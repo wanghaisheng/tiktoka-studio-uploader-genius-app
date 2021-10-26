@@ -1,0 +1,6 @@
+requests
+pillow
+itemdb
+selenium-wire
+moviepy
+ytb_up

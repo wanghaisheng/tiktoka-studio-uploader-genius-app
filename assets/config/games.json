@@ -1,0 +1,13 @@
+{
+    "driverfilepath": "D:/Download/audio-visual/make-reddit-video/auddit/assets/driver/geckodriver.exe",
+    "firefox_profile_folder": "D:/Download/audio-visual/make-reddit-video/auddit/assets/profile/harrypotter",
+    "video_folder": "D:/Download/audio-visual/make-reddit-video/autovideo/test",
+    "music_folder": "D:/Download/audio-visual/make-reddit-video/autovideo/assets/freemusic",
+    "dailycount": "4",
+    "publishpolicy": "0",
+    "preferdes": "\u5408\u96c6",
+    "channelname": "games",
+    "prefertags": "\u9b54\u6cd5\u89c9\u9192,\u54c8\u5229\u6ce2\u7279\u9b54\u6cd5\u89c9\u9192",
+    "channelcookiepath": "D:/Download/audio-visual/make-reddit-video/autovideo/assets/cookies/harrypotter.json",
+    "ratio": "1"
+}
