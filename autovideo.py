@@ -28,7 +28,8 @@ import itemdb
 from PIL import Image
 
 import multiprocessing as mp
-
+from moviepy.editor import VideoFileClip, AudioFileClip
+import moviepy.video.fx.all as vfx
 from ytb_up.upload import Upload
 
 

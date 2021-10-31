@@ -302,5 +302,186 @@ def main():
     app.resizable(width = False, height = False)
     app.mainloop()
 
+
+
+# yt-dlp "bilisearch100:雷电将军" --config-location config.txt
+#config.txt
+# -o "./%(extractor_key)s/[%(channel_id)s] %(uploader)s/[%(upload_date)s] %(title)s [%(id)s].%(ext)s"
+# -ciw
+# --console-title
+# --extractor-args "youtube:player_client=android,web;comment_sort=top;max_comments=1000"
+# --yes-playlist
+# --remux-video flv>mp4
+# --merge-output-format mp4
+# --no-embed-sub
+# --no-clean-infojson
+# --write-thumbnail
+# --sub-lang all
+# --convert-subtitles srt
+# --write-description
+# --write-info-json
+# --convert-thumbnails png
+# --no-write-comments
+# --embed-metadata
+# --parse-metadata "title:(?s)(?P<meta_title>.+)"
+# --parse-metadata "uploader:(?s)(?P<meta_artist>.+)"
+# --parse-metadata " : (?P<meta_synopsis>.*)"
+# --parse-metadata " : (?P<meta_album>.*)"
+# --abort-on-unavailable-fragment
+# --no-write-playlist-metafiles
+
+
+
+# def get_compilation_keyword(context):
+
+
+
+#     results =[]
+
+
+#     session = requests.session()
+
+
+
+#     topic =context['keyword']
+#     duration=context['duration']
+
+#     with open('assets/cookies/bilibili.json') as f:
+#         cookie_list: list = json.load(f)
+#         # create the cookie jar from the first cookie
+#         cookie_jar = requests.utils.cookiejar_from_dict(stringify(cookie_list[0]))
+#         # append the rest of the cookies
+#         for cookie in cookie_list[1:]:
+#             requests.utils.add_dict_to_cookiejar(cookie_jar, stringify(cookie))
+#         session.cookies = cookie_jar
+#         idlist=[]    
+
+#         outputdir = context["outputdir"]
+#         payload = {'search_type': 'video', 'keyword': topic,'order':'pubdate','duration':'0'}
+#         r = session.get('http://api.bilibili.com/x/web-interface/search/type', params=payload)
+#         # print(r.json())
+#         numPages = r.json()['data']['numPages']
+#         if numPages>=1:
+#             for page in range(numPages,1,-1):
+#                 payload = {'search_type': 'video', 'keyword': topic,'order':'pubdate','duration':'0','page':page}
+#                 r = session.get('http://api.bilibili.com/x/web-interface/search/type', params=payload)
+#                 print(os.getcwd())
+#                 os.chdir(outputdir)
+
+#                 if not os.path.exists(str(page)):
+#                     os.makedirs(str(page))
+#                 os.chdir(str(page))
+#                 print('下载视频到目录：',os.getcwd())
+
+#                 links =[]
+#                 # print(r.json())
+#                 for j,item in enumerate(r.json()["data"]["result"]):
+#                     link = item['arcurl']
+                    
+#                     donelist=[]
+#                     context['db'].ensure_table('urls',"!url")
+#                     if context['db'].select("urls",'url'):  # -> list of 2 items
+#                         donelist = context['db'].select("urls",'url==?',link)
+#                     else:
+#                         donelist =[]
+#                     if len(donelist)>0:
+#                         pass
+#                     else:                    
+#                         ydl_opts = {"retries":10}
+#                         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+#                             # info = ydl.extract_info(item['arcurl'])
+#                             ydl.download([item['arcurl']])
+#                         context['db'].ensure_table('urls',"!url")
+#                         context['db'].put_one('urls', url=link)    
+#                 print('start merge flv files')
+
+
+#                 mypath=os.getcwd()
+
+#                 cwd = os.getcwd()
+#                 files = [os.path.join(cwd, f) for f in os.listdir(cwd) if 
+#                 os.path.isfile(os.path.join(cwd, f))]
+
+#                 if len(files)>0:
+#                     clips=[]
+#                     tmp =[]
+#                     for f in files:
+#                         if f.endswith('.flv'):
+#                             clip = VideoFileClip(f,audio=True)
+#                             tmp.append(clip)
+#                     for i,item in enumerate(divide_chunks(tmp,5)):
+#                         i =str(i)
+#                         post_id = uuid2slug(str(uuid.uuid4()))
+#                         post_id = post_id.strip('-')
+#                         # isadded = getlinkduplicate(context, link)
+#                         post_id = addscrapetask(context, post_id, pipelineid='20211012',
+#                                             scrapestatus=0, subnsfw=0,
+#                                             scrapetaskid='20211012', 
+#                                             subreddit_name=topic, post_link=link)                        
+#                         print('process part',i,'comment video')
+#                         comment_videoclip_i = concatenate_videoclips(item,method="compose")
+#                         uploadmp4=topic+i+".mp4"
+#                         # uploadmp4 =outputdir+os.sep+str(page)+os.sep+uploadmp4
+#                         updatescrapemetakv(context,post_id,'uploadmp4',outputdir+os.sep+str(page)+os.sep+uploadmp4)
+
+#                         link = '\r\n'.join(links)
+#                         rapidtags = getkeywordsrapidtags(topic)
+#                         print(topic)
+#                         print('rapidtags',rapidtags)
+
+#                         title =topic+'合集 compilation '
+
+#                         post_title =  title                        # predes = item['description']
+#                         predes="a bot make compilation videos from internet. Any copyright issue pls contact us We will take care of your concerns.original video  from \r\n"
+#                         des=predes+ link
+#                         tags=rapidtags
+#                         # des = predes+'\r\n'
+#                         if len(post_title) > 100:
+#                             formattitle = post_title[:80]+"|"+topic
+
+#                         title=post_title
+#                         description =des[:4000]
+#                         type = 'harry'
+#                         position = "left"
+#                         fontsize = 150                    
+
+#                         updatescrapemetakv(context,post_id,'tags',tags)
+#                         updatescrapemetakv(context,post_id,'des',des)
+#                         updatescrapemetakv(context,post_id,'rapidtags',rapidtags)
+                                
+#                         updatescrapemetakv(context, post_id, 'post_type','video')   
+
+#                         updatescrapemetakv(context,post_id,'postnsfw',0)
+
+#                         updatescrapemetakv(context,post_id,'post_title',post_title)
+
+#                         if os.path.exists(uploadmp4):
+#                             print('existing',uploadmp4)
+#                         else:                
+#                             comment_videoclip_i.write_videofile(uploadmp4,threads=8,codec="mpeg4")
+#                             updatescrapemetakv(context,post_id,'scrapestatus','1')
+                            
+
+#                             gc.collect()
+
+#                             updatescrapemetakv(context,post_id,'videostatus',1) 
+#                             # os.chdir('../../../../')
+#                             print('mulu--',os.getcwd())
+#                             img, thumbpath = thumbnailImage(type, title, post_id, position,
+#                                                     fontsize, context['outputdir'])
+#                             updatescrapemetakv(context,post_id,'thumbpath',thumbpath)
+#                             updatescrapemetakv(context,post_id,'metastatus','1')
+
+                    
+#                             upload(context,post_id=post_id)            
+
+
+#                     print('re generate compilation is done')
+#                     os.chdir('../../../../')
+
+#                     # for f in files:
+#                         # os.remove(f)
+
+                              
 if __name__ == '__main__':
     main()

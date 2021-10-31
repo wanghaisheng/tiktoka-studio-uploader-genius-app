@@ -3,8 +3,8 @@ from PIL.ImageTk import PhotoImage, Image
 import os
 import subprocess as sub
 # from threading import Thread
-# pyinstaller --onefile -i "Exe.ico" -F --add-binary='tk86t.dll;tk' -F --add-binary='tcl86t.dll;tcl' main.py
-# pyinstaller --onefile --add-binary='/System/Library/Frameworks/Tk.framework/Tk':'tk' --add-binary='/System/Library/Frameworks/Tcl.framework/Tcl':'tcl' your_script.py
+# pyinstaller --onedir -i "Exe.ico" -F --add-binary='tk86t.dll;tk' -F --add-binary='tcl86t.dll;tcl' main.py
+# pyinstaller --onedir --add-binary='/System/Library/Frameworks/Tk.framework/Tk':'tk' --add-binary='/System/Library/Frameworks/Tcl.framework/Tcl':'tcl' your_script.py
 from tkinter import filedialog, messagebox, Label, Tcl
 import time
 # import io
@@ -105,28 +105,28 @@ def main():
             text2.insert(END, 'CONVERTING THE PROGRAM ALONG WITH THE TERMINAL\n')
             text2.config(state = DISABLED)
             os.chdir(inp1)
-            os.system('pyinstaller --onefile '+inp2)
+            os.system('pyinstaller --onedir '+inp2)
         elif int(terminal) == 1 and len(icons) != 0:
             text2.config(state = NORMAL)
             text2.insert(END, 'CONVERTING THE PROGRAM ALONG WITH THE TERMINAL AND WITH ICON\n')
             text2.config(state = DISABLED)
             os.chdir(inp1)
-            os.system('pyinstaller --onefile -i "'+icons+'" '+inp2)
-            # os.system('pyinstaller --onefile -w -i "path.ico" yourfile.py'+filename)
+            os.system('pyinstaller --onedir -i "'+icons+'" '+inp2)
+            # os.system('pyinstaller --onedir -w -i "path.ico" yourfile.py'+filename)
         elif int(terminal) == 2 and len(icons) == 0:
             text2.config(state = NORMAL)
             text2.insert(END, 'CONVERTING THE PROGRAM WITHOUT THE TERMINAL\n')
             text2.config(state = DISABLED)
             os.chdir(inp1)
-            os.system('pyinstaller --onefile -w '+inp2)
+            os.system('pyinstaller --onedir -w '+inp2)
         elif int(terminal) == 2 and len(icons) != 0:
             text2.config(state = NORMAL)
             text2.insert(END, 'CONVERTING THE PROGRAM WITHOUT THE TERMINAL AND WITH ICON\n')
             text2.config(state = DISABLED) 
-            print('pyinstaller --onefile -w -i "'+str(icons)+'" '+inp2)
+            print('pyinstaller --onedir -w -i "'+str(icons)+'" '+inp2)
             os.chdir(inp1)
-            os.system('pyinstaller --onefile -w -i "'+str(icons)+'" '+inp2)
-            # pyinstaller --onefile -w -i "Coffee.ico" add_data "Exe.ico" main.py
+            os.system('pyinstaller --onedir -w -i "'+str(icons)+'" '+inp2)
+            # pyinstaller --onedir -w -i "Coffee.ico" add_data "Exe.ico" main.py
         else:
             text2.insert(END, 'PLEASE DO NOT EDIT THE FILE\n')
                 
