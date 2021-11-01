@@ -1,0 +1,85 @@
+1635773804785	geckodriver	INFO	Listening on 127.0.0.1:6453
+1635773807839	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "9222" "-no-remote" "-profile" "C:\\Users\\dubo\\AppData\\Local\\Temp\\rust_mozprofileRFDeQD"
+1635773808329	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\dubo\\AppData\\Local\\Temp\\rust_mozprofileRFDeQD\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:9222/devtools/browser/df08d0e2-62e6-470f-a9c9-2f82daf83029
+1635773810651	Marionette	INFO	Listening on port 4979
+1635773811043	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1635773811046	RemoteAgent	INFO	Proxy settings initialised: {"proxyType":"manual","httpProxy":"127.0.0.1:6451","sslProxy":"127.0.0.1:6451"}
+1635774003695	Marionette	INFO	Stopped listening on port 4979
+JavaScript error: resource:///modules/Interactions.jsm, line 201: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+JavaScript error: chrome://remote/content/marionette/cert.js, line 55: NS_ERROR_NOT_AVAILABLE: Component returned failure code: 0x80040111 (NS_ERROR_NOT_AVAILABLE) [nsICertOverrideService.setDisableAllSecurityChecksAndLetAttackersInterceptMyData]
+ofileJxibIS\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:9222/devtools/browser/6afbd09d-333a-4f4f-ad49-46f5118125dd
+1635773917137	Marionette	INFO	Listening on port 1868
+1635773917273	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1635773917276	RemoteAgent	INFO	Proxy settings initialised: {"proxyType":"manual","httpProxy":"127.0.0.1:13323","sslProxy":"127.0.0.1:13323"}
+JavaScript warning: https://www.google.com/js/th/yZzv_fkpmJZUA5ucb6KuXl0Y77JXdAacTsErhJrsfDg.js line 1 > eval line 2838 > eval line 1 > eval, line 1: Failed to create WebGL context: WebGL is currently disabled.
+JavaScript warning: https://www.google.com/js/th/yZzv_fkpmJZUA5ucb6KuXl0Y77JXdAacTsErhJrsfDg.js line 1 > eval line 1389 > eval, line 1: Failed to create WebGL context: WebGL is currently disabled.
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+JavaScript warning: https://www.google.com/js/th/yZzv_fkpmJZUA5ucb6KuXl0Y77JXdAacTsErhJrsfDg.js line 1 > eval line 7354 > eval, line 1: Failed to create WebGL context: WebGL is currently disabled.
+JavaScript warning: https://www.google.com/js/th/yZzv_fkpmJZUA5ucb6KuXl0Y77JXdAacTsErhJrsfDg.js line 1 > eval line 3225 > eval line 1 > eval, line 1: Failed to create WebGL context: WebGL is currently disabled.
+JavaScript warning: https://www.google.com/js/th/yZzv_fkpmJZUA5ucb6KuXl0Y77JXdAacTsErhJrsfDg.js line 1 > eval line 4015 > eval line 1 > eval, line 1: Failed to create WebGL context: WebGL is currently disabled.
+JavaScript warning: https://www.google.com/js/th/yZzv_fkpmJZUA5ucb6KuXl0Y77JXdAacTsErhJrsfDg.js line 1 > eval line 567 > eval line 1 > eval, line 1: Failed to create WebGL context: WebGL is currently disabled.
+JavaScript warning: https://www.google.com/js/th/yZzv_fkpmJZUA5ucb6KuXl0Y77JXdAacTsErhJrsfDg.js line 1 > eval line 4958 > eval line 1 > eval, line 1: Failed to create WebGL context: WebGL is currently disabled.
+JavaScript warning: https://www.google.com/js/th/yZzv_fkpmJZUA5ucb6KuXl0Y77JXdAacTsErhJrsfDg.js line 1 > eval line 6524 > eval line 1 > eval, line 1: Failed to create WebGL context: WebGL is currently disabled.
+JavaScript error: , line 0: uncaught exception: Object
+JavaScript error: , line 0: uncaught exception: Object
+JavaScript warning: https://www.google.com/js/th/yZzv_fkpmJZUA5ucb6KuXl0Y77JXdAacTsErhJrsfDg.js line 1 > eval line 4958 > eval line 1 > eval, line 1: Failed to create WebGL context: WebGL is currently disabled.
+JavaScript warning: https://www.google.com/js/th/yZzv_fkpmJZUA5ucb6KuXl0Y77JXdAacTsErhJrsfDg.js line 1 > eval line 663 > eval line 1 > eval, line 1: Failed to create WebGL context: WebGL is currently disabled.
+JavaScript warning: https://www.google.com/js/th/yZzv_fkpmJZUA5ucb6KuXl0Y77JXdAacTsErhJrsfDg.js line 1 > eval line 1062 > eval, line 1: Failed to create WebGL context: WebGL is currently disabled.
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1635774893319	Marionette	INFO	Stopped listening on port 1868
+JavaScript error: resource:///modules/Interactions.jsm, line 201: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+re it's been properly intialized. Please examine the stack trace to figure out what and where to fix it:
+_ensureInitialized@resource://gre/modules/SearchService.jsm:213:15
+_getEngineDefault@resource://gre/modules/SearchService.jsm:2157:10
+get defaultEngine@resource://gre/modules/SearchService.jsm:2289:17
+_cacheL10nStrings@resource:///modules/UrlbarView.jsm:2163:11
+onQueryStarted@resource:///modules/UrlbarView.jsm:583:10
+notify@resource:///modules/UrlbarController.jsm:652:25
+startQuery@resource:///modules/UrlbarController.jsm:133:10
+startQuery@resource:///modules/UrlbarInput.jsm:1354:52
+_on_input@resource:///modules/UrlbarInput.jsm:3029:10
+handleEvent@resource:///modules/UrlbarInput.jsm:425:23
+
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\dubo\\AppData\\Local\\Temp\\rust_mozprofileu7PqyD\\search.json.mozlz4", (void 0)))
+JavaScript error: resource:///modules/UrlbarView.jsm, line 2163: NS_ERROR_XPC_JAVASCRIPT_ERROR_WITH_DETAILS: [JavaScript Error: "Something tried to use the search service before it's been properly intialized. Please examine the stack trace to figure out what and where to fix it:
+_ensureInitialized@resource://gre/modules/SearchService.jsm:213:15
+_getEngineDefault@resource://gre/modules/SearchService.jsm:2157:10
+get defaultEngine@resource://gre/modules/SearchService.jsm:2289:17
+_cacheL10nStrings@resource:///modules/UrlbarView.jsm:2163:11
+onQueryStarted@resource:///modules/UrlbarView.jsm:583:10
+notify@resource:///modules/UrlbarController.jsm:652:25
+startQuery@resource:///modules/UrlbarController.jsm:133:10
+startQuery@resource:///modules/UrlbarInput.jsm:1354:52
+_on_input@resource:///modules/UrlbarInput.jsm:3029:10
+handleEvent@resource:///modules/UrlbarInput.jsm:425:23
+" {file: "resource://gre/modules/SearchService.jsm" line: 213}]'[JavaScript Error: "Something tried to use the search service before it's been properly intialized. Please examine the stack trace to figure out what and where to fix it:
+_ensureInitialized@resource://gre/modules/SearchService.jsm:213:15
+_getEngineDefault@resource://gre/modules/SearchService.jsm:2157:10
+get defaultEngine@resource://gre/modules/SearchService.jsm:2289:17
+_cacheL10nStrings@resource:///modules/UrlbarView.jsm:2163:11
+onQueryStarted@resource:///modules/UrlbarView.jsm:583:10
+notify@resource:///modules/UrlbarController.jsm:652:25
+startQuery@resource:///modules/UrlbarController.jsm:133:10
+startQuery@resource:///modules/UrlbarInput.jsm:1354:52
+_on_input@resource:///modules/UrlbarInput.jsm:3029:10
+handleEvent@resource:///modules/UrlbarInput.jsm:425:23
+" {file: "resource://gre/modules/SearchService.jsm" line: 213}]' when calling method: [nsISearchService::defaultEngine]
+DevTools listening on ws://localhost:9222/devtools/browser/cc5ddd55-65f0-430c-8c6e-6be8b37e0a05
+1635774838480	Marionette	INFO	Listening on port 4389
+1635774838516	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1635774838519	RemoteAgent	INFO	Proxy settings initialised: {"proxyType":"manual","httpProxy":"127.0.0.1:7820","sslProxy":"127.0.0.1:7820"}
+[Child 24256, MediaDecoderStateMachine #1] WARNING: 24193d61040 Could not set cubeb stream name.: file /builds/worker/checkouts/gecko/dom/media/AudioStream.cpp:367
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.

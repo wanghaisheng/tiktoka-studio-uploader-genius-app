@@ -460,94 +460,108 @@ def checkraw():
         else:
             print("pls choose file or folder")
 
-
 def check_video_thumb_pair(folder):
+    # print('detecting----------',folder)
+
+    for r, d, f in os.walk(folder):
+        with os.scandir(r) as i:
+            print('detecting----------',r)
+
+            videofiles = []
+            pairedvideothumbs=[]
+            for entry in i:
+                if entry.is_file():
+                    filename = os.path.splitext(entry.name)[0]
+                    ext = os.path.splitext(entry.name)[1]
+                    print(filename,'==',ext) 
+
+                    start_index=0
+                    if ext in ('.flv', '.mp4', '.avi'):
+                        for image_ext in ('.jpeg', '.png', '.jpg'):
+                            videopath = os.path.join(r, entry.name)
+                            thumbpath = os.path.join(r, filename+image_ext)
+
+                            if os.path.exists(thumbpath):       
+                                add_video_thumb_pair_basic(thumbpath,videopath,filename,start_index)                 
+                    start_index+=1
+                                # print('========',videopath)
+                                # print('========',thumbpath)
+
+        # for dirs in d:
+        #     print(dirs)  
+        #     check_video_thumb_pair_basic(dirs)
+
+def add_video_thumb_pair_basic(thumbpath,videopath,filename,start_index):
+
     tablename = setting['channelname']
     db = ytb
     db.ensure_table(tablename, "!videoid", "status")
+            
+              
 
-    if os.path.isdir(folder):
+    # filename = os.path.splitext(f)[0]
 
-        videofiles = []
-        for ext in ('*.flv', '*.mp4', '*.avi'):
-            videofiles.extend(glob(os.path.join(folder, ext)))
-        if len(videofiles) > 0:
-            for i,f in enumerate(videofiles):
-                filename = os.path.splitext(f)[0]
+    if os.path.exists(thumbpath):
+        video = db.count(
+            tablename, "videoid ==?", b64e(filename))
+        print('check video stauts', video)
+        if video == 1:
+            status = db.select_one(tablename, "videoid ==?",
+                                    b64e(filename))["status"]
 
-                # ext = os.path.splitext(f)[1]
-                for ext in ('.jpeg', '.png', '.jpg'):
-                    thumbpath = os.path.join(folder, filename+ext)
-                    videopath = os.path.join(folder, f)
+            if status == 1:
+                print('task completed', status, video)
+            else:
 
-                    if os.path.exists(thumbpath):
-                        video = db.count(
-                            tablename, "videoid ==?", b64e(filename))
-                        print('check video stauts', video)
-                        if video == 1:
-                            status = db.select_one(tablename, "videoid ==?",
-                                                   b64e(filename))["status"]
+                print('task added but not uploaded')
 
-                            if status == 1:
-                                print('task completed', status, video)
-                            else:
+        elif video == 0:
+            print('task not added before')
+            tags = setting['prefertags']
+            des = setting['preferdes']
+            filename=filename.split(os.sep)[-1]
+            title = isfilenamevalid(filename)
+            if len(filename) > 100:
+                title = filename[:90]
+            nowtime = time.time()
+            update_time = int(nowtime)
+            videoid = b64e(filename)
+            olddata = {}
+            olddata["videoid"] = videoid
+            #Oct 19, 2021
+            today = date.today()
+            publish_date =datetime(today.year, today.month, today.day, 20, 15), 
 
-                                print('task added but not uploaded')
+            if start_index <int(setting['dailycount']):
+                publish_date =today+timedelta(days=1)
 
-                        elif video == 0:
-                            print('task not added before')
-                            tags = setting['prefertags']
-                            des = setting['preferdes']
-                            filename=filename.split(os.sep)[-1]
-                            title = isfilenamevalid(filename)
-                            if len(filename) > 100:
-                                title = filename[:90]
-                            nowtime = time.time()
-                            update_time = int(nowtime)
-                            videoid = b64e(filename)
-                            olddata = {}
-                            olddata["videoid"] = videoid
-                            #Oct 19, 2021
-                            today = date.today()
-                            publish_date=''
-                            if len(videofiles)<int(setting['dailycount']):
-                                # publish_date =today+timedelta(days=1)
-                                publish_date = datetime(today.year, today.month, today.day+1, 20, 15), 
+            else:
+                publish_date =today+timedelta(month=int(int(start_index)/30),days=int(int(start_index)/int(setting['dailycount'])))
+                    
 
-                            else:
-                                if i <int(setting['dailycount']):
-                                    publish_date =datetime(today.year, today.month, today.day+1, 20, 15), 
+            # publish_date = publish_date.strftime("%B %d, %Y")
+            # "--upload_time",
+            # help="This argument declares the scheduled upload time (UTC) of the uploaded video. "
+            #      "(Example: 2021-04-04T20:00:00)",
+            # type=datetime.fromisoformat,
+            # default=datetime(today.year, today.month, today.day, 20, 15), 
+            print(publish_date)
+            # date1 = datetime.strptime(publish_date, '%a, %d %b %Y %H:%M:%S')
+            # print('---',publish_date[0].strftime("%Y-%m-%d %H:%M:%S"))
+            olddata["publish_date"] = publish_date.strftime("%Y-%m-%d %H:%M:%S")
 
-                                else:
-                                        
-                                    publish_date = datetime(today.year, today.month+int(int(i)/30), today.day+1+int(int(i)/int(setting['dailycount'])), 20, 15), 
+            olddata["thumbpath"] = thumbpath
+            olddata["update_time"] = update_time
+            olddata["title"] = title
+            olddata["des"] = des
+            olddata["videopath"] = videopath
+            olddata["tags"] = tags
+            olddata["status"] = 0
+            db.put(tablename, olddata)
+            print('add 1 new videos for upload', filename)
+    else:
+        pass
 
-                            # publish_date = publish_date.strftime("%B %d, %Y")
-                            # "--upload_time",
-                            # help="This argument declares the scheduled upload time (UTC) of the uploaded video. "
-                            #      "(Example: 2021-04-04T20:00:00)",
-                            # type=datetime.fromisoformat,
-                            # default=datetime(today.year, today.month, today.day, 20, 15), 
-                            print(publish_date)
-                            # date1 = datetime.strptime(publish_date, '%a, %d %b %Y %H:%M:%S')
-                            print('---',publish_date[0].strftime("%Y-%m-%d %H:%M:%S"))
-                            olddata["publish_date"] = publish_date[0].strftime("%Y-%m-%d %H:%M:%S")
-
-                            olddata["thumbpath"] = thumbpath
-                            olddata["update_time"] = update_time
-                            print('video title',title)
-                            olddata["title"] = title
-                            olddata["des"] = des
-                            olddata["videopath"] = videopath
-                            olddata["tags"] = tags
-                            olddata["status"] = 0
-                            db.put(tablename, olddata)
-                            print('add 1 new videos for upload', f)
-                    else:
-                        pass
-                        # print(thumbpath+' image not found for ', f)
-        else:
-            print('no video file found')
 
 
 def upload():
