@@ -9,6 +9,7 @@ from tkinter import colorchooser
 from tkinter import ttk
 from PIL import Image, ImageFont, ImageDraw
 import os
+import itertools
 from itertools import groupby
 from datetime import datetime
 import base64
@@ -604,39 +605,52 @@ def upload():
                 # title = os.path.splitext(os.path.basename(title)[-1])[0]
                 print('release date',publish_date)
                 videoid=video['videoid']
-                if setting['publishpolicy']=="0" or setting['publishpolicy']=="1":
-                    was_uploaded, upload_video_id = upload.upload(
-                        videopath,
-                        title=title,
-                        description=des,
-                        thumbnail=thumbpath,
-                        tags=tags.split(','),
-                        publishpolicy=setting['publishpolicy']
-                    )
-                else:
+                max_retries = 3
+                for retries in itertools.count():
+                    try:
+                        if setting['publishpolicy']=="0" or setting['publishpolicy']=="1":
+                            was_uploaded, upload_video_id = upload.upload(
+                                videopath,
+                                title=title,
+                                description=des,
+                                thumbnail=thumbpath,
+                                tags=tags.split(','),
+                                publishpolicy=setting['publishpolicy']
+                            )
+                        else:
 
-                    was_uploaded, upload_video_id = upload.upload(
-                        videopath,
-                        title=title,
-                        description=des,
-                        thumbnail=thumbpath,
-                        tags=tags.split(','),
-                        publishpolicy=setting['publishpolicy'],
-                        release_offset=publish_date
-                    )
+                            was_uploaded, upload_video_id = upload.upload(
+                                videopath,
+                                title=title,
+                                description=des,
+                                thumbnail=thumbpath,
+                                tags=tags.split(','),
+                                publishpolicy=setting['publishpolicy'],
+                                release_offset=publish_date
+                            )
+                        if was_uploaded:
 
-                if was_uploaded:
+                            nowtime = time.time()
+                            update_time = int(nowtime)
+                            olddata = db.select_one(tablename, "videoid ==?",
+                                                    videoid)
+                            # print('old data',olddata)
+                            olddata["status"] = 1
+                            db.put(tablename, olddata)
+                            print(f"{videoid} has been uploaded to YouTube")
+                        upload.close()
+                                                        
+                    except Exception as e:
+                        if  retries != max_retries:
+                            print('%s. Retrying...' % str( e.msg))
+                            continue
+                        
+                    break               
 
-                    nowtime = time.time()
-                    update_time = int(nowtime)
-                    olddata = db.select_one(tablename, "videoid ==?",
-                                            videoid)
-                    # print('old data',olddata)
-                    olddata["status"] = 1
-                    db.put(tablename, olddata)
-                    print(f"{videoid} has been uploaded to YouTube")
 
-            upload.close()
+
+
+
         else:
             print('videos in folder',setting['video_folder'],'all uploaded')
 
