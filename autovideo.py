@@ -533,23 +533,12 @@ def add_video_thumb_pair_basic(thumbpath,videopath,filename,start_index):
             publish_date =datetime(today.year, today.month, today.day, 20, 15), 
 
             if start_index <int(setting['dailycount']):
-                publish_date =today+timedelta(days=1)
-
+                release_offset='0-1'
             else:
-                publish_date =today+timedelta(month=int(int(start_index)/30),days=int(int(start_index)/int(setting['dailycount'])))
+                release_offset=str(int(start_index)/30)+'-'+str(int(start_index)/int(setting['dailycount']))
                     
 
-            # publish_date = publish_date.strftime("%B %d, %Y")
-            # "--upload_time",
-            # help="This argument declares the scheduled upload time (UTC) of the uploaded video. "
-            #      "(Example: 2021-04-04T20:00:00)",
-            # type=datetime.fromisoformat,
-            # default=datetime(today.year, today.month, today.day, 20, 15), 
-            print(publish_date)
-            # date1 = datetime.strptime(publish_date, '%a, %d %b %Y %H:%M:%S')
-            # print('---',publish_date[0].strftime("%Y-%m-%d %H:%M:%S"))
-            olddata["publish_date"] = publish_date.strftime("%Y-%m-%d %H:%M:%S")
-
+            olddata["publish_date"] = release_offset
             olddata["thumbpath"] = thumbpath
             olddata["update_time"] = update_time
             olddata["title"] = title
@@ -611,12 +600,9 @@ def upload():
                 videopath = video["videopath"]
                 tags = video["tags"]
                 publish_date =video["publish_date"]
-                # date1 = datetime.strptime(publish_date, '%a, %d %b %Y %H:%M:%S')
-
-                publish_date = datetime.strptime(publish_date, "%Y-%m-%d %H:%M:%S")               
                 title = video["title"]
                 # title = os.path.splitext(os.path.basename(title)[-1])[0]
-
+                print('release date',publish_date)
                 videoid=video['videoid']
                 if setting['publishpolicy']=="0" or setting['publishpolicy']=="1":
                     was_uploaded, upload_video_id = upload.upload(
@@ -636,7 +622,7 @@ def upload():
                         thumbnail=thumbpath,
                         tags=tags.split(','),
                         publishpolicy=setting['publishpolicy'],
-                        publish_date=publish_date
+                        release_offset=publish_date
                     )
 
                 if was_uploaded:
