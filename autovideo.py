@@ -537,7 +537,7 @@ def add_video_thumb_pair_basic(thumbpath,videopath,filename,start_index):
                 release_offset='0-1'
             else:
                 release_offset=str(int(start_index)/30)+'-'+str(int(start_index)/int(setting['dailycount']))
-                    
+            
 
             olddata["publish_date"] = release_offset
             olddata["thumbpath"] = thumbpath
@@ -576,26 +576,30 @@ def upload():
                     'no_proxy': 'localhost,127.0.0.1'
                 }
             }
-            print('checking whether need proxy setting')
+            upload = Upload(
+                # use r"" for paths, this will not give formatting errors e.g. "\n"
+                setting['firefox_profile_folder'],
+                CHANNEL_COOKIES=setting['channelcookiepath'],
+                executable_path =setting['driverfilepath']
+            )
             if url_ok('http://www.google.com'):
                 print('network is fine,there is no need for proxy ')
-                upload = Upload(
-                    # use r"" for paths, this will not give formatting errors e.g. "\n"
-                    setting['firefox_profile_folder'],
-                    CHANNEL_COOKIES=setting['channelcookiepath'],
-                    executable_path =setting['driverfilepath']
-                )
             else:
-                print('we need for proxy ')
+                print('google can not be access ')
+
+                print('we need for proxy ',options)
 
                 upload = Upload(
                     # use r"" for paths, this will not give formatting errors e.g. "\n"
                     setting['firefox_profile_folder'],
                     proxy_option=options,
                     headless=False,
+                    executable_path =setting['driverfilepath'],
                     CHANNEL_COOKIES=setting['channelcookiepath']
-                )
+                )   
             for video in videos:
+                print('checking whether need proxy setting')
+             
                 thumbpath = video["thumbpath"]
                 des = video["des"]
                 videopath = video["videopath"]
@@ -638,7 +642,6 @@ def upload():
                             olddata["status"] = 1
                             db.put(tablename, olddata)
                             print(f"{videoid} has been uploaded to YouTube")
-                        upload.close()
                                                         
                     except Exception as e:
                         if  retries != max_retries:
@@ -646,10 +649,7 @@ def upload():
                             continue
                         
                     break               
-
-
-
-
+            upload.close()
 
         else:
             print('videos in folder',setting['video_folder'],'all uploaded')
@@ -689,7 +689,7 @@ if __name__ == '__main__':
         publishpolicy = tk.StringVar()
         publishpolicy.set(setting['publishpolicy'])
         
-        l3 = tk.Label(root, text="無版權音樂")
+        l3 = tk.Label(root, text="copyright free music folder")
         l3.place(x=10, y=130)
         e3 = tk.Entry(root, width=55, textvariable=music_folder)
         e3.place(x=120, y=130)
@@ -751,6 +751,9 @@ if __name__ == '__main__':
         b6 = tk.Button(root, text="保存配置", command=save_setting)
         b6.place(x=200, y=30)
 
+        b61 = tk.Button(root, text="headless", command=save_setting)
+        b61.place(x=300, y=30)
+
         b7 = tk.Button(root, text="开始上传", command=upload)
         b7.place(x=400, y=400)
 
@@ -779,7 +782,7 @@ if __name__ == '__main__':
         root.config(menu=menubar)
         # root.geometry('1280x720')
         root.geometry('530x440')
-        root.title("油管视频自动上传")
+        root.title("youtube video auto upload GUI")
         root.resizable(width=False, height=False)
         root.iconbitmap("assets/icon.ico")
         root.mainloop()
