@@ -11,6 +11,14 @@ ytb_up GUI demo
 Dirty code but works
 
 
+## steps
+
+1. set up python 
+2. run **pip install -r requirements.txt**
+3. run **python  autovideo.py**
+
+
+
 ## yt-dlp support
 
 ```
