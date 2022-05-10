@@ -1,0 +1,17 @@
+{
+    "driverfilepath": "",
+    "firefox_profile_folder": "",
+    "video_folder": "",
+    "dailycount": "0",
+    "preferdesprefix": "",
+    "preferdessuffix": "",
+    "proxy_option": "",
+    "publishpolicy": "0",
+    "channelname": "",
+    "start_publish_date": "1",
+    "ratio": "1",
+    "music_folder": "",
+    "channelcookiepath": "",
+    "prefertags": "",
+    "json": "{\n    \"driverfilepath\": \"\",\n    \"firefox_profile_folder\": \"\",\n    \"video_folder\": \"\",\n    \"dailycount\": \"0\",\n    \"preferdesprefix\": \"\",\n    \"preferdessuffix\": \"\",\n    \"proxy_option\": \"\",\n    \"publishpolicy\": \"0\",\n    \"channelname\": \"\",\n    \"start_publish_date\": \"1\",\n    \"ratio\": \"1\",\n    \"music_folder\": \"\",\n    \"channelcookiepath\": \"\",\n    \"prefertags\": \"\"\n}"
+}

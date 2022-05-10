@@ -1,6 +1,8 @@
-/__pycache__/*
+__pycache__/*
 /scikit-image/*
 ytb.db
 geckodriver.log
 main.spec
 ytb_up.egg-info
+*.sqlite
+test-results/*

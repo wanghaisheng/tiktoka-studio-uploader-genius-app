@@ -96,3 +96,7 @@ done
 source code:
 
 https://github.com/wanghaisheng/ytb-up
+
+
+https://github.com/electron-vite/electron-vite-vue/issues
+https://github.com/SimulatedGREG/electron-vue/search?p=2&q=input&type=issues
