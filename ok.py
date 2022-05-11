@@ -2,7 +2,7 @@ from ytb_up import *
 from datetime import datetime,date,timedelta
 import asyncio
 
-profilepath = r'D:\Download\audio-visual\make-reddit-video\auddit\assets\profile\aww'
+profilepath = ''
 CHANNEL_COOKIES = r'D:\Download\audio-visual\make-reddit-video\auddit\assets\cookies\aww.json'
 
 videopath = r'D:\Download\audio-visual\objection_engine\hello.mp4'
@@ -19,6 +19,7 @@ password = ""
 description = '========================'
 driverpath = r'D:\Download\audio-visual\make-reddit-video\autovideo\assets\driver\geckodriver-v0.30.0-win64\geckodriver.exe'
 thumbnail = r'D:\Download\audio-visual\make-reddit-video\auddit\assets\ace\ace-attorney_feature.jpg'
+
 upload = Upload(
     # use r"" for paths, this will not give formatting errors e.g. "\n"
     root_profile_directory='',
