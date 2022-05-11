@@ -1,5 +1,6 @@
 pillow==8.4.0
 moviepy==1.0.3
-ytb_up==0.1.12
+ytb_up==0.1.13
 requests[socks]===2.27.1
 scenedetect[opencv]==0.5.6.1
+SQLAlchemy==1.4.36

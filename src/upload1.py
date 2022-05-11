@@ -22,28 +22,28 @@ async def startUpload(profilepath="",proxy_option="",watcheveryuploadstep=True,C
             # for test purpose we need to check the video step by step ,
         )
     return upload
-async def instantpublish(video:UploadSession,upload:Upload):
+async def instantpublish(uploadSession:UploadSession,upload:Upload):
 
     await upload.upload(
-        videopath=video.videopath,
-        title=video.title,
-        description=video.des,
-        thumbnail=video.thumbpath,
-        tags=video.tags,
+        videopath=uploadSession.videopath,
+        title=uploadSession.title,
+        description=uploadSession.des,
+        thumbnail=uploadSession.thumbpath,
+        tags=uploadSession.tags,
         closewhen100percentupload=True,
-        publish_date=video.publish_date,
+        publish_date=uploadSession.publish_date,
         publishpolicy=1
     )
 
-async def privatedraft(video:UploadSession,upload:Upload):
+async def privatedraft(uploadSession:UploadSession,upload:Upload):
     await upload.upload(
-        videopath=video.videopath,
-        title=video.title,
-        description=video.des,
-        thumbnail=video.thumbpath,
-        tags=video.tags,
+        videopath=uploadSession.videopath,
+        title=uploadSession.title,
+        description=uploadSession.des,
+        thumbnail=uploadSession.thumbpath,
+        tags=uploadSession.tags,
         closewhen100percentupload=True,
-        publish_date=video.publish_date,
+        publish_date=uploadSession.publish_date,
         publishpolicy=0
     )
 
@@ -51,7 +51,7 @@ async def privatedraft(video:UploadSession,upload:Upload):
 
 
 
-async def scheduletopublish_specific_date(video:UploadSession,upload:Upload):
+async def scheduletopublish_specific_date(uploadSession:UploadSession,upload:Upload):
         # mode a:release_offset exist,publishdate exist will take date value as a starting date to schedule videos
         # mode b:release_offset not exist, publishdate exist , schedule to this specific date
         # mode c:release_offset not exist, publishdate not exist,daily count to increment schedule from tomorrow
@@ -59,13 +59,13 @@ async def scheduletopublish_specific_date(video:UploadSession,upload:Upload):
 
     # publish_date = datetime.strftime(publish_date, "%Y-%m-%d %H:%M:%S")
     await upload.upload(
-        videopath=video.videopath,
-        title=video.title,
-        description=video.des,
-        thumbnail=video.thumbpath,
-        tags=video.tags,
+        videopath=uploadSession.videopath,
+        title=uploadSession.title,
+        description=uploadSession.des,
+        thumbnail=uploadSession.thumbpath,
+        tags=uploadSession.tags,
         closewhen100percentupload=True,
-        publish_date=video.publish_date,
+        publish_date=uploadSession.publish_date,
         publishpolicy=2
 
     )
@@ -79,7 +79,7 @@ async def bulk_scheduletopublish_specific_date(videos:list,upload:Upload) -> Non
     print('===',type(videos),type(upload))
     for video in videos:
         tasks.append(
-            scheduletopublish_specific_date(video=video, upload=upload)
+            scheduletopublish_specific_date(uploadSession=video, upload=upload)
         )
     await asyncio.gather(*tasks)
 
@@ -89,7 +89,7 @@ async def bulk_privatedraft(videos:list,upload:Upload) -> None:
     tasks = []
     for video in videos:
         tasks.append(
-            privatedraft(video=video, upload=upload)
+            privatedraft(uploadSession=video, upload=upload)
         )
     await asyncio.gather(*tasks)
 
@@ -98,7 +98,7 @@ async def bulk_instantpublish(videos:list,upload:Upload) -> None:
     tasks = []
     for video in videos:
         tasks.append(
-            instantpublish(video=video, upload=upload)
+            instantpublish(uploadSession=video, upload=upload)
         )
     await asyncio.gather(*tasks)
 

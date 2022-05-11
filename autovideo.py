@@ -70,7 +70,6 @@ import asyncio
 import requests
 import re
 
-ytb_path = os.path.join(os.getcwd()+os.sep, "ytb.db")
 
 # dbname = "reddit_popular"
 # Open the database and make sure there is a table with appopriate indices
@@ -158,7 +157,7 @@ def load_setting():
         fp.close()
     except:
         print('读取配置文件失败 加载默认模版')
-        fp = open("assets/config/private-setting-template.json", 'r', encoding='utf-8')
+        fp = open("./assets/config/private-setting-template.json", 'r', encoding='utf-8')
         setting_json = fp.read()
         fp.close()
     setting = json.loads(setting_json)
@@ -245,13 +244,24 @@ def save_setting():
     setting['proxy_option']=proxy_option_value
     setting['prefertags'] = prefertags.get()
     setting['publishpolicy']=publishpolicy.get()    
-    with open('assets/config/'+setting['channelname']+".json", 'w') as f:
-        f.write(json.dumps(setting, indent=4, separators=(',', ': ')))
-    # print('当前使用的配置为：', setting)
-    setting['json']=json.dumps(setting, indent=4, separators=(',', ': '))
+    if setting['publishpolicy']=='': 
+        setting['publishpolicy']=1
+    if setting['start_publish_date']=='': 
+        setting['start_publish_date']='1'
+    if setting['channelname'] is None or setting['channelname']=='' :
+        print('before save setting,you need input channelname')
+    else:
+        if setting['video_folder'] is None or setting['video_folder']=='' :
+            print('before save setting,you need input video_folder')
+        else:
 
-    settingid=Add_New_UploadSetting_In_Db(setting)
-    print("配置保存成功",settingid)
+            with open('./assets/config/'+setting['channelname']+".json", 'w') as f:
+                f.write(json.dumps(setting, indent=4, separators=(',', ': ')))
+            # print('当前使用的配置为：', setting)
+            setting['json']=json.dumps(setting, indent=4, separators=(',', ': '))
+
+            settingid=Add_New_UploadSetting_In_Db(setting)
+            print("配置保存成功",settingid)
 
 
 def select_profile_folder():
@@ -522,7 +532,7 @@ def b64e(s):
 
 def autothumb():
 
-    save_setting()
+    # save_setting()
 # 文件夹下是否有视频文件
 
 # 视频文件是否有同名的图片
@@ -540,8 +550,8 @@ def autothumb():
         else:
             print("pls choose file or folder")
 
-def uploadsession():
-    save_setting()
+def createuploadsession():
+    # save_setting()
 # 文件夹下是否有视频文件
 
 # 视频文件是否有同名的图片
@@ -553,9 +563,10 @@ def uploadsession():
         print('not found fastlane folder  file')
     else:
         if video_folder_path:
-            print("sure, it was defined dir.")
-
-            check_video_thumb_pair(video_folder_path,True)
+            if os.path.exists(video_folder_path):
+                check_video_thumb_pair(video_folder_path,True)
+            else:
+                print("there is no defined video dir.")
         else:
             print("pls choose file or folder")
 
@@ -564,56 +575,32 @@ def check_video_thumb_pair(folder,session):
     for root, dirs, files in os.walk(folder):
         print('Switch to root %s...' % root)
         os.chdir(root)
-        for file in files:
-            ext_regex = r"\.(mov|mp4|mpg|mov|mpeg|flv|wmv|avi|mkv)$"
-            start_index=0
-            if re.search(ext_regex, file, re.IGNORECASE):
-                filename = os.path.splitext(file)[0]
-                videopath=os.path.join(root,file)
+        if len(files)>0:
+            for file in files:
+                ext_regex = r"\.(mov|mp4|mpg|mov|mpeg|flv|wmv|avi|mkv)$"
+                start_index=0
+                if re.search(ext_regex, file, re.IGNORECASE):
+                    filename = os.path.splitext(file)[0]
+                    videopath=os.path.join(root,file)
 
-                for image_ext in ('.jpeg', '.png', '.jpg'):
-                    thumbpath = os.path.join(root, filename+image_ext)
+                    for image_ext in ('.jpeg', '.png', '.jpg'):
+                        thumbpath = os.path.join(root, filename+image_ext)
 
-                    if not os.path.exists(thumbpath):       
-                        no=random.choice(['001','002','003'])
-                        if not os.path.exists(os.path.join(root, filename+'-'+no+'.jpg')):   
-                            generator = AiThumbnailGenerator(videopath)
+                        if not os.path.exists(thumbpath):       
+                            no=random.choice(['001','002','003'])
+                            if not os.path.exists(os.path.join(root, filename+'-'+no+'.jpg')):   
+                                generator = AiThumbnailGenerator(videopath)
 
-                            thumbpath=os.path.join(root, filename+'-'+no+'.jpg')      
-                print(filename,'=========',videopath,thumbpath,file)
-                if session:
-                    print( videopath,thumbpath,filename,start_index,setting['channelname'],settingid)
+                                thumbpath=os.path.join(root, filename+'-'+no+'.jpg')      
+                    print(filename,'=========',videopath,thumbpath,file)
+                    if session:
+                        print( videopath,thumbpath,filename,start_index,setting['channelname'],settingid)
 
-                    prepareuploadsession( videopath,thumbpath,filename,start_index,setting['channelname'],settingid)
-                start_index=start_index+1
-def check_video_thumb_pair1(folder,session):
-    # print('detecting----------',folder)
-
-    for r, d, f in os.walk(folder):
-        with os.scandir(r) as i:
-            print('detecting----------',r)
-            for entry in i:
-                if entry.is_file():
-                    filename = os.path.splitext(entry.name)[0]
-                    ext = os.path.splitext(entry.name)[1]
-                    print(filename,'==',ext) 
-
-                    start_index=1
-                    if ext in ('.flv', '.mp4', '.avi'):
-                        videopath = os.path.join(r, entry.name)
-
-                        for image_ext in ('.jpeg', '.png', '.jpg'):
-                            thumbpath = os.path.join(r, filename+image_ext)
-
-                            if not os.path.exists(thumbpath):       
-                                no=random.choice(['001','002','003'])
-                                if not os.path.exists(os.path.join(r, filename+'-'+no+'.jpg')):   
-                                    generator = AiThumbnailGenerator(videopath)
-
-                                    thumbpath=os.path.join(r, filename+'-'+no+'.jpg')                                
-
-
-                start_index=start_index+1
+                        prepareuploadsession( videopath,thumbpath,filename,start_index,setting['channelname'],settingid)
+                    start_index=start_index+1
+        else:
+            print('we dont find videos  in video folder',setting['video_folder'])
+ 
 def prepareuploadsession( videopath,thumbpath,filename,start_index,channelname,settingid):
     global uploadsessionid
     isadded,isuploaded=Query_video_status_in_channel(videopath,channelname,settingid)
@@ -636,13 +623,17 @@ def prepareuploadsession( videopath,thumbpath,filename,start_index,channelname,s
         preferdesprefix = setting['preferdesprefix']
         preferdessuffix = setting['preferdessuffix']
         filename=filename.split(os.sep)[-1]
-        des=preferdesprefix+'========\n'+filename+'=========\n'+preferdessuffix
+        des =filename
+        if preferdesprefix:
+
+            des=preferdesprefix+'========\n'+des
+        if preferdessuffix:
+            des=des+'=========\n'+preferdessuffix
         des=des[:4900]
         title = isfilenamevalid(filename)
         if len(filename) > 100:
             title = filename[:90]
         nowtime = time.time()
-        update_time = int(nowtime)
         videoid = b64e(filename)
 
         olddata = UploadSession()
@@ -693,6 +684,16 @@ def prepareuploadsession( videopath,thumbpath,filename,start_index,channelname,s
 
 def upload():
     print('we got setting proxy ,',setting['proxy_option'])
+    try:
+        uploadsessionid
+        if uploadsessionid is None:
+            print('weir error',uploadsessionid)
+            createuploadsession()
+    except:
+
+        print('before upload,you need create upload session first')
+        createuploadsession()
+
     videos=Query_undone_videos_in_channel(uploadsessionid)
     print('there is video need to uploading',len(videos),' for task ',uploadsessionid)
 
@@ -884,7 +885,7 @@ if __name__ == '__main__':
 
 
 
-        b11 = tk.Button(root, text="创建上传任务", command=uploadsession)
+        b11 = tk.Button(root, text="创建上传任务", command=createuploadsession)
         b11.place(x=350, y=400)
 
         menubar = tk.Menu(root)

@@ -126,6 +126,6 @@ def scheduletopublish_specific_date():
 
 # scheduletopublish_tomorrow()
 # scheduletopublish_specific_date()
-scheduletopublish_7dayslater()
-saveasprivatedraft()
+# scheduletopublish_7dayslater()
+# saveasprivatedraft()
 instantpublish()

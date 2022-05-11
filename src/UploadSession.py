@@ -40,7 +40,7 @@ class UploadSetting(Base):
     firefox_profile_folder = Column(String, nullable=True )
     video_folder = Column(String, nullable=False )
     dailycount =Column(String, nullable=True )
-    preferdesprefix =Column(String, nullable=False )
+    preferdesprefix =Column(String, nullable=True )
     preferdessuffix =Column(String, nullable=True )
     proxy_option =Column(String, nullable=False )
     start_publish_date =Column(String, nullable=True )
