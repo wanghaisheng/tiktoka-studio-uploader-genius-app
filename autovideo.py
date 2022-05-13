@@ -544,7 +544,7 @@ def autothumb():
         print('not found fastlane folder  file')
     else:
         if video_folder_path:
-            print("sure, it was defined dir.")
+            print("sure, it was defined dir.",video_folder_path)
 
             check_video_thumb_pair(video_folder_path,False)
         else:
@@ -571,6 +571,40 @@ def createuploadsession():
             print("pls choose file or folder")
 
 def check_video_thumb_pair(folder,session):
+    # print('detecting----------',folder)
+
+    for r, d, f in os.walk(folder):
+        with os.scandir(r) as i:
+            print('detecting----------',r)
+            for entry in i:
+                if entry.is_file():
+                    filename = os.path.splitext(entry.name)[0]
+                    ext = os.path.splitext(entry.name)[1]
+                    print(filename,'==',ext) 
+
+                    start_index=1
+                    if ext in ('.flv', '.mp4', '.avi'):
+                        videopath = os.path.join(r, entry.name)
+
+                        for image_ext in ('.jpeg', '.png', '.jpg'):
+                            thumbpath = os.path.join(r, filename+image_ext)
+
+                            if not os.path.exists(thumbpath):       
+                                no=random.choice(['001','002','003'])
+                                if not os.path.exists(os.path.join(r, filename+'-'+no+'.jpg')):   
+                                    generator = AiThumbnailGenerator(videopath)
+
+                                    thumbpath=os.path.join(r, filename+'-'+no+'.jpg')                                
+                        print(filename,'=========',videopath,thumbpath,entry)
+                        if session:
+                            print( videopath,thumbpath,filename,start_index,setting['channelname'],settingid)
+
+                            prepareuploadsession( videopath,thumbpath,filename,start_index,setting['channelname'],settingid)
+                        start_index=start_index+1
+
+                start_index=start_index+1
+
+def check_video_thumb_pair1(folder,session):
 
     for root, dirs, files in os.walk(folder):
         print('Switch to root %s...' % root)
@@ -580,6 +614,7 @@ def check_video_thumb_pair(folder,session):
                 ext_regex = r"\.(mov|mp4|mpg|mov|mpeg|flv|wmv|avi|mkv)$"
                 start_index=0
                 if re.search(ext_regex, file, re.IGNORECASE):
+                    print('====',file)
                     filename = os.path.splitext(file)[0]
                     videopath=os.path.join(root,file)
 
@@ -721,7 +756,7 @@ def upload():
                 CHANNEL_COOKIES=setting['channelcookiepath'],
                 username='username',
                 password='password',
-                recordvideo=True
+                recordvideo=headless
                 # for test purpose we need to check the video step by step ,
             )
 

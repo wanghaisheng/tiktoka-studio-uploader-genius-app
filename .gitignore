@@ -7,3 +7,5 @@ ytb_up.egg-info
 *.sqlite
 test-results/*
 assets/videos/*
+build/*
+dist/*

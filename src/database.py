@@ -5,7 +5,8 @@ import os
 
 print('running')
 conn_string = 'sqlite:///youtube.sqlite3'
-os.remove(os.getcwd()+os.sep+"youtube.sqlite3")
+if os.path.exists(os.getcwd()+os.sep+"youtube.sqlite3"):
+    os.remove(os.getcwd()+os.sep+"youtube.sqlite3")
 
 engine = create_engine(conn_string)
 print('start create tables')

@@ -70,7 +70,6 @@ import asyncio
 import requests
 import re
 
-ytb_path = os.path.join(os.getcwd()+os.sep, "ytb.db")
 
 # dbname = "reddit_popular"
 # Open the database and make sure there is a table with appopriate indices
@@ -118,7 +117,7 @@ def isfilenamevalid(filename):
 
 
 def fix_size(old_image_path, new_image_path, canvas_width=1080, canvas_height=720):
-    """Edited from https://stackoverflow.com/questions/44231209/resize-rectangular-image-to-square-keeping-ratio-and-fill-background-with-black"""
+    """Edited from https://stackoverflow.com/questions/44231509/resize-rectangular-image-to-square-keeping-ratio-and-fill-background-with-black"""
     im = Image.open(old_image_path)
     x, y = im.size
 
@@ -151,14 +150,14 @@ def load_setting():
 
     global setting
     try:
-        print('loading upload setting file', setting_file)
+        print('loading setting file', setting_file)
 
         fp = open(setting_file, 'r', encoding='utf-8')
         setting_json = fp.read()
         fp.close()
     except:
-        print('loading upload setting template file.you can choose another')
-        fp = open("assets/config/private-setting-template.json", 'r', encoding='utf-8')
+        print('load default setting template')
+        fp = open("./assets/config/private-setting-template.json", 'r', encoding='utf-8')
         setting_json = fp.read()
         fp.close()
     setting = json.loads(setting_json)
@@ -245,13 +244,24 @@ def save_setting():
     setting['proxy_option']=proxy_option_value
     setting['prefertags'] = prefertags.get()
     setting['publishpolicy']=publishpolicy.get()    
-    with open('assets/config/'+setting['channelname']+".json", 'w') as f:
-        f.write(json.dumps(setting, indent=4, separators=(',', ': ')))
-    # print('当前使用的配置为：', setting)
-    setting['json']=json.dumps(setting, indent=4, separators=(',', ': '))
+    if setting['publishpolicy']=='': 
+        setting['publishpolicy']=1
+    if setting['start_publish_date']=='': 
+        setting['start_publish_date']='1'
+    if setting['channelname'] is None or setting['channelname']=='' :
+        print('before save setting,you need input channelname')
+    else:
+        if setting['video_folder'] is None or setting['video_folder']=='' :
+            print('before save setting,you need input video_folder')
+        else:
 
-    settingid=Add_New_UploadSetting_In_Db(setting)
-    print("配置保存成功",settingid)
+            with open('./assets/config/'+setting['channelname']+".json", 'w') as f:
+                f.write(json.dumps(setting, indent=4, separators=(',', ': ')))
+            # print('当前使用的配置为：', setting)
+            setting['json']=json.dumps(setting, indent=4, separators=(',', ': '))
+
+            settingid=Add_New_UploadSetting_In_Db(setting)
+            print("配置保存成功",settingid)
 
 
 def select_profile_folder():
@@ -291,7 +301,7 @@ def docs():
     if docsopen==False:
         docsopen=True
         print('show help doc')
-        helptext_setting="==============\n1.install Firefox by yourself,create new profile,see https://support.mozilla.org/en-US/kb/using-multiple-profiles\n2.install firefox extension:Cookie-Editor，login into youtube manually,export cookie.json\n3.find more free music at \nhttps://icons8.com/music/\n=====================\n1.before started,you need a upload setting file,you can import a template to edit as you wish,we got 3 template for you,private、public和schedule，see at assets/config/setting-template.json,Caution:after edit any field you should save it\n"+"video folder path:open Menu to choose or manually edit in the UI\n"+"PreferTags:usually each channel got some prefined tags,even bunch of videos got prefined tags,you can defined here.other specific tag we recommend you leave them in video filename\n"+"video prefer des prefix:usually each channel got a des template,such as Part A+Part B+PartC\n"+"video des suffix:you can put copyright statements here\n"+"publish policy:0==private draft，1==publish instantly 2==schedule some time,with daily publish count and starting publish date,you can manage the publish date of each video+1\nchannel name:we use this field to save uploadsetting files\ncookie json:please use extension to export one\n2.if you got videos and thumbnail already,you should load uploadsetting file,save uploadsetting file,create uploadsession,finally start upload.for those you only got videos,we can use a dumb AI to extract clip from videos as thumbnail automatically\nsometimes you may need batch replace the audio with free music,you can set free music folder and control audio volumn setting to find a better result \n3.leave message at tiktokaofficial@gmail.com "
+        helptext_setting="==============\n1.install Firefox by yourself,create new profile,\nsee https://support.mozilla.org/en-US/kb/using-multiple-profiles\n2.install firefox extension:Cookie-Editor,login into youtube manually,export cookie.json\n3.find more free music at \nhttps://icons8.com/music/\n=====================\n1.before started,you need a upload setting file,you can import a template to edit as you wish,\nwe got 3 template for you,private、public和schedule,\nsee at assets/config/setting-template.json,Caution:after edit any field you should save it\n======\nvideo folder path:open Menu to choose or manually edit in the UI\n==========\nPreferTags:usually each channel got some prefined tags,\neven bunch of videos got prefined tags,you can defined here.\nother specific tag we recommend you leave them in video filename\n=======\nvideo prefer des prefix:usually each channel got a des template,such as Part A+Part B+PartC\n=========\nvideo des suffix:you can put copyright statements here\n==========\npublish policy:0==private draft，1==publish instantly 2==schedule some time,with daily publish count and starting publish date,\nyou can manage the publish date of each video+1\n==========\nchannel name:we use this field to save uploadsetting files\n=======\ncookie json:please use extension to export one\n==========\n2.if you got videos and thumbnail already,you should load uploadsetting file,\nsave uploadsetting file,create uploadsession,finally start upload.for those you only got videos,we can use a dumb AI to extract clip from videos as thumbnail automatically\n===========\nsometimes you may need batch replace the audio with free music,you can set free music folder and control audio volumn setting to find a better result \n3.leave message at tiktokaofficial@gmail.com "
 
         newWindow = tk.Toplevel(root)
         label_helptext_setting = tk.Label(newWindow, text = helptext_setting,anchor='e',justify='left')
@@ -522,7 +532,7 @@ def b64e(s):
 
 def autothumb():
 
-    save_setting()
+    # save_setting()
 # 文件夹下是否有视频文件
 
 # 视频文件是否有同名的图片
@@ -540,8 +550,9 @@ def autothumb():
         else:
             print("pls choose file or folder")
 
-def uploadsession():
-    save_setting()
+
+def createuploadsession():
+    # save_setting()
 # 文件夹下是否有视频文件
 
 # 视频文件是否有同名的图片
@@ -553,67 +564,44 @@ def uploadsession():
         print('not found fastlane folder  file')
     else:
         if video_folder_path:
-            print("sure, it was defined dir.")
-
-            check_video_thumb_pair(video_folder_path,True)
+            if os.path.exists(video_folder_path):
+                check_video_thumb_pair(video_folder_path,True)
+            else:
+                print("there is no defined video dir.")
         else:
             print("pls choose file or folder")
 
 def check_video_thumb_pair(folder,session):
 
     for root, dirs, files in os.walk(folder):
-        print('Switch to root %s...' % root)
+        # print('Switch to root %s...' % root)
         os.chdir(root)
-        for file in files:
-            ext_regex = r"\.(mov|mp4|mpg|mov|mpeg|flv|wmv|avi|mkv)$"
-            start_index=0
-            if re.search(ext_regex, file, re.IGNORECASE):
-                filename = os.path.splitext(file)[0]
-                videopath=os.path.join(root,file)
+        if len(files)>0:
+            for file in files:
+                ext_regex = r"\.(mov|mp4|mpg|mov|mpeg|flv|wmv|avi|mkv)$"
+                start_index=0
+                if re.search(ext_regex, file, re.IGNORECASE):
+                    filename = os.path.splitext(file)[0]
+                    videopath=os.path.join(root,file)
 
-                for image_ext in ('.jpeg', '.png', '.jpg'):
-                    thumbpath = os.path.join(root, filename+image_ext)
+                    for image_ext in ('.jpeg', '.png', '.jpg'):
+                        thumbpath = os.path.join(root, filename+image_ext)
 
-                    if not os.path.exists(thumbpath):       
-                        no=random.choice(['001','002','003'])
-                        if not os.path.exists(os.path.join(root, filename+'-'+no+'.jpg')):   
-                            generator = AiThumbnailGenerator(videopath)
+                        if not os.path.exists(thumbpath):       
+                            no=random.choice(['001','002','003'])
+                            if not os.path.exists(os.path.join(root, filename+'-'+no+'.jpg')):   
+                                generator = AiThumbnailGenerator(videopath)
 
-                            thumbpath=os.path.join(root, filename+'-'+no+'.jpg')      
-                print(filename,'=========',videopath,thumbpath,file)
-                if session:
-                    print( videopath,thumbpath,filename,start_index,setting['channelname'],settingid)
+                                thumbpath=os.path.join(root, filename+'-'+no+'.jpg')      
+                    # print(filename,'=========',videopath,thumbpath,file)
+                    if session:
+                        print( videopath,thumbpath,filename,start_index,setting['channelname'],settingid)
 
-                    prepareuploadsession( videopath,thumbpath,filename,start_index,setting['channelname'],settingid)
-                start_index=start_index+1
-def check_video_thumb_pair1(folder,session):
-    # print('detecting----------',folder)
-
-    for r, d, f in os.walk(folder):
-        with os.scandir(r) as i:
-            print('detecting----------',r)
-            for entry in i:
-                if entry.is_file():
-                    filename = os.path.splitext(entry.name)[0]
-                    ext = os.path.splitext(entry.name)[1]
-                    print(filename,'==',ext) 
-
-                    start_index=1
-                    if ext in ('.flv', '.mp4', '.avi'):
-                        videopath = os.path.join(r, entry.name)
-
-                        for image_ext in ('.jpeg', '.png', '.jpg'):
-                            thumbpath = os.path.join(r, filename+image_ext)
-
-                            if not os.path.exists(thumbpath):       
-                                no=random.choice(['001','002','003'])
-                                if not os.path.exists(os.path.join(r, filename+'-'+no+'.jpg')):   
-                                    generator = AiThumbnailGenerator(videopath)
-
-                                    thumbpath=os.path.join(r, filename+'-'+no+'.jpg')                                
-
-
-                start_index=start_index+1
+                        prepareuploadsession( videopath,thumbpath,filename,start_index,setting['channelname'],settingid)
+                    start_index=start_index+1
+        else:
+            print('we dont find videos  in video folder',setting['video_folder'])
+ 
 def prepareuploadsession( videopath,thumbpath,filename,start_index,channelname,settingid):
     global uploadsessionid
     isadded,isuploaded=Query_video_status_in_channel(videopath,channelname,settingid)
@@ -636,13 +624,17 @@ def prepareuploadsession( videopath,thumbpath,filename,start_index,channelname,s
         preferdesprefix = setting['preferdesprefix']
         preferdessuffix = setting['preferdessuffix']
         filename=filename.split(os.sep)[-1]
-        des=preferdesprefix+'========\n'+filename+'=========\n'+preferdessuffix
+        des =filename
+        if preferdesprefix:
+
+            des=preferdesprefix+'========\n'+des
+        if preferdessuffix:
+            des=des+'=========\n'+preferdessuffix
         des=des[:4900]
         title = isfilenamevalid(filename)
         if len(filename) > 100:
             title = filename[:90]
         nowtime = time.time()
-        update_time = int(nowtime)
         videoid = b64e(filename)
 
         olddata = UploadSession()
@@ -690,8 +682,19 @@ def prepareuploadsession( videopath,thumbpath,filename,start_index,channelname,s
 
 
 
+
 def upload():
     print('we got setting proxy ,',setting['proxy_option'])
+    try:
+        uploadsessionid
+        if uploadsessionid is None:
+            print('weir error',uploadsessionid)
+            createuploadsession()
+    except:
+
+        print('before upload,you need create upload session first')
+        createuploadsession()
+
     videos=Query_undone_videos_in_channel(uploadsessionid)
     print('there is video need to uploading',len(videos),' for task ',uploadsessionid)
 
@@ -719,7 +722,7 @@ def upload():
                 CHANNEL_COOKIES=setting['channelcookiepath'],
                 username='username',
                 password='password',
-                recordvideo=True
+                recordvideo=headless
                 # for test purpose we need to check the video step by step ,
             )
 
@@ -782,43 +785,43 @@ if __name__ == '__main__':
         l_music_folder = tk.Label(root, text="free music folder")
         l_music_folder.place(x=10, y=130)
         el_music_folder = tk.Entry(root, width=55, textvariable=music_folder)
-        el_music_folder.place(x=120, y=130)
+        el_music_folder.place(x=150, y=130)
 
         l_prefertags = tk.Label(root, text="preferred tags")
         l_prefertags.place(x=10, y=50)
         el_prefertags = tk.Entry(root, width=55, textvariable=prefertags)
-        el_prefertags.place(x=120, y=50)
+        el_prefertags.place(x=150, y=50)
 
         l_preferdesprefix = tk.Label(root, text="preferred des prefix")
         l_preferdesprefix.place(x=10, y=70)
         e_preferdesprefix = tk.Entry(root, width=55, textvariable=preferdesprefix)
-        e_preferdesprefix.place(x=120, y=70)
+        e_preferdesprefix.place(x=150, y=70)
 
 
         l_preferdessuffix = tk.Label(root, text="preferred des suffix")
         l_preferdessuffix.place(x=10, y=100)
         e_preferdessuffix = tk.Entry(root, width=55, textvariable=preferdessuffix)
-        e_preferdessuffix.place(x=120, y=100)
+        e_preferdessuffix.place(x=150, y=100)
         lratio = tk.Label(root, text="music volumn")
         lratio.place(x=10, y=150)
         elratio = tk.Entry(root, width=55, textvariable=ratio)
-        elratio.place(x=120, y=150)
+        elratio.place(x=150, y=150)
 
         l52 = tk.Label(root, text="publish policy")
         l52.place(x=10, y=170)
         e52 = tk.Entry(root, width=55, textvariable=publishpolicy)
-        e52.place(x=120, y=170)
+        e52.place(x=150, y=170)
 
 
         l5 = tk.Label(root, text="daily publish count")
         l5.place(x=10, y=200)
         e5 = tk.Entry(root, width=55, textvariable=dailycount)
-        e5.place(x=120, y=200)
+        e5.place(x=150, y=200)
 
         l5_start_publish_date=tk.Label(root, text="start publish date-now(in days)")
         l5_start_publish_date.place(x=10, y=230)
         e5start_publish_date = tk.Entry(root, width=55, textvariable=start_publish_date)
-        e5start_publish_date.place(x=120, y=230)
+        e5start_publish_date.place(x=150, y=230)
 
         
 
@@ -826,27 +829,27 @@ if __name__ == '__main__':
         l64 = tk.Label(root, text="channel name")
         l64.place(x=10, y=250)
         e64 = tk.Entry(root, width=55, textvariable=channelname)
-        e64.place(x=120, y=250)
+        e64.place(x=150, y=250)
 
         l65 = tk.Label(root, text="video folder")
         l65.place(x=10, y=270)
         e65 = tk.Entry(root, width=55, textvariable=video_folder)
-        e65.place(x=120, y=270)
+        e65.place(x=150, y=270)
 
         l66 = tk.Label(root, text="profile folder")
         l66.place(x=10, y=300)
         e66 = tk.Entry(root, width=55, textvariable=firefox_profile_folder)
-        e66.place(x=120, y=300)
+        e66.place(x=150, y=300)
 
         l67 = tk.Label(root, text="proxy")
         l67.place(x=10, y=330)
         e67 = tk.Entry(root, width=55, textvariable=proxy_option)
-        e67.place(x=120, y=330)
+        e67.place(x=150, y=330)
 
         l68 = tk.Label(root, text="cookie json")
         l68.place(x=10, y=360)
         e68 = tk.Entry(root, width=55, textvariable=channel_cookie)
-        e68.place(x=120, y=360)
+        e68.place(x=150, y=360)
 
         readbefore = tk.StringVar()
         readbefore.set('')
@@ -856,7 +859,7 @@ if __name__ == '__main__':
         b5.place(x=10, y=10)
 
 
-        bselect_setting_file = tk.Button(root, text="choose setting file", command=select_setting_file)
+        bselect_setting_file = tk.Button(root, text="load setting", command=select_setting_file)
         bselect_setting_file.place(x=10, y=400)
 
 
@@ -883,8 +886,8 @@ if __name__ == '__main__':
 
 
 
-        b11 = tk.Button(root, text="create uploadsession", command=uploadsession)
-        b11.place(x=350, y=400)
+        b11 = tk.Button(root, text="create uploadsession", command=createuploadsession)
+        b11.place(x=300, y=400)
 
         menubar = tk.Menu(root)
         filemenu = tk.Menu(menubar, tearoff=False)
