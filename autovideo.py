@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
-
+from multiprocessing import Process
 from moviepy.video.io.VideoFileClip import VideoFileClip
 from moviepy.video.VideoClip import ImageClip
 from moviepy.video.compositing.CompositeVideoClip import CompositeVideoClip
@@ -44,6 +44,8 @@ from moviepy.audio.fx.audio_left_right import audio_left_right
 from moviepy.audio.fx.audio_loop import audio_loop
 from moviepy.audio.fx.audio_normalize import audio_normalize
 from moviepy.audio.fx.volumex import volumex
+import moviepy.audio.fx.all  as afx
+import moviepy.video.fx.all as vfx
 # here put the import lib
 import json
 import tkinter as tk
@@ -81,10 +83,31 @@ def url_ok(url,proxy_option=''):
         if not proxy_option=='':
             
 
-            proxies = {
-            'http': proxy_option,
-            'https': proxy_option,
-            }
+            # proxies = {
+            #    'http': 'http://proxy.example.com:8080',
+            #    'https': 'http://secureproxy.example.com:8090',
+            # }
+            if 'http:' in proxy_option:
+
+                proxies = {
+                'http': proxy_option
+                }                
+            elif 'https:' in proxy_option:
+
+                proxies = {
+                'https': proxy_option,
+                }                
+            elif 'socks' in proxy_option:
+                proxies = {
+                'http': proxy_option,
+                'https': proxy_option,
+                }
+            else:
+                proxy_option='http://'
+                proxies = {
+                'http': proxy_option,
+                'https': proxy_option,
+                }            
             print('use proxy',proxy_option)
             response = requests.head(url,proxies=proxies)
         else:
@@ -208,8 +231,10 @@ def save_setting():
         print(video_folder_path)
     else:
         if video_folder_path:
-            setting['video_folder'] = video_folder_path
-
+            if os.path.exists(video_folder_path):
+                setting['video_folder'] = video_folder_path
+            else:
+                print('we can not find this video foler',video_folder_path)
     try:
         channel_cookie_path=channel_cookie.get()
     except NameError:
@@ -219,8 +244,10 @@ def save_setting():
         print(channel_cookie_path)
     else:
         if channel_cookie_path:
-            setting['channelcookiepath'] = channel_cookie_path
-
+            if os.path.exists(channel_cookie_path):
+                setting['channelcookiepath'] = channel_cookie_path
+            else:
+                print('we cannot find cookie file',channel_cookie_path)
     try:
         music_folder_path=music_folder.get()
     except NameError:
@@ -254,14 +281,21 @@ def save_setting():
         if setting['video_folder'] is None or setting['video_folder']=='' :
             print('before save setting,you need input video_folder')
         else:
+            if os.path.exists(channel_cookie_path):
 
-            with open('./assets/config/'+setting['channelname']+".json", 'w') as f:
-                f.write(json.dumps(setting, indent=4, separators=(',', ': ')))
-            # print('当前使用的配置为：', setting)
-            setting['json']=json.dumps(setting, indent=4, separators=(',', ': '))
 
-            settingid=Add_New_UploadSetting_In_Db(setting)
-            print("配置保存成功",settingid)
+                setting['json']=json.dumps(setting, indent=4, separators=(',', ': '))
+                with open('./assets/config/'+setting['channelname']+".json", 'r') as fr:
+                    if json.loads(fr.read())['json']==setting['json']:
+                        print('no changes at all')
+                    else:
+                        with open('./assets/config/'+setting['channelname']+".json", 'w') as f:
+
+                            f.write(json.dumps(setting, indent=4, separators=(',', ': ')))
+                # print('当前使用的配置为：', setting)
+                
+                settingid=Add_New_UploadSetting_In_Db(setting)
+                print("配置保存成功",settingid)
 
 
 def select_profile_folder():
@@ -318,11 +352,14 @@ def install():
     subprocess.check_call(["playwright ", "install"])
 
 def testinstall():
-    print('playwright install')
-    install()
+    print('check install requirments')
 def testsettingok():
-    print('upload default demo video')
-
+    if not proxy_option=='':
+        if url_ok('www.youtube.com'):        
+            print('is proxy setting ok')
+        else:
+            print('please check your proxy setting\nsocks5://127.0.0.1:1080\nhttp://proxy.example.com:8080\n222.165.235.2:80\n')
+        
 headless=False
 def watchuploadsteps():
     global headless
@@ -388,18 +425,19 @@ def using_free_music(setting,inputmp4):
         music_folder='assets/freemusic'
 
     else:
-        print('setting==',setting)
 
         music_folder = setting['music_folder']
-
+    if os.path.exists(music_folder):
+        print('there are free music folder',music_folder)
+    else:
+        print('choose valid free music folder',music_folder)
 
     freemusic = []
 
-    for ext in ('*.mp3', '*.wav','*.wma','*.ogg','*.aac','*.mp4'):
+    for ext in ('*.mp3', '*.wav','*.wma','*.ogg','*.aac'):
         freemusic.extend(glob(os.path.join(music_folder, ext)))
         
     if len(freemusic) > 0:    
-
         soundeffect = random.choice(freemusic)
         print('randomly choose a background music',soundeffect)
         ext = os.path.splitext(soundeffect)[1]
@@ -409,30 +447,43 @@ def using_free_music(setting,inputmp4):
         print('videoext',videoext)
         print('videofilename',videofilename)
         oldvideofiles=[]
-        if not ext in ['.mp4','.wma','.aac','.ogg','.wav','.mp3']:
 
-            print('we have not found wav,mp3 background music in this folder',freemusic)
-        else:
-            audioclip = AudioFileClip(soundeffect)
-          
+        audioclip = AudioFileClip(soundeffect)
+        if not os.path.exists(videofilename+'-old'+videoext):
             os.rename(inputmp4, videofilename+'-old'+videoext)
-            videoclip = VideoFileClip(videofilename+'-old'+videoext)
-            if audioclip.duration>videoclip.duration:
-                audioclip =audioclip.subclip(0,videoclip.duration)
-            else:
-                audioclip = vfx.loop( audioclip, duration=videoclip.duration)
-            if setting['ratio']:
-                pass
-            else:
-                setting['ratio']=1
-            audioclip = audioclip.fx( afx.volumex, float(setting['ratio']))
-            # audioclip = volumex(audioclip,setting['ratio'])          
-            videoclip = videoclip.set_audio(audioclip)
+        videoclip = VideoFileClip(videofilename+'-old'+videoext)
+        if audioclip.duration>videoclip.duration:
+            audioclip =audioclip.subclip(0,videoclip.duration)
+        else:
+            audioclip = vfx.loop( audioclip, duration=videoclip.duration)
+        if setting['ratio']:
+            pass
+        else:
+            setting['ratio']=1
+        # audioclip = audioclip.fx( afx.volumex, float(setting['ratio']))
+        # audioclip.write_audiofile(videofilename+'.mp3')
 
-            videoclip.write_videofile(videofilename+'.mp4', threads=0,audio=False)
+        # audioclip = volumex(audioclip,setting['ratio'])          
+        videoclip = videoclip.set_audio(audioclip)
 
+        videoclip.write_videofile(videofilename+'.mp4', threads=0, audio=True)
+        if not videoclip == None:
+            print('force close clip')
+            audioclip.close()
 
+            videoclip.close()
 
+            del audioclip 
+            del videoclip 
+ 
+            import gc 
+            gc.collect()
+
+           
+        # time.sleep(2) 
+        print('start cleaning old video file')
+        if os.path.exists(videofilename+'-old'+videoext):
+            os.remove(videofilename+'-old'+videoext)
 def init_worker(mps, fps, cut):
     global memorizedPaths, filepaths, cutoff
     global DG
@@ -440,62 +491,57 @@ def init_worker(mps, fps, cut):
     print("process initializing", mp.current_process())
     memorizedPaths, filepaths, cutoff = mps, fps, cut
     DG = 1##nx.read_gml("KeggComplete.gml", relabel = True)
+
 def batchchangebgmusic():
+
+    # use all available CPUs
+    # p = mp.Pool(initializer=init_worker, initargs=(memorizedPaths,
+    #                                                filepaths,
+    #                                                cutoff))
     folder =setting['video_folder']    
-    # oldvideofiles=[]
+    oldvideofiles=[]
     videofiles = []
-    if os.path.exists(folder):
-        m = mp.Manager()
-        memorizedPaths = m.dict()
-        filepaths = m.dict()
-        cutoff = 1 ##
-        # use all available CPUs
-        p = mp.Pool(initializer=init_worker, initargs=(memorizedPaths,
-                                                    filepaths,
-                                                    cutoff))
+
+    if os.path.isdir(folder):
+        print('this is a directory',folder)
+
+        for ext in ('*.flv', '*.mp4', '*.avi'):
+            videofiles.extend(glob(os.path.join(folder, ext)))
+        print('detecting videos in folder',folder,videofiles)
+        if len(videofiles) > 0:
+            arguments=[]
+            for i,f in enumerate(videofiles):
+                videofilename= os.path.splitext(f)[0]
+                videoext= os.path.splitext(f)[1]
+                if not videofilename.endswith('-old'):
+                    using_free_music(setting,f)
+                    # arguments.append((setting,f)) 
+
+            print('awaiting convert files',videofiles)                                                   
+            # degreelist = range(100000) ##
+    #         for _ in p.imap_unordered(threadusing_free_musichelper, arguments, chunksize=500):
+    #             pass
+    # p.close()
+    # p.join()
 
 
-        if os.path.isdir(folder):
-            print('this is a directory',folder)
+    # print('start cleaning old video files')
+    # oldvideofiles=[]
 
-            for ext in ('*.flv', '*.mp4', '*.avi'):
-                videofiles.extend(glob(os.path.join(folder, ext)))
-            print('detecting videos in folder',folder,videofiles)
-            if len(videofiles) > 0:
-                arguments=[]
-                for i,f in enumerate(videofiles):
-                    videofilename= os.path.splitext(f)[0]
-                    videoext= os.path.splitext(f)[1]
-                    if not videofilename.endswith('-old'):
-                        arguments.append((setting,f)) 
-                    else:
-                        oldvideofiles.append(f)
-                print('awaiting convert files',videofiles)                                                   
-                # degreelist = range(100000) ##
-                for _ in p.imap_unordered(threadusing_free_musichelper, arguments, chunksize=500):
-                    pass
-        p.close()
-        p.join()
+    # if os.path.isdir(folder):
 
+    #     for ext in ('*.flv', '*.mp4', '*.avi'):
+    #         oldvideofiles.extend(glob(os.path.join(folder, ext)))
+    #     # print('this is a directory',folder)
+  
+    # for f in oldvideofiles:   
+    #     videofilename= os.path.splitext(f)[0]
 
-        print('start cleaning old video files')
-        oldvideofiles=[]
-
-        if os.path.isdir(folder):
-
-            for ext in ('*.flv', '*.mp4', '*.avi'):
-                oldvideofiles.extend(glob(os.path.join(folder, ext)))
-            # print('this is a directory',folder)
-    
-        for f in oldvideofiles:   
-            videofilename= os.path.splitext(f)[0]
-
-            if  videofilename.endswith('-old'):
-                print('start cleaning old video file',f)
-                os.remove( f)
-        print('finish cleaning old video files')
-    else:
-        print('pls choose a video folder first')
+    #     if  videofilename.endswith('-old'):
+    #         print('start cleaning old video file',f)
+    #         if os.path.exists(f.replace('-old','')):
+    #             os.remove( f)
+    print('finish cleaning old video files')
 def changebgmusic():
     folder =setting['video_folder']    
     if os.path.isdir(folder):
@@ -532,7 +578,7 @@ def b64e(s):
 
 def autothumb():
 
-    # save_setting()
+    save_setting()
 # 文件夹下是否有视频文件
 
 # 视频文件是否有同名的图片
@@ -551,7 +597,7 @@ def autothumb():
             print("pls choose file or folder")
 
 def createuploadsession():
-    # save_setting()
+    save_setting()
 # 文件夹下是否有视频文件
 
 # 视频文件是否有同名的图片
@@ -580,7 +626,7 @@ def check_video_thumb_pair(folder,session):
                 if entry.is_file():
                     filename = os.path.splitext(entry.name)[0]
                     ext = os.path.splitext(entry.name)[1]
-                    print(filename,'==',ext) 
+                    # print(filename,'==',ext) 
 
                     start_index=1
                     if ext in ('.flv', '.mp4', '.avi'):
@@ -595,7 +641,7 @@ def check_video_thumb_pair(folder,session):
                                     generator = AiThumbnailGenerator(videopath)
 
                                     thumbpath=os.path.join(r, filename+'-'+no+'.jpg')                                
-                        print(filename,'=========',videopath,thumbpath,entry)
+                                    print('generated thumbnail is',thumbpath)
                         if session:
                             print( videopath,thumbpath,filename,start_index,setting['channelname'],settingid)
 

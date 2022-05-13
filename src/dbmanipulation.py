@@ -51,7 +51,7 @@ def Add_New_UploadSetting_In_Db(uploadsetting) -> None:
     print(newUploadSettingDetails)
     result=dbsession.add(newUploadSettingDetails)
     dbsession.flush()
-    print('add newUploadSettingDetails result',newUploadSettingDetails.id)
+    # print('add newUploadSettingDetails result',newUploadSettingDetails.id)
 
     # and don't forget to commit your changes
     try:
@@ -61,7 +61,7 @@ def Add_New_UploadSetting_In_Db(uploadsetting) -> None:
 
     except sqlalchemy.exc.SQLAlchemyError  as e:
         dbsession.rollback()
-        print('rollback')
+        # print('rollback')
 
     return newUploadSettingDetails.id
 def Url_In_Database(url) -> bool:
@@ -111,6 +111,8 @@ def Update_uploadsetting_In_Db(setting,channelname) -> None:
         data=setting
         dbsession.add(data)    
     # and don't forget to commit your changes
+    dbsession.flush()
+
     try:
         dbsession.commit()
         settingid=data.id
@@ -138,6 +140,7 @@ def Update_urls_list_In_Db(urls_list, url) -> None:
         data.urls_list = urls_list
         dbsession.merge(data)        
 
+    dbsession.flush()
 
     # and don't forget to commit your changes
     try:
@@ -151,6 +154,7 @@ def Update_kv_In_Db(k,v,url) -> None:
     data.k = v
     dbsession.merge(data)
 
+    dbsession.flush()
 
     # and don't forget to commit your changes
     try:
