@@ -19,7 +19,9 @@ jobs:
     - name: Create environment and install dependencies
       run: |
         $CONDA/bin/conda env create --file environment.yml --name autovideo
-
+        $env:PLAYWRIGHT_BROWSERS_PATH="0"
+        pip install -r requirements.txt
+        playwright install firefox
     - name: Create binary
       run: |
         $CONDA/envs/autovideo/bin/pyinstaller --clean -y --dist ./dist/linux ./autovideo.spec

@@ -33,7 +33,6 @@ def Add_New_UploadSetting_In_Db(uploadsetting) -> None:
     """ This function insert video object in database
     """
     newUploadSettingDetails = UploadSetting(
-        json=uploadsetting["json"],
         channelname=uploadsetting["channelname"],
         firefox_profile_folder=uploadsetting["firefox_profile_folder"],
         video_folder=uploadsetting["video_folder"],

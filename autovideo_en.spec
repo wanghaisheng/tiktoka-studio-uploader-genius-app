@@ -32,7 +32,7 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name='autovideo_en',
+    name='autovideo',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -43,7 +43,7 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon='assets/icon.ico',
+    icon='assets\\icon.ico',
 )
 coll = COLLECT(
     exe,
@@ -53,5 +53,5 @@ coll = COLLECT(
     strip=False,
     upx=True,
     upx_exclude=[],
-    name='autovideo_en',
+    name='autovideo',
 )

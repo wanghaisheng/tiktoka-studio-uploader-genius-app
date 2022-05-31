@@ -4,7 +4,7 @@ import asyncio
 
 profilepath = ''
 CHANNEL_COOKIES = r'D:\Download\audio-visual\make-reddit-video\auddit\assets\cookies\aww.json'
-
+CHANNEL_COOKIES=r'D:\Download\audio-visual\make-text-video\autovideopublish\assets\cookie\aww.json'
 videopath = r'D:\Download\audio-visual\objection_engine\hello.mp4'
 tags = ['ba,baaa,bababa']
 publish_date = ''

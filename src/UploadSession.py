@@ -35,7 +35,6 @@ class UploadSession(Base):
 class UploadSetting(Base):
     __tablename__ = 'uploadSetting'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    json= Column(String, nullable=False )
     channelname = Column(String, nullable=False )
     firefox_profile_folder = Column(String, nullable=True )
     video_folder = Column(String, nullable=False )

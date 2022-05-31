@@ -1,0 +1,16 @@
+{
+    "driverfilepath": "",
+    "firefox_profile_folder": "D:/Download/audio-visual/make-text-video/reddit-to-video/assets/profile/fastlane",
+    "video_folder": "D:/Download/audio-visual/saas/data/indiehackerebooks/data/group",
+    "dailycount": "4",
+    "preferdesprefix": "You Win then We Win",
+    "preferdessuffix": "",
+    "proxy_option": "socks5://127.0.0.1:1080",
+    "publishpolicy": "2",
+    "channelname": "fastlane",
+    "ratio": "1",
+    "start_publish_date": "1",
+    "music_folder": "",
+    "channelcookiepath": "D:/Download/audio-visual/make-text-video/reddit-to-video/assets/cookies/fastlane.json",
+    "prefertags": "indie,indie hackers"
+}
