@@ -30,7 +30,7 @@ async def instantpublish(uploadSession:UploadSession,upload:YoutubeUpload):
         description=uploadSession.des,
         thumbnail=uploadSession.thumbpath,
         tags=uploadSession.tags,
-        closewhen100percentupload=True,
+        closewhen100percentupload=False,
         publish_date=uploadSession.publish_date,
         publishpolicy=1
     )
@@ -42,7 +42,7 @@ async def privatedraft(uploadSession:UploadSession,upload:YoutubeUpload):
         description=uploadSession.des,
         thumbnail=uploadSession.thumbpath,
         tags=uploadSession.tags,
-        closewhen100percentupload=True,
+        closewhen100percentupload=False,
         publish_date=uploadSession.publish_date,
         publishpolicy=0
     )
@@ -64,7 +64,7 @@ async def scheduletopublish_specific_date(uploadSession:UploadSession,upload:You
         description=uploadSession.des,
         thumbnail=uploadSession.thumbpath,
         tags=uploadSession.tags,
-        closewhen100percentupload=True,
+        closewhen100percentupload=False,
         publish_date=uploadSession.publish_date,
         publishpolicy=2
 

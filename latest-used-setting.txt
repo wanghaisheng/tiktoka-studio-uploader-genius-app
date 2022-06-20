@@ -1,0 +1,1 @@
+./assets/config/demo-latest1.json

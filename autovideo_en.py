@@ -148,18 +148,27 @@ def fix_size(old_image_path, new_image_path, canvas_width=1080, canvas_height=72
 def load_setting():
 
     global setting
-    try:
-        print('loading setting file', setting_file)
 
-        fp = open(setting_file, 'r', encoding='utf-8')
-        setting_json = fp.read()
-        fp.close()
-    except:
+    if os.path.exists('latest-used-setting.txt') :
+        try:
+            fp = open('latest-used-setting.txt', 'r', encoding='utf-8')
+            settingfile=fp.readlines()[0]
+            print('loading latest Used setting file')
+
+            fp = open(settingfile, 'r', encoding='utf-8')
+            setting_json = fp.read()
+            fp.close()
+        except:
+            print('load default setting template')
+            fp = open("./assets/config/demo.json", 'r', encoding='utf-8')
+            setting_json = fp.read()
+            fp.close()
+    else:
         print('load default setting template')
-        fp = open("./assets/config/private-setting-template.json",
-                  'r', encoding='utf-8')
+        fp = open("./assets/config/demo.json", 'r', encoding='utf-8')
         setting_json = fp.read()
-        fp.close()
+        fp.close()      
+
     setting = json.loads(setting_json)
     return setting
 
@@ -202,27 +211,25 @@ def save_setting():
         proxy_option_value = setting['proxy_option']
     try:
         firefox_profile_folder_path = firefox_profile_folder.get()
+        print('firefox_profile_folder is ',firefox_profile_folder_path)
+        setting['firefox_profile_folder'] = firefox_profile_folder_path
+
     except NameError:
         print('no new  firefox_profile_folder,using existing setting',
               setting['firefox_profile_folder'])
-        firefox_profile_folder_path = setting['firefox_profile_folder']
+        setting['firefox_profile_folder'] = ''
 
-    else:
-        if firefox_profile_folder_path:
-            setting['firefox_profile_folder'] = firefox_profile_folder_path
+
     try:
         video_folder_path = video_folder.get()
     except NameError:
         print('no new  video_folder_path,using existing setting',
               setting['video_folder'])
-        video_folder_path = setting['video_folder']
-        print(video_folder_path)
-    else:
-        if video_folder_path:
-            if os.path.exists(video_folder_path):
-                setting['video_folder'] = video_folder_path
-            else:
-                print('we can not find this video foler', video_folder_path)
+    if video_folder_path:
+        if os.path.exists(video_folder_path):
+            setting['video_folder'] = video_folder_path
+        else:
+            print('we can not find this video foler', video_folder_path)
     try:
         channel_cookie_path = channel_cookie.get()
     except NameError:
@@ -271,25 +278,29 @@ def save_setting():
             if os.path.exists(channel_cookie_path):
 
                 abspath = os.path.abspath('.')
-                newsetting = json.dumps(
-                    setting, indent=4, separators=(',', ': '))
+                newsetting = setting
+                # json.dumps(setting, indent=4, separators=(',', ': '))
+                # print('setting after edited ',setting)
                 if os.path.exists('./assets/config/'+setting['channelname']+".json"):
                     with open('./assets/config/'+setting['channelname']+".json", 'r') as fr:
                         exitingsetting = json.loads(fr.read())
-
-                        if ordered(setting) == ordered(exitingsetting):
+                        # print('old same setting file ',exitingsetting)
+                        # print('changes ',type(newsetting),type(exitingsetting))
+                        if ordered(newsetting) == ordered(exitingsetting):
                             print('no change at all')
-                            settingid = Add_New_UploadSetting_In_Db(setting)
+                            settingid = Add_New_UploadSetting_In_Db(newsetting)
 
                             print("setting saved ok", settingid)
 
                         else:
                             print('new change will be saved')
-                            with open('./assets/config/'+setting['channelname']+".json", 'w') as f:
-                                f.write(json.dumps(setting, indent=4,
-                                        separators=(',', ': ')))
-                            settingid = Add_New_UploadSetting_In_Db(setting)
-                            print("setting saved ok", settingid)
+                        with open('./assets/config/'+setting['channelname']+".json", 'w') as f:
+                            f.write(json.dumps(setting, indent=4,
+                                    separators=(',', ': ')))
+                        settingid = Add_New_UploadSetting_In_Db(setting)
+                        print("setting saved ok", settingid)
+                        with open('latest-used-setting.txt','w+') as fw:
+                            fw.write('./assets/config/'+setting['channelname']+".json")                        
                 else:
                     with open(abspath+os.sep+'/assets/config/'+setting['channelname']+".json", 'w') as f:
 
@@ -299,20 +310,22 @@ def save_setting():
 
                     settingid = Add_New_UploadSetting_In_Db(setting)
                     print("setting saved ok", settingid)
+                    with open('latest-used-setting.txt','w+') as fw:
+                        fw.write('./assets/config/'+setting['channelname']+".json")                    
             else:
                 print('pls check cookie is there, or is it broken file',
                       channel_cookie_path)
 
 
 def select_profile_folder():
-    global firefox_profile_folder
-    firefox_profile_folder = filedialog.askdirectory(
+    global firefox_profile_folder_path
+    firefox_profile_folder_path = filedialog.askdirectory(
         parent=root, initialdir="/", title='Please select a directory')
-    if os.path.exists(firefox_profile_folder):
-        firefox_profile_folder = str(firefox_profile_folder)
-        print("You chose %s" % firefox_profile_folder)
-        # firefox_profile_folder_path.set(firefox_profile_folder)
-        setting['firefox_profile_folder'] = firefox_profile_folder
+    if os.path.exists(firefox_profile_folder_path):
+        firefox_profile_folder_path = str(firefox_profile_folder_path)
+        print("You chose %s" % firefox_profile_folder_path)
+        firefox_profile_folder.set(firefox_profile_folder_path)
+        # setting['firefox_profile_folder'] = firefox_profile_folder
 
 
 def select_videos_folder():
@@ -633,7 +646,7 @@ def check_video_thumb_pair(folder, session):
                 if entry.is_file():
                     filename = os.path.splitext(entry.name)[0]
                     ext = os.path.splitext(entry.name)[1]
-                    # print(filename,'==',ext)
+                    print(filename,' with extension ',ext)
 
                     start_index = 1
                     if ext in ('.flv', '.mp4', '.avi','.mkv','.mov'):
@@ -668,8 +681,8 @@ def check_video_thumb_pair(folder, session):
                                 videopath, thumbpath, filename, start_index, setting['channelname'], settingid)
                         start_index = start_index+1
                         videopair+=1
-                if videopair==0:
-                    print('we could not find any video,prefer format mp4,mkv,flv,mov')
+            if videopair==0:
+                print('we could not find any video,prefer format mp4,mkv,flv,mov')
 
 def prepareuploadsession(videopath, thumbpath, filename, start_index, channelname, settingid):
     global uploadsessionid
@@ -717,9 +730,12 @@ def prepareuploadsession(videopath, thumbpath, filename, start_index, channelnam
         publish_date = datetime(today.year, today.month, today.day, 20, 15)
 
         if publishpolicy == 0:
+            print('video got be private')
             olddata.publish_date = publish_date
         elif publishpolicy == 1:
             olddata.publish_date = publish_date
+            print('video got be instant public')
+
         else:
             # Oct 19, 2021
             start_index = int(start_publish_date)+start_index
@@ -733,6 +749,7 @@ def prepareuploadsession(videopath, thumbpath, filename, start_index, channelnam
                 startingday=today.day+1-maxdays
             publish_date =datetime(today.year, today.month+monthoffset, startingday+1+dayoffset, 20, 15)
 
+            print('video got be schedule to public at ',publish_date)
 
             olddata.publish_date = publish_date
         olddata.thumbpath = thumbpath
@@ -758,9 +775,8 @@ def upload():
         createuploadsession()
         print('before upload,you need create upload session first')
 
-    videos = Query_undone_videos_in_channel(uploadsessionid)
-    print('there is video need to uploading', len(
-        videos), ' for task ', uploadsessionid)
+    videos = Query_undone_videos_in_channel()
+    print('there is ', len(videos), ' video need to uploading for task ')
 
     if len(videos) > 0:
         publicvideos = []
@@ -912,9 +928,10 @@ if __name__ == '__main__':
         e65.place(x=150, y=270)
 
         l66 = tk.Label(root, text="profile folder")
-        l66.place(x=10, y=300)
-        e66 = tk.Entry(root, width=55, textvariable=firefox_profile_folder)
-        e66.place(x=150, y=300)
+        # 暂时屏蔽
+        # l66.place(x=10, y=300)
+        # e66 = tk.Entry(root, width=55, textvariable=firefox_profile_folder)
+        # e66.place(x=150, y=300)
 
         l67 = tk.Label(root, text="proxy")
         l67.place(x=10, y=330)

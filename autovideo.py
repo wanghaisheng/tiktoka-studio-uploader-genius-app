@@ -71,6 +71,7 @@ from datetime import datetime,date,timedelta
 import asyncio
 import requests
 import re
+import calendar
 
 # dbname = "reddit_popular"
 # Open the database and make sure there is a table with appopriate indices
@@ -171,17 +172,26 @@ def fix_size(old_image_path, new_image_path, canvas_width=1080, canvas_height=72
 def load_setting():
 
     global setting
-    try:
-        print('读取配置文件', setting_file)
 
-        fp = open(setting_file, 'r', encoding='utf-8')
-        setting_json = fp.read()
-        fp.close()
-    except:
+    if os.path.exists('latest-used-setting.txt') :
+        try:
+            fp = open('latest-used-setting.txt', 'r', encoding='utf-8')
+            settingfile=fp.readlines()[0]
+            print('读取最近保存的配置文件',settingfile)
+
+            fp = open(settingfile, 'r', encoding='utf-8')
+            setting_json = fp.read()
+            fp.close()
+        except:
+            print('读取配置文件失败 加载默认模版')
+            fp = open("./assets/config/demo.json", 'r', encoding='utf-8')
+            setting_json = fp.read()
+            fp.close()
+    else:
         print('读取配置文件失败 加载默认模版')
         fp = open("./assets/config/demo.json", 'r', encoding='utf-8')
         setting_json = fp.read()
-        fp.close()
+        fp.close()        
     setting = json.loads(setting_json)
     return setting
 
@@ -207,26 +217,27 @@ def ordered(obj):
 
 settingid=0
 # 保存配置
+
 def save_setting():
     global settingid
 
     try:
-        proxy_option_value =proxy_option.get()
+        proxy_option_value = proxy_option.get()
         # print(' proxy_option setting',proxy_option.get())
     except NameError:
         print('no  proxy_option,using existing setting',
               setting['proxy_option'])
         proxy_option_value = setting['proxy_option']
     try:
-        firefox_profile_folder_path =firefox_profile_folder.get()
+        firefox_profile_folder_path = firefox_profile_folder.get()
+        print('firefox_profile_folder is ',firefox_profile_folder_path)
+        setting['firefox_profile_folder'] = firefox_profile_folder_path
+
     except NameError:
         print('no new  firefox_profile_folder,using existing setting',
               setting['firefox_profile_folder'])
-        firefox_profile_folder_path = setting['firefox_profile_folder']
+        setting['firefox_profile_folder'] = ''
 
-    else:
-        if firefox_profile_folder_path:
-            setting['firefox_profile_folder'] = firefox_profile_folder_path
     try:
         video_folder_path=video_folder.get()
     except NameError:
@@ -298,10 +309,12 @@ def save_setting():
                             print('no change at all')
                         else:
                             print('new change will be saved')
-                            with open('./assets/config/'+setting['channelname']+".json", 'w') as f:
-                                f.write(json.dumps(setting, indent=4, separators=(',', ': ')))
-                            settingid=Add_New_UploadSetting_In_Db(setting)
-                            print("配置保存成功",settingid)
+                        with open('./assets/config/'+setting['channelname']+".json", 'w') as f:
+                            f.write(json.dumps(setting, indent=4, separators=(',', ': ')))
+                        settingid=Add_New_UploadSetting_In_Db(setting)
+                        print("配置保存成功",settingid)
+                        with open('latest-used-setting.txt','w+') as fw:
+                            fw.write('./assets/config/'+setting['channelname']+".json")                        
                 else:
                     with open('./assets/config/'+setting['channelname']+".json", 'w') as f:
 
@@ -310,18 +323,20 @@ def save_setting():
                 
                     settingid=Add_New_UploadSetting_In_Db(setting)
                     print("配置保存成功",settingid)
+                    with open('latest-used-setting.txt','w+') as fw:
+                        fw.write('./assets/config/'+setting['channelname']+".json")
             else:
                 print('请检查cookie文件是否存在 是否损坏',channel_cookie_path)
 
 def select_profile_folder():
-    global firefox_profile_folder
-    firefox_profile_folder = filedialog.askdirectory(
+    global firefox_profile_folder_path
+    firefox_profile_folder_path = filedialog.askdirectory(
         parent=root, initialdir="/", title='Please select a directory')
-    if os.path.exists(firefox_profile_folder):
-        firefox_profile_folder=str(firefox_profile_folder)
-        print("You chose %s" % firefox_profile_folder)
-        # firefox_profile_folder_path.set(firefox_profile_folder)
-        setting['firefox_profile_folder'] = firefox_profile_folder
+    if os.path.exists(firefox_profile_folder_path):
+        firefox_profile_folder_path = str(firefox_profile_folder_path)
+        print("You chose %s" % firefox_profile_folder_path)
+        firefox_profile_folder.set(firefox_profile_folder_path)
+        # setting['firefox_profile_folder'] = firefox_profile_folder
 
 
 def select_videos_folder():
@@ -351,7 +366,8 @@ def docs():
     if docsopen==False:
         docsopen=True
         print('show help doc')
-        helptext_setting="==============\n1.下载安装firefox,并创建新的profile,参考https://support.mozilla.org/en-US/kb/using-multiple-profiles\n2.安装浏览器插件Cookie-Editor，登录youtube，导出cookie\n3.免版权的音乐可以在\nhttps://icons8.com/music/\n=====================\n1.首次使用请选择对应的配置模板,比如默认private、public和schedule，文件路径为软件安装路径下的assets/config/setting-template.json,请按照自己的情况修改，修改完成后点击保存\n"+"文件和文件夹 你可以通过菜单里的浏览器配置、视频素材来点选，你也可以自行在文本框中填写\n"+"首选标签：这一批上传的视频我们想设置一些通用的标签，在这里设置，其他的标签请放在视频文件名中即可\n"+"视频描述前缀:一般而言频道的视频描述都会有个模板，类似作文里总分总结构\n"+"视频描述后缀:一般是一些免责声明之类\n"+"发布策略:0表示上传为私有，1表示上传后立马公开2表示定时公开 当你选了2,可配合每日发布数量来自动设置对应视频公开的日期,起始日期默认为上传日期+1\n频道名称:只是用来保存配置文件\ncookie json:请使用浏览器插件导出并保存\n2.第二步需要检查素材，因为目前上传逻辑中只有支持视频和缩略图名字一样才能进行上传\n背景音乐批量替换:请设置好免费音乐所在文件夹,可先对1个视频处理，调节背景音乐音量为最佳效果\n3.点击上传即可"
+        # helptext_setting="==============\n1.下载安装firefox,并创建新的profile,参考https://support.mozilla.org/en-US/kb/using-multiple-profiles\n2.安装浏览器插件Cookie-Editor，登录youtube，导出cookie\n3.免版权的音乐可以在\nhttps://icons8.com/music/\n=====================\n1.首次使用请选择对应的配置模板,比如默认private、public和schedule，文件路径为软件安装路径下的assets/config/setting-template.json,请按照自己的情况修改，修改完成后点击保存\n"+"文件和文件夹 你可以通过菜单里的浏览器配置、视频素材来点选，你也可以自行在文本框中填写\n"+"首选标签：这一批上传的视频我们想设置一些通用的标签，在这里设置，其他的标签请放在视频文件名中即可\n"+"视频描述前缀:一般而言频道的视频描述都会有个模板，类似作文里总分总结构\n"+"视频描述后缀:一般是一些免责声明之类\n"+"发布策略:0表示上传为私有，1表示上传后立马公开2表示定时公开 当你选了2,可配合每日发布数量来自动设置对应视频公开的日期,起始日期默认为上传日期+1\n频道名称:只是用来保存配置文件\ncookie json:请使用浏览器插件导出并保存\n2.第二步需要检查素材，因为目前上传逻辑中只有支持视频和缩略图名字一样才能进行上传\n背景音乐批量替换:请设置好免费音乐所在文件夹,可先对1个视频处理，调节背景音乐音量为最佳效果\n3.点击上传即可"
+        helptext_setting="==============\n1.如果是多个账户，你需要为每个账号准备一个cookie,然后每个账户配置一个单独的配置文件2.安装浏览器插件Cookie-Editor，登录youtube，导出cookie\n3.免版权的音乐可以在\nhttps://icons8.com/music/\n=====================\n1.首次使用请选择对应的配置模板,比如默认private、public和schedule，文件路径为软件安装路径下的assets/config/setting-template.json,请按照自己的情况修改，修改完成后点击保存\n"+"文件和文件夹 你可以通过菜单里的浏览器配置、视频素材来点选，你也可以自行在文本框中填写\n"+"首选标签：这一批上传的视频我们想设置一些通用的标签，在这里设置，其他的标签请放在视频文件名中即可\n"+"视频描述前缀:一般而言频道的视频描述都会有个模板，类似作文里总分总结构\n"+"视频描述后缀:一般是一些免责声明之类\n"+"发布策略:0表示上传为私有，1表示上传后立马公开2表示定时公开 当你选了2,可配合每日发布数量来自动设置对应视频公开的日期,起始日期默认为上传日期+1\n频道名称:只是用来保存配置文件\ncookie json:请使用浏览器插件导出并保存\n2.第二步需要检查素材，因为目前上传逻辑中只有支持视频和缩略图名字一样才能进行上传\n背景音乐批量替换:请设置好免费音乐所在文件夹,可先对1个视频处理，调节背景音乐音量为最佳效果\n3.点击上传即可"
 
         newWindow = tk.Toplevel(root)
         label_helptext_setting = tk.Label(newWindow, text = helptext_setting,anchor='e',justify='left')
@@ -757,6 +773,12 @@ def prepareuploadsession( videopath,thumbpath,filename,start_index,channelname,s
 
 
 
+def exportcsv():
+    videos=Query_undone_videos_in_channel()
+
+
+def importundonefromcsv():
+    videos=Query_undone_videos_in_channel()
 
 
 
@@ -772,8 +794,8 @@ def upload():
         print('before upload,you need create upload session first')
         createuploadsession()
 
-    videos=Query_undone_videos_in_channel(uploadsessionid)
-    print('there is video need to uploading',len(videos),' for task ',uploadsessionid)
+    videos=Query_undone_videos_in_channel()
+    print('there is ',len(videos),' video need to uploading for task ')
 
     if len(videos)>0:
         publicvideos=[]
@@ -924,9 +946,9 @@ if __name__ == '__main__':
         e65.place(x=120, y=270)
 
         l66 = tk.Label(root, text="profile文件夹")
-        l66.place(x=10, y=300)
-        e66 = tk.Entry(root, width=55, textvariable=firefox_profile_folder)
-        e66.place(x=120, y=300)
+        # l66.place(x=10, y=300)
+        # e66 = tk.Entry(root, width=55, textvariable=firefox_profile_folder)
+        # e66.place(x=120, y=300)
 
         l67 = tk.Label(root, text="代理配置")
         l67.place(x=10, y=330)

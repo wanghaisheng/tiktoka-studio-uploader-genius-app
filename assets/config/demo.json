@@ -1,8 +1,8 @@
 {
     "driverfilepath": "",
-    "firefox_profile_folder": "D:/Download/audio-visual/make-text-video/reddit-to-video/assets/profile/aww",
+    "firefox_profile_folder": "",
     "video_folder": "D:/Download/audio-visual/make-text-video/autovideopublish/assets/videos",
-    "dailycount": "4",
+    "dailycount": "1",
     "preferdesprefix": "",
     "preferdessuffix": "",
     "proxy_option": "socks5://127.0.0.1:1080",

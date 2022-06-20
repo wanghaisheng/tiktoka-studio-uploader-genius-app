@@ -73,8 +73,8 @@ def Query_UploadSetting_In_db(id) -> list:
         return data
     else:
         return []
-def Query_undone_videos_in_channel(uploadsessionid) -> list:
-    data = dbsession.query(UploadSession).filter(UploadSession.id == uploadsessionid,UploadSession.status == False).all()
+def Query_undone_videos_in_channel() -> list:
+    data = dbsession.query(UploadSession).filter(UploadSession.status == False).all()
     if data:
         return data
     else:

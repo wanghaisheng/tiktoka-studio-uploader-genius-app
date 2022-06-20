@@ -20,3 +20,4 @@ playwright install firefox
 pyinstaller babala.py
 ```
 
+pip uninstall asyncio 
