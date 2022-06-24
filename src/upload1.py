@@ -75,34 +75,36 @@ async def scheduletopublish_specific_date(uploadSession:UploadSession,upload:You
 
 async def bulk_scheduletopublish_specific_date(videos:list,upload:YoutubeUpload) -> None:
     """ concurrently upload for multiple video files."""
-    tasks = []
     print('this is a schedule video task',videos)
     for video in videos:
+        tasks = []
+
         tasks.append(
             scheduletopublish_specific_date(uploadSession=video, upload=upload)
         )
-    await asyncio.gather(*tasks)
+        await asyncio.gather(*tasks)
 
 
 async def bulk_privatedraft(videos:list,upload:YoutubeUpload) -> None:
     """ concurrently upload for multiple video files."""
-    tasks = []
     print('this is a private video task',videos)
 
     for video in videos:
+        tasks = []
+
         tasks.append(
             privatedraft(uploadSession=video, upload=upload)
         )
-    await asyncio.gather(*tasks)
+        await asyncio.gather(*tasks)
 
 async def bulk_instantpublish(videos:list,upload:YoutubeUpload) -> None:
     """ concurrently upload for multiple video files."""
-    tasks = []
     print('this is a public video task',videos)
 
     for video in videos:
+        tasks = []
         tasks.append(
             instantpublish(uploadSession=video, upload=upload)
         )
-    await asyncio.gather(*tasks)
+        await asyncio.gather(*tasks)
 

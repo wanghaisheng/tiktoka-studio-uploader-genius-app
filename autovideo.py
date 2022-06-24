@@ -829,7 +829,7 @@ def upload():
             
             if int(video.publishpolicy)==1:
                 print('add public uploading task video',video.videopath)
-
+                
                 publicvideos.append(video)
             elif int(video.publishpolicy)==0:
                 print('add private uploading task video',video.videopath)
@@ -985,12 +985,12 @@ if __name__ == '__main__':
         b61 = tk.Button(root, text="headless", command=watchuploadsteps)
         b61.place(x=280, y=10)
 
-        b62 = tk.Button(root, text="批量替换背景音乐", command=batchchangebgmusic)
+        b62 = tk.Button(root, text="批量替换背景音乐", command=threading.Thread(target=batchchangebgmusic).start)
         b62.place(x=350,y=10)
-        b7 = tk.Button(root, text="开始上传", command=upload)
+        b7 = tk.Button(root, text="开始上传", command=threading.Thread(target=upload).start)
         b7.place(x=450, y=400)
 
-        b8 = tk.Button(root, text="自动生成缩略图", command=autothumb)
+        b8 = tk.Button(root, text="自动生成缩略图", command=threading.Thread(target=autothumb).start)
         b8.place(x=200, y=400)
 
 

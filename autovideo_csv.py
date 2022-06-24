@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 
+
+import threading
+
 from moviepy.video.io.VideoFileClip import VideoFileClip
 from moviepy.video.VideoClip import ImageClip
 from moviepy.video.compositing.CompositeVideoClip import CompositeVideoClip
 from moviepy.audio.io.AudioFileClip import AudioFileClip
 from moviepy.audio.AudioClip import AudioClip
-from moviepy.editor import concatenate_videoclips, concatenate_audioclips, TextClip, CompositeVideoClip
+from moviepy.editor import concatenate_videoclips,concatenate_audioclips,TextClip,CompositeVideoClip
 from moviepy.video.fx.accel_decel import accel_decel
 from moviepy.video.fx.blackwhite import blackwhite
 from moviepy.video.fx.blink import blink
@@ -44,6 +47,8 @@ from moviepy.audio.fx.audio_left_right import audio_left_right
 from moviepy.audio.fx.audio_loop import audio_loop
 from moviepy.audio.fx.audio_normalize import audio_normalize
 from moviepy.audio.fx.volumex import volumex
+import moviepy.audio.fx.all  as afx
+import moviepy.video.fx.all as vfx
 # here put the import lib
 import json
 import tkinter as tk
@@ -55,7 +60,7 @@ import sys
 import random
 import os
 import time
-from datetime import timedelta, date, datetime
+from datetime import timedelta, date,datetime
 # import multiprocessing.dummy as mp
 import concurrent
 from glob import glob
@@ -63,29 +68,51 @@ from src.dbmanipulation import *
 from src.UploadSession import *
 from PIL import Image
 import multiprocessing as mp
-import calendar
 from src.upload1 import *
 from src.ai_detector import AiThumbnailGenerator
-from datetime import datetime, date, timedelta
+from datetime import datetime,date,timedelta
 import asyncio
 import requests
 import re
-
+import calendar
 
 # dbname = "reddit_popular"
 # Open the database and make sure there is a table with appopriate indices
 
-def url_ok(url, proxy_option=''):
+def url_ok(url,proxy_option=''):
+
 
     try:
-        if not proxy_option == '':
+        if not proxy_option=='':
+            
 
-            proxies = {
+            # proxies = {
+            #    'http': 'http://proxy.example.com:8080',
+            #    'https': 'http://secureproxy.example.com:8090',
+            # }
+            if 'http:' in proxy_option:
+
+                proxies = {
+                'http': proxy_option
+                }                
+            elif 'https:' in proxy_option:
+
+                proxies = {
+                'https': proxy_option,
+                }                
+            elif 'socks' in proxy_option:
+                proxies = {
                 'http': proxy_option,
                 'https': proxy_option,
-            }
-            print('use proxy', proxy_option)
-            response = requests.head(url, proxies=proxies)
+                }
+            else:
+                proxy_option='http://'
+                proxies = {
+                'http': proxy_option,
+                'https': proxy_option,
+                }            
+            print('use proxy',proxy_option)
+            response = requests.head(url,proxies=proxies)
         else:
             response = requests.head(url)
 
@@ -93,7 +120,7 @@ def url_ok(url, proxy_option=''):
         # print(f"NOT OK: {str(e)}")
         return False
     else:
-        print('status code', response.status_code)
+        print('status code',response.status_code)
         if response.status_code == 200:
             # print("OK")
             return True
@@ -116,7 +143,7 @@ def isfilenamevalid(filename):
 
 
 def fix_size(old_image_path, new_image_path, canvas_width=1080, canvas_height=720):
-    """Edited from https://stackoverflow.com/questions/44231509/resize-rectangular-image-to-square-keeping-ratio-and-fill-background-with-black"""
+    """Edited from https://stackoverflow.com/questions/44231209/resize-rectangular-image-to-square-keeping-ratio-and-fill-background-with-black"""
     im = Image.open(old_image_path)
     x, y = im.size
 
@@ -153,25 +180,23 @@ def load_setting():
         try:
             fp = open('latest-used-setting.txt', 'r', encoding='utf-8')
             settingfile=fp.readlines()[0]
-            print('loading latest Used setting file')
+            print('读取最近保存的配置文件',settingfile)
 
             fp = open(settingfile, 'r', encoding='utf-8')
             setting_json = fp.read()
             fp.close()
         except:
-            print('load default setting template')
+            print('读取配置文件失败 加载默认模版')
             fp = open("./assets/config/demo.json", 'r', encoding='utf-8')
             setting_json = fp.read()
             fp.close()
     else:
-        print('load default setting template')
+        print('读取配置文件失败 加载默认模版')
         fp = open("./assets/config/demo.json", 'r', encoding='utf-8')
         setting_json = fp.read()
-        fp.close()      
-
+        fp.close()        
     setting = json.loads(setting_json)
     return setting
-
 
 def reset_gui():
 
@@ -184,8 +209,6 @@ def reset_gui():
     preferdessuffix.set(setting['preferdessuffix'])
     preferdesprefix.set(setting['preferdesprefix'])
 
-
-# 加载剧本
 def ordered(obj):
     if isinstance(obj, dict):
         return sorted((k, ordered(v)) for k, v in obj.items())
@@ -193,11 +216,10 @@ def ordered(obj):
         return sorted(ordered(x) for x in obj)
     else:
         return obj
+# 加载剧本
 
-
-settingid = 0
+settingid=0
 # 保存配置
-
 
 def save_setting():
     global settingid
@@ -219,19 +241,21 @@ def save_setting():
               setting['firefox_profile_folder'])
         setting['firefox_profile_folder'] = ''
 
-
     try:
-        video_folder_path = video_folder.get()
+        video_folder_path=video_folder.get()
     except NameError:
         print('no new  video_folder_path,using existing setting',
               setting['video_folder'])
-    if video_folder_path:
-        if os.path.exists(video_folder_path):
-            setting['video_folder'] = video_folder_path
-        else:
-            print('we can not find this video foler', video_folder_path)
+        video_folder_path = setting['video_folder']
+        print(video_folder_path)
+    else:
+        if video_folder_path:
+            if os.path.exists(video_folder_path):
+                setting['video_folder'] = video_folder_path
+            else:
+                print('we can not find this video foler',video_folder_path)
     try:
-        channel_cookie_path = channel_cookie.get()
+        channel_cookie_path=channel_cookie.get()
     except NameError:
         print('no new  channel_cookie_path,using existing setting',
               setting['channelcookiepath'])
@@ -242,17 +266,18 @@ def save_setting():
             if os.path.exists(channel_cookie_path):
                 setting['channelcookiepath'] = channel_cookie_path
             else:
-                print('we cannot find cookie file', channel_cookie_path)
+                print('we cannot find cookie file',channel_cookie_path)
     try:
-        music_folder_path = music_folder.get()
+        music_folder_path=music_folder.get()
     except NameError:
         # print('no new  music_folder,using existing setting',
-        #   setting['music_folder'])
+            #   setting['music_folder'])
         music_folder = setting['music_folder']
         # print(music_folder)
     else:
         if music_folder_path:
             setting['music_folder'] = music_folder_path
+
 
     setting['ratio'] = ratio.get()
 
@@ -262,60 +287,49 @@ def save_setting():
 
     setting['preferdesprefix'] = preferdesprefix.get()
     setting['preferdessuffix'] = preferdessuffix.get()
-    setting['proxy_option'] = proxy_option_value
+    setting['proxy_option']=proxy_option_value
     setting['prefertags'] = prefertags.get()
-    setting['publishpolicy'] = publishpolicy.get()
-    if setting['publishpolicy'] == '':
-        setting['publishpolicy'] = 1
-    if setting['start_publish_date'] == '':
-        setting['start_publish_date'] = '1'
-    if setting['channelname'] is None or setting['channelname'] == '':
+    setting['publishpolicy']=publishpolicy.get()    
+    if setting['publishpolicy']=='': 
+        setting['publishpolicy']=1
+    if setting['start_publish_date']=='': 
+        setting['start_publish_date']='1'
+    if setting['channelname'] is None or setting['channelname']=='' :
         print('before save setting,you need input channelname')
     else:
-        if setting['video_folder'] is None or setting['video_folder'] == '':
+        if setting['video_folder'] is None or setting['video_folder']=='' :
             print('before save setting,you need input video_folder')
         else:
             if os.path.exists(channel_cookie_path):
 
-                abspath = os.path.abspath('.')
-                newsetting = setting
-                # json.dumps(setting, indent=4, separators=(',', ': '))
-                # print('setting after edited ',setting)
+                
+                newsetting=json.dumps(setting, indent=4, separators=(',', ': '))
                 if os.path.exists('./assets/config/'+setting['channelname']+".json"):
                     with open('./assets/config/'+setting['channelname']+".json", 'r') as fr:
-                        exitingsetting = json.loads(fr.read())
-                        # print('old same setting file ',exitingsetting)
-                        # print('changes ',type(newsetting),type(exitingsetting))
-                        if ordered(newsetting) == ordered(exitingsetting):
+                        exitingsetting=json.loads(fr.read())
+
+                        if ordered(setting)==ordered(exitingsetting):
                             print('no change at all')
-                            settingid = Add_New_UploadSetting_In_Db(newsetting)
-
-                            print("setting saved ok", settingid)
-
                         else:
                             print('new change will be saved')
                         with open('./assets/config/'+setting['channelname']+".json", 'w') as f:
-                            f.write(json.dumps(setting, indent=4,
-                                    separators=(',', ': ')))
-                        settingid = Add_New_UploadSetting_In_Db(setting)
-                        print("setting saved ok", settingid)
+                            f.write(json.dumps(setting, indent=4, separators=(',', ': ')))
+                        settingid=Add_New_UploadSetting_In_Db(setting)
+                        print("配置保存成功",settingid)
                         with open('latest-used-setting.txt','w+') as fw:
                             fw.write('./assets/config/'+setting['channelname']+".json")                        
                 else:
-                    with open(abspath+os.sep+'/assets/config/'+setting['channelname']+".json", 'w') as f:
+                    with open('./assets/config/'+setting['channelname']+".json", 'w') as f:
 
-                        f.write(json.dumps(setting, indent=4,
-                                separators=(',', ': ')))
+                        f.write(json.dumps(setting, indent=4, separators=(',', ': ')))                                      
                 # print('当前使用的配置为：', setting)
-
-                    settingid = Add_New_UploadSetting_In_Db(setting)
-                    print("setting saved ok", settingid)
+                
+                    settingid=Add_New_UploadSetting_In_Db(setting)
+                    print("配置保存成功",settingid)
                     with open('latest-used-setting.txt','w+') as fw:
-                        fw.write('./assets/config/'+setting['channelname']+".json")                    
+                        fw.write('./assets/config/'+setting['channelname']+".json")
             else:
-                print('pls check cookie is there, or is it broken file',
-                      channel_cookie_path)
-
+                print('请检查cookie文件是否存在 是否损坏',channel_cookie_path)
 
 def select_profile_folder():
     global firefox_profile_folder_path
@@ -337,7 +351,6 @@ def select_videos_folder():
         video_folder.set(video_folder_path)
         setting['video_folder'] = video_folder_path
 
-
 def select_musics_folder():
     global music_folder_path
     music_folder_path = filedialog.askdirectory(
@@ -348,59 +361,57 @@ def select_musics_folder():
         setting['music_folder'] = music_folder_path
 
 
-docsopen = False
 
-
+docsopen=False
 def docs():
     global docsopen
-
-    if docsopen == False:
-        docsopen = True
+    
+    if docsopen==False:
+        docsopen=True
         print('show help doc')
-        helptext_setting = "==============\n1.install Firefox by yourself,create new profile,\nsee https://support.mozilla.org/en-US/kb/using-multiple-profiles\n2.install firefox extension:Cookie-Editor,login into youtube manually,export cookie.json\n3.find more free music at \nhttps://icons8.com/music/\n=====================\n1.before started,you need a upload setting file,you can import a template to edit as you wish,\nwe got 3 template for you,private、public和schedule,\nsee at assets/config/setting-template.json,Caution:after edit any field you should save it\n======\nvideo folder path:open Menu to choose or manually edit in the UI\n==========\nPreferTags:usually each channel got some prefined tags,\neven bunch of videos got prefined tags,you can defined here.\nother specific tag we recommend you leave them in video filename\n=======\nvideo prefer des prefix:usually each channel got a des template,such as Part A+Part B+PartC\n=========\nvideo des suffix:you can put copyright statements here\n==========\npublish policy:0==private draft，1==publish instantly 2==schedule some time,with daily publish count and days offset(starting publish date,1 means start to set uploaded video public from tomorrow,7 means a week later etc ),\nyou can manage the publish date of each video+1\n==========\nchannel name:we use this field to save uploadsetting files\n=======\ncookie json:please use extension to export one\n==========\n2.if you got videos and thumbnail already,you should load uploadsetting file,\nsave uploadsetting file,create uploadsession,finally start upload.for those you only got videos,we can use a dumb AI to extract clip from videos as thumbnail automatically\n===========\nsometimes you may need batch replace the audio with free music,you can set free music folder and control audio volumn setting to find a better result \n3.leave message at tiktokaofficial@gmail.com "
+        # helptext_setting="==============\n1.下载安装firefox,并创建新的profile,参考https://support.mozilla.org/en-US/kb/using-multiple-profiles\n2.安装浏览器插件Cookie-Editor，登录youtube，导出cookie\n3.免版权的音乐可以在\nhttps://icons8.com/music/\n=====================\n1.首次使用请选择对应的配置模板,比如默认private、public和schedule，文件路径为软件安装路径下的assets/config/setting-template.json,请按照自己的情况修改，修改完成后点击保存\n"+"文件和文件夹 你可以通过菜单里的浏览器配置、视频素材来点选，你也可以自行在文本框中填写\n"+"首选标签：这一批上传的视频我们想设置一些通用的标签，在这里设置，其他的标签请放在视频文件名中即可\n"+"视频描述前缀:一般而言频道的视频描述都会有个模板，类似作文里总分总结构\n"+"视频描述后缀:一般是一些免责声明之类\n"+"发布策略:0表示上传为私有，1表示上传后立马公开2表示定时公开 当你选了2,可配合每日发布数量来自动设置对应视频公开的日期,起始日期默认为上传日期+1\n频道名称:只是用来保存配置文件\ncookie json:请使用浏览器插件导出并保存\n2.第二步需要检查素材，因为目前上传逻辑中只有支持视频和缩略图名字一样才能进行上传\n背景音乐批量替换:请设置好免费音乐所在文件夹,可先对1个视频处理，调节背景音乐音量为最佳效果\n3.点击上传即可"
+        helptext_setting="==============\n1.如果是多个账户，你需要为每个账号准备一个cookie,然后每个账户配置一个单独的配置文件2.安装浏览器插件Cookie-Editor，登录youtube，导出cookie\n3.免版权的音乐可以在\nhttps://icons8.com/music/\n=====================\n1.首次使用请选择对应的配置模板,比如默认private、public和schedule，文件路径为软件安装路径下的assets/config/setting-template.json,请按照自己的情况修改，修改完成后点击保存\n"+"文件和文件夹 你可以通过菜单里的浏览器配置、视频素材来点选，你也可以自行在文本框中填写\n"+"首选标签：这一批上传的视频我们想设置一些通用的标签，在这里设置，其他的标签请放在视频文件名中即可\n"+"视频描述前缀:一般而言频道的视频描述都会有个模板，类似作文里总分总结构\n"+"视频描述后缀:一般是一些免责声明之类\n"+"发布策略:0表示上传为私有，1表示上传后立马公开2表示定时公开 当你选了2,可配合每日发布数量来自动设置对应视频公开的日期,起始日期默认为上传日期+1\n频道名称:只是用来保存配置文件\ncookie json:请使用浏览器插件导出并保存\n2.第二步需要检查素材，因为目前上传逻辑中只有支持视频和缩略图名字一样才能进行上传\n背景音乐批量替换:请设置好免费音乐所在文件夹,可先对1个视频处理，调节背景音乐音量为最佳效果\n3.点击上传即可"
 
         newWindow = tk.Toplevel(root)
-        label_helptext_setting = tk.Label(
-            newWindow, text=helptext_setting, anchor='e', justify='left')
+        label_helptext_setting = tk.Label(newWindow, text = helptext_setting,anchor='e',justify='left')
         label_helptext_setting.pack()
 
+
     else:
-        docsopen = False
+        docsopen=False
+
 
 
 def install():
     # subprocess.check_call([sys.executable, "-m", "playwright ", "install"])
     subprocess.check_call(["playwright ", "install"])
 
-
 def testinstall():
-    print('playwright install')
-    install()
-
-
+    print('check install requirments')
 def testsettingok():
-    print('upload default demo video')
-
-
-headless = True
-
-
+    if not proxy_option=='':
+        if url_ok('www.youtube.com'):        
+            print('is proxy setting ok')
+        else:
+            print('please check your proxy setting\nsocks5://127.0.0.1:1080\nhttp://proxy.example.com:8080\n222.165.235.2:80\n')
+        
+headless=True
 def watchuploadsteps():
     global headless
-
-    if headless == False:
-        headless = True
+    
+    if headless==True:
+        headless=False
     else:
-        headless = False
-
+        headless=True
 
 def select_setting_file():
 
     global setting_file
-    setting_file = filedialog.askopenfilenames(title="choose setting file", filetypes=[
+    setting_file = filedialog.askopenfilenames(title="请选择该频道配置文件", filetypes=[
         ("Json", "*.json"), ("All Files", "*")])[0]
     load_setting()
     firefox_profile_folder_path = setting['firefox_profile_folder']
+    print('393======',firefox_profile_folder_path)
     firefox_profile_folder.set(firefox_profile_folder_path)
 
     proxy_option.set(setting['proxy_option'])
@@ -411,10 +422,10 @@ def select_setting_file():
     prefertags.set(setting['prefertags'])
     preferdessuffix.set(setting['preferdessuffix'])
     preferdesprefix.set(setting['preferdesprefix'])
-
+    
     dailycount.set(setting['dailycount'])
     channelname.set(setting['channelname'])
-    music_folder_path = setting['music_folder']
+    music_folder_path= setting['music_folder']
     publishpolicy.set(setting['publishpolicy'])
     music_folder.set(music_folder_path)
     ratio.set(setting['ratio'])
@@ -423,21 +434,21 @@ def select_setting_file():
 def select_cookie_file():
 
     global channel_cookie_path
-    channel_cookie_path = filedialog.askopenfilenames(title="choose cookie file for this channel", filetypes=[
+    channel_cookie_path = filedialog.askopenfilenames(title="请选择该频道对应cookie文件", filetypes=[
         ("Json", "*.json"), ("All Files", "*")])[0]
 
     channel_cookie.set(channel_cookie_path)
     setting['channelcookiepath'] = channel_cookie_path
 
 
+
 # 清理残留文件
 
 def threadusing_free_musichelper(numbers):
 
-    using_free_music(numbers[0], numbers[1])
+    using_free_music(numbers[0],numbers[1])
 
-
-def using_free_music(setting, inputmp4):
+def using_free_music(setting,inputmp4):
 
     if os.path.exists(inputmp4):
 
@@ -445,134 +456,142 @@ def using_free_music(setting, inputmp4):
     else:
         print('video not found')
     try:
-        music_folder = setting['music_folder']
+        music_folder =setting['music_folder']
     except:
-        music_folder = 'assets/freemusic'
+        music_folder='assets/freemusic'
 
     else:
-        print('setting==', setting)
 
         music_folder = setting['music_folder']
+    if os.path.exists(music_folder):
+        print('there are free music folder',music_folder)
+    else:
+        print('choose valid free music folder',music_folder)
 
     freemusic = []
 
-    for ext in ('*.mp3', '*.wav', '*.wma', '*.ogg', '*.aac', '*.mp4'):
+    for ext in ('*.mp3', '*.wav','*.wma','*.ogg','*.aac'):
         freemusic.extend(glob(os.path.join(music_folder, ext)))
-
-    if len(freemusic) > 0:
-
+        
+    if len(freemusic) > 0:    
         soundeffect = random.choice(freemusic)
-        print('randomly choose a background music', soundeffect)
+        print('randomly choose a background music',soundeffect)
         ext = os.path.splitext(soundeffect)[1]
-        videoext = os.path.splitext(inputmp4)[1]
-        videofilename = os.path.splitext(inputmp4)[0]
+        videoext= os.path.splitext(inputmp4)[1]
+        videofilename= os.path.splitext(inputmp4)[0]
 
-        print('videoext', videoext)
-        print('videofilename', videofilename)
-        oldvideofiles = []
-        if not ext in ['.mp4', '.wma', '.aac', '.ogg', '.wav', '.mp3']:
+        print('videoext',videoext)
+        print('videofilename',videofilename)
+        oldvideofiles=[]
 
-            print('we have not found wav,mp3 background music in this folder', freemusic)
-        else:
-            audioclip = AudioFileClip(soundeffect)
-
+        audioclip = AudioFileClip(soundeffect)
+        if not os.path.exists(videofilename+'-old'+videoext):
             os.rename(inputmp4, videofilename+'-old'+videoext)
-            videoclip = VideoFileClip(videofilename+'-old'+videoext)
-            if audioclip.duration > videoclip.duration:
-                audioclip = audioclip.subclip(0, videoclip.duration)
-            else:
-                audioclip = vfx.loop(audioclip, duration=videoclip.duration)
-            if setting['ratio']:
-                pass
-            else:
-                setting['ratio'] = 1
-            audioclip = audioclip.fx(afx.volumex, float(setting['ratio']))
-            # audioclip = volumex(audioclip,setting['ratio'])
-            videoclip = videoclip.set_audio(audioclip)
+        videoclip = VideoFileClip(videofilename+'-old'+videoext)
+        if audioclip.duration>videoclip.duration:
+            audioclip =audioclip.subclip(0,videoclip.duration)
+        else:
+            audioclip = vfx.loop( audioclip, duration=videoclip.duration)
+        if setting['ratio']:
+            pass
+        else:
+            setting['ratio']=1
+        # audioclip = audioclip.fx( afx.volumex, float(setting['ratio']))
+        # audioclip.write_audiofile(videofilename+'.mp3')
 
-            videoclip.write_videofile(
-                videofilename+'.mp4', threads=0, audio=False)
+        # audioclip = volumex(audioclip,setting['ratio'])          
+        videoclip = videoclip.set_audio(audioclip)
 
+        videoclip.write_videofile(videofilename+'.mp4', threads=0, audio=True)
+        if not videoclip == None:
+            print('force close clip')
+            audioclip.close()
 
+            videoclip.close()
+
+            del audioclip 
+            del videoclip 
+ 
+            import gc 
+            gc.collect()
+
+           
+        # time.sleep(2) 
+        print('start cleaning old video file')
+        if os.path.exists(videofilename+'-old'+videoext):
+            os.remove(videofilename+'-old'+videoext)
 def init_worker(mps, fps, cut):
     global memorizedPaths, filepaths, cutoff
     global DG
 
     print("process initializing", mp.current_process())
     memorizedPaths, filepaths, cutoff = mps, fps, cut
-    DG = 1  # nx.read_gml("KeggComplete.gml", relabel = True)
-
+    DG = 1##nx.read_gml("KeggComplete.gml", relabel = True)
 
 def batchchangebgmusic():
-    folder = setting['video_folder']
-    # oldvideofiles=[]
+
+    # use all available CPUs
+    # p = mp.Pool(initializer=init_worker, initargs=(memorizedPaths,
+    #                                                filepaths,
+    #                                                cutoff))
+    folder =setting['video_folder']    
+    oldvideofiles=[]
     videofiles = []
-    if os.path.exists(folder):
-        m = mp.Manager()
-        memorizedPaths = m.dict()
-        filepaths = m.dict()
-        cutoff = 1
-        # use all available CPUs
-        p = mp.Pool(initializer=init_worker, initargs=(memorizedPaths,
-                                                       filepaths,
-                                                       cutoff))
 
-        if os.path.isdir(folder):
-            print('this is a directory', folder)
-
-            for ext in ('*.flv', '*.mp4', '*.avi'):
-                videofiles.extend(glob(os.path.join(folder, ext)))
-            print('detecting videos in folder', folder, videofiles)
-            if len(videofiles) > 0:
-                arguments = []
-                for i, f in enumerate(videofiles):
-                    videofilename = os.path.splitext(f)[0]
-                    videoext = os.path.splitext(f)[1]
-                    if not videofilename.endswith('-old'):
-                        arguments.append((setting, f))
-                    else:
-                        oldvideofiles.append(f)
-                print('awaiting convert files', videofiles)
-                # degreelist = range(100000) ##
-                for _ in p.imap_unordered(threadusing_free_musichelper, arguments, chunksize=500):
-                    pass
-        p.close()
-        p.join()
-
-        print('start cleaning old video files')
-        oldvideofiles = []
-
-        if os.path.isdir(folder):
-
-            for ext in ('*.flv', '*.mp4', '*.avi'):
-                oldvideofiles.extend(glob(os.path.join(folder, ext)))
-            # print('this is a directory',folder)
-
-        for f in oldvideofiles:
-            videofilename = os.path.splitext(f)[0]
-
-            if videofilename.endswith('-old'):
-                print('start cleaning old video file', f)
-                os.remove(f)
-        print('finish cleaning old video files')
-    else:
-        print('pls choose a video folder first')
-
-
-def changebgmusic():
-    folder = setting['video_folder']
     if os.path.isdir(folder):
-        print('this is a directory', folder)
+        print('this is a directory',folder)
+
+        for ext in ('*.flv', '*.mp4', '*.avi'):
+            videofiles.extend(glob(os.path.join(folder, ext)))
+        print('detecting videos in folder',folder,videofiles)
+        if len(videofiles) > 0:
+            arguments=[]
+            for i,f in enumerate(videofiles):
+                videofilename= os.path.splitext(f)[0]
+                videoext= os.path.splitext(f)[1]
+                if not videofilename.endswith('-old'):
+                    using_free_music(setting,f)
+                    # arguments.append((setting,f)) 
+
+            print('awaiting convert files',videofiles)                                                   
+            # degreelist = range(100000) ##
+    #         for _ in p.imap_unordered(threadusing_free_musichelper, arguments, chunksize=500):
+    #             pass
+    # p.close()
+    # p.join()
+
+
+    # print('start cleaning old video files')
+    # oldvideofiles=[]
+
+    # if os.path.isdir(folder):
+
+    #     for ext in ('*.flv', '*.mp4', '*.avi'):
+    #         oldvideofiles.extend(glob(os.path.join(folder, ext)))
+    #     # print('this is a directory',folder)
+  
+    # for f in oldvideofiles:   
+    #     videofilename= os.path.splitext(f)[0]
+
+    #     if  videofilename.endswith('-old'):
+    #         print('start cleaning old video file',f)
+    #         if os.path.exists(f.replace('-old','')):
+    #             os.remove( f)
+    print('finish cleaning old video files')
+def changebgmusic():
+    folder =setting['video_folder']    
+    if os.path.isdir(folder):
+        print('this is a directory',folder)
 
         videofiles = []
         for ext in ('*.flv', '*.mp4', '*.avi'):
             videofiles.extend(glob(os.path.join(folder, ext)))
-        print('detecting videos in folder', folder, videofiles)
+        print('detecting videos in folder',folder,videofiles)
         if len(videofiles) > 0:
             # for i,f in enumerate(videofiles):
 
-            #     videofiles.append(f)
-            print('awaiting convert files', videofiles)
+            #     videofiles.append(f)    
+            print('awaiting convert files',videofiles)
             start = time.time()
             with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
                 # while True:
@@ -588,16 +607,17 @@ def changebgmusic():
             print("批量替换took {} seconds\n".format(end-start))
 
 
+
 def b64e(s):
     return base64.b64encode(s.encode()).decode()
 
 
 def autothumb():
 
-    # save_setting()
-    # 文件夹下是否有视频文件
+    save_setting()
+# 文件夹下是否有视频文件
 
-    # 视频文件是否有同名的图片
+# 视频文件是否有同名的图片
 
     try:
         video_folder_path = setting['video_folder']
@@ -606,18 +626,17 @@ def autothumb():
         print('not found fastlane folder  file')
     else:
         if video_folder_path:
-            print("sure, it was defined dir.")
+            print("sure, it was defined dir.",video_folder_path)
 
-            check_video_thumb_pair(video_folder_path, False)
+            check_video_thumb_pair(video_folder_path,False)
         else:
             print("pls choose file or folder")
 
-
 def createuploadsession():
-    # save_setting()
-    # 文件夹下是否有视频文件
+    save_setting()
+# 文件夹下是否有视频文件
 
-    # 视频文件是否有同名的图片
+# 视频文件是否有同名的图片
 
     try:
         video_folder_path = setting['video_folder']
@@ -627,68 +646,64 @@ def createuploadsession():
     else:
         if video_folder_path:
             if os.path.exists(video_folder_path):
-                check_video_thumb_pair(video_folder_path, True)
+                check_video_thumb_pair(video_folder_path,True)
             else:
                 print("there is no defined video dir.")
         else:
             print("pls choose file or folder")
 
-
-def check_video_thumb_pair(folder, session):
+def check_video_thumb_pair(folder,session):
     # print('detecting----------',folder)
 
     for r, d, f in os.walk(folder):
         with os.scandir(r) as i:
-            print('detecting----------', r)
+            print('detecting----------',r)
             videopair=0
 
             for entry in i:
                 if entry.is_file():
                     filename = os.path.splitext(entry.name)[0]
                     ext = os.path.splitext(entry.name)[1]
-                    print(filename,' with extension ',ext)
+                    # print(filename,'==',ext) 
 
-                    start_index = 1
-                    if ext in ('.flv', '.mp4', '.avi','.mkv','.mov'):
+                    start_index=1
+                    if ext in ('.flv', '.mp4', '.avi'):
                         videopath = os.path.join(r, entry.name)
-                        count = 0
-                        exist_image_ext = ''
-                        for image_ext in ['.jpeg', '.png', '.jpg']:
+                        count=0
+                        exist_image_ext=''
+                        for image_ext in ['.jpeg', '.png', '.jpg','webp']:
                             thumbpath = os.path.join(r, filename+image_ext)
 
-                            if not os.path.exists(thumbpath):
-                                count += 1
+                            if not os.path.exists(thumbpath):     
+                                count+=1
                             else:
-                                exist_image_ext = image_ext
-                        if count == len(['.jpeg', '.png', '.jpg']):
-                            no = random.choice(['001', '002', '003'])
-                            if not os.path.exists(os.path.join(r, filename+'-'+no+'.jpg')):
+                                exist_image_ext=image_ext  
+                        if count==len(['.jpeg', '.png', '.jpg']):
+                            no=random.choice(['001','002','003'])
+                            if not os.path.exists(os.path.join(r, filename+'-'+no+'.jpg')):   
                                 generator = AiThumbnailGenerator(videopath)
 
-                                thumbpath = os.path.join(
-                                    r, filename+'-'+no+'.jpg')
-                                print('generated thumbnail is', thumbpath)
+                                thumbpath=os.path.join(r, filename+'-'+no+'.jpg')                                
+                                print('generated thumbnail is',thumbpath)
                         else:
-                            thubmpath = os.path.join(
-                                r, filename+exist_image_ext)
-                            print(
-                                'thumbnail is there.if you need create,pls delete the old one')
+                            thubmpath=os.path.join(r,filename+exist_image_ext)
+                            print('thumbnail is there.if you need create,pls delete the old one')
                         if session:
-                            print(videopath, thumbpath, filename,
-                                  start_index, setting['channelname'], settingid)
+                            print( videopath,thumbpath,filename,start_index,setting['channelname'],settingid)
 
-                            prepareuploadsession(
-                                videopath, thumbpath, filename, start_index, setting['channelname'], settingid)
-                        start_index = start_index+1
+                            prepareuploadsession( videopath,thumbpath,filename,start_index,setting['channelname'],settingid)
+                        start_index=start_index+1
                         videopair+=1
-            if videopair==0:
-                print('we could not find any video,prefer format mp4,mkv,flv,mov')
 
-def prepareuploadsession(videopath, thumbpath, filename, start_index, channelname, settingid):
+                if videopair==0:
+                    print('we could not find any video,prefer format mp4,mkv,flv,mov')
+
+
+
+def prepareuploadsession( videopath,thumbpath,filename,start_index,channelname,settingid):
     global uploadsessionid
-    isadded, isuploaded = Query_video_status_in_channel(
-        videopath, channelname, settingid)
-
+    isadded,isuploaded=Query_video_status_in_channel(videopath,channelname,settingid)
+              
     # filename = os.path.splitext(f)[0]
     if isadded:
 
@@ -700,19 +715,20 @@ def prepareuploadsession(videopath, thumbpath, filename, start_index, channelnam
 
     else:
         print('task not added before')
-
+        
         tags = setting['prefertags']
-
+        
+        
         preferdesprefix = setting['preferdesprefix']
         preferdessuffix = setting['preferdessuffix']
-        filename = filename.split(os.sep)[-1]
-        des = filename
+        filename=filename.split(os.sep)[-1]
+        des =filename
         if preferdesprefix:
 
-            des = preferdesprefix+'========\n'+des
+            des=preferdesprefix+'========\n'+des
         if preferdessuffix:
-            des = des+'=========\n'+preferdessuffix
-        des = des[:4900]
+            des=des+'=========\n'+preferdessuffix
+        des=des[:4900]
         title = isfilenamevalid(filename)
         if len(filename) > 100:
             title = filename[:90]
@@ -720,22 +736,19 @@ def prepareuploadsession(videopath, thumbpath, filename, start_index, channelnam
         videoid = b64e(filename)
 
         olddata = UploadSession()
-        olddata.uploadSettingid = settingid
+        olddata.uploadSettingid=settingid
         olddata.videoid = videoid
-        olddata.channelname = setting['channelname']
-        publishpolicy = setting['publishpolicy']
-        start_publish_date = setting['start_publish_date']
-        olddata.publishpolicy = publishpolicy
+        olddata.channelname=setting['channelname']
+        publishpolicy=setting['publishpolicy']
+        start_publish_date=setting['start_publish_date']
+        olddata.publishpolicy=publishpolicy
         today = date.today()
-        publish_date = datetime(today.year, today.month, today.day, 20, 15)
+        publish_date =datetime(today.year, today.month, today.day, 20, 15)
 
         if publishpolicy == 0:
-            print('video got be private')
             olddata.publish_date = publish_date
         elif publishpolicy == 1:
             olddata.publish_date = publish_date
-            print('video got be instant public')
-
         else:
             # Oct 19, 2021
             start_index = int(start_publish_date)+start_index
@@ -749,92 +762,97 @@ def prepareuploadsession(videopath, thumbpath, filename, start_index, channelnam
                 startingday=today.day+1-maxdays
             publish_date =datetime(today.year, today.month+monthoffset, startingday+1+dayoffset, 20, 15)
 
-            print('video got be schedule to public at ',publish_date)
+
 
             olddata.publish_date = publish_date
         olddata.thumbpath = thumbpath
-        olddata.title = title
-        olddata.des = des
+        olddata.title= title
+        olddata.des= des
         olddata.videopath = videopath
-        olddata.tags = tags
+        olddata.tags= tags
         olddata.status = False
-        uploadsessionid = Add_New_UploadSession_In_Db(olddata)
-        print('add 1 new videos ', filename,
-              'for upload session', uploadsessionid)
+        uploadsessionid=Add_New_UploadSession_In_Db(olddata)
+        print('add 1 new videos ',filename,'for upload session',uploadsessionid)
+
+
+
+def exportcsv():
+    videos=Query_undone_videos_in_channel()
+
+
+def importundonefromcsv():
+    videos=Query_undone_videos_in_channel()
+
 
 
 def upload():
-    print('we got setting proxy ,', setting['proxy_option'])
+    print('we got setting proxy ,',setting['proxy_option'])
     try:
         uploadsessionid
         if uploadsessionid is None:
-            print('weir error', uploadsessionid)
+            print('weir error',uploadsessionid)
             createuploadsession()
     except:
 
-        createuploadsession()
         print('before upload,you need create upload session first')
+        createuploadsession()
 
-    videos = Query_undone_videos_in_channel()
-    print('there is ', len(videos), ' video need to uploading for task ')
+    videos=Query_undone_videos_in_channel()
+    print('there is ',len(videos),' video need to uploading for task ')
 
-    if len(videos) > 0:
-        publicvideos = []
-        privatevideos = []
-        othervideos = []
+    if len(videos)>0:
+        publicvideos=[]
+        privatevideos=[]
+        othervideos=[]
         if url_ok('http://www.google.com'):
             print('network is fine,there is no need for proxy ')
-            setting['proxy_option'] = ""
-            print('start browser in headless mode', headless)
+            setting['proxy_option']=""
+            print('start browser in headless mode',headless)
 
         else:
             print('google can not be access ')
 
-            print('we need for proxy ', setting['proxy_option'])
-            print('start browser in headless mode',
-                  headless, setting['proxy_option'])
-        upload = YoutubeUpload(
-            # use r"" for paths, this will not give formatting errors e.g. "\n"
-            root_profile_directory=setting['firefox_profile_folder'],
-
-            proxy_option=setting['proxy_option'],
-            watcheveryuploadstep=headless,
-            # if you want to silent background running, set watcheveryuploadstep false
-            CHANNEL_COOKIES=setting['channelcookiepath'],
-            username='username',
-            password='password',
-            recordvideo=headless
-            # for test purpose we need to check the video step by step ,
-        )
+            print('we need for proxy ',setting['proxy_option'])   
+            print('start browser in headless mode',headless,setting['proxy_option'])
+        upload =  YoutubeUpload(
+                # use r"" for paths, this will not give formatting errors e.g. "\n"
+                root_profile_directory=setting['firefox_profile_folder'],
+                
+                proxy_option=setting['proxy_option'],
+                watcheveryuploadstep=headless,
+                # if you want to silent background running, set watcheveryuploadstep false
+                CHANNEL_COOKIES=setting['channelcookiepath'],
+                username='username',
+                password='password',
+                recordvideo=headless
+                # for test purpose we need to check the video step by step ,
+            )
 
         for video in videos:
-
-            if int(video.publishpolicy) == 1:
-                print('add public uploading task video', video.videopath)
-
+            
+            if int(video.publishpolicy)==1:
+                print('add public uploading task video',video.videopath)
+                
                 publicvideos.append(video)
-            elif int(video.publishpolicy) == 0:
-                print('add private uploading task video', video.videopath)
+            elif int(video.publishpolicy)==0:
+                print('add private uploading task video',video.videopath)
 
                 privatevideos.append(video)
             else:
-                print('add schedule uploading task video', video.videopath)
-                print('intended to public at ',video.publish_date,type(video.publish_date))
+                print('add schedule uploading task video',video.videopath)
+
                 othervideos.append(video)
-        if len(publicvideos) > 0:
+        if len(publicvideos)>0:
             print('start public uploading task')
-            asyncio.run(bulk_instantpublish(
-                videos=publicvideos, upload=upload))
-        if len(privatevideos) > 0:
+            asyncio.run(bulk_instantpublish(videos=publicvideos,upload=upload))
+        if len(privatevideos)>0:
             print('start private uploading task')
 
-            asyncio.run(bulk_privatedraft(videos=privatevideos, upload=upload))
-        if len(othervideos) > 0:
+            asyncio.run(bulk_privatedraft(videos=privatevideos,upload=upload))
+        if len(othervideos)>0:
             print('start schedule uploading task')
 
-            asyncio.run(bulk_scheduletopublish_specific_date(
-                videos=othervideos, upload=upload))
-
+            asyncio.run(bulk_scheduletopublish_specific_date(videos=othervideos,upload=upload))
 
 if __name__ == '__main__':
 
@@ -859,7 +877,7 @@ if __name__ == '__main__':
         music_folder.set(setting['music_folder'])
 
         ratio = tk.StringVar()
-        ratio.set(setting['ratio'])
+        ratio.set(setting['ratio'])        
         video_folder = tk.StringVar()
         video_folder.set(setting['video_folder'])
         firefox_profile_folder = tk.StringVar()
@@ -875,129 +893,130 @@ if __name__ == '__main__':
         start_publish_date = tk.StringVar()
         start_publish_date.set(setting['start_publish_date'])
 
-        l_music_folder = tk.Label(root, text="free music folder")
+        
+        l_music_folder = tk.Label(root, text="背景音乐文件夹")
         l_music_folder.place(x=10, y=130)
         el_music_folder = tk.Entry(root, width=55, textvariable=music_folder)
-        el_music_folder.place(x=150, y=130)
+        el_music_folder.place(x=120, y=130)
 
-        l_prefertags = tk.Label(root, text="preferred tags")
+        l_prefertags = tk.Label(root, text="首选标签")
         l_prefertags.place(x=10, y=50)
         el_prefertags = tk.Entry(root, width=55, textvariable=prefertags)
-        el_prefertags.place(x=150, y=50)
+        el_prefertags.place(x=120, y=50)
 
-        l_preferdesprefix = tk.Label(root, text="preferred des prefix")
+        l_preferdesprefix = tk.Label(root, text="视频描述前缀")
         l_preferdesprefix.place(x=10, y=70)
-        e_preferdesprefix = tk.Entry(
-            root, width=55, textvariable=preferdesprefix)
-        e_preferdesprefix.place(x=150, y=70)
+        e_preferdesprefix = tk.Entry(root, width=55, textvariable=preferdesprefix)
+        e_preferdesprefix.place(x=120, y=70)
 
-        l_preferdessuffix = tk.Label(root, text="preferred des suffix")
+
+        l_preferdessuffix = tk.Label(root, text="视频描述后缀")
         l_preferdessuffix.place(x=10, y=100)
-        e_preferdessuffix = tk.Entry(
-            root, width=55, textvariable=preferdessuffix)
-        e_preferdessuffix.place(x=150, y=100)
-        lratio = tk.Label(root, text="music volumn")
+        e_preferdessuffix = tk.Entry(root, width=55, textvariable=preferdessuffix)
+        e_preferdessuffix.place(x=120, y=100)
+        lratio = tk.Label(root, text="背景音乐音量")
         lratio.place(x=10, y=150)
         elratio = tk.Entry(root, width=55, textvariable=ratio)
-        elratio.place(x=150, y=150)
+        elratio.place(x=120, y=150)
 
-        l52 = tk.Label(root, text="publish policy")
+        l52 = tk.Label(root, text="发布策略")
         l52.place(x=10, y=170)
         e52 = tk.Entry(root, width=55, textvariable=publishpolicy)
-        e52.place(x=150, y=170)
+        e52.place(x=120, y=170)
 
-        l5 = tk.Label(root, text="daily publish count")
+
+        l5 = tk.Label(root, text="每日公开视频数量")
         l5.place(x=10, y=200)
         e5 = tk.Entry(root, width=55, textvariable=dailycount)
-        e5.place(x=150, y=200)
+        e5.place(x=120, y=200)
 
-        l5_start_publish_date = tk.Label(root, text="days offset")
+        l5_start_publish_date=tk.Label(root, text="起始发布日期-当日(天数)")
         l5_start_publish_date.place(x=10, y=230)
-        e5start_publish_date = tk.Entry(
-            root, width=55, textvariable=start_publish_date)
-        e5start_publish_date.place(x=150, y=230)
+        e5start_publish_date = tk.Entry(root, width=55, textvariable=start_publish_date)
+        e5start_publish_date.place(x=120, y=230)
 
-        l64 = tk.Label(root, text="channel name")
+        
+
+
+        l64 = tk.Label(root, text="频道名称")
         l64.place(x=10, y=250)
         e64 = tk.Entry(root, width=55, textvariable=channelname)
-        e64.place(x=150, y=250)
+        e64.place(x=120, y=250)
 
-        l65 = tk.Label(root, text="video folder")
+        l65 = tk.Label(root, text="视频文件夹")
         l65.place(x=10, y=270)
         e65 = tk.Entry(root, width=55, textvariable=video_folder)
-        e65.place(x=150, y=270)
+        e65.place(x=120, y=270)
 
-        l66 = tk.Label(root, text="profile folder")
-        # 暂时屏蔽
+        l66 = tk.Label(root, text="profile文件夹")
         # l66.place(x=10, y=300)
         # e66 = tk.Entry(root, width=55, textvariable=firefox_profile_folder)
-        # e66.place(x=150, y=300)
+        # e66.place(x=120, y=300)
 
-        l67 = tk.Label(root, text="proxy")
+        l67 = tk.Label(root, text="代理配置")
         l67.place(x=10, y=330)
         e67 = tk.Entry(root, width=55, textvariable=proxy_option)
-        e67.place(x=150, y=330)
+        e67.place(x=120, y=330)
 
         l68 = tk.Label(root, text="cookie json")
         l68.place(x=10, y=360)
         e68 = tk.Entry(root, width=55, textvariable=channel_cookie)
-        e68.place(x=150, y=360)
+        e68.place(x=120, y=360)
 
         readbefore = tk.StringVar()
         readbefore.set('')
-        lbreadbefore = tk.Label(root, text=readbefore)
-
+        lbreadbefore=tk.Label(root,text=readbefore)
+        
         b5 = tk.Button(root, text="Read First", command=docs)
         b5.place(x=10, y=10)
 
-        bselect_setting_file = tk.Button(
-            root, text="load setting", command=select_setting_file)
+
+        bselect_setting_file = tk.Button(root, text="选择配置文件", command=select_setting_file)
         bselect_setting_file.place(x=10, y=400)
 
-        btestinstall = tk.Button(
-            root, text="test install", command=testinstall)
+
+
+        btestinstall = tk.Button(root, text="测试安装", command=testinstall)
         btestinstall.place(x=100, y=10)
 
-        btestsettingok = tk.Button(
-            root, text="test config", command=testsettingok)
+        btestsettingok = tk.Button(root, text="测试配置", command=testsettingok)
         btestsettingok.place(x=200, y=10)
 
-        bsave_setting = tk.Button(
-            root, text="save config", command=save_setting)
+        bsave_setting = tk.Button(root, text="保存配置", command=save_setting)
         bsave_setting.place(x=100, y=400)
 
         b61 = tk.Button(root, text="headless", command=watchuploadsteps)
         b61.place(x=280, y=10)
 
-        b62 = tk.Button(root, text="batch replace audio",
-                        command=threading.Thread(target=batchchangebgmusic).start)
-        b62.place(x=350, y=10)
-        b7 = tk.Button(root, text="start upload", command=threading.Thread(target=upload).start)
-        b7.place(x=450, y=400)
+        b62 = tk.Button(root, text="批量替换背景音乐", command=threading.Thread(target=batchchangebgmusic).start)
+        b62.place(x=350,y=10)
+        b7 = tk.Button(root, text="开始上传", command=threading.Thread(target=upload).start)
 
-        b8 = tk.Button(root, text="auto thumbnail", command=threading.Thread(target=autothumb).start)
+        b7.place(x=450, y=400)
+        b8 = tk.Button(root, text="自动生成缩略图", command=threading.Thread(target=autothumb).start)
         b8.place(x=200, y=400)
 
-        b11 = tk.Button(root, text="create uploadsession",
-                        command=createuploadsession)
-        b11.place(x=300, y=400)
+
+
+        b11 = tk.Button(root, text="创建上传任务", command=createuploadsession)
+        b11.place(x=350, y=400)
 
         menubar = tk.Menu(root)
         filemenu = tk.Menu(menubar, tearoff=False)
-        menubar.add_cascade(label="browser setting", menu=filemenu)
+        menubar.add_cascade(label="浏览器配置", menu=filemenu)
         # filemenu.add_command(label="选择geckodriver文件",
-        #  command=select_driver_file)
-        filemenu.add_command(label="choose profile folder",
+                            #  command=select_driver_file)
+        filemenu.add_command(label="选择profile文件夹",
                              command=select_profile_folder)
-        filemenu.add_command(label="choose cookie json",
+        filemenu.add_command(label="选择cookie json",
                              command=select_cookie_file)
 
         filemenu2 = tk.Menu(menubar, tearoff=False)
 
-        menubar.add_cascade(label="videos", menu=filemenu2)
-        filemenu2.add_command(label="choose video folder",
+        menubar.add_cascade(label="视频素材", menu=filemenu2)
+        filemenu2.add_command(label="选择视频文件夹",
                               command=select_videos_folder)
-        filemenu2.add_command(label="choose music folder",
+        filemenu2.add_command(label="选择背景音樂文件夹",
                               command=select_musics_folder)
 
         root.config(menu=menubar)

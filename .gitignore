@@ -10,3 +10,4 @@ assets/videos/*
 build/*
 dist/*
 screen-recording/*
+venv/*
