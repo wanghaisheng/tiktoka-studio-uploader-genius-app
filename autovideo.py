@@ -65,14 +65,26 @@ from src.dbmanipulation import *
 from src.UploadSession import *
 from PIL import Image
 import multiprocessing as mp
-from src.upload1 import *
+from src.upload import *
 from src.ai_detector import AiThumbnailGenerator
 from datetime import datetime,date,timedelta
 import asyncio
 import requests
 import re
 import calendar
+from easy_i18n.t import Ai18n
 
+config = {
+    "load_path": "/locales", # 指定在 /locales 下找对应的翻译 json文件
+    "default_module": "global", # 指定默认的全局模块，你可以为比如用户模块，订单模块单独设置翻译，如果不指定 module 则会去全局模块查找。
+}
+a_i18n = Ai18n(locales=["en", "zh"], config=config)
+
+a_i18n_labels= a_i18n.translate
+
+# after import or define a_i18n and t
+# add translation dictionary manually.
+a_i18n.add(k="hi", message="hello by added")
 # dbname = "reddit_popular"
 # Open the database and make sure there is a table with appopriate indices
 
@@ -1018,7 +1030,7 @@ if __name__ == '__main__':
 
         root.config(menu=menubar)
         # root.geometry('1280x720')
-        root.geometry('530x440')
+        root.geometry('550x440')
         root.title("youtube video auto upload GUI")
         root.resizable(width=False, height=False)
         root.iconbitmap("assets/icon.ico")

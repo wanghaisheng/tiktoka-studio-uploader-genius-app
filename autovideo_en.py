@@ -65,7 +65,7 @@ from src.UploadSession import *
 from PIL import Image
 import multiprocessing as mp
 import calendar
-from src.upload1 import *
+from src.upload import *
 from src.ai_detector import AiThumbnailGenerator
 from datetime import datetime, date, timedelta
 import asyncio

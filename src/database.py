@@ -13,7 +13,7 @@ print('start create tables')
 Base.metadata.create_all(engine)  # here we create all tables
 print('finish create tables')
 
-Session = sessionmaker(bind=engine,autoflush=True,autocommit=True)
+Session = sessionmaker(bind=engine)
 dbsession = Session()
 
 

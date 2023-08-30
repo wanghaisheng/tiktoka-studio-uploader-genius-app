@@ -1,0 +1,13 @@
+{
+        "g": {
+          "hi": "hi1",
+          "hi''": "hi''1",
+          "test": "test1",
+          "hi_only_en": "hi, only set in en.json",
+          "only en and g has this": "only default locale and module has this"
+        },
+        "user": {
+          "hi": "user:hi1",
+          "test": "user:test1"
+        }
+      }
