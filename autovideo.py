@@ -49,7 +49,9 @@ import moviepy.video.fx.all as vfx
 # here put the import lib
 import json
 import tkinter as tk
-from tkinter import OptionMenu, filedialog
+
+from tkinter import OptionMenu, filedialog,ttk
+
 import os
 import base64
 import subprocess
@@ -75,16 +77,16 @@ import calendar
 from easy_i18n.t import Ai18n
 
 config = {
-    "load_path": "/locales", # 指定在 /locales 下找对应的翻译 json文件
+    "load_path": "./locales", # 指定在 /locales 下找对应的翻译 json文件
     "default_module": "global", # 指定默认的全局模块，你可以为比如用户模块，订单模块单独设置翻译，如果不指定 module 则会去全局模块查找。
 }
 a_i18n = Ai18n(locales=["en", "zh"], config=config)
 
 a_i18n_labels= a_i18n.translate
 
+
 # after import or define a_i18n and t
 # add translation dictionary manually.
-a_i18n.add(k="hi", message="hello by added")
 # dbname = "reddit_popular"
 # Open the database and make sure there is a table with appopriate indices
 
@@ -537,6 +539,13 @@ def init_worker(mps, fps, cut):
     memorizedPaths, filepaths, cutoff = mps, fps, cut
     DG = 1##nx.read_gml("KeggComplete.gml", relabel = True)
 
+def changeDisplayLang(event):
+    print(f'change lang to locale:{monthchoosen.get()}')
+    lang=monthchoosen.get()
+    root.update()
+    root.update_idletasks()
+    print("Refresh completed.")
+    
 def batchchangebgmusic():
 
     # use all available CPUs
@@ -868,6 +877,8 @@ if __name__ == '__main__':
     gui_flag = 1
 
     # log_file = "log.txt"
+    lang="zh"
+
 
     load_setting()
 
@@ -986,24 +997,44 @@ if __name__ == '__main__':
 
 
         btestinstall = tk.Button(root, text="测试安装", command=testinstall)
-        btestinstall.place(x=100, y=10)
+        btestinstall.place(x=150, y=10)
 
         btestsettingok = tk.Button(root, text="测试配置", command=testsettingok)
-        btestsettingok.place(x=200, y=10)
+        btestsettingok.place(x=250, y=10)
 
         bsave_setting = tk.Button(root, text="保存配置", command=save_setting)
-        bsave_setting.place(x=100, y=400)
+        bsave_setting.place(x=130, y=400)
 
         b61 = tk.Button(root, text="headless", command=watchuploadsteps)
-        b61.place(x=280, y=10)
+        b61.place(x=350, y=10)
 
         b62 = tk.Button(root, text="批量替换背景音乐", command=threading.Thread(target=batchchangebgmusic).start)
-        b62.place(x=350,y=10)
+        b62.place(x=450,y=10)
+
+
+        # Label
+        # tk.Label(root, text = "Select the lang :", 
+        #         font = ("Times New Roman", 10)).grid(column = 0, 
+        #         row = 1, padx = 600, pady = 10)
+        
+        n = tk.StringVar()
+        monthchoosen = ttk.Combobox(root, width = 5, 
+                                    textvariable = n)
+        
+        # Adding combobox drop down list
+        monthchoosen['values'] = (' zh', 
+                                ' en')
+        
+        monthchoosen.grid(column = 1, row = 1,padx = 600, pady = 10)
+        monthchoosen.current(0) 
+        monthchoosen.bind("<<ComboboxSelected>>", changeDisplayLang)
+        
+                
         b7 = tk.Button(root, text="开始上传", command=threading.Thread(target=upload).start)
-        b7.place(x=450, y=400)
+        b7.place(x=500, y=400)
 
         b8 = tk.Button(root, text="自动生成缩略图", command=threading.Thread(target=autothumb).start)
-        b8.place(x=200, y=400)
+        b8.place(x=220, y=400)
 
 
 
@@ -1011,27 +1042,27 @@ if __name__ == '__main__':
         b11.place(x=350, y=400)
 
         menubar = tk.Menu(root)
-        filemenu = tk.Menu(menubar, tearoff=False)
-        menubar.add_cascade(label="浏览器配置", menu=filemenu)
+        accounts = tk.Menu(menubar, tearoff=False)
+        menubar.add_cascade(label="账号配置", menu=accounts)
         # filemenu.add_command(label="选择geckodriver文件",
                             #  command=select_driver_file)
-        filemenu.add_command(label="选择profile文件夹",
+        accounts.add_command(label="选择profile文件夹",
                              command=select_profile_folder)
-        filemenu.add_command(label="选择cookie json",
+        accounts.add_command(label="选择cookie json",
                              command=select_cookie_file)
 
-        filemenu2 = tk.Menu(menubar, tearoff=False)
+        videoassets = tk.Menu(menubar, tearoff=False)
 
-        menubar.add_cascade(label="视频素材", menu=filemenu2)
-        filemenu2.add_command(label="选择视频文件夹",
+        menubar.add_cascade(label="视频素材", menu=videoassets)
+        videoassets.add_command(label="选择视频文件夹",
                               command=select_videos_folder)
-        filemenu2.add_command(label="选择背景音樂文件夹",
+        videoassets.add_command(label="选择背景音樂文件夹",
                               command=select_musics_folder)
 
         root.config(menu=menubar)
         # root.geometry('1280x720')
-        root.geometry('550x440')
-        root.title("youtube video auto upload GUI")
+        root.geometry('750x440')
+        root.title(a_i18n_labels("title", locale=lang, module="g"))        
         root.resizable(width=False, height=False)
         root.iconbitmap("assets/icon.ico")
         root.mainloop()
