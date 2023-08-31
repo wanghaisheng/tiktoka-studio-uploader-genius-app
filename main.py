@@ -1092,6 +1092,7 @@ def render(root,lang):
     
     langchoosen.bind("<<ComboboxSelected>>", changeDisplayLang)
     root.config(menu=menubar)
+    return langchoosen.get()
 if __name__ == '__main__':
 
     gui_flag = 1
