@@ -82,8 +82,8 @@ config = {
 }
 a_i18n = Ai18n(locales=["en", "zh"], config=config)
 
-a_i18n_labels= a_i18n.translate
-
+i18labels= a_i18n.translate
+window_size='750x540'
 
 # after import or define a_i18n and t
 # add translation dictionary manually.
@@ -379,12 +379,18 @@ def docs():
     
     if docsopen==False:
         docsopen=True
-        print('show help doc')
+        print('show help doc') 
+        helptext_string=''
+        if langchoosen.get()=='zh':
         # helptext_setting="==============\n1.下载安装firefox,并创建新的profile,参考https://support.mozilla.org/en-US/kb/using-multiple-profiles\n2.安装浏览器插件Cookie-Editor，登录youtube，导出cookie\n3.免版权的音乐可以在\nhttps://icons8.com/music/\n=====================\n1.首次使用请选择对应的配置模板,比如默认private、public和schedule，文件路径为软件安装路径下的assets/config/setting-template.json,请按照自己的情况修改，修改完成后点击保存\n"+"文件和文件夹 你可以通过菜单里的浏览器配置、视频素材来点选，你也可以自行在文本框中填写\n"+"首选标签：这一批上传的视频我们想设置一些通用的标签，在这里设置，其他的标签请放在视频文件名中即可\n"+"视频描述前缀:一般而言频道的视频描述都会有个模板，类似作文里总分总结构\n"+"视频描述后缀:一般是一些免责声明之类\n"+"发布策略:0表示上传为私有，1表示上传后立马公开2表示定时公开 当你选了2,可配合每日发布数量来自动设置对应视频公开的日期,起始日期默认为上传日期+1\n频道名称:只是用来保存配置文件\ncookie json:请使用浏览器插件导出并保存\n2.第二步需要检查素材，因为目前上传逻辑中只有支持视频和缩略图名字一样才能进行上传\n背景音乐批量替换:请设置好免费音乐所在文件夹,可先对1个视频处理，调节背景音乐音量为最佳效果\n3.点击上传即可"
-        helptext_setting="==============\n1.如果是多个账户，你需要为每个账号准备一个cookie,然后每个账户配置一个单独的配置文件2.安装浏览器插件Cookie-Editor，登录youtube，导出cookie\n3.免版权的音乐可以在\nhttps://icons8.com/music/\n=====================\n1.首次使用请选择对应的配置模板,比如默认private、public和schedule，文件路径为软件安装路径下的assets/config/setting-template.json,请按照自己的情况修改，修改完成后点击保存\n"+"文件和文件夹 你可以通过菜单里的浏览器配置、视频素材来点选，你也可以自行在文本框中填写\n"+"首选标签：这一批上传的视频我们想设置一些通用的标签，在这里设置，其他的标签请放在视频文件名中即可\n"+"视频描述前缀:一般而言频道的视频描述都会有个模板，类似作文里总分总结构\n"+"视频描述后缀:一般是一些免责声明之类\n"+"发布策略:0表示上传为私有，1表示上传后立马公开2表示定时公开 当你选了2,可配合每日发布数量来自动设置对应视频公开的日期,起始日期默认为上传日期+1\n频道名称:只是用来保存配置文件\ncookie json:请使用浏览器插件导出并保存\n2.第二步需要检查素材，因为目前上传逻辑中只有支持视频和缩略图名字一样才能进行上传\n背景音乐批量替换:请设置好免费音乐所在文件夹,可先对1个视频处理，调节背景音乐音量为最佳效果\n3.点击上传即可"
+            helptext_string="==============\n1.如果是多个账户，你需要为每个账号准备一个cookie,然后每个账户配置一个单独的配置文件2.安装浏览器插件Cookie-Editor，登录youtube，导出cookie\n3.免版权的音乐可以在\nhttps://icons8.com/music/\n=====================\n1.首次使用请选择对应的配置模板,比如默认private、public和schedule，文件路径为软件安装路径下的assets/config/setting-template.json,请按照自己的情况修改，修改完成后点击保存\n"+"文件和文件夹 你可以通过菜单里的浏览器配置、视频素材来点选，你也可以自行在文本框中填写\n"+"首选标签：这一批上传的视频我们想设置一些通用的标签，在这里设置，其他的标签请放在视频文件名中即可\n"+"视频描述前缀:一般而言频道的视频描述都会有个模板，类似作文里总分总结构\n"+"视频描述后缀:一般是一些免责声明之类\n"+"发布策略:0表示上传为私有，1表示上传后立马公开2表示定时公开 当你选了2,可配合每日发布数量来自动设置对应视频公开的日期,起始日期默认为上传日期+1\n频道名称:只是用来保存配置文件\ncookie json:请使用浏览器插件导出并保存\n2.第二步需要检查素材，因为目前上传逻辑中只有支持视频和缩略图名字一样才能进行上传\n背景音乐批量替换:请设置好免费音乐所在文件夹,可先对1个视频处理，调节背景音乐音量为最佳效果\n3.点击上传即可"
+        else:
+            helptext_string="==============\n1.如果是多个账户，你需要为每个账号准备一个cookie,然后每个账户配置一个单独的配置文件2.安装浏览器插件Cookie-Editor，登录youtube，导出cookie\n3.免版权的音乐可以在\nhttps://icons8.com/music/\n=====================\n1.首次使用请选择对应的配置模板,比如默认private、public和schedule，文件路径为软件安装路径下的assets/config/setting-template.json,请按照自己的情况修改，修改完成后点击保存\n"+"文件和文件夹 你可以通过菜单里的浏览器配置、视频素材来点选，你也可以自行在文本框中填写\n"+"首选标签：这一批上传的视频我们想设置一些通用的标签，在这里设置，其他的标签请放在视频文件名中即可\n"+"视频描述前缀:一般而言频道的视频描述都会有个模板，类似作文里总分总结构\n"+"视频描述后缀:一般是一些免责声明之类\n"+"发布策略:0表示上传为私有，1表示上传后立马公开2表示定时公开 当你选了2,可配合每日发布数量来自动设置对应视频公开的日期,起始日期默认为上传日期+1\n频道名称:只是用来保存配置文件\ncookie json:请使用浏览器插件导出并保存\n2.第二步需要检查素材，因为目前上传逻辑中只有支持视频和缩略图名字一样才能进行上传\n背景音乐批量替换:请设置好免费音乐所在文件夹,可先对1个视频处理，调节背景音乐音量为最佳效果\n3.点击上传即可"
 
         newWindow = tk.Toplevel(root)
-        label_helptext_setting = tk.Label(newWindow, text = helptext_setting,anchor='e',justify='left')
+        newWindow.geometry(window_size)
+
+        label_helptext_setting = tk.Label(newWindow, text = helptext_string,anchor='e',justify='left', wraplength=450)
         label_helptext_setting.pack()
 
 
@@ -540,10 +546,26 @@ def init_worker(mps, fps, cut):
     DG = 1##nx.read_gml("KeggComplete.gml", relabel = True)
 
 def changeDisplayLang(event):
-    print(f'change lang to locale:{monthchoosen.get()}')
-    lang=monthchoosen.get()
-    root.update()
-    root.update_idletasks()
+    # if langchoosen.get()=='':
+    
+    #     langchoosen.set('zh')     
+    print(f'change lang to locale:{langchoosen.get()}')
+    
+    langchoosen.set(langchoosen.get())
+
+    # frame.destroy()
+    # render(root,langchoosen.get())
+    root = tk.Tk()
+    # root.geometry('1280x720')
+    root.geometry('750x540')
+
+    root.resizable(width=False, height=False)
+    root.iconbitmap("assets/icon.ico")
+    # root.update()        
+    render(root,langchoosen.get())
+    root.title(i18labels("title", locale=langchoosen.get(), module="g"))        
+
+    root.mainloop()    
     print("Refresh completed.")
     
 def batchchangebgmusic():
@@ -872,12 +894,191 @@ def upload():
 
             asyncio.run(bulk_scheduletopublish_specific_date(videos=othervideos,upload=upload))
 
+def render(root,lang):
+    frame = tk.Frame(root)
+    # frame.pack()    
+    prefertags = tk.StringVar()
+    prefertags.set(setting['prefertags'])
+    preferdesprefix = tk.StringVar()
+    preferdesprefix.set(setting['preferdesprefix'])
+    preferdessuffix = tk.StringVar()
+    preferdessuffix.set(setting['preferdessuffix'])
+    dailycount = tk.StringVar()
+    dailycount.set(setting['dailycount'])
+    music_folder = tk.StringVar()
+    music_folder.set(setting['music_folder'])
+
+    ratio = tk.StringVar()
+    ratio.set(setting['ratio'])        
+    video_folder = tk.StringVar()
+    video_folder.set(setting['video_folder'])
+    firefox_profile_folder = tk.StringVar()
+    firefox_profile_folder.set(setting['firefox_profile_folder'])
+    proxy_option = tk.StringVar()
+    proxy_option.set(setting['proxy_option'])
+    channelname = tk.StringVar()
+    channelname.set(setting['channelname'])
+    channel_cookie = tk.StringVar()
+    channel_cookie.set(setting['channelcookiepath'])
+    publishpolicy = tk.StringVar()
+    publishpolicy.set(setting['publishpolicy'])
+    start_publish_date = tk.StringVar()
+    start_publish_date.set(setting['start_publish_date'])
+
+    
+    l_music_folder = tk.Label(root, text=i18labels("bgVideoFolder", locale=lang, module="g"))
+    l_music_folder.place(x=10, y=130)
+    el_music_folder = tk.Entry(root, width=55, textvariable=music_folder)
+    el_music_folder.place(x=150, y=130)
+
+    l_prefertags = tk.Label(root, text=i18labels("preferTags", locale=lang, module="g"))
+    l_prefertags.place(x=10, y=50)
+    el_prefertags = tk.Entry(root, width=55, textvariable=prefertags)
+    el_prefertags.place(x=150, y=50)
+
+    l_preferdesprefix = tk.Label(root, text=i18labels("descriptionPrefix", locale=lang, module="g"))
+    l_preferdesprefix.place(x=10, y=70)
+    e_preferdesprefix = tk.Entry(root, width=55, textvariable=preferdesprefix)
+    e_preferdesprefix.place(x=150, y=70)
+
+
+    l_preferdessuffix = tk.Label(root, text=i18labels("descriptionSuffix", locale=lang, module="g"))
+    l_preferdessuffix.place(x=10, y=100)
+    e_preferdessuffix = tk.Entry(root, width=55, textvariable=preferdessuffix)
+    e_preferdessuffix.place(x=150, y=100)
+    lratio = tk.Label(root, text=i18labels("bgMucisVolume", locale=lang, module="g"))
+    lratio.place(x=10, y=150)
+    elratio = tk.Entry(root, width=55, textvariable=ratio)
+    elratio.place(x=150, y=150)
+
+    l52 = tk.Label(root, text=i18labels("publishPolicy", locale=lang, module="g"))
+    l52.place(x=10, y=170)
+    e52 = tk.Entry(root, width=55, textvariable=publishpolicy)
+    e52.place(x=150, y=170)
+
+
+    l5 = tk.Label(root, text=i18labels("dailyVideoLimit", locale=lang, module="g"))
+    l5.place(x=10, y=200)
+    e5 = tk.Entry(root, width=55, textvariable=dailycount)
+    e5.place(x=150, y=200)
+
+    l5_start_publish_date=tk.Label(root, text=i18labels("offsetDays", locale=lang, module="g"))
+    l5_start_publish_date.place(x=10, y=230)
+    e5start_publish_date = tk.Entry(root, width=55, textvariable=start_publish_date)
+    e5start_publish_date.place(x=150, y=230)
+
+    
+
+
+    l64 = tk.Label(root, text=i18labels("channelName", locale=lang, module="g"))
+    l64.place(x=10, y=250)
+    e64 = tk.Entry(root, width=55, textvariable=channelname)
+    e64.place(x=150, y=250)
+
+    l65 = tk.Label(root, text=i18labels("videoFolder", locale=lang, module="g"))
+    l65.place(x=10, y=270)
+    e65 = tk.Entry(root, width=55, textvariable=video_folder)
+    e65.place(x=150, y=270)
+
+    l66 = tk.Label(root, text=i18labels("profileFolder", locale=lang, module="g"))
+    # l66.place(x=10, y=300)
+    # e66 = tk.Entry(root, width=55, textvariable=firefox_profile_folder)
+    # e66.place(x=120, y=300)
+
+    l67 = tk.Label(root, text=i18labels("proxySetting", locale=lang, module="g"))
+    l67.place(x=10, y=330)
+    e67 = tk.Entry(root, width=55, textvariable=proxy_option)
+    e67.place(x=150, y=330)
+
+    l68 = tk.Label(root, text="cookie json")
+    l68.place(x=10, y=360)
+    e68 = tk.Entry(root, width=55, textvariable=channel_cookie)
+    e68.place(x=150, y=360)
+
+    readbefore = tk.StringVar()
+    readbefore.set('')
+    lbreadbefore=tk.Label(root,text=readbefore)
+    
+    b5 = tk.Button(root, text="Read First", command=docs)
+    b5.place(x=10, y=10)
+
+
+    bselect_setting_file = tk.Button(root, text=i18labels("select_setting_file", locale=lang, module="g"), command=select_setting_file)
+    bselect_setting_file.place(x=10, y=400)
+
+
+
+    btestinstall = tk.Button(root, text=i18labels("testinstall", locale=lang, module="g"), command=testinstall)
+    btestinstall.place(x=150, y=10)
+
+    btestsettingok = tk.Button(root, text=i18labels("testsettingok", locale=lang, module="g"), command=testsettingok)
+    btestsettingok.place(x=250, y=10)
+
+    bsave_setting = tk.Button(root, text=i18labels("save_setting", locale=lang, module="g"), command=save_setting)
+    bsave_setting.place(x=130, y=400)
+
+    b61 = tk.Button(root, text="headless", command=watchuploadsteps)
+    b61.place(x=350, y=10)
+
+    b62 = tk.Button(root, text=i18labels("batchchangebgmusic", locale=lang, module="g"), command=threading.Thread(target=batchchangebgmusic).start)
+    b62.place(x=450,y=10)
+
+
+    # Label
+    # tk.Label(root, text = "Select the lang :", 
+    #         font = ("Times New Roman", 10)).grid(column = 0, 
+    #         row = 1, padx = 600, pady = 10)
+    
+    langlabel = tk.StringVar()
+    global langchoosen 
+
+    langchoosen = ttk.Combobox(root, width = 5, 
+                                textvariable = langlabel)
+    
+    # Adding combobox drop down list
+    langchoosen['values'] = ('zh', 'en')
+    
+    langchoosen.grid(column = 1, row = 1,padx = 600, pady = 10)
+    
+    langchoosen.set(lang)
+
+    langchoosen.bind("<<ComboboxSelected>>", changeDisplayLang)
+    b7 = tk.Button(root, text=i18labels("upload", locale=lang, module="g"), command=threading.Thread(target=upload).start)
+    b7.place(x=500, y=400)
+
+    b8 = tk.Button(root, text=i18labels("autothumb", locale=lang, module="g"), command=threading.Thread(target=autothumb).start)
+    b8.place(x=220, y=400)
+
+
+
+    b11 = tk.Button(root, text=i18labels("createuploadsession", locale=lang, module="g"), command=createuploadsession)
+    b11.place(x=350, y=400)
+
+    menubar = tk.Menu(root)
+    accounts = tk.Menu(menubar, tearoff=False)
+    menubar.add_cascade(label=i18labels("accounts", locale=lang, module="g"), menu=accounts)
+    # filemenu.add_command(label="选择geckodriver文件",
+                        #  command=select_driver_file)
+    accounts.add_command(label=i18labels("select_profile_folder", locale=lang, module="g"),
+                            command=select_profile_folder)
+    accounts.add_command(label=i18labels("select_cookie_file", locale=lang, module="g"),
+                            command=select_cookie_file)
+
+    videoassets = tk.Menu(menubar, tearoff=False)
+
+    menubar.add_cascade(label=i18labels("videoassets", locale=lang, module="g"), menu=videoassets)
+    videoassets.add_command(label=i18labels("select_videos_folder", locale=lang, module="g"),
+                            command=select_videos_folder)
+    videoassets.add_command(label=i18labels("select_musics_folder", locale=lang, module="g"),
+                            command=select_musics_folder)
+
+    root.config(menu=menubar)
+    return langchoosen.get()
 if __name__ == '__main__':
 
     gui_flag = 1
 
     # log_file = "log.txt"
-    lang="zh"
 
 
     load_setting()
@@ -885,184 +1086,13 @@ if __name__ == '__main__':
     if gui_flag:
 
         root = tk.Tk()
-        prefertags = tk.StringVar()
-        prefertags.set(setting['prefertags'])
-        preferdesprefix = tk.StringVar()
-        preferdesprefix.set(setting['preferdesprefix'])
-        preferdessuffix = tk.StringVar()
-        preferdessuffix.set(setting['preferdessuffix'])
-        dailycount = tk.StringVar()
-        dailycount.set(setting['dailycount'])
-        music_folder = tk.StringVar()
-        music_folder.set(setting['music_folder'])
-
-        ratio = tk.StringVar()
-        ratio.set(setting['ratio'])        
-        video_folder = tk.StringVar()
-        video_folder.set(setting['video_folder'])
-        firefox_profile_folder = tk.StringVar()
-        firefox_profile_folder.set(setting['firefox_profile_folder'])
-        proxy_option = tk.StringVar()
-        proxy_option.set(setting['proxy_option'])
-        channelname = tk.StringVar()
-        channelname.set(setting['channelname'])
-        channel_cookie = tk.StringVar()
-        channel_cookie.set(setting['channelcookiepath'])
-        publishpolicy = tk.StringVar()
-        publishpolicy.set(setting['publishpolicy'])
-        start_publish_date = tk.StringVar()
-        start_publish_date.set(setting['start_publish_date'])
-
-        
-        l_music_folder = tk.Label(root, text="背景音乐文件夹")
-        l_music_folder.place(x=10, y=130)
-        el_music_folder = tk.Entry(root, width=55, textvariable=music_folder)
-        el_music_folder.place(x=120, y=130)
-
-        l_prefertags = tk.Label(root, text="首选标签")
-        l_prefertags.place(x=10, y=50)
-        el_prefertags = tk.Entry(root, width=55, textvariable=prefertags)
-        el_prefertags.place(x=120, y=50)
-
-        l_preferdesprefix = tk.Label(root, text="视频描述前缀")
-        l_preferdesprefix.place(x=10, y=70)
-        e_preferdesprefix = tk.Entry(root, width=55, textvariable=preferdesprefix)
-        e_preferdesprefix.place(x=120, y=70)
-
-
-        l_preferdessuffix = tk.Label(root, text="视频描述后缀")
-        l_preferdessuffix.place(x=10, y=100)
-        e_preferdessuffix = tk.Entry(root, width=55, textvariable=preferdessuffix)
-        e_preferdessuffix.place(x=120, y=100)
-        lratio = tk.Label(root, text="背景音乐音量")
-        lratio.place(x=10, y=150)
-        elratio = tk.Entry(root, width=55, textvariable=ratio)
-        elratio.place(x=120, y=150)
-
-        l52 = tk.Label(root, text="发布策略")
-        l52.place(x=10, y=170)
-        e52 = tk.Entry(root, width=55, textvariable=publishpolicy)
-        e52.place(x=120, y=170)
-
-
-        l5 = tk.Label(root, text="每日公开视频数量")
-        l5.place(x=10, y=200)
-        e5 = tk.Entry(root, width=55, textvariable=dailycount)
-        e5.place(x=120, y=200)
-
-        l5_start_publish_date=tk.Label(root, text="起始发布日期-当日(天数)")
-        l5_start_publish_date.place(x=10, y=230)
-        e5start_publish_date = tk.Entry(root, width=55, textvariable=start_publish_date)
-        e5start_publish_date.place(x=120, y=230)
-
-        
-
-
-        l64 = tk.Label(root, text="频道名称")
-        l64.place(x=10, y=250)
-        e64 = tk.Entry(root, width=55, textvariable=channelname)
-        e64.place(x=120, y=250)
-
-        l65 = tk.Label(root, text="视频文件夹")
-        l65.place(x=10, y=270)
-        e65 = tk.Entry(root, width=55, textvariable=video_folder)
-        e65.place(x=120, y=270)
-
-        l66 = tk.Label(root, text="profile文件夹")
-        # l66.place(x=10, y=300)
-        # e66 = tk.Entry(root, width=55, textvariable=firefox_profile_folder)
-        # e66.place(x=120, y=300)
-
-        l67 = tk.Label(root, text="代理配置")
-        l67.place(x=10, y=330)
-        e67 = tk.Entry(root, width=55, textvariable=proxy_option)
-        e67.place(x=120, y=330)
-
-        l68 = tk.Label(root, text="cookie json")
-        l68.place(x=10, y=360)
-        e68 = tk.Entry(root, width=55, textvariable=channel_cookie)
-        e68.place(x=120, y=360)
-
-        readbefore = tk.StringVar()
-        readbefore.set('')
-        lbreadbefore=tk.Label(root,text=readbefore)
-        
-        b5 = tk.Button(root, text="Read First", command=docs)
-        b5.place(x=10, y=10)
-
-
-        bselect_setting_file = tk.Button(root, text="选择配置文件", command=select_setting_file)
-        bselect_setting_file.place(x=10, y=400)
-
-
-
-        btestinstall = tk.Button(root, text="测试安装", command=testinstall)
-        btestinstall.place(x=150, y=10)
-
-        btestsettingok = tk.Button(root, text="测试配置", command=testsettingok)
-        btestsettingok.place(x=250, y=10)
-
-        bsave_setting = tk.Button(root, text="保存配置", command=save_setting)
-        bsave_setting.place(x=130, y=400)
-
-        b61 = tk.Button(root, text="headless", command=watchuploadsteps)
-        b61.place(x=350, y=10)
-
-        b62 = tk.Button(root, text="批量替换背景音乐", command=threading.Thread(target=batchchangebgmusic).start)
-        b62.place(x=450,y=10)
-
-
-        # Label
-        # tk.Label(root, text = "Select the lang :", 
-        #         font = ("Times New Roman", 10)).grid(column = 0, 
-        #         row = 1, padx = 600, pady = 10)
-        
-        n = tk.StringVar()
-        monthchoosen = ttk.Combobox(root, width = 5, 
-                                    textvariable = n)
-        
-        # Adding combobox drop down list
-        monthchoosen['values'] = (' zh', 
-                                ' en')
-        
-        monthchoosen.grid(column = 1, row = 1,padx = 600, pady = 10)
-        monthchoosen.current(0) 
-        monthchoosen.bind("<<ComboboxSelected>>", changeDisplayLang)
-        
-                
-        b7 = tk.Button(root, text="开始上传", command=threading.Thread(target=upload).start)
-        b7.place(x=500, y=400)
-
-        b8 = tk.Button(root, text="自动生成缩略图", command=threading.Thread(target=autothumb).start)
-        b8.place(x=220, y=400)
-
-
-
-        b11 = tk.Button(root, text="创建上传任务", command=createuploadsession)
-        b11.place(x=350, y=400)
-
-        menubar = tk.Menu(root)
-        accounts = tk.Menu(menubar, tearoff=False)
-        menubar.add_cascade(label="账号配置", menu=accounts)
-        # filemenu.add_command(label="选择geckodriver文件",
-                            #  command=select_driver_file)
-        accounts.add_command(label="选择profile文件夹",
-                             command=select_profile_folder)
-        accounts.add_command(label="选择cookie json",
-                             command=select_cookie_file)
-
-        videoassets = tk.Menu(menubar, tearoff=False)
-
-        menubar.add_cascade(label="视频素材", menu=videoassets)
-        videoassets.add_command(label="选择视频文件夹",
-                              command=select_videos_folder)
-        videoassets.add_command(label="选择背景音樂文件夹",
-                              command=select_musics_folder)
-
-        root.config(menu=menubar)
         # root.geometry('1280x720')
-        root.geometry('750x440')
-        root.title(a_i18n_labels("title", locale=lang, module="g"))        
+        root.geometry(window_size)
+
         root.resizable(width=False, height=False)
         root.iconbitmap("assets/icon.ico")
+        # root.update()        
+        lang =render(root,'zh')
+        root.title(i18labels("title", locale=lang, module="g"))        
+
         root.mainloop()

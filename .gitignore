@@ -11,3 +11,4 @@ build/*
 dist/*
 screen-recording/*
 venv/*
+*.sqlite3
