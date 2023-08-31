@@ -1,6 +1,6 @@
 {
 	"g": {
-		"title": "youtube video auto upload GUI",
+		"title": "Youtube Video Bulk Upload GUI Demo",
 		"select_musics_folder''": "choose music folder",
 		"select_videos_folder": "choose video folder",
 		"videoassets": "videos",
@@ -11,10 +11,14 @@
 		"autothumb": "auto thumbnail",
 		"upload": "start upload",
 		"batchchangebgmusic": "batch replace audio",
-		"watchuploadsteps": "headless",
+		"watchuploadsteps": "silent mode",
+		"recordvideo": "record video",
 		"save_setting": "save config",
+		"chooseLang": "choose lang:",
+
 		"testsettingok": "test config",
 		"testinstall": "test install",
+		"testnetwork": "test network",
 		"select_setting_file": "load setting",
 		"docs": "Read First",
 		"cookiejson": "cookie json",

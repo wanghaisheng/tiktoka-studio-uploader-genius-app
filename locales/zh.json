@@ -1,7 +1,7 @@
 {
 	"g": {
-		"title": "youtube 视频批量上传助手",
-		"select_musics_folder''": "选择背景音樂文件夹",
+		"title": "youtube 视频批量上传助手测试版",
+		"select_musics_folder": "选择背景音樂文件夹",
 		"select_videos_folder": "选择视频文件夹",
 		"videoassets": "视频素材",
 		"select_cookie_file": "选择cookie json",
@@ -11,13 +11,19 @@
 		"autothumb": "自动生成缩略图",
 		"upload": "开始上传",
 		"batchchangebgmusic": "批量替换背景音乐",
-		"watchuploadsteps": "headless",
+		"watchuploadsteps": "静默模式",
+		"recordvideo": "录像模式",
+
 		"save_setting": "保存配置",
 		"testsettingok": "测试配置",
+		"testnetwork": "测试网络",
+		
+		"chooseLang": "选择语言:",
+
 		"testinstall": "测试安装",
 		"select_setting_file": "选择配置文件",
 		"docs": "Read First",
-		"cookiejson": "cookie json",
+		"cookiejson": "cookie json 文件",
 		"proxySetting": "代理配置",
 		"profileFolder": "profile文件夹",
 		"videoFolder": "视频文件夹",

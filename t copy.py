@@ -396,19 +396,15 @@ def install():
     # subprocess.check_call([sys.executable, "-m", "playwright ", "install"])
     subprocess.check_call(["playwright ", "install"])
 
-def testInstallRequirements():
+def testinstall():
     print('check install requirments')
-
-def testNetwork():
-    if  proxy_option=='':
+def testsettingok():
+    if not proxy_option=='':
         if url_ok('www.youtube.com'):        
             print('is proxy setting ok')
         else:
             print('please check your proxy setting\nsocks5://127.0.0.1:1080\nhttp://proxy.example.com:8080\n222.165.235.2:80\n')
         
-
-def ValidateSetting():
-    print('validate your upload settings')
 headless=True
 def watchuploadsteps():
     global headless
@@ -417,10 +413,6 @@ def watchuploadsteps():
         headless=False
     else:
         headless=True
-
-def recordvideo():
-    global is_record_video
-    
 
 def select_setting_file():
 
@@ -899,9 +891,8 @@ def upload():
 
 def render(root,lang):
     global frame
-    frame=tk.Frame(root,width=750,  height=540,  )
-    frame.pack()
-    # frame.pack()    
+    frame=tk.Frame(root,width=750,  height=540 )
+    frame.pack()    
     prefertags = tk.StringVar()
     prefertags.set(setting['prefertags'])
     preferdesprefix = tk.StringVar()
@@ -995,7 +986,7 @@ def render(root,lang):
     e67 = tk.Entry(frame, width=55, textvariable=proxy_option)
     e67.place(x=150, y=330)
 
-    l68 = tk.Label(frame, text=i18labels("cookiejson", locale=lang, module="g"))
+    l68 = tk.Label(frame, text="cookie json")
     l68.place(x=10, y=360)
     e68 = tk.Entry(frame, width=55, textvariable=channel_cookie)
     e68.place(x=150, y=360)
@@ -1008,53 +999,43 @@ def render(root,lang):
     b5.place(x=10, y=10)
 
 
+    bselect_setting_file = tk.Button(frame, text=i18labels("select_setting_file", locale=lang, module="g"), command=select_setting_file)
+    bselect_setting_file.place(x=10, y=400)
 
 
 
+    btestinstall = tk.Button(frame, text=i18labels("testinstall", locale=lang, module="g"), command=testinstall)
+    btestinstall.place(x=150, y=10)
+
+    btestsettingok = tk.Button(frame, text=i18labels("testsettingok", locale=lang, module="g"), command=testsettingok)
+    btestsettingok.place(x=250, y=10)
+
+    bsave_setting = tk.Button(frame, text=i18labels("save_setting", locale=lang, module="g"), command=save_setting)
+    bsave_setting.place(x=130, y=400)
 
     b61 = tk.Button(frame, text=i18labels("watchuploadsteps", locale=lang, module="g"), command=watchuploadsteps)
     b61.place(x=350, y=10)
 
-
-    b_recordvideo = tk.Button(frame, text=i18labels("recordvideo", locale=lang, module="g"), command=recordvideo)
-    b_recordvideo.place(x=250, y=10)
+    b62 = tk.Button(frame, text=i18labels("batchchangebgmusic", locale=lang, module="g"), command=threading.Thread(target=batchchangebgmusic).start)
+    b62.place(x=450,y=10)
 
 
     # Label
     # tk.Label(frame, text = "Select the lang :", 
     #         font = ("Times New Roman", 10)).grid(column = 0, 
     #         row = 1, padx = 600, pady = 10)
-
-    btestNetwork = tk.Button(frame, text=i18labels("testnetwork", locale=lang, module="g"), command=testNetwork)
-    btestNetwork.place(x=10, y=400)
-
-
-    btestinstall = tk.Button(frame, text=i18labels("testinstall", locale=lang, module="g"), command=testInstallRequirements)
-    btestinstall.place(x=130, y=400)
-
-    b62 = tk.Button(frame, text=i18labels("batchchangebgmusic", locale=lang, module="g"), command=threading.Thread(target=batchchangebgmusic).start)
-    b62.place(x=450,y=400)
-    b8 = tk.Button(frame, text=i18labels("autothumb", locale=lang, module="g"), command=threading.Thread(target=autothumb).start)
-    b8.place(x=220, y=400)
-
-    bselect_setting_file = tk.Button(frame, text=i18labels("select_setting_file", locale=lang, module="g"), command=select_setting_file)
-    bselect_setting_file.place(x=10, y=450)
-
-
-    btestsettingok = tk.Button(frame, text=i18labels("testsettingok", locale=lang, module="g"), command=ValidateSetting)
-    btestsettingok.place(x=130, y=450)
-
-    bsave_setting = tk.Button(frame, text=i18labels("save_setting", locale=lang, module="g"), command=save_setting)
-    bsave_setting.place(x=130, y=10)
+    
 
     b7 = tk.Button(frame, text=i18labels("upload", locale=lang, module="g"), command=threading.Thread(target=upload).start)
-    b7.place(x=500, y=450)
+    b7.place(x=500, y=400)
 
+    b8 = tk.Button(frame, text=i18labels("autothumb", locale=lang, module="g"), command=threading.Thread(target=autothumb).start)
+    b8.place(x=220, y=400)
 
 
 
     b11 = tk.Button(frame, text=i18labels("createuploadsession", locale=lang, module="g"), command=createuploadsession)
-    b11.place(x=350, y=450)
+    b11.place(x=350, y=400)
 
     menubar = tk.Menu(root)
     accounts = tk.Menu(menubar, tearoff=False)
@@ -1073,23 +1054,20 @@ def render(root,lang):
                             command=select_videos_folder)
     videoassets.add_command(label=i18labels("select_musics_folder", locale=lang, module="g"),
                             command=select_musics_folder)
-    l_lang = tk.Label(frame, text=i18labels("chooseLang", locale=lang, module="g"))
-    l_lang.place(x=520, y=10)
-
     langlabel = tk.StringVar()
     global langchoosen 
 
-    langchoosen = ttk.Combobox(root, width = 5, 
+    langchoosen = ttk.Combobox(frame, width = 5, 
                                 textvariable = langlabel)
     
     # Adding combobox drop down list
     langchoosen['values'] = ('zh', 'en')
     
-    # langchoosen.place(in_=frame,  relx=0.5,  anchor=tk.E)
-    langchoosen.place(in_=frame, y=10,x=600)
-    langchoosen.set(lang)
-    langchoosen.set(langchoosen.get())
+    langchoosen.grid(column = 1, row = 1,padx = 600, pady = 10)
     
+    langchoosen.set(lang)
+    frame.pack()
+
     langchoosen.bind("<<ComboboxSelected>>", changeDisplayLang)
     root.config(menu=menubar)
 if __name__ == '__main__':
