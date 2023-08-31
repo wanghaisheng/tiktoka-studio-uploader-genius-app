@@ -13,6 +13,8 @@
 		"batchchangebgmusic": "批量替换背景音乐",
 		"watchuploadsteps": "静默模式",
 		"recordvideo": "录像模式",
+		
+		"hiddenwatermark": "添加隐形水印",
 
 		"save_setting": "保存配置",
 		"testsettingok": "测试配置",

@@ -569,7 +569,9 @@ def changeDisplayLang(event):
 
     # root.mainloop()    
     print("Refresh completed.")
-    
+
+def hiddenwatermark():
+    print('add hiddenwatermark to each video for  copyright theft')
 def batchchangebgmusic():
 
     # use all available CPUs
@@ -674,8 +676,30 @@ def autothumb():
         else:
             print("pls choose file or folder")
 
+
+def genVideoMetas():
+    save_setting()
+# 文件夹下是否有视频文件
+
+# 视频文件是否有同名的图片
+
+    try:
+        video_folder_path = setting['video_folder']
+
+    except NameError:
+        print('not found fastlane folder  file')
+    else:
+        if video_folder_path:
+            if os.path.exists(video_folder_path):
+                check_video_thumb_pair(video_folder_path,True)
+            else:
+                print("there is no defined video dir.")
+        else:
+            print("pls choose file or folder")
+    print('save metas to json /csv excel format for later processing')
 def createuploadsession():
     save_setting()
+    print('load video metas to database .create upload task for each video')
 # 文件夹下是否有视频文件
 
 # 视频文件是否有同名的图片
@@ -951,69 +975,72 @@ def render(root,lang):
     l_preferdessuffix.place(x=10, y=100)
     e_preferdessuffix = tk.Entry(frame, width=55, textvariable=preferdessuffix)
     e_preferdessuffix.place(x=150, y=100)
-    lratio = tk.Label(frame, text=i18labels("bgMucisVolume", locale=lang, module="g"))
-    lratio.place(x=10, y=150)
-    elratio = tk.Entry(frame, width=55, textvariable=ratio)
-    elratio.place(x=150, y=150)
+    l_bgMucisVolume = tk.Label(frame, text=i18labels("bgMucisVolume", locale=lang, module="g"))
+    l_bgMucisVolume.place(x=10, y=150)
+    e_bgMucisVolume = tk.Entry(frame, width=55, textvariable=ratio)
+    e_bgMucisVolume.place(x=150, y=150)
 
-    l52 = tk.Label(frame, text=i18labels("publishPolicy", locale=lang, module="g"))
-    l52.place(x=10, y=170)
-    e52 = tk.Entry(frame, width=55, textvariable=publishpolicy)
-    e52.place(x=150, y=170)
+    l_publishpolicy = tk.Label(frame, text=i18labels("publishPolicy", locale=lang, module="g"))
+    l_publishpolicy.place(x=10, y=170)
+    e_publishpolicy = tk.Entry(frame, width=55, textvariable=publishpolicy)
+    e_publishpolicy.place(x=150, y=170)
 
 
-    l5 = tk.Label(frame, text=i18labels("dailyVideoLimit", locale=lang, module="g"))
-    l5.place(x=10, y=200)
-    e5 = tk.Entry(frame, width=55, textvariable=dailycount)
-    e5.place(x=150, y=200)
+    l_dailycount = tk.Label(frame, text=i18labels("dailyVideoLimit", locale=lang, module="g"))
+    l_dailycount.place(x=10, y=200)
 
-    l5_start_publish_date=tk.Label(frame, text=i18labels("offsetDays", locale=lang, module="g"))
-    l5_start_publish_date.place(x=10, y=230)
-    e5start_publish_date = tk.Entry(frame, width=55, textvariable=start_publish_date)
-    e5start_publish_date.place(x=150, y=230)
+
+
+    e_dailycount = tk.Entry(frame, width=55, textvariable=dailycount)
+    e_dailycount.place(x=150, y=200)
+
+    l_start_publish_date=tk.Label(frame, text=i18labels("offsetDays", locale=lang, module="g"))
+    l_start_publish_date.place(x=10, y=230)
+    e_start_publish_date = tk.Entry(frame, width=55, textvariable=start_publish_date)
+    e_start_publish_date.place(x=150, y=230)
 
     
 
 
-    l64 = tk.Label(frame, text=i18labels("channelName", locale=lang, module="g"))
-    l64.place(x=10, y=250)
-    e64 = tk.Entry(frame, width=55, textvariable=channelname)
-    e64.place(x=150, y=250)
+    l_channelname = tk.Label(frame, text=i18labels("channelName", locale=lang, module="g"))
+    l_channelname.place(x=10, y=250)
+    e_channelname = tk.Entry(frame, width=55, textvariable=channelname)
+    e_channelname.place(x=150, y=250)
 
-    l65 = tk.Label(frame, text=i18labels("videoFolder", locale=lang, module="g"))
-    l65.place(x=10, y=270)
-    e65 = tk.Entry(frame, width=55, textvariable=video_folder)
-    e65.place(x=150, y=270)
+    l_video_folder = tk.Label(frame, text=i18labels("videoFolder", locale=lang, module="g"))
+    l_video_folder.place(x=10, y=270)
+    e_video_folder = tk.Entry(frame, width=55, textvariable=video_folder)
+    e_video_folder.place(x=150, y=270)
 
-    l66 = tk.Label(frame, text=i18labels("profileFolder", locale=lang, module="g"))
-    # l66.place(x=10, y=300)
-    # e66 = tk.Entry(frame, width=55, textvariable=firefox_profile_folder)
-    # e66.place(x=120, y=300)
+    l_firefox_profile_folder = tk.Label(frame, text=i18labels("profileFolder", locale=lang, module="g"))
+    l_firefox_profile_folder.place(x=10, y=300)
+    e_firefox_profile_folder = tk.Entry(frame, width=55, textvariable=firefox_profile_folder)
+    e_firefox_profile_folder.place(x=150, y=300)
 
-    l67 = tk.Label(frame, text=i18labels("proxySetting", locale=lang, module="g"))
-    l67.place(x=10, y=330)
-    e67 = tk.Entry(frame, width=55, textvariable=proxy_option)
-    e67.place(x=150, y=330)
+    l_proxy_option = tk.Label(frame, text=i18labels("proxySetting", locale=lang, module="g"))
+    l_proxy_option.place(x=10, y=330)
+    e_proxy_option = tk.Entry(frame, width=55, textvariable=proxy_option)
+    e_proxy_option.place(x=150, y=330)
 
-    l68 = tk.Label(frame, text=i18labels("cookiejson", locale=lang, module="g"))
-    l68.place(x=10, y=360)
-    e68 = tk.Entry(frame, width=55, textvariable=channel_cookie)
-    e68.place(x=150, y=360)
+    l_channel_cookie = tk.Label(frame, text=i18labels("cookiejson", locale=lang, module="g"))
+    l_channel_cookie.place(x=10, y=360)
+    e_channel_cookie = tk.Entry(frame, width=55, textvariable=channel_cookie)
+    e_channel_cookie.place(x=150, y=360)
 
     readbefore = tk.StringVar()
     readbefore.set('')
-    lbreadbefore=tk.Label(frame,text=readbefore)
+    l_readbefore=tk.Label(frame,text=readbefore)
     
-    b5 = tk.Button(frame, text="Read First", command=docs)
-    b5.place(x=10, y=10)
+    b_readfist = tk.Button(frame, text="Read First", command=docs)
+    b_readfist.place(x=10, y=10)
 
 
 
 
 
 
-    b61 = tk.Button(frame, text=i18labels("watchuploadsteps", locale=lang, module="g"), command=watchuploadsteps)
-    b61.place(x=350, y=10)
+    b_watchuploadsteps = tk.Button(frame, text=i18labels("watchuploadsteps", locale=lang, module="g"), command=watchuploadsteps)
+    b_watchuploadsteps.place(x=350, y=10)
 
 
     b_recordvideo = tk.Button(frame, text=i18labels("recordvideo", locale=lang, module="g"), command=recordvideo)
@@ -1025,36 +1052,45 @@ def render(root,lang):
     #         font = ("Times New Roman", 10)).grid(column = 0, 
     #         row = 1, padx = 600, pady = 10)
 
-    btestNetwork = tk.Button(frame, text=i18labels("testnetwork", locale=lang, module="g"), command=testNetwork)
-    btestNetwork.place(x=10, y=400)
+    b_testNetwork = tk.Button(frame, text=i18labels("testnetwork", locale=lang, module="g"), command=testNetwork)
+    b_testNetwork.place(x=10, y=400)
 
 
-    btestinstall = tk.Button(frame, text=i18labels("testinstall", locale=lang, module="g"), command=testInstallRequirements)
-    btestinstall.place(x=130, y=400)
+    b_testinstall = tk.Button(frame, text=i18labels("testinstall", locale=lang, module="g"), command=testInstallRequirements)
+    b_testinstall.place(x=130, y=400)
+    b_autothumb = tk.Button(frame, text=i18labels("autothumb", locale=lang, module="g"), command=threading.Thread(target=autothumb).start)
+    b_autothumb.place(x=220, y=400)
+    b_batchchangebgmusic = tk.Button(frame, text=i18labels("batchchangebgmusic", locale=lang, module="g"), command=threading.Thread(target=batchchangebgmusic).start)
+    b_batchchangebgmusic.place(x=350,y=400)
 
-    b62 = tk.Button(frame, text=i18labels("batchchangebgmusic", locale=lang, module="g"), command=threading.Thread(target=batchchangebgmusic).start)
-    b62.place(x=450,y=400)
-    b8 = tk.Button(frame, text=i18labels("autothumb", locale=lang, module="g"), command=threading.Thread(target=autothumb).start)
-    b8.place(x=220, y=400)
-
-    bselect_setting_file = tk.Button(frame, text=i18labels("select_setting_file", locale=lang, module="g"), command=select_setting_file)
-    bselect_setting_file.place(x=10, y=450)
-
-
-    btestsettingok = tk.Button(frame, text=i18labels("testsettingok", locale=lang, module="g"), command=ValidateSetting)
-    btestsettingok.place(x=130, y=450)
-
-    bsave_setting = tk.Button(frame, text=i18labels("save_setting", locale=lang, module="g"), command=save_setting)
-    bsave_setting.place(x=130, y=10)
-
-    b7 = tk.Button(frame, text=i18labels("upload", locale=lang, module="g"), command=threading.Thread(target=upload).start)
-    b7.place(x=500, y=450)
+    b_hiddenwatermark = tk.Button(frame, text=i18labels("hiddenwatermark", locale=lang, module="g"), command=threading.Thread(target=hiddenwatermark).start)
+    b_hiddenwatermark.place(x=500,y=400)
 
 
 
+    b_select_setting_file = tk.Button(frame, text=i18labels("select_setting_file", locale=lang, module="g"), command=select_setting_file)
+    b_select_setting_file.place(x=10, y=450)
 
-    b11 = tk.Button(frame, text=i18labels("createuploadsession", locale=lang, module="g"), command=createuploadsession)
-    b11.place(x=350, y=450)
+
+    b_testsettingok = tk.Button(frame, text=i18labels("testsettingok", locale=lang, module="g"), command=ValidateSetting)
+    b_testsettingok.place(x=130, y=450)
+
+    b_save_setting = tk.Button(frame, text=i18labels("save_setting", locale=lang, module="g"), command=save_setting)
+    b_save_setting.place(x=130, y=10)
+
+
+
+    b_gen_video_metas = tk.Button(frame, text=i18labels("genVideoMetas", locale=lang, module="g"), command=genVideoMetas)
+    b_gen_video_metas.place(x=220, y=450)
+
+    b_createuploadsession = tk.Button(frame, text=i18labels("createuploadsession", locale=lang, module="g"), command=createuploadsession)
+    b_createuploadsession.place(x=350, y=450)
+
+
+
+    b_upload = tk.Button(frame, text=i18labels("upload", locale=lang, module="g"), command=threading.Thread(target=upload).start)
+    b_upload.place(x=500, y=450)
+
 
     menubar = tk.Menu(root)
     accounts = tk.Menu(menubar, tearoff=False)
@@ -1073,8 +1109,8 @@ def render(root,lang):
                             command=select_videos_folder)
     videoassets.add_command(label=i18labels("select_musics_folder", locale=lang, module="g"),
                             command=select_musics_folder)
-    l_lang = tk.Label(frame, text=i18labels("chooseLang", locale=lang, module="g"))
-    l_lang.place(x=520, y=10)
+    l_chooseLang = tk.Label(frame, text=i18labels("chooseLang", locale=lang, module="g"))
+    l_chooseLang.place(x=520, y=10)
 
     langlabel = tk.StringVar()
     global langchoosen 
