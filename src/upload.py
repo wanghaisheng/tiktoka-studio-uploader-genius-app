@@ -9,21 +9,21 @@ import asyncio
 # upload = Upload(
 # )
 
-async def startUpload(profilepath="",proxy_option="",watcheveryuploadstep=True,CHANNEL_COOKIES='',username='',password='',recordvideo=True):
+async def startUpload(root_profile_directory="",use_stealth_js=False,proxy_option="",is_open_browser=True,debug=True,channel_cookie_path='',wait_policy="go next after copyright check success",username='',password='',is_record_video=True):
     uploadSetting=UploadSetting(
-        # use r"" for paths, this will not give formatting errors e.g. "\n"
-        root_profile_directory="",
-        proxy_option=proxy_option,
-        headless=False,
-        debug=True,
-        use_stealth_js=False,
-        # if you want to silent background running, set watcheveryuploadstep false
-        CHANNEL_COOKIES=CHANNEL_COOKIES,
-        username=username,
-        browserType="firefox",
-        closewhen100percent="go next after copyright check success",
-        password=password,
-        recordvideo=True)
+    root_profile_directory="",
+    proxy_option=proxy_option,
+    is_open_browser=False,
+    debug=True,
+    use_stealth_js=False,
+    # if you want to silent background running, set watcheveryuploadstep false
+    channel_cookie_path=channel_cookie_path,
+    username=username,
+    browser_type="firefox",
+    wait_policy="go next after copyright check success",
+    password=password,
+    is_record_video=True
+        )
 
 
 
@@ -33,7 +33,7 @@ async def startUpload(profilepath="",proxy_option="",watcheveryuploadstep=True,C
 async def instantpublish(uploadSession:UploadSession,upload:YoutubeUpload):
 
     await upload.upload(
-        video_local_path=uploadSession.videopath,
+        local_path=uploadSession.videopath,
         video_title=uploadSession.title,
         video_description=uploadSession.des,
         thumbnail_locapath=uploadSession.thumbpath,
@@ -46,7 +46,7 @@ async def instantpublish(uploadSession:UploadSession,upload:YoutubeUpload):
 
 async def privatedraft(uploadSession:UploadSession,upload:YoutubeUpload):
     await upload.upload(
-        video_local_path=uploadSession.videopath,
+        local_path=uploadSession.videopath,
         video_title=uploadSession.title,
         video_description=uploadSession.des,
         thumbnail_locapath=uploadSession.thumbpath,
@@ -68,7 +68,7 @@ async def scheduletopublish_specific_date(uploadSession:UploadSession,upload:You
 
     # publish_date = datetime.strftime(publish_date, "%Y-%m-%d %H:%M:%S")
     await upload.upload(
-        video_local_path=uploadSession.videopath,
+        local_path=uploadSession.videopath,
         video_title=uploadSession.title,
         video_description=uploadSession.des,
         thumbnail_locapath=uploadSession.thumbpath,

@@ -65,7 +65,7 @@ import concurrent
 from glob import glob
 from src.dbmanipulation import *
 from src.UploadSession import *
-from PIL import Image
+from PIL import Image,ImageTk
 import multiprocessing as mp
 from src.upload import *
 from src.ai_detector import AiThumbnailGenerator
@@ -74,6 +74,8 @@ import asyncio
 import requests
 import re
 import calendar
+from tsup.utils.webdriver.setupPL import checkRequirments
+
 from easy_i18n.t import Ai18n
 config = {
     "load_path": "./locales", # 指定在 /locales 下找对应的翻译 json文件
@@ -82,8 +84,9 @@ config = {
 a_i18n = Ai18n(locales=["en", "zh"], config=config)
 
 i18labels= a_i18n.translate
-window_size='750x540'
-lang='zh'
+window_size='1024x720'
+height=720
+width=1024
 # after import or define a_i18n and t
 # add translation dictionary manually.
 # dbname = "reddit_popular"
@@ -190,18 +193,18 @@ def load_setting():
         try:
             fp = open('latest-used-setting.txt', 'r', encoding='utf-8')
             settingfile=fp.readlines()[0]
-            print('读取最近保存的配置文件',settingfile)
+            print(i18labels("start-loading-setting", locale='en', module="g"),settingfile)
 
             fp = open(settingfile, 'r', encoding='utf-8')
             setting_json = fp.read()
             fp.close()
         except:
-            print('读取配置文件失败 加载默认模版')
+            print(i18labels("loading-default-setting", locale='en', module="g"))
             fp = open("./assets/config/demo.json", 'r', encoding='utf-8')
             setting_json = fp.read()
             fp.close()
     else:
-        print('读取配置文件失败 加载默认模版')
+        print(i18labels("loading-default-setting", locale='en', module="g"))
         fp = open("./assets/config/demo.json", 'r', encoding='utf-8')
         setting_json = fp.read()
         fp.close()        
@@ -288,8 +291,10 @@ def save_setting():
         if music_folder_path:
             setting['music_folder'] = music_folder_path
 
-
+    setting['is_record_video'] = is_record_video.get()
+    setting['is_open_browser'] = is_open_browser.get()    
     setting['ratio'] = ratio.get()
+    setting['debug'] = is_debug.get()
 
     setting['dailycount'] = dailycount.get()
     setting['channelname'] = channelname.get()
@@ -374,23 +379,60 @@ def select_musics_folder():
 
 docsopen=False
 def docs():
-
-    print('show help doc') 
-    helptext_string=''
-    if langchoosen.get()=='zh':
-    # helptext_setting="==============\n1.下载安装firefox,并创建新的profile,参考https://support.mozilla.org/en-US/kb/using-multiple-profiles\n2.安装浏览器插件Cookie-Editor，登录youtube，导出cookie\n3.免版权的音乐可以在\nhttps://icons8.com/music/\n=====================\n1.首次使用请选择对应的配置模板,比如默认private、public和schedule，文件路径为软件安装路径下的assets/config/setting-template.json,请按照自己的情况修改，修改完成后点击保存\n"+"文件和文件夹 你可以通过菜单里的浏览器配置、视频素材来点选，你也可以自行在文本框中填写\n"+"首选标签：这一批上传的视频我们想设置一些通用的标签，在这里设置，其他的标签请放在视频文件名中即可\n"+"视频描述前缀:一般而言频道的视频描述都会有个模板，类似作文里总分总结构\n"+"视频描述后缀:一般是一些免责声明之类\n"+"发布策略:0表示上传为私有，1表示上传后立马公开2表示定时公开 当你选了2,可配合每日发布数量来自动设置对应视频公开的日期,起始日期默认为上传日期+1\n频道名称:只是用来保存配置文件\ncookie json:请使用浏览器插件导出并保存\n2.第二步需要检查素材，因为目前上传逻辑中只有支持视频和缩略图名字一样才能进行上传\n背景音乐批量替换:请设置好免费音乐所在文件夹,可先对1个视频处理，调节背景音乐音量为最佳效果\n3.点击上传即可"
-        helptext_string="==============\n1.如果是多个账户，你需要为每个账号准备一个cookie,然后每个账户配置一个单独的配置文件2.安装浏览器插件Cookie-Editor，登录youtube，导出cookie\n3.免版权的音乐可以在\nhttps://icons8.com/music/\n=====================\n1.首次使用请选择对应的配置模板,比如默认private、public和schedule，文件路径为软件安装路径下的assets/config/setting-template.json,请按照自己的情况修改，修改完成后点击保存\n"+"文件和文件夹 你可以通过菜单里的浏览器配置、视频素材来点选，你也可以自行在文本框中填写\n"+"首选标签：这一批上传的视频我们想设置一些通用的标签，在这里设置，其他的标签请放在视频文件名中即可\n"+"视频描述前缀:一般而言频道的视频描述都会有个模板，类似作文里总分总结构\n"+"视频描述后缀:一般是一些免责声明之类\n"+"发布策略:0表示上传为私有，1表示上传后立马公开2表示定时公开 当你选了2,可配合每日发布数量来自动设置对应视频公开的日期,起始日期默认为上传日期+1\n频道名称:只是用来保存配置文件\ncookie json:请使用浏览器插件导出并保存\n2.第二步需要检查素材，因为目前上传逻辑中只有支持视频和缩略图名字一样才能进行上传\n背景音乐批量替换:请设置好免费音乐所在文件夹,可先对1个视频处理，调节背景音乐音量为最佳效果\n3.点击上传即可"
-    else:
-        helptext_string="==============\n1.如果是多个账户，你需要为每个账号准备一个cookie,然后每个账户配置一个单独的配置文件2.安装浏览器插件Cookie-Editor，登录youtube，导出cookie\n3.免版权的音乐可以在\nhttps://icons8.com/music/\n=====================\n1.首次使用请选择对应的配置模板,比如默认private、public和schedule，文件路径为软件安装路径下的assets/config/setting-template.json,请按照自己的情况修改，修改完成后点击保存\n"+"文件和文件夹 你可以通过菜单里的浏览器配置、视频素材来点选，你也可以自行在文本框中填写\n"+"首选标签：这一批上传的视频我们想设置一些通用的标签，在这里设置，其他的标签请放在视频文件名中即可\n"+"视频描述前缀:一般而言频道的视频描述都会有个模板，类似作文里总分总结构\n"+"视频描述后缀:一般是一些免责声明之类\n"+"发布策略:0表示上传为私有，1表示上传后立马公开2表示定时公开 当你选了2,可配合每日发布数量来自动设置对应视频公开的日期,起始日期默认为上传日期+1\n频道名称:只是用来保存配置文件\ncookie json:请使用浏览器插件导出并保存\n2.第二步需要检查素材，因为目前上传逻辑中只有支持视频和缩略图名字一样才能进行上传\n背景音乐批量替换:请设置好免费音乐所在文件夹,可先对1个视频处理，调节背景音乐音量为最佳效果\n3.点击上传即可"
-
     newWindow = tk.Toplevel(root)
     newWindow.geometry(window_size)
 
-    label_helptext_setting = tk.Label(newWindow, text = helptext_string,anchor='e',justify='left', wraplength=450)
+    label_helptext_setting = tk.Label(newWindow, text = i18labels("docs_str", locale='en', module="g").replace('\\n','\n'),justify='left', wraplength=450)
+    label_helptext_setting.pack()
+def version():
+    newWindow = tk.Toplevel(root)
+    newWindow.geometry(window_size)
+    # print(type(i18labels("version_str", locale='en', module="g")))
+    # print(str(i18labels("version_str", locale='en', module="g")))
+    # if '\\n' in i18labels("version_str", locale='en', module="g"):
+    #     print('111111111111')
+    # print(type("First line\n and this is the second"))
+    # print("First line\n and this is the second")
+    # if '\n' in "First line\n and this is the second":
+    #     print('22222222222')    
+    label_helptext_setting = tk.Label(newWindow, 
+                                      text = i18labels("version_str", locale='en', module="g").replace('\\n','\n'),
+                                    #   text = "First line\n and this is the second",
+                                      justify='left')
     label_helptext_setting.pack()
 
 
+def contact():
+    newWindow = tk.Toplevel(root)
+    newWindow.geometry(window_size)
+    # due to \n in json string should in \\n, so read it from json  need to convert to original 
+    label_helptext_setting = tk.Label(newWindow, text = i18labels("contact_str", locale=lang, module="g").replace('\\n','\n'),anchor='e',justify='left', wraplength=450)
+    label_helptext_setting.pack()
 
+    group = tk.Label(newWindow, text =i18labels("contact_str_group", locale=lang, module="g"),anchor='e',justify='left')
+    group.pack()
+    path_group = './assets/feishu-chatgroup.jpg'
+    img_group = Image.open(path_group)
+    photo_group = ImageTk.PhotoImage(img_group)
+    
+    label_group = tk.Label(newWindow,image=photo_group,height=400, width=256)
+    label_group.pack()
+
+    personal = tk.Label(newWindow, text = i18labels("contact_str_personal", locale=lang, module="g").replace('\\n','\n'),anchor='e',justify='left')
+    personal.pack()
+    path_personal = './assets/wechat.jpg'
+    img_personal = Image.open(path_personal)
+    photo_personal = ImageTk.PhotoImage(img_personal)#在root实例化创建，否则会报错
+    
+    label_personal = tk.Label(newWindow,image=photo_personal,height=400, width=256)
+    label_personal.pack()
+
+    newWindow.mainloop()
+
+def get_record_video():
+    is_record_video=record_video.get()
+def get_is_open_browser():
+    is_open_browser=open_browser.get()
 
 def install():
     # subprocess.check_call([sys.executable, "-m", "playwright ", "install"])
@@ -398,7 +440,7 @@ def install():
 
 def testInstallRequirements():
     print('check install requirments')
-
+    checkRequirments()
 def testNetwork():
     if  proxy_option=='':
         if url_ok('www.youtube.com'):        
@@ -409,27 +451,39 @@ def testNetwork():
 
 def ValidateSetting():
     print('validate your upload settings')
-headless=True
-def watchuploadsteps():
-    global headless
-    
-    if headless==True:
-        headless=False
-    else:
-        headless=True
 
-def recordvideo():
-    global is_record_video
+
     
 
 def select_setting_file():
+    ROOT_DIR = os.path.dirname(
+        os.path.abspath(__file__)
+    )
+    default_setting_path=''
+    if os.path.exists('latest-used-setting.txt') :
+        try:
+            fp = open('latest-used-setting.txt', 'r', encoding='utf-8')
+            default_setting_path=fp.readlines()[0]
+            print('读取最近保存的配置文件',default_setting_path)
+
+
+        except:
+            print('读取配置文件失败 加载默认模版')
+            default_setting_path ="./assets/config/demo.json"
+
+    else:
+        print('读取配置文件失败 加载默认模版')
+        default_setting_path ="./assets/config/demo.json"
+
+
+
+    print('======',ROOT_DIR+os.path.sep+default_setting_path)
 
     global setting_file
-    setting_file = filedialog.askopenfilenames(title="请选择该频道配置文件", filetypes=[
+    setting_file = filedialog.askopenfilenames(initialdir=ROOT_DIR,initialfile=ROOT_DIR+os.path.sep+default_setting_path,title="请选择该频道配置文件", filetypes=[
         ("Json", "*.json"), ("All Files", "*")])[0]
     load_setting()
     firefox_profile_folder_path = setting['firefox_profile_folder']
-    print('393======',firefox_profile_folder_path)
     firefox_profile_folder.set(firefox_profile_folder_path)
 
     proxy_option.set(setting['proxy_option'])
@@ -550,25 +604,16 @@ def changeDisplayLang(event):
     # if langchoosen.get()=='':
     
     #     langchoosen.set('zh')     
-    print(f'change lang to locale:{langchoosen.get()}')
     
-    langchoosen.set(langchoosen.get())
+    # langchoosen.set(langchoosen.get())
+    global lang
     lang=langchoosen.get()
+
     frame.destroy()
     root.title(i18labels("title", locale=lang, module="g"))        
 
     render(root,lang)
-    # root = tk.Tk()
-    # root.geometry('750x540')
-
-    # root.resizable(width=False, height=False)
-    # root.iconbitmap("assets/icon.ico")
-    # root.update()        
-    # render(root,lang)
-    # root.title(i18labels("title", locale=lang, module="g"))        
-
-    # root.mainloop()    
-    print("Refresh completed.")
+    print(f'switch lang to locale:{lang}')
 
 def hiddenwatermark():
     print('add hiddenwatermark to each video for  copyright theft')
@@ -675,6 +720,17 @@ def autothumb():
             check_video_thumb_pair(video_folder_path,False)
         else:
             print("pls choose file or folder")
+def editVideoMetas():
+    print('edit prepared video metas in json format')
+
+def importVideoMetas():
+    print('import prepared video metas in json format')
+    global video_meta_json_path
+    video_meta_json_path = filedialog.askopenfilenames(title="choose video meta json file", filetypes=[
+        ("Json", "*.json"), ("All Files", "*")])[0]
+
+    # channel_cookie.set(channel_cookie_path)
+    # setting['channelcookiepath'] = channel_cookie_path
 
 
 def genVideoMetas():
@@ -691,7 +747,7 @@ def genVideoMetas():
     else:
         if video_folder_path:
             if os.path.exists(video_folder_path):
-                check_video_thumb_pair(video_folder_path,True)
+                check_video_thumb_pair(video_folder_path,False)
             else:
                 print("there is no defined video dir.")
         else:
@@ -758,6 +814,9 @@ def check_video_thumb_pair(folder,session):
                             print( videopath,thumbpath,filename,start_index,setting['channelname'],settingid)
 
                             prepareuploadsession( videopath,thumbpath,filename,start_index,setting['channelname'],settingid)
+                            print('all video added to task list,you should start uploading next ')
+                        else:
+                            print('save video meta json to local disk')
                         start_index=start_index+1
                         videopair+=1
 
@@ -857,11 +916,11 @@ def upload():
         uploadsessionid
         if uploadsessionid is None:
             print('weir error',uploadsessionid)
-            createuploadsession()
+            # createuploadsession()
     except:
 
         print('before upload,you need create upload session first')
-        createuploadsession()
+        # createuploadsession()
 
     videos=Query_undone_videos_in_channel()
     print('there is ',len(videos),' video need to uploading for task ')
@@ -873,24 +932,27 @@ def upload():
         if url_ok('http://www.google.com'):
             print('network is fine,there is no need for proxy ')
             setting['proxy_option']=""
-            print('start browser in headless mode',headless)
+            print('start browser in headless mode',is_open_browser)
 
         else:
             print('google can not be access ')
 
             print('we need for proxy ',setting['proxy_option'])   
-            print('start browser in headless mode',headless,setting['proxy_option'])
+            print('start browser in headless mode',is_open_browser,setting['proxy_option'])
         upload =  YoutubeUpload(
-                # use r"" for paths, this will not give formatting errors e.g. "\n"
                 root_profile_directory=setting['firefox_profile_folder'],
-                
                 proxy_option=setting['proxy_option'],
-                watcheveryuploadstep=headless,
+                is_open_browser=is_open_browser,
+                debug=True,
+                use_stealth_js=False,
                 # if you want to silent background running, set watcheveryuploadstep false
-                CHANNEL_COOKIES=setting['channelcookiepath'],
-                username='username',
-                password='password',
-                recordvideo=headless
+                channel_cookie_path=setting['channelcookiepath'],
+                username=setting['username'],
+                browser_type='firefox',
+                wait_policy="go next after copyright check success",
+                password=setting['password'],
+                is_record_video=setting['is_record_video']
+
                 # for test purpose we need to check the video step by step ,
             )
 
@@ -923,9 +985,19 @@ def upload():
 
 def render(root,lang):
     global frame
-    frame=tk.Frame(root,width=750,  height=540,  )
+    frame=tk.Frame(root,width=str(width),  height=str(height),  )
     frame.pack()
-    # frame.pack()    
+    # frame.pack()  
+    # 
+    global is_debug,is_open_browser,is_record_video,start_publish_date,channelname,ratio,publishpolicy,prefertags,preferdesprefix,preferdessuffix,channel_cookie,proxy_option,firefox_profile_folder,video_folder,dailycount,music_folder
+    is_debug = tk.BooleanVar()
+    is_debug.set(setting['is_debug']) 
+
+    is_open_browser = tk.BooleanVar()
+    is_open_browser.set(setting['is_open_browser']) 
+    is_record_video = tk.BooleanVar()
+    is_record_video.set(setting['is_record_video'])
+
     prefertags = tk.StringVar()
     prefertags.set(setting['prefertags'])
     preferdesprefix = tk.StringVar()
@@ -953,7 +1025,11 @@ def render(root,lang):
     publishpolicy.set(setting['publishpolicy'])
     start_publish_date = tk.StringVar()
     start_publish_date.set(setting['start_publish_date'])
+    username = tk.StringVar()
+    username.set(setting['username'])
 
+    password = tk.StringVar()
+    password.set(setting['password'])    
     
     l_music_folder = tk.Label(frame, text=i18labels("bgVideoFolder", locale=lang, module="g"))
     l_music_folder.place(in_=frame, x=10, y=130)
@@ -1027,69 +1103,85 @@ def render(root,lang):
     e_channel_cookie = tk.Entry(frame, width=55, textvariable=channel_cookie)
     e_channel_cookie.place(x=150, y=360)
 
-    readbefore = tk.StringVar()
-    readbefore.set('')
-    l_readbefore=tk.Label(frame,text=readbefore)
+    l_username = tk.Label(frame, text=i18labels("username", locale=lang, module="g"))
+    l_username.place(x=10, y=390)
+    e_username = tk.Entry(frame, width=55, textvariable=username)
+    e_username.place(x=150, y=390)
+
+    l_password = tk.Label(frame, text=i18labels("password", locale=lang, module="g"))
+    l_password.place(x=10, y=420)
+    e_password = tk.Entry(frame, width=55, textvariable=password)
+    e_password.place(x=150, y=420)
+
+
+
     
-    b_readfist = tk.Button(frame, text="Read First", command=docs)
-    b_readfist.place(x=10, y=10)
+    # b_readfist = tk.Button(frame, text="Read First", command=docs)
+    # b_readfist.place(x=10, y=10)
 
 
 
 
+    
+
+    b_is_open_browser = tk.Checkbutton(frame, text=i18labels("is_open_browser", locale=lang, module="g"), variable=is_open_browser)
+    b_is_open_browser.place(x=350, y=10)
 
 
-    b_watchuploadsteps = tk.Button(frame, text=i18labels("watchuploadsteps", locale=lang, module="g"), command=watchuploadsteps)
-    b_watchuploadsteps.place(x=350, y=10)
+    b_recordvideo = tk.Checkbutton(frame, text=i18labels("is_record_video", locale=lang, module="g"), variable=is_record_video)
+    b_recordvideo.place(x=260, y=10)
 
 
-    b_recordvideo = tk.Button(frame, text=i18labels("recordvideo", locale=lang, module="g"), command=recordvideo)
-    b_recordvideo.place(x=250, y=10)
+    b_debug = tk.Checkbutton(frame, text=i18labels("debug", locale=lang, module="g"), variable=is_debug)
+    b_debug.place(x=180, y=10)
 
 
-    # Label
-    # tk.Label(frame, text = "Select the lang :", 
-    #         font = ("Times New Roman", 10)).grid(column = 0, 
-    #         row = 1, padx = 600, pady = 10)
-
-    b_testNetwork = tk.Button(frame, text=i18labels("testnetwork", locale=lang, module="g"), command=testNetwork)
-    b_testNetwork.place(x=10, y=400)
-
-
-    b_testinstall = tk.Button(frame, text=i18labels("testinstall", locale=lang, module="g"), command=testInstallRequirements)
-    b_testinstall.place(x=130, y=400)
-    b_autothumb = tk.Button(frame, text=i18labels("autothumb", locale=lang, module="g"), command=threading.Thread(target=autothumb).start)
-    b_autothumb.place(x=220, y=400)
-    b_batchchangebgmusic = tk.Button(frame, text=i18labels("batchchangebgmusic", locale=lang, module="g"), command=threading.Thread(target=batchchangebgmusic).start)
-    b_batchchangebgmusic.place(x=350,y=400)
-
-    b_hiddenwatermark = tk.Button(frame, text=i18labels("hiddenwatermark", locale=lang, module="g"), command=threading.Thread(target=hiddenwatermark).start)
-    b_hiddenwatermark.place(x=500,y=400)
-
-
+    b_save_setting = tk.Button(frame, text=i18labels("save_setting", locale=lang, module="g"), command=lambda: threading.Thread(target=save_setting).start())
+    b_save_setting.place(x=100, y=10)
 
     b_select_setting_file = tk.Button(frame, text=i18labels("select_setting_file", locale=lang, module="g"), command=select_setting_file)
-    b_select_setting_file.place(x=10, y=450)
-
-
-    b_testsettingok = tk.Button(frame, text=i18labels("testsettingok", locale=lang, module="g"), command=ValidateSetting)
-    b_testsettingok.place(x=130, y=450)
-
-    b_save_setting = tk.Button(frame, text=i18labels("save_setting", locale=lang, module="g"), command=save_setting)
-    b_save_setting.place(x=130, y=10)
+    b_select_setting_file.place(x=10, y=10)
 
 
 
-    b_gen_video_metas = tk.Button(frame, text=i18labels("genVideoMetas", locale=lang, module="g"), command=genVideoMetas)
-    b_gen_video_metas.place(x=220, y=450)
-
-    b_createuploadsession = tk.Button(frame, text=i18labels("createuploadsession", locale=lang, module="g"), command=createuploadsession)
-    b_createuploadsession.place(x=350, y=450)
 
 
+    b_testNetwork = tk.Button(frame, text=i18labels("testnetwork", locale=lang, module="g"), command=lambda: threading.Thread(target=testNetwork).start())
+    b_testNetwork.place(x=10, y=int(height-200))
 
-    b_upload = tk.Button(frame, text=i18labels("upload", locale=lang, module="g"), command=threading.Thread(target=upload).start)
-    b_upload.place(x=500, y=450)
+
+    b_testinstall = tk.Button(frame, text=i18labels("testinstall", locale=lang, module="g"), command=lambda: threading.Thread(target=testInstallRequirements).start())
+    b_testinstall.place(x=130, y=int(height-200))
+
+    b_testsettingok = tk.Button(frame, text=i18labels("testsettingok", locale=lang, module="g"), command=lambda: threading.Thread(target=ValidateSetting).start())
+    b_testsettingok.place(x=230, y=int(height-200))
+    b_gen_video_metas = tk.Button(frame, text=i18labels("genVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=genVideoMetas).start())
+    b_gen_video_metas.place(x=10, y=int(height-150))
+
+    b_autothumb = tk.Button(frame, text=i18labels("autothumb", locale=lang, module="g"), command=lambda: threading.Thread(target=autothumb).start())
+    b_autothumb.place(x=220, y=int(height-150))
+    b_batchchangebgmusic = tk.Button(frame, text=i18labels("batchchangebgmusic", locale=lang, module="g"), command=lambda: threading.Thread(target=batchchangebgmusic).start())
+    b_batchchangebgmusic.place(x=350,y=int(height-150))
+
+    b_hiddenwatermark = tk.Button(frame, text=i18labels("hiddenwatermark", locale=lang, module="g"), command=lambda: threading.Thread(target=hiddenwatermark))
+    b_hiddenwatermark.place(x=500,y=int(height-150))
+
+
+
+
+    b_editVideoMetas = tk.Button(frame, text=i18labels("editVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=editVideoMetas).start())
+    b_editVideoMetas.place(x=10, y=int(height-100))
+
+    b_import_video_metas = tk.Button(frame, text=i18labels("importVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=importVideoMetas).start())
+    b_import_video_metas.place(x=200, y=int(height-100))
+
+    b_createuploadsession = tk.Button(frame, text=i18labels("createuploadsession", locale=lang, module="g"), command=lambda: threading.Thread(target=createuploadsession).start())
+    b_createuploadsession.place(x=350, y=int(height-100))
+
+
+
+    b_upload = tk.Button(frame, text=i18labels("upload", locale=lang, module="g"), command=lambda: threading.Thread(target=upload).start())
+    b_upload.place(x=500, y=int(height-100))
 
 
     menubar = tk.Menu(root)
@@ -1109,8 +1201,19 @@ def render(root,lang):
                             command=select_videos_folder)
     videoassets.add_command(label=i18labels("select_musics_folder", locale=lang, module="g"),
                             command=select_musics_folder)
+    helpcenter = tk.Menu(menubar, tearoff=False)
+
+    menubar.add_cascade(label=i18labels("helpcenter", locale=lang, module="g"), menu=helpcenter)
+    helpcenter.add_command(label=i18labels("docs", locale=lang, module="g"),
+                            command=docs)
+    helpcenter.add_command(label=i18labels("contact", locale=lang, module="g"),
+                            command=contact)
+    helpcenter.add_command(label=i18labels("version", locale=lang, module="g"),
+                            command=version)    
+        
+
     l_chooseLang = tk.Label(frame, text=i18labels("chooseLang", locale=lang, module="g"))
-    l_chooseLang.place(x=520, y=10)
+    l_chooseLang.place(x=440, y=10)
 
     langlabel = tk.StringVar()
     global langchoosen 
@@ -1122,10 +1225,8 @@ def render(root,lang):
     langchoosen['values'] = ('zh', 'en')
     
     # langchoosen.place(in_=frame,  relx=0.5,  anchor=tk.E)
-    langchoosen.place(in_=frame, y=10,x=600)
-    langchoosen.set(lang)
-    langchoosen.set(langchoosen.get())
-    
+    langchoosen.place(in_=frame, y=10,x=480)
+    langchoosen.set(lang)    
     langchoosen.bind("<<ComboboxSelected>>", changeDisplayLang)
     root.config(menu=menubar)
     return langchoosen.get()
