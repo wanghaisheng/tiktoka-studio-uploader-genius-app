@@ -1,0 +1,22 @@
+{
+    "driverfilepath": "",
+    "firefox_profile_folder": "",
+    "video_folder": "/Users/wenke/github/tiktoka-studio-uploader-app/assets/videos",
+    "dailycount": "1",
+    "preferdesprefix": "",
+    "preferdessuffix": "",
+    "proxy_option": "socks5://127.0.0.1:1080",
+    "publishpolicy": "2",
+    "channelname": "mac",
+    "username": "",
+    "password": "",
+    "ratio": "1",
+    "start_publish_date": "1",
+    "is_debug": false,
+    "is_record_video": true,
+    "is_open_browser": true,
+    "music_folder": "/Users/wenke/github/tiktoka-studio-uploader-app/assets/musics",
+    "channelcookiepath": "/Users/wenke/github/tiktoka-studio-uploader-app/assets/cookie/aww.json",
+    "prefertags": "",
+    "debug": false
+}

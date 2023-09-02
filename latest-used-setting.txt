@@ -1,1 +1,1 @@
-./assets/config/capcut.json
+./assets/config/mac.json
