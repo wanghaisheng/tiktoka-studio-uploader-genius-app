@@ -1,66 +1,70 @@
-# autovideo
+
+
+## 缩略图生成
+
+1.随机抽取关键帧作为缩略图底版
+2.抽取视频第一帧作为缩略图底版
+3.读取指定文件夹中的图片作为缩略图底版
+4.读取缩略图模板，渲染缩略图
+
+
+## 代理管理
+1.导入代理列表，自动按地理位置分组
+
+## 账号管理
+
+1.新增账号，填写用户名、密码，自动生成cookie
+2.账号绑定代理，最少选择一个，可选择同一地理位置的多个作为候选，默认连接失败自动切换到候选代理
 
 
 
+## 上传配置和元数据管理
 
-# Future plan
+1.纯手动编辑视频元数据，需提前手动准备视频、缩略图等配套信息，使用编辑器
 
-## invisible watermark 
-
-
- Youtube/TikTok Has A Serious Content Theft Problem 
- when you encounter  a copyright complaint,you will find how helpless you are.with invisible watermark  technology, it can be strong evidence for you instead of visible logo watermark which can easily cutoff
- 
-According to your individual needs and preferences, you can use a brand logo, a text with your name, company name or website, a signature, and more as your watermark.
+https://jsoncrack.com/editor
 
 
+2、自动生成元数据并导出json文件，用户仍可二次编辑导出的json文件。
 
-Install virtualenv and create the environment in your project folder.
+* 新建上传配置，填写账号、代理信息，描述前缀、后缀、标签、发布策略等。
+默认自动加载上一次使用的配置文件
 
-1
-2
+* 选择视频文件夹，生成视频元数据底版文件，
 
-	
+2.0 视频预处理
+2.0.1 去除背景音乐
+2.0.2 使用无版权音乐
+2.0.3 埋入隐形水印
+2.1 如果视频文件夹下存在同名图片，则视为缩略图
+2.2 如果视频文件夹下不存在同名图片，则可执行缩略图生成任务
+2.3 如果视频文件夹下存在同名txt，则视为视频描述
+2.4 根据定时发布策略、文件夹下的视频数量和每日公开数量上限，规划每个视频的定时公开日期
+2.4.1 策略：每日一发
+每日公开数量为1,
+* 如果发布时间段未选择，使用默认的10:15,
+* 如果仅提供了一个发布时间段，比如9:00，则使用该时间段。
+* 如果提供了多个时间段，则随机从中选择一个作为视频公开时间段
 
-pip install virtualenv
-virtualenv venv 
+2.4.2 策略:每日二发
+每日公开数量为2，
+* 如果发布时间段未选择，使用默认的10:15,
+* 如果仅提供了一个发布时间段，比如9:00，则使用该时间段。
+* 如果仅提供了两个发布时间段，比如9:00，14:00,则分别使用该时间段。
+* 如果提供了多个时间段，则随机从中选择两个个作为视频公开时间段
 
-Activate it!
-
-For Linux
-
-1
-
-	
-
-source ./venv/bin/activate
-
-For Windows
-
-1
-
-	
-
-"venv/Scripts/activate"
+2.4.3 策略: 每日4发 每日6发
+规则如上所示，依此类推
 
 
 
-if you already cd your project type only in windows 10
+## 上传任务管理
 
-Scripts/activate
-
-
-
-powershell
-```
-$env:PLAYWRIGHT_BROWSERS_PATH="0"
-playwright install firefox
-pyinstaller babala.py
-```
-
-pip uninstall asyncio 
-
-
-https://t.wss.ink/f/8m5iv53j171 复制链接到浏览器打开
-传输链接：https://cowtransfer.com/s/a3b0f677456845 或 打开【奶牛快传】cowtransfer.com 使用传输口令：bvvub2 提取；
+1.导入已准备好的视频元数据，可以是单个账号单视频，单个账号多视频，多个账号单视频，多个账号多视频，
+元数据格式请参考，每组视频对应一个上传配置项(上传该视频所使用的代理、账号等)，导入完成后自动创建上传任务
+2.可查看待上传任务列表，编辑对应字段和优先顺序
+3.点击上传可自动拉取待上传队列，执行上传动作，上传完成后返回视频id，更新视频上传状态
+3.1 如果存在置顶评论，则在视频上传完成后继续执行留评动作，完成后记录状态
+4.可查看已上传任务列表
+5.可查看上传失败任务列表，可设置自动重试
 
