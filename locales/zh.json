@@ -10,7 +10,11 @@
 		"createuploadsession": "创建上传任务",
 		"autothumb": "自动生成缩略图",
 		"testupload": "开始上传前測試",
-
+		"proxymanage": "代理管理",
+		"addproxy": "新增代理",
+		"accountmanage": "账号管理",
+		"addaccount": "新增账号",		
+		
 		"upload": "开始上传",
 		"batchchangebgmusic": "批量替换背景音乐",
 		"is_open_browser": "静默模式",

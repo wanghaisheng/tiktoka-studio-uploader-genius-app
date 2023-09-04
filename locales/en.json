@@ -10,7 +10,11 @@
 		"createuploadsession": "create uploadsession",
 		"autothumb": "auto thumbnail",
 		"testupload": "test video upload ",
-
+		"proxymanage": "proxies",
+		"addproxy": "新增代理",
+		"accountmanage": "账号管理",
+		"addaccount": "新增账号",		
+		
 		"upload": "start upload",
 		"batchchangebgmusic": "batch replace audio",
 		"is_open_browser": "silent mode",

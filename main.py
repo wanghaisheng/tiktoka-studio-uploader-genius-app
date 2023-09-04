@@ -480,6 +480,18 @@ def testNetwork():
             else:
                 print('you should provide valid your proxy setting,format as follows \nsocks5://127.0.0.1:1080\nhttp://proxy.example.com:8080\n222.165.235.2:80\n')
     print('netwrork and proxy test is done')
+def proxyManage():
+    print('import proxy list file')
+    print('copy proxy list and parse')
+    print('validate proxy list and save')
+def accountManage():
+    print('import account list file')
+    print('copy account list and parse')
+    print('validate account list and save')
+    print('set account password choose platform')
+
+    
+
 def ValidateSetting():
     print('start to validate your upload settings')
     time.sleep(4)
@@ -1409,7 +1421,29 @@ def render(root,lang):
     
     setups.add_command(label=i18labels("testsettingok", locale=lang, module="g"),
                             command=lambda: threading.Thread(target=ValidateSetting).start())
-    
+        
+    proxymanage = tk.Menu(menubar, tearoff=False)
+
+    menubar.add_cascade(label=i18labels("proxymanage", locale=lang, module="g"), menu=proxymanage)
+    proxymanage.add_command(label=i18labels("addproxy", locale=lang, module="g"),
+                            command=proxyManage)
+
+
+    accountmanage = tk.Menu(menubar, tearoff=False)
+
+    menubar.add_cascade(label=i18labels("accountmanage", locale=lang, module="g"), menu=accountmanage)
+    accountmanage.add_command(label=i18labels("addaccount", locale=lang, module="g"),
+                            command=accountManage)
+        
+
+    # autoThumbPage = tk.Menu(menubar, tearoff=False)
+
+    # menubar.add_cascade(label=i18labels("metamanage", locale=lang, module="g"), menu=metamanage)
+    # metamanage.add_command(label=i18labels("autothumb", locale=lang, module="g"),
+    #                         command=autoThumbPage)
+    # metamanage.add_command(label=i18labels("autothumb", locale=lang, module="g"),
+    #                         command=autoThumb)
+        
         
     helpcenter = tk.Menu(menubar, tearoff=False)
 
