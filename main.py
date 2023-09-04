@@ -517,7 +517,7 @@ def create_setting_file():
     preferdesprefix.set(setting['preferdesprefix'])
     
     dailycount.set(setting['dailycount'])
-    channelname.set('hints:we use this as setting file name,you should change it')
+    channelname.set('hints-we use this as setting file name,you should change it')
     music_folder_path= setting['music_folder']
     publishpolicy.set(setting['publishpolicy'])
     music_folder.set(music_folder_path)
