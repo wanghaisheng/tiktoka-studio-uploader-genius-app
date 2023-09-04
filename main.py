@@ -353,34 +353,50 @@ def save_setting(dbm):
 
 def select_profile_folder():
     global firefox_profile_folder_path
-    firefox_profile_folder_path = filedialog.askdirectory(
+    try:
+        firefox_profile_folder_path = filedialog.askdirectory(
         parent=root, initialdir="/", title='Please select a directory')
-    if os.path.exists(firefox_profile_folder_path):
-        firefox_profile_folder_path = str(firefox_profile_folder_path)
-        print("You chose %s" % firefox_profile_folder_path)
-        firefox_profile_folder.set(firefox_profile_folder_path)
-        # setting['firefox_profile_folder'] = firefox_profile_folder
 
+        if os.path.exists(firefox_profile_folder_path):
+            firefox_profile_folder_path = str(firefox_profile_folder_path)
+            print("You chose %s" % firefox_profile_folder_path)
+            firefox_profile_folder.set(firefox_profile_folder_path)
+        else:
+            print('please choose a valid profile folder')
+
+            # setting['firefox_profile_folder'] = firefox_profile_folder
+    except:
+        print('please choose a valid profile folder')
 
 def select_videos_folder():
     global video_folder_path
-    video_folder_path = filedialog.askdirectory(
+    try:
+        video_folder_path = filedialog.askdirectory(
         parent=root, initialdir="/", title='Please select a directory')
-    if len(video_folder_path) > 0:
-        print("You chose %s" % video_folder_path)
-        video_folder.set(video_folder_path)
-        setting['video_folder'] = video_folder_path
+        if os.path.exists(video_folder_path):
+            print("You chose %s" % video_folder_path)
+            video_folder.set(video_folder_path)
+            setting['video_folder'] = video_folder_path
+        else:
+            print('please choose a valid video folder')
 
+    except:
+        print('please choose a valid video folder')
 def select_musics_folder():
     global music_folder_path
-    music_folder_path = filedialog.askdirectory(
+    try:
+        music_folder_path = filedialog.askdirectory(
         parent=root, initialdir="/", title='Please select a directory')
-    if len(music_folder_path) > 0:
-        print("You chose %s" % music_folder_path)
-        music_folder.set(music_folder_path)
-        setting['music_folder'] = music_folder_path
 
 
+        if os.path.exists(music_folder_path):
+            print("You chose %s" % music_folder_path)
+            music_folder.set(music_folder_path)
+            setting['music_folder'] = music_folder_path
+        else:
+            print('please choose a valid music folder')
+    except:
+        print('please choose a valid music folder')
 
 docsopen=False
 def docs():
@@ -561,15 +577,22 @@ def load_setting_file():
     ratio.set(setting['ratio'])
 
 
+
+def auto_gen_cookie_file():
+    
+    print('call tsup gen cookie api')
+    
 def select_cookie_file():
 
     global channel_cookie_path
-    channel_cookie_path = filedialog.askopenfilenames(title="请选择该频道对应cookie文件", filetypes=[
-        ("Json", "*.json"), ("All Files", "*")])[0]
+    try:
+        channel_cookie_path = filedialog.askopenfilenames(title="请选择该频道对应cookie文件", filetypes=[
+            ("Json", "*.json"), ("All Files", "*")])[0]
 
-    channel_cookie.set(channel_cookie_path)
-    setting['channelcookiepath'] = channel_cookie_path
-
+        channel_cookie.set(channel_cookie_path)
+        setting['channelcookiepath'] = channel_cookie_path
+    except:
+        print('please select a valid cookie json file')
 
 
 # 清理残留文件
@@ -1241,7 +1264,7 @@ def render(root,lang):
     e_video_folder = tk.Entry(frame, width=45, textvariable=video_folder)
     e_video_folder.place(x=150, y=270)
     
-    b_video_folder=tk.Button(frame,text="Select",command=select_videos_folder)
+    b_video_folder=tk.Button(frame,text="Select",command=lambda: threading.Thread(target=select_videos_folder).start() )
     b_video_folder.place(x=580, y=270)    
     
 
@@ -1251,7 +1274,7 @@ def render(root,lang):
     e_firefox_profile_folder.place(x=150, y=300)
 
 
-    b_firefox_profile_folder=tk.Button(frame,text="Select",command=select_profile_folder)
+    b_firefox_profile_folder=tk.Button(frame,text="Select",command=lambda: threading.Thread(target=select_profile_folder).start() )
     b_firefox_profile_folder.place(x=580, y=300)
 
 
@@ -1262,12 +1285,15 @@ def render(root,lang):
 
     l_channel_cookie = tk.Label(frame, text=i18labels("cookiejson", locale=lang, module="g"))
     l_channel_cookie.place(x=10, y=360)
-    e_channel_cookie = tk.Entry(frame, width=45, textvariable=channel_cookie)
+    e_channel_cookie = tk.Entry(frame, width=35, textvariable=channel_cookie)
     e_channel_cookie.place(x=150, y=360)
 
-    b_channel_cookie=tk.Button(frame,text="Select",command=select_cookie_file)
-    b_channel_cookie.place(x=580, y=360)    
+    b_channel_cookie=tk.Button(frame,text="Select",command=lambda: threading.Thread(target=select_cookie_file).start() )
+    b_channel_cookie.place(x=480, y=360)    
     
+    
+    b_channel_cookie_gen=tk.Button(frame,text="gen",command=auto_gen_cookie_file)
+    b_channel_cookie_gen.place(x=550, y=360)    
 
     l_username = tk.Label(frame, text=i18labels("username", locale=lang, module="g"))
     l_username.place(x=10, y=390)
