@@ -12,3 +12,5 @@ dist/*
 screen-recording/*
 venv/*
 *.sqlite3
+*.DS_Store
+assets/config/hints-we use this as setting file name,you should change it.json

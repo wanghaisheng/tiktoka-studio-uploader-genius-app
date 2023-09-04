@@ -92,6 +92,7 @@ width=1024
 # dbname = "reddit_popular"
 # Open the database and make sure there is a table with appopriate indices
 
+
 def url_ok(url,proxy_option=''):
 
 
@@ -126,16 +127,20 @@ def url_ok(url,proxy_option=''):
                 }            
             print('use proxy',proxy_option)
             response = requests.head(url,proxies=proxies)
+            print('google access is ok use {proxy_option}')
         else:
             response = requests.head(url)
+            print('we cant  access google without proxy')
 
     except Exception as e:
         # print(f"NOT OK: {str(e)}")
+        print('we cant  access google')
+        
         return False
     else:
         print('status code',response.status_code)
         if response.status_code == 200:
-            # print("OK")
+            print('we cant  access google')
             return True
         else:
             print(f"NOT OK: HTTP response code {response.status_code}")
@@ -234,7 +239,7 @@ def ordered(obj):
 settingid=0
 # 保存配置
 
-def save_setting():
+def save_setting(dbm):
     global settingid
 
     try:
@@ -329,17 +334,17 @@ def save_setting():
                             print('new change will be saved')
                         with open('./assets/config/'+setting['channelname']+".json", 'w') as f:
                             f.write(json.dumps(setting, indent=4, separators=(',', ': ')))
-                        settingid=Add_New_UploadSetting_In_Db(setting)
+                        settingid=dbm.Add_New_UploadSetting_In_Db(setting)
                         print("配置保存成功",settingid)
                         with open('latest-used-setting.txt','w+') as fw:
                             fw.write('./assets/config/'+setting['channelname']+".json")                        
                 else:
                     with open('./assets/config/'+setting['channelname']+".json", 'w') as f:
-
-                        f.write(json.dumps(setting, indent=4, separators=(',', ': ')))                                      
+ 
+                        f.write(json.dumps(setting, indent=4, separators=(',', ': ')))                                     
                 # print('当前使用的配置为：', setting)
                 
-                    settingid=Add_New_UploadSetting_In_Db(setting)
+                    settingid=dbm.Add_New_UploadSetting_In_Db(setting)
                     print("配置保存成功",settingid)
                     with open('latest-used-setting.txt','w+') as fw:
                         fw.write('./assets/config/'+setting['channelname']+".json")
@@ -348,34 +353,50 @@ def save_setting():
 
 def select_profile_folder():
     global firefox_profile_folder_path
-    firefox_profile_folder_path = filedialog.askdirectory(
+    try:
+        firefox_profile_folder_path = filedialog.askdirectory(
         parent=root, initialdir="/", title='Please select a directory')
-    if os.path.exists(firefox_profile_folder_path):
-        firefox_profile_folder_path = str(firefox_profile_folder_path)
-        print("You chose %s" % firefox_profile_folder_path)
-        firefox_profile_folder.set(firefox_profile_folder_path)
-        # setting['firefox_profile_folder'] = firefox_profile_folder
 
+        if os.path.exists(firefox_profile_folder_path):
+            firefox_profile_folder_path = str(firefox_profile_folder_path)
+            print("You chose %s" % firefox_profile_folder_path)
+            firefox_profile_folder.set(firefox_profile_folder_path)
+        else:
+            print('please choose a valid profile folder')
+
+            # setting['firefox_profile_folder'] = firefox_profile_folder
+    except:
+        print('please choose a valid profile folder')
 
 def select_videos_folder():
     global video_folder_path
-    video_folder_path = filedialog.askdirectory(
+    try:
+        video_folder_path = filedialog.askdirectory(
         parent=root, initialdir="/", title='Please select a directory')
-    if len(video_folder_path) > 0:
-        print("You chose %s" % video_folder_path)
-        video_folder.set(video_folder_path)
-        setting['video_folder'] = video_folder_path
+        if os.path.exists(video_folder_path):
+            print("You chose %s" % video_folder_path)
+            video_folder.set(video_folder_path)
+            setting['video_folder'] = video_folder_path
+        else:
+            print('please choose a valid video folder')
 
+    except:
+        print('please choose a valid video folder')
 def select_musics_folder():
     global music_folder_path
-    music_folder_path = filedialog.askdirectory(
+    try:
+        music_folder_path = filedialog.askdirectory(
         parent=root, initialdir="/", title='Please select a directory')
-    if len(music_folder_path) > 0:
-        print("You chose %s" % music_folder_path)
-        music_folder.set(music_folder_path)
-        setting['music_folder'] = music_folder_path
 
 
+        if os.path.exists(music_folder_path):
+            print("You chose %s" % music_folder_path)
+            music_folder.set(music_folder_path)
+            setting['music_folder'] = music_folder_path
+        else:
+            print('please choose a valid music folder')
+    except:
+        print('please choose a valid music folder')
 
 docsopen=False
 def docs():
@@ -442,20 +463,73 @@ def testInstallRequirements():
     print('check install requirments')
     checkRequirments()
 def testNetwork():
-    if  proxy_option=='':
-        if url_ok('www.youtube.com'):        
-            print('is proxy setting ok')
-        else:
-            print('please check your proxy setting\nsocks5://127.0.0.1:1080\nhttp://proxy.example.com:8080\n222.165.235.2:80\n')
-        
-
-def ValidateSetting():
-    print('validate your upload settings')
-
-
+    print('start to test network and proxy setting')
+    if proxy_option.get() is None:
+        url_ok('www.youtube.com')
+        print('you can access google without proxy setting')
+    else:
+        # print('please check your proxy setting\nsocks5://127.0.0.1:1080\nhttp://proxy.example.com:8080\n222.165.235.2:80\n')
     
+        print('your proxy setting is ',proxy_option.get())
+        if  proxy_option.get()=='':
 
-def select_setting_file():
+            print('you should provide valid your proxy setting,format as follows \nsocks5://127.0.0.1:1080\nhttp://proxy.example.com:8080\n222.165.235.2:80\n')
+        else:
+            if url_ok('www.youtube.com',proxy_option=proxy_option.get()):        
+                print('your  proxy is running ok')
+            else:
+                print('you should provide valid your proxy setting,format as follows \nsocks5://127.0.0.1:1080\nhttp://proxy.example.com:8080\n222.165.235.2:80\n')
+    print('netwrork and proxy test is done')
+def ValidateSetting():
+    print('start to validate your upload settings')
+    time.sleep(4)
+    print('end to validate your upload settings')
+
+
+
+def create_setting_file():
+    ROOT_DIR = os.path.dirname(
+        os.path.abspath(__file__)
+    )
+
+    print('使用默认模版新建配置文件')
+    default_setting_path ="./assets/config/template.json"
+
+    global setting_file
+    if os.path.exists(ROOT_DIR+os.path.sep+default_setting_path):
+        print('default template exists')
+        fp = open(ROOT_DIR+os.path.sep+default_setting_path, 'r', encoding='utf-8')
+        setting_json = fp.read()
+        fp.close()        
+        setting = json.loads(setting_json)
+    else:
+        setting={}
+    firefox_profile_folder_path = setting['firefox_profile_folder']
+    firefox_profile_folder.set(firefox_profile_folder_path)
+
+    proxy_option.set(setting['proxy_option'])
+    # firefox_profile_folder.set(setting['firefox_profile_folder'])
+    channel_cookie.set(setting['channelcookiepath'])
+    video_folder.set(setting['video_folder'])
+
+    prefertags.set(setting['prefertags'])
+    preferdessuffix.set(setting['preferdessuffix'])
+    preferdesprefix.set(setting['preferdesprefix'])
+    
+    dailycount.set(setting['dailycount'])
+    channelname.set('hints-we use this as setting file name,you should change it')
+    music_folder_path= setting['music_folder']
+    publishpolicy.set(setting['publishpolicy'])
+    music_folder.set(music_folder_path)
+    ratio.set(setting['ratio'])    
+    with open(ROOT_DIR+os.path.sep+'./assets/config/'+channelname.get()+".json", 'w') as f:
+
+        f.write(json.dumps(setting, indent=4, separators=(',', ': ')))      
+
+    if os.path.exists(ROOT_DIR+os.path.sep+'./assets/config/'+channelname.get()+".json"):
+        print('setting file create done')
+
+def load_setting_file():
     ROOT_DIR = os.path.dirname(
         os.path.abspath(__file__)
     )
@@ -503,15 +577,22 @@ def select_setting_file():
     ratio.set(setting['ratio'])
 
 
+
+def auto_gen_cookie_file():
+    
+    print('call tsup gen cookie api')
+    
 def select_cookie_file():
 
     global channel_cookie_path
-    channel_cookie_path = filedialog.askopenfilenames(title="请选择该频道对应cookie文件", filetypes=[
-        ("Json", "*.json"), ("All Files", "*")])[0]
+    try:
+        channel_cookie_path = filedialog.askopenfilenames(title="请选择该频道对应cookie文件", filetypes=[
+            ("Json", "*.json"), ("All Files", "*")])[0]
 
-    channel_cookie.set(channel_cookie_path)
-    setting['channelcookiepath'] = channel_cookie_path
-
+        channel_cookie.set(channel_cookie_path)
+        setting['channelcookiepath'] = channel_cookie_path
+    except:
+        print('please select a valid cookie json file')
 
 
 # 清理残留文件
@@ -721,7 +802,8 @@ def autothumb():
         else:
             print("pls choose file or folder")
 def editVideoMetas():
-    print('edit prepared video metas in json format')
+    print('go to web json editor to edit prepared video metas in json format')
+
 
 def importVideoMetas():
     print('import prepared video metas in json format')
@@ -732,9 +814,14 @@ def importVideoMetas():
     # channel_cookie.set(channel_cookie_path)
     # setting['channelcookiepath'] = channel_cookie_path
 
-
+def downVideoMetas():
+    print('start to down video metas json template')
+    time.sleep(3)
+    print('finish to down video metas json template')
+    
 def genVideoMetas():
-    save_setting()
+    dbm=DBM('prod')
+    save_setting(dbm)
 # 文件夹下是否有视频文件
 
 # 视频文件是否有同名的图片
@@ -747,14 +834,14 @@ def genVideoMetas():
     else:
         if video_folder_path:
             if os.path.exists(video_folder_path):
-                check_video_thumb_pair(video_folder_path,False)
+                check_video_thumb_pair(dbm,video_folder_path,False)
             else:
                 print("there is no defined video dir.")
         else:
             print("pls choose file or folder")
     print('save metas to json /csv excel format for later processing')
-def createuploadsession():
-    save_setting()
+def createuploadsession(dbm):
+    save_setting(dbm)
     print('load video metas to database .create upload task for each video')
 # 文件夹下是否有视频文件
 
@@ -768,13 +855,13 @@ def createuploadsession():
     else:
         if video_folder_path:
             if os.path.exists(video_folder_path):
-                check_video_thumb_pair(video_folder_path,True)
+                check_video_thumb_pair(dbm,video_folder_path,True)
             else:
                 print("there is no defined video dir.")
         else:
             print("pls choose file or folder")
 
-def check_video_thumb_pair(folder,session):
+def check_video_thumb_pair(dbm,folder,session):
     # print('detecting----------',folder)
 
     for r, d, f in os.walk(folder):
@@ -813,7 +900,7 @@ def check_video_thumb_pair(folder,session):
                         if session:
                             print( videopath,thumbpath,filename,start_index,setting['channelname'],settingid)
 
-                            prepareuploadsession( videopath,thumbpath,filename,start_index,setting['channelname'],settingid)
+                            prepareuploadsession( dbm,videopath,thumbpath,filename,start_index,setting['channelname'],settingid)
                             print('all video added to task list,you should start uploading next ')
                         else:
                             print('save video meta json to local disk')
@@ -825,9 +912,9 @@ def check_video_thumb_pair(folder,session):
 
 
 
-def prepareuploadsession( videopath,thumbpath,filename,start_index,channelname,settingid):
+def prepareuploadsession(dbm,videopath,thumbpath,filename,start_index,channelname,settingid):
     global uploadsessionid
-    isadded,isuploaded=Query_video_status_in_channel(videopath,channelname,settingid)
+    isadded,isuploaded=dbm.Query_video_status_in_channel(videopath,channelname,settingid)
               
     # filename = os.path.splitext(f)[0]
     if isadded:
@@ -896,22 +983,98 @@ def prepareuploadsession( videopath,thumbpath,filename,start_index,channelname,s
         olddata.videopath = videopath
         olddata.tags= tags
         olddata.status = False
-        uploadsessionid=Add_New_UploadSession_In_Db(olddata)
+        uploadsessionid=dbm.Add_New_UploadSession_In_Db(olddata)
         print('add 1 new videos ',filename,'for upload session',uploadsessionid)
 
 
 
-def exportcsv():
-    videos=Query_undone_videos_in_channel()
+def exportcsv(dbm):
+    videos=dbm.Query_undone_videos_in_channel()
 
 
-def importundonefromcsv():
-    videos=Query_undone_videos_in_channel()
+def importundonefromcsv(dbm):
+    videos=dbm.Query_undone_videos_in_channel()
 
 
 
-def upload():
+def testupload():
     print('we got setting proxy ,',setting['proxy_option'])
+    dbm=DBM('test')
+    try:
+        uploadsessionid
+        if uploadsessionid is None:
+            print('weir error',uploadsessionid)
+            createuploadsession(dbm)
+    except:
+
+        print('before upload,you need create upload session first')
+        createuploadsession(dbm)
+
+    videos=dbm.Query_undone_videos_in_channel()
+    print('there is ',len(videos),' video need to uploading for task ')
+
+    if len(videos)>0:
+        publicvideos=[]
+        privatevideos=[]
+        othervideos=[]
+        if url_ok('http://www.google.com'):
+            print('network is fine,there is no need for proxy ')
+            setting['proxy_option']=""
+            print('start browser in headless mode',is_open_browser)
+
+        else:
+            print('google can not be access ')
+
+            print('we need for proxy ',setting['proxy_option'])   
+            print('start browser in headless mode',is_open_browser,setting['proxy_option'])
+        upload =  YoutubeUpload(
+                root_profile_directory=setting['firefox_profile_folder'],
+                proxy_option=setting['proxy_option'],
+                is_open_browser=is_open_browser,
+                debug=True,
+                use_stealth_js=False,
+                # if you want to silent background running, set watcheveryuploadstep false
+                channel_cookie_path=setting['channelcookiepath'],
+                username=setting['username'],
+                browser_type='firefox',
+                wait_policy="go next after copyright check success",
+                password=setting['password'],
+                is_record_video=setting['is_record_video']
+
+                # for test purpose we need to check the video step by step ,
+            )
+
+        for video in videos:
+            
+            if int(video.publishpolicy)==1:
+                print('add public uploading task video',video.videopath)
+                
+                publicvideos.append(video)
+            elif int(video.publishpolicy)==0:
+                print('add private uploading task video',video.videopath)
+
+                privatevideos.append(video)
+            else:
+                print('add schedule uploading task video',video.videopath)
+
+                othervideos.append(video)
+        if len(publicvideos)>0:
+            print('start public uploading task')
+            asyncio.run(bulk_instantpublish(videos=publicvideos,upload=upload))
+        if len(privatevideos)>0:
+            print('start private uploading task')
+
+            asyncio.run(bulk_privatedraft(videos=privatevideos,upload=upload))
+        if len(othervideos)>0:
+            print('start schedule uploading task')
+
+            asyncio.run(bulk_scheduletopublish_specific_date(videos=othervideos,upload=upload))
+
+
+def upload(mode='prod'):
+    print('we got setting proxy ,',setting['proxy_option'])
+    dbm=DBM('prod')
+    
     try:
         uploadsessionid
         if uploadsessionid is None:
@@ -922,7 +1085,7 @@ def upload():
         print('before upload,you need create upload session first')
         # createuploadsession()
 
-    videos=Query_undone_videos_in_channel()
+    videos=dbm.Query_undone_videos_in_channel()
     print('there is ',len(videos),' video need to uploading for task ')
 
     if len(videos)>0:
@@ -1031,10 +1194,10 @@ def render(root,lang):
     password = tk.StringVar()
     password.set(setting['password'])    
     
-    l_music_folder = tk.Label(frame, text=i18labels("bgVideoFolder", locale=lang, module="g"))
-    l_music_folder.place(in_=frame, x=10, y=130)
-    el_music_folder = tk.Entry(frame, width=55, textvariable=music_folder)
-    el_music_folder.place(x=150, y=130)
+
+    
+    
+    
 
     l_prefertags = tk.Label(frame, text=i18labels("preferTags", locale=lang, module="g"))
     l_prefertags.place(x=10, y=50)
@@ -1051,15 +1214,28 @@ def render(root,lang):
     l_preferdessuffix.place(x=10, y=100)
     e_preferdessuffix = tk.Entry(frame, width=55, textvariable=preferdessuffix)
     e_preferdessuffix.place(x=150, y=100)
-    l_bgMucisVolume = tk.Label(frame, text=i18labels("bgMucisVolume", locale=lang, module="g"))
-    l_bgMucisVolume.place(x=10, y=150)
-    e_bgMucisVolume = tk.Entry(frame, width=55, textvariable=ratio)
-    e_bgMucisVolume.place(x=150, y=150)
 
+
+    l_music_folder = tk.Label(frame, text=i18labels("bgVideoFolder", locale=lang, module="g"))
+    l_music_folder.place(in_=frame, x=10, y=130)
+    
+    el_music_folder = tk.Entry(frame, width=45, textvariable=music_folder)
+    el_music_folder.place(x=150, y=130)
+    
+    b_music_folder=tk.Button(frame,text="Select",command=select_musics_folder)
+    b_music_folder.place(x=580, y=130)        
+    
+    
+
+    l_bgMucisVolume = tk.Label(frame, text=i18labels("bgMucisVolume", locale=lang, module="g"))
+    l_bgMucisVolume.place(x=10, y=160)
+    e_bgMucisVolume = tk.Entry(frame, width=55, textvariable=ratio)
+    e_bgMucisVolume.place(x=150, y=160)
+    
     l_publishpolicy = tk.Label(frame, text=i18labels("publishPolicy", locale=lang, module="g"))
-    l_publishpolicy.place(x=10, y=170)
+    l_publishpolicy.place(x=10, y=180)
     e_publishpolicy = tk.Entry(frame, width=55, textvariable=publishpolicy)
-    e_publishpolicy.place(x=150, y=170)
+    e_publishpolicy.place(x=150, y=180)
 
 
     l_dailycount = tk.Label(frame, text=i18labels("dailyVideoLimit", locale=lang, module="g"))
@@ -1071,27 +1247,36 @@ def render(root,lang):
     e_dailycount.place(x=150, y=200)
 
     l_start_publish_date=tk.Label(frame, text=i18labels("offsetDays", locale=lang, module="g"))
-    l_start_publish_date.place(x=10, y=230)
+    l_start_publish_date.place(x=10, y=220)
     e_start_publish_date = tk.Entry(frame, width=55, textvariable=start_publish_date)
-    e_start_publish_date.place(x=150, y=230)
+    e_start_publish_date.place(x=150, y=220)
 
     
 
 
     l_channelname = tk.Label(frame, text=i18labels("channelName", locale=lang, module="g"))
-    l_channelname.place(x=10, y=250)
+    l_channelname.place(x=10, y=240)
     e_channelname = tk.Entry(frame, width=55, textvariable=channelname)
-    e_channelname.place(x=150, y=250)
+    e_channelname.place(x=150, y=240)
 
     l_video_folder = tk.Label(frame, text=i18labels("videoFolder", locale=lang, module="g"))
     l_video_folder.place(x=10, y=270)
-    e_video_folder = tk.Entry(frame, width=55, textvariable=video_folder)
+    e_video_folder = tk.Entry(frame, width=45, textvariable=video_folder)
     e_video_folder.place(x=150, y=270)
+    
+    b_video_folder=tk.Button(frame,text="Select",command=lambda: threading.Thread(target=select_videos_folder).start() )
+    b_video_folder.place(x=580, y=270)    
+    
 
     l_firefox_profile_folder = tk.Label(frame, text=i18labels("profileFolder", locale=lang, module="g"))
     l_firefox_profile_folder.place(x=10, y=300)
-    e_firefox_profile_folder = tk.Entry(frame, width=55, textvariable=firefox_profile_folder)
+    e_firefox_profile_folder = tk.Entry(frame, width=45, textvariable=firefox_profile_folder)
     e_firefox_profile_folder.place(x=150, y=300)
+
+
+    b_firefox_profile_folder=tk.Button(frame,text="Select",command=lambda: threading.Thread(target=select_profile_folder).start() )
+    b_firefox_profile_folder.place(x=580, y=300)
+
 
     l_proxy_option = tk.Label(frame, text=i18labels("proxySetting", locale=lang, module="g"))
     l_proxy_option.place(x=10, y=330)
@@ -1100,8 +1285,15 @@ def render(root,lang):
 
     l_channel_cookie = tk.Label(frame, text=i18labels("cookiejson", locale=lang, module="g"))
     l_channel_cookie.place(x=10, y=360)
-    e_channel_cookie = tk.Entry(frame, width=55, textvariable=channel_cookie)
+    e_channel_cookie = tk.Entry(frame, width=35, textvariable=channel_cookie)
     e_channel_cookie.place(x=150, y=360)
+
+    b_channel_cookie=tk.Button(frame,text="Select",command=lambda: threading.Thread(target=select_cookie_file).start() )
+    b_channel_cookie.place(x=480, y=360)    
+    
+    
+    b_channel_cookie_gen=tk.Button(frame,text="gen",command=auto_gen_cookie_file)
+    b_channel_cookie_gen.place(x=550, y=360)    
 
     l_username = tk.Label(frame, text=i18labels("username", locale=lang, module="g"))
     l_username.place(x=10, y=390)
@@ -1125,82 +1317,100 @@ def render(root,lang):
     
 
     b_is_open_browser = tk.Checkbutton(frame, text=i18labels("is_open_browser", locale=lang, module="g"), variable=is_open_browser)
-    b_is_open_browser.place(x=350, y=10)
+    b_is_open_browser.place(x=280, y=10)
 
 
     b_recordvideo = tk.Checkbutton(frame, text=i18labels("is_record_video", locale=lang, module="g"), variable=is_record_video)
-    b_recordvideo.place(x=260, y=10)
+    b_recordvideo.place(x=200, y=10)
 
 
     b_debug = tk.Checkbutton(frame, text=i18labels("debug", locale=lang, module="g"), variable=is_debug)
-    b_debug.place(x=180, y=10)
+    b_debug.place(x=120, y=10)
 
-
-    b_save_setting = tk.Button(frame, text=i18labels("save_setting", locale=lang, module="g"), command=lambda: threading.Thread(target=save_setting).start())
-    b_save_setting.place(x=100, y=10)
-
-    b_select_setting_file = tk.Button(frame, text=i18labels("select_setting_file", locale=lang, module="g"), command=select_setting_file)
-    b_select_setting_file.place(x=10, y=10)
-
-
-
-
-
-    b_testNetwork = tk.Button(frame, text=i18labels("testnetwork", locale=lang, module="g"), command=lambda: threading.Thread(target=testNetwork).start())
-    b_testNetwork.place(x=10, y=int(height-200))
-
-
-    b_testinstall = tk.Button(frame, text=i18labels("testinstall", locale=lang, module="g"), command=lambda: threading.Thread(target=testInstallRequirements).start())
-    b_testinstall.place(x=130, y=int(height-200))
-
-    b_testsettingok = tk.Button(frame, text=i18labels("testsettingok", locale=lang, module="g"), command=lambda: threading.Thread(target=ValidateSetting).start())
-    b_testsettingok.place(x=230, y=int(height-200))
-    b_gen_video_metas = tk.Button(frame, text=i18labels("genVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=genVideoMetas).start())
-    b_gen_video_metas.place(x=10, y=int(height-150))
-
+    
+    
+    l_mode_1 = tk.Label(frame, text=i18labels("toolkits", locale=lang, module="g"))
+    l_mode_1.place(x=10, y=int(height-250))
+    
+    
     b_autothumb = tk.Button(frame, text=i18labels("autothumb", locale=lang, module="g"), command=lambda: threading.Thread(target=autothumb).start())
-    b_autothumb.place(x=220, y=int(height-150))
+    b_autothumb.place(x=150, y=int(height-250))
     b_batchchangebgmusic = tk.Button(frame, text=i18labels("batchchangebgmusic", locale=lang, module="g"), command=lambda: threading.Thread(target=batchchangebgmusic).start())
-    b_batchchangebgmusic.place(x=350,y=int(height-150))
-
+    b_batchchangebgmusic.place(x=350,y=int(height-250))
+    
+    
     b_hiddenwatermark = tk.Button(frame, text=i18labels("hiddenwatermark", locale=lang, module="g"), command=lambda: threading.Thread(target=hiddenwatermark))
-    b_hiddenwatermark.place(x=500,y=int(height-150))
+    b_hiddenwatermark.place(x=500,y=int(height-250))
 
-
-
+    
+    l_mode_1 = tk.Label(frame, text=i18labels("mode1", locale=lang, module="g"))
+    l_mode_1.place(x=10, y=int(height-200))
 
     b_editVideoMetas = tk.Button(frame, text=i18labels("editVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=editVideoMetas).start())
-    b_editVideoMetas.place(x=10, y=int(height-100))
+    b_editVideoMetas.place(x=150, y=int(height-200))
+    
+    
+    
+        
+    l_mode_2 = tk.Label(frame, text=i18labels("mode2", locale=lang, module="g"))
+    l_mode_2.place(x=10, y=int(height-150))
+    
+    
+    
+    b_gen_video_metas = tk.Button(frame, text=i18labels("genVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=genVideoMetas).start())
+    b_gen_video_metas.place(x=150, y=int(height-150))
+
+
+
+
+
+        
+    l_mode_3 = tk.Label(frame, text=i18labels("mode3", locale=lang, module="g"))
+    l_mode_3.place(x=10, y=int(height-100))
+    
 
     b_import_video_metas = tk.Button(frame, text=i18labels("importVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=importVideoMetas).start())
-    b_import_video_metas.place(x=200, y=int(height-100))
+    b_import_video_metas.place(x=150, y=int(height-100))
+    
+    b_down_video_metas_temp = tk.Button(frame, text=i18labels("downVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=downVideoMetas).start())
+    b_down_video_metas_temp.place(x=350, y=int(height-100))    
+    
 
     b_createuploadsession = tk.Button(frame, text=i18labels("createuploadsession", locale=lang, module="g"), command=lambda: threading.Thread(target=createuploadsession).start())
-    b_createuploadsession.place(x=350, y=int(height-100))
+    b_createuploadsession.place(x=150, y=int(height-50))
 
 
+
+    b_upload = tk.Button(frame, text=i18labels("testupload", locale=lang, module="g"), command=lambda: threading.Thread(target=testupload).start())
+    b_upload.place(x=350, y=int(height-50))
 
     b_upload = tk.Button(frame, text=i18labels("upload", locale=lang, module="g"), command=lambda: threading.Thread(target=upload).start())
-    b_upload.place(x=500, y=int(height-100))
-
+    b_upload.place(x=550, y=int(height-50))
 
     menubar = tk.Menu(root)
-    accounts = tk.Menu(menubar, tearoff=False)
-    menubar.add_cascade(label=i18labels("accounts", locale=lang, module="g"), menu=accounts)
+    settings = tk.Menu(menubar, tearoff=False)
+    menubar.add_cascade(label=i18labels("settings", locale=lang, module="g"), menu=settings)
     # filemenu.add_command(label="选择geckodriver文件",
                         #  command=select_driver_file)
-    accounts.add_command(label=i18labels("select_profile_folder", locale=lang, module="g"),
-                            command=select_profile_folder)
-    accounts.add_command(label=i18labels("select_cookie_file", locale=lang, module="g"),
-                            command=select_cookie_file)
+    settings.add_command(label=i18labels("load_setting_file", locale=lang, module="g"),
+                            command=load_setting_file)
+    settings.add_command(label=i18labels("save_setting", locale=lang, module="g"),
+                            command=save_setting)
+    settings.add_command(label=i18labels("create_setting_file", locale=lang, module="g"),
+                            command=create_setting_file)
+    
+    setups = tk.Menu(menubar, tearoff=False)
 
-    videoassets = tk.Menu(menubar, tearoff=False)
-
-    menubar.add_cascade(label=i18labels("videoassets", locale=lang, module="g"), menu=videoassets)
-    videoassets.add_command(label=i18labels("select_videos_folder", locale=lang, module="g"),
-                            command=select_videos_folder)
-    videoassets.add_command(label=i18labels("select_musics_folder", locale=lang, module="g"),
-                            command=select_musics_folder)
+    menubar.add_cascade(label=i18labels("setups", locale=lang, module="g"), menu=setups)
+    setups.add_command(label=i18labels("testnetwork", locale=lang, module="g"),
+                            command=lambda: threading.Thread(target=testNetwork).start())
+    setups.add_command(label=i18labels("testinstall", locale=lang, module="g"),
+                            command=lambda: threading.Thread(target=testInstallRequirements).start())
+    
+    setups.add_command(label=i18labels("testsettingok", locale=lang, module="g"),
+                            command=lambda: threading.Thread(target=ValidateSetting).start())
+    
+        
     helpcenter = tk.Menu(menubar, tearoff=False)
 
     menubar.add_cascade(label=i18labels("helpcenter", locale=lang, module="g"), menu=helpcenter)
@@ -1246,24 +1456,7 @@ if __name__ == '__main__':
 
         root.resizable(width=False, height=False)
         root.iconbitmap("assets/icon.ico")
-        # root.update()        
-        # frame=tk.Frame(root)
-        # frame.pack()
-        # langlabel = tk.StringVar()
-        # global langchoosen 
 
-        # langchoosen = ttk.Combobox(frame, width = 5, 
-        #                             textvariable = langlabel)
-        
-        # # Adding combobox drop down list
-        # langchoosen['values'] = ('zh', 'en')
-        
-        # langchoosen.pack(pady=30)
-        # langchoosen.current(0)
-
-        # # langchoosen.set(lang)
-
-        # langchoosen.bind("<<ComboboxSelected>>", changeDisplayLang)        
         lang =render(root,'zh')
         root.title(i18labels("title", locale=lang, module="g"))        
 
