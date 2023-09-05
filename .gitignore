@@ -1,6 +1,16 @@
-/__pycache__/*
+__pycache__/*
 /scikit-image/*
 ytb.db
 geckodriver.log
 main.spec
 ytb_up.egg-info
+*.sqlite
+test-results/*
+assets/videos/*
+build/*
+dist/*
+screen-recording/*
+venv/*
+*.sqlite3
+*.DS_Store
+assets/config/hints-we use this as setting file name,you should change it.json

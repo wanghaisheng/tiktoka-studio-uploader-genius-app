@@ -1,0 +1,161 @@
+name: Build and Release Assets en
+
+on:
+  workflow_dispatch:
+
+  push:
+    tags:
+    - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+jobs:
+
+  linux:
+    runs-on: ubuntu-18.04
+    timeout-minutes: 10
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Create environment and install dependencies
+      run: |
+        $CONDA/bin/conda env create --file environment.yml --name autovideo
+        $env:PLAYWRIGHT_BROWSERS_PATH="0"
+        pip install -r requirements.txt
+        playwright install firefox
+    - name: Create binary
+      run: |
+        $CONDA/envs/autovideo/bin/pyinstaller --clean -y --dist ./dist/linux ./autovideo.spec
+
+    - name: Zip binary
+      run: |
+        cd ./dist/linux
+        zip autovideo-linux.zip autovideo
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: autovideo-linux
+        path: ./dist/linux/autovideo-linux.zip
+
+  macos:
+    runs-on: macos-10.15
+    timeout-minutes: 10
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Create environment and install dependencies
+      run: |
+        sudo $CONDA/bin/conda env create --file environment.yml --name autovideo
+
+    - name: Create macos app
+      run: |
+        $CONDA/envs/autovideo/bin/pyinstaller --clean -y --dist ./dist/macos ./autovideo.spec
+        rm -rf ./dist/macos/autovideo
+
+    - name: Zip binary
+      run: |
+        cd ./dist/macos
+        zip -r autovideo-macos.zip .
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: autovideo-macos
+        path: ./dist/macos/autovideo-macos.zip
+
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 10
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Create environment and install dependencies
+      run: |
+        %CONDA%\Scripts\conda.exe env create ^
+        --file environment.yml --name autovideo
+      shell: cmd
+
+    - name: Create binary
+      run: |
+        %CONDA%\envs\autovideo\Scripts\pyinstaller.exe ^
+        --clean -y --dist .\dist\windows .\autovideo.spec
+      shell: cmd
+
+    - name: Zip binary
+      run: |
+        cd .\dist\windows
+        powershell Compress-Archive autovideo.exe autovideo-windows.zip
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: autovideo-windows
+        path: .\dist\windows\autovideo-windows.zip
+
+  release:
+    needs: [ linux, macos, windows ]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: true
+          prerelease: true
+
+      - name: Get tag version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+
+      - uses: actions/download-artifact@v1
+        with:
+          name: autovideo-linux
+        continue-on-error: true
+
+      - name: Upload Linux Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./autovideo-linux/autovideo-linux.zip
+          asset_name: autovideo-linux-${{ steps.get_version.outputs.VERSION }}.zip
+          asset_content_type: application/zip
+        continue-on-error: true
+
+      - uses: actions/download-artifact@v1
+        with:
+          name: autovideo-macos
+        continue-on-error: true
+
+      - name: Upload MacOS Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./autovideo-macos/autovideo-macos.zip
+          asset_name: autovideo-macos-${{ steps.get_version.outputs.VERSION }}.zip
+          asset_content_type: application/zip
+        continue-on-error: true
+
+      - uses: actions/download-artifact@v1
+        with:
+          name: autovideo-windows
+        continue-on-error: true
+
+      - name: Upload Windows Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./autovideo-windows/autovideo-windows.zip
+          asset_name: autovideo-windows-${{ steps.get_version.outputs.VERSION }}.zip
+          asset_content_type: application/zip
+        continue-on-error: true

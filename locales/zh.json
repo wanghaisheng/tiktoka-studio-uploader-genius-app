@@ -1,0 +1,75 @@
+{
+	"g": {
+		"title": "youtube 视频批量上传助手测试版",
+		"select_musics_folder": "选择背景音樂文件夹",
+		"select_videos_folder": "选择视频文件夹",
+		"setups": "安装配置",
+		"select_cookie_file": "选择cookie json",
+		"select_profile_folder": "选择profile文件夹",
+		"settings": "配置文件",
+		"createuploadsession": "创建上传任务",
+		"autothumb": "自动生成缩略图",
+		"testupload": "开始上传前測試",
+
+		"upload": "开始上传",
+		"batchchangebgmusic": "批量替换背景音乐",
+		"is_open_browser": "静默模式",
+		"is_record_video": "录像模式",
+		"debug": "开启日志",
+		"start-loading-setting": "开始读取最近保存的配置文件",
+		"loading-default-setting": "读取配置文件失败 加载默认模版",
+
+		"hiddenwatermark": "添加隐形水印",
+		
+		"downVideoMetas":"下载视频元信息json模板",
+		"toolkits":"工具箱",
+		"mode1":"模式1",
+		"mode2":"模式2",
+		"mode3":"模式3",
+		
+		"save_setting": "保存配置",
+		"testsettingok": "测试配置",
+		"testnetwork": "测试网络",
+		"version":"版本",
+		"version_str":"V0.1.16\\n1.source code for this GUI:https://github.com/wanghaisheng/tiktoka-studio-uploader-app \\n2.core lib for this GUI: https://github.com/wanghaisheng/tiktoka-studio-uploader",
+
+		"docs":"说明文档",
+		"docs_str":"安装配置篇\\n1.安装\\n2.配置\\n导入默认配置后可以通过测试网络、测试安装、测试配置文件来知晓具体情况\\n1.从文件夹生成视频元数据规则\\n r1:尝试使用ffmpeg读取视频元数据,从其中获取视频标题、描述、制作日期、制作地点、字幕文件等信息。\\n r2:r1未命中则读取文件名称作为视频名称,如果视频名称超过20个字符,则将视频名称作为视频描述\\n r3:如果存在字幕文件,尝试从字幕总结出视频描述,如果不存在多语种字幕，尝试使用外部工具翻译多语种字幕\\n r4:如果存在同名的图片文件,则将其作为缩略图，如果没有则使用自动提取关键帧工具生成缩略图底图供后续封面图生成使用\\n r5:如果设置了每日发布的数量，则自动按照数量从次日起安排视频定时公开的日期\\n如果没有设置每日发布的数量，则根据发布策略的值来决定视频是立即公开还是私有发布。1.如果是多个账户,你需要为每个账号准备一个cookie,然后每个账户配置一个单独的配置文件\\n2.安装浏览器插件Cookie-Editor,登录youtube,导出cookie3.免版权的音乐可以在\\nhttps://icons8.com/music/\\n=====================\\n1.首次使用请选择对应的配置模板,比如默认private、public和schedule,文件路径为软件安装路径下的assets/config/setting-template.json,请按照自己的情况修改,修改完成后点击保存\\n文件和文件夹 你可以通过菜单里的浏览器配置、视频素材来点选,你也可以自行在文本框中填写\\n首选标签：这一批上传的视频我们想设置一些通用的标签,在这里设置,其他的标签请放在视频文件名中即可\\n视频描述前缀:一般而言频道的视频描述都会有个模板,类似作文里总分总结构\\n视频描述后缀:一般是一些免责声明之类\\n发布策略:0表示上传为私有,1表示上传后立马公开2表示定时公开 当你选了2,可配合每日发布数量来自动设置对应视频公开的日期,起始日期默认为上传日期+1\\n频道名称:只是用来保存配置文件\\ncookie json:请使用浏览器插件导出并保存\\n2.第二步需要检查素材,因为目前上传逻辑中只有支持视频和缩略图名字一样才能进行上传\\n背景音乐批量替换:请设置好免费音乐所在文件夹,可先对1个视频处理,调节背景音乐音量为最佳效果\\n 3.点击上传即可",
+		"contact":"联系我",
+		"contact_str":"1.发送邮件到admin@tiktokastudio.com\\n",
+
+		"contact_str_group":"2.扫码加入讨论组参与讨论",
+		"contact_str_personal":"3.特殊情况,299元红包可添加私人微信",
+		"chooseLang": "语言:",
+		"genVideoMetas":"从视频文件夹生成视频元信息",
+		"helpcenter":"帮助中心",
+		"importVideoMetas":"导入视频元信息json文件",
+		"editVideoMetas":"纯手动编辑视频元信息json文件",
+		"username": "账号名称",
+		"password": "账号密码",
+
+		"testinstall": "测试安装",
+		"load_setting_file": "加载配置文件",
+		"create_setting_file": "新建配置文件",
+
+		"cookiejson": "cookie json 文件",
+		"proxySetting": "代理配置",
+		"profileFolder": "profile文件夹",
+		"videoFolder": "视频文件夹",
+		"channelName": "频道名称",
+		"offsetDays": "起始发布日期-当日(天数)",
+		"dailyVideoLimit": "每日公开视频数量",
+		"publishPolicy": "发布策略",
+		"bgMucisVolume": "背景音乐音量",
+		"descriptionSuffix": "视频描述后缀",
+		"descriptionPrefix": "视频描述前缀",
+		"preferTags": "首选标签",
+		"bgVideoFolder": "背景音乐文件夹",
+		"chooseCookie": "请选择该频道对应cookie文件",
+		"chooseChannelSetting": "请选择该频道配置文件"
+	},
+	"user": {
+		"hi": "user:hi1",
+		"test": "user:test1"
+	}
+}

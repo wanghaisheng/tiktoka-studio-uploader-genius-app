@@ -1,6 +1,7 @@
-requests
 pillow
-itemdb
-selenium-wire
-moviepy
-ytb_up
+moviepy==1.0.3
+ytb_up==0.1.15
+requests[socks]
+scenedetect[opencv]==0.5.6.1
+SQLAlchemy
+easy_i18n
