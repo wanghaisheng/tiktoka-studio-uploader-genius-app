@@ -75,7 +75,12 @@ import requests
 import re
 import calendar
 from tsup.utils.webdriver.setupPL import checkRequirments
-
+import logging
+try:
+    import tkinter.scrolledtext as ScrolledText
+except ImportError:
+    import Tkinter as tk # Python 2.x
+    import ScrolledText
 from easy_i18n.t import Ai18n
 config = {
     "load_path": "./locales", # 指定在 /locales 下找对应的翻译 json文件
@@ -87,7 +92,14 @@ i18labels= a_i18n.translate
 window_size='1024x720'
 height=720
 width=1024
+# Logging configuration
+logging.basicConfig(filename='test.log',
+    level=logging.DEBUG, 
+    format='%(asctime)s - %(levelname)s - %(message)s')        
 
+# Add the handler to logger
+
+logger = logging.getLogger()         
 checkvideopaircounts=0
 checkvideocounts=0
 # after import or define a_i18n and t
@@ -95,6 +107,26 @@ checkvideocounts=0
 # dbname = "reddit_popular"
 # Open the database and make sure there is a table with appopriate indices
 
+class TextHandler(logging.Handler):
+    # This class allows you to log to a Tkinter Text or ScrolledText widget
+    # Adapted from Moshe Kaplan: https://gist.github.com/moshekaplan/c425f861de7bbf28ef06
+
+    def __init__(self, text):
+        # run the regular Handler __init__
+        logging.Handler.__init__(self)
+        # Store a reference to the Text it will log to
+        self.text = text
+
+    def emit(self, record):
+        msg = self.format(record)
+        def append():
+            self.text.configure(state='normal')
+            self.text.insert(tk.END, msg + '\n')
+            self.text.configure(state='disabled')
+            # Autoscroll to the bottom
+            self.text.yview(tk.END)
+        # This is necessary because we can't modify the Text from other threads
+        self.text.after(0, append)
 
 def url_ok(url,proxy_option=''):
 
@@ -201,7 +233,6 @@ def load_setting():
         try:
             fp = open('latest-used-setting.txt', 'r', encoding='utf-8')
             settingfile=fp.readlines()[0]
-            print(i18labels("start-loading-setting", locale='en', module="g"),settingfile)
 
             fp = open(settingfile, 'r', encoding='utf-8')
             setting_json = fp.read()
@@ -439,16 +470,17 @@ docsopen=False
 def docs(frame,lang):
     newWindow = tk.Toplevel(frame)
     newWindow.geometry(window_size)
-
+    print('open docmentations')
     label_helptext_setting = tk.Label(newWindow, text = i18labels("docs_str", locale='en', module="g").replace('\\n','\n'),justify='left', wraplength=450)
     label_helptext_setting.pack()
+    
 def version(frame,lang):
     newWindow = tk.Toplevel(frame)
     newWindow.geometry(window_size)
     # print(type(i18labels("version_str", locale='en', module="g")))
     # print(str(i18labels("version_str", locale='en', module="g")))
     # if '\\n' in i18labels("version_str", locale='en', module="g"):
-    #     print('111111111111')
+    print('111111111111')
     # print(type("First line\n and this is the second"))
     # print("First line\n and this is the second")
     # if '\n' in "First line\n and this is the second":
@@ -954,7 +986,7 @@ def createuploadsession(dbm,ttkframe):
             lab = tk.Label(ttkframe,text="创建失败，请参考日志修改文件后重新提交",bg="lightyellow",width=40)
             lab.place(x=10, y=220)                
 def analyse_video_thumb_pair(folder,frame):
-    print('detecting----------',folder)
+    print(f'detecting----------{folder}')
     checkvideopaircountsvalue=0
     checkvideocountsvalue=0
     for r, d, f in os.walk(folder):
@@ -988,7 +1020,7 @@ def analyse_video_thumb_pair(folder,frame):
     render_video_folder_check_results(frame)
 
 def check_video_thumb_pair(dbm,folder,session):
-    # print('detecting----------',folder)
+    # print(f'detecting----------{folder}')
 
     for r, d, f in os.walk(folder):
         with os.scandir(r) as i:
@@ -1832,14 +1864,37 @@ def metaView(frame,ttkframe,lang):
 
 def render(root,lang):
     global window
-    window=tk.Frame(root,width=str(width),  height=str(height),  )
+    window=tk.Frame(root,width=str(width),  height=str(height+200),  )
+    
+    log_frame = tk.Frame(window, width = width, height = 50)
+    log_frame.pack(side = tk.BOTTOM)
+    st = ScrolledText.ScrolledText(log_frame,                                      
+                                #    width = width, 
+                                    #   height = 50, 
+                                      state='disabled')
+    st.configure(font='TkFixedFont')
+    # st.grid(column=0, row=1, 
+    #         # sticky='n',
+    #         columnspan=4)
+    st.pack(padx=10, pady=10,side= tk.LEFT, fill=tk.X, expand=True)
+    # Create textLogger
+    text_handler = TextHandler(st)
+
+    logger.addHandler(text_handler)    
+    # print('debug message')
+    # print('info message')
+    # logger.warning('warn message')
+    # logger.error('error message')
+    # logger.critical('critical message')
     window.pack()
 
 
     tab_control = ttk.Notebook(window)
     doc_frame = ttk.Frame(tab_control)
     doc_frame_left1 = tk.Frame(doc_frame, width = width, height = height)
-    doc_frame_left1.pack(side = tk.LEFT)
+    doc_frame_left1.pack(side = tk.TOP)
+
+
 
     install_frame = ttk.Frame(tab_control)
     install_frame_left1 = tk.Frame(install_frame, width = width, height = height)
@@ -1955,7 +2010,8 @@ if __name__ == '__main__':
     ROOT_DIR = os.path.dirname(
         os.path.abspath(__file__)
     )
-    print('ROOT_DIR',ROOT_DIR)
+
+
 
     if gui_flag:
         global root
@@ -1963,6 +2019,7 @@ if __name__ == '__main__':
         # root.geometry('1280x720')
         root.geometry(window_size)
 
+        print(f'ROOT_DIR is{ROOT_DIR}')
         root.resizable(width=False, height=False)
         root.iconbitmap("assets/icon.ico")
 

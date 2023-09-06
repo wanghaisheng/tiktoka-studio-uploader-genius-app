@@ -1,0 +1,56 @@
+2023-09-06 22:38:17,315 - INFO - debug message
+2023-09-06 22:38:17,315 - INFO - info message
+2023-09-06 22:38:17,315 - WARNING - warn message
+2023-09-06 22:38:17,315 - ERROR - error message
+2023-09-06 22:38:17,316 - CRITICAL - critical message
+2023-09-06 22:38:17,338 - INFO - .!frame.!notebook.!frame3.!frame.!button2
+2023-09-06 22:38:18,038 - INFO - 0
+2023-09-06 22:38:18,039 - INFO - 0
+2023-09-06 22:40:17,131 - INFO - debug message
+2023-09-06 22:40:17,131 - INFO - info message
+2023-09-06 22:40:17,131 - WARNING - warn message
+2023-09-06 22:40:17,132 - ERROR - error message
+2023-09-06 22:40:17,132 - CRITICAL - critical message
+2023-09-06 22:40:17,154 - INFO - .!frame.!notebook.!frame3.!frame.!button2
+2023-09-06 22:40:17,798 - INFO - 0
+2023-09-06 22:40:17,799 - INFO - 0
+2023-09-06 22:41:15,019 - INFO - debug message
+2023-09-06 22:41:15,019 - INFO - info message
+2023-09-06 22:41:15,019 - WARNING - warn message
+2023-09-06 22:41:15,019 - ERROR - error message
+2023-09-06 22:41:15,020 - CRITICAL - critical message
+2023-09-06 22:41:15,042 - INFO - .!frame.!notebook.!frame3.!frame.!button2
+2023-09-06 22:41:15,798 - INFO - 0
+2023-09-06 22:41:15,799 - INFO - 0
+2023-09-06 22:41:55,407 - INFO - .!frame.!notebook.!frame3.!frame.!button2
+2023-09-06 22:41:55,629 - INFO - 0
+2023-09-06 22:41:55,630 - INFO - 0
+2023-09-06 22:42:35,650 - INFO - .!frame.!notebook.!frame3.!frame.!button2
+2023-09-06 22:42:35,888 - INFO - 0
+2023-09-06 22:42:35,889 - INFO - 0
+2023-09-06 22:45:09,049 - INFO - .!frame.!notebook.!frame3.!frame.!button2
+2023-09-06 22:45:09,281 - INFO - 0
+2023-09-06 22:45:09,282 - INFO - 0
+2023-09-06 22:45:52,130 - INFO - .!frame.!notebook.!frame3.!frame.!button2
+2023-09-06 22:45:52,357 - INFO - 0
+2023-09-06 22:45:52,358 - INFO - 0
+2023-09-06 22:46:32,686 - INFO - .!frame.!notebook.!frame3.!frame.!button2
+2023-09-06 22:46:32,950 - INFO - 0
+2023-09-06 22:46:32,951 - INFO - 0
+2023-09-06 22:47:55,206 - INFO - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-06 22:47:55,237 - INFO - .!frame.!notebook.!frame3.!frame.!button2
+2023-09-06 22:47:55,458 - INFO - 0
+2023-09-06 22:47:55,459 - INFO - 0
+2023-09-06 22:50:00,755 - INFO - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-06 22:50:00,785 - INFO - .!frame.!notebook.!frame3.!frame.!button2
+2023-09-06 22:50:01,007 - INFO - 0
+2023-09-06 22:50:01,008 - INFO - 0
+2023-09-06 22:50:16,096 - INFO - You chose /Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-06 22:50:16,124 - INFO - You chose /Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-06 22:51:29,374 - INFO - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-06 22:51:29,404 - INFO - .!frame.!notebook.!frame3.!frame.!button2
+2023-09-06 22:51:29,678 - INFO - 0
+2023-09-06 22:51:29,679 - INFO - 0
+2023-09-06 22:51:36,963 - INFO - You chose /Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-06 22:51:36,992 - INFO - You chose /Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-06 22:51:38,306 - INFO - detecting----------/Users/wenke/github/tiktoka-studio-uploader/tests
