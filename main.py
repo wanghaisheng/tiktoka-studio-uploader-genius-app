@@ -800,19 +800,7 @@ def init_worker(mps, fps, cut):
     DG = 1##nx.read_gml("KeggComplete.gml", relabel = True)
 
 def changeDisplayLang(lang,window):
-    # if langchoosen.get()=='':
-    
-    #     langchoosen.set('zh')     
-    
-    # langchoosen.set(langchoosen.get())
-    # doc_frame.destroy()
-    # install_frame.destroy()
-    # thumb_frame.destroy()
-    # video_frame.destroy()
-    # proxy_frame.destroy()
-    # account_frame.destroy()
-    # upload_frame.destroy()
-    # meta_frame.destroy()
+
     window.destroy()
     root.title(i18labels("title", locale=lang, module="g"))        
     window=tk.Frame(root,width=str(width),  height=str(height+200),  )
