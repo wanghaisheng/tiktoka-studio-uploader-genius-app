@@ -1378,7 +1378,9 @@ def render_video_folder_check_results(frame):
     else:
         lb_thumb_wizard = tk.Label(frame, text='you need create thumbnails for '+str(missing_video_thumb_pairs_counts)+'  videos', font=(' ', 18))
         lb_thumb_wizard.place(x=50, y=180,anchor=tk.NW)        
-        b_edit_thumb=tk.Button(frame,text="Step2:make a new thumbnails template use editor",command=lambda: webbrowser.open_new("template.html"))
+        b_edit_thumb=tk.Button(frame,text="Step2:make a new thumbnails template use editor",command=lambda: webbrowser.open_new('file:///{base_dir}/template.html'.format(base_dir=ROOT_DIR)))
+
+
         b_edit_thumb.place(x=10, y=220)    
 
         global thumbnail_template_file
@@ -1391,6 +1393,9 @@ def render_video_folder_check_results(frame):
         
         b_video_folder=tk.Button(frame,text="Select",command=lambda: threading.Thread(target=select_thumb_template_file).start() )
         b_video_folder.place(x=580, y=260)    
+
+
+
 
         b_edit_thumb_metas=tk.Button(frame,text="Step3:make new video thumbnails metas use editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
         b_edit_thumb_metas.place(x=10, y=300)    
@@ -1946,6 +1951,11 @@ if __name__ == '__main__':
 
 
     load_setting()
+    global ROOT_DIR
+    ROOT_DIR = os.path.dirname(
+        os.path.abspath(__file__)
+    )
+    print('ROOT_DIR',ROOT_DIR)
 
     if gui_flag:
         global root
