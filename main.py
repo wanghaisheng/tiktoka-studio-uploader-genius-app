@@ -893,7 +893,7 @@ def importVideoMetas():
     video_meta_json_path = filedialog.askopenfilenames(title="choose video meta json file", filetypes=[
         ("Json", "*.json"), ("All Files", "*")])[0]
 
-    # channel_cookie.set(channel_cookie_path)
+    imported_video_metas_file.set(video_meta_json_path)
     # setting['channelcookiepath'] = channel_cookie_path
 
 def downVideoMetas():
@@ -922,7 +922,7 @@ def genVideoMetas():
         else:
             print("pls choose file or folder")
     print('save metas to json /csv excel format for later processing')
-def createuploadsession(dbm):
+def createuploadsession(dbm,ttkframe):
     save_setting(dbm)
     print('load video metas to database .create upload task for each video')
 # 文件夹下是否有视频文件
@@ -934,14 +934,25 @@ def createuploadsession(dbm):
 
     except NameError:
         print('not found fastlane folder  file')
+        is_createuploadsession.set(False)
+       
     else:
         if video_folder_path:
             if os.path.exists(video_folder_path):
                 check_video_thumb_pair(dbm,video_folder_path,True)
             else:
-                print("there is no defined video dir.")
+                is_createuploadsession.set(False)                
+                print("there is no defined video dir.",is_createuploadsession.get())
+                print('===',is_createuploadsession.get())
+
+
         else:
             print("pls choose file or folder")
+            is_createuploadsession.set(False)
+
+        if is_createuploadsession.get()==False:
+            lab = tk.Label(ttkframe,text="创建失败，请参考日志修改文件后重新提交",bg="lightyellow",width=40)
+            lab.place(x=10, y=220)                
 def analyse_video_thumb_pair(folder,frame):
     print('detecting----------',folder)
     checkvideopaircountsvalue=0
@@ -1112,18 +1123,17 @@ def importundonefromcsv(dbm):
 
 
 
-def testupload():
+def testupload(dbm,ttkframe):
     print('we got setting proxy ,',setting['proxy_option'])
-    dbm=DBM('test')
     try:
         uploadsessionid
         if uploadsessionid is None:
             print('weir error',uploadsessionid)
-            createuploadsession(dbm)
+            createuploadsession(dbm,ttkframe)
     except:
 
         print('before upload,you need create upload session first')
-        createuploadsession(dbm)
+        createuploadsession(dbm,ttkframe)
 
     videos=dbm.Query_undone_videos_in_channel()
     print('there is ',len(videos),' video need to uploading for task ')
@@ -1506,31 +1516,37 @@ def uploadView(frame,ttkframe,lang):
     lb_video_thumb_pairs_counts_value.place(x=700, y=160, width = 50, anchor=tk.NE)
 
         
-
+    
+    b_down_video_metas_temp = tk.Button(ttkframe, text=i18labels("downVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=downVideoMetas).start())
+    b_down_video_metas_temp.place(x=10, y=int(50))    
+    
 
     b_editVideoMetas = tk.Button(ttkframe, text=i18labels("editVideoMetas", locale=lang, module="g"), command=
                                 #  lambda: webbrowser.open_new("https://jsoncrack.com/editor")
                                  lambda: threading.Thread(target=webbrowser.open_new("https://jsoncrack.com/editor")).start())
-    b_editVideoMetas.place(x=10, y=int(50))
+    b_editVideoMetas.place(x=10, y=int(100))
     
 
     b_import_video_metas = tk.Button(ttkframe, text=i18labels("importVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=importVideoMetas).start())
-    b_import_video_metas.place(x=10, y=int(100))
-    
-    b_down_video_metas_temp = tk.Button(ttkframe, text=i18labels("downVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=downVideoMetas).start())
-    b_down_video_metas_temp.place(x=10, y=int(150))    
-    
+    b_import_video_metas.place(x=10, y=int(150))
+    global imported_video_metas_file    ,is_createuploadsession
+    is_createuploadsession=tk.BooleanVar()
 
-    b_createuploadsession = tk.Button(ttkframe, text=i18labels("createuploadsession", locale=lang, module="g"), command=lambda: threading.Thread(target=createuploadsession).start())
-    b_createuploadsession.place(x=10, y=int(200))
+    imported_video_metas_file = tk.StringVar()        
+    # l_imported_video_metas_file = tk.Label(ttkframe, text='thumbnail template file')
+
+    # l_imported_video_metas_file.place(x=10, y=200)
+    e_imported_video_metas_file = tk.Entry(ttkframe, width=45, textvariable=imported_video_metas_file)
+    e_imported_video_metas_file.place(x=10, y=200)
+    b_createuploadsession = tk.Button(ttkframe, text=i18labels("createuploadsession", locale=lang, module="g"), command=lambda: threading.Thread(target=createuploadsession(DBM('prod'),ttkframe)).start())
+    b_createuploadsession.place(x=10, y=int(300))
 
 
-
-    b_upload = tk.Button(ttkframe, text=i18labels("testupload", locale=lang, module="g"), command=lambda: threading.Thread(target=testupload).start())
-    b_upload.place(x=10, y=int(250))
+    b_upload = tk.Button(ttkframe, text=i18labels("testupload", locale=lang, module="g"), command=lambda: threading.Thread(target=testupload(DBM('test'),ttkframe)).start())
+    b_upload.place(x=10, y=int(350))
 
     b_upload = tk.Button(ttkframe, text=i18labels("upload", locale=lang, module="g"), command=lambda: threading.Thread(target=upload).start())
-    b_upload.place(x=10, y=int(300))
+    b_upload.place(x=10, y=int(400))
 
 
     # viewing_records()
