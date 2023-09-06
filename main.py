@@ -102,6 +102,8 @@ logging.basicConfig(filename='test.log',
 logger = logging.getLogger()         
 checkvideopaircounts=0
 checkvideocounts=0
+
+window=None
 # after import or define a_i18n and t
 # add translation dictionary manually.
 # dbname = "reddit_popular"
@@ -797,17 +799,48 @@ def init_worker(mps, fps, cut):
     memorizedPaths, filepaths, cutoff = mps, fps, cut
     DG = 1##nx.read_gml("KeggComplete.gml", relabel = True)
 
-def changeDisplayLang(lang):
+def changeDisplayLang(lang,window):
     # if langchoosen.get()=='':
     
     #     langchoosen.set('zh')     
     
     # langchoosen.set(langchoosen.get())
-
+    # doc_frame.destroy()
+    # install_frame.destroy()
+    # thumb_frame.destroy()
+    # video_frame.destroy()
+    # proxy_frame.destroy()
+    # account_frame.destroy()
+    # upload_frame.destroy()
+    # meta_frame.destroy()
     window.destroy()
     root.title(i18labels("title", locale=lang, module="g"))        
+    window=tk.Frame(root,width=str(width),  height=str(height+200),  )
+    
+    log_frame = tk.Frame(window, width = width, height = 15)
+    log_frame.pack(side = tk.BOTTOM)
+    st = ScrolledText.ScrolledText(log_frame,                                      
+                                width = width, 
+                                    height = 15, 
+                                    state='disabled')
+    st.configure(font='TkFixedFont')
+    st.grid(column=0, 
+            row=0, 
+            # sticky='n',
+            # columnspan=4
+            )
+    # st.pack(padx=10, pady=10,side= tk.LEFT, fill=tk.X, expand=True)
+    # Create textLogger
+    text_handler = TextHandler(st)
 
-    render(root,lang)
+    logger.addHandler(text_handler)    
+    # print('debug message')
+    # print('info message')
+    # logger.warning('warn message')
+    # logger.error('error message')
+    # logger.critical('critical message')
+    window.pack()
+    render(root,window,lang)
     print(f'switch lang to locale:{lang}')
 
 def hiddenwatermark():
@@ -1863,7 +1896,7 @@ def metaView(frame,ttkframe,lang):
     b_hiddenwatermark.place(x=500,y=int(height-250))
 
 def render(root,window,lang):
-
+    global doc_frame,install_frame,thumb_frame,video_frame,proxy_frame,account_frame,upload_frame,meta_frame
 
     tab_control = ttk.Notebook(window)
     doc_frame = ttk.Frame(tab_control)
@@ -1958,8 +1991,8 @@ def render(root,window,lang):
  
  
      # definition of the menu one level up...
-    Cascade_button.menu.choices.add_command(label='zh',command=lambda:changeDisplayLang('zh'))
-    Cascade_button.menu.choices.add_command(label='en',command=lambda:changeDisplayLang('en'))
+    Cascade_button.menu.choices.add_command(label='zh',command=lambda:changeDisplayLang('zh',window))
+    Cascade_button.menu.choices.add_command(label='en',command=lambda:changeDisplayLang('en',window))
     menubar = tk.Menu(window)
     Cascade_button.menu.add_cascade(label= i18labels("chooseLang", locale=lang, module="g"),
                                     
@@ -1994,14 +2027,14 @@ if __name__ == '__main__':
         root = tk.Tk()
         # root.geometry('1280x720')
         root.geometry(window_size)
-        global window
+
         window=tk.Frame(root,width=str(width),  height=str(height+200),  )
         
-        log_frame = tk.Frame(window, width = width, height = 50)
+        log_frame = tk.Frame(window, width = width, height = 15)
         log_frame.pack(side = tk.BOTTOM)
         st = ScrolledText.ScrolledText(log_frame,                                      
                                     width = width, 
-                                        height = 20, 
+                                        height = 15, 
                                         state='disabled')
         st.configure(font='TkFixedFont')
         st.grid(column=0, 
