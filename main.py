@@ -1862,31 +1862,7 @@ def metaView(frame,ttkframe,lang):
     b_hiddenwatermark = tk.Button(frame, text=i18labels("create_setting_file", locale=lang, module="g"), command=lambda: threading.Thread(target=create_setting_file))
     b_hiddenwatermark.place(x=500,y=int(height-250))
 
-def render(root,lang):
-    global window
-    window=tk.Frame(root,width=str(width),  height=str(height+200),  )
-    
-    log_frame = tk.Frame(window, width = width, height = 50)
-    log_frame.pack(side = tk.BOTTOM)
-    st = ScrolledText.ScrolledText(log_frame,                                      
-                                #    width = width, 
-                                    #   height = 50, 
-                                      state='disabled')
-    st.configure(font='TkFixedFont')
-    # st.grid(column=0, row=1, 
-    #         # sticky='n',
-    #         columnspan=4)
-    st.pack(padx=10, pady=10,side= tk.LEFT, fill=tk.X, expand=True)
-    # Create textLogger
-    text_handler = TextHandler(st)
-
-    logger.addHandler(text_handler)    
-    # print('debug message')
-    # print('info message')
-    # logger.warning('warn message')
-    # logger.error('error message')
-    # logger.critical('critical message')
-    window.pack()
+def render(root,window,lang):
 
 
     tab_control = ttk.Notebook(window)
@@ -2018,12 +1994,39 @@ if __name__ == '__main__':
         root = tk.Tk()
         # root.geometry('1280x720')
         root.geometry(window_size)
+        global window
+        window=tk.Frame(root,width=str(width),  height=str(height+200),  )
+        
+        log_frame = tk.Frame(window, width = width, height = 50)
+        log_frame.pack(side = tk.BOTTOM)
+        st = ScrolledText.ScrolledText(log_frame,                                      
+                                    width = width, 
+                                        height = 20, 
+                                        state='disabled')
+        st.configure(font='TkFixedFont')
+        st.grid(column=0, 
+                row=0, 
+                # sticky='n',
+                # columnspan=4
+                )
+        # st.pack(padx=10, pady=10,side= tk.LEFT, fill=tk.X, expand=True)
+        # Create textLogger
+        text_handler = TextHandler(st)
 
-        print(f'ROOT_DIR is{ROOT_DIR}')
+        logger.addHandler(text_handler)    
+        # print('debug message')
+        # print('info message')
+        # logger.warning('warn message')
+        # logger.error('error message')
+        # logger.critical('critical message')
+        window.pack()
+
+        logger.debug(f'ROOT_DIR is{ROOT_DIR}')
         root.resizable(width=False, height=False)
         root.iconbitmap("assets/icon.ico")
 
-        render(root,'en')
+        render(root,window,'en')
         root.title(i18labels("title", locale='en', module="g"))        
+        logger.info('GUI started')
 
         root.mainloop()
