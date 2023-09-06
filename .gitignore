@@ -15,3 +15,4 @@ venv/*
 *.DS_Store
 assets/config/hints-we use this as setting file name,you should change it.json
 Airline-Management-System
+test.log
