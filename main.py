@@ -799,9 +799,10 @@ def init_worker(mps, fps, cut):
     memorizedPaths, filepaths, cutoff = mps, fps, cut
     DG = 1##nx.read_gml("KeggComplete.gml", relabel = True)
 
-def changeDisplayLang(lang,window):
+def changeDisplayLang(lang,window,log_frame):
 
     window.destroy()
+    log_frame.destroy()
     root.title(i18labels("title", locale=lang, module="g"))        
     window=tk.Frame(root,width=str(width),  height=str(height+200),  )
     
@@ -828,7 +829,7 @@ def changeDisplayLang(lang,window):
     # logger.error('error message')
     # logger.critical('critical message')
     window.pack()
-    render(root,window,lang)
+    render(root,window,log_frame,lang)
     print(f'switch lang to locale:{lang}')
 
 def hiddenwatermark():
@@ -1883,7 +1884,7 @@ def metaView(frame,ttkframe,lang):
     b_hiddenwatermark = tk.Button(frame, text=i18labels("create_setting_file", locale=lang, module="g"), command=lambda: threading.Thread(target=create_setting_file))
     b_hiddenwatermark.place(x=500,y=int(height-250))
 
-def render(root,window,lang):
+def render(root,window,log_frame,lang):
     global doc_frame,install_frame,thumb_frame,video_frame,proxy_frame,account_frame,upload_frame,meta_frame
 
     tab_control = ttk.Notebook(window)
@@ -1969,7 +1970,7 @@ def render(root,window,lang):
 
 
     Cascade_button = tk.Menubutton(window, text=i18labels("setups", locale=lang, module="g"), underline=0)
-    Cascade_button.pack(side=tk.LEFT, padx="2m")
+    # Cascade_button.pack(side=tk.LEFT, padx="2m")
  
      # the primary pulldown
     Cascade_button.menu = tk.Menu(Cascade_button)
@@ -1979,8 +1980,8 @@ def render(root,window,lang):
  
  
      # definition of the menu one level up...
-    Cascade_button.menu.choices.add_command(label='zh',command=lambda:changeDisplayLang('zh',window))
-    Cascade_button.menu.choices.add_command(label='en',command=lambda:changeDisplayLang('en',window))
+    Cascade_button.menu.choices.add_command(label='zh',command=lambda:changeDisplayLang('zh',window,log_frame))
+    Cascade_button.menu.choices.add_command(label='en',command=lambda:changeDisplayLang('en',window,log_frame))
     menubar = tk.Menu(window)
     Cascade_button.menu.add_cascade(label= i18labels("chooseLang", locale=lang, module="g"),
                                     
@@ -2017,8 +2018,9 @@ if __name__ == '__main__':
         root.geometry(window_size)
 
         window=tk.Frame(root,width=str(width),  height=str(height+200),  )
-        
-        log_frame = tk.Frame(window, width = width, height = 15)
+        from src.collapsiblepane import CollapsiblePane as cp
+        log_frame = cp(root, 'Expanded', 'Collapsed')
+        # tk.Frame(window, width = width, height = 15)
         log_frame.pack(side = tk.BOTTOM)
         st = ScrolledText.ScrolledText(log_frame,                                      
                                     width = width, 
@@ -2046,7 +2048,7 @@ if __name__ == '__main__':
         root.resizable(width=False, height=False)
         root.iconbitmap("assets/icon.ico")
 
-        render(root,window,'en')
+        render(root,window,log_frame,'en')
         root.title(i18labels("title", locale='en', module="g"))        
         logger.info('GUI started')
 
