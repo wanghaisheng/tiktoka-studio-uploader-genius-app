@@ -49,7 +49,7 @@ import moviepy.video.fx.all as vfx
 # here put the import lib
 import json
 import tkinter as tk
-
+import webbrowser
 from tkinter import OptionMenu, filedialog,ttk
 
 import os
@@ -87,6 +87,9 @@ i18labels= a_i18n.translate
 window_size='1024x720'
 height=720
 width=1024
+
+checkvideopaircounts=0
+checkvideocounts=0
 # after import or define a_i18n and t
 # add translation dictionary manually.
 # dbname = "reddit_popular"
@@ -368,6 +371,40 @@ def select_profile_folder():
     except:
         print('please choose a valid profile folder')
 
+def select_thumbView_video_folder():
+    global thumbView_video_folder_path
+    try:
+        thumbView_video_folder_path = filedialog.askdirectory(
+        parent=root, initialdir="/", title='Please select a directory')
+        if os.path.exists(thumbView_video_folder_path):
+            print("You chose %s" % thumbView_video_folder_path)
+            thumbView_video_folder.set(thumbView_video_folder_path)
+            print("You chose %s" % thumbView_video_folder.get())
+
+        else:
+            print('please choose a valid video folder')
+
+    except:
+        print('please choose a valid video folder')
+
+
+
+def select_videosView_video_folder():
+    global videosView_video_folder_path
+    try:
+        videosView_video_folder_path = filedialog.askdirectory(
+        parent=root, initialdir="/", title='Please select a directory')
+        if os.path.exists(videosView_video_folder_path):
+            print("You chose %s" % videosView_video_folder_path)
+            videosView_video_folder.set(videosView_video_folder_path)
+            print("You chose %s" % videosView_video_folder.get())
+
+        else:
+            print('please choose a valid video folder')
+
+    except:
+        print('please choose a valid video folder')
+
 def select_videos_folder():
     global video_folder_path
     try:
@@ -399,14 +436,14 @@ def select_musics_folder():
         print('please choose a valid music folder')
 
 docsopen=False
-def docs():
-    newWindow = tk.Toplevel(root)
+def docs(frame,lang):
+    newWindow = tk.Toplevel(frame)
     newWindow.geometry(window_size)
 
     label_helptext_setting = tk.Label(newWindow, text = i18labels("docs_str", locale='en', module="g").replace('\\n','\n'),justify='left', wraplength=450)
     label_helptext_setting.pack()
-def version():
-    newWindow = tk.Toplevel(root)
+def version(frame,lang):
+    newWindow = tk.Toplevel(frame)
     newWindow.geometry(window_size)
     # print(type(i18labels("version_str", locale='en', module="g")))
     # print(str(i18labels("version_str", locale='en', module="g")))
@@ -423,8 +460,8 @@ def version():
     label_helptext_setting.pack()
 
 
-def contact():
-    newWindow = tk.Toplevel(root)
+def contact(frame,lang):
+    newWindow = tk.Toplevel(frame)
     newWindow.geometry(window_size)
     # due to \n in json string should in \\n, so read it from json  need to convert to original 
     label_helptext_setting = tk.Label(newWindow, text = i18labels("contact_str", locale=lang, module="g").replace('\\n','\n'),anchor='e',justify='left', wraplength=450)
@@ -529,6 +566,40 @@ def create_setting_file():
     if os.path.exists(ROOT_DIR+os.path.sep+'./assets/config/'+channelname.get()+".json"):
         print('setting file create done')
 
+def videosMenuMangement():
+    # global frame
+    # frame=tk.Frame(root,width=str(width),  height=str(height),  )
+    # frame.pack()
+    window = tk.Tk()
+    
+    window.title("Airline Management System")
+
+    window.geometry('550x450')    
+    tab_control = ttk.Notebook(window)
+    
+    right = ttk.Frame(tab_control)
+    
+    left = ttk.Frame(tab_control)
+
+    three = ttk.Frame(tab_control)
+
+    four = ttk.Frame(tab_control)
+
+    right1 = tk.Frame(three, width = 500, height = 500)
+    right1.pack(side = tk.RIGHT)
+
+    left1 = tk.Frame(three, width = 500, height = 500)
+    left1.pack(side = tk.LEFT)
+
+    tab_control.add(right, text='Passenger Info')
+    
+    tab_control.add(left, text='Airline Info')
+
+    tab_control.add(three, text='Book Ticket')
+
+    tab_control.add(four, text='Boarding Pass')
+    tab_control.pack(expand=1, fill='both')
+    window.mainloop()
 def load_setting_file():
     ROOT_DIR = os.path.dirname(
         os.path.abspath(__file__)
@@ -581,7 +652,20 @@ def load_setting_file():
 def auto_gen_cookie_file():
     
     print('call tsup gen cookie api')
-    
+
+def genThumbnailFromTemplate(video_folder,thumb_template,mode):
+    print('find missing files')
+    print('render thumbnails for videos')
+def select_thumb_template_file():
+    global thumbnail_template_file_path
+    try:
+        thumbnail_template_file_path = filedialog.askopenfilenames(title="请选择 template文件", filetypes=[
+            ("Json", "*.json"), ("All Files", "*")])[0]
+
+        thumbnail_template_file.set(thumbnail_template_file_path)
+    except:
+        print('please select a valid template json file')
+
 def select_cookie_file():
 
     global channel_cookie_path
@@ -681,16 +765,14 @@ def init_worker(mps, fps, cut):
     memorizedPaths, filepaths, cutoff = mps, fps, cut
     DG = 1##nx.read_gml("KeggComplete.gml", relabel = True)
 
-def changeDisplayLang(event):
+def changeDisplayLang(lang):
     # if langchoosen.get()=='':
     
     #     langchoosen.set('zh')     
     
     # langchoosen.set(langchoosen.get())
-    global lang
-    lang=langchoosen.get()
 
-    frame.destroy()
+    window.destroy()
     root.title(i18labels("title", locale=lang, module="g"))        
 
     render(root,lang)
@@ -860,6 +942,39 @@ def createuploadsession(dbm):
                 print("there is no defined video dir.")
         else:
             print("pls choose file or folder")
+def analyse_video_thumb_pair(folder,frame):
+    print('detecting----------',folder)
+    checkvideopaircountsvalue=0
+    checkvideocountsvalue=0
+    for r, d, f in os.walk(folder):
+        with os.scandir(r) as i:
+
+            for entry in i:
+                if entry.is_file():
+                    filename = os.path.splitext(entry.name)[0]
+                    ext = os.path.splitext(entry.name)[1]
+
+                    start_index=1
+                    if ext in ('.flv', '.mp4', '.avi'):
+                        videopath = os.path.join(r, entry.name)
+                        print(videopath,'==',ext) 
+                        checkvideocountsvalue+=1
+
+                        isPaired=0
+                        for image_ext in ['.jpeg', '.png', '.jpg','webp']:
+                            thumbpath = os.path.join(r, filename+image_ext)
+
+                            if  os.path.exists(thumbpath):     
+                                isPaired=1
+                        if isPaired==1:
+                            checkvideopaircountsvalue+=1
+                        start_index=start_index+1
+    if checkvideocountsvalue==0:
+        print('we could not find any video,prefer format mp4,mkv,flv,mov')
+    print('dingding',checkvideopaircountsvalue,checkvideocountsvalue)
+    checkvideocounts.set(checkvideocountsvalue)
+    video_thumb_pairs_counts.set(checkvideopaircountsvalue)
+    render_video_folder_check_results(frame)
 
 def check_video_thumb_pair(dbm,folder,session):
     # print('detecting----------',folder)
@@ -1145,12 +1260,320 @@ def upload(mode='prod'):
 
             asyncio.run(bulk_scheduletopublish_specific_date(videos=othervideos,upload=upload))
 
+def docView(frame,ttkframe,lang):
+    b_view_readme=tk.Button(frame,text=i18labels("docs", locale=lang, module="g"),command=lambda: threading.Thread(target=docs(frame,lang)).start() )
+    b_view_readme.place(x=50, y=100)    
 
-def render(root,lang):
-    global frame
-    frame=tk.Frame(root,width=str(width),  height=str(height),  )
-    frame.pack()
-    # frame.pack()  
+    b_view_contact=tk.Button(frame,text=i18labels("contact", locale=lang, module="g"),command=lambda: threading.Thread(target=contact(frame,lang)).start() )
+    b_view_contact.place(x=50, y=200)    
+    
+
+    b_view_version=tk.Button(frame,text=i18labels("version", locale=lang, module="g"),command=lambda: threading.Thread(target=version(frame,lang)).start() )
+    b_view_version.place(x=50, y=300)   
+
+def installView(frame,ttkframe,lang):
+    b_view_readme=tk.Button(frame,text=i18labels("testinstall", locale=lang, module="g"),command=lambda: threading.Thread(target=testInstallRequirements).start() )
+    b_view_readme.place(x=50, y=100)    
+
+    b_view_contact=tk.Button(frame,text=i18labels("testnetwork", locale=lang, module="g"),command=lambda: threading.Thread(target=testNetwork).start() )
+    b_view_contact.place(x=50, y=200)    
+    
+
+    b_view_version=tk.Button(frame,text=i18labels("testsettingok", locale=lang, module="g"),command=lambda: threading.Thread(target=ValidateSetting).start() )
+    b_view_version.place(x=50, y=300)    
+def videosView(frame,ttkframe,lang):
+    global videosView_video_folder
+    videosView_video_folder = tk.StringVar()
+
+    videosView_video_folder.set(setting['video_folder'])
+
+    l_video_folder = tk.Label(frame, text=i18labels("videoFolder", locale=lang, module="g"))
+    l_video_folder.place(x=10, y=20)
+    e_video_folder = tk.Entry(frame, width=45, textvariable=videosView_video_folder)
+    e_video_folder.place(x=150, y=20)
+    b_video_folder=tk.Button(frame,text="Select",command=lambda: threading.Thread(target=select_videosView_video_folder).start() )
+    b_video_folder.place(x=580, y=20)    
+
+    l_mode_1 = tk.Label(frame, text=i18labels("toolkits", locale=lang, module="g"))
+    l_mode_1.place(x=10, y=int(height-250))
+    
+    
+    b_autothumb = tk.Button(frame, text=i18labels("autothumb", locale=lang, module="g"), command=lambda: threading.Thread(target=autothumb).start())
+    b_autothumb.place(x=150, y=int(height-250))
+    b_batchchangebgmusic = tk.Button(frame, text=i18labels("batchchangebgmusic", locale=lang, module="g"), command=lambda: threading.Thread(target=batchchangebgmusic).start())
+    b_batchchangebgmusic.place(x=350,y=int(height-250))
+    
+    
+    b_hiddenwatermark = tk.Button(frame, text=i18labels("hiddenwatermark", locale=lang, module="g"), command=lambda: threading.Thread(target=hiddenwatermark))
+    b_hiddenwatermark.place(x=500,y=int(height-250))
+
+def thumbView(frame,ttkframe,lang):
+    global thumbView_video_folder
+    thumbView_video_folder = tk.StringVar()
+
+
+    global checkvideocounts
+    checkvideocounts = tk.IntVar()
+
+    global video_thumb_pairs_counts
+    video_thumb_pairs_counts = tk.IntVar()
+
+    # videosView_video_folder.set(setting['video_folder'])
+
+    l_video_folder = tk.Label(frame, text=i18labels("videoFolder", locale=lang, module="g"))
+    l_video_folder.place(x=10, y=20)
+    e_video_folder = tk.Entry(frame, width=45, textvariable=thumbView_video_folder)
+    e_video_folder.place(x=150, y=20)
+    
+    b_video_folder=tk.Button(frame,text="Select",command=lambda: threading.Thread(target=select_thumbView_video_folder).start() )
+    b_video_folder.place(x=580, y=20)    
+    b_video_folder_check=tk.Button(frame,text="Step1:check video assets",command=lambda: threading.Thread(target=analyse_video_thumb_pair(thumbView_video_folder.get(),frame)).start() )
+    b_video_folder_check.place(x=10, y=50)    
+    print(b_video_folder_check)
+    # print(checkvideocounts)
+    # print('===============')
+    # print(checkvideopaircounts)
+
+
+def render_video_folder_check_results(frame):
+    lb_video_counts = tk.Label(frame, text='video total counts', font=(' ', 9))
+    lb_video_counts.place(x=140, y=110, anchor=tk.NE)
+    print(checkvideocounts.get())
+
+    lb_video_counts_value = tk.Label(frame, text=str(checkvideocounts.get()), font=(' ', 9))
+    lb_video_counts_value.place(x=200, y=110, width = 50, anchor=tk.NE)
+
+
+    lb_video_thumb_pairs_counts = tk.Label(frame, text='video-thum paired', font=(' ', 9))
+    lb_video_thumb_pairs_counts.place(x=140, y=140, anchor=tk.NE)
+
+
+
+    print(video_thumb_pairs_counts.get())
+    lb_video_thumb_pairs_counts_value = tk.Label(frame, text=str(video_thumb_pairs_counts.get()), font=(' ', 9))
+    lb_video_thumb_pairs_counts_value.place(x=200, y=140, width = 50, anchor=tk.NE)
+
+
+    lb_video_thumb_pairs_counts = tk.Label(frame, text='missing paired', font=(' ', 9))
+    lb_video_thumb_pairs_counts.place(x=140, y=160, anchor=tk.NE)
+
+    missing_video_thumb_pairs_counts=checkvideocounts.get()-video_thumb_pairs_counts.get()
+
+    lb_video_thumb_pairs_counts_value = tk.Label(frame, text=str(missing_video_thumb_pairs_counts), font=(' ', 9))
+    lb_video_thumb_pairs_counts_value.place(x=200, y=160, width = 50, anchor=tk.NE)
+
+    if missing_video_thumb_pairs_counts==0:
+        lb_thumb_wizard = tk.Label(frame, text='please try another video folder', font=(' ', 18))
+        lb_thumb_wizard.place(x=50, y=180,anchor=tk.NW)   
+    else:
+        lb_thumb_wizard = tk.Label(frame, text='you need create thumbnails for '+str(missing_video_thumb_pairs_counts)+'  videos', font=(' ', 18))
+        lb_thumb_wizard.place(x=50, y=180,anchor=tk.NW)        
+        b_edit_thumb=tk.Button(frame,text="Step2:make a new thumbnails template use editor",command=lambda: webbrowser.open_new("template.html"))
+        b_edit_thumb.place(x=10, y=220)    
+
+        global thumbnail_template_file
+        thumbnail_template_file = tk.StringVar()        
+        l_thumb_template = tk.Label(frame, text='thumbnail template file')
+
+        l_thumb_template.place(x=10, y=260)
+        e_video_folder = tk.Entry(frame, width=45, textvariable=thumbnail_template_file)
+        e_video_folder.place(x=150, y=260)
+        
+        b_video_folder=tk.Button(frame,text="Select",command=lambda: threading.Thread(target=select_thumb_template_file).start() )
+        b_video_folder.place(x=580, y=260)    
+
+        b_edit_thumb_metas=tk.Button(frame,text="Step3:make new video thumbnails metas use editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
+        b_edit_thumb_metas.place(x=10, y=300)    
+
+        global thumbnail_metas_file
+        thumbnail_metas_file = tk.StringVar()        
+        l_thumb_metas = tk.Label(frame, text='thumbnail metas file')
+
+        l_thumb_metas.place(x=10, y=340)
+        e_thumb_metas = tk.Entry(frame, width=45, textvariable=thumbnail_metas_file)
+        e_thumb_metas.place(x=150, y=340)
+
+        b_video_folder=tk.Button(frame,text="Select",command=lambda: threading.Thread(target=select_thumb_template_file).start() )
+        b_video_folder.place(x=580, y=340)    
+
+
+        mode = tk.StringVar()
+        mode.set("4")
+
+        lab = tk.Label(frame,text="请选择你的缩略图背景图片从何而来",bg="lightyellow",width=30)
+        lab.place(x=10, y=380)    
+        mode1=tk.Radiobutton(frame,text="视频第一帧作为背景图",variable=mode,value="1",command='')
+        mode1.place(x=10, y=420)    
+        mode2=tk.Radiobutton(frame,text="视频任意关键帧作为背景图",variable=mode,value="2",command='')
+        mode2.place(x=10, y=450)    
+        mode3=tk.Radiobutton(frame,text="文件夹中任意图片作为背景图",variable=mode,value="3",command='')
+        mode3.place(x=10, y=480)    
+        mode4=tk.Radiobutton(frame,text="元数据中已指定背景图地址",variable=mode,value="4",command='')
+        mode4.place(x=10, y=520)    
+        b_import_thumb_metas_=tk.Button(frame,text="Step4:gen thumbnails use thumb metas and thumb template file",command=lambda: genThumbnailFromTemplate(videosView_video_folder.get(),thumbnail_template_file.get(),mode.get()))
+        b_import_thumb_metas_.place(x=10, y=560)    
+
+
+def accountView(frame,ttkframe,lang):
+    lbl15 = tk.Label(ttkframe, text='Enter PID.')
+    lbl15.place(x=230, y=125, anchor=tk.NE)
+    txt15 = tk.Entry(ttkframe, width=11)
+    txt15.place(x=320, y=125, anchor=tk.NE)
+
+
+    # buttons
+
+    btn4= tk.Button(ttkframe, text="Book Flight", command = select_cookie_file)
+    btn4.place(x=300, y=350, anchor=tk.NE)
+
+    btn5= tk.Button(ttkframe, text="Get Info", command = select_cookie_file)
+    btn5.place(x=400, y=120, anchor=tk.NE)
+    # treeview_flight
+    tree = ttk.Treeview(frame, height = 10, column = 6)
+    tree["column"]=('#0','#1','#2','#3','#4','#5')
+    tree.grid(row = 0, column = 0, columnspan = 6, padx=14, pady=15)
+
+    tree.heading('#0', text = 'Flight No.')
+    tree.column('#0', anchor = 'center', width = 70)
+    tree.heading('#1', text = 'From')
+    tree.column('#1', anchor = 'center', width = 60)
+    tree.heading('#2', text = 'To')
+    tree.column('#2', anchor = 'center', width = 60)
+    tree.heading('#3', text = 'Dep. Date')
+    tree.column('#3', anchor = 'center', width = 80)
+    tree.heading('#4', text = 'Dep. Time')
+    tree.column('#4', anchor = 'center', width = 80)
+    tree.heading('#5', text = 'Arr. Date')
+    tree.column('#5', anchor = 'center', width = 80)
+    tree.heading('#6', text = 'Arr. Time')
+    tree.column('#6', anchor = 'center', width = 80)
+
+
+
+def uploadView(frame,ttkframe,lang):
+
+    # treeview_flight
+    tree = ttk.Treeview(frame, height = 10, column = 6)
+    tree["column"]=('#0','#1','#2','#3','#4','#5','#6','#7')
+    tree.grid(row = 0, column = 0, columnspan = 10, padx=14, pady=15)
+
+    tree.heading('#0', text = 'Task No.')
+    tree.column('#0', anchor = 'center', width = 70)
+    tree.heading('#1', text = 'Video id')
+    tree.column('#1', anchor = 'center', width = 60)
+    tree.heading('#2', text = 'local path')
+    tree.column('#2', anchor = 'center', width = 60)
+    tree.heading('#3', text = 'title')
+    tree.column('#3', anchor = 'center', width = 80)
+    tree.heading('#4', text = 'tags')
+    tree.column('#4', anchor = 'center', width = 80)
+    tree.heading('#5', text = 'release. Date')
+    tree.column('#5', anchor = 'center', width = 80)
+    tree.heading('#6', text = 'release. Time')
+    tree.column('#6', anchor = 'center', width = 80)
+    tree.heading('#7', text = 'upload. Time')
+    tree.column('#7', anchor = 'center', width = 80)
+    tree.heading('#8', text = 'upload. Status')
+    tree.column('#8', anchor = 'center', width = 80)
+    # lbl15 = tk.Label(ttkframe, text='Enter PID.')
+    # lbl15.place(x=230, y=125, anchor=tk.NE)
+    # txt15 = tk.Entry(ttkframe, width=11)
+    # txt15.place(x=320, y=125, anchor=tk.NE)
+    lb_video_counts = tk.Label(ttkframe, text='success', font=(' ', 18))
+    lb_video_counts.place(x=540, y=50, anchor=tk.NE)
+    print(checkvideocounts.get())
+
+    lb_video_counts_value = tk.Label(ttkframe, text=str(checkvideocounts.get()), font=(' ', 18))
+    lb_video_counts_value.place(x=700, y=50, width = 50, anchor=tk.NE)
+
+
+    lb_video_thumb_pairs_counts = tk.Label(ttkframe, text='queued', font=(' ', 18))
+    lb_video_thumb_pairs_counts.place(x=540, y=100, anchor=tk.NE)
+
+
+
+    print(video_thumb_pairs_counts.get())
+    lb_video_thumb_pairs_counts_value = tk.Label(ttkframe, text=str(video_thumb_pairs_counts.get()), font=(' ', 18))
+    lb_video_thumb_pairs_counts_value.place(x=700, y=100, width = 50, anchor=tk.NE)
+
+
+    lb_video_thumb_pairs_counts = tk.Label(ttkframe, text='failure', font=(' ', 18))
+    lb_video_thumb_pairs_counts.place(x=540, y=160, anchor=tk.NE)
+
+    missing_video_thumb_pairs_counts=checkvideocounts.get()-video_thumb_pairs_counts.get()
+
+    lb_video_thumb_pairs_counts_value = tk.Label(ttkframe, text=str(missing_video_thumb_pairs_counts), font=(' ', 18))
+    lb_video_thumb_pairs_counts_value.place(x=700, y=160, width = 50, anchor=tk.NE)
+
+        
+
+
+    b_editVideoMetas = tk.Button(ttkframe, text=i18labels("editVideoMetas", locale=lang, module="g"), command=
+                                #  lambda: webbrowser.open_new("https://jsoncrack.com/editor")
+                                 lambda: threading.Thread(target=webbrowser.open_new("https://jsoncrack.com/editor")).start())
+    b_editVideoMetas.place(x=10, y=int(50))
+    
+
+    b_import_video_metas = tk.Button(ttkframe, text=i18labels("importVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=importVideoMetas).start())
+    b_import_video_metas.place(x=10, y=int(100))
+    
+    b_down_video_metas_temp = tk.Button(ttkframe, text=i18labels("downVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=downVideoMetas).start())
+    b_down_video_metas_temp.place(x=10, y=int(150))    
+    
+
+    b_createuploadsession = tk.Button(ttkframe, text=i18labels("createuploadsession", locale=lang, module="g"), command=lambda: threading.Thread(target=createuploadsession).start())
+    b_createuploadsession.place(x=10, y=int(200))
+
+
+
+    b_upload = tk.Button(ttkframe, text=i18labels("testupload", locale=lang, module="g"), command=lambda: threading.Thread(target=testupload).start())
+    b_upload.place(x=10, y=int(250))
+
+    b_upload = tk.Button(ttkframe, text=i18labels("upload", locale=lang, module="g"), command=lambda: threading.Thread(target=upload).start())
+    b_upload.place(x=10, y=int(300))
+
+
+    # viewing_records()
+def proxyView(frame,ttkframe,lang):
+    lbl15 = tk.Label(ttkframe, text='Enter PID.')
+    lbl15.place(x=230, y=125, anchor=tk.NE)
+    txt15 = tk.Entry(ttkframe, width=11)
+    txt15.place(x=320, y=125, anchor=tk.NE)
+
+
+    # buttons
+
+    btn4= tk.Button(ttkframe, text="Book Flight", command = select_cookie_file)
+    btn4.place(x=300, y=350, anchor=tk.NE)
+
+    btn5= tk.Button(ttkframe, text="Get Info", command = select_cookie_file)
+    btn5.place(x=400, y=120, anchor=tk.NE)
+    # treeview_flight
+    tree = ttk.Treeview(frame, height = 10, column = 6)
+    tree["column"]=('#0','#1','#2','#3','#4','#5')
+    tree.grid(row = 0, column = 0, columnspan = 6, padx=14, pady=15)
+
+    tree.heading('#0', text = 'Flight No.')
+    tree.column('#0', anchor = 'center', width = 70)
+    tree.heading('#1', text = 'From')
+    tree.column('#1', anchor = 'center', width = 60)
+    tree.heading('#2', text = 'To')
+    tree.column('#2', anchor = 'center', width = 60)
+    tree.heading('#3', text = 'Dep. Date')
+    tree.column('#3', anchor = 'center', width = 80)
+    tree.heading('#4', text = 'Dep. Time')
+    tree.column('#4', anchor = 'center', width = 80)
+    tree.heading('#5', text = 'Arr. Date')
+    tree.column('#5', anchor = 'center', width = 80)
+    tree.heading('#6', text = 'Arr. Time')
+    tree.column('#6', anchor = 'center', width = 80)
+
+
+
+    # viewing_records()
+
+def metaView(frame,ttkframe,lang):
+
     # 
     global is_debug,is_open_browser,is_record_video,start_publish_date,channelname,ratio,publishpolicy,prefertags,preferdesprefix,preferdessuffix,channel_cookie,proxy_option,firefox_profile_folder,video_folder,dailycount,music_folder
     is_debug = tk.BooleanVar()
@@ -1329,25 +1752,13 @@ def render(root,lang):
 
     
     
-    l_mode_1 = tk.Label(frame, text=i18labels("toolkits", locale=lang, module="g"))
-    l_mode_1.place(x=10, y=int(height-250))
-    
-    
-    b_autothumb = tk.Button(frame, text=i18labels("autothumb", locale=lang, module="g"), command=lambda: threading.Thread(target=autothumb).start())
-    b_autothumb.place(x=150, y=int(height-250))
-    b_batchchangebgmusic = tk.Button(frame, text=i18labels("batchchangebgmusic", locale=lang, module="g"), command=lambda: threading.Thread(target=batchchangebgmusic).start())
-    b_batchchangebgmusic.place(x=350,y=int(height-250))
-    
-    
-    b_hiddenwatermark = tk.Button(frame, text=i18labels("hiddenwatermark", locale=lang, module="g"), command=lambda: threading.Thread(target=hiddenwatermark))
-    b_hiddenwatermark.place(x=500,y=int(height-250))
 
     
-    l_mode_1 = tk.Label(frame, text=i18labels("mode1", locale=lang, module="g"))
-    l_mode_1.place(x=10, y=int(height-200))
+    # l_mode_1 = tk.Label(frame, text=i18labels("mode1", locale=lang, module="g"))
+    # l_mode_1.place(x=10, y=int(height-200))
 
-    b_editVideoMetas = tk.Button(frame, text=i18labels("editVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=editVideoMetas).start())
-    b_editVideoMetas.place(x=150, y=int(height-200))
+    # b_editVideoMetas = tk.Button(frame, text=i18labels("editVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=editVideoMetas).start())
+    # b_editVideoMetas.place(x=150, y=int(height-200))
     
     
     
@@ -1365,81 +1776,152 @@ def render(root,lang):
 
 
         
-    l_mode_3 = tk.Label(frame, text=i18labels("mode3", locale=lang, module="g"))
-    l_mode_3.place(x=10, y=int(height-100))
+    # l_mode_3 = tk.Label(frame, text=i18labels("mode3", locale=lang, module="g"))
+    # l_mode_3.place(x=10, y=int(height-100))
     
 
-    b_import_video_metas = tk.Button(frame, text=i18labels("importVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=importVideoMetas).start())
-    b_import_video_metas.place(x=150, y=int(height-100))
+    # b_import_video_metas = tk.Button(frame, text=i18labels("importVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=importVideoMetas).start())
+    # b_import_video_metas.place(x=150, y=int(height-100))
     
-    b_down_video_metas_temp = tk.Button(frame, text=i18labels("downVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=downVideoMetas).start())
-    b_down_video_metas_temp.place(x=350, y=int(height-100))    
+    # b_down_video_metas_temp = tk.Button(frame, text=i18labels("downVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=downVideoMetas).start())
+    # b_down_video_metas_temp.place(x=350, y=int(height-100))    
     
 
-    b_createuploadsession = tk.Button(frame, text=i18labels("createuploadsession", locale=lang, module="g"), command=lambda: threading.Thread(target=createuploadsession).start())
-    b_createuploadsession.place(x=150, y=int(height-50))
+    # b_createuploadsession = tk.Button(frame, text=i18labels("createuploadsession", locale=lang, module="g"), command=lambda: threading.Thread(target=createuploadsession).start())
+    # b_createuploadsession.place(x=150, y=int(height-50))
 
 
 
-    b_upload = tk.Button(frame, text=i18labels("testupload", locale=lang, module="g"), command=lambda: threading.Thread(target=testupload).start())
-    b_upload.place(x=350, y=int(height-50))
+    # b_upload = tk.Button(frame, text=i18labels("testupload", locale=lang, module="g"), command=lambda: threading.Thread(target=testupload).start())
+    # b_upload.place(x=350, y=int(height-50))
 
-    b_upload = tk.Button(frame, text=i18labels("upload", locale=lang, module="g"), command=lambda: threading.Thread(target=upload).start())
-    b_upload.place(x=550, y=int(height-50))
+    # b_upload = tk.Button(frame, text=i18labels("upload", locale=lang, module="g"), command=lambda: threading.Thread(target=upload).start())
+    # b_upload.place(x=550, y=int(height-50))
 
-    menubar = tk.Menu(root)
-    settings = tk.Menu(menubar, tearoff=False)
-    menubar.add_cascade(label=i18labels("settings", locale=lang, module="g"), menu=settings)
-    # filemenu.add_command(label="选择geckodriver文件",
-                        #  command=select_driver_file)
-    settings.add_command(label=i18labels("load_setting_file", locale=lang, module="g"),
-                            command=load_setting_file)
-    settings.add_command(label=i18labels("save_setting", locale=lang, module="g"),
-                            command=save_setting)
-    settings.add_command(label=i18labels("create_setting_file", locale=lang, module="g"),
-                            command=create_setting_file)
+
     
-    setups = tk.Menu(menubar, tearoff=False)
+    b_autothumb = tk.Button(frame, text=i18labels("load_setting_file", locale=lang, module="g"), command=lambda: threading.Thread(target=load_setting_file).start())
+    b_autothumb.place(x=150, y=int(height-250))
+    b_batchchangebgmusic = tk.Button(frame, text=i18labels("save_setting", locale=lang, module="g"), command=lambda: threading.Thread(target=save_setting).start())
+    b_batchchangebgmusic.place(x=350,y=int(height-250))
+    
+    
+    b_hiddenwatermark = tk.Button(frame, text=i18labels("create_setting_file", locale=lang, module="g"), command=lambda: threading.Thread(target=create_setting_file))
+    b_hiddenwatermark.place(x=500,y=int(height-250))
 
-    menubar.add_cascade(label=i18labels("setups", locale=lang, module="g"), menu=setups)
-    setups.add_command(label=i18labels("testnetwork", locale=lang, module="g"),
-                            command=lambda: threading.Thread(target=testNetwork).start())
-    setups.add_command(label=i18labels("testinstall", locale=lang, module="g"),
-                            command=lambda: threading.Thread(target=testInstallRequirements).start())
-    
-    setups.add_command(label=i18labels("testsettingok", locale=lang, module="g"),
-                            command=lambda: threading.Thread(target=ValidateSetting).start())
-    
+def render(root,lang):
+    global window
+    window=tk.Frame(root,width=str(width),  height=str(height),  )
+    window.pack()
+
+
+    tab_control = ttk.Notebook(window)
+    doc_frame = ttk.Frame(tab_control)
+    doc_frame_left1 = tk.Frame(doc_frame, width = width, height = height)
+    doc_frame_left1.pack(side = tk.LEFT)
+
+    install_frame = ttk.Frame(tab_control)
+    install_frame_left1 = tk.Frame(install_frame, width = width, height = height)
+    install_frame_left1.pack(side = tk.LEFT)
+
+    thumb_frame = ttk.Frame(tab_control)
+    thumb_frame_left1 = tk.Frame(thumb_frame, width = width, height = height)
+    thumb_frame_left1.pack(side = tk.LEFT)
+
+
+    video_frame = ttk.Frame(tab_control)
+
+    video_frame_left1 = tk.Frame(video_frame, width = width, height = height)
+    video_frame_left1.pack(side = tk.LEFT)
+
+    proxy_frame = ttk.Frame(tab_control)
+
+    proxy_frame_left1 = tk.Frame(proxy_frame, width = width, height = height)
+    proxy_frame_left1.pack(side = tk.RIGHT)
+
+
+    account_frame = ttk.Frame(tab_control)
+
+    account_frame_left1 = tk.Frame(account_frame, width = width, height = height)
+    account_frame_left1.pack(side = tk.RIGHT)
+
+    upload_frame = ttk.Frame(tab_control)
+
+    upload_frame_left1 = tk.Frame(upload_frame, width = width, height = height)
+    upload_frame_left1.pack(side = tk.RIGHT)
+
+
+    meta_frame = ttk.Frame(tab_control)
+    meta_frame_left1 = tk.Frame(meta_frame, width = width, height = height)
+    meta_frame_left1.pack(side = tk.RIGHT)
+
+
+
+    tab_control.add(doc_frame, text=i18labels("docView", locale=lang, module="g"))
+    docView(doc_frame_left1,doc_frame,lang)
+
+    tab_control.add(install_frame, text=i18labels("installView", locale=lang, module="g"))
+    installView(install_frame_left1,install_frame,lang)
+
+
+    tab_control.add(account_frame, text=i18labels("accountView", locale=lang, module="g"))
+    accountView(account_frame_left1,account_frame,lang)
+
+    tab_control.add(proxy_frame, text=i18labels("proxyView", locale=lang, module="g"))
+    proxyView(proxy_frame_left1,proxy_frame,lang)
+
+    tab_control.add(thumb_frame, text=i18labels("thumbView", locale=lang, module="g"))
+    thumbView(thumb_frame_left1,thumb_frame,lang)
+
+
+    tab_control.add(video_frame, text=i18labels("videosView", locale=lang, module="g"))
+    videosView(video_frame_left1,video_frame,lang)
+
+
+    tab_control.add(meta_frame, text=i18labels("metaView", locale=lang, module="g"))
+    metaView(meta_frame_left1,meta_frame,lang)
+
+
+    tab_control.add(upload_frame, text=i18labels("uploadView", locale=lang, module="g"))
+    uploadView(upload_frame_left1,upload_frame,lang)
+
+    tab_control.pack(expand=1, fill='both')
+
+
+
+
+
+
+
+
+
+    Cascade_button = tk.Menubutton(window, text=i18labels("setups", locale=lang, module="g"), underline=0)
+    Cascade_button.pack(side=tk.LEFT, padx="2m")
+ 
+     # the primary pulldown
+    Cascade_button.menu = tk.Menu(Cascade_button)
+ 
+     # this is the menu that cascades from the primary pulldown....
+    Cascade_button.menu.choices = tk.Menu(Cascade_button.menu)
+ 
+ 
+     # definition of the menu one level up...
+    Cascade_button.menu.choices.add_command(label='zh',command=lambda:changeDisplayLang('zh'))
+    Cascade_button.menu.choices.add_command(label='en',command=lambda:changeDisplayLang('en'))
+    menubar = tk.Menu(window)
+    Cascade_button.menu.add_cascade(label= i18labels("chooseLang", locale=lang, module="g"),
+                                    
+                                     menu=Cascade_button.menu.choices)    
+    menubar.add_cascade(label=i18labels("settings", locale=lang, module="g"), menu=Cascade_button.menu)    
+
+
+
         
-    helpcenter = tk.Menu(menubar, tearoff=False)
 
-    menubar.add_cascade(label=i18labels("helpcenter", locale=lang, module="g"), menu=helpcenter)
-    helpcenter.add_command(label=i18labels("docs", locale=lang, module="g"),
-                            command=docs)
-    helpcenter.add_command(label=i18labels("contact", locale=lang, module="g"),
-                            command=contact)
-    helpcenter.add_command(label=i18labels("version", locale=lang, module="g"),
-                            command=version)    
-        
-
-    l_chooseLang = tk.Label(frame, text=i18labels("chooseLang", locale=lang, module="g"))
-    l_chooseLang.place(x=440, y=10)
-
-    langlabel = tk.StringVar()
-    global langchoosen 
-
-    langchoosen = ttk.Combobox(root, width = 5, 
-                                textvariable = langlabel)
-    
-    # Adding combobox drop down list
-    langchoosen['values'] = ('zh', 'en')
-    
-    # langchoosen.place(in_=frame,  relx=0.5,  anchor=tk.E)
-    langchoosen.place(in_=frame, y=10,x=480)
-    langchoosen.set(lang)    
-    langchoosen.bind("<<ComboboxSelected>>", changeDisplayLang)
     root.config(menu=menubar)
-    return langchoosen.get()
+    # return langchoosen.get()
+
+
 if __name__ == '__main__':
 
     gui_flag = 1
@@ -1450,6 +1932,7 @@ if __name__ == '__main__':
     load_setting()
 
     if gui_flag:
+        global root
         root = tk.Tk()
         # root.geometry('1280x720')
         root.geometry(window_size)
@@ -1457,7 +1940,7 @@ if __name__ == '__main__':
         root.resizable(width=False, height=False)
         root.iconbitmap("assets/icon.ico")
 
-        lang =render(root,'zh')
-        root.title(i18labels("title", locale=lang, module="g"))        
+        render(root,'en')
+        root.title(i18labels("title", locale='en', module="g"))        
 
         root.mainloop()

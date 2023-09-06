@@ -1,6 +1,6 @@
 {
 	"g": {
-		"title": "Youtube Video Bulk Upload GUI Demo",
+		"title": "TiktokaStudio Video Bulk Upload GUI Demo",
 		"select_musics_folder''": "choose music folder",
 		"select_videos_folder": "choose video folder",
 		"setups": "setups",
@@ -10,7 +10,15 @@
 		"createuploadsession": "create uploadsession",
 		"autothumb": "auto thumbnail",
 		"testupload": "test video upload ",
-
+		"videosMenu": "视频管理",
+		"docView": "Docs",		
+		"installView": "Setup",
+		"accountView": "Accounts",
+		"proxyView": "Proxies",
+		"thumbView": "Thumbnails",
+		"videosView": "Videos",
+		"metaView": "Metas",
+		"uploadView": "Upload",
 		"upload": "start upload",
 		"batchchangebgmusic": "batch replace audio",
 		"is_open_browser": "silent mode",
@@ -22,7 +30,7 @@
 		"username": "username",
 		"password": "password",
 		"save_setting": "save config",
-		"chooseLang": "lang:",
+		"chooseLang": "Lang",
 		"contact":"contact",
 		"contact_str":"1.Email send to admin@tiktokastudio.com\\n",
 		"debug": "debug",
