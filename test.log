@@ -254,3 +254,7 @@
 2023-09-07 15:17:23,877 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests/youtube-videos-meta.json
 2023-09-07 15:17:23,877 - INFO - start to load  and parse meta json
 2023-09-07 15:17:23,877 - INFO - start to create uploading task for each video
+2023-09-07 17:08:53,949 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-07 17:08:54,024 - INFO - GUI started
+2023-09-07 17:10:12,737 - INFO - start to down video metas json template from:https://raw.githubusercontent.com/wanghaisheng/tiktoka-studio-uploader-app/main/assets/youtube-videos-meta-comments.json
+2023-09-07 17:10:15,741 - INFO - finish to down video metas json template
