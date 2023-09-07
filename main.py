@@ -977,9 +977,11 @@ def SelectVideoMetasfile():
     logger.debug('finished to import prepared video metas in json format')
 
 def downVideoMetas():
-    print('start to down video metas json template')
+    template_url='https://raw.githubusercontent.com/wanghaisheng/tiktoka-studio-uploader-app/main/assets/youtube-videos-meta-comments.json'
+    logger.info(f'start to down video metas json template from:{template_url}')
     time.sleep(3)
-    print('finish to down video metas json template')
+    logger.info('finish to down video metas json template')
+
     
 def genVideoMetas():
     dbm=DBM('prod')
