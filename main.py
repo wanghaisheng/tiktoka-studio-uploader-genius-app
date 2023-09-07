@@ -59,7 +59,6 @@ import sys
 import random
 import os
 import time
-from datetime import timedelta, date,datetime
 # import multiprocessing.dummy as mp
 import concurrent
 from glob import glob
@@ -798,6 +797,30 @@ def init_worker(mps, fps, cut):
     print("process initializing", mp.current_process())
     memorizedPaths, filepaths, cutoff = mps, fps, cut
     DG = 1##nx.read_gml("KeggComplete.gml", relabel = True)
+def changeLoglevel(level,window,log_frame):
+    values = ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']
+
+    if level=='DEBUG':
+        logging.basicConfig(filename='test.log',
+            level=logging.DEBUG, 
+            format='%(asctime)s - %(levelname)s - %(message)s')   
+    elif level=='INFO':
+        logging.basicConfig(filename='test.log',
+            level=logging.INFO, 
+            format='%(asctime)s - %(levelname)s - %(message)s') 
+    elif level=='WARNING':
+        logging.basicConfig(filename='test.log',
+            level=logging.WARNING, 
+            format='%(asctime)s - %(levelname)s - %(message)s') 
+    elif level=='ERROR':
+        logging.basicConfig(filename='test.log',
+            level=logging.ERROR, 
+            format='%(asctime)s - %(levelname)s - %(message)s') 
+    elif level=='CRITICAL':
+        logging.basicConfig(filename='test.log',
+            level=logging.CRITICAL, 
+            format='%(asctime)s - %(levelname)s - %(message)s') 
+
 
 def changeDisplayLang(lang,window,log_frame):
 
@@ -806,11 +829,11 @@ def changeDisplayLang(lang,window,log_frame):
     root.title(i18labels("title", locale=lang, module="g"))        
     window=tk.Frame(root,width=str(width),  height=str(height+200),  )
     
-    log_frame = tk.Frame(window, width = width, height = 15)
+    log_frame = tk.Frame(window, width = width, height = 5)
     log_frame.pack(side = tk.BOTTOM)
     st = ScrolledText.ScrolledText(log_frame,                                      
                                 width = width, 
-                                    height = 15, 
+                                    height = 5, 
                                     state='disabled')
     st.configure(font='TkFixedFont')
     st.grid(column=0, 
@@ -830,7 +853,7 @@ def changeDisplayLang(lang,window,log_frame):
     # logger.critical('critical message')
     window.pack()
     render(root,window,log_frame,lang)
-    print(f'switch lang to locale:{lang}')
+    logger.info(f'switch lang to locale:{lang}')
 
 def hiddenwatermark():
     print('add hiddenwatermark to each video for  copyright theft')
@@ -941,14 +964,17 @@ def editVideoMetas():
     print('go to web json editor to edit prepared video metas in json format')
 
 
-def importVideoMetas():
-    print('import prepared video metas in json format')
-    global video_meta_json_path
-    video_meta_json_path = filedialog.askopenfilenames(title="choose video meta json file", filetypes=[
+def SelectVideoMetasfile():
+    logger.debug('start to import prepared video metas in json format')
+    try:
+        video_meta_json_path = filedialog.askopenfilenames(title="choose video meta json file", filetypes=[
         ("Json", "*.json"), ("All Files", "*")])[0]
+        imported_video_metas_file.set(video_meta_json_path)
 
-    imported_video_metas_file.set(video_meta_json_path)
+    except:
+        logger.error('you should choose a valid path')
     # setting['channelcookiepath'] = channel_cookie_path
+    logger.debug('finished to import prepared video metas in json format')
 
 def downVideoMetas():
     print('start to down video metas json template')
@@ -976,24 +1002,56 @@ def genVideoMetas():
         else:
             print("pls choose file or folder")
     print('save metas to json /csv excel format for later processing')
-def createuploadsession(dbm,ttkframe):
+
+def validateMetafile(dbm,ttkframe,metafile):
+    logger.info('load video metas to database .create upload task for each video')
+# 文件夹下是否有视频文件
+
+# 视频文件是否有同名的图片
+
+    if metafile !='' and metafile is not None:
+        
+        logger.info(f'you select metafile is {metafile}')
+        if  os.path.exists(metafile):
+            # check_video_thumb_pair(dbm,video_folder_path,True)
+            logger.info('start to load  and parse meta json')
+            # save_setting(dbm)
+
+            # prepareuploadsession( dbm,videopath,thumbpath,filename,start_index,setting['channelname'],settingid)
+            logger.info('start to create uploading task for each video')
+        else:
+            logger.error("you choosed video meta json file is missing or broken.")
+            lab = tk.Label(ttkframe,text="please choose a valid json file",bg="lightyellow",width=40)
+            lab.place(x=10, y=220)       
+            lab.after(10*1000,lab.destroy)
+    else:
+        logger.error('please provide a video meta json file')
+        lab = tk.Label(ttkframe,text="please choose a  json file",bg="lightyellow",width=40)
+        lab.place(x=10, y=220)       
+        lab.after(10*1000,lab.destroy)       
+
+
+def createuploadsession(dbm,ttkframe,metafile):
     save_setting(dbm)
-    print('load video metas to database .create upload task for each video')
+    logger.info('load video metas to database .create upload task for each video')
 # 文件夹下是否有视频文件
 
 # 视频文件是否有同名的图片
 
     try:
-        video_folder_path = setting['video_folder']
+        metafile
 
     except NameError:
-        print('not found fastlane folder  file')
+        logger.error('please provide a video meta json file')
         is_createuploadsession.set(False)
        
     else:
-        if video_folder_path:
-            if os.path.exists(video_folder_path):
-                check_video_thumb_pair(dbm,video_folder_path,True)
+        if metafile:
+            if os.path.exists(metafile):
+                # check_video_thumb_pair(dbm,video_folder_path,True)
+                logger.info('start to load  and parse meta json')
+                # prepareuploadsession( dbm,videopath,thumbpath,filename,start_index,setting['channelname'],settingid)
+                logger.info('start to create uploading task for each video')
             else:
                 is_createuploadsession.set(False)                
                 print("there is no defined video dir.",is_createuploadsession.get())
@@ -1005,8 +1063,11 @@ def createuploadsession(dbm,ttkframe):
             is_createuploadsession.set(False)
 
         if is_createuploadsession.get()==False:
+            logger.info('show import meta to database error hints in 10 seconds')
             lab = tk.Label(ttkframe,text="创建失败，请参考日志修改文件后重新提交",bg="lightyellow",width=40)
-            lab.place(x=10, y=220)                
+            lab.place(x=10, y=220)       
+            lab.after(10*1000,lab.destroy)
+
 def analyse_video_thumb_pair(folder,frame):
     print(f'detecting----------{folder}')
     checkvideopaircountsvalue=0
@@ -1548,31 +1609,31 @@ def uploadView(frame,ttkframe,lang):
     # lbl15.place(x=230, y=125, anchor=tk.NE)
     # txt15 = tk.Entry(ttkframe, width=11)
     # txt15.place(x=320, y=125, anchor=tk.NE)
-    lb_video_counts = tk.Label(ttkframe, text='success', font=(' ', 18))
-    lb_video_counts.place(x=540, y=50, anchor=tk.NE)
+    lb_video_counts = tk.Label(ttkframe, text='success', font=(' ', 9))
+    lb_video_counts.place(x=500, y=10, anchor=tk.NE)
     print(checkvideocounts.get())
 
     lb_video_counts_value = tk.Label(ttkframe, text=str(checkvideocounts.get()), font=(' ', 18))
-    lb_video_counts_value.place(x=700, y=50, width = 50, anchor=tk.NE)
+    lb_video_counts_value.place(x=550, y=10, width = 20, anchor=tk.NE)
 
 
-    lb_video_thumb_pairs_counts = tk.Label(ttkframe, text='queued', font=(' ', 18))
-    lb_video_thumb_pairs_counts.place(x=540, y=100, anchor=tk.NE)
+    lb_video_thumb_pairs_counts = tk.Label(ttkframe, text='queued', font=(' ', 9))
+    lb_video_thumb_pairs_counts.place(x=600, y=10, anchor=tk.NE)
 
 
 
     print(video_thumb_pairs_counts.get())
     lb_video_thumb_pairs_counts_value = tk.Label(ttkframe, text=str(video_thumb_pairs_counts.get()), font=(' ', 18))
-    lb_video_thumb_pairs_counts_value.place(x=700, y=100, width = 50, anchor=tk.NE)
+    lb_video_thumb_pairs_counts_value.place(x=650, y=10, width = 20, anchor=tk.NE)
 
 
-    lb_video_thumb_pairs_counts = tk.Label(ttkframe, text='failure', font=(' ', 18))
-    lb_video_thumb_pairs_counts.place(x=540, y=160, anchor=tk.NE)
+    lb_video_thumb_pairs_counts = tk.Label(ttkframe, text='failure', font=(' ', 9))
+    lb_video_thumb_pairs_counts.place(x=700, y=10, anchor=tk.NE)
 
     missing_video_thumb_pairs_counts=checkvideocounts.get()-video_thumb_pairs_counts.get()
 
     lb_video_thumb_pairs_counts_value = tk.Label(ttkframe, text=str(missing_video_thumb_pairs_counts), font=(' ', 18))
-    lb_video_thumb_pairs_counts_value.place(x=700, y=160, width = 50, anchor=tk.NE)
+    lb_video_thumb_pairs_counts_value.place(x=750, y=10, width = 20, anchor=tk.NE)
 
         
     
@@ -1586,17 +1647,25 @@ def uploadView(frame,ttkframe,lang):
     b_editVideoMetas.place(x=10, y=int(100))
     
 
-    b_import_video_metas = tk.Button(ttkframe, text=i18labels("importVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=importVideoMetas).start())
-    b_import_video_metas.place(x=10, y=int(150))
-    global imported_video_metas_file    ,is_createuploadsession
-    is_createuploadsession=tk.BooleanVar()
 
+    l_import_video_metas = tk.Label(ttkframe, text=i18labels("importVideoMetas", locale=lang, module="g"), font=(' ', 9))
+    l_import_video_metas.place(x=10, y=150, anchor=tk.NW)
+    global video_meta_json_path
+    b_imported_video_metas_file=tk.Button(ttkframe,text="Select",command=SelectVideoMetasfile)
+    b_imported_video_metas_file.place(x=200, y=150)   
+
+
+    global imported_video_metas_file   
     imported_video_metas_file = tk.StringVar()        
     # l_imported_video_metas_file = tk.Label(ttkframe, text='thumbnail template file')
 
     # l_imported_video_metas_file.place(x=10, y=200)
     e_imported_video_metas_file = tk.Entry(ttkframe, width=45, textvariable=imported_video_metas_file)
     e_imported_video_metas_file.place(x=10, y=200)
+
+  
+    b_validate_video_metas = tk.Button(ttkframe, text=i18labels("validateVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=validateMetafile(DBM('prod'),ttkframe,imported_video_metas_file.get())).start())
+    b_validate_video_metas.place(x=10, y=int(250))
     b_createuploadsession = tk.Button(ttkframe, text=i18labels("createuploadsession", locale=lang, module="g"), command=lambda: threading.Thread(target=createuploadsession(DBM('prod'),ttkframe)).start())
     b_createuploadsession.place(x=10, y=int(300))
 
@@ -1969,7 +2038,7 @@ def render(root,window,log_frame,lang):
 
 
 
-    Cascade_button = tk.Menubutton(window, text=i18labels("setups", locale=lang, module="g"), underline=0)
+    Cascade_button = tk.Menubutton(window)
     # Cascade_button.pack(side=tk.LEFT, padx="2m")
  
      # the primary pulldown
@@ -1982,15 +2051,30 @@ def render(root,window,log_frame,lang):
      # definition of the menu one level up...
     Cascade_button.menu.choices.add_command(label='zh',command=lambda:changeDisplayLang('zh',window,log_frame))
     Cascade_button.menu.choices.add_command(label='en',command=lambda:changeDisplayLang('en',window,log_frame))
-    menubar = tk.Menu(window)
     Cascade_button.menu.add_cascade(label= i18labels("chooseLang", locale=lang, module="g"),
                                     
                                      menu=Cascade_button.menu.choices)    
+    
+    Cascade_button.menu.loglevel = tk.Menu(Cascade_button.menu)
+ 
+ 
+     # definition of the menu one level up...
+    Cascade_button.menu.loglevel.add_command(label='DEBUG',command=lambda:changeLoglevel('DEBUG',window,log_frame))
+    Cascade_button.menu.loglevel.add_command(label='INFO',command=lambda:changeLoglevel('INFO',window,log_frame))
+    Cascade_button.menu.loglevel.add_command(label='WARNING',command=lambda:changeLoglevel('WARNING',window,log_frame))
+    Cascade_button.menu.loglevel.add_command(label='ERROR',command=lambda:changeLoglevel('ERROR',window,log_frame))
+    Cascade_button.menu.loglevel.add_command(label='CRITICAL',command=lambda:changeLoglevel('CRITICAL',window,log_frame))
+
+    
+    Cascade_button.menu.add_cascade(label= i18labels("loglevel", locale=lang, module="g"),
+                                    
+                                     menu=Cascade_button.menu.loglevel)    
+
+    menubar = tk.Menu(window)
+
     menubar.add_cascade(label=i18labels("settings", locale=lang, module="g"), menu=Cascade_button.menu)    
 
 
-
-        
 
     root.config(menu=menubar)
     # return langchoosen.get()
@@ -2018,13 +2102,14 @@ if __name__ == '__main__':
         root.geometry(window_size)
 
         window=tk.Frame(root,width=str(width),  height=str(height+200),  )
-        from src.collapsiblepane import CollapsiblePane as cp
-        log_frame = cp(root, 'Expanded', 'Collapsed')
-        # tk.Frame(window, width = width, height = 15)
+        # from src.collapsiblepane import CollapsiblePane as cp
+        log_frame =tk.Frame(window, width = width, height = 5)
+        # = cp(root, 'Expanded', 'Collapsed')
+        
         log_frame.pack(side = tk.BOTTOM)
         st = ScrolledText.ScrolledText(log_frame,                                      
                                     width = width, 
-                                        height = 15, 
+                                        height = 5, 
                                         state='disabled')
         st.configure(font='TkFixedFont')
         st.grid(column=0, 
@@ -2045,7 +2130,7 @@ if __name__ == '__main__':
         window.pack()
 
         logger.debug(f'ROOT_DIR is{ROOT_DIR}')
-        root.resizable(width=False, height=False)
+        # root.resizable(width=False, height=False)
         root.iconbitmap("assets/icon.ico")
 
         render(root,window,log_frame,'en')

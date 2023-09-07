@@ -19,6 +19,7 @@
 		"videosView": "视频",
 		"metaView": "元数据",
 		"uploadView": "上传",
+		"loglevel": "loglevel",
 
 		"upload": "开始上传",
 		"batchchangebgmusic": "批量替换背景音乐",
@@ -53,6 +54,8 @@
 		"genVideoMetas":"从视频文件夹生成视频元信息",
 		"helpcenter":"帮助中心",
 		"importVideoMetas":"导入视频元信息json文件",
+
+		"validateVideoMetas":"验证视频元信息json文件",
 		"editVideoMetas":"纯手动编辑视频元信息json文件",
 		"username": "账号名称",
 		"password": "账号密码",

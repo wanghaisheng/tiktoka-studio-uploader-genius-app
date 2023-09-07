@@ -1,0 +1,135 @@
+{
+  "uploadSetting": {
+    //你可以为一个账号添加多个代理，这样子一个代理失败会自动切换
+    "proxy_option": "socks5://127.0.0.1:1080",
+    //默认的延迟检测 可以不用设置
+    "timeout": 200000,
+    //是否打开浏览器调试
+    "is_open_browser": "True",
+    //是否打开调试日志
+    "debug": "True",
+    "username": "edwin.uestc@gmail.com",
+    "password": "U437P8Is9prmNquVerHJ9%R00a",
+    //浏览器可以选择"chromium", "firefox", "webkit"其中之一
+    "browser_type": "firefox",
+    "channel_cookie_path": "/Users/wenke/github/tiktoka-studio-uploader/offloaddogsboner-cookie.json",
+    //三选一 
+    //"go next after uploading success",
+   // "go next after processing success",
+   // "go next after copyright check success",
+    "wait_policy": "go next after processing success",
+    //上传过程自动录制视频 供调试用
+    "is_record_video": "True"
+  },
+  "videos": [
+    {
+      "video_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4",
+      "title": "my test title private draft",
+      "description": "my test description",
+      "thumbnail": "/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg",
+      //0 -private 1-publish 2-schedule 3-Unlisted 4-public&premiere 
+      "publish_policy": 0,
+      "is_not_for_kid": "True",
+          //0 "Autos & Vehicles",
+          //1 "Comedy",
+          //2 "Education",
+          //3 "Entertainment",
+          //4 "Film & Animation",
+          //5 "Gaming",
+          //6 "Howto & Style",
+          //7 "Music",
+          //8 "News & Politics",
+          //9 "Nonprofits & Activism",
+          //10 "People & Blogs",
+          //11 "Pets & Animals",
+          //12 "Science & Technology",
+          //13 "Sports",
+          //14 "Travel & Events",
+      "categories": 10,
+      // 默认为1
+      // # 0-Allow all comments
+      // # 1-Hold potentially inappropriate comments for review
+      // # 2-Increase strictness
+      // # 3-Hold all comments for review
+      // # 4-Disable comments
+
+      "comments_ratings_policy": 1,
+      "tags": [
+        "Radiation resistance",
+        "Turning tiny",
+        "Radiation blast"
+      ]
+    },
+    {
+      "video_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4",
+      "age": 29,
+      "title": "instant publish my test title",
+      "description": "my test description",
+      "thumbnail": "/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg",
+      "publish_policy": 1,
+
+      "is_not_for_kid": "True",
+      "categories": 10,
+      "comments_ratings_policy": 1,
+      "tags": [
+        "Radiation resistance",
+        "Turning tiny",
+        "Radiation blast"
+      ]
+    },
+    {
+      "video_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4",
+      "age": 29,
+      "title": "scheduletopublish_at_specific_date my test title",
+      "description": "my test description",
+      "thumbnail": "/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg",
+      "publish_policy": 2,
+      "release_date": "2023-12-01",
+      "release_date_hour": "10:15",
+      "is_not_for_kid": "True",
+      "categories": 10,
+      "comments_ratings_policy": 1,
+      "tags": [
+        "Radiation resistance",
+        "Turning tiny",
+        "Radiation blast"
+      ]
+    },    
+    {
+      "video_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4",
+      "age": 29,
+      "title": "Unlisted my test title",
+      "description": "my test description",
+      "thumbnail": "/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg",
+      "publish_policy": 3,
+      "release_date": "2023-12-01",
+      "release_date_hour": "10:15",
+      "is_not_for_kid": "True",
+      "categories": 10,
+      "comments_ratings_policy": 1,
+      "tags": [
+        "Radiation resistance",
+        "Turning tiny",
+        "Radiation blast"
+      ]
+    }, 
+    {
+      "video_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4",
+      "age": 29,
+      "title": "public&premiere my test title",
+      "description": "my test description",
+      "thumbnail": "/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg",
+      "publish_policy": 4,
+      "release_date": "2023-12-01",
+      "release_date_hour": "10:15",
+      "is_not_for_kid": "True",
+      "categories": 10,
+      "comments_ratings_policy": 1,
+      "tags": [
+        "Radiation resistance",
+        "Turning tiny",
+        "Radiation blast"
+      ]
+    }      
+  ]
+}

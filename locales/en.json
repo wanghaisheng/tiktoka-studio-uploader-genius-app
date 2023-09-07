@@ -34,6 +34,9 @@
 		"contact":"contact",
 		"contact_str":"1.Email send to admin@tiktokastudio.com\\n",
 		"debug": "debug",
+		"loglevel": "loglevel",
+		"validateVideoMetas":"validate meta json",
+
 		"start-loading-setting": "start loading latest used setting file",
 		"loading-default-setting": "loading failed,use default setting template",
 		"contact_str_group":"2.Join discussion group",
