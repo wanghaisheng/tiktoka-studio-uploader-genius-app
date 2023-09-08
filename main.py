@@ -51,7 +51,7 @@ import json
 import tkinter as tk
 import webbrowser
 from tkinter import OptionMenu, filedialog,ttk
-
+import pandas as pd
 import os
 import base64
 import subprocess
@@ -75,6 +75,7 @@ import re
 import calendar
 from tsup.utils.webdriver.setupPL import checkRequirments
 import logging
+from src.database import createEngine,pd2table,query2df,rmEngine
 try:
     import tkinter.scrolledtext as ScrolledText
 except ImportError:
@@ -1007,9 +1008,7 @@ def genVideoMetas():
 
 def validateMetafile(dbm,ttkframe,metafile):
     logger.info('load video metas to database .create upload task for each video')
-# 文件夹下是否有视频文件
 
-# 视频文件是否有同名的图片
 
     if metafile !='' and metafile is not None:
         
@@ -1017,9 +1016,255 @@ def validateMetafile(dbm,ttkframe,metafile):
         if  os.path.exists(metafile):
             # check_video_thumb_pair(dbm,video_folder_path,True)
             logger.info('start to load  and parse meta json')
-            # save_setting(dbm)
+
+            engine=createEngine('test')
+            settingidsdict=[]
+            try:
+                data = json.load(open(metafile))
+            # df = pd.read_json(metafile)     
+            except:
+                logger.error(f'{metafile} cannot be read') 
+            else:
+                try:
+                    settings=data["uploadSetting"]
+
+                    for setting in settings:
+
+                        for key in ['proxy_option','channel_cookie_path']:
+                            if setting.get(key)==None:
+                                logger.error(f" this field {key} is required in given setting json data")
+                                raise ValueError(f"this field {key} is required  in given data")
+                                
+                        for key in ['timeout','timeout','debug','wait_policy','is_record_video','username','password']:
+                            if setting.get(key)==None:
+                                logger.info(f"no {key} filed provide in given setting json data,we can use default value")
+
+                        if setting.get('browser_type')==None:
+                            setting['browser_type']='firefox'        
+                            logger.info('we use browser_type =firefox')
+                        else:
+                            if type(setting.get('browser_type'))!=str:
+                                logger.error('browser_type should be one of "chromium", "firefox", "webkit"')
+                            else:
+                                if not setting.get('browser_type') in ["chromium", "firefox", "webkit"]:
+                                    logger.error('browser_type should be one of"chromium", "firefox", "webkit"')
+
+                        if setting.get('platform')==None:
+                            setting['platform']='youtube'        
+                            logger.info('you dont specify platform field,we use default youtube')
+                        else:
+                            if type(setting.get('platform'))!=str:
+                                logger.error('platform should be one of "youtube", "tiktok", "douyin"')
+                            else:
+                                if not setting.get('platform') in ["youtube", "tiktok", "douyin"]:
+                                    logger.error('platform should be one of "youtube", "tiktok", "douyin"')
+
+
+                        if setting.get('timeout')==None:
+                            setting['timeout']=200000
+                        else:
+                            if type(setting.get('timeout'))!=int:
+                                logger.error('timeout should be integer,such as 20*1000=20000, 20 seconds')
+                        if setting.get('is_open_browser')==None:
+                            setting['is_open_browser']=True
+                        else:
+                            if setting.get('is_open_browser').lower() not in ['true','false']:
+
+                                logger.error('is_open_browser should be bool, true or false')
+
+                        if setting.get('debug')==None:
+                            setting['debug']=True
+                        else:
+                            if setting.get('debug').lower() not in ['true','false']:
+                                logger.error('debug should be bool, true or false')                        
+                        if setting.get('wait_policy')==None:
+                            setting['wait_policy']=2        
+                            logger.info('we use wait_policy =2')
+                        else:
+                            if type(setting.get('wait_policy'))!=int:
+                                logger.error('wait_policy should be one of 0,1,2')
+                            else:
+                                if not setting.get('wait_policy') in [0,1,2]:
+                                    logger.error('wait_policy should be one of 0,1,2')
+
+                        if setting.get('is_record_video')==None:
+                            setting['is_record_video']=True        
+                        else:
+                            if setting.get('is_record_video').lower() not in ['true','false']:
+                                logger.error('is_record_video should be bool, true or false')     
+                        newid=pd.Timestamp.now().value  
+                        if setting.get('id')==None:
+                            setting['id']=newid  
+                            settingidsdict[newid]=newid   
+
+                        else:
+                            setting['id']=newid  
+                            settingidsdict[setting['id']]=newid   
+                        df_setting=    pd.json_normalize(setting)
+                        df_setting['inserted_at']=datetime.now()           
+
+                        logger.info('start to check whether setting duplicate or save as new')
+
+                        table_name = "uploadsetting"
+                        
+                        is_setting_ok=pd2table(engine,table_name,df_setting,logger,if_exists='replace')
+
+                    query = 'SELECT * FROM uploadsetting'
+                    # Display the results
+                    df=query2df(engine,query,logger)
+                    print(df.columns)
+                    print(df.head(3))
+                    df.to_sql()
 
             # prepareuploadsession( dbm,videopath,thumbpath,filename,start_index,setting['channelname'],settingid)
+
+                except:
+                    logger.error('there is no uploadSetting key in  your metajson')
+                try:
+                    videos=data["videos"]
+
+                    for video in videos:
+                        df_video=pd.json_normalize(video)
+                        for key in ['video_local_path','video_title','video_description','thumbnail_local_path','publish_policy','tags']:
+                            if video.get(key)==None:
+                                logger.error(f"these {key} field is required,No target{key} in given video json data")
+                                raise ValueError(f"these {key} field is required,No target{key} in given video json data")
+                            if key in['video_local_path','thumbnail_local_path']:
+                                if os.path.exists(video.get(key))==False:
+                                    logger.error(f"these {key} field is required,and check whether local file exists")
+                                    raise ValueError(f"these {key} field is required,and check whether local file exists")
+                        for key in ['video_film_date','video_film_location','first_comment','subtitles']:
+                            logger.info(f'now we have no rules about {key} validation ')
+
+                        for key in ['is_age_restriction','is_paid_promotion','is_allow_embedding','is_publish_to_subscriptions_feed_notify',
+                                    'is_automatic_chapters','is_featured_place', 'is_not_for_kid',
+                                    'is_show_howmany_likes',
+                                    'is_monetization_allowed']:
+
+                            if video.get(key)==None:
+                                logger.info(f"No target{key} in given video json data,we can use default value")
+                            else:
+                                if video.get(key).lower() not in ['true','false']:
+                                    logger.error(f'{key} should be bool, true or false') 
+
+                        if video.get('categories')==None:
+                            video['categories']=None      
+                            logger.info('we use categories =none')
+                        else:
+                            if type(video.get('categories'))!=int:
+                                logger.error('categories should be one of 0,1,....,14')
+                            else:
+                                if not video.get('categories') in range(0,15):
+                                    logger.error('categories should be one of 0,1,2,3..........,14')
+
+                        if video.get('license_type')==None:
+                            video['license_type']=0       
+                            logger.info('we use license_type =0')
+                        else:
+                            if type(video.get('license_type'))!=int:
+                                logger.error('license_type should be one of 0,1')
+                            else:
+                                if not video.get('license_type') in range(0,2):
+                                    logger.error('license_type should be one of 0,1')
+                        if video.get('shorts_remixing_type')==None:
+                            video['shorts_remixing_type']=0       
+                            logger.info('we use shorts_remixing_type =0')
+                        else:
+                            if type(video.get('shorts_remixing_type'))!=int:
+                                logger.error('shorts_remixing_type should be one of 0,1,2')
+                            else:
+                                if not video.get('shorts_remixing_type') in range(0,3):
+                                    logger.error('shorts_remixing_type should be one of 0,1,2')
+                        if video.get('comments_ratings_policy')==None:
+                            video['comments_ratings_policy']=1       
+                            logger.info('we use comments_ratings_policy =1')
+                        else:
+                            if type(video.get('comments_ratings_policy'))!=int:
+                                logger.error('comments_ratings_policy should be one of 0,1,2,3,4,5')
+                            else:
+                                if not video.get('comments_ratings_policy') in range(0,6):
+                                    logger.error('comments_ratings_policy should be one of 0,1,2,3,4,5')
+
+
+
+                        if video.get('captions_certification')==None:
+                            video['captions_certification']=0       
+                            logger.info('we use captions_certification =0')
+                        else:
+                            if type(video.get('captions_certification'))!=int:
+                                logger.error('captions_certification should be one of 0,1,2,3,4,5')
+                            else:
+                                if not video.get('captions_certification') in range(0,6):
+                                    logger.error('captions_certification should be one of 0,1,2,3,4,5')
+                        if video.get('video_language')==None:
+                            video['video_language']=None       
+                            logger.info('we use video_language =none')
+                        else:
+                            if type(video.get('video_language'))!=int:
+                                logger.error('video_language should be one of 0,1,2,3,4...23')
+                            else:
+                                if not video.get('video_language') in range(0,24):
+                                    logger.error('video_language should be one of 0,1,2,3,4...23')
+
+                        if video.get('publish_policy')==None:
+                            video['publish_policy']=0       
+                            logger.info('we use publish_policy =0')
+                        else:
+                            if type(video.get('publish_policy'))!=int:
+                                logger.error('publish_policy should be one of 0,1,2,3,4')
+                            else:
+                                if not video.get('publish_policy') in [0,1,2,3,4]:
+                                    logger.error('publish_policy should be one of 0,1,2,3,4')
+
+                        if video.get('tags')==None:
+                            video['tags']=[]      
+                            logger.info('we use tags =[]')
+                        else:
+                            if type(video.get('tags'))!=list:
+                                if type(video.get('tags'))==str and "," in video.get('tags'):
+                                    video['tags']=video.get('tags').split(',')
+                                else:
+                                    logger.error('tags should be a list of keywords such as ["one","two"]')
+                            else:
+                                if not video.get('tags') in [0,1,2,3,4]:
+                                    logger.error('tags should be one of 0,1,2,3,4')
+
+                        if len(settingidsdict)>1:       
+                            if video.get('uploadSettingid')==None:
+    
+                                logger.error('we need explicitly specify  uploadSettingid in each video ')
+                            else:
+
+                                if  settingidsdict[video.get('uploadSettingid')]:
+                                    video['upload_setting_id']=settingidsdict[video.get('uploadSettingid')]
+                                else:       
+                                    logger.error(f'please check {video.get("uploadSettingid")} is saved sucess in db')
+                        elif len(settingidsdict)==1:       
+                            video['upload_setting_id']=settingidsdict[1]     
+                        else:
+
+                            logger.error('we need at least 1 uploadsetting saved sucess in db')
+
+                        newid=pd.Timestamp.now().value  
+                        video['id']=newid
+                        video['youtube_video_id']=None
+                        video['inserted_at']=datetime.now()           
+                        video['updated_at']=None           
+                        video['uploaded_at']=None    
+       
+                        video['status']=False         
+                        # print('videos',videos)   
+                        logger.info('start to check whether video duplicate or save as new')
+
+                        table_name = "uploadtasks"
+                        
+                        is_video_ok=pd2table(engine,table_name,df_setting,logger,if_exists='replace')
+                                                 
+                except:
+                    logger.error('there is no videos in  your metajson.check metajson docs for reference')                
+                
+
+
             logger.info('start to create uploading task for each video')
         else:
             logger.error("you choosed video meta json file is missing or broken.")

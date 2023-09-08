@@ -1,16 +1,16 @@
 {
-  "uploadSetting": [{
+  "uploadSetting1": {
     "proxy_option": "socks5://127.0.0.1:1080",
     "timeout": 200000,
-    "is_open_browser": true,
-    "debug": true,
+    "is_open_browser": "True",
+    "debug": "True",
     "username": "edwin.uestc@gmail.com",
     "password": "U437P8Is9prmNquVerHJ9%R00a",
     "browser_type": "firefox",
     "channel_cookie_path": "/Users/wenke/github/tiktoka-studio-uploader/offloaddogsboner-cookie.json",
     "wait_policy": "go next after processing success",
-    "is_record_video": true
-  }],
+    "is_record_video": "True"
+  },
   "videos": [
     {
       "video_local_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4",
@@ -18,7 +18,7 @@
       "video_description": "my test video_description",
       "thumbnail_local_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg",
       "publish_policy": 0,
-      "is_not_for_kid": true,
+      "is_not_for_kid": "True",
       "categories": 10,
       "comments_ratings_policy": 1,
       "tags": [
@@ -33,7 +33,7 @@
       "video_description": "my test video_description",
       "thumbnail_local_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg",
       "publish_policy": 1,
-      "is_not_for_kid": true,
+      "is_not_for_kid": "True",
       "categories": 10,
       "comments_ratings_policy": 1,
       "tags": [
@@ -50,7 +50,7 @@
       "publish_policy": 2,
       "release_date": "2023-12-01",
       "release_date_hour": "10:15",
-      "is_not_for_kid": true,
+      "is_not_for_kid": "True",
       "categories": 10,
       "comments_ratings_policy": 1,
       "tags": [
@@ -67,7 +67,7 @@
       "publish_policy": 3,
       "release_date": "2023-12-01",
       "release_date_hour": "10:15",
-      "is_not_for_kid": true,
+      "is_not_for_kid": "True",
       "categories": 10,
       "comments_ratings_policy": 1,
       "tags": [
@@ -84,7 +84,7 @@
       "publish_policy": 4,
       "release_date": "2023-12-01",
       "release_date_hour": "10:15",
-      "is_not_for_kid": true,
+      "is_not_for_kid": "True",
       "categories": 10,
       "comments_ratings_policy": 1,
       "tags": [

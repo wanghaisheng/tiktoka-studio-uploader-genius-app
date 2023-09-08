@@ -1,0 +1,14 @@
+{
+  "uploadSetting": {
+    "proxy_option": "socks5://127.0.0.1:1080",
+    "timeout": 200000,
+    "is_open_browser": "True",
+    "debug": "True",
+    "username": "edwin.uestc@gmail.com",
+    "password": "U437P8Is9prmNquVerHJ9%R00a",
+    "browser_type": "firefox",
+    "channel_cookie_path": "/Users/wenke/github/tiktoka-studio-uploader/offloaddogsboner-cookie.json",
+    "wait_policy": "go next after processing success",
+    "is_record_video": "True"
+  }
+}

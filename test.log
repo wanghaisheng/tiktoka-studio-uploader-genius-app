@@ -258,3 +258,679 @@
 2023-09-07 17:08:54,024 - INFO - GUI started
 2023-09-07 17:10:12,737 - INFO - start to down video metas json template from:https://raw.githubusercontent.com/wanghaisheng/tiktoka-studio-uploader-app/main/assets/youtube-videos-meta-comments.json
 2023-09-07 17:10:15,741 - INFO - finish to down video metas json template
+2023-09-08 10:14:17,924 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 10:14:17,990 - INFO - GUI started
+2023-09-08 10:14:33,781 - DEBUG - start to import prepared video metas in json format
+2023-09-08 10:14:44,865 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 10:14:46,093 - INFO - load video metas to database .create upload task for each video
+2023-09-08 10:14:46,093 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/assets/youtube-videos-meta-minimal.json
+2023-09-08 10:14:46,094 - INFO - start to load  and parse meta json
+2023-09-08 10:17:57,825 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 10:17:57,877 - INFO - GUI started
+2023-09-08 10:18:04,548 - DEBUG - start to import prepared video metas in json format
+2023-09-08 10:18:12,584 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 10:18:13,931 - INFO - load video metas to database .create upload task for each video
+2023-09-08 10:18:13,932 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/assets/youtube-videos-meta-minimal.json
+2023-09-08 10:18:13,932 - INFO - start to load  and parse meta json
+2023-09-08 10:18:34,480 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 10:18:34,544 - INFO - GUI started
+2023-09-08 10:18:36,517 - DEBUG - start to import prepared video metas in json format
+2023-09-08 10:18:38,615 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 10:18:39,133 - INFO - load video metas to database .create upload task for each video
+2023-09-08 10:18:39,133 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/assets/youtube-videos-meta-minimal.json
+2023-09-08 10:18:39,133 - INFO - start to load  and parse meta json
+2023-09-08 10:19:56,826 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 10:19:56,900 - INFO - GUI started
+2023-09-08 10:19:58,696 - DEBUG - start to import prepared video metas in json format
+2023-09-08 10:20:00,646 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 10:20:01,103 - INFO - load video metas to database .create upload task for each video
+2023-09-08 10:20:01,104 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/assets/youtube-videos-meta-minimal.json
+2023-09-08 10:20:01,104 - INFO - start to load  and parse meta json
+2023-09-08 10:20:22,952 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 10:20:23,022 - INFO - GUI started
+2023-09-08 10:20:25,313 - DEBUG - start to import prepared video metas in json format
+2023-09-08 10:20:27,131 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 10:20:27,618 - INFO - load video metas to database .create upload task for each video
+2023-09-08 10:20:27,618 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/assets/youtube-videos-meta-minimal.json
+2023-09-08 10:20:27,618 - INFO - start to load  and parse meta json
+2023-09-08 10:20:27,684 - INFO - start to create uploading task for each video
+2023-09-08 10:28:00,672 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 10:28:00,753 - INFO - GUI started
+2023-09-08 10:28:02,729 - DEBUG - start to import prepared video metas in json format
+2023-09-08 10:28:04,724 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 10:28:05,617 - INFO - load video metas to database .create upload task for each video
+2023-09-08 10:28:05,617 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/assets/youtube-videos-meta-minimal.json
+2023-09-08 10:28:05,618 - INFO - start to load  and parse meta json
+2023-09-08 10:28:05,651 - INFO - start to create uploading task for each video
+2023-09-08 10:30:14,918 - DEBUG - start to import prepared video metas in json format
+2023-09-08 10:30:19,975 - ERROR - you should choose a valid path
+2023-09-08 10:30:19,975 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 10:30:30,542 - DEBUG - start to import prepared video metas in json format
+2023-09-08 10:30:36,036 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 10:30:36,992 - INFO - load video metas to database .create upload task for each video
+2023-09-08 10:30:36,992 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/no-uploadsetting-key.json
+2023-09-08 10:30:36,992 - INFO - start to load  and parse meta json
+2023-09-08 10:30:36,998 - ERROR - there is uploadSetting in no your metajson
+2023-09-08 10:32:34,026 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 10:32:34,076 - INFO - GUI started
+2023-09-08 10:32:38,995 - DEBUG - start to import prepared video metas in json format
+2023-09-08 10:32:41,162 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 10:32:41,899 - INFO - load video metas to database .create upload task for each video
+2023-09-08 10:32:41,899 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/no-videos.json
+2023-09-08 10:32:41,900 - INFO - start to load  and parse meta json
+2023-09-08 10:32:41,916 - INFO - start to check setting duplicate or save as new
+2023-09-08 10:32:41,917 - ERROR - there is videos in no your metajson
+2023-09-08 10:32:41,917 - INFO - start to create uploading task for each video
+2023-09-08 10:47:11,927 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 10:47:11,977 - INFO - GUI started
+2023-09-08 10:47:15,723 - DEBUG - start to import prepared video metas in json format
+2023-09-08 10:47:18,756 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 10:47:19,891 - INFO - load video metas to database .create upload task for each video
+2023-09-08 10:47:19,892 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 10:47:19,892 - INFO - start to load  and parse meta json
+2023-09-08 10:47:19,902 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 10:47:19,902 - ERROR - there is uploadSetting in no your metajson
+2023-09-08 10:47:19,929 - INFO - start to create uploading task for each video
+2023-09-08 10:49:07,696 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 10:49:07,744 - INFO - GUI started
+2023-09-08 10:49:12,223 - DEBUG - start to import prepared video metas in json format
+2023-09-08 10:49:15,161 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 10:49:15,982 - INFO - load video metas to database .create upload task for each video
+2023-09-08 10:49:15,982 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 10:49:15,982 - INFO - start to load  and parse meta json
+2023-09-08 10:49:15,993 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 10:49:15,993 - ERROR - there is uploadSetting in no your metajson
+2023-09-08 10:49:15,997 - INFO - start to create uploading task for each video
+2023-09-08 10:49:59,523 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 10:49:59,588 - INFO - GUI started
+2023-09-08 10:50:02,240 - DEBUG - start to import prepared video metas in json format
+2023-09-08 10:50:05,693 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 10:50:06,473 - INFO - load video metas to database .create upload task for each video
+2023-09-08 10:50:06,473 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 10:50:06,474 - INFO - start to load  and parse meta json
+2023-09-08 10:50:06,485 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 10:50:06,486 - ERROR - there is uploadSetting in no your metajson
+2023-09-08 10:50:06,490 - INFO - start to create uploading task for each video
+2023-09-08 10:51:25,656 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 10:51:25,733 - INFO - GUI started
+2023-09-08 10:51:27,468 - DEBUG - start to import prepared video metas in json format
+2023-09-08 10:51:29,162 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 10:51:29,803 - INFO - load video metas to database .create upload task for each video
+2023-09-08 10:51:29,804 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 10:51:29,804 - INFO - start to load  and parse meta json
+2023-09-08 10:51:29,821 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 10:51:29,822 - ERROR - there is uploadSetting in no your metajson
+2023-09-08 10:51:29,827 - INFO - start to create uploading task for each video
+2023-09-08 10:55:28,472 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 10:55:28,535 - INFO - GUI started
+2023-09-08 10:55:32,196 - DEBUG - start to import prepared video metas in json format
+2023-09-08 10:55:34,959 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 10:55:35,805 - INFO - load video metas to database .create upload task for each video
+2023-09-08 10:55:35,805 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 10:55:35,806 - INFO - start to load  and parse meta json
+2023-09-08 10:55:35,820 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 10:55:35,820 - ERROR - there is uploadSetting in no your metajson
+2023-09-08 10:55:35,823 - INFO - start to create uploading task for each video
+2023-09-08 10:57:49,424 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 10:57:49,508 - INFO - GUI started
+2023-09-08 10:57:51,258 - DEBUG - start to import prepared video metas in json format
+2023-09-08 10:57:53,208 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 10:57:53,729 - INFO - load video metas to database .create upload task for each video
+2023-09-08 10:57:53,729 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 10:57:53,730 - INFO - start to load  and parse meta json
+2023-09-08 10:57:53,736 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 10:57:53,736 - ERROR - there is uploadSetting in no your metajson
+2023-09-08 10:57:53,743 - INFO - start to create uploading task for each video
+2023-09-08 10:58:54,559 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 10:58:54,630 - INFO - GUI started
+2023-09-08 10:59:16,029 - DEBUG - start to import prepared video metas in json format
+2023-09-08 10:59:17,990 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 10:59:18,557 - INFO - load video metas to database .create upload task for each video
+2023-09-08 10:59:18,557 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 10:59:18,558 - INFO - start to load  and parse meta json
+2023-09-08 10:59:18,560 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 10:59:18,561 - ERROR - there is uploadSetting in no your metajson
+2023-09-08 10:59:18,563 - INFO - start to create uploading task for each video
+2023-09-08 11:03:08,384 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 11:03:08,458 - INFO - GUI started
+2023-09-08 11:03:10,173 - DEBUG - start to import prepared video metas in json format
+2023-09-08 11:03:13,428 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 11:03:13,902 - INFO - load video metas to database .create upload task for each video
+2023-09-08 11:03:13,902 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 11:03:13,902 - INFO - start to load  and parse meta json
+2023-09-08 11:03:13,905 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 11:03:13,905 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 11:03:13,908 - INFO - start to create uploading task for each video
+2023-09-08 11:04:12,282 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 11:04:12,349 - INFO - GUI started
+2023-09-08 11:04:16,119 - DEBUG - start to import prepared video metas in json format
+2023-09-08 11:04:18,382 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 11:04:18,871 - INFO - load video metas to database .create upload task for each video
+2023-09-08 11:04:18,871 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 11:04:18,872 - INFO - start to load  and parse meta json
+2023-09-08 11:04:18,877 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 11:04:18,895 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 11:04:18,900 - INFO - start to create uploading task for each video
+2023-09-08 11:05:14,730 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 11:05:14,799 - INFO - GUI started
+2023-09-08 11:05:19,098 - DEBUG - start to import prepared video metas in json format
+2023-09-08 11:05:20,958 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 11:05:21,969 - INFO - load video metas to database .create upload task for each video
+2023-09-08 11:05:21,969 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 11:05:21,970 - INFO - start to load  and parse meta json
+2023-09-08 11:05:21,973 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 11:05:21,973 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 11:05:21,976 - INFO - start to create uploading task for each video
+2023-09-08 11:07:08,340 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 11:07:08,409 - INFO - GUI started
+2023-09-08 11:07:10,597 - DEBUG - start to import prepared video metas in json format
+2023-09-08 11:07:12,381 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 11:07:12,814 - INFO - load video metas to database .create upload task for each video
+2023-09-08 11:07:12,814 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 11:07:12,814 - INFO - start to load  and parse meta json
+2023-09-08 11:07:12,826 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 11:07:12,827 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 11:07:12,830 - INFO - start to create uploading task for each video
+2023-09-08 11:07:56,948 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 11:07:57,015 - INFO - GUI started
+2023-09-08 11:07:59,936 - DEBUG - start to import prepared video metas in json format
+2023-09-08 11:08:01,882 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 11:08:02,552 - INFO - load video metas to database .create upload task for each video
+2023-09-08 11:08:02,552 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 11:08:02,552 - INFO - start to load  and parse meta json
+2023-09-08 11:08:02,556 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 11:08:02,557 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 11:08:02,560 - INFO - start to create uploading task for each video
+2023-09-08 11:13:50,597 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 11:13:50,669 - INFO - GUI started
+2023-09-08 11:13:52,949 - DEBUG - start to import prepared video metas in json format
+2023-09-08 11:13:55,177 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 11:13:55,925 - INFO - load video metas to database .create upload task for each video
+2023-09-08 11:13:55,925 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 11:13:55,925 - INFO - start to load  and parse meta json
+2023-09-08 11:13:55,929 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 11:13:55,930 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 11:13:55,933 - INFO - start to create uploading task for each video
+2023-09-08 11:15:44,424 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 11:15:44,495 - INFO - GUI started
+2023-09-08 11:15:47,232 - DEBUG - start to import prepared video metas in json format
+2023-09-08 11:15:48,880 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 11:15:49,231 - INFO - load video metas to database .create upload task for each video
+2023-09-08 11:15:49,232 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 11:15:49,232 - INFO - start to load  and parse meta json
+2023-09-08 11:15:49,237 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 11:15:49,238 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 11:15:49,241 - INFO - start to create uploading task for each video
+2023-09-08 11:17:37,792 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 11:17:37,868 - INFO - GUI started
+2023-09-08 11:17:39,644 - DEBUG - start to import prepared video metas in json format
+2023-09-08 11:17:41,474 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 11:17:41,900 - INFO - load video metas to database .create upload task for each video
+2023-09-08 11:17:41,901 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 11:17:41,901 - INFO - start to load  and parse meta json
+2023-09-08 11:17:41,909 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 11:17:41,910 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 11:17:41,915 - INFO - start to create uploading task for each video
+2023-09-08 11:18:24,766 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 11:18:24,836 - INFO - GUI started
+2023-09-08 11:18:26,237 - DEBUG - start to import prepared video metas in json format
+2023-09-08 11:18:27,912 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 11:18:28,310 - INFO - load video metas to database .create upload task for each video
+2023-09-08 11:18:28,311 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 11:18:28,311 - INFO - start to load  and parse meta json
+2023-09-08 11:18:28,315 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 11:18:28,316 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 11:18:28,319 - INFO - start to create uploading task for each video
+2023-09-08 11:18:53,963 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 11:18:54,027 - INFO - GUI started
+2023-09-08 11:19:07,447 - DEBUG - start to import prepared video metas in json format
+2023-09-08 11:19:09,255 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 11:19:09,670 - INFO - load video metas to database .create upload task for each video
+2023-09-08 11:19:09,671 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 11:19:09,671 - INFO - start to load  and parse meta json
+2023-09-08 11:19:09,687 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 11:19:09,689 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 11:19:09,694 - INFO - start to create uploading task for each video
+2023-09-08 11:19:35,936 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 11:19:36,002 - INFO - GUI started
+2023-09-08 11:19:42,008 - DEBUG - start to import prepared video metas in json format
+2023-09-08 11:19:43,614 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 11:19:44,505 - INFO - load video metas to database .create upload task for each video
+2023-09-08 11:19:44,505 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 11:19:44,505 - INFO - start to load  and parse meta json
+2023-09-08 11:19:44,508 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 11:19:44,509 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 11:19:44,512 - INFO - start to create uploading task for each video
+2023-09-08 11:20:32,538 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 11:20:32,604 - INFO - GUI started
+2023-09-08 11:20:35,003 - DEBUG - start to import prepared video metas in json format
+2023-09-08 11:20:36,772 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 11:20:37,498 - INFO - load video metas to database .create upload task for each video
+2023-09-08 11:20:37,499 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 11:20:37,499 - INFO - start to load  and parse meta json
+2023-09-08 11:20:37,510 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 11:20:37,511 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 11:20:37,514 - INFO - start to create uploading task for each video
+2023-09-08 11:21:03,825 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 11:21:03,890 - INFO - GUI started
+2023-09-08 11:21:05,523 - DEBUG - start to import prepared video metas in json format
+2023-09-08 11:21:06,896 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 11:21:07,228 - INFO - load video metas to database .create upload task for each video
+2023-09-08 11:21:07,228 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 11:21:07,228 - INFO - start to load  and parse meta json
+2023-09-08 11:21:07,239 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 11:21:07,243 - INFO - start to create uploading task for each video
+2023-09-08 11:21:39,653 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 11:21:39,717 - INFO - GUI started
+2023-09-08 11:21:41,661 - DEBUG - start to import prepared video metas in json format
+2023-09-08 11:21:43,146 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 11:21:43,588 - INFO - load video metas to database .create upload task for each video
+2023-09-08 11:21:43,589 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 11:21:43,589 - INFO - start to load  and parse meta json
+2023-09-08 11:21:43,594 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 11:21:43,595 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 11:21:43,598 - INFO - start to create uploading task for each video
+2023-09-08 11:22:43,393 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 11:22:43,457 - INFO - GUI started
+2023-09-08 11:22:45,215 - DEBUG - start to import prepared video metas in json format
+2023-09-08 11:22:46,646 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 11:22:47,079 - INFO - load video metas to database .create upload task for each video
+2023-09-08 11:22:47,079 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 11:22:47,079 - INFO - start to load  and parse meta json
+2023-09-08 11:22:47,096 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 11:22:47,096 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 11:22:47,101 - INFO - start to create uploading task for each video
+2023-09-08 11:29:59,760 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 11:29:59,826 - INFO - GUI started
+2023-09-08 11:30:05,319 - DEBUG - start to import prepared video metas in json format
+2023-09-08 11:30:06,958 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 11:30:07,598 - INFO - load video metas to database .create upload task for each video
+2023-09-08 11:30:07,598 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 11:30:07,599 - INFO - start to load  and parse meta json
+2023-09-08 11:30:07,599 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 11:30:07,600 - ERROR - there is no videos in  your metajson.check metajson docs for reference
+2023-09-08 11:30:07,600 - INFO - start to create uploading task for each video
+2023-09-08 11:31:51,828 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 11:31:51,895 - INFO - GUI started
+2023-09-08 11:31:54,243 - DEBUG - start to import prepared video metas in json format
+2023-09-08 11:31:56,303 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 11:31:57,002 - INFO - load video metas to database .create upload task for each video
+2023-09-08 11:31:57,003 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 11:31:57,003 - INFO - start to load  and parse meta json
+2023-09-08 11:31:57,003 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 11:31:57,004 - ERROR - there is no videos in  your metajson.check metajson docs for reference
+2023-09-08 11:31:57,004 - INFO - start to create uploading task for each video
+2023-09-08 11:55:24,229 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 11:55:24,297 - INFO - GUI started
+2023-09-08 11:55:36,199 - DEBUG - start to import prepared video metas in json format
+2023-09-08 11:55:37,849 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 11:55:38,526 - INFO - load video metas to database .create upload task for each video
+2023-09-08 11:55:38,526 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 11:55:38,526 - INFO - start to load  and parse meta json
+2023-09-08 11:55:38,541 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 11:55:38,541 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 11:55:38,545 - INFO - start to create uploading task for each video
+2023-09-08 12:19:39,986 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 12:19:40,053 - INFO - GUI started
+2023-09-08 12:19:42,137 - DEBUG - start to import prepared video metas in json format
+2023-09-08 12:19:43,927 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 12:19:44,521 - INFO - load video metas to database .create upload task for each video
+2023-09-08 12:19:44,522 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 12:19:44,522 - INFO - start to load  and parse meta json
+2023-09-08 12:19:44,527 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 12:19:44,534 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 12:19:44,537 - INFO - start to create uploading task for each video
+2023-09-08 12:20:19,356 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 12:20:19,407 - INFO - GUI started
+2023-09-08 12:21:00,221 - DEBUG - start to import prepared video metas in json format
+2023-09-08 12:21:02,350 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 12:21:03,325 - INFO - load video metas to database .create upload task for each video
+2023-09-08 12:21:03,325 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 12:21:03,325 - INFO - start to load  and parse meta json
+2023-09-08 12:21:03,328 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 12:21:03,333 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 12:21:03,334 - INFO - start to create uploading task for each video
+2023-09-08 12:23:16,944 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 12:23:17,019 - INFO - GUI started
+2023-09-08 12:23:19,066 - DEBUG - start to import prepared video metas in json format
+2023-09-08 12:23:20,959 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 12:23:21,473 - INFO - load video metas to database .create upload task for each video
+2023-09-08 12:23:21,473 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 12:23:21,474 - INFO - start to load  and parse meta json
+2023-09-08 12:23:21,479 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 12:23:21,486 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 12:23:21,490 - INFO - start to create uploading task for each video
+2023-09-08 12:23:43,296 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 12:23:43,361 - INFO - GUI started
+2023-09-08 12:23:46,506 - DEBUG - start to import prepared video metas in json format
+2023-09-08 12:23:48,271 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 12:23:48,667 - INFO - load video metas to database .create upload task for each video
+2023-09-08 12:23:48,667 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 12:23:48,667 - INFO - start to load  and parse meta json
+2023-09-08 12:23:48,670 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 12:23:48,674 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 12:23:48,675 - INFO - start to create uploading task for each video
+2023-09-08 12:24:46,339 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 12:24:46,420 - INFO - GUI started
+2023-09-08 12:24:48,476 - DEBUG - start to import prepared video metas in json format
+2023-09-08 12:24:49,959 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 12:24:50,366 - INFO - load video metas to database .create upload task for each video
+2023-09-08 12:24:50,366 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 12:24:50,366 - INFO - start to load  and parse meta json
+2023-09-08 12:24:50,371 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 12:24:50,377 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 12:24:50,380 - INFO - start to create uploading task for each video
+2023-09-08 12:25:12,739 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 12:25:12,806 - INFO - GUI started
+2023-09-08 12:25:14,893 - DEBUG - start to import prepared video metas in json format
+2023-09-08 12:25:16,538 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 12:25:17,007 - INFO - load video metas to database .create upload task for each video
+2023-09-08 12:25:17,007 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 12:25:17,007 - INFO - start to load  and parse meta json
+2023-09-08 12:25:17,010 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 12:25:17,013 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 12:25:17,015 - INFO - start to create uploading task for each video
+2023-09-08 12:38:35,970 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 12:38:36,034 - INFO - GUI started
+2023-09-08 12:39:44,773 - DEBUG - start to import prepared video metas in json format
+2023-09-08 12:39:46,333 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 12:39:46,885 - INFO - load video metas to database .create upload task for each video
+2023-09-08 12:39:46,886 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 12:39:46,886 - INFO - start to load  and parse meta json
+2023-09-08 12:39:46,889 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 12:39:47,337 - INFO - start to create uploading task for each video
+2023-09-08 12:57:05,525 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 12:57:05,581 - INFO - GUI started
+2023-09-08 12:57:13,923 - DEBUG - start to import prepared video metas in json format
+2023-09-08 12:57:15,568 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 12:57:16,338 - INFO - load video metas to database .create upload task for each video
+2023-09-08 12:57:16,339 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 12:57:16,339 - INFO - start to load  and parse meta json
+2023-09-08 12:57:16,342 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 12:57:16,375 - ERROR - insert data to uploadSetting>>> seems went wrong!(sqlite3.OperationalError) table uploadSetting has no column named timeout
+[SQL: INSERT INTO "uploadSetting" (proxy_option, timeout, is_open_browser, debug, username, password, browser_type, channel_cookie_path, wait_policy, is_record_video, id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('socks5://127.0.0.1:1080', 200000, 'True', 'True', 'edwin.uestc@gmail.com', 'U437P8Is9prmNquVerHJ9%R00a', 'firefox', '/Users/wenke/github/tiktoka-studio-uploader/offloaddogsboner-cookie.json', 'go next after processing success', 'True', 1694177836341221000)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-08 12:57:16,379 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 12:57:16,383 - INFO - start to create uploading task for each video
+2023-09-08 13:02:58,270 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 13:02:58,343 - INFO - GUI started
+2023-09-08 13:03:42,049 - DEBUG - start to import prepared video metas in json format
+2023-09-08 13:03:43,787 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 13:03:44,304 - INFO - load video metas to database .create upload task for each video
+2023-09-08 13:03:44,304 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 13:03:44,305 - INFO - start to load  and parse meta json
+2023-09-08 13:03:44,307 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 13:03:44,362 - ERROR - insert data to uploadSetting>>> seems went wrong!(sqlite3.OperationalError) table uploadSetting has no column named timeout
+[SQL: INSERT INTO "uploadSetting" (proxy_option, timeout, is_open_browser, debug, username, password, browser_type, channel_cookie_path, wait_policy, is_record_video, id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('socks5://127.0.0.1:1080', 200000, 'True', 'True', 'edwin.uestc@gmail.com', 'U437P8Is9prmNquVerHJ9%R00a', 'firefox', '/Users/wenke/github/tiktoka-studio-uploader/offloaddogsboner-cookie.json', 'go next after processing success', 'True', 1694178224306115000)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-08 13:03:44,366 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 13:03:44,369 - INFO - start to create uploading task for each video
+2023-09-08 13:05:02,255 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 13:05:02,323 - INFO - GUI started
+2023-09-08 13:05:05,372 - DEBUG - start to import prepared video metas in json format
+2023-09-08 13:05:06,818 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 13:05:07,748 - INFO - load video metas to database .create upload task for each video
+2023-09-08 13:05:07,748 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 13:05:07,748 - INFO - start to load  and parse meta json
+2023-09-08 13:05:07,750 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 13:05:07,771 - INFO - insert data to uploadSetting>>> seems All good.
+2023-09-08 13:05:07,775 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 13:05:07,777 - INFO - start to create uploading task for each video
+2023-09-08 13:06:41,938 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 13:06:42,005 - INFO - GUI started
+2023-09-08 13:06:44,455 - DEBUG - start to import prepared video metas in json format
+2023-09-08 13:06:45,896 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 13:06:46,376 - INFO - load video metas to database .create upload task for each video
+2023-09-08 13:06:46,376 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 13:06:46,377 - INFO - start to load  and parse meta json
+2023-09-08 13:06:46,380 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 13:06:46,424 - INFO - insert data to uploadsetting>>> seems All good.
+2023-09-08 13:06:46,430 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 13:06:46,434 - INFO - start to create uploading task for each video
+2023-09-08 13:07:45,220 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 13:07:45,270 - INFO - GUI started
+2023-09-08 13:07:48,210 - DEBUG - start to import prepared video metas in json format
+2023-09-08 13:07:49,598 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 13:07:49,880 - INFO - load video metas to database .create upload task for each video
+2023-09-08 13:07:49,881 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 13:07:49,881 - INFO - start to load  and parse meta json
+2023-09-08 13:07:49,882 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 13:07:49,901 - INFO - insert data to uploadsetting>>> seems All good.
+2023-09-08 13:07:49,917 - INFO - start to create uploading task for each video
+2023-09-08 13:18:53,220 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 13:18:53,297 - INFO - GUI started
+2023-09-08 13:18:56,002 - DEBUG - start to import prepared video metas in json format
+2023-09-08 13:18:57,708 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 13:18:58,169 - INFO - load video metas to database .create upload task for each video
+2023-09-08 13:18:58,170 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 13:18:58,170 - INFO - start to load  and parse meta json
+2023-09-08 13:18:58,174 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 13:18:58,231 - INFO - insert data to uploadsetting>>> seems All good.
+2023-09-08 13:18:58,263 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 13:18:58,266 - INFO - start to create uploading task for each video
+2023-09-08 13:19:06,514 - INFO - load video metas to database .create upload task for each video
+2023-09-08 13:19:06,514 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 13:19:06,514 - INFO - start to load  and parse meta json
+2023-09-08 13:19:06,516 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 13:19:06,523 - INFO - insert data to uploadsetting>>> seems All good.
+2023-09-08 13:19:06,537 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 13:19:06,538 - INFO - start to create uploading task for each video
+2023-09-08 13:20:44,579 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 13:20:44,645 - INFO - GUI started
+2023-09-08 13:20:47,380 - DEBUG - start to import prepared video metas in json format
+2023-09-08 13:20:48,990 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 13:20:49,495 - INFO - load video metas to database .create upload task for each video
+2023-09-08 13:20:49,497 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 13:20:49,501 - INFO - start to load  and parse meta json
+2023-09-08 13:20:49,511 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 13:20:49,555 - INFO - insert data to uploadsetting>>> seems All good.
+2023-09-08 13:20:49,586 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 13:20:49,589 - INFO - start to create uploading task for each video
+2023-09-08 13:21:11,806 - INFO - load video metas to database .create upload task for each video
+2023-09-08 13:21:11,807 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 13:21:11,807 - INFO - start to load  and parse meta json
+2023-09-08 13:21:11,808 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 13:21:11,814 - INFO - insert data to uploadsetting>>> seems All good.
+2023-09-08 13:21:11,829 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 13:21:11,831 - INFO - start to create uploading task for each video
+2023-09-08 13:22:51,988 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 13:22:52,064 - INFO - GUI started
+2023-09-08 13:22:53,914 - DEBUG - start to import prepared video metas in json format
+2023-09-08 13:22:55,459 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 13:22:56,097 - INFO - load video metas to database .create upload task for each video
+2023-09-08 13:22:56,098 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 13:22:56,098 - INFO - start to load  and parse meta json
+2023-09-08 13:22:56,101 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 13:22:56,159 - INFO - insert data to uploadsetting>>> seems All good.
+2023-09-08 13:22:56,188 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 13:22:56,191 - INFO - start to create uploading task for each video
+2023-09-08 13:23:02,409 - INFO - load video metas to database .create upload task for each video
+2023-09-08 13:23:02,409 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 13:23:02,410 - INFO - start to load  and parse meta json
+2023-09-08 13:23:02,411 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 13:23:02,427 - INFO - insert data to uploadsetting>>> seems All good.
+2023-09-08 13:23:02,442 - ERROR - there is no uploadSetting in  your metajson
+2023-09-08 13:23:02,444 - INFO - start to create uploading task for each video
+2023-09-08 14:21:47,474 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 14:21:47,539 - INFO - GUI started
+2023-09-08 14:21:51,008 - DEBUG - start to import prepared video metas in json format
+2023-09-08 14:21:53,084 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 14:22:02,481 - INFO - load video metas to database .create upload task for each video
+2023-09-08 14:22:02,482 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 14:22:02,482 - INFO - start to load  and parse meta json
+2023-09-08 14:22:02,496 - ERROR - there is no uploadSetting key in  your metajson
+2023-09-08 14:22:02,498 - INFO - start to create uploading task for each video
+2023-09-08 14:50:18,505 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 14:50:18,551 - INFO - GUI started
+2023-09-08 14:50:22,222 - DEBUG - start to import prepared video metas in json format
+2023-09-08 14:50:23,989 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 14:50:24,485 - INFO - load video metas to database .create upload task for each video
+2023-09-08 14:50:24,485 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 14:50:24,486 - INFO - start to load  and parse meta json
+2023-09-08 14:50:24,501 - ERROR - there is no uploadSetting key in  your metajson
+2023-09-08 14:50:24,503 - INFO - start to create uploading task for each video
+2023-09-08 14:51:58,925 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 14:51:59,011 - INFO - GUI started
+2023-09-08 14:52:09,681 - DEBUG - start to import prepared video metas in json format
+2023-09-08 14:52:11,208 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 14:52:11,546 - INFO - load video metas to database .create upload task for each video
+2023-09-08 14:52:11,546 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 14:52:11,546 - INFO - start to load  and parse meta json
+2023-09-08 14:52:11,562 - INFO - we use platform =youtube
+2023-09-08 14:52:11,562 - ERROR - is_open_browser should be bool, true or false
+2023-09-08 14:52:11,562 - ERROR - debug should be bool, true or false
+2023-09-08 14:52:11,562 - ERROR - wait_policy should be one of 0,1,2
+2023-09-08 14:52:11,562 - ERROR - is_record_video should be bool, true or false
+2023-09-08 14:52:11,563 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 14:52:11,576 - INFO - insert data to uploadsetting>>> seems All good.
+2023-09-08 14:52:11,594 - ERROR - there is no uploadSetting key in  your metajson
+2023-09-08 14:54:27,840 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 14:54:27,906 - INFO - GUI started
+2023-09-08 14:54:29,696 - DEBUG - start to import prepared video metas in json format
+2023-09-08 14:54:31,381 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 14:54:31,854 - INFO - load video metas to database .create upload task for each video
+2023-09-08 14:54:31,855 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 14:54:31,855 - INFO - start to load  and parse meta json
+2023-09-08 14:54:31,871 - INFO - we use platform =youtube
+2023-09-08 14:54:31,871 - ERROR - is_open_browser should be bool, true or false
+2023-09-08 14:54:31,871 - ERROR - debug should be bool, true or false
+2023-09-08 14:54:31,871 - ERROR - wait_policy should be one of 0,1,2
+2023-09-08 14:54:31,872 - ERROR - is_record_video should be bool, true or false
+2023-09-08 14:54:31,872 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 14:54:31,885 - INFO - insert data to uploadsetting>>> seems All good.
+2023-09-08 14:54:31,901 - ERROR - there is no uploadSetting key in  your metajson
+2023-09-08 14:55:39,864 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 14:55:39,937 - INFO - GUI started
+2023-09-08 14:55:41,554 - DEBUG - start to import prepared video metas in json format
+2023-09-08 14:55:42,911 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 14:55:43,401 - INFO - load video metas to database .create upload task for each video
+2023-09-08 14:55:43,401 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 14:55:43,401 - INFO - start to load  and parse meta json
+2023-09-08 14:55:43,419 - INFO - we use platform =youtube
+2023-09-08 14:55:43,419 - ERROR - is_open_browser should be bool, true or false
+2023-09-08 14:55:43,420 - ERROR - debug should be bool, true or false
+2023-09-08 14:55:43,420 - ERROR - wait_policy should be one of 0,1,2
+2023-09-08 14:55:43,420 - ERROR - is_record_video should be bool, true or false
+2023-09-08 14:55:43,421 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 14:55:43,433 - INFO - insert data to uploadsetting>>> seems All good.
+2023-09-08 14:55:43,451 - ERROR - there is no uploadSetting key in  your metajson
+2023-09-08 14:55:43,453 - INFO - start to create uploading task for each video
+2023-09-08 14:56:38,350 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 14:56:38,417 - INFO - GUI started
+2023-09-08 14:56:44,595 - DEBUG - start to import prepared video metas in json format
+2023-09-08 14:56:46,084 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 14:56:46,515 - INFO - load video metas to database .create upload task for each video
+2023-09-08 14:56:46,515 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 14:56:46,515 - INFO - start to load  and parse meta json
+2023-09-08 14:56:46,532 - INFO - we use platform =youtube
+2023-09-08 14:56:46,533 - ERROR - is_open_browser should be bool, true or false
+2023-09-08 14:56:46,533 - ERROR - debug should be bool, true or false
+2023-09-08 14:56:46,533 - ERROR - wait_policy should be one of 0,1,2
+2023-09-08 14:56:46,533 - ERROR - is_record_video should be bool, true or false
+2023-09-08 14:56:46,534 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 14:56:46,547 - INFO - insert data to uploadsetting>>> seems All good.
+2023-09-08 14:56:46,564 - ERROR - there is no uploadSetting key in  your metajson
+2023-09-08 14:56:46,566 - INFO - start to create uploading task for each video
+2023-09-08 14:57:17,630 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 14:57:17,695 - INFO - GUI started
+2023-09-08 14:57:19,837 - DEBUG - start to import prepared video metas in json format
+2023-09-08 14:57:21,193 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 14:57:21,589 - INFO - load video metas to database .create upload task for each video
+2023-09-08 14:57:21,589 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 14:57:21,589 - INFO - start to load  and parse meta json
+2023-09-08 14:57:21,603 - INFO - we use platform =youtube
+2023-09-08 14:57:21,604 - ERROR - is_open_browser should be bool, true or false
+2023-09-08 14:57:21,604 - ERROR - debug should be bool, true or false
+2023-09-08 14:57:21,604 - ERROR - wait_policy should be one of 0,1,2
+2023-09-08 14:57:21,604 - ERROR - is_record_video should be bool, true or false
+2023-09-08 14:57:21,605 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 14:57:21,616 - INFO - insert data to uploadsetting>>> seems All good.
+2023-09-08 14:57:21,632 - ERROR - there is no uploadSetting key in  your metajson
+2023-09-08 14:57:21,633 - INFO - start to create uploading task for each video
+2023-09-08 14:57:46,752 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 14:57:46,818 - INFO - GUI started
+2023-09-08 14:57:48,670 - DEBUG - start to import prepared video metas in json format
+2023-09-08 14:57:50,131 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 14:57:50,501 - INFO - load video metas to database .create upload task for each video
+2023-09-08 14:57:50,502 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 14:57:50,502 - INFO - start to load  and parse meta json
+2023-09-08 14:57:50,520 - INFO - we use platform =youtube
+2023-09-08 14:57:50,520 - ERROR - is_open_browser should be bool, true or false
+2023-09-08 14:57:50,521 - ERROR - debug should be bool, true or false
+2023-09-08 14:57:50,521 - ERROR - wait_policy should be one of 0,1,2
+2023-09-08 14:57:50,521 - ERROR - is_record_video should be bool, true or false
+2023-09-08 14:57:50,522 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 14:57:50,536 - INFO - insert data to uploadsetting>>> seems All good.
+2023-09-08 14:57:50,554 - ERROR - there is no uploadSetting key in  your metajson
+2023-09-08 14:57:50,556 - INFO - start to create uploading task for each video
+2023-09-08 15:04:50,550 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 15:04:50,620 - INFO - GUI started
+2023-09-08 15:04:52,909 - DEBUG - start to import prepared video metas in json format
+2023-09-08 15:04:54,287 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 15:04:55,085 - INFO - load video metas to database .create upload task for each video
+2023-09-08 15:04:55,085 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 15:04:55,086 - INFO - start to load  and parse meta json
+2023-09-08 15:04:55,099 - INFO - we use platform =youtube
+2023-09-08 15:04:55,100 - ERROR - is_open_browser should be bool, true or false
+2023-09-08 15:04:55,100 - ERROR - debug should be bool, true or false
+2023-09-08 15:04:55,100 - ERROR - wait_policy should be one of 0,1,2
+2023-09-08 15:04:55,100 - ERROR - is_record_video should be bool, true or false
+2023-09-08 15:04:55,100 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 15:04:55,112 - INFO - insert data to uploadsetting>>> seems All good.
+2023-09-08 15:04:55,127 - ERROR - there is no uploadSetting key in  your metajson
+2023-09-08 15:04:55,129 - INFO - start to create uploading task for each video
+2023-09-08 15:05:42,883 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 15:05:42,946 - INFO - GUI started
+2023-09-08 15:05:44,671 - DEBUG - start to import prepared video metas in json format
+2023-09-08 15:05:46,021 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 15:05:46,639 - INFO - load video metas to database .create upload task for each video
+2023-09-08 15:05:46,639 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 15:05:46,639 - INFO - start to load  and parse meta json
+2023-09-08 15:05:46,652 - INFO - we use platform =youtube
+2023-09-08 15:05:46,653 - ERROR - is_open_browser should be bool, true or false
+2023-09-08 15:05:46,653 - ERROR - debug should be bool, true or false
+2023-09-08 15:05:46,653 - ERROR - wait_policy should be one of 0,1,2
+2023-09-08 15:05:46,653 - ERROR - is_record_video should be bool, true or false
+2023-09-08 15:05:46,654 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 15:05:46,665 - INFO - insert data to uploadsetting>>> seems All good.
+2023-09-08 15:05:46,680 - ERROR - there is no uploadSetting key in  your metajson
+2023-09-08 15:05:46,681 - INFO - start to create uploading task for each video
+2023-09-08 15:09:32,455 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 15:09:32,519 - INFO - GUI started
+2023-09-08 15:09:34,415 - DEBUG - start to import prepared video metas in json format
+2023-09-08 15:09:35,865 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 15:09:36,495 - INFO - load video metas to database .create upload task for each video
+2023-09-08 15:09:36,495 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 15:09:36,495 - INFO - start to load  and parse meta json
+2023-09-08 15:09:36,510 - INFO - we use platform =youtube
+2023-09-08 15:09:36,510 - ERROR - wait_policy should be one of 0,1,2
+2023-09-08 15:09:36,511 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 15:09:36,522 - INFO - insert data to uploadsetting>>> seems All good.
+2023-09-08 15:09:36,536 - ERROR - there is no uploadSetting key in  your metajson
+2023-09-08 15:09:36,538 - INFO - start to create uploading task for each video
+2023-09-08 15:10:19,335 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 15:10:19,398 - INFO - GUI started
+2023-09-08 15:11:49,483 - DEBUG - start to import prepared video metas in json format
+2023-09-08 15:11:51,193 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 15:11:51,755 - INFO - load video metas to database .create upload task for each video
+2023-09-08 15:11:51,755 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 15:11:51,755 - INFO - start to load  and parse meta json
+2023-09-08 15:11:51,771 - INFO - we use platform =youtube
+2023-09-08 15:11:51,772 - INFO - start to check whether setting duplicate or save as new
+2023-09-08 15:11:51,784 - INFO - insert data to uploadsetting>>> seems All good.
+2023-09-08 15:11:51,801 - ERROR - there is no uploadSetting key in  your metajson
+2023-09-08 15:11:51,803 - INFO - start to create uploading task for each video
+2023-09-08 17:12:42,608 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-08 17:12:42,676 - INFO - GUI started
+2023-09-08 17:12:45,864 - DEBUG - start to import prepared video metas in json format
+2023-09-08 17:12:47,537 - DEBUG - finished to import prepared video metas in json format
+2023-09-08 17:12:48,024 - INFO - load video metas to database .create upload task for each video
+2023-09-08 17:12:48,024 - INFO - you select metafile is D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/youtube-videos-meta.json
+2023-09-08 17:12:48,025 - INFO - start to load  and parse meta json
+2023-09-08 17:12:48,043 - INFO - you dont specify platform field,we use default youtube
+2023-09-08 17:12:48,043 - ERROR - there is no uploadSetting key in  your metajson
+2023-09-08 17:12:48,044 - ERROR - these video_local_path field is required,and check whether local file exists
+2023-09-08 17:12:48,044 - ERROR - there is no videos in  your metajson.check metajson docs for reference
+2023-09-08 17:12:48,044 - INFO - start to create uploading task for each video
