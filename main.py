@@ -102,13 +102,110 @@ logging.basicConfig(filename='test.log',
 logger = logging.getLogger()         
 checkvideopaircounts=0
 checkvideocounts=0
-
+test_engine=createEngine('test')
+prod_engine=createEngine('prod')
 window=None
 # after import or define a_i18n and t
 # add translation dictionary manually.
 # dbname = "reddit_popular"
 # Open the database and make sure there is a table with appopriate indices
-
+availableScheduleTimes = [
+"0:00",
+"0:15",
+"0:30",
+"0:45",
+"1:00",
+"1:15",
+"1:30",
+"1:45",
+"2:00",
+"2:15",
+"2:30",
+"2:45",
+"3:00",
+"3:15",
+"3:30",
+"3:45",
+"4:00",
+"4:15",
+"4:30",
+"4:45",
+"5:00",
+"5:15",
+"5:30",
+"5:45",
+"6:00",
+"6:15",
+"6:30",
+"6:45",
+"7:00",
+"7:15",
+"7:30",
+"7:45",
+"8:00",
+"8:15",
+"8:30",
+"8:45",
+"9:00",
+"9:15",
+"9:30",
+"9:45",
+"10:00",
+"10:15",
+"10:30",
+"10:45",
+"11:00",
+"11:15",
+"11:30",
+"11:45",
+"12:00",
+"12:15",
+"12:30",
+"12:45",
+"13:00",
+"13:15",
+"13:30",
+"13:45",
+"14:00",
+"14:15",
+"14:30",
+"14:45",
+"15:00",
+"15:15",
+"15:30",
+"15:45",
+"16:00",
+"16:15",
+"16:30",
+"16:45",
+"17:00",
+"17:15",
+"17:30",
+"17:45",
+"18:00",
+"18:15",
+"18:30",
+"18:45",
+"19:00",
+"19:15",
+"19:30",
+"19:45",
+"20:00",
+"20:15",
+"20:30",
+"20:45",
+"21:00",
+"21:15",
+"21:30",
+"21:45",
+"22:00",
+"22:15",
+"22:30",
+"22:45",
+"23:00",
+"23:15",
+"23:30",
+"23:45"] 
 class TextHandler(logging.Handler):
     # This class allows you to log to a Tkinter Text or ScrolledText widget
     # Adapted from Moshe Kaplan: https://gist.github.com/moshekaplan/c425f861de7bbf28ef06
@@ -118,9 +215,19 @@ class TextHandler(logging.Handler):
         logging.Handler.__init__(self)
         # Store a reference to the Text it will log to
         self.text = text
+        self.max_length = 250
+
 
     def emit(self, record):
         msg = self.format(record)
+        if len(msg) > self.max_length:
+            lines = []
+            while len(msg) > self.max_length:
+                lines.append(msg[:self.max_length])
+                msg = msg[self.max_length:]
+            lines.append(msg)
+            msg= '\n'.join(lines)
+
         def append():
             self.text.configure(state='normal')
             self.text.insert(tk.END, msg + '\n')
@@ -1006,7 +1113,7 @@ def genVideoMetas():
             print("pls choose file or folder")
     print('save metas to json /csv excel format for later processing')
 
-def validateMetafile(dbm,ttkframe,metafile):
+def validateMetafile(engine,ttkframe,metafile):
     logger.info('load video metas to database .create upload task for each video')
 
 
@@ -1017,8 +1124,8 @@ def validateMetafile(dbm,ttkframe,metafile):
             # check_video_thumb_pair(dbm,video_folder_path,True)
             logger.info('start to load  and parse meta json')
 
-            engine=createEngine('test')
-            settingidsdict=[]
+            
+            settingidsdict={}
             try:
                 data = json.load(open(metafile))
             # df = pd.read_json(metafile)     
@@ -1029,6 +1136,7 @@ def validateMetafile(dbm,ttkframe,metafile):
                     settings=data["uploadSetting"]
 
                     for setting in settings:
+                        logger.info(f'setting json is {setting}')
 
                         for key in ['proxy_option','channel_cookie_path']:
                             if setting.get(key)==None:
@@ -1062,24 +1170,38 @@ def validateMetafile(dbm,ttkframe,metafile):
 
                         if setting.get('timeout')==None:
                             setting['timeout']=200000
+                            logger.info("you dont specify timeout field,we use default 200*1000")
                         else:
                             if type(setting.get('timeout'))!=int:
                                 logger.error('timeout should be integer,such as 20*1000=20000, 20 seconds')
                         if setting.get('is_open_browser')==None:
                             setting['is_open_browser']=True
+                            logger.info("you dont specify is_open_browser field,we use default True")
+                            
                         else:
-                            if setting.get('is_open_browser').lower() not in ['true','false']:
+                            
+                            if type(setting.get('is_open_browser'))==bool:
+                                pass
+                            elif type(setting.get('is_open_browser'))==str and setting.get('is_open_browser').lower() not in ['true','false']:
 
-                                logger.error('is_open_browser should be bool, true or false')
+                                logger.error(f'is_open_browser is {setting.get("is_open_browser")} of {type(setting.get("is_open_browser"))},it should be bool, true or false')
 
                         if setting.get('debug')==None:
                             setting['debug']=True
+                            logger.info("you dont specify debug field,we use default True")
+                            
                         else:
-                            if setting.get('debug').lower() not in ['true','false']:
-                                logger.error('debug should be bool, true or false')                        
+                            
+                            if type(setting.get('debug'))==bool:
+                                pass
+                            elif type(setting.get('debug'))==str and setting.get('debug').lower() not in ['true','false']:
+
+                                logger.error(f'debug is {setting.get("debug")} of {type(setting.get("debug"))},it should be bool, true or false')
+
+               
                         if setting.get('wait_policy')==None:
                             setting['wait_policy']=2        
-                            logger.info('we use wait_policy =2')
+                            logger.info("you dont specify wait_policy field,we use default 2")
                         else:
                             if type(setting.get('wait_policy'))!=int:
                                 logger.error('wait_policy should be one of 0,1,2')
@@ -1089,18 +1211,40 @@ def validateMetafile(dbm,ttkframe,metafile):
 
                         if setting.get('is_record_video')==None:
                             setting['is_record_video']=True        
+                            logger.info("you dont specify is_record_video field,we use default True")
+                            
                         else:
-                            if setting.get('is_record_video').lower() not in ['true','false']:
-                                logger.error('is_record_video should be bool, true or false')     
+                            
+                            if type(setting.get('is_record_video'))==bool:
+                                pass
+                            elif type(setting.get('is_record_video'))==str and setting.get('is_record_video').lower() not in ['true','false']:
+
+                                logger.error(f'is_record_video is {setting.get("is_record_video")} of {type(setting.get("is_record_video"))},it should be bool, true or false')
+
+
+                        df_setting=    pd.json_normalize(setting)
+
                         newid=pd.Timestamp.now().value  
                         if setting.get('id')==None:
-                            setting['id']=newid  
+                            df_setting['id']=newid  
+                            logger.info(f"you dont specify id field,we generate a new {newid} for this setting")
+                            
                             settingidsdict[newid]=newid   
+                            logger.info(f"setting old id and new ids mapping dicts is {settingidsdict}")
 
                         else:
-                            setting['id']=newid  
-                            settingidsdict[setting['id']]=newid   
-                        df_setting=    pd.json_normalize(setting)
+                            if type(setting['id'])==str:
+                                try:
+                                    setting['id']=int(setting['id'])
+                                    
+                                except Exception as e:
+                                    logger.error(f'setting["id"] should be a int value')
+                            settingidsdict[setting['id']]=newid                               
+                            logger.info(f"you  specify id field,we add a mapping to {setting['id']}  of {type({setting['id']} )}a new {newid} for this setting")
+                            df_setting['id']=newid  
+
+                            logger.info(f"setting old id and new ids mapping dicts is {settingidsdict}")
+
                         df_setting['inserted_at']=datetime.now()           
 
                         logger.info('start to check whether setting duplicate or save as new')
@@ -1114,17 +1258,18 @@ def validateMetafile(dbm,ttkframe,metafile):
                     df=query2df(engine,query,logger)
                     print(df.columns)
                     print(df.head(3))
-                    df.to_sql()
 
             # prepareuploadsession( dbm,videopath,thumbpath,filename,start_index,setting['channelname'],settingid)
 
-                except:
-                    logger.error('there is no uploadSetting key in  your metajson')
+                except Exception as e:
+                    logger.error(f'there is no uploadSetting key in  your metajson:{e}')
                 try:
                     videos=data["videos"]
-
-                    for video in videos:
-                        df_video=pd.json_normalize(video)
+                    logger.info(f'we found {len(videos)} videos to be load in db')
+                    
+                    for idx,video in enumerate(videos):
+                        logger.info(f'start to process {str(idx)}th\n:{video} ')
+                    
                         for key in ['video_local_path','video_title','video_description','thumbnail_local_path','publish_policy','tags']:
                             if video.get(key)==None:
                                 logger.error(f"these {key} field is required,No target{key} in given video json data")
@@ -1134,17 +1279,29 @@ def validateMetafile(dbm,ttkframe,metafile):
                                     logger.error(f"these {key} field is required,and check whether local file exists")
                                     raise ValueError(f"these {key} field is required,and check whether local file exists")
                         for key in ['video_film_date','video_film_location','first_comment','subtitles']:
+                            video[key]=None 
                             logger.info(f'now we have no rules about {key} validation ')
 
-                        for key in ['is_age_restriction','is_paid_promotion','is_allow_embedding','is_publish_to_subscriptions_feed_notify',
+                        for key in ['is_allow_embedding','is_publish_to_subscriptions_feed_notify',
                                     'is_automatic_chapters','is_featured_place', 'is_not_for_kid',
                                     'is_show_howmany_likes',
                                     'is_monetization_allowed']:
 
                             if video.get(key)==None:
-                                logger.info(f"No target{key} in given video json data,we can use default value")
+                                video[key]=True 
+                                logger.info(f"This field {key} is optional in given video json data,we can use default true")
                             else:
-                                if video.get(key).lower() not in ['true','false']:
+                                if video.get(key) not in ['true','false']:
+                                    logger.error(f'{key} should be bool, true or false') 
+
+
+                        for key in ['is_age_restriction','is_paid_promotion']:
+                            if video.get(key)==None:
+                                video[key]=False 
+
+                                logger.info(f"This field {key} is optional in given video json data,we can use default false")
+                            else:
+                                if video.get(key) not in ['true','false']:
                                     logger.error(f'{key} should be bool, true or false') 
 
                         if video.get('categories')==None:
@@ -1215,20 +1372,44 @@ def validateMetafile(dbm,ttkframe,metafile):
                             else:
                                 if not video.get('publish_policy') in [0,1,2,3,4]:
                                     logger.error('publish_policy should be one of 0,1,2,3,4')
-
+                                else:
+                                    # check release date and datehour exists
+                                    if video.get('publish_policy')==2:
+                                        if video.get('release_date')==None:
+                                            video['release_date']=None      
+                                            logger.info('we use release_date ==none')  
+                                        else:
+                                            if video.get('release_date_hour')==None:     
+                                                logger.info('we use default release_date_hour 10:15')    
+                                            elif video.get('release_date_hour') not in availableScheduleTimes:
+                                                logger.error(f'we use choose one from {availableScheduleTimes}') 
+                        if video.get('release_date')==None:
+                            nowdate=datetime.now() 
+                            video['release_date']=nowdate      
+                            logger.info(f'we use release_date =={nowdate }')  
+                        else:
+                            if video.get('release_date_hour')==None:    
+                                video['release_date_hour']="10:15"   
+                                logger.info('we use default release_date_hour 10:15')    
+                            elif video.get('release_date_hour') not in availableScheduleTimes:
+                                logger.error(f'we use choose one from {availableScheduleTimes}')    
+                        if video.get('release_date_hour')==None:     
+                            video['release_date_hour']="10:15"   
+                            logger.info('we use default release_date_hour 10:15')    
+                        elif video.get('release_date_hour') not in availableScheduleTimes:
+                            logger.error(f'we use choose one from {availableScheduleTimes}')  
                         if video.get('tags')==None:
-                            video['tags']=[]      
+                            video['tags']=None      
                             logger.info('we use tags =[]')
                         else:
-                            if type(video.get('tags'))!=list:
-                                if type(video.get('tags'))==str and "," in video.get('tags'):
-                                    video['tags']=video.get('tags').split(',')
-                                else:
-                                    logger.error('tags should be a list of keywords such as ["one","two"]')
-                            else:
-                                if not video.get('tags') in [0,1,2,3,4]:
-                                    logger.error('tags should be one of 0,1,2,3,4')
+                            if type(video.get('tags'))==str and "," in video.get('tags'):
+                                logger.info(f'tags is ok:{video.get("tags")}')                                
 
+                            else:
+                                logger.error('tags should be a list of keywords such as "one,two" ')
+
+                        logger.info(f'length of settingidsdict is {len(settingidsdict)}')
+                        df_video=pd.json_normalize(video)                        
                         if len(settingidsdict)>1:       
                             if video.get('uploadSettingid')==None:
     
@@ -1236,36 +1417,54 @@ def validateMetafile(dbm,ttkframe,metafile):
                             else:
 
                                 if  settingidsdict[video.get('uploadSettingid')]:
-                                    video['upload_setting_id']=settingidsdict[video.get('uploadSettingid')]
+                                    df_video['upload_setting_id']=settingidsdict[video.get('uploadSettingid')]
                                 else:       
                                     logger.error(f'please check {video.get("uploadSettingid")} is saved sucess in db')
                         elif len(settingidsdict)==1:       
-                            video['upload_setting_id']=settingidsdict[1]     
+                            logger.info(f'there is only one setting:{list(settingidsdict.items())}')
+                            # there is two case, 
+                            # 1.user input a setting id,we gen a new as value in the dict,key is the old
+                            # 2. user give no id, we gen a new as key and value in the dict
+                            df_video['upload_setting_id']= list(settingidsdict.keys())[0]
+                           
                         else:
 
                             logger.error('we need at least 1 uploadsetting saved sucess in db')
 
                         newid=pd.Timestamp.now().value  
-                        video['id']=newid
-                        video['youtube_video_id']=None
-                        video['inserted_at']=datetime.now()           
-                        video['updated_at']=None           
-                        video['uploaded_at']=None    
+                        df_video['id']=newid
+                        df_video['youtube_video_id']=None
+                        df_video['inserted_at']=datetime.now()           
+                        df_video['updated_at']=None           
+                        df_video['uploaded_at']=None    
        
-                        video['status']=False         
+                        df_video['status']=False         
                         # print('videos',videos)   
-                        logger.info('start to check whether video duplicate or save as new')
+                        logger.info(f'start to check {str(idx)}th video whether  duplicate or save as new')
 
                         table_name = "uploadtasks"
                         
-                        is_video_ok=pd2table(engine,table_name,df_setting,logger,if_exists='replace')
+
+                        is_video_ok=pd2table(engine,table_name,df_video,logger,if_exists='append')
+                        if is_video_ok:
+                            logger.info(f'save {str(idx)}th video ok:{df_video["video_title"]}')
+                            
+                    query = 'SELECT * FROM uploadtasks'
+                    # Display the results
+                    df=query2df(engine,query,logger)
+                    print(df.columns)
+                    for row in df.itertuples():
+                        print(row)
+                    logger.info(f'there is {len(df.index)} records in table {table_name}')      
+                    lab = tk.Label(ttkframe,text="validation pass,try to create upload task next",bg="green",width=40)
+                    lab.place(x=10, y=220)       
+                    lab.after(5*1000,lab.destroy)                                        
                                                  
-                except:
-                    logger.error('there is no videos in  your metajson.check metajson docs for reference')                
+                except Exception as e:
+                    logger.error(f'there is no videos in  your metajson.check metajson docs for reference:{e}')                
                 
 
 
-            logger.info('start to create uploading task for each video')
         else:
             logger.error("you choosed video meta json file is missing or broken.")
             lab = tk.Label(ttkframe,text="please choose a valid json file",bg="lightyellow",width=40)
@@ -1907,13 +2106,13 @@ def uploadView(frame,ttkframe,lang):
     # l_imported_video_metas_file = tk.Label(ttkframe, text='thumbnail template file')
 
     # l_imported_video_metas_file.place(x=10, y=200)
-    e_imported_video_metas_file = tk.Entry(ttkframe, width=45, textvariable=imported_video_metas_file)
+    e_imported_video_metas_file = tk.Entry(ttkframe, width=int(width*0.02), textvariable=imported_video_metas_file)
     e_imported_video_metas_file.place(x=10, y=200)
 
   
-    b_validate_video_metas = tk.Button(ttkframe, text=i18labels("validateVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=validateMetafile(DBM('prod'),ttkframe,imported_video_metas_file.get())).start())
+    b_validate_video_metas = tk.Button(ttkframe, text=i18labels("validateVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=validateMetafile(test_engine,ttkframe,imported_video_metas_file.get())).start())
     b_validate_video_metas.place(x=10, y=int(250))
-    b_createuploadsession = tk.Button(ttkframe, text=i18labels("createuploadsession", locale=lang, module="g"), command=lambda: threading.Thread(target=createuploadsession(DBM('prod'),ttkframe)).start())
+    b_createuploadsession = tk.Button(ttkframe, text=i18labels("createuploadsession", locale=lang, module="g"), command=lambda: threading.Thread(target=createuploadsession(prod_engine,ttkframe)).start())
     b_createuploadsession.place(x=10, y=int(300))
 
 
@@ -2352,7 +2551,7 @@ if __name__ == '__main__':
         # from src.collapsiblepane import CollapsiblePane as cp
         log_frame =tk.Frame(window, width = width, height = 5)
         # = cp(root, 'Expanded', 'Collapsed')
-        
+        # log_frame.resizable(width=True, height=True)
         log_frame.pack(side = tk.BOTTOM)
         st = ScrolledText.ScrolledText(log_frame,                                      
                                     width = width, 
@@ -2377,7 +2576,7 @@ if __name__ == '__main__':
         window.pack()
 
         logger.debug(f'ROOT_DIR is{ROOT_DIR}')
-        # root.resizable(width=False, height=False)
+        root.resizable(width=True, height=True)
         root.iconbitmap("assets/icon.ico")
 
         render(root,window,log_frame,'en')

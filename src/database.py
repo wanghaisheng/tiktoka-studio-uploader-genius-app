@@ -33,8 +33,21 @@ def pd2table(engine,table_name,df,logger,if_exists='append',dtype=None):
 
     try:
         with engine.begin() as conn:
-            df.to_sql(table_name, conn, if_exists=if_exists, index=False,dtype=dtype)
-            logger.info(f"insert data to {table_name}>>> seems All good.")
+                    
+            try:
+                #this will fail if there is a new column
+                df.to_sql(table_name, conn, if_exists='append', index=False,dtype=dtype)
+                logger.info(f"insert data to {table_name}>>> seems All good.")
+                
+            except:
+                logger.info('table exists and try to combined new column data  ')
+                data = pd.read_sql(f'SELECT * FROM {table_name}', conn)
+                logger.info(f"field diff:{df.columns.difference(data.columns)}\nold columns {data.columns}\r new columns {df.columns}")
+                
+                df2 = pd.concat([data,df])
+                df2.to_sql(name=table_name, con=conn, if_exists = 'replace', index=False)            
+                
+                logger.info(f"table exists and new column data combined and insert data to {table_name}>>> seems All good.")
             return True
     except Exception as e:
         logger.error(f"insert data to {table_name}>>> seems went wrong!{e}")

@@ -18,11 +18,9 @@ you can use any your preferred editor or use [jsoncrack](https://jsoncrack.com/e
       "video_description": "my test video_description",
       "thumbnail_local_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg",
       "publish_policy": 0,
-      "tags": [
-        "Radiation resistance",
-        "Turning tiny",
-        "Radiation blast"
-      ]
+      "tags": 
+        "Radiation resistance,Turning tiny,Radiation blast"
+      
     },
     {
       "video_local_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4",
@@ -33,11 +31,9 @@ you can use any your preferred editor or use [jsoncrack](https://jsoncrack.com/e
       "is_not_for_kid": "True",
       "categories": 10,
       "comments_ratings_policy": 1,
-      "tags": [
-        "Radiation resistance",
-        "Turning tiny",
-        "Radiation blast"
-      ]
+      "tags": 
+        "Radiation resistance,Turning tiny,Radiation blast"
+      
     },
     {
       "video_local_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4",
@@ -50,11 +46,9 @@ you can use any your preferred editor or use [jsoncrack](https://jsoncrack.com/e
       "is_not_for_kid": "True",
       "categories": 10,
       "comments_ratings_policy": 1,
-      "tags": [
-        "Radiation resistance",
-        "Turning tiny",
-        "Radiation blast"
-      ]
+      "tags": 
+        "Radiation resistance,Turning tiny,Radiation blast"
+      
     },
     {
       "video_local_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4",
@@ -67,11 +61,9 @@ you can use any your preferred editor or use [jsoncrack](https://jsoncrack.com/e
       "is_not_for_kid": "True",
       "categories": 10,
       "comments_ratings_policy": 1,
-      "tags": [
-        "Radiation resistance",
-        "Turning tiny",
-        "Radiation blast"
-      ]
+      "tags": 
+        "Radiation resistance,Turning tiny,Radiation blast"
+      
     },
     {
       "video_local_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4",
@@ -84,11 +76,9 @@ you can use any your preferred editor or use [jsoncrack](https://jsoncrack.com/e
       "is_not_for_kid": "True",
       "categories": 10,
       "comments_ratings_policy": 1,
-      "tags": [
-        "Radiation resistance",
-        "Turning tiny",
-        "Radiation blast"
-      ]
+      "tags": 
+        "Radiation resistance,Turning tiny,Radiation blast"
+      
     }
   ]
 }
@@ -421,11 +411,9 @@ you can use any your preferred editor or use [jsoncrack](https://jsoncrack.com/e
       // # 4-Disable comments
 
       "comments_ratings_policy": 1,
-      "tags": [
-        "Radiation resistance",
-        "Turning tiny",
-        "Radiation blast"
-      ]
+      "tags": 
+        "Radiation resistance,Turning tiny,Radiation blast"
+      
     },
     {
       "video_local_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4",
@@ -437,11 +425,9 @@ you can use any your preferred editor or use [jsoncrack](https://jsoncrack.com/e
       "is_not_for_kid": "True",
       "categories": 10,
       "comments_ratings_policy": 1,
-      "tags": [
-        "Radiation resistance",
-        "Turning tiny",
-        "Radiation blast"
-      ]
+      "tags": 
+        "Radiation resistance,Turning tiny,Radiation blast"
+      
     },
     {
       "video_local_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4",
@@ -552,11 +538,9 @@ you can use any your preferred editor or use [jsoncrack](https://jsoncrack.com/e
       "is_not_for_kid": "True",
       "categories": 10,
       "comments_ratings_policy": 1,
-      "tags": [
-        "Radiation resistance",
-        "Turning tiny",
-        "Radiation blast"
-      ]
+      "tags": 
+        "Radiation resistance,Turning tiny,Radiation blast"
+      
     },    
     {
       "video_local_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4",
@@ -569,11 +553,9 @@ you can use any your preferred editor or use [jsoncrack](https://jsoncrack.com/e
       "is_not_for_kid": "True",
       "categories": 10,
       "comments_ratings_policy": 1,
-      "tags": [
-        "Radiation resistance",
-        "Turning tiny",
-        "Radiation blast"
-      ]
+      "tags": 
+        "Radiation resistance,Turning tiny,Radiation blast"
+      
     }, 
     {
       "video_local_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4",
@@ -586,11 +568,9 @@ you can use any your preferred editor or use [jsoncrack](https://jsoncrack.com/e
       "is_not_for_kid": "True",
       "categories": 10,
       "comments_ratings_policy": 1,
-      "tags": [
-        "Radiation resistance",
-        "Turning tiny",
-        "Radiation blast"
-      ]
+      "tags": 
+        "Radiation resistance,Turning tiny,Radiation blast"
+      
     }      
   ]
 }

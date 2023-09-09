@@ -21,11 +21,9 @@
       "is_not_for_kid": "True",
       "categories": 10,
       "comments_ratings_policy": 1,
-      "tags": [
-        "Radiation resistance",
-        "Turning tiny",
-        "Radiation blast"
-      ]
+      "tags": 
+        "Radiation resistance,Turning tiny,Radiation blast"
+      
     },
     {
       "video_local_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4",
@@ -36,11 +34,9 @@
       "is_not_for_kid": "True",
       "categories": 10,
       "comments_ratings_policy": 1,
-      "tags": [
-        "Radiation resistance",
-        "Turning tiny",
-        "Radiation blast"
-      ]
+      "tags": 
+        "Radiation resistance,Turning tiny,Radiation blast"
+      
     },
     {
       "video_local_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4",
@@ -53,11 +49,9 @@
       "is_not_for_kid": "True",
       "categories": 10,
       "comments_ratings_policy": 1,
-      "tags": [
-        "Radiation resistance",
-        "Turning tiny",
-        "Radiation blast"
-      ]
+      "tags": 
+        "Radiation resistance,Turning tiny,Radiation blast"
+      
     },
     {
       "video_local_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4",
@@ -70,11 +64,9 @@
       "is_not_for_kid": "True",
       "categories": 10,
       "comments_ratings_policy": 1,
-      "tags": [
-        "Radiation resistance",
-        "Turning tiny",
-        "Radiation blast"
-      ]
+      "tags": 
+        "Radiation resistance,Turning tiny,Radiation blast"
+      
     },
     {
       "video_local_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4",
@@ -87,11 +79,9 @@
       "is_not_for_kid": "True",
       "categories": 10,
       "comments_ratings_policy": 1,
-      "tags": [
-        "Radiation resistance",
-        "Turning tiny",
-        "Radiation blast"
-      ]
+      "tags": 
+        "Radiation resistance,Turning tiny,Radiation blast"
+      
     }
   ]
 }
