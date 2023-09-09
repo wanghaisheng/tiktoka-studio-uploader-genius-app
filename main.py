@@ -1452,9 +1452,7 @@ def validateMetafile(engine,ttkframe,metafile):
                     query = 'SELECT * FROM uploadtasks'
                     # Display the results
                     df=query2df(engine,query,logger)
-                    print(df.columns)
-                    for row in df.itertuples():
-                        print(row)
+
                     logger.info(f'there is {len(df.index)} records in table {table_name}')      
                     lab = tk.Label(ttkframe,text="validation pass,try to create upload task next",bg="green",width=40)
                     lab.place(x=10, y=220)       
@@ -1985,7 +1983,7 @@ def render_video_folder_check_results(frame):
         mode3=tk.Radiobutton(frame,text="文件夹中任意图片作为背景图",variable=mode,value="3",command='')
         mode3.place(x=10, y=480)    
         mode4=tk.Radiobutton(frame,text="元数据中已指定背景图地址",variable=mode,value="4",command='')
-        mode4.place(x=10, y=520)    
+        mode4.place(x=10, y=510)    
         b_import_thumb_metas_=tk.Button(frame,text="Step4:gen thumbnails use thumb metas and thumb template file",command=lambda: genThumbnailFromTemplate(videosView_video_folder.get(),thumbnail_template_file.get(),mode.get()))
         b_import_thumb_metas_.place(x=10, y=560)    
 
@@ -2023,63 +2021,102 @@ def accountView(frame,ttkframe,lang):
     tree.column('#5', anchor = 'center', width = 80)
     tree.heading('#6', text = 'Arr. Time')
     tree.column('#6', anchor = 'center', width = 80)
+def  queryTasks(tree,engine,logger,vid):
 
+
+
+    query = "SELECT * FROM uploadtasks ORDER by inserted_at DESC"
+    print('vid',vid,type(vid))
+    if vid is not None and vid !='' and vid !="please input task id":
+        query=f"SELECT * FROM uploadtasks  where id={vid}"
+    try:
+        db_rows = query2df(engine,query,logger)
+        records = tree.get_children()
+        for element in records:
+            tree.delete(element) 
+        for row in db_rows.itertuples():
+            tree.insert(
+                "", 0, text=row.id, values=(row.video_title,row.video_description,row.status,row.release_date, row.release_date_hour, row.publish_policy, row.uploaded_at, row.video_local_path)
+            )
+    except:
+        print('keep the same')    
 
 
 def uploadView(frame,ttkframe,lang):
 
     # treeview_flight
-    tree = ttk.Treeview(frame, height = 10, column = 6)
+    tree = ttk.Treeview(frame, height = 20, column = 9)
     tree["column"]=('#0','#1','#2','#3','#4','#5','#6','#7')
     tree.grid(row = 0, column = 0, columnspan = 10, padx=14, pady=15)
 
     tree.heading('#0', text = 'Task No.')
     tree.column('#0', anchor = 'center', width = 70)
-    tree.heading('#1', text = 'Video id')
+    tree.heading('#1', text = 'Video title')
     tree.column('#1', anchor = 'center', width = 60)
-    tree.heading('#2', text = 'local path')
+    tree.heading('#2', text = 'Description')
     tree.column('#2', anchor = 'center', width = 60)
-    tree.heading('#3', text = 'title')
+    tree.heading('#3', text = 'Status')
     tree.column('#3', anchor = 'center', width = 80)
-    tree.heading('#4', text = 'tags')
+    tree.heading('#4', text = 'release. Date')
     tree.column('#4', anchor = 'center', width = 80)
-    tree.heading('#5', text = 'release. Date')
+    tree.heading('#5', text = 'release. Time')
     tree.column('#5', anchor = 'center', width = 80)
-    tree.heading('#6', text = 'release. Time')
+    tree.heading('#6', text = 'publish type')
     tree.column('#6', anchor = 'center', width = 80)
     tree.heading('#7', text = 'upload. Time')
     tree.column('#7', anchor = 'center', width = 80)
-    tree.heading('#8', text = 'upload. Status')
+    tree.heading('#8', text = 'local path')
     tree.column('#8', anchor = 'center', width = 80)
+    
+    global vid
+    vid = tk.StringVar()
+    lbl15 = tk.Label(ttkframe, text='Enter vid.')
+    lbl15.place(x=430, y=125, anchor=tk.NE)
+    txt15 = tk.Entry(ttkframe, width=11,textvariable=vid)
+    txt15.insert(0,'please input task id')
+    txt15.place(x=580, y=125, anchor=tk.NE)
+
+
+    # buttons
+
+    # btn4= tk.Button(ttkframe, text="Book Flight", command = select_cookie_file)
+    # btn4.place(x=300, y=350, anchor=tk.NE)
+
+    btn5= tk.Button(ttkframe, text="Get Info", command = lambda: threading.Thread(target=queryTasks(tree,prod_engine,logger,vid.get())).start())
+    btn5.place(x=800, y=120, anchor=tk.NE)    
     # lbl15 = tk.Label(ttkframe, text='Enter PID.')
     # lbl15.place(x=230, y=125, anchor=tk.NE)
     # txt15 = tk.Entry(ttkframe, width=11)
     # txt15.place(x=320, y=125, anchor=tk.NE)
-    lb_video_counts = tk.Label(ttkframe, text='success', font=(' ', 9))
-    lb_video_counts.place(x=500, y=10, anchor=tk.NE)
-    print(checkvideocounts.get())
+    lb_youtube_counts = tk.Label(ttkframe, text='youtube', font=(' ', 15))
+    lb_youtube_counts.place(x=350, y=530, anchor=tk.NE)    
+
+    lb_tiktok_counts = tk.Label(ttkframe, text='tiktok', font=(' ', 15))
+    lb_tiktok_counts.place(x=330, y=560, anchor=tk.NE)    
+    
+    lb_video_counts = tk.Label(ttkframe, text='success', font=(' ', 15))
+    lb_video_counts.place(x=450, y=510, anchor=tk.NE)
 
     lb_video_counts_value = tk.Label(ttkframe, text=str(checkvideocounts.get()), font=(' ', 18))
-    lb_video_counts_value.place(x=550, y=10, width = 20, anchor=tk.NE)
+    lb_video_counts_value.place(x=550, y=510, width = 20, anchor=tk.NE)
 
 
-    lb_video_thumb_pairs_counts = tk.Label(ttkframe, text='queued', font=(' ', 9))
-    lb_video_thumb_pairs_counts.place(x=600, y=10, anchor=tk.NE)
+    lb_video_thumb_pairs_counts = tk.Label(ttkframe, text='queued', font=(' ', 15))
+    lb_video_thumb_pairs_counts.place(x=650, y=510, anchor=tk.NE)
 
 
 
-    print(video_thumb_pairs_counts.get())
     lb_video_thumb_pairs_counts_value = tk.Label(ttkframe, text=str(video_thumb_pairs_counts.get()), font=(' ', 18))
-    lb_video_thumb_pairs_counts_value.place(x=650, y=10, width = 20, anchor=tk.NE)
+    lb_video_thumb_pairs_counts_value.place(x=750, y=510, width = 20, anchor=tk.NE)
 
 
-    lb_video_thumb_pairs_counts = tk.Label(ttkframe, text='failure', font=(' ', 9))
-    lb_video_thumb_pairs_counts.place(x=700, y=10, anchor=tk.NE)
+    lb_video_thumb_pairs_counts = tk.Label(ttkframe, text='failure', font=(' ', 15))
+    lb_video_thumb_pairs_counts.place(x=850, y=510, anchor=tk.NE)
 
     missing_video_thumb_pairs_counts=checkvideocounts.get()-video_thumb_pairs_counts.get()
 
     lb_video_thumb_pairs_counts_value = tk.Label(ttkframe, text=str(missing_video_thumb_pairs_counts), font=(' ', 18))
-    lb_video_thumb_pairs_counts_value.place(x=750, y=10, width = 20, anchor=tk.NE)
+    lb_video_thumb_pairs_counts_value.place(x=950, y=510, width = 20, anchor=tk.NE)
 
         
     
@@ -2094,7 +2131,7 @@ def uploadView(frame,ttkframe,lang):
     
 
 
-    l_import_video_metas = tk.Label(ttkframe, text=i18labels("importVideoMetas", locale=lang, module="g"), font=(' ', 9))
+    l_import_video_metas = tk.Label(ttkframe, text=i18labels("importVideoMetas", locale=lang, module="g"), font=(' ', 14))
     l_import_video_metas.place(x=10, y=150, anchor=tk.NW)
     global video_meta_json_path
     b_imported_video_metas_file=tk.Button(ttkframe,text="Select",command=SelectVideoMetasfile)
@@ -2112,7 +2149,7 @@ def uploadView(frame,ttkframe,lang):
   
     b_validate_video_metas = tk.Button(ttkframe, text=i18labels("validateVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=validateMetafile(test_engine,ttkframe,imported_video_metas_file.get())).start())
     b_validate_video_metas.place(x=10, y=int(250))
-    b_createuploadsession = tk.Button(ttkframe, text=i18labels("createuploadsession", locale=lang, module="g"), command=lambda: threading.Thread(target=createuploadsession(prod_engine,ttkframe)).start())
+    b_createuploadsession = tk.Button(ttkframe, text=i18labels("createuploadsession", locale=lang, module="g"), command=lambda: threading.Thread(target=validateMetafile(prod_engine,ttkframe,imported_video_metas_file.get())).start())
     b_createuploadsession.place(x=10, y=int(300))
 
 
@@ -2123,7 +2160,7 @@ def uploadView(frame,ttkframe,lang):
     b_upload.place(x=10, y=int(400))
 
 
-    # viewing_records()
+    queryTasks(tree,prod_engine,logger,vid.get())
 def proxyView(frame,ttkframe,lang):
     lbl15 = tk.Label(ttkframe, text='Enter PID.')
     lbl15.place(x=230, y=125, anchor=tk.NE)

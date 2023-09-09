@@ -7521,3 +7521,1125 @@ Name: video_title, dtype: object
 2023-09-09 14:12:56,168 - INFO - save 4th video ok:0    public&premiere my test video_title
 Name: video_title, dtype: object
 2023-09-09 14:12:56,176 - INFO - there is 5 records in table uploadtasks
+2023-09-09 15:12:37,039 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 15:12:38,072 - INFO - GUI started
+2023-09-09 16:49:28,548 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 16:49:29,344 - INFO - GUI started
+2023-09-09 16:50:15,204 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 16:50:15,475 - INFO - GUI started
+2023-09-09 16:50:34,905 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 16:50:35,187 - INFO - GUI started
+2023-09-09 20:09:12,368 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 20:09:13,136 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: uploadtasks
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-09 20:10:50,529 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 20:10:50,788 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: uploadtasks
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-09 20:10:50,799 - INFO - GUI started
+2023-09-09 20:10:54,725 - DEBUG - start to import prepared video metas in json format
+2023-09-09 20:11:00,340 - DEBUG - finished to import prepared video metas in json format
+2023-09-09 20:11:02,909 - INFO - load video metas to database .create upload task for each video
+2023-09-09 20:11:02,909 - INFO - you select metafile is /Users/wenke/github/tiktoka-studio-uploader-app/assets/youtube-videos-meta.json
+2023-09-09 20:11:02,909 - INFO - start to load  and parse meta json
+2023-09-09 20:11:02,910 - INFO - setting json is {'proxy_option': 'socks5://127.0.0.1:1080', 'timeout': 200000, 'is_open_browser': True, 'debug': True, 'username': 'edwin.uestc@gmail.com', 'password': 'U437P8Is9prmNquVerHJ9%R00a', 'browser_type': 'firefox', 'channel_cookie_path': '/Users/wenke/github/tiktoka-studio-uploader/offloaddogsboner-cookie.json', 'wait_policy': 2, 'is_record_video': True}
+2023-09-09 20:11:02,911 - INFO - you dont specify platform field,we use default youtube
+2023-09-09 20:11:02,923 - INFO - you dont specify id field,we generate a new 1694290262917453000 for this setting
+2023-09-09 20:11:02,923 - INFO - setting old id and new ids mapping dicts is {1694290262917453000: 1694290262917453000}
+2023-09-09 20:11:02,925 - INFO - start to check whether setting duplicate or save as new
+2023-09-09 20:11:02,945 - INFO - insert data to uploadsetting>>> seems All good.
+2023-09-09 20:11:02,972 - INFO - we found 5 videos to be load in db
+2023-09-09 20:11:02,972 - INFO - start to process 0th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'private draft my test video_title ', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 0, 'is_not_for_kid': True, 'categories': 1, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:11:02,972 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:11:02,972 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:11:02,972 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:11:02,972 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:11:02,972 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:11:02,972 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:11:02,973 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:11:02,973 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:11:02,973 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:11:02,973 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:11:02,973 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:11:02,973 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:11:02,973 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:11:02,973 - INFO - we use license_type =0
+2023-09-09 20:11:02,973 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:11:02,973 - INFO - we use captions_certification =0
+2023-09-09 20:11:02,973 - INFO - we use video_language =none
+2023-09-09 20:11:02,974 - INFO - we use release_date ==2023-09-09 20:11:02.974010
+2023-09-09 20:11:02,974 - INFO - we use default release_date_hour 10:15
+2023-09-09 20:11:02,974 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:11:02,974 - INFO - length of settingidsdict is 1
+2023-09-09 20:11:02,977 - INFO - there is only one setting:[(1694290262917453000, 1694290262917453000)]
+2023-09-09 20:11:02,979 - INFO - start to check 0th video whether  duplicate or save as new
+2023-09-09 20:11:02,997 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:11:02,998 - INFO - save 0th video ok:0    private draft my test video_title 
+Name: video_title, dtype: object
+2023-09-09 20:11:02,999 - INFO - start to process 1th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'instant publish my test video_title', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 1, 'is_not_for_kid': True, 'categories': 2, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:11:02,999 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:11:02,999 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:11:02,999 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:11:02,999 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:11:02,999 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:11:02,999 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:11:02,999 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:11:02,999 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:11:02,999 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:11:02,999 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:11:02,999 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:11:03,000 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:11:03,000 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:11:03,000 - INFO - we use license_type =0
+2023-09-09 20:11:03,000 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:11:03,000 - INFO - we use captions_certification =0
+2023-09-09 20:11:03,000 - INFO - we use video_language =none
+2023-09-09 20:11:03,000 - INFO - we use release_date ==2023-09-09 20:11:03.000547
+2023-09-09 20:11:03,000 - INFO - we use default release_date_hour 10:15
+2023-09-09 20:11:03,000 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:11:03,000 - INFO - length of settingidsdict is 1
+2023-09-09 20:11:03,002 - INFO - there is only one setting:[(1694290262917453000, 1694290262917453000)]
+2023-09-09 20:11:03,004 - INFO - start to check 1th video whether  duplicate or save as new
+2023-09-09 20:11:03,016 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:11:03,018 - INFO - save 1th video ok:0    instant publish my test video_title
+Name: video_title, dtype: object
+2023-09-09 20:11:03,018 - INFO - start to process 2th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'schedule  my test video_title', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 2, 'release_date': '2023-12-01', 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': 5, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:11:03,018 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:11:03,019 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:11:03,019 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:11:03,019 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:11:03,019 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:11:03,019 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:11:03,019 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:11:03,019 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:11:03,019 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:11:03,019 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:11:03,019 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:11:03,019 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:11:03,019 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:11:03,020 - INFO - we use license_type =0
+2023-09-09 20:11:03,020 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:11:03,020 - INFO - we use captions_certification =0
+2023-09-09 20:11:03,020 - INFO - we use video_language =none
+2023-09-09 20:11:03,020 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:11:03,020 - INFO - length of settingidsdict is 1
+2023-09-09 20:11:03,022 - INFO - there is only one setting:[(1694290262917453000, 1694290262917453000)]
+2023-09-09 20:11:03,024 - INFO - start to check 2th video whether  duplicate or save as new
+2023-09-09 20:11:03,037 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:11:03,039 - INFO - save 2th video ok:0    schedule  my test video_title
+Name: video_title, dtype: object
+2023-09-09 20:11:03,039 - INFO - start to process 3th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'Unlisted my test video_title', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 3, 'release_date': '2023-12-01', 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': 3, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:11:03,040 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:11:03,040 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:11:03,040 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:11:03,040 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:11:03,040 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:11:03,040 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:11:03,040 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:11:03,040 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:11:03,040 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:11:03,041 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:11:03,041 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:11:03,041 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:11:03,041 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:11:03,041 - INFO - we use license_type =0
+2023-09-09 20:11:03,041 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:11:03,041 - INFO - we use captions_certification =0
+2023-09-09 20:11:03,041 - INFO - we use video_language =none
+2023-09-09 20:11:03,041 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:11:03,041 - INFO - length of settingidsdict is 1
+2023-09-09 20:11:03,044 - INFO - there is only one setting:[(1694290262917453000, 1694290262917453000)]
+2023-09-09 20:11:03,046 - INFO - start to check 3th video whether  duplicate or save as new
+2023-09-09 20:11:03,058 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:11:03,059 - INFO - save 3th video ok:0    Unlisted my test video_title
+Name: video_title, dtype: object
+2023-09-09 20:11:03,059 - INFO - start to process 4th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'public&premiere my test video_title', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 4, 'release_date': '2023-12-01', 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': 10, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:11:03,060 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:11:03,060 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:11:03,060 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:11:03,060 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:11:03,060 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:11:03,060 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:11:03,060 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:11:03,060 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:11:03,060 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:11:03,060 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:11:03,060 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:11:03,061 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:11:03,061 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:11:03,061 - INFO - we use license_type =0
+2023-09-09 20:11:03,061 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:11:03,061 - INFO - we use captions_certification =0
+2023-09-09 20:11:03,061 - INFO - we use video_language =none
+2023-09-09 20:11:03,061 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:11:03,061 - INFO - length of settingidsdict is 1
+2023-09-09 20:11:03,063 - INFO - there is only one setting:[(1694290262917453000, 1694290262917453000)]
+2023-09-09 20:11:03,065 - INFO - start to check 4th video whether  duplicate or save as new
+2023-09-09 20:11:03,079 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:11:03,080 - INFO - save 4th video ok:0    public&premiere my test video_title
+Name: video_title, dtype: object
+2023-09-09 20:11:03,087 - INFO - there is 5 records in table uploadtasks
+2023-09-09 20:13:57,502 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 20:13:58,121 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: uploadtasks
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-09 20:13:58,129 - INFO - GUI started
+2023-09-09 20:14:00,057 - DEBUG - start to import prepared video metas in json format
+2023-09-09 20:14:02,642 - DEBUG - finished to import prepared video metas in json format
+2023-09-09 20:14:03,355 - INFO - load video metas to database .create upload task for each video
+2023-09-09 20:14:03,355 - INFO - you select metafile is /Users/wenke/github/tiktoka-studio-uploader-app/assets/youtube-videos-meta.json
+2023-09-09 20:14:03,355 - INFO - start to load  and parse meta json
+2023-09-09 20:14:03,356 - INFO - setting json is {'proxy_option': 'socks5://127.0.0.1:1080', 'timeout': 200000, 'is_open_browser': True, 'debug': True, 'username': 'edwin.uestc@gmail.com', 'password': 'U437P8Is9prmNquVerHJ9%R00a', 'browser_type': 'firefox', 'channel_cookie_path': '/Users/wenke/github/tiktoka-studio-uploader/offloaddogsboner-cookie.json', 'wait_policy': 2, 'is_record_video': True}
+2023-09-09 20:14:03,357 - INFO - you dont specify platform field,we use default youtube
+2023-09-09 20:14:03,360 - INFO - you dont specify id field,we generate a new 1694290443359373000 for this setting
+2023-09-09 20:14:03,360 - INFO - setting old id and new ids mapping dicts is {1694290443359373000: 1694290443359373000}
+2023-09-09 20:14:03,360 - INFO - start to check whether setting duplicate or save as new
+2023-09-09 20:14:03,372 - INFO - insert data to uploadsetting>>> seems All good.
+2023-09-09 20:14:03,410 - INFO - we found 5 videos to be load in db
+2023-09-09 20:14:03,410 - INFO - start to process 0th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'private draft my test video_title ', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 0, 'is_not_for_kid': True, 'categories': 1, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:14:03,410 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:14:03,410 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:14:03,410 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:14:03,411 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:14:03,411 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:14:03,411 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:14:03,411 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:14:03,411 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:14:03,411 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:14:03,411 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:14:03,411 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:14:03,411 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:14:03,411 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:14:03,411 - INFO - we use license_type =0
+2023-09-09 20:14:03,411 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:14:03,412 - INFO - we use captions_certification =0
+2023-09-09 20:14:03,412 - INFO - we use video_language =none
+2023-09-09 20:14:03,412 - INFO - we use release_date ==2023-09-09 20:14:03.412185
+2023-09-09 20:14:03,412 - INFO - we use default release_date_hour 10:15
+2023-09-09 20:14:03,412 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:14:03,412 - INFO - length of settingidsdict is 1
+2023-09-09 20:14:03,414 - INFO - there is only one setting:[(1694290443359373000, 1694290443359373000)]
+2023-09-09 20:14:03,416 - INFO - start to check 0th video whether  duplicate or save as new
+2023-09-09 20:14:03,432 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:14:03,434 - INFO - save 0th video ok:0    private draft my test video_title 
+Name: video_title, dtype: object
+2023-09-09 20:14:03,434 - INFO - start to process 1th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'instant publish my test video_title', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 1, 'is_not_for_kid': True, 'categories': 2, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:14:03,434 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:14:03,435 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:14:03,435 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:14:03,435 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:14:03,435 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:14:03,435 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:14:03,435 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:14:03,435 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:14:03,435 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:14:03,435 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:14:03,435 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:14:03,435 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:14:03,435 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:14:03,436 - INFO - we use license_type =0
+2023-09-09 20:14:03,436 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:14:03,436 - INFO - we use captions_certification =0
+2023-09-09 20:14:03,436 - INFO - we use video_language =none
+2023-09-09 20:14:03,436 - INFO - we use release_date ==2023-09-09 20:14:03.436330
+2023-09-09 20:14:03,436 - INFO - we use default release_date_hour 10:15
+2023-09-09 20:14:03,436 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:14:03,436 - INFO - length of settingidsdict is 1
+2023-09-09 20:14:03,438 - INFO - there is only one setting:[(1694290443359373000, 1694290443359373000)]
+2023-09-09 20:14:03,441 - INFO - start to check 1th video whether  duplicate or save as new
+2023-09-09 20:14:03,453 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:14:03,455 - INFO - save 1th video ok:0    instant publish my test video_title
+Name: video_title, dtype: object
+2023-09-09 20:14:03,455 - INFO - start to process 2th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'schedule  my test video_title', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 2, 'release_date': '2023-12-01', 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': 5, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:14:03,455 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:14:03,455 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:14:03,455 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:14:03,456 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:14:03,456 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:14:03,456 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:14:03,456 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:14:03,456 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:14:03,456 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:14:03,456 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:14:03,456 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:14:03,456 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:14:03,456 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:14:03,456 - INFO - we use license_type =0
+2023-09-09 20:14:03,457 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:14:03,457 - INFO - we use captions_certification =0
+2023-09-09 20:14:03,457 - INFO - we use video_language =none
+2023-09-09 20:14:03,457 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:14:03,457 - INFO - length of settingidsdict is 1
+2023-09-09 20:14:03,459 - INFO - there is only one setting:[(1694290443359373000, 1694290443359373000)]
+2023-09-09 20:14:03,461 - INFO - start to check 2th video whether  duplicate or save as new
+2023-09-09 20:14:03,472 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:14:03,474 - INFO - save 2th video ok:0    schedule  my test video_title
+Name: video_title, dtype: object
+2023-09-09 20:14:03,474 - INFO - start to process 3th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'Unlisted my test video_title', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 3, 'release_date': '2023-12-01', 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': 3, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:14:03,474 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:14:03,474 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:14:03,474 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:14:03,474 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:14:03,475 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:14:03,475 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:14:03,475 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:14:03,475 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:14:03,475 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:14:03,475 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:14:03,475 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:14:03,475 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:14:03,475 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:14:03,475 - INFO - we use license_type =0
+2023-09-09 20:14:03,475 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:14:03,475 - INFO - we use captions_certification =0
+2023-09-09 20:14:03,476 - INFO - we use video_language =none
+2023-09-09 20:14:03,476 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:14:03,476 - INFO - length of settingidsdict is 1
+2023-09-09 20:14:03,477 - INFO - there is only one setting:[(1694290443359373000, 1694290443359373000)]
+2023-09-09 20:14:03,479 - INFO - start to check 3th video whether  duplicate or save as new
+2023-09-09 20:14:03,492 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:14:03,494 - INFO - save 3th video ok:0    Unlisted my test video_title
+Name: video_title, dtype: object
+2023-09-09 20:14:03,494 - INFO - start to process 4th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'public&premiere my test video_title', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 4, 'release_date': '2023-12-01', 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': 10, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:14:03,494 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:14:03,494 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:14:03,494 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:14:03,494 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:14:03,494 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:14:03,495 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:14:03,495 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:14:03,495 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:14:03,495 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:14:03,495 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:14:03,495 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:14:03,495 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:14:03,495 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:14:03,495 - INFO - we use license_type =0
+2023-09-09 20:14:03,495 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:14:03,495 - INFO - we use captions_certification =0
+2023-09-09 20:14:03,495 - INFO - we use video_language =none
+2023-09-09 20:14:03,496 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:14:03,496 - INFO - length of settingidsdict is 1
+2023-09-09 20:14:03,497 - INFO - there is only one setting:[(1694290443359373000, 1694290443359373000)]
+2023-09-09 20:14:03,499 - INFO - start to check 4th video whether  duplicate or save as new
+2023-09-09 20:14:03,513 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:14:03,515 - INFO - save 4th video ok:0    public&premiere my test video_title
+Name: video_title, dtype: object
+2023-09-09 20:14:03,523 - INFO - there is 5 records in table uploadtasks
+2023-09-09 20:14:05,418 - INFO - load video metas to database .create upload task for each video
+2023-09-09 20:14:05,419 - INFO - you select metafile is /Users/wenke/github/tiktoka-studio-uploader-app/assets/youtube-videos-meta.json
+2023-09-09 20:14:05,419 - INFO - start to load  and parse meta json
+2023-09-09 20:14:05,419 - INFO - setting json is {'proxy_option': 'socks5://127.0.0.1:1080', 'timeout': 200000, 'is_open_browser': True, 'debug': True, 'username': 'edwin.uestc@gmail.com', 'password': 'U437P8Is9prmNquVerHJ9%R00a', 'browser_type': 'firefox', 'channel_cookie_path': '/Users/wenke/github/tiktoka-studio-uploader/offloaddogsboner-cookie.json', 'wait_policy': 2, 'is_record_video': True}
+2023-09-09 20:14:05,420 - INFO - you dont specify platform field,we use default youtube
+2023-09-09 20:14:05,422 - INFO - you dont specify id field,we generate a new 1694290445422168000 for this setting
+2023-09-09 20:14:05,422 - INFO - setting old id and new ids mapping dicts is {1694290445422168000: 1694290445422168000}
+2023-09-09 20:14:05,423 - INFO - start to check whether setting duplicate or save as new
+2023-09-09 20:14:05,433 - INFO - insert data to uploadsetting>>> seems All good.
+2023-09-09 20:14:05,452 - INFO - we found 5 videos to be load in db
+2023-09-09 20:14:05,452 - INFO - start to process 0th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'private draft my test video_title ', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 0, 'is_not_for_kid': True, 'categories': 1, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:14:05,452 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:14:05,452 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:14:05,452 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:14:05,452 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:14:05,452 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:14:05,452 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:14:05,452 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:14:05,453 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:14:05,453 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:14:05,453 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:14:05,453 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:14:05,453 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:14:05,453 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:14:05,453 - INFO - we use license_type =0
+2023-09-09 20:14:05,453 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:14:05,453 - INFO - we use captions_certification =0
+2023-09-09 20:14:05,453 - INFO - we use video_language =none
+2023-09-09 20:14:05,454 - INFO - we use release_date ==2023-09-09 20:14:05.454017
+2023-09-09 20:14:05,454 - INFO - we use default release_date_hour 10:15
+2023-09-09 20:14:05,454 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:14:05,454 - INFO - length of settingidsdict is 1
+2023-09-09 20:14:05,456 - INFO - there is only one setting:[(1694290445422168000, 1694290445422168000)]
+2023-09-09 20:14:05,458 - INFO - start to check 0th video whether  duplicate or save as new
+2023-09-09 20:14:05,476 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:14:05,478 - INFO - save 0th video ok:0    private draft my test video_title 
+Name: video_title, dtype: object
+2023-09-09 20:14:05,478 - INFO - start to process 1th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'instant publish my test video_title', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 1, 'is_not_for_kid': True, 'categories': 2, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:14:05,478 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:14:05,479 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:14:05,479 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:14:05,479 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:14:05,479 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:14:05,479 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:14:05,479 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:14:05,479 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:14:05,479 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:14:05,479 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:14:05,479 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:14:05,479 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:14:05,479 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:14:05,480 - INFO - we use license_type =0
+2023-09-09 20:14:05,480 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:14:05,480 - INFO - we use captions_certification =0
+2023-09-09 20:14:05,480 - INFO - we use video_language =none
+2023-09-09 20:14:05,480 - INFO - we use release_date ==2023-09-09 20:14:05.480427
+2023-09-09 20:14:05,480 - INFO - we use default release_date_hour 10:15
+2023-09-09 20:14:05,480 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:14:05,480 - INFO - length of settingidsdict is 1
+2023-09-09 20:14:05,482 - INFO - there is only one setting:[(1694290445422168000, 1694290445422168000)]
+2023-09-09 20:14:05,484 - INFO - start to check 1th video whether  duplicate or save as new
+2023-09-09 20:14:05,496 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:14:05,498 - INFO - save 1th video ok:0    instant publish my test video_title
+Name: video_title, dtype: object
+2023-09-09 20:14:05,498 - INFO - start to process 2th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'schedule  my test video_title', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 2, 'release_date': '2023-12-01', 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': 5, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:14:05,498 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:14:05,498 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:14:05,498 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:14:05,498 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:14:05,498 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:14:05,498 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:14:05,498 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:14:05,499 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:14:05,499 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:14:05,499 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:14:05,499 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:14:05,499 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:14:05,499 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:14:05,499 - INFO - we use license_type =0
+2023-09-09 20:14:05,499 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:14:05,499 - INFO - we use captions_certification =0
+2023-09-09 20:14:05,499 - INFO - we use video_language =none
+2023-09-09 20:14:05,499 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:14:05,499 - INFO - length of settingidsdict is 1
+2023-09-09 20:14:05,501 - INFO - there is only one setting:[(1694290445422168000, 1694290445422168000)]
+2023-09-09 20:14:05,503 - INFO - start to check 2th video whether  duplicate or save as new
+2023-09-09 20:14:05,515 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:14:05,516 - INFO - save 2th video ok:0    schedule  my test video_title
+Name: video_title, dtype: object
+2023-09-09 20:14:05,517 - INFO - start to process 3th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'Unlisted my test video_title', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 3, 'release_date': '2023-12-01', 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': 3, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:14:05,517 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:14:05,517 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:14:05,517 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:14:05,517 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:14:05,517 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:14:05,517 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:14:05,517 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:14:05,517 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:14:05,517 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:14:05,517 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:14:05,518 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:14:05,518 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:14:05,518 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:14:05,518 - INFO - we use license_type =0
+2023-09-09 20:14:05,518 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:14:05,518 - INFO - we use captions_certification =0
+2023-09-09 20:14:05,518 - INFO - we use video_language =none
+2023-09-09 20:14:05,518 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:14:05,518 - INFO - length of settingidsdict is 1
+2023-09-09 20:14:05,520 - INFO - there is only one setting:[(1694290445422168000, 1694290445422168000)]
+2023-09-09 20:14:05,522 - INFO - start to check 3th video whether  duplicate or save as new
+2023-09-09 20:14:05,533 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:14:05,535 - INFO - save 3th video ok:0    Unlisted my test video_title
+Name: video_title, dtype: object
+2023-09-09 20:14:05,535 - INFO - start to process 4th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'public&premiere my test video_title', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 4, 'release_date': '2023-12-01', 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': 10, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:14:05,535 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:14:05,535 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:14:05,535 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:14:05,535 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:14:05,536 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:14:05,536 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:14:05,536 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:14:05,536 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:14:05,536 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:14:05,536 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:14:05,536 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:14:05,536 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:14:05,536 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:14:05,536 - INFO - we use license_type =0
+2023-09-09 20:14:05,536 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:14:05,536 - INFO - we use captions_certification =0
+2023-09-09 20:14:05,537 - INFO - we use video_language =none
+2023-09-09 20:14:05,537 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:14:05,537 - INFO - length of settingidsdict is 1
+2023-09-09 20:14:05,539 - INFO - there is only one setting:[(1694290445422168000, 1694290445422168000)]
+2023-09-09 20:14:05,541 - INFO - start to check 4th video whether  duplicate or save as new
+2023-09-09 20:14:05,552 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:14:05,554 - INFO - save 4th video ok:0    public&premiere my test video_title
+Name: video_title, dtype: object
+2023-09-09 20:14:05,561 - INFO - there is 5 records in table uploadtasks
+2023-09-09 20:17:05,224 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 20:17:05,911 - INFO - GUI started
+2023-09-09 20:17:09,439 - DEBUG - start to import prepared video metas in json format
+2023-09-09 20:17:12,111 - DEBUG - finished to import prepared video metas in json format
+2023-09-09 20:17:14,336 - INFO - load video metas to database .create upload task for each video
+2023-09-09 20:17:14,336 - INFO - you select metafile is /Users/wenke/github/tiktoka-studio-uploader-app/assets/youtube-videos-meta-minimal.json
+2023-09-09 20:17:14,336 - INFO - start to load  and parse meta json
+2023-09-09 20:17:14,337 - INFO - setting json is {'proxy_option': 'socks5://127.0.0.1:1080', 'browser_type': 'firefox', 'channel_cookie_path': '/Users/wenke/github/tiktoka-studio-uploader/offloaddogsboner-cookie.json'}
+2023-09-09 20:17:14,338 - INFO - no timeout filed provide in given setting json data,we can use default value
+2023-09-09 20:17:14,338 - INFO - no timeout filed provide in given setting json data,we can use default value
+2023-09-09 20:17:14,338 - INFO - no debug filed provide in given setting json data,we can use default value
+2023-09-09 20:17:14,338 - INFO - no wait_policy filed provide in given setting json data,we can use default value
+2023-09-09 20:17:14,338 - INFO - no is_record_video filed provide in given setting json data,we can use default value
+2023-09-09 20:17:14,339 - INFO - no username filed provide in given setting json data,we can use default value
+2023-09-09 20:17:14,339 - INFO - no password filed provide in given setting json data,we can use default value
+2023-09-09 20:17:14,339 - INFO - you dont specify platform field,we use default youtube
+2023-09-09 20:17:14,339 - INFO - you dont specify timeout field,we use default 200*1000
+2023-09-09 20:17:14,339 - INFO - you dont specify is_open_browser field,we use default True
+2023-09-09 20:17:14,339 - INFO - you dont specify debug field,we use default True
+2023-09-09 20:17:14,339 - INFO - you dont specify wait_policy field,we use default 2
+2023-09-09 20:17:14,339 - INFO - you dont specify is_record_video field,we use default True
+2023-09-09 20:17:14,342 - INFO - you dont specify id field,we generate a new 1694290634341653000 for this setting
+2023-09-09 20:17:14,342 - INFO - setting old id and new ids mapping dicts is {1694290634341653000: 1694290634341653000}
+2023-09-09 20:17:14,343 - INFO - start to check whether setting duplicate or save as new
+2023-09-09 20:17:14,350 - INFO - insert data to uploadsetting>>> seems All good.
+2023-09-09 20:17:14,373 - INFO - we found 5 videos to be load in db
+2023-09-09 20:17:14,373 - INFO - start to process 0th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'my test video_title private draft', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 0, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:17:14,373 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:17:14,373 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:17:14,373 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:17:14,373 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:17:14,373 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:17:14,373 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:17:14,374 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:17:14,374 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:17:14,374 - INFO - This field is_not_for_kid is optional in given video json data,we can use default true
+2023-09-09 20:17:14,374 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:17:14,374 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:17:14,374 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:17:14,374 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:17:14,374 - INFO - we use categories =none
+2023-09-09 20:17:14,374 - INFO - we use license_type =0
+2023-09-09 20:17:14,374 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:17:14,374 - INFO - we use comments_ratings_policy =1
+2023-09-09 20:17:14,374 - INFO - we use captions_certification =0
+2023-09-09 20:17:14,374 - INFO - we use video_language =none
+2023-09-09 20:17:14,375 - INFO - we use release_date ==2023-09-09 20:17:14.375031
+2023-09-09 20:17:14,375 - INFO - we use default release_date_hour 10:15
+2023-09-09 20:17:14,375 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:17:14,375 - INFO - length of settingidsdict is 1
+2023-09-09 20:17:14,377 - INFO - there is only one setting:[(1694290634341653000, 1694290634341653000)]
+2023-09-09 20:17:14,379 - INFO - start to check 0th video whether  duplicate or save as new
+2023-09-09 20:17:14,392 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:17:14,394 - INFO - save 0th video ok:0    my test video_title private draft
+Name: video_title, dtype: object
+2023-09-09 20:17:14,394 - INFO - start to process 1th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'instant publish my test video_title', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 1, 'is_not_for_kid': True, 'categories': 10, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:17:14,394 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:17:14,394 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:17:14,394 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:17:14,394 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:17:14,394 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:17:14,394 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:17:14,394 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:17:14,394 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:17:14,395 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:17:14,395 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:17:14,395 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:17:14,395 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:17:14,395 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:17:14,395 - INFO - we use license_type =0
+2023-09-09 20:17:14,395 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:17:14,395 - INFO - we use captions_certification =0
+2023-09-09 20:17:14,395 - INFO - we use video_language =none
+2023-09-09 20:17:14,395 - INFO - we use release_date ==2023-09-09 20:17:14.395732
+2023-09-09 20:17:14,395 - INFO - we use default release_date_hour 10:15
+2023-09-09 20:17:14,395 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:17:14,395 - INFO - length of settingidsdict is 1
+2023-09-09 20:17:14,397 - INFO - there is only one setting:[(1694290634341653000, 1694290634341653000)]
+2023-09-09 20:17:14,400 - INFO - start to check 1th video whether  duplicate or save as new
+2023-09-09 20:17:14,413 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:17:14,414 - INFO - save 1th video ok:0    instant publish my test video_title
+Name: video_title, dtype: object
+2023-09-09 20:17:14,414 - INFO - start to process 2th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'scheduletopublish_at_specific_date my test video_title', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 2, 'release_date': '2023-12-01', 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': 10, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:17:14,414 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:17:14,414 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:17:14,415 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:17:14,415 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:17:14,415 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:17:14,415 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:17:14,415 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:17:14,415 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:17:14,415 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:17:14,415 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:17:14,415 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:17:14,415 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:17:14,415 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:17:14,415 - INFO - we use license_type =0
+2023-09-09 20:17:14,416 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:17:14,416 - INFO - we use captions_certification =0
+2023-09-09 20:17:14,416 - INFO - we use video_language =none
+2023-09-09 20:17:14,416 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:17:14,416 - INFO - length of settingidsdict is 1
+2023-09-09 20:17:14,418 - INFO - there is only one setting:[(1694290634341653000, 1694290634341653000)]
+2023-09-09 20:17:14,420 - INFO - start to check 2th video whether  duplicate or save as new
+2023-09-09 20:17:14,432 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:17:14,434 - INFO - save 2th video ok:0    scheduletopublish_at_specific_date my test vid...
+Name: video_title, dtype: object
+2023-09-09 20:17:14,434 - INFO - start to process 3th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'Unlisted my test video_title', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 3, 'release_date': '2023-12-01', 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': 10, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:17:14,434 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:17:14,434 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:17:14,434 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:17:14,434 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:17:14,434 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:17:14,434 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:17:14,434 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:17:14,435 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:17:14,435 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:17:14,435 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:17:14,435 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:17:14,435 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:17:14,435 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:17:14,435 - INFO - we use license_type =0
+2023-09-09 20:17:14,435 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:17:14,435 - INFO - we use captions_certification =0
+2023-09-09 20:17:14,435 - INFO - we use video_language =none
+2023-09-09 20:17:14,435 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:17:14,435 - INFO - length of settingidsdict is 1
+2023-09-09 20:17:14,437 - INFO - there is only one setting:[(1694290634341653000, 1694290634341653000)]
+2023-09-09 20:17:14,439 - INFO - start to check 3th video whether  duplicate or save as new
+2023-09-09 20:17:14,451 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:17:14,453 - INFO - save 3th video ok:0    Unlisted my test video_title
+Name: video_title, dtype: object
+2023-09-09 20:17:14,453 - INFO - start to process 4th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'public&premiere my test video_title', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 4, 'release_date': '2023-12-01', 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': 10, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:17:14,453 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:17:14,453 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:17:14,453 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:17:14,454 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:17:14,454 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:17:14,454 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:17:14,454 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:17:14,454 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:17:14,454 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:17:14,454 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:17:14,454 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:17:14,454 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:17:14,454 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:17:14,454 - INFO - we use license_type =0
+2023-09-09 20:17:14,454 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:17:14,454 - INFO - we use captions_certification =0
+2023-09-09 20:17:14,455 - INFO - we use video_language =none
+2023-09-09 20:17:14,455 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:17:14,455 - INFO - length of settingidsdict is 1
+2023-09-09 20:17:14,456 - INFO - there is only one setting:[(1694290634341653000, 1694290634341653000)]
+2023-09-09 20:17:14,458 - INFO - start to check 4th video whether  duplicate or save as new
+2023-09-09 20:17:14,471 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:17:14,473 - INFO - save 4th video ok:0    public&premiere my test video_title
+Name: video_title, dtype: object
+2023-09-09 20:17:14,477 - INFO - there is 10 records in table uploadtasks
+2023-09-09 20:18:28,651 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 20:18:29,335 - INFO - GUI started
+2023-09-09 20:18:32,205 - DEBUG - start to import prepared video metas in json format
+2023-09-09 20:18:34,765 - DEBUG - finished to import prepared video metas in json format
+2023-09-09 20:18:36,005 - DEBUG - start to import prepared video metas in json format
+2023-09-09 20:18:38,278 - DEBUG - finished to import prepared video metas in json format
+2023-09-09 20:18:39,821 - INFO - load video metas to database .create upload task for each video
+2023-09-09 20:18:39,822 - INFO - you select metafile is /Users/wenke/github/tiktoka-studio-uploader-app/assets/youtube-videos-mete-private.json
+2023-09-09 20:18:39,822 - INFO - start to load  and parse meta json
+2023-09-09 20:18:39,853 - INFO - setting json is {'proxy_option': 'socks5://127.0.0.1:1080', 'timeout': 200000, 'is_open_browser': True, 'debug': True, 'username': 'edwin.uestc@gmail.com', 'password': 'U437P8Is9prmNquVerHJ9%R00a', 'browser_type': 'firefox', 'channel_cookie_path': '/Users/wenke/github/tiktoka-studio-uploader/offloaddogsboner-cookie.json', 'wait_policy': 2, 'is_record_video': True}
+2023-09-09 20:18:39,853 - INFO - you dont specify platform field,we use default youtube
+2023-09-09 20:18:39,856 - INFO - you dont specify id field,we generate a new 1694290719855475000 for this setting
+2023-09-09 20:18:39,856 - INFO - setting old id and new ids mapping dicts is {1694290719855475000: 1694290719855475000}
+2023-09-09 20:18:39,857 - INFO - start to check whether setting duplicate or save as new
+2023-09-09 20:18:39,864 - INFO - insert data to uploadsetting>>> seems All good.
+2023-09-09 20:18:39,884 - INFO - we found 2 videos to be load in db
+2023-09-09 20:18:39,884 - INFO - start to process 0th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'private draft my test video_title ', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 0, 'is_not_for_kid': True, 'categories': 1, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:18:39,884 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:18:39,885 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:18:39,885 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:18:39,885 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:18:39,885 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:18:39,885 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:18:39,885 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:18:39,885 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:18:39,885 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:18:39,885 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:18:39,885 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:18:39,885 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:18:39,886 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:18:39,886 - INFO - we use license_type =0
+2023-09-09 20:18:39,886 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:18:39,886 - INFO - we use captions_certification =0
+2023-09-09 20:18:39,886 - INFO - we use video_language =none
+2023-09-09 20:18:39,886 - INFO - we use release_date ==2023-09-09 20:18:39.886403
+2023-09-09 20:18:39,886 - INFO - we use default release_date_hour 10:15
+2023-09-09 20:18:39,886 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:18:39,886 - INFO - length of settingidsdict is 1
+2023-09-09 20:18:39,888 - INFO - there is only one setting:[(1694290719855475000, 1694290719855475000)]
+2023-09-09 20:18:39,890 - INFO - start to check 0th video whether  duplicate or save as new
+2023-09-09 20:18:39,902 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:18:39,903 - INFO - save 0th video ok:0    private draft my test video_title 
+Name: video_title, dtype: object
+2023-09-09 20:18:39,904 - INFO - start to process 1th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'instant publish my test video_title', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 1, 'is_not_for_kid': True, 'categories': 2, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:18:39,904 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:18:39,904 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:18:39,904 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:18:39,904 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:18:39,904 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:18:39,904 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:18:39,904 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:18:39,904 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:18:39,904 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:18:39,904 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:18:39,905 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:18:39,905 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:18:39,905 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:18:39,905 - INFO - we use license_type =0
+2023-09-09 20:18:39,905 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:18:39,905 - INFO - we use captions_certification =0
+2023-09-09 20:18:39,905 - INFO - we use video_language =none
+2023-09-09 20:18:39,905 - INFO - we use release_date ==2023-09-09 20:18:39.905588
+2023-09-09 20:18:39,905 - INFO - we use default release_date_hour 10:15
+2023-09-09 20:18:39,905 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:18:39,905 - INFO - length of settingidsdict is 1
+2023-09-09 20:18:39,907 - INFO - there is only one setting:[(1694290719855475000, 1694290719855475000)]
+2023-09-09 20:18:39,909 - INFO - start to check 1th video whether  duplicate or save as new
+2023-09-09 20:18:39,925 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:18:39,926 - INFO - save 1th video ok:0    instant publish my test video_title
+Name: video_title, dtype: object
+2023-09-09 20:18:39,931 - INFO - there is 12 records in table uploadtasks
+2023-09-09 20:28:51,475 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 20:28:52,207 - INFO - GUI started
+2023-09-09 20:28:54,266 - DEBUG - start to import prepared video metas in json format
+2023-09-09 20:28:58,320 - DEBUG - finished to import prepared video metas in json format
+2023-09-09 20:29:00,434 - INFO - load video metas to database .create upload task for each video
+2023-09-09 20:29:00,434 - INFO - you select metafile is /Users/wenke/github/tiktoka-studio-uploader-app/assets/youtube-videos-mete-private.json
+2023-09-09 20:29:00,434 - INFO - start to load  and parse meta json
+2023-09-09 20:29:00,436 - INFO - setting json is {'proxy_option': 'socks5://127.0.0.1:1080', 'timeout': 200000, 'is_open_browser': True, 'debug': True, 'username': 'edwin.uestc@gmail.com', 'password': 'U437P8Is9prmNquVerHJ9%R00a', 'browser_type': 'firefox', 'channel_cookie_path': '/Users/wenke/github/tiktoka-studio-uploader/offloaddogsboner-cookie.json', 'wait_policy': 2, 'is_record_video': True}
+2023-09-09 20:29:00,436 - INFO - you dont specify platform field,we use default youtube
+2023-09-09 20:29:00,438 - INFO - you dont specify id field,we generate a new 1694291340437775000 for this setting
+2023-09-09 20:29:00,438 - INFO - setting old id and new ids mapping dicts is {1694291340437775000: 1694291340437775000}
+2023-09-09 20:29:00,439 - INFO - start to check whether setting duplicate or save as new
+2023-09-09 20:29:00,445 - INFO - insert data to uploadsetting>>> seems All good.
+2023-09-09 20:29:00,466 - INFO - we found 2 videos to be load in db
+2023-09-09 20:29:00,466 - INFO - start to process 0th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'private draft my test video_title ', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 0, 'is_not_for_kid': True, 'categories': 1, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:29:00,466 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:29:00,466 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:29:00,466 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:29:00,466 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:29:00,466 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:29:00,466 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:29:00,467 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:29:00,467 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:29:00,467 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:29:00,467 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:29:00,467 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:29:00,467 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:29:00,467 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:29:00,467 - INFO - we use license_type =0
+2023-09-09 20:29:00,467 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:29:00,467 - INFO - we use captions_certification =0
+2023-09-09 20:29:00,467 - INFO - we use video_language =none
+2023-09-09 20:29:00,468 - INFO - we use release_date ==2023-09-09 20:29:00.467990
+2023-09-09 20:29:00,468 - INFO - we use default release_date_hour 10:15
+2023-09-09 20:29:00,468 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:29:00,468 - INFO - length of settingidsdict is 1
+2023-09-09 20:29:00,470 - INFO - there is only one setting:[(1694291340437775000, 1694291340437775000)]
+2023-09-09 20:29:00,472 - INFO - start to check 0th video whether  duplicate or save as new
+2023-09-09 20:29:00,484 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:29:00,486 - INFO - save 0th video ok:0    private draft my test video_title 
+Name: video_title, dtype: object
+2023-09-09 20:29:00,486 - INFO - start to process 1th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'instant publish my test video_title', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 1, 'is_not_for_kid': True, 'categories': 2, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:29:00,486 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:29:00,486 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:29:00,486 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:29:00,486 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:29:00,487 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:29:00,487 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:29:00,487 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:29:00,487 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:29:00,487 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:29:00,487 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:29:00,487 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:29:00,487 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:29:00,487 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:29:00,487 - INFO - we use license_type =0
+2023-09-09 20:29:00,487 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:29:00,488 - INFO - we use captions_certification =0
+2023-09-09 20:29:00,488 - INFO - we use video_language =none
+2023-09-09 20:29:00,488 - INFO - we use release_date ==2023-09-09 20:29:00.488234
+2023-09-09 20:29:00,488 - INFO - we use default release_date_hour 10:15
+2023-09-09 20:29:00,488 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:29:00,488 - INFO - length of settingidsdict is 1
+2023-09-09 20:29:00,490 - INFO - there is only one setting:[(1694291340437775000, 1694291340437775000)]
+2023-09-09 20:29:00,492 - INFO - start to check 1th video whether  duplicate or save as new
+2023-09-09 20:29:00,507 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:29:00,509 - INFO - save 1th video ok:0    instant publish my test video_title
+Name: video_title, dtype: object
+2023-09-09 20:29:00,513 - INFO - there is 14 records in table uploadtasks
+2023-09-09 20:35:45,804 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 20:35:46,086 - INFO - GUI started
+2023-09-09 20:35:48,197 - DEBUG - start to import prepared video metas in json format
+2023-09-09 20:35:51,539 - DEBUG - finished to import prepared video metas in json format
+2023-09-09 20:36:08,108 - INFO - load video metas to database .create upload task for each video
+2023-09-09 20:36:08,109 - INFO - you select metafile is /Users/wenke/github/tiktoka-studio-uploader-app/assets/youtube-videos-meta.json
+2023-09-09 20:36:08,109 - INFO - start to load  and parse meta json
+2023-09-09 20:36:08,110 - INFO - setting json is {'proxy_option': 'socks5://127.0.0.1:1080', 'timeout': 200000, 'is_open_browser': True, 'debug': True, 'username': 'edwin.uestc@gmail.com', 'password': 'U437P8Is9prmNquVerHJ9%R00a', 'browser_type': 'firefox', 'channel_cookie_path': '/Users/wenke/github/tiktoka-studio-uploader/offloaddogsboner-cookie.json', 'wait_policy': 2, 'is_record_video': True}
+2023-09-09 20:36:08,110 - INFO - you dont specify platform field,we use default youtube
+2023-09-09 20:36:08,113 - INFO - you dont specify id field,we generate a new 1694291768112913000 for this setting
+2023-09-09 20:36:08,113 - INFO - setting old id and new ids mapping dicts is {1694291768112913000: 1694291768112913000}
+2023-09-09 20:36:08,114 - INFO - start to check whether setting duplicate or save as new
+2023-09-09 20:36:08,121 - INFO - insert data to uploadsetting>>> seems All good.
+2023-09-09 20:36:08,143 - INFO - we found 5 videos to be load in db
+2023-09-09 20:36:08,143 - INFO - start to process 0th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'private draft my test video_title ', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 0, 'is_not_for_kid': True, 'categories': 1, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:36:08,143 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:36:08,143 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:36:08,143 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:36:08,143 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:36:08,143 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:36:08,143 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:36:08,144 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:36:08,144 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:36:08,144 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:36:08,144 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:36:08,144 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:36:08,144 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:36:08,144 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:36:08,144 - INFO - we use license_type =0
+2023-09-09 20:36:08,144 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:36:08,144 - INFO - we use captions_certification =0
+2023-09-09 20:36:08,144 - INFO - we use video_language =none
+2023-09-09 20:36:08,145 - INFO - we use release_date ==2023-09-09 20:36:08.145000
+2023-09-09 20:36:08,145 - INFO - we use default release_date_hour 10:15
+2023-09-09 20:36:08,145 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:36:08,145 - INFO - length of settingidsdict is 1
+2023-09-09 20:36:08,147 - INFO - there is only one setting:[(1694291768112913000, 1694291768112913000)]
+2023-09-09 20:36:08,149 - INFO - start to check 0th video whether  duplicate or save as new
+2023-09-09 20:36:08,161 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:36:08,162 - INFO - save 0th video ok:0    private draft my test video_title 
+Name: video_title, dtype: object
+2023-09-09 20:36:08,162 - INFO - start to process 1th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'instant publish my test video_title', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 1, 'is_not_for_kid': True, 'categories': 2, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:36:08,163 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:36:08,163 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:36:08,163 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:36:08,163 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:36:08,163 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:36:08,163 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:36:08,163 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:36:08,163 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:36:08,163 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:36:08,163 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:36:08,163 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:36:08,163 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:36:08,164 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:36:08,164 - INFO - we use license_type =0
+2023-09-09 20:36:08,164 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:36:08,164 - INFO - we use captions_certification =0
+2023-09-09 20:36:08,164 - INFO - we use video_language =none
+2023-09-09 20:36:08,164 - INFO - we use release_date ==2023-09-09 20:36:08.164585
+2023-09-09 20:36:08,164 - INFO - we use default release_date_hour 10:15
+2023-09-09 20:36:08,164 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:36:08,164 - INFO - length of settingidsdict is 1
+2023-09-09 20:36:08,167 - INFO - there is only one setting:[(1694291768112913000, 1694291768112913000)]
+2023-09-09 20:36:08,169 - INFO - start to check 1th video whether  duplicate or save as new
+2023-09-09 20:36:08,182 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:36:08,184 - INFO - save 1th video ok:0    instant publish my test video_title
+Name: video_title, dtype: object
+2023-09-09 20:36:08,184 - INFO - start to process 2th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'schedule  my test video_title', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 2, 'release_date': '2023-12-01', 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': 5, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:36:08,184 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:36:08,184 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:36:08,184 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:36:08,184 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:36:08,184 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:36:08,184 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:36:08,185 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:36:08,185 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:36:08,185 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:36:08,185 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:36:08,185 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:36:08,185 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:36:08,185 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:36:08,185 - INFO - we use license_type =0
+2023-09-09 20:36:08,185 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:36:08,185 - INFO - we use captions_certification =0
+2023-09-09 20:36:08,185 - INFO - we use video_language =none
+2023-09-09 20:36:08,185 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:36:08,186 - INFO - length of settingidsdict is 1
+2023-09-09 20:36:08,187 - INFO - there is only one setting:[(1694291768112913000, 1694291768112913000)]
+2023-09-09 20:36:08,189 - INFO - start to check 2th video whether  duplicate or save as new
+2023-09-09 20:36:08,203 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:36:08,204 - INFO - save 2th video ok:0    schedule  my test video_title
+Name: video_title, dtype: object
+2023-09-09 20:36:08,205 - INFO - start to process 3th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'Unlisted my test video_title', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 3, 'release_date': '2023-12-01', 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': 3, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:36:08,205 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:36:08,205 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:36:08,205 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:36:08,205 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:36:08,205 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:36:08,205 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:36:08,205 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:36:08,205 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:36:08,206 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:36:08,206 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:36:08,206 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:36:08,206 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:36:08,206 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:36:08,206 - INFO - we use license_type =0
+2023-09-09 20:36:08,206 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:36:08,206 - INFO - we use captions_certification =0
+2023-09-09 20:36:08,206 - INFO - we use video_language =none
+2023-09-09 20:36:08,206 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:36:08,206 - INFO - length of settingidsdict is 1
+2023-09-09 20:36:08,208 - INFO - there is only one setting:[(1694291768112913000, 1694291768112913000)]
+2023-09-09 20:36:08,211 - INFO - start to check 3th video whether  duplicate or save as new
+2023-09-09 20:36:08,222 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:36:08,225 - INFO - save 3th video ok:0    Unlisted my test video_title
+Name: video_title, dtype: object
+2023-09-09 20:36:08,225 - INFO - start to process 4th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'public&premiere my test video_title', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 4, 'release_date': '2023-12-01', 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': 10, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:36:08,225 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:36:08,225 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:36:08,225 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:36:08,226 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:36:08,226 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:36:08,226 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:36:08,226 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:36:08,226 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:36:08,226 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:36:08,226 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:36:08,226 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:36:08,227 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:36:08,227 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:36:08,227 - INFO - we use license_type =0
+2023-09-09 20:36:08,227 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:36:08,227 - INFO - we use captions_certification =0
+2023-09-09 20:36:08,227 - INFO - we use video_language =none
+2023-09-09 20:36:08,227 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:36:08,227 - INFO - length of settingidsdict is 1
+2023-09-09 20:36:08,230 - INFO - there is only one setting:[(1694291768112913000, 1694291768112913000)]
+2023-09-09 20:36:08,232 - INFO - start to check 4th video whether  duplicate or save as new
+2023-09-09 20:36:08,245 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:36:08,246 - INFO - save 4th video ok:0    public&premiere my test video_title
+Name: video_title, dtype: object
+2023-09-09 20:36:08,251 - INFO - there is 19 records in table uploadtasks
+2023-09-09 20:37:32,955 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 20:37:33,246 - INFO - GUI started
+2023-09-09 20:37:35,251 - DEBUG - start to import prepared video metas in json format
+2023-09-09 20:37:37,784 - DEBUG - finished to import prepared video metas in json format
+2023-09-09 20:37:39,066 - INFO - load video metas to database .create upload task for each video
+2023-09-09 20:37:39,067 - INFO - you select metafile is /Users/wenke/github/tiktoka-studio-uploader-app/assets/youtube-videos-mete-private.json
+2023-09-09 20:37:39,067 - INFO - start to load  and parse meta json
+2023-09-09 20:37:39,068 - INFO - setting json is {'proxy_option': 'socks5://127.0.0.1:1080', 'timeout': 200000, 'is_open_browser': True, 'debug': True, 'username': 'edwin.uestc@gmail.com', 'password': 'U437P8Is9prmNquVerHJ9%R00a', 'browser_type': 'firefox', 'channel_cookie_path': '/Users/wenke/github/tiktoka-studio-uploader/offloaddogsboner-cookie.json', 'wait_policy': 2, 'is_record_video': True}
+2023-09-09 20:37:39,068 - INFO - you dont specify platform field,we use default youtube
+2023-09-09 20:37:39,070 - INFO - you dont specify id field,we generate a new 1694291859070071000 for this setting
+2023-09-09 20:37:39,070 - INFO - setting old id and new ids mapping dicts is {1694291859070071000: 1694291859070071000}
+2023-09-09 20:37:39,071 - INFO - start to check whether setting duplicate or save as new
+2023-09-09 20:37:39,079 - INFO - insert data to uploadsetting>>> seems All good.
+2023-09-09 20:37:39,099 - INFO - we found 2 videos to be load in db
+2023-09-09 20:37:39,099 - INFO - start to process 0th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'private draft my test video_title ', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 0, 'is_not_for_kid': True, 'categories': 1, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:37:39,099 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:37:39,099 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:37:39,099 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:37:39,099 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:37:39,099 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:37:39,100 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:37:39,100 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:37:39,100 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:37:39,100 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:37:39,100 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:37:39,100 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:37:39,100 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:37:39,100 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:37:39,100 - INFO - we use license_type =0
+2023-09-09 20:37:39,100 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:37:39,100 - INFO - we use captions_certification =0
+2023-09-09 20:37:39,100 - INFO - we use video_language =none
+2023-09-09 20:37:39,101 - INFO - we use release_date ==2023-09-09 20:37:39.101027
+2023-09-09 20:37:39,101 - INFO - we use default release_date_hour 10:15
+2023-09-09 20:37:39,101 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:37:39,101 - INFO - length of settingidsdict is 1
+2023-09-09 20:37:39,103 - INFO - there is only one setting:[(1694291859070071000, 1694291859070071000)]
+2023-09-09 20:37:39,105 - INFO - start to check 0th video whether  duplicate or save as new
+2023-09-09 20:37:39,117 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:37:39,118 - INFO - save 0th video ok:0    private draft my test video_title 
+Name: video_title, dtype: object
+2023-09-09 20:37:39,119 - INFO - start to process 1th
+:{'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4', 'video_title': 'instant publish my test video_title', 'video_description': 'my test video_description', 'thumbnail_local_path': '/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg', 'publish_policy': 1, 'is_not_for_kid': True, 'categories': 2, 'comments_ratings_policy': 1, 'tags': 'Radiation resistance,Turning tiny,Radiation blast'} 
+2023-09-09 20:37:39,119 - INFO - now we have no rules about video_film_date validation 
+2023-09-09 20:37:39,119 - INFO - now we have no rules about video_film_location validation 
+2023-09-09 20:37:39,119 - INFO - now we have no rules about first_comment validation 
+2023-09-09 20:37:39,119 - INFO - now we have no rules about subtitles validation 
+2023-09-09 20:37:39,119 - INFO - This field is_allow_embedding is optional in given video json data,we can use default true
+2023-09-09 20:37:39,119 - INFO - This field is_publish_to_subscriptions_feed_notify is optional in given video json data,we can use default true
+2023-09-09 20:37:39,119 - INFO - This field is_automatic_chapters is optional in given video json data,we can use default true
+2023-09-09 20:37:39,119 - INFO - This field is_featured_place is optional in given video json data,we can use default true
+2023-09-09 20:37:39,119 - ERROR - is_not_for_kid should be bool, true or false
+2023-09-09 20:37:39,119 - INFO - This field is_show_howmany_likes is optional in given video json data,we can use default true
+2023-09-09 20:37:39,120 - INFO - This field is_monetization_allowed is optional in given video json data,we can use default true
+2023-09-09 20:37:39,120 - INFO - This field is_age_restriction is optional in given video json data,we can use default false
+2023-09-09 20:37:39,120 - INFO - This field is_paid_promotion is optional in given video json data,we can use default false
+2023-09-09 20:37:39,120 - INFO - we use license_type =0
+2023-09-09 20:37:39,120 - INFO - we use shorts_remixing_type =0
+2023-09-09 20:37:39,120 - INFO - we use captions_certification =0
+2023-09-09 20:37:39,120 - INFO - we use video_language =none
+2023-09-09 20:37:39,120 - INFO - we use release_date ==2023-09-09 20:37:39.120560
+2023-09-09 20:37:39,120 - INFO - we use default release_date_hour 10:15
+2023-09-09 20:37:39,120 - INFO - tags is ok:Radiation resistance,Turning tiny,Radiation blast
+2023-09-09 20:37:39,120 - INFO - length of settingidsdict is 1
+2023-09-09 20:37:39,122 - INFO - there is only one setting:[(1694291859070071000, 1694291859070071000)]
+2023-09-09 20:37:39,124 - INFO - start to check 1th video whether  duplicate or save as new
+2023-09-09 20:37:39,137 - INFO - insert data to uploadtasks>>> seems All good.
+2023-09-09 20:37:39,139 - INFO - save 1th video ok:0    instant publish my test video_title
+Name: video_title, dtype: object
+2023-09-09 20:37:39,143 - INFO - there is 21 records in table uploadtasks
+2023-09-09 20:40:35,222 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 20:40:35,514 - INFO - GUI started
+2023-09-09 20:41:34,531 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 20:41:34,808 - INFO - GUI started
+2023-09-09 20:45:36,975 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 20:45:37,268 - INFO - GUI started
+2023-09-09 20:50:51,384 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 20:50:51,721 - INFO - GUI started
+2023-09-09 20:51:23,908 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 20:51:24,631 - INFO - GUI started
+2023-09-09 20:56:33,194 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 20:56:33,881 - INFO - GUI started
+2023-09-09 21:08:07,173 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 21:08:07,921 - INFO - GUI started
+2023-09-09 21:09:16,237 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 21:09:16,509 - INFO - GUI started
+2023-09-09 21:10:13,090 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 21:10:13,380 - INFO - GUI started
+2023-09-09 21:11:41,824 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 21:11:42,107 - INFO - GUI started
+2023-09-09 21:19:00,270 - INFO - switch lang to locale:zh
+2023-09-09 21:28:23,208 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 21:28:23,264 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC where id=PY_VAR22>>> seems went wrong!(sqlite3.OperationalError) near "where": syntax error
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC where id=PY_VAR22]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-09 21:28:23,968 - INFO - GUI started
+2023-09-09 21:29:30,854 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 21:29:30,891 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC where id=PY_VAR22>>> seems went wrong!(sqlite3.OperationalError) near "where": syntax error
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC where id=PY_VAR22]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-09 21:29:31,119 - INFO - GUI started
+2023-09-09 21:30:01,939 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 21:30:01,977 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC where id=0>>> seems went wrong!(sqlite3.OperationalError) near "where": syntax error
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC where id=0]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-09 21:30:02,231 - INFO - GUI started
+2023-09-09 21:31:42,450 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 21:31:42,489 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC where id=0>>> seems went wrong!(sqlite3.OperationalError) near "where": syntax error
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC where id=0]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-09 21:31:43,439 - INFO - GUI started
+2023-09-09 21:33:04,844 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 21:33:04,899 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC where id=0>>> seems went wrong!(sqlite3.OperationalError) near "where": syntax error
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC where id=0]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-09 21:33:05,581 - INFO - GUI started
+2023-09-09 21:36:17,844 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 21:37:10,950 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 21:37:11,024 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC where id=please input task id>>> seems went wrong!(sqlite3.OperationalError) near "where": syntax error
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC where id=please input task id]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-09 21:37:11,849 - INFO - GUI started
+2023-09-09 21:37:52,794 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 21:37:53,623 - INFO - GUI started
+2023-09-09 21:38:56,782 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 21:38:57,501 - INFO - GUI started
+2023-09-09 21:43:47,773 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 21:43:48,554 - INFO - GUI started
+2023-09-09 21:45:45,201 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 21:45:46,070 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC where id=>>> seems went wrong!(sqlite3.OperationalError) near "where": syntax error
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC where id=]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-09 21:45:46,078 - INFO - GUI started
+2023-09-09 21:48:45,342 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 21:48:46,203 - INFO - GUI started
+2023-09-09 21:49:00,231 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC where id=1694290634419241000>>> seems went wrong!(sqlite3.OperationalError) near "where": syntax error
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC where id=1694290634419241000]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-09 21:59:23,986 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 21:59:24,841 - INFO - GUI started
+2023-09-09 22:00:06,482 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:00:06,754 - INFO - GUI started
+2023-09-09 22:00:37,609 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC where id=1694291768167873000>>> seems went wrong!(sqlite3.OperationalError) near "where": syntax error
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC where id=1694291768167873000]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-09 22:08:24,274 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:08:25,241 - INFO - GUI started
+2023-09-09 22:08:54,007 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC where id=1694290445456640000>>> seems went wrong!(sqlite3.OperationalError) near "where": syntax error
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC where id=1694290445456640000]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-09 22:11:28,416 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:11:29,298 - INFO - GUI started
+2023-09-09 22:11:39,046 - ERROR - query  to SELECT * FROM uploadtasks  where id={vid}>>> seems went wrong!(sqlite3.OperationalError) unrecognized token: "{"
+[SQL: SELECT * FROM uploadtasks  where id={vid}]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-09 22:11:55,410 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:11:55,666 - INFO - GUI started
+2023-09-09 22:12:24,609 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:12:24,909 - INFO - GUI started
+2023-09-09 22:12:36,978 - ERROR - query  to SELECT * FROM uploadtasks  where id=>>> seems went wrong!(sqlite3.OperationalError) incomplete input
+[SQL: SELECT * FROM uploadtasks  where id=]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-09 22:20:41,145 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:20:42,133 - INFO - GUI started
+2023-09-09 22:22:40,270 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:22:40,540 - INFO - GUI started
+2023-09-09 22:23:28,865 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:23:29,492 - INFO - GUI started
+2023-09-09 22:25:13,475 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:25:13,743 - INFO - GUI started
+2023-09-09 22:25:28,587 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:25:28,891 - INFO - GUI started
+2023-09-09 22:26:02,189 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:26:02,457 - INFO - GUI started
+2023-09-09 22:26:27,835 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:26:28,130 - INFO - GUI started
+2023-09-09 22:27:01,507 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:27:01,771 - INFO - GUI started
+2023-09-09 22:27:42,895 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:27:43,571 - INFO - GUI started
+2023-09-09 22:29:15,393 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:29:15,662 - INFO - GUI started
+2023-09-09 22:30:12,789 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:30:13,058 - INFO - GUI started
+2023-09-09 22:30:38,764 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:30:39,038 - INFO - GUI started
+2023-09-09 22:31:25,256 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:31:26,017 - INFO - GUI started
+2023-09-09 22:32:03,037 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:32:03,719 - INFO - GUI started
+2023-09-09 22:33:18,226 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:33:18,899 - INFO - GUI started
+2023-09-09 22:33:46,353 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:33:46,632 - INFO - GUI started
+2023-09-09 22:34:37,385 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:34:37,653 - INFO - GUI started
+2023-09-09 22:34:55,218 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:34:55,484 - INFO - GUI started
+2023-09-09 22:35:13,972 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:35:14,263 - INFO - GUI started
+2023-09-09 22:35:50,886 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:35:51,165 - INFO - GUI started
+2023-09-09 22:36:46,306 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:36:46,902 - INFO - GUI started
