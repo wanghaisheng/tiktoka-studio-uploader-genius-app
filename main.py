@@ -2470,14 +2470,16 @@ def  filterProxiesLocations(engine,logger,pid):
     except:
         print('keep the same')    
 
-def  queryProxies(tree,engine,logger,pid):
+def  queryProxies(tree,engine,logger,city,country):
 
-
+    logger.info('you proxy filter conditions:',city,country)
 
     query = "SELECT * FROM proxies ORDER by inserted_at DESC"
-    print('pid',pid,type(pid))
-    if pid is not None and pid !='' and pid !="please input task id":
-        query=f"SELECT * FROM proxies  where id={pid}"
+    if city is not None and city !='' and  not "Filter by" in city:
+        if country is not None and country !='' and  not "Filter by" in country:
+            query=f"SELECT * FROM proxies  where city={city} and country={country}"
+        else:
+            query=f"SELECT * FROM proxies  where city={city}"
     try:
         db_rows = query2df(engine,query,logger)
         records = tree.get_children()
@@ -2485,37 +2487,76 @@ def  queryProxies(tree,engine,logger,pid):
             tree.delete(element) 
         for row in db_rows.itertuples():
             tree.insert(
-                "", 0, text=row.id, values=(row.video_title,row.video_description,row.status,row.release_date, row.release_date_hour, row.publish_policy, row.uploaded_at, row.video_local_path)
+                "", 0, text=row.id, values=(row.url,row.status,row.city,row.country, row.inserted_at,row.updated_at)
             )
     except:
-        print('keep the same')    
+        logger.info('you proxy filter conditions without any change,keep the same')
 
-def saveproxies():
-    print('pass')
+
+def saveproxies(engine,proxies_list_raw,logger):
+    proxies_list=[]
+    if proxies_list_raw and not 'proxy list should be one proxy oneline,and each proxy in such format' in proxies_list_raw:
+        proxies_list=proxies_list_raw.split('\n')
+        proxies_list=list(set(proxies_list))
+        proxies_list=list(filter(None, proxies_list))
+        
+        for idx,url in enumerate(proxies_list):
+            if url:
+                print('check url format ',url)
+        ids=[]
+        status=[]
+        cities=[]
+        countries=[]
+        inserted_ats=[]
+        print('==0',proxies_list)
+        for i in range(0,len(proxies_list)):
+            newid=pd.Timestamp.now().value  
+            ids.append(newid)
+            status.append(0)
+            cities.append(None)
+            countries.append(None)
+            inserted_ats.append(datetime.now() )     
+            
+        proxies_df= pd.DataFrame({'url':proxies_list,'id':ids,'status':status,'city':cities,"country":countries,'inserted_at':inserted_ats})
+     
+        proxies_df['updated_at']=None           
+        print('===',proxies_df)
+        is_proxy_ok=pd2table(engine,'proxies',proxies_df,logger)
+        print('pass')
+    else:
+        logger.info('you should input valid proxy list and try again')
+def returnProxy_textfield(event):
+    proxy_textfield_str.set(event.widget.get("1.0", "end-1c"))
+    print(proxy_textfield_str.get())
+    return proxy_textfield_str.get()
 def proxyView(frame,ttkframe,lang):
 
     
     input_canvas = tk.Frame(frame)
     input_canvas.grid(row=0, column=0, pady=(5, 0), sticky='nw')    
-    
+    input_canvas.grid_rowconfigure(100, weight=1)
+    input_canvas.grid_columnconfigure(2, weight=1)
 
     lbl15 = tk.Label(input_canvas, text='copy proxy info here')
     lbl15.grid(row=0,column=0, sticky=tk.W)
     
 
         
-    
-    
+    global proxy_textfield_str
+    proxy_textfield_str = tk.StringVar()
+
+
     
     from tkinter.scrolledtext import ScrolledText
-    textfield = ScrolledText(input_canvas, wrap=tk.WORD)
-    textfield.grid(row = 2, column = 0, columnspan =2, padx=0, pady=15)
-    textfield.insert(tk.END,'proxy list should be one proxy oneline,and each proxy in such format:\nsocks5://127.0.0.1:1080\nsocks5://127.0.0.1:1088')
-    
-    b_save_proxy=tk.Button(input_canvas,text="save",command=lambda: threading.Thread(target=saveproxies()).start() )
+    proxy_textfield = ScrolledText(input_canvas, wrap=tk.WORD)
+    proxy_textfield.grid(row = 2, column = 0, columnspan =2, padx=0, pady=15)
+    proxy_textfield.insert(tk.END,'proxy list should be one proxy oneline,and each proxy in such format:\nsocks5://127.0.0.1:1080\nsocks5://127.0.0.1:1088')
+    proxy_textfield.bind("<Return>", returnProxy_textfield)
+
+    b_save_proxy=tk.Button(input_canvas,text="save",command=lambda: threading.Thread(target=saveproxies(prod_engine,proxy_textfield.get("1.0", tk.END),logger)).start() )
     b_save_proxy.grid(row=4,column=0, sticky=tk.W)
 
-    b_clear_texts=tk.Button(input_canvas,text="clear all texts",command=lambda: threading.Thread(target=textfield.delete(1.0,tk.END)).start() )
+    b_clear_texts=tk.Button(input_canvas,text="clear all texts",command=lambda: threading.Thread(target=proxy_textfield.delete(1.0,tk.END)).start() )
     b_clear_texts.grid(row=3,column=1, sticky=tk.W)
     
     b_choose_proxy=tk.Button(input_canvas,text="load  from file",command=lambda: threading.Thread(target=select_cookie_file).start() )
@@ -2524,29 +2565,37 @@ def proxyView(frame,ttkframe,lang):
 
 
 
-    res_canvas = tk.Frame(frame)
-    res_canvas.grid(row=0, column=1, pady=(5, 0), sticky=tk.W)    
-    
+    res_canvas = tk.Frame(frame,width=int(0.7*width))
+    res_canvas.grid(row=0, column=1, pady=(5, 0),columnspan=20, sticky=tk.W)    
+    res_canvas.grid_rowconfigure(100, weight=1)
+    res_canvas.grid_columnconfigure(2, weight=1)
         
-    global vid
-    vid = tk.StringVar()
+    global city,country
+    city = tk.StringVar()
+    country = tk.StringVar()
+
     # lbl15 = tk.Label(res_canvas, text='Filter by location.')
     # # lbl15.place(x=430, y=30, anchor=tk.NE)
     # # lbl15.pack(side='left')
 
     # lbl15.grid(row=0,column=0, sticky=tk.W)
 
-    txt15 = tk.Entry(res_canvas,textvariable=vid)
-    txt15.insert(0,'Filter by location')
+    txt15 = tk.Entry(res_canvas,textvariable=city,width=int(0.01*width))
+    txt15.insert(0,'Filter by city')
     # txt15.place(x=580, y=30, anchor=tk.NE)
     # txt15.pack(side='left')
-    txt15.grid(row=0,column=0, sticky=tk.W)
+    txt15.grid(row=0,column=0, sticky=tk.NW)
+
+    txt16 = tk.Entry(res_canvas,textvariable=country,width=int(0.01*width))
+    txt16.insert(0,'Filter by country')
+    # txt15.place(x=580, y=30, anchor=tk.NE)
+    # txt15.pack(side='left')
+    txt16.grid(row=0,column=1, sticky=tk.NW)
     
-    
-    btn5= tk.Button(res_canvas, text="Get proxy list", padx = 0, pady = 0,command = lambda: threading.Thread(target=filterProxiesLocations(prod_engine,logger,vid.get())).start())
+    btn5= tk.Button(res_canvas, text="Get proxy list", padx = 0, pady = 0,command = lambda: threading.Thread(target=queryProxies(tree,prod_engine,logger,city.get(),country.get())).start())
     # btn5.place(x=800, y=30, anchor=tk.NE)    
     # btn5.pack(side='left')       
-    btn5.grid(row=0,column=1, sticky=tk.W)    
+    btn5.grid(row=0,column=2, sticky=tk.W)    
     
     
     
@@ -2555,24 +2604,24 @@ def proxyView(frame,ttkframe,lang):
     tree["column"]=('#0','#1','#2','#3','#4','#5','#6','#7')
     tree.grid(row = 2, column = 0, columnspan = 10, padx=14, pady=15)
 
-    tree.heading('#0', text = 'Task No.')
+    tree.heading('#0', text = 'proxy No.')
     tree.column('#0', anchor = 'center', width = 70)
-    tree.heading('#1', text = 'Video title')
+    tree.heading('#1', text = 'URL')
     tree.column('#1', anchor = 'center', width = 60)
-    tree.heading('#2', text = 'Description')
+    tree.heading('#2', text = 'Status')
     tree.column('#2', anchor = 'center', width = 60)
-    tree.heading('#3', text = 'Status')
+    tree.heading('#3', text = 'City')
     tree.column('#3', anchor = 'center', width = 80)
-    tree.heading('#4', text = 'release. Date')
+    tree.heading('#4', text = 'Country')
     tree.column('#4', anchor = 'center', width = 80)
-    tree.heading('#5', text = 'release. Time')
+    tree.heading('#5', text = 'create. Time')
     tree.column('#5', anchor = 'center', width = 80)
-    tree.heading('#6', text = 'publish type')
+    tree.heading('#6', text = 'updated. Time')
     tree.column('#6', anchor = 'center', width = 80)
-    tree.heading('#7', text = 'upload. Time')
-    tree.column('#7', anchor = 'center', width = 80)
-    tree.heading('#8', text = 'local path')
-    tree.column('#8', anchor = 'center', width = 80)    
+    # tree.heading('#7', text = 'upload. Time')
+    # tree.column('#7', anchor = 'center', width = 80)
+    # tree.heading('#8', text = 'local path')
+    # tree.column('#8', anchor = 'center', width = 80)    
     
     # viewing_records()
 
