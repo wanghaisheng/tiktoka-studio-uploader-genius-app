@@ -9115,3 +9115,57 @@ Name: video_title, dtype: object
 [SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC]
 (Background on this error at: https://sqlalche.me/e/20/e3q8)
 2023-09-10 22:52:43,947 - INFO - GUI started
+2023-09-10 23:32:59,980 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 23:33:00,718 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: uploadtasks
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-10 23:33:00,726 - INFO - GUI started
+2023-09-10 23:33:05,742 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: uploadtasks
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-10 23:33:05,745 - INFO - switch lang to locale:zh
+2023-09-11 00:38:20,846 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 00:38:21,759 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: uploadtasks
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 00:38:21,769 - INFO - GUI started
+2023-09-11 00:39:42,133 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 00:39:42,431 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: uploadtasks
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 00:39:42,439 - INFO - GUI started
+2023-09-11 00:41:55,372 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 00:41:55,687 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: uploadtasks
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 00:41:55,695 - INFO - GUI started
+2023-09-11 00:42:32,264 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 00:42:32,539 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: uploadtasks
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 00:42:32,548 - INFO - GUI started
+2023-09-11 00:43:13,254 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 00:43:13,529 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: uploadtasks
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 00:43:13,536 - INFO - GUI started
+2023-09-11 00:44:12,223 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 00:44:12,509 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: uploadtasks
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 00:44:12,520 - INFO - GUI started
+2023-09-11 00:44:49,144 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 00:44:49,426 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: uploadtasks
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 00:44:49,434 - INFO - GUI started
+2023-09-11 00:46:25,373 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 00:46:25,670 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: uploadtasks
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 00:46:25,678 - INFO - GUI started
+2023-09-11 00:47:18,080 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 00:47:18,343 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: uploadtasks
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 00:47:18,353 - INFO - GUI started

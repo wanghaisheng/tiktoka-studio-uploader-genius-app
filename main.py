@@ -2143,7 +2143,7 @@ def bulkImportUsers(ttkframe):
 
     
     res_canvas = tk.Frame(newWindow)
-    res_canvas.grid(row=0, column=1, pady=(5, 0), sticky='nw')    
+    res_canvas.grid(row=0, column=1, pady=(5, 0), sticky='ne')    
     
         
     global vid
@@ -2173,24 +2173,22 @@ def bulkImportUsers(ttkframe):
     tree["column"]=('#0','#1','#2','#3','#4','#5','#6','#7')
     tree.grid(row = 1, column = 0, columnspan = 10, padx=14, pady=15)
 
-    tree.heading('#0', text = 'Task No.')
+    tree.heading('#0', text = 'Account No.')
     tree.column('#0', anchor = 'center', width = 70)
-    tree.heading('#1', text = 'Video title')
+    tree.heading('#1', text = 'username')
     tree.column('#1', anchor = 'center', width = 60)
-    tree.heading('#2', text = 'Description')
+    tree.heading('#2', text = 'password')
     tree.column('#2', anchor = 'center', width = 60)
-    tree.heading('#3', text = 'Status')
+    tree.heading('#3', text = 'platform')
     tree.column('#3', anchor = 'center', width = 80)
-    tree.heading('#4', text = 'release. Date')
+    tree.heading('#4', text = 'proxies')
     tree.column('#4', anchor = 'center', width = 80)
-    tree.heading('#5', text = 'release. Time')
+    tree.heading('#5', text = 'Cookiefile')
     tree.column('#5', anchor = 'center', width = 80)
-    tree.heading('#6', text = 'publish type')
+    tree.heading('#6', text = 'create. Time')
     tree.column('#6', anchor = 'center', width = 80)
-    tree.heading('#7', text = 'upload. Time')
+    tree.heading('#7', text = 'updated. Time')
     tree.column('#7', anchor = 'center', width = 80)
-    tree.heading('#8', text = 'local path')
-    tree.column('#8', anchor = 'center', width = 80)    
 def saveUser():
     pass
     
@@ -2212,7 +2210,7 @@ def accountView(frame,ttkframe,lang):
 
 
     keepplatform = platform.get()    
-    box = ttk.Combobox(ttkframe, textvariable=keepplatform, state='readonly')
+    box = ttk.Combobox(ttkframe, width=int(width*0.01), textvariable=keepplatform, state='readonly')
     box.place(x=10, y=120)
     def selectedplatform(event):
         box = event.widget
@@ -2226,12 +2224,12 @@ def accountView(frame,ttkframe,lang):
 
     l_username = tk.Label(ttkframe, text=i18labels("username", locale=lang, module="g"))
     l_username.place(x=10, y=150)
-    e_username = tk.Entry(ttkframe, width=int(width*0.02), textvariable=username)
+    e_username = tk.Entry(ttkframe, width=int(width*0.01), textvariable=username)
     e_username.place(x=10, y=180)
 
     l_password = tk.Label(ttkframe, text=i18labels("password", locale=lang, module="g"))
     l_password.place(x=10, y=210)
-    e_password = tk.Entry(ttkframe, width=int(width*0.02), textvariable=password)
+    e_password = tk.Entry(ttkframe, width=int(width*0.01), textvariable=password)
     e_password.place(x=10, y=240)
 
 
@@ -2240,19 +2238,19 @@ def accountView(frame,ttkframe,lang):
     l_proxy_option.place(x=10, y=270)
     
     
-    e_proxy_option = tk.Entry(ttkframe, width=int(width*0.02), textvariable=proxy_option)
+    e_proxy_option = tk.Entry(ttkframe, width=int(width*0.01), textvariable=proxy_option)
     e_proxy_option.place(x=10, y=300)
 
     b_choose_proxy=tk.Button(ttkframe,text="choose",command=lambda: threading.Thread(target=chooseProxies(ttkframe,username.get())).start() )
     
-    b_choose_proxy.place(x=100, y=270)    
+    b_choose_proxy.place(x=50, y=270)    
 
 
 
 
     l_channel_cookie = tk.Label(ttkframe, text=i18labels("cookiejson", locale=lang, module="g"))
     l_channel_cookie.place(x=10, y=330)
-    e_channel_cookie = tk.Entry(ttkframe, width=int(width*0.02), textvariable=channel_cookie)
+    e_channel_cookie = tk.Entry(ttkframe, width=int(width*0.01), textvariable=channel_cookie)
     e_channel_cookie.place(x=10, y=360)
 
     b_channel_cookie=tk.Button(ttkframe,text="Select",command=lambda: threading.Thread(target=select_cookie_file).start() )
@@ -2286,28 +2284,26 @@ def accountView(frame,ttkframe,lang):
 
 
     # treeview_flight
-    tree = ttk.Treeview(frame, height = 20, column = 9)
+    tree = ttk.Treeview(frame, height = 20, column = 8)
     tree["column"]=('#0','#1','#2','#3','#4','#5','#6','#7')
-    tree.grid(row = 0, column = 0, columnspan = 10, padx=14, pady=15)
+    tree.grid(row = 0, column = 0, columnspan = 5, padx=14, pady=15)
 
-    tree.heading('#0', text = 'Task No.')
+    tree.heading('#0', text = 'Account No.')
     tree.column('#0', anchor = 'center', width = 70)
-    tree.heading('#1', text = 'Video title')
+    tree.heading('#1', text = 'username')
     tree.column('#1', anchor = 'center', width = 60)
-    tree.heading('#2', text = 'Description')
+    tree.heading('#2', text = 'password')
     tree.column('#2', anchor = 'center', width = 60)
-    tree.heading('#3', text = 'Status')
+    tree.heading('#3', text = 'platform')
     tree.column('#3', anchor = 'center', width = 80)
-    tree.heading('#4', text = 'release. Date')
+    tree.heading('#4', text = 'proxies')
     tree.column('#4', anchor = 'center', width = 80)
-    tree.heading('#5', text = 'release. Time')
+    tree.heading('#5', text = 'Cookiefile')
     tree.column('#5', anchor = 'center', width = 80)
-    tree.heading('#6', text = 'publish type')
+    tree.heading('#6', text = 'create. Time')
     tree.column('#6', anchor = 'center', width = 80)
-    tree.heading('#7', text = 'upload. Time')
+    tree.heading('#7', text = 'updated. Time')
     tree.column('#7', anchor = 'center', width = 80)
-    tree.heading('#8', text = 'local path')
-    tree.column('#8', anchor = 'center', width = 80)
 
 
     
@@ -2352,6 +2348,7 @@ def uploadView(frame,ttkframe,lang):
     tree.column('#4', anchor = 'center', width = 80)
     tree.heading('#5', text = 'release. Time')
     tree.column('#5', anchor = 'center', width = 80)
+    
     tree.heading('#6', text = 'publish type')
     tree.column('#6', anchor = 'center', width = 80)
     tree.heading('#7', text = 'upload. Time')
@@ -2899,7 +2896,7 @@ def render(root,window,log_frame,lang):
 
     account_frame = ttk.Frame(tab_control)
 
-    account_frame_left1 = tk.Frame(account_frame, width = width, height = height)
+    account_frame_left1 = tk.Frame(account_frame, width = int(width*0.5), height = height)
     account_frame_left1.pack(side = tk.RIGHT)
 
     upload_frame = ttk.Frame(tab_control)
