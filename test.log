@@ -8643,3 +8643,241 @@ Name: video_title, dtype: object
 2023-09-09 22:35:51,165 - INFO - GUI started
 2023-09-09 22:36:46,306 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
 2023-09-09 22:36:46,902 - INFO - GUI started
+2023-09-09 22:45:50,014 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 22:45:50,974 - INFO - GUI started
+2023-09-09 23:35:24,747 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 23:35:26,108 - INFO - GUI started
+2023-09-09 23:41:18,078 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 23:41:18,942 - INFO - GUI started
+2023-09-09 23:42:15,035 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 23:42:15,304 - INFO - GUI started
+2023-09-09 23:42:59,162 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 23:42:59,426 - ERROR - query  to SELECT * FROM uploadtasks  where id=input task id>>> seems went wrong!(sqlite3.OperationalError) near "task": syntax error
+[SQL: SELECT * FROM uploadtasks  where id=input task id]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-09 23:42:59,435 - INFO - GUI started
+2023-09-09 23:44:36,737 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 23:44:37,003 - ERROR - query  to SELECT * FROM uploadtasks  where id=input task id>>> seems went wrong!(sqlite3.OperationalError) near "task": syntax error
+[SQL: SELECT * FROM uploadtasks  where id=input task id]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-09 23:44:37,012 - INFO - GUI started
+2023-09-09 23:45:32,050 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 23:45:32,299 - ERROR - query  to SELECT * FROM uploadtasks  where id=input task id>>> seems went wrong!(sqlite3.OperationalError) near "task": syntax error
+[SQL: SELECT * FROM uploadtasks  where id=input task id]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-09 23:45:32,307 - INFO - GUI started
+2023-09-09 23:45:58,129 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-09 23:45:58,408 - ERROR - query  to SELECT * FROM uploadtasks  where id=input task id>>> seems went wrong!(sqlite3.OperationalError) near "task": syntax error
+[SQL: SELECT * FROM uploadtasks  where id=input task id]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-09 23:45:58,417 - INFO - GUI started
+2023-09-10 13:43:25,513 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 13:43:59,783 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 13:44:00,548 - INFO - GUI started
+2023-09-10 13:44:28,193 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 13:44:28,912 - INFO - GUI started
+2023-09-10 13:48:10,312 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 13:48:10,626 - INFO - GUI started
+2023-09-10 13:48:34,199 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 13:48:49,973 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 13:48:50,249 - INFO - GUI started
+2023-09-10 13:50:00,622 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 13:50:01,296 - INFO - GUI started
+2023-09-10 13:51:27,106 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 13:51:27,371 - INFO - GUI started
+2023-09-10 13:53:23,919 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 13:53:50,188 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 13:53:50,454 - INFO - GUI started
+2023-09-10 13:54:08,461 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 13:54:08,728 - INFO - GUI started
+2023-09-10 13:54:25,113 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 13:54:25,377 - INFO - GUI started
+2023-09-10 13:55:51,220 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 13:55:51,496 - INFO - GUI started
+2023-09-10 14:04:46,953 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 14:04:47,831 - INFO - GUI started
+2023-09-10 14:07:21,777 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 14:07:22,688 - INFO - GUI started
+2023-09-10 14:33:11,947 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 14:33:12,798 - INFO - GUI started
+2023-09-10 14:34:06,825 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 14:34:18,144 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 14:34:18,479 - INFO - GUI started
+2023-09-10 14:39:49,103 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 14:39:49,400 - INFO - GUI started
+2023-09-10 14:46:04,774 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 14:46:05,053 - INFO - GUI started
+2023-09-10 14:46:31,572 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 14:46:31,858 - INFO - GUI started
+2023-09-10 14:48:26,609 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 14:48:26,939 - INFO - GUI started
+2023-09-10 14:52:13,101 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 14:52:13,390 - INFO - GUI started
+2023-09-10 14:58:22,138 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 14:58:22,838 - INFO - GUI started
+2023-09-10 14:59:06,451 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 14:59:06,741 - INFO - GUI started
+2023-09-10 14:59:15,837 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 14:59:16,113 - INFO - GUI started
+2023-09-10 15:00:23,360 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:00:23,703 - INFO - GUI started
+2023-09-10 15:04:18,902 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:04:19,185 - INFO - GUI started
+2023-09-10 15:05:17,557 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:05:17,862 - INFO - GUI started
+2023-09-10 15:08:21,206 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:08:21,921 - INFO - GUI started
+2023-09-10 15:08:47,886 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:08:48,182 - INFO - GUI started
+2023-09-10 15:09:38,191 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:09:38,477 - INFO - GUI started
+2023-09-10 15:10:29,983 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:10:30,253 - INFO - GUI started
+2023-09-10 15:11:22,869 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:11:23,171 - INFO - GUI started
+2023-09-10 15:11:58,879 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:11:59,167 - INFO - GUI started
+2023-09-10 15:12:46,727 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:12:47,012 - INFO - GUI started
+2023-09-10 15:14:06,372 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:14:06,667 - INFO - GUI started
+2023-09-10 15:17:01,697 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:17:02,399 - INFO - GUI started
+2023-09-10 15:17:50,419 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:17:50,703 - INFO - GUI started
+2023-09-10 15:18:21,581 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:18:21,878 - INFO - GUI started
+2023-09-10 15:26:14,915 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:26:15,684 - INFO - GUI started
+2023-09-10 15:32:17,044 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:32:17,739 - INFO - GUI started
+2023-09-10 15:33:31,701 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:33:31,989 - INFO - GUI started
+2023-09-10 15:33:43,873 - ERROR - query  to SELECT * FROM proxies  where id=input location>>> seems went wrong!(sqlite3.OperationalError) near "location": syntax error
+[SQL: SELECT * FROM proxies  where id=input location]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-10 15:33:46,805 - ERROR - query  to SELECT * FROM proxies  where id=input location>>> seems went wrong!(sqlite3.OperationalError) near "location": syntax error
+[SQL: SELECT * FROM proxies  where id=input location]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-10 15:33:52,497 - ERROR - query  to SELECT * FROM proxies  where id=input location>>> seems went wrong!(sqlite3.OperationalError) near "location": syntax error
+[SQL: SELECT * FROM proxies  where id=input location]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-10 15:34:51,945 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:34:52,223 - INFO - GUI started
+2023-09-10 15:36:12,874 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:36:13,190 - INFO - GUI started
+2023-09-10 15:38:12,048 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:38:12,327 - INFO - GUI started
+2023-09-10 15:39:51,893 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:39:52,189 - INFO - GUI started
+2023-09-10 15:41:24,336 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:41:24,627 - INFO - GUI started
+2023-09-10 15:41:57,712 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:41:58,034 - INFO - GUI started
+2023-09-10 15:42:53,616 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:42:53,911 - INFO - GUI started
+2023-09-10 15:45:42,700 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:45:43,046 - INFO - GUI started
+2023-09-10 15:46:48,199 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:46:48,511 - INFO - GUI started
+2023-09-10 15:48:14,972 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:48:15,642 - INFO - GUI started
+2023-09-10 15:49:56,902 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:49:57,231 - INFO - GUI started
+2023-09-10 15:51:01,531 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:51:02,201 - INFO - GUI started
+2023-09-10 15:51:33,015 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:51:33,289 - INFO - GUI started
+2023-09-10 15:53:25,277 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:53:26,029 - INFO - GUI started
+2023-09-10 15:56:55,116 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 15:56:55,421 - INFO - GUI started
+2023-09-10 16:03:35,892 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:03:36,560 - INFO - GUI started
+2023-09-10 16:04:30,926 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:04:31,213 - INFO - GUI started
+2023-09-10 16:07:18,188 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:07:19,026 - INFO - GUI started
+2023-09-10 16:07:38,259 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:07:38,534 - INFO - GUI started
+2023-09-10 16:08:01,461 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:08:01,773 - INFO - GUI started
+2023-09-10 16:11:08,764 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:11:09,541 - INFO - GUI started
+2023-09-10 16:12:34,833 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:12:35,117 - INFO - GUI started
+2023-09-10 16:17:16,442 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:17:17,258 - INFO - GUI started
+2023-09-10 16:17:52,490 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:17:52,771 - INFO - GUI started
+2023-09-10 16:20:07,734 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:20:08,032 - INFO - GUI started
+2023-09-10 16:20:56,627 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:20:56,947 - INFO - GUI started
+2023-09-10 16:22:59,550 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:24:24,496 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:24:25,193 - INFO - GUI started
+2023-09-10 16:25:18,181 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:25:18,516 - INFO - GUI started
+2023-09-10 16:28:30,086 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:28:30,744 - INFO - GUI started
+2023-09-10 16:30:11,233 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:30:11,505 - INFO - GUI started
+2023-09-10 16:30:50,098 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:30:50,399 - INFO - GUI started
+2023-09-10 16:31:11,961 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:31:12,234 - INFO - GUI started
+2023-09-10 16:31:46,329 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:31:46,658 - INFO - GUI started
+2023-09-10 16:32:58,895 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:32:59,163 - INFO - GUI started
+2023-09-10 16:33:17,609 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:33:17,952 - INFO - GUI started
+2023-09-10 16:33:53,841 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:36:33,387 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:36:34,167 - INFO - GUI started
+2023-09-10 16:38:04,057 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:38:04,329 - INFO - GUI started
+2023-09-10 16:38:16,601 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:38:16,872 - INFO - GUI started
+2023-09-10 16:39:20,051 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:39:20,327 - INFO - GUI started
+2023-09-10 16:40:25,237 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:40:25,508 - INFO - GUI started
+2023-09-10 16:41:12,151 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:41:12,436 - INFO - GUI started
+2023-09-10 16:41:41,079 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:41:41,357 - INFO - GUI started
+2023-09-10 16:42:03,775 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:42:04,064 - INFO - GUI started
+2023-09-10 16:42:54,067 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:42:54,332 - INFO - GUI started
+2023-09-10 16:43:20,596 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:43:20,870 - INFO - GUI started
+2023-09-10 16:44:11,551 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:44:11,817 - INFO - GUI started
+2023-09-10 16:46:01,861 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:46:02,167 - INFO - GUI started
+2023-09-10 16:46:36,616 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 16:46:36,887 - INFO - GUI started
+2023-09-10 17:01:48,139 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 17:01:48,891 - INFO - GUI started
+2023-09-10 17:02:11,527 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 17:02:11,795 - INFO - GUI started
+2023-09-10 17:03:55,125 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 17:03:55,764 - INFO - GUI started
+2023-09-10 17:12:42,823 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 17:12:43,522 - INFO - GUI started
+2023-09-10 17:15:07,149 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 17:15:07,421 - INFO - GUI started
+2023-09-10 17:15:33,548 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 17:15:33,824 - INFO - GUI started
+2023-09-10 17:15:57,669 - ERROR - query  to SELECT * FROM proxies  where id=input location>>> seems went wrong!(sqlite3.OperationalError) near "location": syntax error
+[SQL: SELECT * FROM proxies  where id=input location]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-10 17:17:49,635 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 17:17:50,441 - INFO - GUI started
+2023-09-10 17:18:08,191 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 17:18:08,470 - INFO - GUI started
+2023-09-10 17:18:44,088 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 17:18:44,371 - INFO - GUI started

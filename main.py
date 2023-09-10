@@ -942,6 +942,7 @@ def changeDisplayLang(lang,window,log_frame):
     st = ScrolledText.ScrolledText(log_frame,                                      
                                 width = width, 
                                     height = 5, 
+                                     wrap=tk.WORD,
                                     state='disabled')
     st.configure(font='TkFixedFont')
     st.grid(column=0, 
@@ -1987,47 +1988,337 @@ def render_video_folder_check_results(frame):
         b_import_thumb_metas_=tk.Button(frame,text="Step4:gen thumbnails use thumb metas and thumb template file",command=lambda: genThumbnailFromTemplate(videosView_video_folder.get(),thumbnail_template_file.get(),mode.get()))
         b_import_thumb_metas_.place(x=10, y=560)    
 
-
-def accountView(frame,ttkframe,lang):
-    lbl15 = tk.Label(ttkframe, text='Enter PID.')
-    lbl15.place(x=230, y=125, anchor=tk.NE)
-    txt15 = tk.Entry(ttkframe, width=11)
-    txt15.place(x=320, y=125, anchor=tk.NE)
+def  queryAccounts(tree,engine,logger,uid):
 
 
-    # buttons
 
-    btn4= tk.Button(ttkframe, text="Book Flight", command = select_cookie_file)
-    btn4.place(x=300, y=350, anchor=tk.NE)
+    query = "SELECT * FROM accounts ORDER by inserted_at DESC"
+    print('uid',uid,type(uid))
+    if uid is not None and uid !='' and not "input" in uid:
+        query=f"SELECT * FROM accounts  where id={uid}"
+    try:
+        db_rows = query2df(engine,query,logger)
+        records = tree.get_children()
+        for element in records:
+            tree.delete(element) 
+        for row in db_rows.itertuples():
+            tree.insert(
+                "", 0, text=row.id, values=(row.video_title,row.video_description,row.status,row.release_date, row.release_date_hour, row.publish_policy, row.uploaded_at, row.video_local_path)
+            )
+    except:
+        print('keep the same')    
 
-    btn5= tk.Button(ttkframe, text="Get Info", command = select_cookie_file)
-    btn5.place(x=400, y=120, anchor=tk.NE)
+
+def printValues(choices):
+    for name, var in choices.items():
+        print("%s: %s" % (name, var.get()))
+
+
+def chooseProxies(ttkframe,username):
+    newWindow = tk.Toplevel(ttkframe)
+    newWindow.geometry(window_size)
+    
+    
+    newWindow.title('proxy selection')
+
+    if username=='':
+        username='this user account'
+
+    label = tk.Label(newWindow,
+                text = f"Select the proxies for {username} below : ",
+                font = ("Times New Roman", 10),
+                padx = 10, pady = 10)
+    # label.pack()
+    label.grid(row=0,column=0, sticky=tk.W)
+    
+ 
+    
+        
+    global vid
+    vid = tk.StringVar()
+    lbl15 = tk.Label(newWindow, text='Filter by location.')
+    # lbl15.place(x=430, y=30, anchor=tk.NE)
+    # lbl15.pack(side='left')
+
+    lbl15.grid(row=1,column=0, sticky=tk.W)
+
+    txt15 = tk.Entry(newWindow, width=11,textvariable=vid)
+    txt15.insert(0,'input location')
+    # txt15.place(x=580, y=30, anchor=tk.NE)
+    # txt15.pack(side='left')
+    txt15.grid(row=2,column=0, sticky=tk.W)
+    
+    
+    btn5= tk.Button(newWindow, text="Get proxy list", padx = 10, pady = 10,command = lambda: threading.Thread(target=filterProxiesLocations(prod_engine,logger,vid.get())).start())
+    # btn5.place(x=800, y=30, anchor=tk.NE)    
+    # btn5.pack(side='left')       
+    btn5.grid(row=3,column=0, sticky=tk.W)
+
+
+    
+    btn6= tk.Button(newWindow, text="add selected", padx = 10, pady = 10,command = lambda: threading.Thread(target=filterProxiesLocations(prod_engine,logger,vid.get())).start())
+    # btn5.place(x=800, y=30, anchor=tk.NE)    
+    # btn6.pack(side='left')          
+    btn6.grid(row=5,column=0, sticky=tk.W)
+     
+     
+
+    # Create a frame for the canvas with non-zero row&column weights
+    frame_canvas = tk.Frame(newWindow)
+    frame_canvas.grid(row=4, column=0, pady=(5, 0), sticky='nw')
+    frame_canvas.grid_rowconfigure(0, weight=1)
+    frame_canvas.grid_columnconfigure(0, weight=1)
+    # Set grid_propagate to False to allow 5-by-5 buttons resizing later
+    frame_canvas.grid_propagate(False)     
+
+    # for scrolling vertically
+    # for scrolling vertically
+    yscrollbar = tk.Scrollbar(frame_canvas)
+    yscrollbar.pack(side = tk.RIGHT, fill = tk.Y)
+     
+    langlist = tk.Listbox(frame_canvas, selectmode = "multiple",
+                yscrollcommand = yscrollbar.set)
+    langlist.pack(padx = 10, pady = 10,
+            expand = tk.YES, fill = "both")
+
+    proxylist =["C", "C++", "C#", "Java", "Python",
+        "R", "Go", "Ruby", "JavaScript", "Swift",
+        "SQL", "Perl", "XML"]
+
+    def CurSelet(event):
+        listbox = event.widget
+        # values = [listbox.get(idx) for idx in listbox.curselection()]
+        selection=listbox.curselection()
+        # picked = listbox.get(selection[1])
+        print(type(selection),list(selection))
+        
+        if len(list(selection))==3:
+            lbl15 = tk.Label(newWindow, text='you have reached 3 proxy limit for one account.dont select anymore')
+            lbl15.grid(row=6,column=0, sticky=tk.W)
+            lbl15.after(5*1000,lbl15.destroy)        
+        
+        elif len(list(selection))>3:
+            print('you should choose no more than 3 proxy for one account')
+            lbl15 = tk.Label(newWindow, text='you should choose no more than 3 proxy for one account.please remove')
+            lbl15.grid(row=6,column=0, sticky=tk.W)
+            lbl15.after(3*1000,lbl15.destroy)
+        else:
+            lbl15 = tk.Label(newWindow, text='you can add at least 1 and max 3 proxy for one account.')
+            lbl15.grid(row=6,column=0, sticky=tk.W)
+            lbl15.after(500,lbl15.destroy)
+            
+    langlist.bind('<<ListboxSelect>>',CurSelet)
+
+    for each_item in range(len(proxylist)):
+        
+        langlist.insert(tk.END, proxylist[each_item])
+        langlist.itemconfig(each_item, bg = "lime")
+
+def bulkImportUsers(ttkframe):
+    newWindow = tk.Toplevel(ttkframe)
+    newWindow.geometry(window_size)
+    
+    
+    newWindow.title('user bulk import')
+    
+    input_canvas = tk.Frame(newWindow)
+    input_canvas.grid(row=0, column=0, pady=(5, 0), sticky='nw')    
+    
+
+    lbl15 = tk.Label(input_canvas, text='input account info with \\n separator')
+    lbl15.grid(row=0,column=0, sticky=tk.W)
+    
+
+        
+    
+    
+    
+    from tkinter.scrolledtext import ScrolledText
+    textfield = ScrolledText(input_canvas, wrap=tk.WORD)
+    textfield.grid(row = 1, column = 0, columnspan = 6, padx=14, pady=15)
+
+    
+    b_choose_proxy=tk.Button(input_canvas,text="load  from file",command=lambda: threading.Thread(target=select_cookie_file).start() )
+    b_choose_proxy.grid(row=2,column=0, sticky=tk.W)
+
+    
+    res_canvas = tk.Frame(newWindow)
+    res_canvas.grid(row=0, column=1, pady=(5, 0), sticky='nw')    
+    
+        
+    global vid
+    vid = tk.StringVar()
+    lbl15 = tk.Label(res_canvas, text='Filter by location.')
+    # lbl15.place(x=430, y=30, anchor=tk.NE)
+    # lbl15.pack(side='left')
+
+    lbl15.grid(row=0,column=0, sticky=tk.W)
+
+    txt15 = tk.Entry(res_canvas, width=11,textvariable=vid)
+    txt15.insert(0,'input location')
+    # txt15.place(x=580, y=30, anchor=tk.NE)
+    # txt15.pack(side='left')
+    txt15.grid(row=0,column=1, sticky=tk.W)
+    
+    
+    btn5= tk.Button(res_canvas, text="Get proxy list", padx = 10, pady = 10,command = lambda: threading.Thread(target=filterProxiesLocations(prod_engine,logger,vid.get())).start())
+    # btn5.place(x=800, y=30, anchor=tk.NE)    
+    # btn5.pack(side='left')       
+    btn5.grid(row=0,column=2, sticky=tk.W)    
+    
+    
+    
     # treeview_flight
-    tree = ttk.Treeview(frame, height = 10, column = 6)
-    tree["column"]=('#0','#1','#2','#3','#4','#5')
-    tree.grid(row = 0, column = 0, columnspan = 6, padx=14, pady=15)
+    tree = ttk.Treeview(res_canvas, height = 20, column = 9)
+    tree["column"]=('#0','#1','#2','#3','#4','#5','#6','#7')
+    tree.grid(row = 1, column = 0, columnspan = 10, padx=14, pady=15)
 
-    tree.heading('#0', text = 'Flight No.')
+    tree.heading('#0', text = 'Task No.')
     tree.column('#0', anchor = 'center', width = 70)
-    tree.heading('#1', text = 'From')
+    tree.heading('#1', text = 'Video title')
     tree.column('#1', anchor = 'center', width = 60)
-    tree.heading('#2', text = 'To')
+    tree.heading('#2', text = 'Description')
     tree.column('#2', anchor = 'center', width = 60)
-    tree.heading('#3', text = 'Dep. Date')
+    tree.heading('#3', text = 'Status')
     tree.column('#3', anchor = 'center', width = 80)
-    tree.heading('#4', text = 'Dep. Time')
+    tree.heading('#4', text = 'release. Date')
     tree.column('#4', anchor = 'center', width = 80)
-    tree.heading('#5', text = 'Arr. Date')
+    tree.heading('#5', text = 'release. Time')
     tree.column('#5', anchor = 'center', width = 80)
-    tree.heading('#6', text = 'Arr. Time')
+    tree.heading('#6', text = 'publish type')
     tree.column('#6', anchor = 'center', width = 80)
+    tree.heading('#7', text = 'upload. Time')
+    tree.column('#7', anchor = 'center', width = 80)
+    tree.heading('#8', text = 'local path')
+    tree.column('#8', anchor = 'center', width = 80)    
+def saveUser():
+    pass
+    
+    
+def accountView(frame,ttkframe,lang):
+
+
+
+    channel_cookie= tk.StringVar()
+    username = tk.StringVar()
+    proxy_option = tk.StringVar()
+    platform = tk.StringVar()
+
+    password = tk.StringVar()
+
+
+    l_platform = tk.Label(ttkframe, text=i18labels("platform", locale=lang, module="g"))
+    l_platform.place(x=10, y=90)
+
+
+    keepplatform = platform.get()    
+    box = ttk.Combobox(ttkframe, textvariable=keepplatform, state='readonly')
+    box.place(x=10, y=120)
+    def selectedplatform(event):
+        box = event.widget
+        
+        print('selected platform is :',box.get())
+    box['values'] = ('youtube', 'tiktok', 'douyin')
+    box.current(0)
+    box.bind("<<ComboboxSelected>>", selectedplatform)
+
+
+
+    l_username = tk.Label(ttkframe, text=i18labels("username", locale=lang, module="g"))
+    l_username.place(x=10, y=150)
+    e_username = tk.Entry(ttkframe, width=int(width*0.02), textvariable=username)
+    e_username.place(x=10, y=180)
+
+    l_password = tk.Label(ttkframe, text=i18labels("password", locale=lang, module="g"))
+    l_password.place(x=10, y=210)
+    e_password = tk.Entry(ttkframe, width=int(width*0.02), textvariable=password)
+    e_password.place(x=10, y=240)
+
+
+
+    l_proxy_option = tk.Label(ttkframe, text=i18labels("proxySetting", locale=lang, module="g"))
+    l_proxy_option.place(x=10, y=270)
+    
+    
+    e_proxy_option = tk.Entry(ttkframe, width=int(width*0.02), textvariable=proxy_option)
+    e_proxy_option.place(x=10, y=300)
+
+    b_choose_proxy=tk.Button(ttkframe,text="choose",command=lambda: threading.Thread(target=chooseProxies(ttkframe,username.get())).start() )
+    
+    b_choose_proxy.place(x=100, y=270)    
+
+
+
+
+    l_channel_cookie = tk.Label(ttkframe, text=i18labels("cookiejson", locale=lang, module="g"))
+    l_channel_cookie.place(x=10, y=330)
+    e_channel_cookie = tk.Entry(ttkframe, width=int(width*0.02), textvariable=channel_cookie)
+    e_channel_cookie.place(x=10, y=360)
+
+    b_channel_cookie=tk.Button(ttkframe,text="Select",command=lambda: threading.Thread(target=select_cookie_file).start() )
+    b_channel_cookie.place(x=10, y=390)    
+    
+    
+    b_channel_cookie_gen=tk.Button(ttkframe,text="gen",command=auto_gen_cookie_file)
+    b_channel_cookie_gen.place(x=100, y=390)    
+
+
+    
+    b_save_user=tk.Button(ttkframe,text="save user",command=saveUser())
+    b_save_user.place(x=10, y=420)        
+    
+    b_bulk_import_users=tk.Button(ttkframe,text="bulk import",command=lambda: threading.Thread(target=bulkImportUsers(ttkframe)).start() )
+    b_bulk_import_users.place(x=10, y=450)    
+
+    global uid
+    uid = tk.StringVar()
+    lbl15 = tk.Label(ttkframe, text='Enter uid.')
+    lbl15.place(x=430, y=15, anchor=tk.NE)
+    txt15 = tk.Entry(ttkframe, width=11,textvariable=uid)
+    txt15.insert(0,'input uid id')
+    txt15.place(x=580, y=15, anchor=tk.NE)
+
+    btn5= tk.Button(ttkframe, text="Get Info", command = lambda: threading.Thread(target=queryAccounts(tree,prod_engine,logger,vid.get())).start())
+    btn5.place(x=800, y=15, anchor=tk.NE)    
+
+
+
+
+
+    # treeview_flight
+    tree = ttk.Treeview(frame, height = 20, column = 9)
+    tree["column"]=('#0','#1','#2','#3','#4','#5','#6','#7')
+    tree.grid(row = 0, column = 0, columnspan = 10, padx=14, pady=15)
+
+    tree.heading('#0', text = 'Task No.')
+    tree.column('#0', anchor = 'center', width = 70)
+    tree.heading('#1', text = 'Video title')
+    tree.column('#1', anchor = 'center', width = 60)
+    tree.heading('#2', text = 'Description')
+    tree.column('#2', anchor = 'center', width = 60)
+    tree.heading('#3', text = 'Status')
+    tree.column('#3', anchor = 'center', width = 80)
+    tree.heading('#4', text = 'release. Date')
+    tree.column('#4', anchor = 'center', width = 80)
+    tree.heading('#5', text = 'release. Time')
+    tree.column('#5', anchor = 'center', width = 80)
+    tree.heading('#6', text = 'publish type')
+    tree.column('#6', anchor = 'center', width = 80)
+    tree.heading('#7', text = 'upload. Time')
+    tree.column('#7', anchor = 'center', width = 80)
+    tree.heading('#8', text = 'local path')
+    tree.column('#8', anchor = 'center', width = 80)
+
+
+    
+    
 def  queryTasks(tree,engine,logger,vid):
 
 
 
     query = "SELECT * FROM uploadtasks ORDER by inserted_at DESC"
     print('vid',vid,type(vid))
-    if vid is not None and vid !='' and vid !="please input task id":
+    if vid is not None and vid !='' and  not "input" in vid:
         query=f"SELECT * FROM uploadtasks  where id={vid}"
     try:
         db_rows = query2df(engine,query,logger)
@@ -2067,27 +2358,23 @@ def uploadView(frame,ttkframe,lang):
     tree.column('#7', anchor = 'center', width = 80)
     tree.heading('#8', text = 'local path')
     tree.column('#8', anchor = 'center', width = 80)
+
+    btn5= tk.Button(ttkframe, text="Get Info", command = lambda: threading.Thread(target=queryTasks(tree,prod_engine,logger,vid.get())).start())
+    btn5.place(x=800, y=15, anchor=tk.NE)    
     
+    
+        
     global vid
     vid = tk.StringVar()
     lbl15 = tk.Label(ttkframe, text='Enter vid.')
-    lbl15.place(x=430, y=125, anchor=tk.NE)
+    lbl15.place(x=430, y=15, anchor=tk.NE)
     txt15 = tk.Entry(ttkframe, width=11,textvariable=vid)
-    txt15.insert(0,'please input task id')
-    txt15.place(x=580, y=125, anchor=tk.NE)
+    txt15.insert(0,'input task id')
+    txt15.place(x=580, y=15, anchor=tk.NE)
 
 
-    # buttons
 
-    # btn4= tk.Button(ttkframe, text="Book Flight", command = select_cookie_file)
-    # btn4.place(x=300, y=350, anchor=tk.NE)
 
-    btn5= tk.Button(ttkframe, text="Get Info", command = lambda: threading.Thread(target=queryTasks(tree,prod_engine,logger,vid.get())).start())
-    btn5.place(x=800, y=120, anchor=tk.NE)    
-    # lbl15 = tk.Label(ttkframe, text='Enter PID.')
-    # lbl15.place(x=230, y=125, anchor=tk.NE)
-    # txt15 = tk.Entry(ttkframe, width=11)
-    # txt15.place(x=320, y=125, anchor=tk.NE)
     lb_youtube_counts = tk.Label(ttkframe, text='youtube', font=(' ', 15))
     lb_youtube_counts.place(x=350, y=530, anchor=tk.NE)    
 
@@ -2152,7 +2439,7 @@ def uploadView(frame,ttkframe,lang):
     b_createuploadsession = tk.Button(ttkframe, text=i18labels("createuploadsession", locale=lang, module="g"), command=lambda: threading.Thread(target=validateMetafile(prod_engine,ttkframe,imported_video_metas_file.get())).start())
     b_createuploadsession.place(x=10, y=int(300))
 
-
+    # test upload  跳转到一个单独页面，录入一个视频的上传信息，点击上传进行测试。
     b_upload = tk.Button(ttkframe, text=i18labels("testupload", locale=lang, module="g"), command=lambda: threading.Thread(target=testupload(DBM('test'),ttkframe)).start())
     b_upload.place(x=10, y=int(350))
 
@@ -2161,42 +2448,132 @@ def uploadView(frame,ttkframe,lang):
 
 
     queryTasks(tree,prod_engine,logger,vid.get())
+    
+def  filterProxiesLocations(engine,logger,pid):
+
+
+
+    query = "SELECT * FROM proxies ORDER by inserted_at DESC"
+    print('pid',pid,type(pid))
+    if pid is not None and pid !='' and pid !="please input task id":
+        query=f"SELECT * FROM proxies  where id={pid}"
+    try:
+        db_rows = query2df(engine,query,logger)
+        # records = tree.get_children()
+        # for element in records:
+        #     tree.delete(element) 
+        for row in db_rows.itertuples():
+            print()
+            # tree.insert(
+            #     "", 0, text=row.id, values=(row.video_title,row.video_description,row.status,row.release_date, row.release_date_hour, row.publish_policy, row.uploaded_at, row.video_local_path)
+            # )
+    except:
+        print('keep the same')    
+
+def  queryProxies(tree,engine,logger,pid):
+
+
+
+    query = "SELECT * FROM proxies ORDER by inserted_at DESC"
+    print('pid',pid,type(pid))
+    if pid is not None and pid !='' and pid !="please input task id":
+        query=f"SELECT * FROM proxies  where id={pid}"
+    try:
+        db_rows = query2df(engine,query,logger)
+        records = tree.get_children()
+        for element in records:
+            tree.delete(element) 
+        for row in db_rows.itertuples():
+            tree.insert(
+                "", 0, text=row.id, values=(row.video_title,row.video_description,row.status,row.release_date, row.release_date_hour, row.publish_policy, row.uploaded_at, row.video_local_path)
+            )
+    except:
+        print('keep the same')    
+
+def saveproxies():
+    print('pass')
 def proxyView(frame,ttkframe,lang):
-    lbl15 = tk.Label(ttkframe, text='Enter PID.')
-    lbl15.place(x=230, y=125, anchor=tk.NE)
-    txt15 = tk.Entry(ttkframe, width=11)
-    txt15.place(x=320, y=125, anchor=tk.NE)
+
+    
+    input_canvas = tk.Frame(frame)
+    input_canvas.grid(row=0, column=0, pady=(5, 0), sticky='nw')    
+    
+
+    lbl15 = tk.Label(input_canvas, text='copy proxy info here')
+    lbl15.grid(row=0,column=0, sticky=tk.W)
+    
+
+        
+    
+    
+    
+    from tkinter.scrolledtext import ScrolledText
+    textfield = ScrolledText(input_canvas, wrap=tk.WORD)
+    textfield.grid(row = 2, column = 0, columnspan =2, padx=0, pady=15)
+    textfield.insert(tk.END,'proxy list should be one proxy oneline,and each proxy in such format:\nsocks5://127.0.0.1:1080\nsocks5://127.0.0.1:1088')
+    
+    b_save_proxy=tk.Button(input_canvas,text="save",command=lambda: threading.Thread(target=saveproxies()).start() )
+    b_save_proxy.grid(row=4,column=0, sticky=tk.W)
+
+    b_clear_texts=tk.Button(input_canvas,text="clear all texts",command=lambda: threading.Thread(target=textfield.delete(1.0,tk.END)).start() )
+    b_clear_texts.grid(row=3,column=1, sticky=tk.W)
+    
+    b_choose_proxy=tk.Button(input_canvas,text="load  from file",command=lambda: threading.Thread(target=select_cookie_file).start() )
+    b_choose_proxy.grid(row=3,column=0, sticky=tk.W)
 
 
-    # buttons
 
-    btn4= tk.Button(ttkframe, text="Book Flight", command = select_cookie_file)
-    btn4.place(x=300, y=350, anchor=tk.NE)
 
-    btn5= tk.Button(ttkframe, text="Get Info", command = select_cookie_file)
-    btn5.place(x=400, y=120, anchor=tk.NE)
+    res_canvas = tk.Frame(frame)
+    res_canvas.grid(row=0, column=1, pady=(5, 0), sticky=tk.W)    
+    
+        
+    global vid
+    vid = tk.StringVar()
+    # lbl15 = tk.Label(res_canvas, text='Filter by location.')
+    # # lbl15.place(x=430, y=30, anchor=tk.NE)
+    # # lbl15.pack(side='left')
+
+    # lbl15.grid(row=0,column=0, sticky=tk.W)
+
+    txt15 = tk.Entry(res_canvas,textvariable=vid)
+    txt15.insert(0,'Filter by location')
+    # txt15.place(x=580, y=30, anchor=tk.NE)
+    # txt15.pack(side='left')
+    txt15.grid(row=0,column=0, sticky=tk.W)
+    
+    
+    btn5= tk.Button(res_canvas, text="Get proxy list", padx = 0, pady = 0,command = lambda: threading.Thread(target=filterProxiesLocations(prod_engine,logger,vid.get())).start())
+    # btn5.place(x=800, y=30, anchor=tk.NE)    
+    # btn5.pack(side='left')       
+    btn5.grid(row=0,column=1, sticky=tk.W)    
+    
+    
+    
     # treeview_flight
-    tree = ttk.Treeview(frame, height = 10, column = 6)
-    tree["column"]=('#0','#1','#2','#3','#4','#5')
-    tree.grid(row = 0, column = 0, columnspan = 6, padx=14, pady=15)
+    tree = ttk.Treeview(res_canvas, height = 20, column = 9)
+    tree["column"]=('#0','#1','#2','#3','#4','#5','#6','#7')
+    tree.grid(row = 2, column = 0, columnspan = 10, padx=14, pady=15)
 
-    tree.heading('#0', text = 'Flight No.')
+    tree.heading('#0', text = 'Task No.')
     tree.column('#0', anchor = 'center', width = 70)
-    tree.heading('#1', text = 'From')
+    tree.heading('#1', text = 'Video title')
     tree.column('#1', anchor = 'center', width = 60)
-    tree.heading('#2', text = 'To')
+    tree.heading('#2', text = 'Description')
     tree.column('#2', anchor = 'center', width = 60)
-    tree.heading('#3', text = 'Dep. Date')
+    tree.heading('#3', text = 'Status')
     tree.column('#3', anchor = 'center', width = 80)
-    tree.heading('#4', text = 'Dep. Time')
+    tree.heading('#4', text = 'release. Date')
     tree.column('#4', anchor = 'center', width = 80)
-    tree.heading('#5', text = 'Arr. Date')
+    tree.heading('#5', text = 'release. Time')
     tree.column('#5', anchor = 'center', width = 80)
-    tree.heading('#6', text = 'Arr. Time')
+    tree.heading('#6', text = 'publish type')
     tree.column('#6', anchor = 'center', width = 80)
-
-
-
+    tree.heading('#7', text = 'upload. Time')
+    tree.column('#7', anchor = 'center', width = 80)
+    tree.heading('#8', text = 'local path')
+    tree.column('#8', anchor = 'center', width = 80)    
+    
     # viewing_records()
 
 def metaView(frame,ttkframe,lang):
