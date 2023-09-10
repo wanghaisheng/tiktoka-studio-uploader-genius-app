@@ -9094,3 +9094,24 @@ Name: video_title, dtype: object
 2023-09-10 22:44:31,748 - INFO - you should input valid proxy list and try again
 2023-09-10 22:44:36,888 - INFO - insert data to proxies>>> seems All good.
 2023-09-10 22:44:43,611 - INFO - insert data to proxies>>> seems All good.
+2023-09-10 22:49:43,376 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 22:49:44,355 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: uploadtasks
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-10 22:49:44,363 - INFO - GUI started
+2023-09-10 22:50:43,084 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 22:50:43,980 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: uploadtasks
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-10 22:50:43,988 - INFO - GUI started
+2023-09-10 22:50:48,789 - INFO - you proxy filter conditions:Filter by city,Filter by country
+2023-09-10 22:52:22,036 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 22:52:22,345 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: uploadtasks
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-10 22:52:22,354 - INFO - GUI started
+2023-09-10 22:52:43,678 - DEBUG - ROOT_DIR is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-10 22:52:43,938 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: uploadtasks
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-10 22:52:43,947 - INFO - GUI started

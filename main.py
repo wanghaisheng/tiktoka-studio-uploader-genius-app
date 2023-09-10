@@ -2472,7 +2472,7 @@ def  filterProxiesLocations(engine,logger,pid):
 
 def  queryProxies(tree,engine,logger,city,country):
 
-    logger.info('you proxy filter conditions:',city,country)
+    logger.info(f'you proxy filter conditions:{city},{country}')
 
     query = "SELECT * FROM proxies ORDER by inserted_at DESC"
     if city is not None and city !='' and  not "Filter by" in city:
@@ -2491,8 +2491,9 @@ def  queryProxies(tree,engine,logger,city,country):
             )
     except:
         logger.info('you proxy filter conditions without any change,keep the same')
-
-
+def updateproxies(engine,proxies_list_raw,logger):
+    
+    print('check proxy whether valid and its city country')
 def saveproxies(engine,proxies_list_raw,logger):
     proxies_list=[]
     if proxies_list_raw and not 'proxy list should be one proxy oneline,and each proxy in such format' in proxies_list_raw:
@@ -2553,8 +2554,12 @@ def proxyView(frame,ttkframe,lang):
     proxy_textfield.insert(tk.END,'proxy list should be one proxy oneline,and each proxy in such format:\nsocks5://127.0.0.1:1080\nsocks5://127.0.0.1:1088')
     proxy_textfield.bind("<Return>", returnProxy_textfield)
 
-    b_save_proxy=tk.Button(input_canvas,text="save",command=lambda: threading.Thread(target=saveproxies(prod_engine,proxy_textfield.get("1.0", tk.END),logger)).start() )
+    b_save_proxy=tk.Button(input_canvas,text="save proxy",command=lambda: threading.Thread(target=saveproxies(prod_engine,proxy_textfield.get("1.0", tk.END),logger)).start() )
     b_save_proxy.grid(row=4,column=0, sticky=tk.W)
+    
+    b_check_proxy=tk.Button(input_canvas,text="check proxy",command=lambda: threading.Thread(target=updateproxies(prod_engine,proxy_textfield.get("1.0", tk.END),logger)).start() )
+    b_check_proxy.grid(row=4,column=1, sticky=tk.W)    
+    
 
     b_clear_texts=tk.Button(input_canvas,text="clear all texts",command=lambda: threading.Thread(target=proxy_textfield.delete(1.0,tk.END)).start() )
     b_clear_texts.grid(row=3,column=1, sticky=tk.W)
