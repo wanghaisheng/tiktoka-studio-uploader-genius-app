@@ -11242,3 +11242,194 @@ select name from sysobjects where name = 'proxies',full error message:
 (sqlite3.OperationalError) no such table: sysobjects
 [SQL: select name from sysobjects where name = 'proxies']
 (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 23:19:04,103 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 23:19:04,163 - INFO - insert data to accounts>>> seems All good.
+2023-09-11 23:19:04,939 - INFO - TiktokaStudio GUI started
+2023-09-11 23:21:07,039 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 23:21:07,720 - INFO - TiktokaStudio GUI started
+2023-09-11 23:21:13,863 - INFO - insert data to accounts>>> seems All good.
+2023-09-11 23:21:54,259 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 23:21:54,544 - INFO - TiktokaStudio GUI started
+2023-09-11 23:21:56,722 - INFO - insert data to accounts>>> seems All good.
+2023-09-11 23:23:23,848 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 23:23:24,137 - INFO - TiktokaStudio GUI started
+2023-09-11 23:23:27,808 - INFO - insert data to accounts>>> seems All good.
+2023-09-11 23:32:04,261 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 23:32:04,950 - INFO - TiktokaStudio GUI started
+2023-09-11 23:32:09,124 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 23:32:09,160 - ERROR - this query >>> seems went wrong:
+select name from sysobjects where name = 'proxies',full error message:
+(sqlite3.OperationalError) no such table: sysobjects
+[SQL: select name from sysobjects where name = 'proxies']
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 23:32:14,836 - INFO - detected 2 records to be added
+2023-09-11 23:32:14,836 - INFO - start to pre-process 0 record: <class 'str'>
+2023-09-11 23:32:14,836 - INFO - split into url:
+socks5://127.0.0.1:1080
+tags:
+tiktok
+2023-09-11 23:32:14,836 - INFO - check url format socks5://127.0.0.1:1080
+2023-09-11 23:32:14,836 - INFO - check tag format tiktok
+2023-09-11 23:32:14,836 - INFO - end to validate 0 record: <class 'str'>
+2023-09-11 23:32:14,836 - INFO - start to pre-process 1 record: <class 'str'>
+2023-09-11 23:32:14,836 - INFO - split into url:
+socks5://127.0.0.1:1088
+tags:
+youtube
+2023-09-11 23:32:14,837 - INFO - check url format socks5://127.0.0.1:1088
+2023-09-11 23:32:14,837 - INFO - check tag format youtube
+2023-09-11 23:32:14,837 - INFO - end to validate 1 record: <class 'str'>
+2023-09-11 23:32:14,861 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 23:32:23,739 - INFO - start a new query:
+ SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC
+2023-09-11 23:32:23,743 - INFO - search and display finished:
+SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC
+2023-09-11 23:32:58,323 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 23:32:58,324 - ERROR - this query >>> seems went wrong:
+select name from sysobjects where name = 'proxies',full error message:
+(sqlite3.OperationalError) no such table: sysobjects
+[SQL: select name from sysobjects where name = 'proxies']
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 23:34:52,162 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 23:34:52,163 - ERROR - this query >>> seems went wrong:
+select name from sysobjects where name = 'proxies',full error message:
+(sqlite3.OperationalError) no such table: sysobjects
+[SQL: select name from sysobjects where name = 'proxies']
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 23:35:22,633 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 23:35:28,992 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 23:35:28,996 - INFO - search and display finished:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 23:35:30,633 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 23:35:31,297 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 23:35:31,729 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 23:35:31,905 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 23:35:32,097 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 23:35:32,282 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 23:35:32,489 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 23:35:32,673 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 23:35:32,873 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 23:35:33,170 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 23:35:33,376 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 23:35:33,561 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 23:35:33,772 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 23:35:33,962 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 23:35:34,145 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 23:35:37,953 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 23:35:37,958 - INFO - search and display finished:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 23:35:38,865 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 23:35:39,066 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 23:35:39,273 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 23:35:39,449 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 23:35:39,648 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 23:35:40,089 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 23:35:54,793 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 23:35:54,793 - ERROR - this query >>> seems went wrong:
+select name from sysobjects where name = 'proxies',full error message:
+(sqlite3.OperationalError) no such table: sysobjects
+[SQL: select name from sysobjects where name = 'proxies']
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 23:38:38,453 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 23:38:39,426 - INFO - TiktokaStudio GUI started
+2023-09-11 23:38:42,645 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 23:38:42,647 - ERROR - this query >>> seems went wrong:
+SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME= 'proxies',full error message:
+(sqlite3.OperationalError) no such table: INFORMATION_SCHEMA.TABLES
+[SQL: SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME= 'proxies']
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 23:40:11,148 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 23:40:11,415 - INFO - TiktokaStudio GUI started
+2023-09-11 23:40:15,149 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 23:40:15,155 - INFO - we found 4 record matching 
+2023-09-11 23:40:15,156 - INFO - search and display finished:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 23:40:42,120 - INFO - table exists and try to combined new column data  
+2023-09-11 23:40:42,178 - INFO - field diff:Index(['platform'], dtype='object')
+old columns Index(['username', 'id', 'password', 'cookies', 'proxy', 'inserted_at',
+       'updated_at'],
+      dtype='object') new columns Index(['username', 'id', 'platform', 'password', 'cookies', 'proxy',
+       'inserted_at', 'updated_at'],
+      dtype='object')
+2023-09-11 23:40:42,194 - ERROR - insert data to accounts>>> seems went wrong!(sqlite3.InterfaceError) Error binding parameter 5 - probably unsupported type.
+[SQL: INSERT INTO accounts (username, id, password, cookies, proxy, inserted_at, updated_at, platform) VALUES (?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: [('', 1694463376441331000, '', '', '', '2023-09-11 20:16:16.441403', None, None), ('', 1694463490501077000, '', '', '', '2023-09-11 20:18:10.501150', None, None), ('', 1694464756073491000, '', '', '', '2023-09-11 20:39:16.073564', None, None), ('', 1694465230101546000, '', '', '', '2023-09-11 20:47:10.101620', None, None), ('', 1694465358192519000, '', '', '', '2023-09-11 20:49:18.192596', None, None), ('', 1694465974507119000, '', '', '', '2023-09-11 20:59:34.507194', None, None), ('', 1694474344134305000, '', '', '', '2023-09-11 23:19:04.134415', None, None), ('', 1694474473854675000, '', '', '', '2023-09-11 23:21:13.854782', None, None)  ... displaying 10 of 11 total bound parameter sets ...  ('', 1694474607797531000, '', '', '', '2023-09-11 23:23:27.797647', None, None), ('yt1', 1694475642101464000, 'pt1', '/Users/wenke/github/tiktoka-studio-uploader-app/assets/cookie/aww.json', 'socks5://127.0.0.1:1088;socks5://127.0.0.1:1080;socks5://127.0.0.1:1080;', Timestamp('2023-09-11 23:40:42.101603'), None, 'youtube')]]
+(Background on this error at: https://sqlalche.me/e/20/rvf5)
+2023-09-11 23:42:40,931 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 23:42:41,204 - INFO - TiktokaStudio GUI started
+2023-09-11 23:42:45,814 - INFO - detected 2 records to be added
+2023-09-11 23:42:45,814 - INFO - start to pre-process 0 record: <class 'str'>
+2023-09-11 23:42:45,815 - INFO - split into url:
+socks5://127.0.0.1:1088
+tags:
+youtube
+2023-09-11 23:42:45,815 - INFO - check url format socks5://127.0.0.1:1088
+2023-09-11 23:42:45,815 - INFO - check tag format youtube
+2023-09-11 23:42:45,815 - INFO - end to validate 0 record: <class 'str'>
+2023-09-11 23:42:45,815 - INFO - start to pre-process 1 record: <class 'str'>
+2023-09-11 23:42:45,815 - INFO - split into url:
+socks5://127.0.0.1:1080
+tags:
+tiktok
+2023-09-11 23:42:45,815 - INFO - check url format socks5://127.0.0.1:1080
+2023-09-11 23:42:45,816 - INFO - check tag format tiktok
+2023-09-11 23:42:45,816 - INFO - end to validate 1 record: <class 'str'>
+2023-09-11 23:42:45,840 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 23:42:53,557 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 23:42:53,560 - INFO - we found 2 record matching 
+2023-09-11 23:42:53,562 - INFO - search and display finished:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 23:43:07,199 - INFO - insert data to accounts>>> seems All good.
+2023-09-11 23:55:57,583 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 23:55:57,900 - INFO - TiktokaStudio GUI started
+2023-09-11 23:57:46,778 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 23:57:47,050 - INFO - TiktokaStudio GUI started
+2023-09-11 23:58:08,471 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 23:58:08,737 - INFO - TiktokaStudio GUI started
+2023-09-11 23:58:10,982 - INFO - start a new query:
+ SELECT * FROM accounts where username regexp 'input uid id' ORDER by inserted_at DESC
+2023-09-11 23:58:10,988 - INFO - we found 0 record matching 
+2023-09-11 23:58:10,989 - ERROR - search failed error:name 'latest_proxy_conditions_user' is not defined
+2023-09-12 00:07:53,856 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 00:07:54,574 - INFO - TiktokaStudio GUI started
+2023-09-12 00:08:37,885 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 00:08:38,172 - INFO - TiktokaStudio GUI started
+2023-09-12 00:08:56,931 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 00:08:57,194 - INFO - TiktokaStudio GUI started
+2023-09-12 00:09:43,422 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 00:09:43,708 - INFO - TiktokaStudio GUI started
+2023-09-12 00:10:21,032 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 00:10:21,326 - INFO - TiktokaStudio GUI started
+2023-09-12 00:11:39,094 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 00:11:39,955 - INFO - TiktokaStudio GUI started
+2023-09-12 00:12:08,361 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 00:12:08,633 - INFO - TiktokaStudio GUI started
+2023-09-12 00:12:33,712 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 00:12:33,994 - INFO - TiktokaStudio GUI started
+2023-09-12 00:12:55,335 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 00:12:55,606 - INFO - TiktokaStudio GUI started
+2023-09-12 00:13:22,419 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 00:13:22,697 - INFO - TiktokaStudio GUI started
+2023-09-12 00:13:41,440 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 00:13:41,710 - INFO - TiktokaStudio GUI started
+2023-09-12 00:14:06,886 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 00:14:07,181 - INFO - TiktokaStudio GUI started
+2023-09-12 00:14:11,999 - INFO - start a new query:
+ SELECT * FROM accounts ORDER by inserted_at DESC
+2023-09-12 00:14:12,003 - INFO - we found 1 record matching 
+2023-09-12 00:14:12,004 - ERROR - search failed error:'Pandas' object has no attribute 'uploaded_at'
+2023-09-12 00:14:45,698 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 00:14:45,974 - INFO - TiktokaStudio GUI started
+2023-09-12 00:14:47,822 - INFO - start a new query:
+ SELECT * FROM accounts ORDER by inserted_at DESC
+2023-09-12 00:14:47,827 - INFO - we found 1 record matching 
+2023-09-12 00:14:47,828 - ERROR - search failed error:name 'latest_proxy_conditions_user' is not defined

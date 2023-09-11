@@ -2027,8 +2027,8 @@ def chooseProxies(ttkframe,username):
     country_user = tk.StringVar()
     proxyTags_user = tk.StringVar()
     proxyStatus_user = tk.BooleanVar()
-    global latest_conditions_user
-    latest_conditions_user = tk.StringVar()
+    global latest_proxy_conditions_user
+    latest_proxy_conditions_user = tk.StringVar()
     lbl15 = tk.Label(newWindow, text='by city.')
     # lbl15.place(x=430, y=30, anchor=tk.NE)
     # lbl15.pack(side='left')
@@ -2125,7 +2125,7 @@ def chooseProxies(ttkframe,username):
     langlist.bind('<<ListboxSelect>>',CurSelet)
     btn5= tk.Button(newWindow, text="Get proxy list", padx = 0, 
                     pady = 0,command = lambda: threading.Thread(target=
-                    filterProxiesLocations(newWindow,langlist,prod_engine,logger,city_user.get(),country_user.get(),proxyTags_user.get(),proxyStatusbox.get(),latest_conditions_user.get())).start())
+                    filterProxiesLocations(newWindow,langlist,prod_engine,logger,city_user.get(),country_user.get(),proxyTags_user.get(),proxyStatusbox.get(),latest_proxy_conditions_user.get())).start())
     btn5.grid(row=5,column=0, sticky=tk.W)    
     btn6= tk.Button(newWindow, text="add selected", padx = 10, pady = 10,command = lambda: threading.Thread(target=setEntry(proxy_str.get())).start())
     # btn5.place(x=800, y=30, anchor=tk.NE)    
@@ -2211,40 +2211,106 @@ def bulkImportUsers(ttkframe):
     tree.heading('#7', text = 'updated. Time')
     tree.column('#7', anchor = 'center', width = 80)
 def saveUser(engine,platform,username,password,proxy,cookies):
-
-
+    if platform is None:
+        logger.info('please choose a platform')
+    if username is None:
+        logger.error('please provide  a username')
+    else:    
+        if password is None:
+            logger.info('you dont provide password')        
+            if cookies is None:
+                logger.error('please provide a cookie file without  password')        
+                  
+        list_platform=[platform]
         list_ids=[pd.Timestamp.now().value ]
         list_username=[username]
         list_password=[password]
         list_proxy=[proxy]
         list_cookies=[cookies]
         list_inserted_ats=[datetime.now()]
-   
-        account_df= pd.DataFrame({'username':list_username,'id':list_ids,'password':list_password,'cookies':list_cookies,"proxy":list_proxy,'inserted_at':list_inserted_ats})
+        account_df= pd.DataFrame({'username':list_username,'id':list_ids,"platform":list_platform,'password':list_password,'cookies':list_cookies,"proxy":list_proxy,'inserted_at':list_inserted_ats})
             
+        print('1000000000',account_df)
 
         account_df['updated_at']=None  
         is_proxy_ok=pd2table(engine,'accounts',account_df,logger)
     
-def  queryAccounts(tree,engine,logger,uid):
+def  queryAccounts(newWindow,tree,engine,logger,username,platform,latest_conditions_value):
 
 
 
-    query = "SELECT * FROM accounts ORDER by inserted_at DESC"
-    print('uid',uid,type(uid))
-    if uid is not None and uid !='' and not "input" in uid:
-        query=f"SELECT * FROM accounts  where id={uid}"
-    try:
-        db_rows = query2df(engine,query,logger)
-        records = tree.get_children()
-        for element in records:
-            tree.delete(element) 
-        for row in db_rows.itertuples():
-            tree.insert(
-                "", 0, text=row.id, values=(row.username,row.pasword,row.platform,row.proxy, row.cookies, row.proxy, row.inserted_at, row.updated_at)
-            )
-    except:
-        print('keep the same')    
+    availableProxies=[]
+    now_conditions='platform:'+platform+';username:'+username
+
+    
+    if set(list(latest_conditions_value))==set(now_conditions):
+        logger.info('you proxy filter conditions without any change,keep the same')
+
+    else:    
+        if username is not None and username !='' and 'input' not in username:
+        # or platform is not None and platform !='' :
+            query = f"SELECT * FROM accounts where"
+            clause=[]
+            if username is not None and username !='':
+                clause.append(f" username regexp '{username}'")
+            if platform is not None and platform !='':
+                clause.append(f" platform regexp '{platform}'")
+
+
+            query=query+' AND '.join(clause)+" ORDER by inserted_at DESC"
+
+        else:
+            query = f"SELECT * FROM accounts ORDER by inserted_at DESC"
+
+
+        try:
+            logger.info(f'start a new query:\n {query}')
+            
+            table_name='accounts'
+            tableexist_query=f"SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME= '{table_name}'"
+            tableexist_query_sqlite=f"SELECT name FROM sqlite_master WHERE type='table' AND name='{table_name}'"
+
+            tableexist=query2df(engine,tableexist_query_sqlite,logger)
+            if  tableexist is None:
+                hints='there is no  records for query.add proxy before then try again'
+                    
+                lbl15 = tk.Label(newWindow,bg="lightyellow", text=hints)
+                lbl15.grid(row=6,column=2, sticky=tk.W)
+                lbl15.after(2000,lbl15.destroy)                
+            else:
+                
+                db_rows = query2df(engine,query,logger)
+                
+                records = tree.get_children()                
+                if db_rows is not None:
+                    logger.info(f'we found {len(db_rows)} record matching ')
+                    i=0
+                    for element in records:
+                        tree.delete(element) 
+                    for row in db_rows.itertuples():
+                        tree.insert(
+                            "", 0, text=row.id, values=(row.username,row.password,row.platform,row.proxy, row.cookies, row.inserted_at, row.updated_at)
+                        )                    
+                        
+
+                        
+                    
+                    latest_proxy_conditions_user.set(now_conditions)
+                    logger.info(f'search and display finished:\n{query}')
+                else:
+                    logger.info(f'there is no matching records for query:\n{query}')
+                    hints=''
+                    query = f"SELECT * FROM accounts"
+                    if query2df(engine,query,logger) is not None and len( query2df(engine,query,logger))>0:
+                        hints='there is no matching records for query. try to set another condition'
+                    else:
+                        hints='there is no  records for query.add proxy before then try again'
+                        
+                    lbl15 = tk.Label(newWindow,bg="lightyellow", text=hints)
+                    lbl15.grid(row=6,column=2, sticky=tk.W)
+                    lbl15.after(2000,lbl15.destroy)
+        except Exception as e:
+            logger.error(f'search failed error:{e}') 
 
 def accountView(frame,ttkframe,lang):
 
@@ -2331,7 +2397,8 @@ def accountView(frame,ttkframe,lang):
 
 
     
-    b_save_user=tk.Button(ttkframe,text="save user",command=saveUser(prod_engine,box.get(),username.get(),password.get(),proxy_option_account.get(),channel_cookie_user.get()))
+    b_save_user=tk.Button(ttkframe,text="save user",command=lambda: threading.Thread(target=saveUser(prod_engine,box.get(),username.get(),password.get(),proxy_option_account.get(),channel_cookie_user.get())).start() )
+                         
     # b_save_user.place(x=10, y=420)        
     b_save_user.grid(row = 8, column = 0, columnspan = 3, padx=14, pady=15)    
 
@@ -2339,16 +2406,41 @@ def accountView(frame,ttkframe,lang):
     # b_bulk_import_users.place(x=10, y=450)    
     b_bulk_import_users.grid(row = 8, column = 4, columnspan = 3, padx=14, pady=15)    
 
-    global uid
-    uid = tk.StringVar()
-    lbl15 = tk.Label(frame, text='Enter uid.')
+    global q_username_account,latest_user_conditions_user,q_platform_account
+    q_username_account = tk.StringVar()
+    q_platform_account = tk.StringVar()
+
+    latest_user_conditions_user=tk.StringVar()
+    lbl15 = tk.Label(frame, text='By username.')
     # lbl15.place(x=430, y=15, anchor=tk.NE)
-    lbl15.grid(row = 0, column = 0, columnspan = 5, padx=14, pady=15)    
-    txt15 = tk.Entry(frame, width=11,textvariable=uid)
-    txt15.insert(0,'input uid id')
+    lbl15.grid(row = 0, column = 0, columnspan = 3, padx=14, pady=15)    
+    txt15 = tk.Entry(frame, width=11,textvariable=q_platform_account)
+    txt15.insert(0,'input username')
+    txt15.grid(row = 1, column = 0, columnspan = 3, padx=14, pady=15)    
+
+
+    lb18 = tk.Label(frame, text='By platform.')
+    lb18.grid(row=0,column=3, sticky=tk.W)
+
+    keepStatus = q_platform_account.get()    
+    q_platform_accountbox = ttk.Combobox(frame, width=int(width*0.01), textvariable=keepStatus, state='readonly')
+    # box.place(x=10, y=120)
+    q_platform_accountbox.grid(row = 1, column = 2, columnspan = 3, padx=14, pady=15)    
+
+    def selectedq_platform_accountbox(event):
+        box = event.widget
+        
+        print('selected status is :',box.get())
+    q_platform_accountbox['values'] = ('youtube', 'tiktok')
+    q_platform_accountbox.current(0)
+    q_platform_accountbox.bind("<<ComboboxSelected>>", selectedq_platform_accountbox)
+
+
+
+
+    
     # txt15.place(x=580, y=15, anchor=tk.NE)
-    txt15.grid(row = 0, column = 1, columnspan = 5, padx=14, pady=15)    
-    btn5= tk.Button(frame, text="Get Info", command = lambda: threading.Thread(target=queryAccounts(tree,prod_engine,logger,vid.get())).start())
+    btn5= tk.Button(frame, text="Get Info", command = lambda: threading.Thread(target=queryAccounts(ttkframe,tree,prod_engine,logger,q_platform_account.get(),q_platform_account.get(),latest_user_conditions_user.get())).start())
     # btn5.place(x=800, y=15, anchor=tk.NE)    
 
     btn5.grid(row = 0, column =3, columnspan = 5, padx=14, pady=15)    
@@ -2359,7 +2451,7 @@ def accountView(frame,ttkframe,lang):
     # treeview_flight
     tree = ttk.Treeview(frame, height = 20,column = 8)
     tree["column"]=('#0','#1','#2','#3','#4','#5','#6','#7')
-    tree.grid(row = 1, column = 0, columnspan = 10, padx=14, pady=15)
+    tree.grid(row = 2, column = 0, columnspan = 10, padx=14, pady=15)
 
     tree.heading('#0', text = 'Account No.')
     tree.column('#0', anchor = 'center', width = 90)
@@ -2553,9 +2645,11 @@ def  filterProxiesLocations(newWindow,langlist,engine,logger,city,country,tags,s
         try:
             logger.info(f'start a new query:\n {query}')
             
-            tablename='proxies'
-            tableexist_query=f"select name from sysobjects where name = '{tablename}'"
-            tableexist=query2df(engine,tableexist_query,logger)
+            table_name='proxies'
+            tableexist_query=f"SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME= '{table_name}'"
+            tableexist_query_sqlite=f"SELECT name FROM sqlite_master WHERE type='table' AND name='{table_name}'"
+
+            tableexist=query2df(engine,tableexist_query_sqlite,logger)
             if  tableexist is None:
                 hints='there is no  records for query.add proxy before then try again'
                     
@@ -2574,7 +2668,7 @@ def  filterProxiesLocations(newWindow,langlist,engine,logger,city,country,tags,s
                         langlist.insert(tk.END, row.url)
                         langlist.itemconfig(int(i), bg = "lime")
                         i=i+1
-                    latest_conditions_user.set(now_conditions)
+                    latest_proxy_conditions_user.set(now_conditions)
                     logger.info(f'search and display finished:\n{query}')
                 else:
                     logger.info(f'there is no matching records for query:\n{query}')
@@ -2834,6 +2928,31 @@ def proxyView(frame,ttkframe,lang):
     # viewing_records()
 
 def metaView(frame,ttkframe,lang):
+    global thumbView_video_folder
+    thumbView_video_folder = tk.StringVar()
+
+
+    global checkvideocounts
+    checkvideocounts = tk.IntVar()
+
+    global video_thumb_pairs_counts
+    video_thumb_pairs_counts = tk.IntVar()
+
+    # videosView_video_folder.set(setting['video_folder'])
+
+    l_video_folder = tk.Label(frame, text=i18labels("videoFolder", locale=lang, module="g"))
+    l_video_folder.place(x=10, y=20)
+    e_video_folder = tk.Entry(frame, width=45, textvariable=thumbView_video_folder)
+    e_video_folder.place(x=150, y=20)
+    
+    b_video_folder=tk.Button(frame,text="Select",command=lambda: threading.Thread(target=select_thumbView_video_folder).start() )
+    b_video_folder.place(x=580, y=20)    
+    b_video_folder_check=tk.Button(frame,text="Step1:check video assets",command=lambda: threading.Thread(target=analyse_video_thumb_pair(thumbView_video_folder.get(),frame)).start() )
+    b_video_folder_check.place(x=10, y=50)    
+    print(b_video_folder_check)
+    
+    
+def metaView1(frame,ttkframe,lang):
 
     # 
     global is_debug,is_open_browser,is_record_video,start_publish_date,channelname,ratio,publishpolicy,prefertags,preferdesprefix,preferdessuffix,channel_cookie,proxy_option,firefox_profile_folder,video_folder,dailycount,music_folder
