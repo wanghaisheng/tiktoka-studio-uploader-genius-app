@@ -58,7 +58,7 @@ def  query2df(engine,query,logger):
         df = pd.read_sql_query(query, engine)
         return df
     except Exception as e:
-        logger.error(f"query  to {query}>>> seems went wrong!{e}")
+        logger.error(f"this query >>> seems went wrong:\n{query},full error message:\n{e}")
         return None
 
 dbsession_test=createSessonMaker('test')

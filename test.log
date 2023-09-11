@@ -10659,3 +10659,586 @@ SELECT * FROM proxies where city regexp 'as' AND  country regexp 'ds' AND  tags 
  SELECT * FROM proxies ORDER by inserted_at DESC
 2023-09-11 17:20:34,880 - INFO - we found 2 record matching 
 2023-09-11 17:20:34,881 - ERROR - search failed error:'str' object cannot be interpreted as an integer
+2023-09-11 18:31:27,646 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 18:31:28,439 - INFO - TiktokaStudio GUI started
+2023-09-11 18:31:45,684 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 18:31:45,705 - INFO - we found 4 record matching 
+2023-09-11 18:31:45,706 - ERROR - search failed error:'str' object cannot be interpreted as an integer
+2023-09-11 18:42:14,698 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 18:42:14,718 - INFO - we found 4 record matching 
+2023-09-11 18:42:14,719 - ERROR - search failed error:'str' object cannot be interpreted as an integer
+2023-09-11 18:50:21,105 - INFO - start a new query:
+ SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC
+2023-09-11 18:50:21,117 - ERROR - query  to SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such column: tags
+[SQL: SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 18:50:21,118 - INFO - there is no matching records for query:
+SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC
+2023-09-11 18:53:01,065 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 18:53:01,079 - INFO - we found 4 record matching 
+2023-09-11 18:53:01,080 - ERROR - search failed error:'str' object cannot be interpreted as an integer
+2023-09-11 18:54:27,512 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 18:54:28,282 - INFO - TiktokaStudio GUI started
+2023-09-11 18:54:31,991 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 18:54:32,015 - INFO - we found 4 record matching 
+2023-09-11 18:54:32,017 - ERROR - search failed error:'str' object cannot be interpreted as an integer
+2023-09-11 18:59:21,367 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 18:59:22,117 - INFO - TiktokaStudio GUI started
+2023-09-11 18:59:26,588 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 18:59:26,618 - INFO - we found 4 record matching 
+2023-09-11 18:59:26,620 - INFO - search and display finished:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:02:26,394 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:02:26,396 - INFO - we found 4 record matching 
+2023-09-11 19:02:26,397 - INFO - search and display finished:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:13:23,412 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 19:13:24,123 - INFO - TiktokaStudio GUI started
+2023-09-11 19:13:27,484 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:13:27,489 - INFO - we found 4 record matching 
+2023-09-11 19:13:27,490 - INFO - search and display finished:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:15:54,686 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 19:15:55,359 - INFO - TiktokaStudio GUI started
+2023-09-11 19:15:58,867 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:15:58,872 - INFO - we found 4 record matching 
+2023-09-11 19:15:58,874 - INFO - search and display finished:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:17:04,078 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 19:17:04,859 - INFO - TiktokaStudio GUI started
+2023-09-11 19:17:08,867 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:17:08,873 - INFO - we found 4 record matching 
+2023-09-11 19:17:08,874 - INFO - search and display finished:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:23:58,511 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 19:23:58,829 - INFO - TiktokaStudio GUI started
+2023-09-11 19:25:14,349 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:25:14,353 - INFO - we found 4 record matching 
+2023-09-11 19:25:14,354 - INFO - search and display finished:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:26:55,610 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 19:26:55,888 - INFO - TiktokaStudio GUI started
+2023-09-11 19:27:00,882 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:27:00,897 - INFO - we found 4 record matching 
+2023-09-11 19:27:00,900 - INFO - search and display finished:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:28:00,695 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 19:28:01,127 - INFO - TiktokaStudio GUI started
+2023-09-11 19:28:15,689 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:28:15,695 - INFO - we found 4 record matching 
+2023-09-11 19:28:15,697 - INFO - search and display finished:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:30:39,377 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 19:30:40,638 - INFO - TiktokaStudio GUI started
+2023-09-11 19:30:43,366 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:30:43,371 - INFO - we found 4 record matching 
+2023-09-11 19:30:43,373 - INFO - search and display finished:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:32:19,271 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 19:32:20,322 - INFO - TiktokaStudio GUI started
+2023-09-11 19:32:23,748 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:32:23,752 - INFO - we found 4 record matching 
+2023-09-11 19:32:23,754 - INFO - search and display finished:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:33:11,852 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 19:33:12,135 - INFO - TiktokaStudio GUI started
+2023-09-11 19:33:16,260 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:33:16,263 - INFO - we found 4 record matching 
+2023-09-11 19:33:16,265 - INFO - search and display finished:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:33:45,157 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 19:33:45,443 - INFO - TiktokaStudio GUI started
+2023-09-11 19:33:48,643 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:33:48,647 - INFO - we found 4 record matching 
+2023-09-11 19:33:48,649 - INFO - search and display finished:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:36:09,721 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 19:36:10,075 - INFO - TiktokaStudio GUI started
+2023-09-11 19:36:20,106 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:36:20,110 - INFO - we found 4 record matching 
+2023-09-11 19:36:20,112 - INFO - search and display finished:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:39:38,319 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 19:39:39,036 - INFO - TiktokaStudio GUI started
+2023-09-11 19:39:43,077 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:39:43,081 - INFO - we found 4 record matching 
+2023-09-11 19:39:43,082 - INFO - search and display finished:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:43:30,908 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 19:43:32,119 - INFO - TiktokaStudio GUI started
+2023-09-11 19:43:35,986 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:43:35,990 - INFO - we found 4 record matching 
+2023-09-11 19:43:35,992 - INFO - search and display finished:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:57:45,397 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 19:57:45,456 - INFO - table exists and try to combined new column data  
+2023-09-11 19:57:45,460 - INFO - field diff:Index(['cookies', 'password', 'proxy', 'username'], dtype='object')
+old columns Index(['url', 'id', 'status', 'city', 'country', 'inserted_at', 'updated_at'], dtype='object') new columns Index(['username', 'id', 'password', 'cookies', 'proxy', 'inserted_at',
+       'updated_at'],
+      dtype='object')
+2023-09-11 19:57:45,480 - ERROR - insert data to proxies>>> seems went wrong!(sqlite3.InterfaceError) Error binding parameter 5 - probably unsupported type.
+[SQL: INSERT INTO proxies (url, id, status, city, country, inserted_at, updated_at, username, password, cookies, proxy) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: [('socks5://127.0.0.1:1088', 1694385876868021000, 0.0, None, None, '2023-09-10 22:44:36.868100', None, None, None, None, None), ('socks5://127.0.0.1:1080', 1694385876868102000, 0.0, None, None, '2023-09-10 22:44:36.868109', None, None, None, None, None), ('socks5://127.0.0.1:1088', 1694385883595718000, 0.0, None, None, '2023-09-10 22:44:43.595751', None, None, None, None, None), ('socks5://127.0.0.1:1080', 1694385883595753000, 0.0, None, None, '2023-09-10 22:44:43.595758', None, None, None, None, None), (None, 1694462265447546000, None, None, None, Timestamp('2023-09-11 19:57:45.447622'), None, '', '', '', '')]]
+(Background on this error at: https://sqlalche.me/e/20/rvf5)
+2023-09-11 19:57:46,534 - INFO - TiktokaStudio GUI started
+2023-09-11 19:57:54,108 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:57:54,113 - INFO - we found 0 record matching 
+2023-09-11 19:57:54,114 - INFO - search and display finished:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 19:58:19,519 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 19:58:19,555 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 19:58:19,797 - INFO - TiktokaStudio GUI started
+2023-09-11 19:58:24,987 - INFO - detected 2 records to be added
+2023-09-11 19:58:24,987 - INFO - start to pre-process 0 record: <class 'str'>
+2023-09-11 19:58:24,987 - INFO - split into url:
+socks5://127.0.0.1:1080
+tags:
+tiktok
+2023-09-11 19:58:24,987 - INFO - check url format socks5://127.0.0.1:1080
+2023-09-11 19:58:24,988 - INFO - check tag format tiktok
+2023-09-11 19:58:24,988 - INFO - end to validate 0 record: <class 'str'>
+2023-09-11 19:58:24,988 - INFO - start to pre-process 1 record: <class 'str'>
+2023-09-11 19:58:24,988 - INFO - split into url:
+socks5://127.0.0.1:1088
+tags:
+youtube
+2023-09-11 19:58:24,988 - INFO - check url format socks5://127.0.0.1:1088
+2023-09-11 19:58:24,988 - INFO - check tag format youtube
+2023-09-11 19:58:24,988 - INFO - end to validate 1 record: <class 'str'>
+2023-09-11 19:58:25,005 - INFO - table exists and try to combined new column data  
+2023-09-11 19:58:25,008 - INFO - field diff:Index(['city', 'country', 'status', 'tags', 'url'], dtype='object')
+old columns Index(['username', 'id', 'password', 'cookies', 'proxy', 'inserted_at',
+       'updated_at'],
+      dtype='object') new columns Index(['url', 'id', 'status', 'city', 'country', 'inserted_at', 'tags',
+       'updated_at'],
+      dtype='object')
+2023-09-11 19:58:25,025 - ERROR - insert data to proxies>>> seems went wrong!(sqlite3.InterfaceError) Error binding parameter 5 - probably unsupported type.
+[SQL: INSERT INTO proxies (username, id, password, cookies, proxy, inserted_at, updated_at, url, status, city, country, tags) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: [('', 1694462299542447000, '', '', '', '2023-09-11 19:58:19.542519', None, None, None, None, None, None), (None, 1694462304988618000, None, None, None, Timestamp('2023-09-11 19:58:24.988643'), None, 'socks5://127.0.0.1:1080', '1', None, None, 'tiktok'), (None, 1694462304988645000, None, None, None, Timestamp('2023-09-11 19:58:24.988650'), None, 'socks5://127.0.0.1:1088', '1', None, None, 'youtube')]]
+(Background on this error at: https://sqlalche.me/e/20/rvf5)
+2023-09-11 20:00:54,167 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 20:00:54,202 - INFO - insert data to accounts>>> seems All good.
+2023-09-11 20:00:54,452 - INFO - TiktokaStudio GUI started
+2023-09-11 20:01:29,425 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:01:29,426 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:01:29,426 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:01:30,528 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:01:30,529 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:01:30,529 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:01:39,737 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:01:39,738 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:01:39,738 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:01:42,193 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:01:42,194 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:01:42,194 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:01:42,377 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:01:42,377 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:01:42,378 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:01:42,568 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:01:42,569 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:01:42,569 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:01:42,752 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:01:42,752 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:01:42,753 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:01:42,944 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:01:42,945 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:01:42,945 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:01:43,121 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:01:43,122 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:01:43,122 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:06:59,278 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 20:06:59,310 - INFO - insert data to accounts>>> seems All good.
+2023-09-11 20:06:59,582 - INFO - TiktokaStudio GUI started
+2023-09-11 20:07:06,914 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:07:06,916 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:07:06,916 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:07:08,298 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:07:08,299 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:07:08,299 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:07:09,195 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:07:09,196 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:07:09,196 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:07:10,067 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:07:10,067 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:07:10,067 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:07:10,986 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:07:10,987 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:07:10,987 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:07:11,963 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:07:11,964 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:07:11,964 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:07:12,899 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:07:12,899 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:07:12,899 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:07:16,322 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:07:16,323 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:07:16,323 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:07:37,661 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 20:07:37,692 - INFO - insert data to accounts>>> seems All good.
+2023-09-11 20:07:37,949 - INFO - TiktokaStudio GUI started
+2023-09-11 20:08:03,826 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:08:03,827 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:08:03,827 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:08:04,946 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:08:04,946 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:08:04,946 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:08:05,866 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:08:05,866 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:08:05,866 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:08:42,652 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 20:08:42,684 - INFO - insert data to accounts>>> seems All good.
+2023-09-11 20:08:42,945 - INFO - TiktokaStudio GUI started
+2023-09-11 20:08:47,277 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:08:47,278 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:08:47,278 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:08:55,812 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:08:55,813 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:08:55,813 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:09:23,365 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 20:09:23,398 - INFO - insert data to accounts>>> seems All good.
+2023-09-11 20:09:23,665 - INFO - TiktokaStudio GUI started
+2023-09-11 20:10:15,075 - INFO - detected 2 records to be added
+2023-09-11 20:10:15,075 - INFO - start to pre-process 0 record: <class 'str'>
+2023-09-11 20:10:15,075 - INFO - split into url:
+socks5://127.0.0.1:1080
+tags:
+tiktok
+2023-09-11 20:10:15,075 - INFO - check url format socks5://127.0.0.1:1080
+2023-09-11 20:10:15,076 - INFO - check tag format tiktok
+2023-09-11 20:10:15,076 - INFO - end to validate 0 record: <class 'str'>
+2023-09-11 20:10:15,076 - INFO - start to pre-process 1 record: <class 'str'>
+2023-09-11 20:10:15,076 - INFO - split into url:
+socks5://127.0.0.1:1088
+tags:
+youtube
+2023-09-11 20:10:15,076 - INFO - check url format socks5://127.0.0.1:1088
+2023-09-11 20:10:15,076 - INFO - check tag format youtube
+2023-09-11 20:10:15,076 - INFO - end to validate 1 record: <class 'str'>
+2023-09-11 20:10:15,097 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 20:10:19,819 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:10:19,822 - INFO - we found 2 record matching 
+2023-09-11 20:10:19,824 - INFO - search and display finished:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:15:30,788 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 20:15:30,820 - INFO - insert data to accounts>>> seems All good.
+2023-09-11 20:15:31,591 - INFO - TiktokaStudio GUI started
+2023-09-11 20:15:39,925 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:15:39,928 - INFO - we found 2 record matching 
+2023-09-11 20:15:39,929 - INFO - search and display finished:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:15:58,949 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:15:58,951 - INFO - we found 2 record matching 
+2023-09-11 20:15:58,952 - INFO - search and display finished:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:16:16,418 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 20:16:16,453 - INFO - insert data to accounts>>> seems All good.
+2023-09-11 20:16:16,702 - INFO - TiktokaStudio GUI started
+2023-09-11 20:17:00,435 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:17:00,436 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:17:00,436 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:17:00,437 - ERROR - query  to SELECT * FROM proxies>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:17:00,437 - ERROR - search failed error:object of type 'NoneType' has no len()
+2023-09-11 20:18:10,477 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 20:18:10,510 - INFO - insert data to accounts>>> seems All good.
+2023-09-11 20:18:10,766 - INFO - TiktokaStudio GUI started
+2023-09-11 20:18:43,402 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:18:43,403 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:18:43,403 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:18:43,404 - ERROR - query  to SELECT * FROM proxies>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:18:50,610 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:18:50,611 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:18:50,611 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:18:50,611 - ERROR - query  to SELECT * FROM proxies>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:20:03,280 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:20:03,281 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:20:03,281 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:20:03,282 - ERROR - query  to SELECT * FROM proxies>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:21:12,671 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:21:12,672 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:21:12,672 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:21:12,672 - ERROR - query  to SELECT * FROM proxies>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:30:45,462 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:30:45,464 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:30:45,464 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:30:45,465 - ERROR - query  to SELECT * FROM proxies>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:39:16,032 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 20:39:16,081 - INFO - insert data to accounts>>> seems All good.
+2023-09-11 20:39:16,723 - INFO - TiktokaStudio GUI started
+2023-09-11 20:41:28,515 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:41:28,516 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:41:28,516 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:41:28,517 - ERROR - query  to SELECT * FROM proxies>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:47:10,052 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 20:47:10,109 - INFO - insert data to accounts>>> seems All good.
+2023-09-11 20:47:10,903 - INFO - TiktokaStudio GUI started
+2023-09-11 20:47:25,805 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:47:25,807 - ERROR - query  to select name from sysobjects where name = 'proxies'>>> seems went wrong!(sqlite3.OperationalError) no such table: sysobjects
+[SQL: select name from sysobjects where name = 'proxies']
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:47:25,808 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:47:25,808 - INFO - there is no matching records for query:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:47:25,808 - ERROR - query  to SELECT * FROM proxies>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:49:18,168 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 20:49:18,202 - INFO - insert data to accounts>>> seems All good.
+2023-09-11 20:49:18,449 - INFO - TiktokaStudio GUI started
+2023-09-11 20:49:40,506 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:49:40,507 - ERROR - query  to select name from sysobjects where name = 'proxies'>>> seems went wrong!(sqlite3.OperationalError) no such table: sysobjects
+[SQL: select name from sysobjects where name = 'proxies']
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:49:48,130 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:49:48,130 - ERROR - query  to select name from sysobjects where name = 'proxies'>>> seems went wrong!(sqlite3.OperationalError) no such table: sysobjects
+[SQL: select name from sysobjects where name = 'proxies']
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:49:50,666 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:49:50,667 - ERROR - query  to select name from sysobjects where name = 'proxies'>>> seems went wrong!(sqlite3.OperationalError) no such table: sysobjects
+[SQL: select name from sysobjects where name = 'proxies']
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:49:53,155 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:49:53,156 - ERROR - query  to select name from sysobjects where name = 'proxies'>>> seems went wrong!(sqlite3.OperationalError) no such table: sysobjects
+[SQL: select name from sysobjects where name = 'proxies']
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:59:34,480 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-11 20:59:34,515 - INFO - insert data to accounts>>> seems All good.
+2023-09-11 20:59:34,782 - INFO - TiktokaStudio GUI started
+2023-09-11 20:59:38,771 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 20:59:38,772 - ERROR - this query >>> seems went wrong:
+select name from sysobjects where name = 'proxies',full error message:
+(sqlite3.OperationalError) no such table: sysobjects
+[SQL: select name from sysobjects where name = 'proxies']
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 20:59:45,826 - INFO - detected 2 records to be added
+2023-09-11 20:59:45,826 - INFO - start to pre-process 0 record: <class 'str'>
+2023-09-11 20:59:45,826 - INFO - split into url:
+socks5://127.0.0.1:1088
+tags:
+youtube
+2023-09-11 20:59:45,826 - INFO - check url format socks5://127.0.0.1:1088
+2023-09-11 20:59:45,827 - INFO - check tag format youtube
+2023-09-11 20:59:45,827 - INFO - end to validate 0 record: <class 'str'>
+2023-09-11 20:59:45,827 - INFO - start to pre-process 1 record: <class 'str'>
+2023-09-11 20:59:45,827 - INFO - split into url:
+socks5://127.0.0.1:1080
+tags:
+tiktok
+2023-09-11 20:59:45,827 - INFO - check url format socks5://127.0.0.1:1080
+2023-09-11 20:59:45,827 - INFO - check tag format tiktok
+2023-09-11 20:59:45,827 - INFO - end to validate 1 record: <class 'str'>
+2023-09-11 20:59:45,847 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 20:59:47,995 - INFO - start a new query:
+ SELECT * FROM proxies where city regexp 'los' AND  country regexp 'usa' AND  tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC
+2023-09-11 20:59:47,999 - INFO - search and display finished:
+SELECT * FROM proxies where city regexp 'los' AND  country regexp 'usa' AND  tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC
+2023-09-11 21:00:03,194 - INFO - start a new query:
+ SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC
+2023-09-11 21:00:03,197 - INFO - search and display finished:
+SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC
+2023-09-11 21:00:06,250 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 21:00:06,253 - INFO - search and display finished:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 21:00:11,066 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 21:00:11,066 - ERROR - this query >>> seems went wrong:
+select name from sysobjects where name = 'proxies',full error message:
+(sqlite3.OperationalError) no such table: sysobjects
+[SQL: select name from sysobjects where name = 'proxies']
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 21:00:16,370 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 21:00:16,370 - ERROR - this query >>> seems went wrong:
+select name from sysobjects where name = 'proxies',full error message:
+(sqlite3.OperationalError) no such table: sysobjects
+[SQL: select name from sysobjects where name = 'proxies']
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 21:00:18,826 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 21:00:18,827 - ERROR - this query >>> seems went wrong:
+select name from sysobjects where name = 'proxies',full error message:
+(sqlite3.OperationalError) no such table: sysobjects
+[SQL: select name from sysobjects where name = 'proxies']
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 21:00:21,514 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 21:00:21,515 - ERROR - this query >>> seems went wrong:
+select name from sysobjects where name = 'proxies',full error message:
+(sqlite3.OperationalError) no such table: sysobjects
+[SQL: select name from sysobjects where name = 'proxies']
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 21:00:58,418 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 21:00:58,419 - ERROR - this query >>> seems went wrong:
+select name from sysobjects where name = 'proxies',full error message:
+(sqlite3.OperationalError) no such table: sysobjects
+[SQL: select name from sysobjects where name = 'proxies']
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 21:01:00,681 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 21:01:00,682 - ERROR - this query >>> seems went wrong:
+select name from sysobjects where name = 'proxies',full error message:
+(sqlite3.OperationalError) no such table: sysobjects
+[SQL: select name from sysobjects where name = 'proxies']
+(Background on this error at: https://sqlalche.me/e/20/e3q8)

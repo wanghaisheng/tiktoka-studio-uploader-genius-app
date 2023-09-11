@@ -810,14 +810,14 @@ def select_thumb_template_file():
     except:
         print('please select a valid template json file')
 
-def select_cookie_file():
+def select_cookie_file(channel_cookie_user):
 
     global channel_cookie_path
     try:
         channel_cookie_path = filedialog.askopenfilenames(title="请选择该频道对应cookie文件", filetypes=[
             ("Json", "*.json"), ("All Files", "*")])[0]
 
-        channel_cookie.set(channel_cookie_path)
+        channel_cookie_user.set(channel_cookie_path)
         setting['channelcookiepath'] = channel_cookie_path
     except:
         print('please select a valid cookie json file')
@@ -1993,32 +1993,16 @@ def render_video_folder_check_results(frame):
         b_import_thumb_metas_=tk.Button(frame,text="Step4:gen thumbnails use thumb metas and thumb template file",command=lambda: genThumbnailFromTemplate(videosView_video_folder.get(),thumbnail_template_file.get(),mode.get()))
         b_import_thumb_metas_.place(x=10, y=560)    
 
-def  queryAccounts(tree,engine,logger,uid):
-
-
-
-    query = "SELECT * FROM accounts ORDER by inserted_at DESC"
-    print('uid',uid,type(uid))
-    if uid is not None and uid !='' and not "input" in uid:
-        query=f"SELECT * FROM accounts  where id={uid}"
-    try:
-        db_rows = query2df(engine,query,logger)
-        records = tree.get_children()
-        for element in records:
-            tree.delete(element) 
-        for row in db_rows.itertuples():
-            tree.insert(
-                "", 0, text=row.id, values=(row.video_title,row.video_description,row.status,row.release_date, row.release_date_hour, row.publish_policy, row.uploaded_at, row.video_local_path)
-            )
-    except:
-        print('keep the same')    
 
 
 def printValues(choices):
     for name, var in choices.items():
         print("%s: %s" % (name, var.get()))
 
-
+def setEntry(str):
+    proxy_option_account.set(str) 
+    print('2222',proxy_option_account.get())
+    
 def chooseProxies(ttkframe,username):
     newWindow = tk.Toplevel(ttkframe)
     newWindow.geometry(window_size)
@@ -2038,7 +2022,7 @@ def chooseProxies(ttkframe,username):
     
  
     
-    global city_user,country_user,proxyTags_user,proxyStatus_user
+    global city_user,country_user,proxyTags_user,proxyStatus_user,proxy_str
     city_user = tk.StringVar()
     country_user = tk.StringVar()
     proxyTags_user = tk.StringVar()
@@ -2048,6 +2032,7 @@ def chooseProxies(ttkframe,username):
     lbl15 = tk.Label(newWindow, text='by city.')
     # lbl15.place(x=430, y=30, anchor=tk.NE)
     # lbl15.pack(side='left')
+    proxy_str = tk.StringVar()
 
     lbl15.grid(row=1,column=0, sticky=tk.W)
 
@@ -2089,10 +2074,7 @@ def chooseProxies(ttkframe,username):
 
 
     
-    btn6= tk.Button(newWindow, text="add selected", padx = 10, pady = 10,command = lambda: threading.Thread(target=filterProxiesLocations(prod_engine,logger,vid.get())).start())
-    # btn5.place(x=800, y=30, anchor=tk.NE)    
-    # btn6.pack(side='left')          
-    btn6.grid(row=7,column=0, sticky=tk.W)
+
      
      
 
@@ -2114,16 +2096,17 @@ def chooseProxies(ttkframe,username):
     langlist.pack(padx = 10, pady = 10,
             expand = tk.YES, fill = "both")
 
-    proxylist =["C", "C++", "C#", "Java", "Python",
-        "R", "Go", "Ruby", "JavaScript", "Swift",
-        "SQL", "Perl", "XML"]
     def CurSelet(event):
         listbox = event.widget
         # values = [listbox.get(idx) for idx in listbox.curselection()]
         selection=listbox.curselection()
         # picked = listbox.get(selection[1])
-        print(type(selection),list(selection))
-        
+        print(selection,list(selection),listbox.get(0))
+        tmp=''
+        for i in list(selection):
+            tmp=tmp+listbox.get(i)+';'
+        proxy_str.set(tmp)
+        print('000000',proxy_str.get())
         if len(list(selection))==3:
             lbl15 = tk.Label(newWindow, text='you have reached 3 proxy limit for one account.dont select anymore')
             lbl15.grid(row=6,column=0, sticky=tk.W)
@@ -2138,19 +2121,21 @@ def chooseProxies(ttkframe,username):
             lbl15 = tk.Label(newWindow, text='you can add at least 1 and max 3 proxy for one account.')
             lbl15.grid(row=6,column=0, sticky=tk.W)
             lbl15.after(500,lbl15.destroy)
-            
+
     langlist.bind('<<ListboxSelect>>',CurSelet)
     btn5= tk.Button(newWindow, text="Get proxy list", padx = 0, 
                     pady = 0,command = lambda: threading.Thread(target=
-                    filterProxiesLocations(langlist,prod_engine,logger,city_user.get(),country_user.get(),proxyTags_user.get(),proxyStatusbox.get(),latest_conditions_user.get())).start())
+                    filterProxiesLocations(newWindow,langlist,prod_engine,logger,city_user.get(),country_user.get(),proxyTags_user.get(),proxyStatusbox.get(),latest_conditions_user.get())).start())
     btn5.grid(row=5,column=0, sticky=tk.W)    
-    
-
+    btn6= tk.Button(newWindow, text="add selected", padx = 10, pady = 10,command = lambda: threading.Thread(target=setEntry(proxy_str.get())).start())
+    # btn5.place(x=800, y=30, anchor=tk.NE)    
+    # btn6.pack(side='left')          
+    btn6.grid(row=7,column=0, sticky=tk.W)
 
 def bulkImportUsers(ttkframe):
     newWindow = tk.Toplevel(ttkframe)
     newWindow.geometry(window_size)
-    # 缺少这两行填充设置，两个frame展示的大小始终是不对的
+    #缺少这两行填充设置，两个frame展示的大小始终是不对的
     newWindow.rowconfigure(0, weight=1)
     newWindow.columnconfigure((0,1), weight=1)
 
@@ -2225,17 +2210,49 @@ def bulkImportUsers(ttkframe):
     tree.column('#6', anchor = 'center', width = 80)
     tree.heading('#7', text = 'updated. Time')
     tree.column('#7', anchor = 'center', width = 80)
-def saveUser():
-    pass
+def saveUser(engine,platform,username,password,proxy,cookies):
+
+
+        list_ids=[pd.Timestamp.now().value ]
+        list_username=[username]
+        list_password=[password]
+        list_proxy=[proxy]
+        list_cookies=[cookies]
+        list_inserted_ats=[datetime.now()]
+   
+        account_df= pd.DataFrame({'username':list_username,'id':list_ids,'password':list_password,'cookies':list_cookies,"proxy":list_proxy,'inserted_at':list_inserted_ats})
+            
+
+        account_df['updated_at']=None  
+        is_proxy_ok=pd2table(engine,'accounts',account_df,logger)
     
-    
+def  queryAccounts(tree,engine,logger,uid):
+
+
+
+    query = "SELECT * FROM accounts ORDER by inserted_at DESC"
+    print('uid',uid,type(uid))
+    if uid is not None and uid !='' and not "input" in uid:
+        query=f"SELECT * FROM accounts  where id={uid}"
+    try:
+        db_rows = query2df(engine,query,logger)
+        records = tree.get_children()
+        for element in records:
+            tree.delete(element) 
+        for row in db_rows.itertuples():
+            tree.insert(
+                "", 0, text=row.id, values=(row.username,row.pasword,row.platform,row.proxy, row.cookies, row.proxy, row.inserted_at, row.updated_at)
+            )
+    except:
+        print('keep the same')    
+
 def accountView(frame,ttkframe,lang):
 
+    global proxy_option_account
 
-
-    channel_cookie= tk.StringVar()
+    channel_cookie_user= tk.StringVar()
     username = tk.StringVar()
-    proxy_option = tk.StringVar()
+    proxy_option_account = tk.StringVar()
     platform = tk.StringVar()
 
     password = tk.StringVar()
@@ -2283,7 +2300,7 @@ def accountView(frame,ttkframe,lang):
     
     l_proxy_option.grid(row = 4, column = 0, columnspan = 3, padx=14, pady=15)    
 
-    e_proxy_option = tk.Entry(ttkframe, textvariable=proxy_option)
+    e_proxy_option = tk.Entry(ttkframe, textvariable=proxy_option_account)
     # e_proxy_option.place(x=10, y=300)
     e_proxy_option.grid(row = 5, column = 3, columnspan = 3, padx=14, pady=15)    
 
@@ -2299,11 +2316,11 @@ def accountView(frame,ttkframe,lang):
     # l_channel_cookie.place(x=10, y=330)
     l_channel_cookie.grid(row = 6, column = 0, columnspan = 3, padx=14, pady=15)    
 
-    e_channel_cookie = tk.Entry(ttkframe, textvariable=channel_cookie)
+    e_channel_cookie = tk.Entry(ttkframe, textvariable=channel_cookie_user)
     # e_channel_cookie.place(x=10, y=360)
     e_channel_cookie.grid(row = 7, column = 3, columnspan = 3, padx=14, pady=15)    
 
-    b_channel_cookie=tk.Button(ttkframe,text="Select",command=lambda: threading.Thread(target=select_cookie_file).start() )
+    b_channel_cookie=tk.Button(ttkframe,text="Select",command=lambda: threading.Thread(target=select_cookie_file(channel_cookie_user)).start() )
     # b_channel_cookie.place(x=10, y=390)    
     b_channel_cookie.grid(row = 6, column = 3, columnspan = 2, padx=14, pady=15)    
 
@@ -2314,7 +2331,7 @@ def accountView(frame,ttkframe,lang):
 
 
     
-    b_save_user=tk.Button(ttkframe,text="save user",command=saveUser())
+    b_save_user=tk.Button(ttkframe,text="save user",command=saveUser(prod_engine,box.get(),username.get(),password.get(),proxy_option_account.get(),channel_cookie_user.get()))
     # b_save_user.place(x=10, y=420)        
     b_save_user.grid(row = 8, column = 0, columnspan = 3, padx=14, pady=15)    
 
@@ -2502,7 +2519,7 @@ def uploadView(frame,ttkframe,lang):
 
     # queryTasks(tree,prod_engine,logger,vid.get())
     
-def  filterProxiesLocations(langlist,engine,logger,city,country,tags,status,latest_conditions_value):
+def  filterProxiesLocations(newWindow,langlist,engine,logger,city,country,tags,status,latest_conditions_value):
     city=city.lower()
     country=country.lower()
     tags=tags.lower()
@@ -2535,24 +2552,42 @@ def  filterProxiesLocations(langlist,engine,logger,city,country,tags,status,late
 
         try:
             logger.info(f'start a new query:\n {query}')
-
-            db_rows = query2df(engine,query,logger)
-            if db_rows is not None:
-                langlist=[]
-                logger.info(f'we found {len(db_rows)} record matching ')
-                i=int(0)
-                for row in db_rows.itertuples():
-                    print('i=',type(row.url),type(i))
-
-                    langlist.insert(tk.END, row.url)
-                    print('---')
-                    langlist.itemconfig(int(i), bg = "lime")
-                    print('222222')
-                    i=i+1
-                latest_conditions_user.set(now_conditions)
-                logger.info(f'search and display finished:\n{query}')
+            
+            tablename='proxies'
+            tableexist_query=f"select name from sysobjects where name = '{tablename}'"
+            tableexist=query2df(engine,tableexist_query,logger)
+            if  tableexist is None:
+                hints='there is no  records for query.add proxy before then try again'
+                    
+                lbl15 = tk.Label(newWindow,bg="lightyellow", text=hints)
+                lbl15.grid(row=6,column=2, sticky=tk.W)
+                lbl15.after(2000,lbl15.destroy)                
             else:
-                logger.info(f'there is no matching records for query:\n{query}')
+                
+                db_rows = query2df(engine,query,logger)
+                if db_rows is not None:
+                    langlist.delete(0,tk.END)
+                    logger.info(f'we found {len(db_rows)} record matching ')
+                    i=0
+                    for row in db_rows.itertuples():
+
+                        langlist.insert(tk.END, row.url)
+                        langlist.itemconfig(int(i), bg = "lime")
+                        i=i+1
+                    latest_conditions_user.set(now_conditions)
+                    logger.info(f'search and display finished:\n{query}')
+                else:
+                    logger.info(f'there is no matching records for query:\n{query}')
+                    hints=''
+                    query = f"SELECT * FROM proxies"
+                    if query2df(engine,query,logger) is not None and len( query2df(engine,query,logger))>0:
+                        hints='there is no matching records for query. try to set another condition'
+                    else:
+                        hints='there is no  records for query.add proxy before then try again'
+                        
+                    lbl15 = tk.Label(newWindow,bg="lightyellow", text=hints)
+                    lbl15.grid(row=6,column=2, sticky=tk.W)
+                    lbl15.after(2000,lbl15.destroy)
         except Exception as e:
             logger.error(f'search failed error:{e}') 
 
