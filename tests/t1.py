@@ -43,6 +43,7 @@ langlist.bind('<<ListboxSelect>>',CurSelet)
 for each_item in range(len(x)):
 	
 	langlist.insert(END, x[each_item])
+	print('-',type(x[each_item]),type(each_item))
 	langlist.itemconfig(each_item, bg = "lime")
 
 # Attach listbox to vertical scrollbar

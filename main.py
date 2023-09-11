@@ -81,6 +81,8 @@ try:
 except ImportError:
     import Tkinter as tk # Python 2.x
     import ScrolledText
+import pyperclip as clip
+
 from easy_i18n.t import Ai18n
 config = {
     "load_path": "./locales", # 指定在 /locales 下找对应的翻译 json文件
@@ -206,6 +208,7 @@ availableScheduleTimes = [
 "23:15",
 "23:30",
 "23:45"] 
+
 class TextHandler(logging.Handler):
     # This class allows you to log to a Tkinter Text or ScrolledText widget
     # Adapted from Moshe Kaplan: https://gist.github.com/moshekaplan/c425f861de7bbf28ef06
@@ -944,6 +947,8 @@ def changeDisplayLang(lang,window,log_frame):
                                     height = 5, 
                                      wrap=tk.WORD,
                                     state='disabled')
+    st.bind_all("<Control-c>",_copy)
+
     st.configure(font='TkFixedFont')
     st.grid(column=0, 
             row=0, 
@@ -2033,39 +2038,67 @@ def chooseProxies(ttkframe,username):
     
  
     
-        
-    global vid
-    vid = tk.StringVar()
-    lbl15 = tk.Label(newWindow, text='Filter by location.')
+    global city_user,country_user,proxyTags_user,proxyStatus_user
+    city_user = tk.StringVar()
+    country_user = tk.StringVar()
+    proxyTags_user = tk.StringVar()
+    proxyStatus_user = tk.BooleanVar()
+    global latest_conditions_user
+    latest_conditions_user = tk.StringVar()
+    lbl15 = tk.Label(newWindow, text='by city.')
     # lbl15.place(x=430, y=30, anchor=tk.NE)
     # lbl15.pack(side='left')
 
     lbl15.grid(row=1,column=0, sticky=tk.W)
 
-    txt15 = tk.Entry(newWindow, width=11,textvariable=vid)
-    txt15.insert(0,'input location')
+    txt15 = tk.Entry(newWindow,textvariable=city_user,width=int(0.01*width))
+    txt15.insert(0,'')
     # txt15.place(x=580, y=30, anchor=tk.NE)
     # txt15.pack(side='left')
-    txt15.grid(row=2,column=0, sticky=tk.W)
+    txt15.grid(row=1,column=1, sticky=tk.W)
+
+    lbl16 = tk.Label(newWindow, text='by country.')
+    lbl16.grid(row=2,column=0, sticky=tk.W)
+    txt16 = tk.Entry(newWindow,textvariable=country_user,width=int(0.01*width))
+    txt16.insert(0,'')
+    txt16.grid(row=2,column=1, sticky=tk.W)
     
-    
-    btn5= tk.Button(newWindow, text="Get proxy list", padx = 10, pady = 10,command = lambda: threading.Thread(target=filterProxiesLocations(prod_engine,logger,vid.get())).start())
-    # btn5.place(x=800, y=30, anchor=tk.NE)    
-    # btn5.pack(side='left')       
-    btn5.grid(row=3,column=0, sticky=tk.W)
+    lb17 = tk.Label(newWindow, text='by tags.')
+    lb17.grid(row=3,column=0, sticky=tk.W)
+    txt17 = tk.Entry(newWindow,textvariable=proxyTags_user,width=int(0.01*width))
+    txt17.insert(0,'')
+    txt17.grid(row=3,column=2, sticky=tk.W)
+
+    lb18 = tk.Label(newWindow, text='by status.')
+    lb18.grid(row=4,column=0, sticky=tk.W)
+
+    keepStatus = proxyStatus_user.get()    
+    proxyStatusbox = ttk.Combobox(newWindow, width=int(width*0.01), textvariable=keepStatus, state='readonly')
+    # box.place(x=10, y=120)
+    proxyStatusbox.grid(row = 4, column = 2, columnspan = 3, padx=14, pady=15)    
+
+    def selectedproxyStatus(event):
+        box = event.widget
+        
+        print('selected status is :',box.get())
+    proxyStatusbox['values'] = ('valid', 'invalid')
+    proxyStatusbox.current(0)
+    proxyStatusbox.bind("<<ComboboxSelected>>", selectedproxyStatus)
+
+
 
 
     
     btn6= tk.Button(newWindow, text="add selected", padx = 10, pady = 10,command = lambda: threading.Thread(target=filterProxiesLocations(prod_engine,logger,vid.get())).start())
     # btn5.place(x=800, y=30, anchor=tk.NE)    
     # btn6.pack(side='left')          
-    btn6.grid(row=5,column=0, sticky=tk.W)
+    btn6.grid(row=7,column=0, sticky=tk.W)
      
      
 
     # Create a frame for the canvas with non-zero row&column weights
     frame_canvas = tk.Frame(newWindow)
-    frame_canvas.grid(row=4, column=0, pady=(5, 0), sticky='nw')
+    frame_canvas.grid(row=6, column=0, pady=(5, 0), sticky='nw')
     frame_canvas.grid_rowconfigure(0, weight=1)
     frame_canvas.grid_columnconfigure(0, weight=1)
     # Set grid_propagate to False to allow 5-by-5 buttons resizing later
@@ -2074,7 +2107,7 @@ def chooseProxies(ttkframe,username):
     # for scrolling vertically
     # for scrolling vertically
     yscrollbar = tk.Scrollbar(frame_canvas)
-    yscrollbar.pack(side = tk.RIGHT, fill = tk.Y)
+    yscrollbar.pack(side = tk.RIGHT, fill = 'both')
      
     langlist = tk.Listbox(frame_canvas, selectmode = "multiple",
                 yscrollcommand = yscrollbar.set)
@@ -2084,7 +2117,6 @@ def chooseProxies(ttkframe,username):
     proxylist =["C", "C++", "C#", "Java", "Python",
         "R", "Go", "Ruby", "JavaScript", "Swift",
         "SQL", "Perl", "XML"]
-
     def CurSelet(event):
         listbox = event.widget
         # values = [listbox.get(idx) for idx in listbox.curselection()]
@@ -2108,17 +2140,20 @@ def chooseProxies(ttkframe,username):
             lbl15.after(500,lbl15.destroy)
             
     langlist.bind('<<ListboxSelect>>',CurSelet)
+    btn5= tk.Button(newWindow, text="Get proxy list", padx = 0, 
+                    pady = 0,command = lambda: threading.Thread(target=
+                    filterProxiesLocations(langlist,prod_engine,logger,city_user.get(),country_user.get(),proxyTags_user.get(),proxyStatusbox.get(),latest_conditions_user.get())).start())
+    btn5.grid(row=5,column=0, sticky=tk.W)    
+    
 
-    for each_item in range(len(proxylist)):
-        
-        langlist.insert(tk.END, proxylist[each_item])
-        langlist.itemconfig(each_item, bg = "lime")
 
 def bulkImportUsers(ttkframe):
     newWindow = tk.Toplevel(ttkframe)
     newWindow.geometry(window_size)
-    
-    
+    # 缺少这两行填充设置，两个frame展示的大小始终是不对的
+    newWindow.rowconfigure(0, weight=1)
+    newWindow.columnconfigure((0,1), weight=1)
+
     newWindow.title('user bulk import')
     
     input_canvas = tk.Frame(newWindow)
@@ -2135,43 +2170,44 @@ def bulkImportUsers(ttkframe):
     
     from tkinter.scrolledtext import ScrolledText
     textfield = ScrolledText(input_canvas, wrap=tk.WORD)
-    textfield.grid(row = 1, column = 0, columnspan = 6, padx=14, pady=15)
+    textfield.grid(row = 1, column = 0, columnspan = 5, padx=14, pady=15)
+    textfield.bind_all("<Control-c>",_copy)
 
     
     b_choose_proxy=tk.Button(input_canvas,text="load  from file",command=lambda: threading.Thread(target=select_cookie_file).start() )
     b_choose_proxy.grid(row=2,column=0, sticky=tk.W)
 
     
-    res_canvas = tk.Frame(newWindow)
-    res_canvas.grid(row=0, column=1, pady=(5, 0), sticky='ne')    
+    res_canvas = tk.Frame(newWindow,width=int(0.5*width))
+    res_canvas.grid(row=0, column=10,pady=(5, 0), sticky='ne')    
     
         
     global vid
     vid = tk.StringVar()
-    lbl15 = tk.Label(res_canvas, text='Filter by location.')
+    lbl15 = tk.Label(res_canvas, text='Filter by Username.')
     # lbl15.place(x=430, y=30, anchor=tk.NE)
     # lbl15.pack(side='left')
 
     lbl15.grid(row=0,column=0, sticky=tk.W)
 
     txt15 = tk.Entry(res_canvas, width=11,textvariable=vid)
-    txt15.insert(0,'input location')
+    txt15.insert(0,'input username')
     # txt15.place(x=580, y=30, anchor=tk.NE)
     # txt15.pack(side='left')
     txt15.grid(row=0,column=1, sticky=tk.W)
     
     
-    btn5= tk.Button(res_canvas, text="Get proxy list", padx = 10, pady = 10,command = lambda: threading.Thread(target=filterProxiesLocations(prod_engine,logger,vid.get())).start())
+    btn5= tk.Button(res_canvas, text="Get user list", padx = 10, pady = 10,command = lambda: threading.Thread(target=filterProxiesLocations(prod_engine,logger,vid.get())).start())
     # btn5.place(x=800, y=30, anchor=tk.NE)    
     # btn5.pack(side='left')       
-    btn5.grid(row=0,column=2, sticky=tk.W)    
+    btn5.grid(row=0,column=5, sticky=tk.W)    
     
     
     
     # treeview_flight
-    tree = ttk.Treeview(res_canvas, height = 20, column = 9)
+    tree = ttk.Treeview(res_canvas, height = 20, column = 8)
     tree["column"]=('#0','#1','#2','#3','#4','#5','#6','#7')
-    tree.grid(row = 1, column = 0, columnspan = 10, padx=14, pady=15)
+    tree.grid(row = 1, column = 0, columnspan = 20, padx=14, pady=15)
 
     tree.heading('#0', text = 'Account No.')
     tree.column('#0', anchor = 'center', width = 70)
@@ -2206,12 +2242,15 @@ def accountView(frame,ttkframe,lang):
 
 
     l_platform = tk.Label(ttkframe, text=i18labels("platform", locale=lang, module="g"))
-    l_platform.place(x=10, y=90)
+    # l_platform.place(x=10, y=90)
+    l_platform.grid(row = 0, column = 0, columnspan = 3, padx=14, pady=15)    
 
 
     keepplatform = platform.get()    
     box = ttk.Combobox(ttkframe, width=int(width*0.01), textvariable=keepplatform, state='readonly')
-    box.place(x=10, y=120)
+    # box.place(x=10, y=120)
+    box.grid(row = 0, column = 5, columnspan = 3, padx=14, pady=15)    
+
     def selectedplatform(event):
         box = event.widget
         
@@ -2223,87 +2262,104 @@ def accountView(frame,ttkframe,lang):
 
 
     l_username = tk.Label(ttkframe, text=i18labels("username", locale=lang, module="g"))
-    l_username.place(x=10, y=150)
+    # l_username.place(x=10, y=150)
+    l_username.grid(row = 2, column = 0, columnspan = 3, padx=14, pady=15)    
+
     e_username = tk.Entry(ttkframe, width=int(width*0.01), textvariable=username)
-    e_username.place(x=10, y=180)
+    # e_username.place(x=10, y=180)
+    e_username.grid(row = 2, column = 5, columnspan = 3, padx=14, pady=15)    
 
     l_password = tk.Label(ttkframe, text=i18labels("password", locale=lang, module="g"))
-    l_password.place(x=10, y=210)
+    # l_password.place(x=10, y=210)
     e_password = tk.Entry(ttkframe, width=int(width*0.01), textvariable=password)
-    e_password.place(x=10, y=240)
+    # e_password.place(x=10, y=240)
 
+    l_password.grid(row = 3, column = 0, columnspan = 3, padx=14, pady=15)    
+    e_password.grid(row = 3, column = 5, columnspan = 3, padx=14, pady=15)    
 
 
     l_proxy_option = tk.Label(ttkframe, text=i18labels("proxySetting", locale=lang, module="g"))
-    l_proxy_option.place(x=10, y=270)
+    # l_proxy_option.place(x=10, y=270)
     
-    
-    e_proxy_option = tk.Entry(ttkframe, width=int(width*0.01), textvariable=proxy_option)
-    e_proxy_option.place(x=10, y=300)
+    l_proxy_option.grid(row = 4, column = 0, columnspan = 3, padx=14, pady=15)    
+
+    e_proxy_option = tk.Entry(ttkframe, textvariable=proxy_option)
+    # e_proxy_option.place(x=10, y=300)
+    e_proxy_option.grid(row = 5, column = 3, columnspan = 3, padx=14, pady=15)    
 
     b_choose_proxy=tk.Button(ttkframe,text="choose",command=lambda: threading.Thread(target=chooseProxies(ttkframe,username.get())).start() )
     
-    b_choose_proxy.place(x=50, y=270)    
+    # b_choose_proxy.place(x=50, y=270)    
+    b_choose_proxy.grid(row = 4, column = 3, columnspan = 2, padx=14, pady=15)    
 
 
 
 
     l_channel_cookie = tk.Label(ttkframe, text=i18labels("cookiejson", locale=lang, module="g"))
-    l_channel_cookie.place(x=10, y=330)
-    e_channel_cookie = tk.Entry(ttkframe, width=int(width*0.01), textvariable=channel_cookie)
-    e_channel_cookie.place(x=10, y=360)
+    # l_channel_cookie.place(x=10, y=330)
+    l_channel_cookie.grid(row = 6, column = 0, columnspan = 3, padx=14, pady=15)    
+
+    e_channel_cookie = tk.Entry(ttkframe, textvariable=channel_cookie)
+    # e_channel_cookie.place(x=10, y=360)
+    e_channel_cookie.grid(row = 7, column = 3, columnspan = 3, padx=14, pady=15)    
 
     b_channel_cookie=tk.Button(ttkframe,text="Select",command=lambda: threading.Thread(target=select_cookie_file).start() )
-    b_channel_cookie.place(x=10, y=390)    
-    
+    # b_channel_cookie.place(x=10, y=390)    
+    b_channel_cookie.grid(row = 6, column = 3, columnspan = 2, padx=14, pady=15)    
+
     
     b_channel_cookie_gen=tk.Button(ttkframe,text="gen",command=auto_gen_cookie_file)
-    b_channel_cookie_gen.place(x=100, y=390)    
+    # b_channel_cookie_gen.place(x=100, y=390)    
+    b_channel_cookie_gen.grid(row = 6, column = 5, columnspan = 3, padx=14, pady=15)    
 
 
     
     b_save_user=tk.Button(ttkframe,text="save user",command=saveUser())
-    b_save_user.place(x=10, y=420)        
-    
+    # b_save_user.place(x=10, y=420)        
+    b_save_user.grid(row = 8, column = 0, columnspan = 3, padx=14, pady=15)    
+
     b_bulk_import_users=tk.Button(ttkframe,text="bulk import",command=lambda: threading.Thread(target=bulkImportUsers(ttkframe)).start() )
-    b_bulk_import_users.place(x=10, y=450)    
+    # b_bulk_import_users.place(x=10, y=450)    
+    b_bulk_import_users.grid(row = 8, column = 4, columnspan = 3, padx=14, pady=15)    
 
     global uid
     uid = tk.StringVar()
-    lbl15 = tk.Label(ttkframe, text='Enter uid.')
-    lbl15.place(x=430, y=15, anchor=tk.NE)
-    txt15 = tk.Entry(ttkframe, width=11,textvariable=uid)
+    lbl15 = tk.Label(frame, text='Enter uid.')
+    # lbl15.place(x=430, y=15, anchor=tk.NE)
+    lbl15.grid(row = 0, column = 0, columnspan = 5, padx=14, pady=15)    
+    txt15 = tk.Entry(frame, width=11,textvariable=uid)
     txt15.insert(0,'input uid id')
-    txt15.place(x=580, y=15, anchor=tk.NE)
+    # txt15.place(x=580, y=15, anchor=tk.NE)
+    txt15.grid(row = 0, column = 1, columnspan = 5, padx=14, pady=15)    
+    btn5= tk.Button(frame, text="Get Info", command = lambda: threading.Thread(target=queryAccounts(tree,prod_engine,logger,vid.get())).start())
+    # btn5.place(x=800, y=15, anchor=tk.NE)    
 
-    btn5= tk.Button(ttkframe, text="Get Info", command = lambda: threading.Thread(target=queryAccounts(tree,prod_engine,logger,vid.get())).start())
-    btn5.place(x=800, y=15, anchor=tk.NE)    
-
+    btn5.grid(row = 0, column =3, columnspan = 5, padx=14, pady=15)    
 
 
 
 
     # treeview_flight
-    tree = ttk.Treeview(frame, height = 20, column = 8)
+    tree = ttk.Treeview(frame, height = 20,column = 8)
     tree["column"]=('#0','#1','#2','#3','#4','#5','#6','#7')
-    tree.grid(row = 0, column = 0, columnspan = 5, padx=14, pady=15)
+    tree.grid(row = 1, column = 0, columnspan = 10, padx=14, pady=15)
 
     tree.heading('#0', text = 'Account No.')
-    tree.column('#0', anchor = 'center', width = 70)
+    tree.column('#0', anchor = 'center', width = 90)
     tree.heading('#1', text = 'username')
-    tree.column('#1', anchor = 'center', width = 60)
+    tree.column('#1', anchor = 'center', width = 90)
     tree.heading('#2', text = 'password')
-    tree.column('#2', anchor = 'center', width = 60)
+    tree.column('#2', anchor = 'center', width = 90)
     tree.heading('#3', text = 'platform')
-    tree.column('#3', anchor = 'center', width = 80)
+    tree.column('#3', anchor = 'center', width = 90)
     tree.heading('#4', text = 'proxies')
-    tree.column('#4', anchor = 'center', width = 80)
+    tree.column('#4', anchor = 'center', width = 90)
     tree.heading('#5', text = 'Cookiefile')
-    tree.column('#5', anchor = 'center', width = 80)
+    tree.column('#5', anchor = 'center', width = 90)
     tree.heading('#6', text = 'create. Time')
-    tree.column('#6', anchor = 'center', width = 80)
+    tree.column('#6', anchor = 'center', width = 90)
     tree.heading('#7', text = 'updated. Time')
-    tree.column('#7', anchor = 'center', width = 80)
+    tree.column('#7', anchor = 'center', width = 90)
 
 
     
@@ -2444,50 +2500,110 @@ def uploadView(frame,ttkframe,lang):
     b_upload.place(x=10, y=int(400))
 
 
-    queryTasks(tree,prod_engine,logger,vid.get())
+    # queryTasks(tree,prod_engine,logger,vid.get())
     
-def  filterProxiesLocations(engine,logger,pid):
+def  filterProxiesLocations(langlist,engine,logger,city,country,tags,status,latest_conditions_value):
+    city=city.lower()
+    country=country.lower()
+    tags=tags.lower()
+    availableProxies=[]
+    status=1 if status=='valid' else 0
+    now_conditions='city:'+city+';country:'+country+';tags:'+tags+';status:'+str(status)
 
-
-
-    query = "SELECT * FROM proxies ORDER by inserted_at DESC"
-    print('pid',pid,type(pid))
-    if pid is not None and pid !='' and pid !="please input task id":
-        query=f"SELECT * FROM proxies  where id={pid}"
-    try:
-        db_rows = query2df(engine,query,logger)
-        # records = tree.get_children()
-        # for element in records:
-        #     tree.delete(element) 
-        for row in db_rows.itertuples():
-            print()
-            # tree.insert(
-            #     "", 0, text=row.id, values=(row.video_title,row.video_description,row.status,row.release_date, row.release_date_hour, row.publish_policy, row.uploaded_at, row.video_local_path)
-            # )
-    except:
-        print('keep the same')    
-
-def  queryProxies(tree,engine,logger,city,country):
-
-    logger.info(f'you proxy filter conditions:{city},{country}')
-
-    query = "SELECT * FROM proxies ORDER by inserted_at DESC"
-    if city is not None and city !='' and  not "Filter by" in city:
-        if country is not None and country !='' and  not "Filter by" in country:
-            query=f"SELECT * FROM proxies  where city={city} and country={country}"
-        else:
-            query=f"SELECT * FROM proxies  where city={city}"
-    try:
-        db_rows = query2df(engine,query,logger)
-        records = tree.get_children()
-        for element in records:
-            tree.delete(element) 
-        for row in db_rows.itertuples():
-            tree.insert(
-                "", 0, text=row.id, values=(row.url,row.status,row.city,row.country, row.inserted_at,row.updated_at)
-            )
-    except:
+    
+    if set(list(latest_conditions_value))==set(now_conditions):
         logger.info('you proxy filter conditions without any change,keep the same')
+
+    else:    
+        if city is not None and city !='' or country is not None and country !='' or tags is not None and tags !='':
+            query = f"SELECT * FROM proxies where"
+            clause=[]
+            if city is not None and city !='':
+                clause.append(f" city regexp '{city}'")
+            if country is not None and country !='':
+                clause.append(f" country regexp '{country}'")
+            if tags is not None and tags !='':
+                clause.append(f" tags regexp '{tags}'")
+            if status is not None:
+                clause.append(f" status regexp '{status}'")
+
+            query=query+' AND '.join(clause)+" ORDER by inserted_at DESC"
+
+        else:
+            query = f"SELECT * FROM proxies ORDER by inserted_at DESC"
+
+
+        try:
+            logger.info(f'start a new query:\n {query}')
+
+            db_rows = query2df(engine,query,logger)
+            if db_rows is not None:
+                langlist=[]
+                logger.info(f'we found {len(db_rows)} record matching ')
+                i=int(0)
+                for row in db_rows.itertuples():
+                    print('i=',type(row.url),type(i))
+
+                    langlist.insert(tk.END, row.url)
+                    print('---')
+                    langlist.itemconfig(int(i), bg = "lime")
+                    print('222222')
+                    i=i+1
+                latest_conditions_user.set(now_conditions)
+                logger.info(f'search and display finished:\n{query}')
+            else:
+                logger.info(f'there is no matching records for query:\n{query}')
+        except Exception as e:
+            logger.error(f'search failed error:{e}') 
+
+def  queryProxies(tree,engine,logger,city,country,tags,status,latest_conditions_value):
+    city=city.lower()
+    country=country.lower()
+    tags=tags.lower()
+    status=1 if status=='valid' else 0
+    now_conditions='city:'+city+';country:'+country+';tags:'+tags+';status:'+str(status)
+
+    
+    if set(list(latest_conditions_value))==set(now_conditions):
+        logger.info('you proxy filter conditions without any change,keep the same')
+
+    else:    
+        if city is not None and city !='' or country is not None and country !='' or tags is not None and tags !='':
+            query = f"SELECT * FROM proxies where"
+            clause=[]
+            if city is not None and city !='':
+                clause.append(f" city regexp '{city}'")
+            if country is not None and country !='':
+                clause.append(f" country regexp '{country}'")
+            if tags is not None and tags !='':
+                clause.append(f" tags regexp '{tags}'")
+            if status is not None:
+                clause.append(f" status regexp '{status}'")
+
+            query=query+' AND '.join(clause)+" ORDER by inserted_at DESC"
+
+        else:
+            query = f"SELECT * FROM proxies ORDER by inserted_at DESC"
+
+
+        try:
+            logger.info(f'start a new query:\n {query}')
+
+            db_rows = query2df(engine,query,logger)
+            if db_rows is not None:
+                records = tree.get_children()
+                for element in records:
+                    tree.delete(element) 
+                for row in db_rows.itertuples():
+                    tree.insert(
+                        "", 0, text=row.id, values=(row.url,row.status,row.city,row.country,row.tags, row.inserted_at,row.updated_at)
+                    )
+                latest_conditions.set(now_conditions)
+                logger.info(f'search and display finished:\n{query}')
+            else:
+                logger.info(f'there is no matching records for query:\n{query}')
+        except Exception as e:
+            logger.error(f'search failed error:{e}')
 def updateproxies(engine,proxies_list_raw,logger):
     
     print('check proxy whether valid and its city country')
@@ -2497,114 +2613,169 @@ def saveproxies(engine,proxies_list_raw,logger):
         proxies_list=proxies_list_raw.split('\n')
         proxies_list=list(set(proxies_list))
         proxies_list=list(filter(None, proxies_list))
+        logger.info(f'detected {len(proxies_list) } records to be added')
         
-        for idx,url in enumerate(proxies_list):
-            if url:
-                print('check url format ',url)
+        
+        tags=[]
+        servers=[]
+        for idx,ele in enumerate(proxies_list):
+            logger.info(f'start to pre-process {str(idx)} record: {type(ele)}')
+            if ";" in ele:
+                logger.info(f'split into url:\n{ele.split(";")[0]}\ntags:\n{ele.split(";")[-1]}')
+
+                url=ele.split(";")[0]
+                tag=ele.split(";")[-1]
+
+                if url:
+                    logger.info(f'check url format {url}')    
+                    servers.append(url)  
+                    logger.info(f'check tag format {tag}')    
+
+                    tags.append(tag)          
+            else:
+
+                if url:
+                    print('check url format ',url)    
+                    servers.append(url)  
+                    tags.append(None)          
+            logger.info(f'end to validate {str(idx)} record: {type(url)}')
+
+
+
         ids=[]
         status=[]
         cities=[]
         countries=[]
         inserted_ats=[]
-        print('==0',proxies_list)
-        for i in range(0,len(proxies_list)):
+        for i in range(0,len(servers)):
             newid=pd.Timestamp.now().value  
             ids.append(newid)
-            status.append(0)
+            status.append('1')
             cities.append(None)
             countries.append(None)
             inserted_ats.append(datetime.now() )     
             
-        proxies_df= pd.DataFrame({'url':proxies_list,'id':ids,'status':status,'city':cities,"country":countries,'inserted_at':inserted_ats})
-     
-        proxies_df['updated_at']=None           
-        print('===',proxies_df)
+        proxies_df= pd.DataFrame({'url':servers,'id':ids,'status':status,'city':cities,"country":countries,'inserted_at':inserted_ats,'tags':tags})
+            
+
+        proxies_df['updated_at']=None  
+        print(proxies_df)         
         is_proxy_ok=pd2table(engine,'proxies',proxies_df,logger)
-        print('pass')
     else:
         logger.info('you should input valid proxy list and try again')
 def returnProxy_textfield(event):
     proxy_textfield_str.set(event.widget.get("1.0", "end-1c"))
     print(proxy_textfield_str.get())
     return proxy_textfield_str.get()
+
+
+
+def _copy(event):
+   try:
+      string = event.widget.selection_get()
+      clip.copy(string)
+   except:pass
 def proxyView(frame,ttkframe,lang):
 
     
-    input_canvas = tk.Frame(frame)
-    input_canvas.grid(row=0, column=0, pady=(5, 0), sticky='nw')    
-    input_canvas.grid_rowconfigure(100, weight=1)
-    input_canvas.grid_columnconfigure(2, weight=1)
+ 
 
-    lbl15 = tk.Label(input_canvas, text='copy proxy info here')
+
+    lbl15 = tk.Label(frame, text='copy proxy info here')
     lbl15.grid(row=0,column=0, sticky=tk.W)
     
 
         
     global proxy_textfield_str
     proxy_textfield_str = tk.StringVar()
+    global latest_conditions
+    latest_conditions = tk.StringVar()
+
+
 
 
     
     from tkinter.scrolledtext import ScrolledText
-    proxy_textfield = ScrolledText(input_canvas, wrap=tk.WORD)
-    proxy_textfield.grid(row = 2, column = 0, columnspan =2, padx=0, pady=15)
-    proxy_textfield.insert(tk.END,'proxy list should be one proxy oneline,and each proxy in such format:\nsocks5://127.0.0.1:1080\nsocks5://127.0.0.1:1088')
+    proxy_textfield = ScrolledText(frame, wrap=tk.WORD)
+    proxy_textfield.grid(row = 3, column = 0, columnspan =2, padx=0, pady=15)
+    proxy_textfield.insert(tk.END,'proxy list should be one proxy oneline,and each proxy in such format:\nsocks5://127.0.0.1:1080;tiktok\nsocks5://127.0.0.1:1088;youtube')
     proxy_textfield.bind("<Return>", returnProxy_textfield)
+    proxy_textfield.bind_all("<Control-c>",_copy)
 
-    b_save_proxy=tk.Button(input_canvas,text="save proxy",command=lambda: threading.Thread(target=saveproxies(prod_engine,proxy_textfield.get("1.0", tk.END),logger)).start() )
-    b_save_proxy.grid(row=4,column=0, sticky=tk.W)
+    b_save_proxy=tk.Button(frame,text="save proxy",command=lambda: threading.Thread(target=saveproxies(prod_engine,proxy_textfield.get("1.0", tk.END),logger)).start() )
+    b_save_proxy.grid(row=5,column=0, sticky=tk.W)
     
-    b_check_proxy=tk.Button(input_canvas,text="check proxy",command=lambda: threading.Thread(target=updateproxies(prod_engine,proxy_textfield.get("1.0", tk.END),logger)).start() )
-    b_check_proxy.grid(row=4,column=1, sticky=tk.W)    
+    b_check_proxy=tk.Button(frame,text="check proxy",command=lambda: threading.Thread(target=updateproxies(prod_engine,proxy_textfield.get("1.0", tk.END),logger)).start() )
+    b_check_proxy.grid(row=5,column=1, sticky=tk.W)    
     
 
-    b_clear_texts=tk.Button(input_canvas,text="clear all texts",command=lambda: threading.Thread(target=proxy_textfield.delete(1.0,tk.END)).start() )
-    b_clear_texts.grid(row=3,column=1, sticky=tk.W)
+    b_clear_texts=tk.Button(frame,text="clear all texts",command=lambda: threading.Thread(target=proxy_textfield.delete(1.0,tk.END)).start() )
+    b_clear_texts.grid(row=4,column=1, sticky=tk.W)
     
-    b_choose_proxy=tk.Button(input_canvas,text="load  from file",command=lambda: threading.Thread(target=select_cookie_file).start() )
-    b_choose_proxy.grid(row=3,column=0, sticky=tk.W)
+    b_choose_proxy=tk.Button(frame,text="load  from file",command=lambda: threading.Thread(target=select_cookie_file).start() )
+    b_choose_proxy.grid(row=4,column=0, sticky=tk.W)
 
 
 
-
-    res_canvas = tk.Frame(frame,width=int(0.7*width))
-    res_canvas.grid(row=0, column=1, pady=(5, 0),columnspan=20, sticky=tk.W)    
-    res_canvas.grid_rowconfigure(100, weight=1)
-    res_canvas.grid_columnconfigure(2, weight=1)
+    
+    # res_canvas.rowconfigure(0, weight=1)
+    # res_canvas.columnconfigure((0,1), weight=1)
         
-    global city,country
+    global city,country,proxyTags,proxyStatus
     city = tk.StringVar()
     country = tk.StringVar()
+    proxyTags = tk.StringVar()
+    proxyStatus = tk.BooleanVar()
 
-    # lbl15 = tk.Label(res_canvas, text='Filter by location.')
-    # # lbl15.place(x=430, y=30, anchor=tk.NE)
-    # # lbl15.pack(side='left')
+    lbl15 = tk.Label(ttkframe, text='by city.')
+    # lbl15.place(x=430, y=30, anchor=tk.NE)
+    # lbl15.pack(side='left')
 
-    # lbl15.grid(row=0,column=0, sticky=tk.W)
+    lbl15.grid(row=0,column=0, sticky=tk.W)
 
-    txt15 = tk.Entry(res_canvas,textvariable=city,width=int(0.01*width))
-    txt15.insert(0,'Filter by city')
+    txt15 = tk.Entry(ttkframe,textvariable=city,width=int(0.01*width))
+    txt15.insert(0,'Los')
     # txt15.place(x=580, y=30, anchor=tk.NE)
     # txt15.pack(side='left')
-    txt15.grid(row=0,column=0, sticky=tk.NW)
+    txt15.grid(row=1,column=0, sticky=tk.W)
 
-    txt16 = tk.Entry(res_canvas,textvariable=country,width=int(0.01*width))
-    txt16.insert(0,'Filter by country')
-    # txt15.place(x=580, y=30, anchor=tk.NE)
-    # txt15.pack(side='left')
-    txt16.grid(row=0,column=1, sticky=tk.NW)
+    lbl16 = tk.Label(ttkframe, text='by country.')
+    lbl16.grid(row=0,column=1, sticky=tk.W)
+    txt16 = tk.Entry(ttkframe,textvariable=country,width=int(0.01*width))
+    txt16.insert(0,'USA')
+    txt16.grid(row=1,column=1, sticky=tk.W)
     
-    btn5= tk.Button(res_canvas, text="Get proxy list", padx = 0, pady = 0,command = lambda: threading.Thread(target=queryProxies(tree,prod_engine,logger,city.get(),country.get())).start())
-    # btn5.place(x=800, y=30, anchor=tk.NE)    
-    # btn5.pack(side='left')       
-    btn5.grid(row=0,column=2, sticky=tk.W)    
+    lb17 = tk.Label(ttkframe, text='by tags.')
+    lb17.grid(row=0,column=2, sticky=tk.W)
+    txt17 = tk.Entry(ttkframe,textvariable=proxyTags,width=int(0.01*width))
+    txt17.insert(0,'youtube')
+    txt17.grid(row=1,column=2, sticky=tk.W)
+
+    lb18 = tk.Label(ttkframe, text='by status.')
+    lb18.grid(row=0,column=3, sticky=tk.W)
+
+    keepStatus = proxyStatus.get()    
+    proxyStatusbox = ttk.Combobox(ttkframe, width=int(width*0.01), textvariable=keepStatus, state='readonly')
+    # box.place(x=10, y=120)
+    proxyStatusbox.grid(row = 1, column = 3, columnspan = 3, padx=14, pady=15)    
+
+    def selectedproxyStatus(event):
+        box = event.widget
+        
+        print('selected status is :',box.get())
+    proxyStatusbox['values'] = ('valid', 'invalid')
+    proxyStatusbox.current(0)
+    proxyStatusbox.bind("<<ComboboxSelected>>", selectedproxyStatus)
+
+    btn5= tk.Button(ttkframe, text="Get proxy list", padx = 0, pady = 0,command = lambda: threading.Thread(target=queryProxies(tree,prod_engine,logger,city.get(),country.get(),proxyTags.get(),proxyStatusbox.get(),latest_conditions.get())).start())
+    btn5.grid(row=2,column=0, sticky=tk.W)    
     
     
     
     # treeview_flight
-    tree = ttk.Treeview(res_canvas, height = 20, column = 9)
+    tree = ttk.Treeview(ttkframe, height = 20, column = 8)
     tree["column"]=('#0','#1','#2','#3','#4','#5','#6','#7')
-    tree.grid(row = 2, column = 0, columnspan = 10, padx=14, pady=15)
+    tree.grid(row = 3, column = 0, columnspan = 20, padx=14, pady=15)
 
     tree.heading('#0', text = 'proxy No.')
     tree.column('#0', anchor = 'center', width = 70)
@@ -2616,12 +2787,12 @@ def proxyView(frame,ttkframe,lang):
     tree.column('#3', anchor = 'center', width = 80)
     tree.heading('#4', text = 'Country')
     tree.column('#4', anchor = 'center', width = 80)
-    tree.heading('#5', text = 'create. Time')
+    tree.heading('#5', text = 'tags')
     tree.column('#5', anchor = 'center', width = 80)
-    tree.heading('#6', text = 'updated. Time')
+    tree.heading('#6', text = 'create. Time')
     tree.column('#6', anchor = 'center', width = 80)
-    # tree.heading('#7', text = 'upload. Time')
-    # tree.column('#7', anchor = 'center', width = 80)
+    tree.heading('#7', text = 'updated. Time')
+    tree.column('#7', anchor = 'center', width = 80)
     # tree.heading('#8', text = 'local path')
     # tree.column('#8', anchor = 'center', width = 80)    
     
@@ -2889,18 +3060,28 @@ def render(root,window,log_frame,lang):
     video_frame_left1.pack(side = tk.LEFT)
 
     proxy_frame = ttk.Frame(tab_control)
-
-    proxy_frame_left1 = tk.Frame(proxy_frame, width = width, height = height)
-    proxy_frame_left1.pack(side = tk.RIGHT)
-
+    proxy_frame.rowconfigure(0, weight=1)
+    proxy_frame.columnconfigure((0,1), weight=1)
+    proxy_frame_left = tk.Frame(proxy_frame, height = height)
+    proxy_frame_left.grid(row=0,column=2,columnspan=3,pady=(5, 0), sticky='nw')   
+    proxy_frame__right = tk.Frame(proxy_frame, height = height)
+    # account_frame_right.pack(side = tk.RIGHT)
+    proxy_frame__right.grid(row=0,column=10,pady=(5, 0), sticky='ne')   
+    # input_canvas.grid(row=0, column=0, pady=(5, 0), sticky='nw')   
 
     account_frame = ttk.Frame(tab_control)
-
-    account_frame_left1 = tk.Frame(account_frame, width = int(width*0.5), height = height)
-    account_frame_left1.pack(side = tk.RIGHT)
+    account_frame.rowconfigure(0, weight=1)
+    account_frame.columnconfigure((0,1), weight=1)
+    account_frame_left = tk.Frame(account_frame,width=int(0.5*width),height = height)
+    # account_frame_left.pack(side = tk.LEFT)
+    account_frame_left.grid(row=0,column=3,columnspan=3)
+    account_frame_right = tk.Frame(account_frame,width=int(0.5*width), height = height)
+    # account_frame_right.pack(side = tk.RIGHT)
+    account_frame_right.grid(row=0,column=6,columnspan=3)
 
     upload_frame = ttk.Frame(tab_control)
-
+    upload_frame.rowconfigure(0, weight=1)
+    upload_frame.columnconfigure((0,1), weight=1)
     upload_frame_left1 = tk.Frame(upload_frame, width = width, height = height)
     upload_frame_left1.pack(side = tk.RIGHT)
 
@@ -2919,10 +3100,10 @@ def render(root,window,log_frame,lang):
 
 
     tab_control.add(account_frame, text=i18labels("accountView", locale=lang, module="g"))
-    accountView(account_frame_left1,account_frame,lang)
+    accountView(account_frame_right,account_frame_left,lang)
 
     tab_control.add(proxy_frame, text=i18labels("proxyView", locale=lang, module="g"))
-    proxyView(proxy_frame_left1,proxy_frame,lang)
+    proxyView(proxy_frame_left,proxy_frame__right,lang)
 
     tab_control.add(thumb_frame, text=i18labels("thumbView", locale=lang, module="g"))
     thumbView(thumb_frame_left1,thumb_frame,lang)
@@ -3022,6 +3203,8 @@ if __name__ == '__main__':
                                     width = width, 
                                         height = 5, 
                                         state='disabled')
+        st.bind_all("<Control-c>",_copy)
+        
         st.configure(font='TkFixedFont')
         st.grid(column=0, 
                 row=0, 
@@ -3040,12 +3223,12 @@ if __name__ == '__main__':
         # logger.critical('critical message')
         window.pack()
 
-        logger.debug(f'ROOT_DIR is{ROOT_DIR}')
+        logger.debug(f'installation path is{ROOT_DIR}')
         root.resizable(width=True, height=True)
         root.iconbitmap("assets/icon.ico")
 
         render(root,window,log_frame,'en')
         root.title(i18labels("title", locale='en', module="g"))        
-        logger.info('GUI started')
+        logger.info('TiktokaStudio GUI started')
 
         root.mainloop()

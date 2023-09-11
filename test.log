@@ -9169,3 +9169,1493 @@ Name: video_title, dtype: object
 [SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC]
 (Background on this error at: https://sqlalche.me/e/20/e3q8)
 2023-09-11 00:47:18,353 - INFO - GUI started
+2023-09-11 09:02:05,647 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 09:02:05,708 - ERROR - query  to SELECT * FROM uploadtasks ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: uploadtasks
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 09:02:05,731 - INFO - GUI started
+2023-09-11 09:04:39,473 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 09:04:39,539 - INFO - GUI started
+2023-09-11 09:28:53,049 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 09:28:53,127 - INFO - GUI started
+2023-09-11 09:29:55,404 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 09:29:55,482 - INFO - GUI started
+2023-09-11 09:30:30,182 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 09:31:50,298 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 09:31:50,370 - INFO - GUI started
+2023-09-11 09:32:14,472 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 09:32:14,542 - INFO - GUI started
+2023-09-11 09:34:10,636 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 09:34:10,712 - INFO - GUI started
+2023-09-11 09:38:23,613 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 09:38:23,688 - INFO - GUI started
+2023-09-11 09:38:28,672 - ERROR - query  to SELECT * FROM accounts ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: accounts
+[SQL: SELECT * FROM accounts ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 09:43:39,467 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 09:43:39,532 - INFO - GUI started
+2023-09-11 09:45:21,581 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 09:45:21,641 - INFO - GUI started
+2023-09-11 09:46:16,023 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 09:46:16,097 - INFO - GUI started
+2023-09-11 09:47:16,999 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 09:47:17,073 - INFO - GUI started
+2023-09-11 09:49:16,009 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 09:49:16,078 - INFO - GUI started
+2023-09-11 09:49:52,882 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 09:49:52,955 - INFO - GUI started
+2023-09-11 09:52:22,250 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 09:52:22,327 - INFO - GUI started
+2023-09-11 09:55:07,702 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 09:55:07,774 - INFO - GUI started
+2023-09-11 09:57:26,294 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 09:57:26,365 - INFO - GUI started
+2023-09-11 09:58:41,523 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 09:58:41,594 - INFO - GUI started
+2023-09-11 09:59:52,338 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 09:59:52,415 - INFO - GUI started
+2023-09-11 10:02:26,543 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:02:26,623 - INFO - GUI started
+2023-09-11 10:03:28,198 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:03:28,271 - INFO - GUI started
+2023-09-11 10:03:53,793 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:03:53,858 - INFO - GUI started
+2023-09-11 10:07:48,366 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:07:48,444 - INFO - GUI started
+2023-09-11 10:08:15,750 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:08:15,830 - INFO - GUI started
+2023-09-11 10:08:56,974 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:08:57,051 - INFO - GUI started
+2023-09-11 10:10:03,562 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:10:03,638 - INFO - GUI started
+2023-09-11 10:10:42,554 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:10:42,631 - INFO - GUI started
+2023-09-11 10:11:21,816 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:11:21,891 - INFO - GUI started
+2023-09-11 10:12:06,520 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:12:06,598 - INFO - GUI started
+2023-09-11 10:12:30,635 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:12:30,693 - INFO - GUI started
+2023-09-11 10:13:36,320 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:13:36,392 - INFO - GUI started
+2023-09-11 10:14:05,521 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:14:05,596 - INFO - GUI started
+2023-09-11 10:15:16,084 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:15:16,171 - INFO - GUI started
+2023-09-11 10:15:47,089 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:15:47,144 - INFO - GUI started
+2023-09-11 10:17:14,986 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:17:15,054 - INFO - GUI started
+2023-09-11 10:17:49,350 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:17:49,426 - INFO - GUI started
+2023-09-11 10:18:26,397 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:18:26,469 - INFO - GUI started
+2023-09-11 10:20:09,609 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:20:09,658 - INFO - GUI started
+2023-09-11 10:20:52,376 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:20:52,429 - INFO - GUI started
+2023-09-11 10:21:31,326 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:21:31,395 - INFO - GUI started
+2023-09-11 10:21:50,430 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:21:50,504 - INFO - GUI started
+2023-09-11 10:22:18,291 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:22:18,364 - INFO - GUI started
+2023-09-11 10:22:45,877 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:22:45,928 - INFO - GUI started
+2023-09-11 10:23:04,206 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:23:04,277 - INFO - GUI started
+2023-09-11 10:23:18,922 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:23:18,999 - INFO - GUI started
+2023-09-11 10:23:36,224 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:23:36,296 - INFO - GUI started
+2023-09-11 10:24:38,098 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:24:38,169 - INFO - GUI started
+2023-09-11 10:25:31,517 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:25:31,589 - INFO - GUI started
+2023-09-11 10:25:54,827 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:25:54,880 - INFO - GUI started
+2023-09-11 10:26:45,801 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:26:45,872 - INFO - GUI started
+2023-09-11 10:27:21,506 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:27:21,575 - INFO - GUI started
+2023-09-11 10:28:54,573 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:28:54,646 - INFO - GUI started
+2023-09-11 10:29:29,827 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:29:29,897 - INFO - GUI started
+2023-09-11 10:29:52,807 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:29:52,876 - INFO - GUI started
+2023-09-11 10:30:22,829 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:30:22,901 - INFO - GUI started
+2023-09-11 10:31:17,224 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:31:17,297 - INFO - GUI started
+2023-09-11 10:33:44,984 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:33:45,060 - INFO - GUI started
+2023-09-11 10:35:47,088 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:35:47,167 - INFO - GUI started
+2023-09-11 10:36:31,035 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:36:31,110 - INFO - GUI started
+2023-09-11 10:38:12,168 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:38:12,242 - INFO - GUI started
+2023-09-11 10:38:40,957 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:38:41,026 - INFO - GUI started
+2023-09-11 10:42:47,397 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:43:04,156 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:43:37,092 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:43:37,170 - INFO - GUI started
+2023-09-11 10:44:38,530 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:44:38,605 - INFO - GUI started
+2023-09-11 10:45:53,042 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:45:53,096 - INFO - GUI started
+2023-09-11 10:46:39,642 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:46:39,716 - INFO - GUI started
+2023-09-11 10:47:30,565 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:47:30,639 - INFO - GUI started
+2023-09-11 10:48:12,028 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:48:12,104 - INFO - GUI started
+2023-09-11 10:48:34,006 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:48:34,077 - INFO - GUI started
+2023-09-11 10:50:31,417 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:50:31,487 - INFO - GUI started
+2023-09-11 10:53:12,431 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:53:12,503 - INFO - GUI started
+2023-09-11 10:54:26,462 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:54:26,535 - INFO - GUI started
+2023-09-11 10:54:50,195 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:54:50,266 - INFO - GUI started
+2023-09-11 10:55:02,331 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 10:55:02,534 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 10:55:35,922 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:55:35,972 - INFO - GUI started
+2023-09-11 10:56:11,552 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:56:11,621 - INFO - GUI started
+2023-09-11 10:56:34,224 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:56:34,293 - INFO - GUI started
+2023-09-11 10:56:55,956 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:56:56,029 - INFO - GUI started
+2023-09-11 10:57:14,812 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:57:14,884 - INFO - GUI started
+2023-09-11 10:57:33,906 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:57:33,979 - INFO - GUI started
+2023-09-11 10:57:47,345 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:57:47,417 - INFO - GUI started
+2023-09-11 10:58:00,647 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:58:00,718 - INFO - GUI started
+2023-09-11 10:58:22,747 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:58:22,818 - INFO - GUI started
+2023-09-11 10:58:44,490 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:58:44,579 - INFO - GUI started
+2023-09-11 10:58:59,157 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:58:59,227 - INFO - GUI started
+2023-09-11 10:59:14,461 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:59:14,535 - INFO - GUI started
+2023-09-11 10:59:29,017 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:59:29,091 - INFO - GUI started
+2023-09-11 10:59:43,036 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:59:43,103 - INFO - GUI started
+2023-09-11 10:59:54,574 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 10:59:54,626 - INFO - GUI started
+2023-09-11 11:00:50,395 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:00:50,471 - INFO - GUI started
+2023-09-11 11:02:14,141 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:02:14,190 - INFO - GUI started
+2023-09-11 11:03:37,497 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:03:37,570 - INFO - GUI started
+2023-09-11 11:03:58,005 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:03:58,078 - INFO - GUI started
+2023-09-11 11:04:54,336 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:04:54,406 - INFO - GUI started
+2023-09-11 11:07:15,165 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:07:15,236 - INFO - GUI started
+2023-09-11 11:08:35,631 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:08:35,704 - INFO - GUI started
+2023-09-11 11:08:53,003 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:08:53,074 - INFO - GUI started
+2023-09-11 11:09:34,936 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:09:34,992 - INFO - GUI started
+2023-09-11 11:11:22,017 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:11:22,089 - INFO - GUI started
+2023-09-11 11:12:20,327 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:12:20,394 - INFO - GUI started
+2023-09-11 11:12:51,136 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:12:51,205 - INFO - GUI started
+2023-09-11 11:13:34,417 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:13:34,486 - INFO - GUI started
+2023-09-11 11:13:48,339 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:13:48,413 - INFO - GUI started
+2023-09-11 11:19:26,827 - DEBUG - ROOT_DIR isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:19:26,909 - INFO - GUI started
+2023-09-11 11:20:27,165 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:20:27,237 - INFO - TiktokaStudio GUI started
+2023-09-11 11:20:44,529 - INFO - you should input valid proxy list and try again
+2023-09-11 11:20:50,202 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 11:28:09,078 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:28:09,132 - INFO - TiktokaStudio GUI started
+2023-09-11 11:28:14,889 - INFO - you proxy filter conditions:Los etc,USA,youtube
+2023-09-11 11:28:14,892 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC where city regexp '$Los etc' and country regexp '$USA' and tags regexp '$youtube' >>> seems went wrong!(sqlite3.OperationalError) near "where": syntax error
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC where city regexp '$Los etc' and country regexp '$USA' and tags regexp '$youtube' ]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 11:28:14,893 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 11:29:37,169 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:29:37,237 - INFO - TiktokaStudio GUI started
+2023-09-11 11:29:39,940 - INFO - you proxy filter conditions:Los etc,USA,youtube
+2023-09-11 11:29:39,942 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC where city regexp '${city}' and country regexp '${country}' and tags regexp '${tags}' >>> seems went wrong!(sqlite3.OperationalError) near "where": syntax error
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC where city regexp '${city}' and country regexp '${country}' and tags regexp '${tags}' ]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 11:29:39,942 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 11:29:59,433 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:29:59,485 - INFO - TiktokaStudio GUI started
+2023-09-11 11:30:10,550 - INFO - you proxy filter conditions:Los etc,USA,youtube
+2023-09-11 11:30:10,551 - ERROR - query  to SELECT * FROM proxies ORDER by inserted_at DESC where city regexp '$Los etc' and country regexp '$USA' and tags regexp '$youtube' >>> seems went wrong!(sqlite3.OperationalError) near "where": syntax error
+[SQL: SELECT * FROM proxies ORDER by inserted_at DESC where city regexp '$Los etc' and country regexp '$USA' and tags regexp '$youtube' ]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 11:30:10,552 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 11:32:03,607 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:32:03,681 - INFO - TiktokaStudio GUI started
+2023-09-11 11:32:14,058 - INFO - you proxy filter conditions:Los,USA,youtube
+2023-09-11 11:32:14,061 - ERROR - query  to SELECT * FROM proxies  where city regexp '$Los' and country regexp '$USA' and tags regexp '$youtube' ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such column: tags
+[SQL: SELECT * FROM proxies  where city regexp '$Los' and country regexp '$USA' and tags regexp '$youtube' ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 11:32:14,061 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 11:40:36,748 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:40:36,797 - INFO - TiktokaStudio GUI started
+2023-09-11 11:40:42,187 - INFO - you proxy filter conditions:los,usa,youtube
+2023-09-11 11:40:42,189 - ERROR - query  to SELECT * FROM proxies  where city regexp 'los' and country regexp 'usa' and tags regexp 'youtube' ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such column: tags
+[SQL: SELECT * FROM proxies  where city regexp 'los' and country regexp 'usa' and tags regexp 'youtube' ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 11:40:42,189 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 11:41:10,307 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:41:10,356 - INFO - TiktokaStudio GUI started
+2023-09-11 11:41:17,117 - INFO - you should input valid proxy list and try again
+2023-09-11 11:41:23,262 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 11:41:33,599 - INFO - you proxy filter conditions:,,
+2023-09-11 11:41:54,119 - INFO - you proxy filter conditions:,,
+2023-09-11 11:44:24,176 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:44:24,249 - INFO - TiktokaStudio GUI started
+2023-09-11 11:44:37,846 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:44:37,896 - INFO - TiktokaStudio GUI started
+2023-09-11 11:44:46,813 - INFO - you proxy filter conditions:los,usa,youtube
+2023-09-11 11:44:51,085 - INFO - you proxy filter conditions:,,
+2023-09-11 11:45:05,781 - INFO - you proxy filter conditions:,,
+2023-09-11 11:53:36,186 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:53:36,257 - INFO - TiktokaStudio GUI started
+2023-09-11 11:53:42,014 - INFO - you proxy filter conditions:los,usa,youtube
+2023-09-11 11:55:09,542 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:55:09,609 - INFO - TiktokaStudio GUI started
+2023-09-11 11:55:14,806 - INFO - you proxy filter conditions:los,usa,youtube
+2023-09-11 11:55:14,807 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:55:14,811 - INFO - search and display finished
+2023-09-11 11:55:27,997 - INFO - you proxy filter conditions:los,usa,youtube
+2023-09-11 11:55:27,997 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:55:28,000 - INFO - search and display finished
+2023-09-11 11:55:29,794 - INFO - you proxy filter conditions:los,usa,youtube
+2023-09-11 11:55:29,795 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:55:29,797 - INFO - search and display finished
+2023-09-11 11:55:31,377 - INFO - you proxy filter conditions:los,usa,youtube
+2023-09-11 11:55:31,378 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:55:31,380 - INFO - search and display finished
+2023-09-11 11:55:32,208 - INFO - you proxy filter conditions:los,usa,youtube
+2023-09-11 11:55:32,209 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:55:32,211 - INFO - search and display finished
+2023-09-11 11:55:33,004 - INFO - you proxy filter conditions:los,usa,youtube
+2023-09-11 11:55:33,004 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:55:33,005 - INFO - search and display finished
+2023-09-11 11:55:33,227 - INFO - you proxy filter conditions:los,usa,youtube
+2023-09-11 11:55:33,228 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:55:33,229 - INFO - search and display finished
+2023-09-11 11:55:33,430 - INFO - you proxy filter conditions:los,usa,youtube
+2023-09-11 11:55:33,430 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:55:33,432 - INFO - search and display finished
+2023-09-11 11:55:33,651 - INFO - you proxy filter conditions:los,usa,youtube
+2023-09-11 11:55:33,651 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:55:33,653 - INFO - search and display finished
+2023-09-11 11:55:40,296 - INFO - you proxy filter conditions:los,usa,youtube
+2023-09-11 11:55:40,297 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:55:40,299 - INFO - search and display finished
+2023-09-11 11:55:41,095 - INFO - you proxy filter conditions:los,usa,youtube
+2023-09-11 11:55:41,095 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:55:41,097 - INFO - search and display finished
+2023-09-11 11:55:41,298 - INFO - you proxy filter conditions:los,usa,youtube
+2023-09-11 11:55:41,298 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:55:41,300 - INFO - search and display finished
+2023-09-11 11:55:41,494 - INFO - you proxy filter conditions:los,usa,youtube
+2023-09-11 11:55:41,494 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:55:41,496 - INFO - search and display finished
+2023-09-11 11:55:41,704 - INFO - you proxy filter conditions:los,usa,youtube
+2023-09-11 11:55:41,704 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:55:41,706 - INFO - search and display finished
+2023-09-11 11:55:41,907 - INFO - you proxy filter conditions:los,usa,youtube
+2023-09-11 11:55:41,907 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:55:41,909 - INFO - search and display finished
+2023-09-11 11:55:42,102 - INFO - you proxy filter conditions:los,usa,youtube
+2023-09-11 11:55:42,102 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:55:42,104 - INFO - search and display finished
+2023-09-11 11:55:42,304 - INFO - you proxy filter conditions:los,usa,youtube
+2023-09-11 11:55:42,304 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:55:42,306 - INFO - search and display finished
+2023-09-11 11:55:42,533 - INFO - you proxy filter conditions:los,usa,youtube
+2023-09-11 11:55:42,533 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:55:42,536 - INFO - search and display finished
+2023-09-11 11:56:51,868 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:56:51,938 - INFO - TiktokaStudio GUI started
+2023-09-11 11:56:56,119 - INFO - you proxy last filter conditions:[]
+2023-09-11 11:57:03,767 - INFO - you proxy last filter conditions:[]
+2023-09-11 11:57:07,109 - INFO - you proxy last filter conditions:[]
+2023-09-11 11:57:08,034 - INFO - you proxy last filter conditions:[]
+2023-09-11 11:57:08,599 - INFO - you proxy last filter conditions:[]
+2023-09-11 11:57:34,700 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:57:34,772 - INFO - TiktokaStudio GUI started
+2023-09-11 11:57:38,614 - INFO - you proxy last filter conditions:[]
+2023-09-11 11:57:38,615 - INFO - you proxy filter conditions:['los', 'usa', 'youtube']
+2023-09-11 11:57:38,615 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:57:38,620 - INFO - search and display finished
+2023-09-11 11:57:49,565 - INFO - you proxy last filter conditions:[]
+2023-09-11 11:57:49,566 - INFO - you proxy filter conditions:['los', 'usa', 'youtube']
+2023-09-11 11:57:49,566 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:57:49,567 - INFO - search and display finished
+2023-09-11 11:57:53,297 - INFO - you proxy last filter conditions:[]
+2023-09-11 11:57:53,297 - INFO - you proxy filter conditions:['los', 'usa', 'youtube']
+2023-09-11 11:57:53,298 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:57:53,300 - INFO - search and display finished
+2023-09-11 11:57:56,494 - INFO - you proxy last filter conditions:[]
+2023-09-11 11:57:56,494 - INFO - you proxy filter conditions:['los', 'usa', 'youtube']
+2023-09-11 11:57:56,494 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:57:56,496 - INFO - search and display finished
+2023-09-11 11:58:02,196 - INFO - you proxy last filter conditions:[]
+2023-09-11 11:58:02,196 - INFO - you proxy filter conditions:['los', 'usa', 'youtube']
+2023-09-11 11:58:02,196 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:58:02,199 - INFO - search and display finished
+2023-09-11 11:58:02,917 - INFO - you proxy last filter conditions:[]
+2023-09-11 11:58:02,917 - INFO - you proxy filter conditions:['los', 'usa', 'youtube']
+2023-09-11 11:58:02,917 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:58:02,919 - INFO - search and display finished
+2023-09-11 11:58:03,119 - INFO - you proxy last filter conditions:[]
+2023-09-11 11:58:03,119 - INFO - you proxy filter conditions:['los', 'usa', 'youtube']
+2023-09-11 11:58:03,120 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:58:03,121 - INFO - search and display finished
+2023-09-11 11:58:03,301 - INFO - you proxy last filter conditions:[]
+2023-09-11 11:58:03,301 - INFO - you proxy filter conditions:['los', 'usa', 'youtube']
+2023-09-11 11:58:03,301 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:58:03,303 - INFO - search and display finished
+2023-09-11 11:58:03,524 - INFO - you proxy last filter conditions:[]
+2023-09-11 11:58:03,525 - INFO - you proxy filter conditions:['los', 'usa', 'youtube']
+2023-09-11 11:58:03,525 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:58:03,527 - INFO - search and display finished
+2023-09-11 11:58:04,014 - INFO - you proxy last filter conditions:[]
+2023-09-11 11:58:04,014 - INFO - you proxy filter conditions:['los', 'usa', 'youtube']
+2023-09-11 11:58:04,014 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:58:04,016 - INFO - search and display finished
+2023-09-11 11:58:04,210 - INFO - you proxy last filter conditions:[]
+2023-09-11 11:58:04,210 - INFO - you proxy filter conditions:['los', 'usa', 'youtube']
+2023-09-11 11:58:04,210 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:58:04,212 - INFO - search and display finished
+2023-09-11 11:58:04,405 - INFO - you proxy last filter conditions:[]
+2023-09-11 11:58:04,405 - INFO - you proxy filter conditions:['los', 'usa', 'youtube']
+2023-09-11 11:58:04,405 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:58:04,407 - INFO - search and display finished
+2023-09-11 11:58:04,587 - INFO - you proxy last filter conditions:[]
+2023-09-11 11:58:04,587 - INFO - you proxy filter conditions:['los', 'usa', 'youtube']
+2023-09-11 11:58:04,587 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:58:04,589 - INFO - search and display finished
+2023-09-11 11:58:04,809 - INFO - you proxy last filter conditions:[]
+2023-09-11 11:58:04,809 - INFO - you proxy filter conditions:['los', 'usa', 'youtube']
+2023-09-11 11:58:04,809 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 11:58:04,811 - INFO - search and display finished
+2023-09-11 11:59:42,737 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 11:59:42,809 - INFO - TiktokaStudio GUI started
+2023-09-11 12:00:42,878 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 12:00:42,968 - INFO - TiktokaStudio GUI started
+2023-09-11 12:04:14,762 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 12:04:14,833 - INFO - TiktokaStudio GUI started
+2023-09-11 12:04:18,623 - INFO - you proxy last filter conditions:
+2023-09-11 12:04:18,623 - INFO - you proxy filter conditions:['los', 'usa', 'youtube']
+2023-09-11 12:04:18,624 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:04:18,629 - INFO - search and display finished
+2023-09-11 12:04:32,184 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:04:32,184 - INFO - you proxy filter conditions:['los', 'usa', 'youtube']
+2023-09-11 12:04:32,185 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:04:32,187 - INFO - search and display finished
+2023-09-11 12:04:41,182 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:04:41,182 - INFO - you proxy filter conditions:['los', 'usa', 'youtube']
+2023-09-11 12:04:41,182 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:04:41,184 - INFO - search and display finished
+2023-09-11 12:07:02,495 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 12:07:02,572 - INFO - TiktokaStudio GUI started
+2023-09-11 12:07:05,224 - INFO - you proxy last filter conditions:
+2023-09-11 12:07:05,224 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], is changed False
+2023-09-11 12:07:05,224 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:07:05,228 - INFO - search and display finished
+2023-09-11 12:07:05,543 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:07:05,543 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], is changed False
+2023-09-11 12:07:05,544 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:07:05,545 - INFO - search and display finished
+2023-09-11 12:08:07,525 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:08:07,525 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], is changed False
+2023-09-11 12:08:07,525 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:08:07,527 - INFO - search and display finished
+2023-09-11 12:08:08,652 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:08:08,652 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], is changed False
+2023-09-11 12:08:08,652 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:08:08,654 - INFO - search and display finished
+2023-09-11 12:10:08,699 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 12:10:08,774 - INFO - TiktokaStudio GUI started
+2023-09-11 12:10:21,743 - INFO - you proxy last filter conditions:
+2023-09-11 12:10:21,744 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:10:21,744 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:10:21,749 - INFO - search and display finished
+2023-09-11 12:10:30,948 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:10:30,948 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:10:30,948 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:10:30,951 - INFO - search and display finished
+2023-09-11 12:11:29,011 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 12:11:29,112 - INFO - TiktokaStudio GUI started
+2023-09-11 12:11:35,293 - INFO - you proxy last filter conditions:
+2023-09-11 12:11:35,293 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:11:35,293 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:11:35,298 - INFO - search and display finished
+2023-09-11 12:11:41,501 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:11:41,502 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:11:41,502 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:11:41,504 - INFO - search and display finished
+2023-09-11 12:11:52,976 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:11:52,976 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:11:52,976 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:11:52,978 - INFO - search and display finished
+2023-09-11 12:11:54,541 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:11:54,541 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:11:54,541 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:11:54,543 - INFO - search and display finished
+2023-09-11 12:11:55,653 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:11:55,654 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:11:55,654 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:11:55,655 - INFO - search and display finished
+2023-09-11 12:11:56,483 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:11:56,483 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:11:56,483 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:11:56,485 - INFO - search and display finished
+2023-09-11 12:12:44,676 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 12:12:44,750 - INFO - TiktokaStudio GUI started
+2023-09-11 12:12:47,969 - INFO - you proxy last filter conditions:
+2023-09-11 12:12:47,969 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:12:47,969 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:12:47,973 - INFO - search and display finished
+2023-09-11 12:12:53,681 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:12:53,681 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:12:53,681 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:12:53,683 - INFO - search and display finished
+2023-09-11 12:12:54,448 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:12:54,448 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:12:54,448 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:12:54,450 - INFO - search and display finished
+2023-09-11 12:12:55,122 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:12:55,123 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:12:55,123 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:12:55,125 - INFO - search and display finished
+2023-09-11 12:12:55,779 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:12:55,780 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:12:55,780 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:12:55,781 - INFO - search and display finished
+2023-09-11 12:12:56,345 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:12:56,345 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:12:56,346 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:12:56,348 - INFO - search and display finished
+2023-09-11 12:12:57,015 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:12:57,015 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:12:57,015 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:12:57,017 - INFO - search and display finished
+2023-09-11 12:13:56,741 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 12:13:56,795 - INFO - TiktokaStudio GUI started
+2023-09-11 12:14:11,556 - INFO - you proxy last filter conditions:
+2023-09-11 12:14:11,556 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:14:11,556 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:14:11,560 - INFO - search and display finished
+2023-09-11 12:14:14,456 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:14:14,457 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:14:14,457 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:14:14,459 - INFO - search and display finished
+2023-09-11 12:14:15,207 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:14:15,207 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:14:15,207 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:14:15,209 - INFO - search and display finished
+2023-09-11 12:14:15,458 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:14:15,458 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:14:15,458 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:14:15,461 - INFO - search and display finished
+2023-09-11 12:14:15,737 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:14:15,737 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:14:15,737 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:14:15,739 - INFO - search and display finished
+2023-09-11 12:14:15,917 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:14:15,918 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:14:15,918 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:14:15,920 - INFO - search and display finished
+2023-09-11 12:14:16,113 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:14:16,113 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:14:16,113 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:14:16,115 - INFO - search and display finished
+2023-09-11 12:14:16,309 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:14:16,309 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:14:16,309 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:14:16,311 - INFO - search and display finished
+2023-09-11 12:14:16,484 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:14:16,484 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:14:16,484 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:14:16,486 - INFO - search and display finished
+2023-09-11 12:14:16,707 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:14:16,707 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:14:16,707 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:14:16,709 - INFO - search and display finished
+2023-09-11 12:14:42,679 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 12:14:42,727 - INFO - TiktokaStudio GUI started
+2023-09-11 12:14:51,436 - INFO - you proxy last filter conditions:
+2023-09-11 12:14:51,436 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:14:51,436 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:14:51,440 - INFO - search and display finished
+2023-09-11 12:14:53,151 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:14:53,151 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:14:53,151 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:14:53,153 - INFO - search and display finished
+2023-09-11 12:14:54,042 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:14:54,042 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:14:54,043 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:14:54,045 - INFO - search and display finished
+2023-09-11 12:14:54,922 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:14:54,922 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:14:54,922 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:14:54,924 - INFO - search and display finished
+2023-09-11 12:14:55,609 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:14:55,609 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:14:55,609 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:14:55,612 - INFO - search and display finished
+2023-09-11 12:14:56,253 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:14:56,253 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:14:56,253 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:14:56,255 - INFO - search and display finished
+2023-09-11 12:15:45,346 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 12:15:45,416 - INFO - TiktokaStudio GUI started
+2023-09-11 12:15:50,207 - INFO - you proxy last filter conditions:
+2023-09-11 12:15:50,207 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:15:50,207 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:15:50,211 - INFO - search and display finished
+2023-09-11 12:15:52,843 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:15:52,843 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:15:52,843 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:15:52,846 - INFO - search and display finished
+2023-09-11 12:15:54,444 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:15:54,445 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:15:54,445 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:15:54,447 - INFO - search and display finished
+2023-09-11 12:15:55,321 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:15:55,322 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:15:55,322 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:15:55,324 - INFO - search and display finished
+2023-09-11 12:15:55,964 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube')
+2023-09-11 12:15:55,965 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'], without change False
+2023-09-11 12:15:55,965 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:15:55,967 - INFO - search and display finished
+2023-09-11 12:17:26,647 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 12:17:26,720 - INFO - TiktokaStudio GUI started
+2023-09-11 12:17:33,198 - INFO - you proxy last filter conditions:,<class 'str'>
+2023-09-11 12:17:33,198 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'],<class 'list'> without change False
+2023-09-11 12:17:33,198 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:17:33,203 - INFO - search and display finished
+2023-09-11 12:17:41,511 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube'),<class 'str'>
+2023-09-11 12:17:41,511 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'],<class 'list'> without change False
+2023-09-11 12:17:41,511 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:17:41,513 - INFO - search and display finished
+2023-09-11 12:17:42,360 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube'),<class 'str'>
+2023-09-11 12:17:42,361 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'],<class 'list'> without change False
+2023-09-11 12:17:42,361 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:17:42,363 - INFO - search and display finished
+2023-09-11 12:18:18,596 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 12:18:18,668 - INFO - TiktokaStudio GUI started
+2023-09-11 12:18:22,147 - INFO - you proxy last filter conditions:,<class 'str'>
+2023-09-11 12:18:22,148 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'],<class 'list'> without change False
+2023-09-11 12:18:22,148 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:18:22,152 - INFO - search and display finished
+2023-09-11 12:18:30,175 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube'),<class 'str'>
+2023-09-11 12:18:30,175 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'],<class 'list'> without change False
+2023-09-11 12:18:30,175 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:18:30,177 - INFO - search and display finished
+2023-09-11 12:18:31,449 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube'),<class 'str'>
+2023-09-11 12:18:31,449 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'],<class 'list'> without change False
+2023-09-11 12:18:31,449 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:18:31,451 - INFO - search and display finished
+2023-09-11 12:18:32,309 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube'),<class 'str'>
+2023-09-11 12:18:32,309 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'],<class 'list'> without change False
+2023-09-11 12:18:32,309 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:18:32,311 - INFO - search and display finished
+2023-09-11 12:18:33,003 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube'),<class 'str'>
+2023-09-11 12:18:33,003 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'],<class 'list'> without change False
+2023-09-11 12:18:33,003 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:18:33,005 - INFO - search and display finished
+2023-09-11 12:18:40,308 - INFO - you proxy last filter conditions:('los', 'usa', 'youtube'),<class 'str'>
+2023-09-11 12:18:40,308 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'],<class 'list'> without change False
+2023-09-11 12:18:40,308 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:18:40,310 - INFO - search and display finished
+2023-09-11 12:20:00,418 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 12:20:00,493 - INFO - TiktokaStudio GUI started
+2023-09-11 12:20:03,890 - INFO - you proxy last filter conditions:[],<class 'list'>
+2023-09-11 12:20:03,890 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'],<class 'list'> without change False
+2023-09-11 12:20:03,890 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:20:03,895 - INFO - search and display finished
+2023-09-11 12:20:15,750 - INFO - you proxy last filter conditions:['(', "'", 'l', 'o', 's', "'", ',', ' ', "'", 'u', 's', 'a', "'", ',', ' ', "'", 'y', 'o', 'u', 't', 'u', 'b', 'e', "'", ')'],<class 'list'>
+2023-09-11 12:20:15,751 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'],<class 'list'> without change False
+2023-09-11 12:20:15,751 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:20:15,753 - INFO - search and display finished
+2023-09-11 12:20:52,202 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 12:20:52,277 - INFO - TiktokaStudio GUI started
+2023-09-11 12:20:56,584 - INFO - you proxy last filter conditions:[''],<class 'list'>
+2023-09-11 12:20:56,584 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'],<class 'list'> without change False
+2023-09-11 12:20:56,584 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:20:56,588 - INFO - search and display finished
+2023-09-11 12:21:02,691 - INFO - you proxy last filter conditions:["('los'", " 'usa'", " 'youtube')"],<class 'list'>
+2023-09-11 12:21:02,691 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'],<class 'list'> without change False
+2023-09-11 12:21:02,691 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:21:02,693 - INFO - search and display finished
+2023-09-11 12:21:14,265 - INFO - you proxy last filter conditions:["('los'", " 'usa'", " 'youtube')"],<class 'list'>
+2023-09-11 12:21:14,265 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'],<class 'list'> without change False
+2023-09-11 12:21:14,265 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:21:14,267 - INFO - search and display finished
+2023-09-11 12:21:53,099 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 12:21:53,169 - INFO - TiktokaStudio GUI started
+2023-09-11 12:21:57,455 - INFO - you proxy last filter conditions:[],<class 'list'>
+2023-09-11 12:21:57,455 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'],<class 'list'> without change False
+2023-09-11 12:21:57,455 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:21:57,460 - INFO - search and display finished
+2023-09-11 12:22:01,382 - INFO - you proxy last filter conditions:['o', "'", 's', 'e', 'l', 'b', 'u', ' ', 't', ',', 'a', ')', 'y', '('],<class 'list'>
+2023-09-11 12:22:01,383 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'],<class 'list'> without change False
+2023-09-11 12:22:01,383 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:22:01,385 - INFO - search and display finished
+2023-09-11 12:22:57,397 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 12:22:57,474 - INFO - TiktokaStudio GUI started
+2023-09-11 12:23:00,965 - INFO - you proxy last filter conditions:[],<class 'list'>
+2023-09-11 12:23:00,965 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'],<class 'list'> without change False
+2023-09-11 12:23:00,965 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:23:00,969 - INFO - search and display finished
+2023-09-11 12:23:15,361 - INFO - you proxy last filter conditions:['(', "'", 'l', 'o', 's', "'", ',', ' ', "'", 'u', 's', 'a', "'", ',', ' ', "'", 'y', 'o', 'u', 't', 'u', 'b', 'e', "'", ')'],<class 'list'>
+2023-09-11 12:23:15,361 - INFO - you proxy filter conditions:['los', 'usa', 'youtube'],<class 'list'> without change False
+2023-09-11 12:23:15,361 - INFO - start to search against: ['los', 'usa', 'youtube']
+2023-09-11 12:23:15,363 - INFO - search and display finished
+2023-09-11 12:24:51,453 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 12:24:51,527 - INFO - TiktokaStudio GUI started
+2023-09-11 12:24:55,541 - INFO - you proxy last filter conditions:,<class 'str'>
+2023-09-11 12:24:55,542 - INFO - you proxy filter conditions:losusayoutube,<class 'str'> without change False
+2023-09-11 12:24:55,542 - INFO - start to search against: losusayoutube
+2023-09-11 12:24:55,547 - INFO - search and display finished
+2023-09-11 12:25:12,357 - INFO - you proxy last filter conditions:losusayoutube,<class 'str'>
+2023-09-11 12:25:12,357 - INFO - you proxy filter conditions:losusayoutube,<class 'str'> without change True
+2023-09-11 12:25:12,357 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 12:25:13,531 - INFO - you proxy last filter conditions:losusayoutube,<class 'str'>
+2023-09-11 12:25:13,532 - INFO - you proxy filter conditions:losusayoutube,<class 'str'> without change True
+2023-09-11 12:25:13,532 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 12:25:16,703 - INFO - you proxy last filter conditions:losusayoutube,<class 'str'>
+2023-09-11 12:25:16,704 - INFO - you proxy filter conditions:losusayoutube,<class 'str'> without change True
+2023-09-11 12:25:16,704 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 12:25:17,284 - INFO - you proxy last filter conditions:losusayoutube,<class 'str'>
+2023-09-11 12:25:17,284 - INFO - you proxy filter conditions:losusayoutube,<class 'str'> without change True
+2023-09-11 12:25:17,284 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 12:25:17,487 - INFO - you proxy last filter conditions:losusayoutube,<class 'str'>
+2023-09-11 12:25:17,487 - INFO - you proxy filter conditions:losusayoutube,<class 'str'> without change True
+2023-09-11 12:25:17,487 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 12:25:17,708 - INFO - you proxy last filter conditions:losusayoutube,<class 'str'>
+2023-09-11 12:25:17,708 - INFO - you proxy filter conditions:losusayoutube,<class 'str'> without change True
+2023-09-11 12:25:17,708 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 12:26:20,755 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 12:26:20,832 - INFO - TiktokaStudio GUI started
+2023-09-11 12:26:29,942 - INFO - you proxy last filter conditions:,<class 'str'>
+2023-09-11 12:26:29,943 - INFO - start to search against: city:los;country:usa;tags:youtube
+2023-09-11 12:26:29,947 - INFO - search and display finished
+2023-09-11 12:26:33,396 - INFO - you proxy last filter conditions:city:los;country:usa;tags:youtube,<class 'str'>
+2023-09-11 12:26:33,396 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 12:26:42,976 - INFO - you proxy last filter conditions:city:los;country:usa;tags:youtube,<class 'str'>
+2023-09-11 12:26:42,976 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 12:26:44,119 - INFO - you proxy last filter conditions:city:los;country:usa;tags:youtube,<class 'str'>
+2023-09-11 12:26:44,119 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 12:26:44,727 - INFO - you proxy last filter conditions:city:los;country:usa;tags:youtube,<class 'str'>
+2023-09-11 12:26:44,728 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 12:28:42,189 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 12:28:42,240 - INFO - TiktokaStudio GUI started
+2023-09-11 12:28:46,489 - INFO - start a new query: city:los;country:usa;tags:youtube
+2023-09-11 12:28:46,494 - INFO - search and display finished
+2023-09-11 12:28:53,573 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 12:29:01,262 - INFO - start a new query: city:;country:;tags:
+2023-09-11 12:29:01,264 - INFO - search and display finished
+2023-09-11 12:39:25,400 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 12:39:25,470 - INFO - TiktokaStudio GUI started
+2023-09-11 12:39:44,203 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 12:39:44,276 - INFO - TiktokaStudio GUI started
+2023-09-11 12:41:13,296 - INFO - detected 2record to be added
+2023-09-11 12:41:13,297 - INFO - start to process 0 record
+2023-09-11 12:41:13,309 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 12:41:13,310 - INFO - start to process 1 record
+2023-09-11 12:41:13,314 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 12:41:48,958 - INFO - start a new query: city:los;country:usa;tags:youtube
+2023-09-11 12:41:48,959 - INFO - search and display finished
+2023-09-11 12:41:54,772 - INFO - start a new query: city:;country:;tags:youtube
+2023-09-11 12:41:54,774 - INFO - search and display finished
+2023-09-11 12:42:00,518 - INFO - start a new query: city:;country:;tags:
+2023-09-11 12:42:00,521 - INFO - search and display finished
+2023-09-11 12:42:02,179 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 12:42:02,438 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 12:42:02,662 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 12:42:03,411 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 12:43:03,109 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 12:43:03,178 - INFO - TiktokaStudio GUI started
+2023-09-11 12:43:12,736 - INFO - detected 2 records to be added
+2023-09-11 12:43:12,737 - INFO - start to process 0 record
+2023-09-11 12:43:12,745 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 12:43:12,746 - INFO - start to process 1 record
+2023-09-11 12:43:12,751 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 12:44:57,148 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 12:44:57,222 - INFO - TiktokaStudio GUI started
+2023-09-11 12:45:03,407 - INFO - detected 2 records to be added
+2023-09-11 12:45:03,408 - INFO - start to process 0 record
+2023-09-11 12:45:03,416 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 12:45:03,416 - INFO - start to process 1 record
+2023-09-11 12:45:03,421 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 12:45:03,633 - INFO - detected 2 records to be added
+2023-09-11 12:45:03,633 - INFO - start to process 0 record
+2023-09-11 12:45:03,638 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 12:45:03,638 - INFO - start to process 1 record
+2023-09-11 12:45:03,644 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 14:01:08,715 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 14:01:08,786 - INFO - TiktokaStudio GUI started
+2023-09-11 14:01:13,978 - INFO - detected 2 records to be added
+2023-09-11 14:01:13,978 - INFO - start to process 0 record
+2023-09-11 14:01:44,902 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 14:01:44,978 - INFO - TiktokaStudio GUI started
+2023-09-11 14:01:56,052 - INFO - detected 2 records to be added
+2023-09-11 14:01:56,053 - INFO - start to process 0 record
+2023-09-11 14:07:42,000 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 14:07:42,055 - INFO - TiktokaStudio GUI started
+2023-09-11 14:07:49,024 - INFO - detected 2 records to be added
+2023-09-11 14:07:49,024 - INFO - start to process 0 record
+2023-09-11 14:08:34,045 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 14:08:34,121 - INFO - TiktokaStudio GUI started
+2023-09-11 14:08:38,682 - INFO - detected 2 records to be added
+2023-09-11 14:08:38,683 - INFO - start to process 0 record
+2023-09-11 14:09:39,606 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 14:09:39,685 - INFO - TiktokaStudio GUI started
+2023-09-11 14:10:10,636 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 14:10:10,711 - INFO - TiktokaStudio GUI started
+2023-09-11 14:10:15,887 - INFO - detected 2 records to be added
+2023-09-11 14:10:15,887 - INFO - start to pre-process 0 record
+2023-09-11 14:10:15,888 - INFO - start to pre-process 1 record
+2023-09-11 14:10:15,904 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 14:10:23,206 - INFO - start a new query: city:los;country:usa;tags:youtube
+2023-09-11 14:10:23,209 - INFO - search and display finished
+2023-09-11 14:10:26,902 - INFO - start a new query: city:;country:usa;tags:youtube
+2023-09-11 14:10:26,904 - INFO - search and display finished
+2023-09-11 14:10:28,806 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 14:10:31,054 - INFO - start a new query: city:;country:;tags:
+2023-09-11 14:10:31,056 - INFO - search and display finished
+2023-09-11 14:10:43,688 - INFO - start a new query: city:;country:;tags:youtube
+2023-09-11 14:10:43,690 - INFO - search and display finished
+2023-09-11 14:12:01,427 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 14:12:01,500 - INFO - TiktokaStudio GUI started
+2023-09-11 14:12:04,595 - INFO - start a new query: SELECT * FROM proxies  where city regexp 'los' and country regexp 'usa' and tags regexp 'youtube' ORDER by inserted_at DESC
+2023-09-11 14:12:04,601 - INFO - search and display finished
+2023-09-11 14:12:11,219 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 14:12:11,394 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 14:12:15,595 - INFO - start a new query: SELECT * FROM proxies  where city regexp '' and country regexp '' and tags regexp 'youtube' ORDER by inserted_at DESC
+2023-09-11 14:12:15,597 - INFO - search and display finished
+2023-09-11 14:17:19,776 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 14:17:19,828 - INFO - TiktokaStudio GUI started
+2023-09-11 14:17:25,605 - INFO - start a new query: SELECT * FROM proxies where city regexp 'los' country regexp 'usa' tags regexp 'youtube' ORDER by inserted_at DESC
+2023-09-11 14:17:25,608 - ERROR - query  to SELECT * FROM proxies where city regexp 'los' country regexp 'usa' tags regexp 'youtube' ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) near "country": syntax error
+[SQL: SELECT * FROM proxies where city regexp 'los' country regexp 'usa' tags regexp 'youtube' ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 14:17:25,608 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 14:38:49,131 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 14:38:49,181 - INFO - TiktokaStudio GUI started
+2023-09-11 14:38:57,187 - INFO - start a new query: SELECT * FROM proxies where city regexp '{city}' AND  country regexp '{country}' AND  tags regexp '{tags}' ORDER by inserted_at DESC
+2023-09-11 14:38:57,193 - INFO - search and display finished
+2023-09-11 14:39:46,886 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 14:39:46,962 - INFO - TiktokaStudio GUI started
+2023-09-11 14:39:49,733 - INFO - start a new query: SELECT * FROM proxies where city regexp 'los' AND  country regexp 'usa' AND  tags regexp 'youtube' ORDER by inserted_at DESC
+2023-09-11 14:39:49,738 - INFO - search and display finished
+2023-09-11 14:39:57,494 - INFO - start a new query: SELECT * FROM proxies where tags regexp 'youtube' ORDER by inserted_at DESC
+2023-09-11 14:39:57,497 - INFO - search and display finished
+2023-09-11 14:40:20,109 - INFO - detected 2 records to be added
+2023-09-11 14:40:20,110 - INFO - start to pre-process 0 record
+2023-09-11 14:40:20,110 - INFO - start to pre-process 1 record
+2023-09-11 14:40:20,126 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 14:40:24,246 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 14:40:28,670 - INFO - start a new query: SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 14:40:28,673 - INFO - search and display finished
+2023-09-11 14:42:17,193 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 14:42:17,268 - INFO - TiktokaStudio GUI started
+2023-09-11 14:42:27,738 - INFO - detected 2 records to be added
+2023-09-11 14:42:27,739 - INFO - start to pre-process 0 record: socks5://127.0.0.1:1080;tiktok
+2023-09-11 14:42:27,739 - INFO - start to pre-process 1 record: socks5://127.0.0.1:1088;douyin
+2023-09-11 14:42:27,756 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 14:42:52,508 - INFO - start a new query: SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 14:42:52,510 - INFO - search and display finished
+2023-09-11 14:43:36,543 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 14:43:36,616 - INFO - TiktokaStudio GUI started
+2023-09-11 14:43:48,446 - INFO - detected 2 records to be added
+2023-09-11 14:43:48,447 - INFO - start to pre-process 0 record: socks5://127.0.0.1:1080;douyin
+2023-09-11 14:43:48,447 - INFO - start to pre-process 1 record: socks5://127.0.0.1:1088;tiktok
+2023-09-11 14:43:48,465 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 14:44:42,696 - INFO - start a new query: SELECT * FROM proxies where city regexp 'los' AND  country regexp 'usa' AND  tags regexp 'youtube' ORDER by inserted_at DESC
+2023-09-11 14:44:42,699 - INFO - search and display finished
+2023-09-11 14:44:48,056 - INFO - start a new query: SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 14:44:48,059 - INFO - search and display finished
+2023-09-11 14:46:05,613 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 14:46:05,687 - INFO - TiktokaStudio GUI started
+2023-09-11 14:46:20,731 - INFO - detected 2 records to be added
+2023-09-11 14:46:20,732 - INFO - start to pre-process 0 record: socks5://127.0.0.1:1080;tiktok
+2023-09-11 14:46:20,732 - INFO - split into url
+:socks5://127.0.0.1:1080
+tags
+:[]
+2023-09-11 14:47:39,355 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 14:47:39,429 - INFO - TiktokaStudio GUI started
+2023-09-11 14:47:49,702 - INFO - detected 1 records to be added
+2023-09-11 14:47:49,702 - INFO - start to pre-process 0 record: socks5://127.0.0.1:1080;tiktokk
+2023-09-11 14:47:49,702 - INFO - split into url
+:socks5://127.0.0.1:1080
+tags
+:[]
+2023-09-11 14:47:49,702 - INFO - check url format socks5://127.0.0.1:1080
+2023-09-11 14:47:49,702 - INFO - check tag format socks5://127.0.0.1:1080
+2023-09-11 14:47:49,719 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 14:49:57,026 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 14:49:57,099 - INFO - TiktokaStudio GUI started
+2023-09-11 14:50:09,507 - INFO - detected 2 records to be added
+2023-09-11 14:50:09,508 - INFO - start to pre-process 0 record: socks5://127.0.0.1:1080;tiktokk
+2023-09-11 14:50:09,508 - INFO - split into url
+:['socks5://127.0.0.1:1080']
+tags
+:[]
+2023-09-11 14:50:09,508 - INFO - check url format socks5://127.0.0.1:1080
+2023-09-11 14:50:09,508 - INFO - check tag format socks5://127.0.0.1:1080
+2023-09-11 14:50:09,508 - INFO - start to pre-process 1 record: socks5://127.0.0.1:1088;ddddddd
+2023-09-11 14:50:09,508 - INFO - split into url
+:['socks5://127.0.0.1:1088']
+tags
+:['socks5://127.0.0.1:1080']
+2023-09-11 14:50:09,508 - INFO - check url format socks5://127.0.0.1:1088
+2023-09-11 14:50:09,508 - INFO - check tag format socks5://127.0.0.1:1088
+2023-09-11 14:50:09,526 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 14:54:27,539 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 14:54:27,613 - INFO - TiktokaStudio GUI started
+2023-09-11 14:55:10,078 - INFO - detected 2 records to be added
+2023-09-11 14:55:10,079 - INFO - start to pre-process 0 record: socks5://127.0.0.1:1088;333
+2023-09-11 14:55:10,079 - INFO - split into url
+:['socks5://127.0.0.1:1088']
+tags
+:[]
+2023-09-11 14:55:10,079 - INFO - check url format socks5://127.0.0.1:1088
+2023-09-11 14:55:10,079 - INFO - check tag format socks5://127.0.0.1:1088
+2023-09-11 14:55:10,079 - INFO - start to pre-process 1 record: socks5://127.0.0.1:1080;222
+2023-09-11 14:55:10,079 - INFO - split into url
+:['socks5://127.0.0.1:1080']
+tags
+:['socks5://127.0.0.1:1088']
+2023-09-11 14:55:10,079 - INFO - check url format socks5://127.0.0.1:1080
+2023-09-11 14:55:10,079 - INFO - check tag format socks5://127.0.0.1:1080
+2023-09-11 14:55:10,098 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 14:56:37,063 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 14:56:37,139 - INFO - TiktokaStudio GUI started
+2023-09-11 14:56:43,674 - INFO - detected 2 records to be added
+2023-09-11 14:56:43,674 - INFO - start to pre-process 0 record: <class 'str'>
+2023-09-11 14:56:43,675 - INFO - start to pre-process 1 record: <class 'str'>
+2023-09-11 14:56:43,675 - INFO - split into url
+:['socks5://127.0.0.1:1080']
+tags
+:[None]
+2023-09-11 14:56:43,675 - INFO - check url format socks5://127.0.0.1:1080
+2023-09-11 14:56:43,675 - INFO - check tag format socks5://127.0.0.1:1080
+2023-09-11 14:56:43,692 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 14:57:51,339 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 14:57:51,426 - INFO - TiktokaStudio GUI started
+2023-09-11 14:57:58,916 - INFO - detected 2 records to be added
+2023-09-11 14:57:58,917 - INFO - start to pre-process 0 record: <class 'str'>
+2023-09-11 14:57:58,917 - INFO - split into url
+:['socks5://127.0.0.1:1080']
+tags
+:[]
+2023-09-11 14:57:58,917 - INFO - check url format socks5://127.0.0.1:1080
+2023-09-11 14:57:58,917 - INFO - check tag format socks5://127.0.0.1:1080
+2023-09-11 14:57:58,917 - INFO - end to validate 0 record: <class 'str'>
+2023-09-11 14:57:58,917 - INFO - start to pre-process 1 record: <class 'str'>
+2023-09-11 14:57:58,918 - INFO - end to validate 1 record: <class 'str'>
+2023-09-11 14:57:58,938 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 14:59:45,589 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 14:59:45,662 - INFO - TiktokaStudio GUI started
+2023-09-11 14:59:52,904 - INFO - detected 2 records to be added
+2023-09-11 14:59:52,905 - INFO - start to pre-process 0 record: <class 'str'>
+2023-09-11 14:59:52,905 - INFO - split into url
+:socks5://127.0.0.1:1080
+tags
+:3333
+2023-09-11 14:59:52,905 - INFO - check url format socks5://127.0.0.1:1080
+2023-09-11 14:59:52,905 - INFO - check tag format socks5://127.0.0.1:1080
+2023-09-11 14:59:52,905 - INFO - end to validate 0 record: <class 'str'>
+2023-09-11 14:59:52,905 - INFO - start to pre-process 1 record: <class 'str'>
+2023-09-11 14:59:52,905 - INFO - end to validate 1 record: <class 'str'>
+2023-09-11 14:59:52,923 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 15:00:40,261 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 15:00:40,328 - INFO - TiktokaStudio GUI started
+2023-09-11 15:01:20,012 - INFO - detected 10 records to be added
+2023-09-11 15:01:20,013 - INFO - start to pre-process 0 record: <class 'str'>
+2023-09-11 15:01:20,013 - INFO - split into url:
+socks5://127.0.0.1:1080
+tags:
+douyin
+2023-09-11 15:01:20,013 - INFO - check url format socks5://127.0.0.1:1080
+2023-09-11 15:01:20,013 - INFO - check tag format socks5://127.0.0.1:1080
+2023-09-11 15:01:20,013 - INFO - end to validate 0 record: <class 'str'>
+2023-09-11 15:01:20,013 - INFO - start to pre-process 1 record: <class 'str'>
+2023-09-11 15:01:20,013 - INFO - split into url:
+socks5://127.0.0.1:1088
+tags:
+333
+2023-09-11 15:01:20,013 - INFO - check url format socks5://127.0.0.1:1088
+2023-09-11 15:01:20,013 - INFO - check tag format socks5://127.0.0.1:1088
+2023-09-11 15:01:20,013 - INFO - end to validate 1 record: <class 'str'>
+2023-09-11 15:01:20,013 - INFO - start to pre-process 2 record: <class 'str'>
+2023-09-11 15:01:20,013 - INFO - split into url:
+socks5://127.0.0.1:1088
+tags:
+douyin
+2023-09-11 15:01:20,013 - INFO - check url format socks5://127.0.0.1:1088
+2023-09-11 15:01:20,013 - INFO - check tag format socks5://127.0.0.1:1088
+2023-09-11 15:01:20,013 - INFO - end to validate 2 record: <class 'str'>
+2023-09-11 15:01:20,013 - INFO - start to pre-process 3 record: <class 'str'>
+2023-09-11 15:01:20,014 - INFO - split into url:
+socks5://127.0.0.1:1080
+tags:
+xhs
+2023-09-11 15:01:20,014 - INFO - check url format socks5://127.0.0.1:1080
+2023-09-11 15:01:20,014 - INFO - check tag format socks5://127.0.0.1:1080
+2023-09-11 15:01:20,014 - INFO - end to validate 3 record: <class 'str'>
+2023-09-11 15:01:20,014 - INFO - start to pre-process 4 record: <class 'str'>
+2023-09-11 15:01:20,014 - INFO - split into url:
+socks5://127.0.0.1:1088
+tags:
+222
+2023-09-11 15:01:20,014 - INFO - check url format socks5://127.0.0.1:1088
+2023-09-11 15:01:20,014 - INFO - check tag format socks5://127.0.0.1:1088
+2023-09-11 15:01:20,014 - INFO - end to validate 4 record: <class 'str'>
+2023-09-11 15:01:20,014 - INFO - start to pre-process 5 record: <class 'str'>
+2023-09-11 15:01:20,014 - INFO - split into url:
+socks5://127.0.0.1:1088
+tags:
+youtube
+2023-09-11 15:01:20,014 - INFO - check url format socks5://127.0.0.1:1088
+2023-09-11 15:01:20,014 - INFO - check tag format socks5://127.0.0.1:1088
+2023-09-11 15:01:20,014 - INFO - end to validate 5 record: <class 'str'>
+2023-09-11 15:01:20,014 - INFO - start to pre-process 6 record: <class 'str'>
+2023-09-11 15:01:20,015 - INFO - end to validate 6 record: <class 'str'>
+2023-09-11 15:01:20,015 - INFO - start to pre-process 7 record: <class 'str'>
+2023-09-11 15:01:20,016 - INFO - split into url:
+socks5://127.0.0.1:1080
+tags:
+111
+2023-09-11 15:01:20,016 - INFO - check url format socks5://127.0.0.1:1080
+2023-09-11 15:01:20,016 - INFO - check tag format socks5://127.0.0.1:1080
+2023-09-11 15:01:20,016 - INFO - end to validate 7 record: <class 'str'>
+2023-09-11 15:01:20,016 - INFO - start to pre-process 8 record: <class 'str'>
+2023-09-11 15:01:20,016 - INFO - end to validate 8 record: <class 'str'>
+2023-09-11 15:01:20,016 - INFO - start to pre-process 9 record: <class 'str'>
+2023-09-11 15:01:20,016 - INFO - split into url:
+socks5://127.0.0.1:1080
+tags:
+tiktok
+2023-09-11 15:01:20,016 - INFO - check url format socks5://127.0.0.1:1080
+2023-09-11 15:01:20,016 - INFO - check tag format socks5://127.0.0.1:1080
+2023-09-11 15:01:20,017 - INFO - end to validate 9 record: <class 'str'>
+2023-09-11 15:01:20,038 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 15:02:25,934 - INFO - start a new query: SELECT * FROM proxies where tags regexp 'youtube' ORDER by inserted_at DESC
+2023-09-11 15:02:25,938 - INFO - search and display finished
+2023-09-11 15:02:34,206 - INFO - start a new query: SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 15:02:34,208 - INFO - search and display finished
+2023-09-11 15:03:52,552 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 15:03:52,625 - INFO - TiktokaStudio GUI started
+2023-09-11 15:04:03,646 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 15:04:03,698 - INFO - TiktokaStudio GUI started
+2023-09-11 15:11:24,066 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 15:11:24,142 - INFO - TiktokaStudio GUI started
+2023-09-11 15:13:23,850 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 15:13:23,919 - INFO - TiktokaStudio GUI started
+2023-09-11 15:15:41,354 - INFO - detected 8 records to be added
+2023-09-11 15:15:47,451 - INFO - start a new query: SELECT * FROM proxies where city regexp 'los' AND  country regexp 'usa' AND  tags regexp 'youtube' ORDER by inserted_at DESC
+2023-09-11 15:15:47,455 - ERROR - query  to SELECT * FROM proxies where city regexp 'los' AND  country regexp 'usa' AND  tags regexp 'youtube' ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies where city regexp 'los' AND  country regexp 'usa' AND  tags regexp 'youtube' ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 15:15:47,455 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 15:15:56,723 - INFO - start a new query: SELECT * FROM proxies where tags regexp 'youtube' ORDER by inserted_at DESC
+2023-09-11 15:15:56,724 - ERROR - query  to SELECT * FROM proxies where tags regexp 'youtube' ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) no such table: proxies
+[SQL: SELECT * FROM proxies where tags regexp 'youtube' ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 15:15:56,724 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 15:17:26,393 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 15:17:26,467 - INFO - TiktokaStudio GUI started
+2023-09-11 15:17:33,823 - INFO - detected 8 records to be added
+2023-09-11 15:18:06,193 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 15:18:06,266 - INFO - TiktokaStudio GUI started
+2023-09-11 15:18:10,824 - INFO - detected 8 records to be added
+2023-09-11 15:18:10,825 - INFO - start to pre-process 0 record: <class 'str'>
+2023-09-11 15:18:10,825 - INFO - split into url:
+socks5://127.0.0.1:1088
+tags:
+444
+2023-09-11 15:18:10,825 - INFO - check url format socks5://127.0.0.1:1088
+2023-09-11 15:18:10,825 - INFO - check tag format 444
+2023-09-11 15:18:10,825 - INFO - end to validate 0 record: <class 'str'>
+2023-09-11 15:18:10,825 - INFO - start to pre-process 1 record: <class 'str'>
+2023-09-11 15:18:10,825 - INFO - split into url:
+socks5://127.0.0.1:1080
+tags:
+111
+2023-09-11 15:18:10,825 - INFO - check url format socks5://127.0.0.1:1080
+2023-09-11 15:18:10,825 - INFO - check tag format 111
+2023-09-11 15:18:10,825 - INFO - end to validate 1 record: <class 'str'>
+2023-09-11 15:18:10,825 - INFO - start to pre-process 2 record: <class 'str'>
+2023-09-11 15:18:10,825 - INFO - split into url:
+socks5://127.0.0.1:1088
+tags:
+tiktok
+2023-09-11 15:18:10,825 - INFO - check url format socks5://127.0.0.1:1088
+2023-09-11 15:18:10,825 - INFO - check tag format tiktok
+2023-09-11 15:18:10,825 - INFO - end to validate 2 record: <class 'str'>
+2023-09-11 15:18:10,825 - INFO - start to pre-process 3 record: <class 'str'>
+2023-09-11 15:18:10,825 - INFO - split into url:
+socks5://127.0.0.1:1080
+tags:
+333
+2023-09-11 15:18:10,825 - INFO - check url format socks5://127.0.0.1:1080
+2023-09-11 15:18:10,827 - INFO - check tag format 333
+2023-09-11 15:18:10,827 - INFO - end to validate 3 record: <class 'str'>
+2023-09-11 15:18:10,827 - INFO - start to pre-process 4 record: <class 'str'>
+2023-09-11 15:18:10,827 - INFO - split into url:
+socks5://127.0.0.1:1080
+tags:
+douyin
+2023-09-11 15:18:10,827 - INFO - check url format socks5://127.0.0.1:1080
+2023-09-11 15:18:10,827 - INFO - check tag format douyin
+2023-09-11 15:18:10,827 - INFO - end to validate 4 record: <class 'str'>
+2023-09-11 15:18:10,827 - INFO - start to pre-process 5 record: <class 'str'>
+2023-09-11 15:18:10,827 - INFO - split into url:
+socks5://127.0.0.1:1080
+tags:
+youtube
+2023-09-11 15:18:10,827 - INFO - check url format socks5://127.0.0.1:1080
+2023-09-11 15:18:10,827 - INFO - check tag format youtube
+2023-09-11 15:18:10,827 - INFO - end to validate 5 record: <class 'str'>
+2023-09-11 15:18:10,827 - INFO - start to pre-process 6 record: <class 'str'>
+2023-09-11 15:18:10,828 - INFO - split into url:
+socks5://127.0.0.1:1088
+tags:
+xhs
+2023-09-11 15:18:10,828 - INFO - check url format socks5://127.0.0.1:1088
+2023-09-11 15:18:10,828 - INFO - check tag format xhs
+2023-09-11 15:18:10,828 - INFO - end to validate 6 record: <class 'str'>
+2023-09-11 15:18:10,828 - INFO - start to pre-process 7 record: <class 'str'>
+2023-09-11 15:18:10,828 - INFO - split into url:
+socks5://127.0.0.1:1088
+tags:
+222
+2023-09-11 15:18:10,828 - INFO - check url format socks5://127.0.0.1:1088
+2023-09-11 15:18:10,828 - INFO - check tag format 222
+2023-09-11 15:18:10,828 - INFO - end to validate 7 record: <class 'str'>
+2023-09-11 15:18:10,848 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 15:18:18,904 - INFO - start a new query: SELECT * FROM proxies where city regexp 'los' AND  country regexp 'usa' AND  tags regexp 'youtube' ORDER by inserted_at DESC
+2023-09-11 15:18:18,907 - INFO - search and display finished
+2023-09-11 15:18:21,984 - INFO - start a new query: SELECT * FROM proxies where tags regexp 'youtube' ORDER by inserted_at DESC
+2023-09-11 15:18:21,987 - INFO - search and display finished
+2023-09-11 15:18:25,160 - INFO - start a new query: SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 15:18:25,163 - INFO - search and display finished
+2023-09-11 15:24:50,742 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 15:24:50,818 - INFO - TiktokaStudio GUI started
+2023-09-11 15:25:15,940 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 15:25:16,014 - INFO - TiktokaStudio GUI started
+2023-09-11 15:25:41,844 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 15:25:41,917 - INFO - TiktokaStudio GUI started
+2023-09-11 15:36:33,119 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 15:36:33,192 - INFO - TiktokaStudio GUI started
+2023-09-11 15:37:48,955 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 15:37:49,028 - INFO - TiktokaStudio GUI started
+2023-09-11 15:39:13,062 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 15:39:13,135 - INFO - TiktokaStudio GUI started
+2023-09-11 15:40:52,545 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 15:40:52,613 - INFO - TiktokaStudio GUI started
+2023-09-11 15:40:59,625 - INFO - start a new query: SELECT * FROM proxies where status regexp 'False' ORDER by inserted_at DESC
+2023-09-11 15:40:59,629 - ERROR - query  to SELECT * FROM proxies where status regexp 'False' ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) user-defined function raised exception
+[SQL: SELECT * FROM proxies where status regexp 'False' ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 15:40:59,629 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 15:41:43,027 - INFO - start a new query: SELECT * FROM proxies where status regexp 'False' ORDER by inserted_at DESC
+2023-09-11 15:41:43,028 - ERROR - query  to SELECT * FROM proxies where status regexp 'False' ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) user-defined function raised exception
+[SQL: SELECT * FROM proxies where status regexp 'False' ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 15:41:43,028 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 15:41:44,339 - INFO - start a new query: SELECT * FROM proxies where status regexp 'False' ORDER by inserted_at DESC
+2023-09-11 15:41:44,340 - ERROR - query  to SELECT * FROM proxies where status regexp 'False' ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) user-defined function raised exception
+[SQL: SELECT * FROM proxies where status regexp 'False' ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 15:41:44,340 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 15:51:04,570 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 15:51:04,642 - INFO - TiktokaStudio GUI started
+2023-09-11 15:51:09,856 - INFO - detected 2 records to be added
+2023-09-11 15:51:09,856 - INFO - start to pre-process 0 record: <class 'str'>
+2023-09-11 15:51:09,856 - INFO - split into url:
+socks5://127.0.0.1:1088
+tags:
+youtube
+2023-09-11 15:51:09,856 - INFO - check url format socks5://127.0.0.1:1088
+2023-09-11 15:51:09,856 - INFO - check tag format youtube
+2023-09-11 15:51:09,856 - INFO - end to validate 0 record: <class 'str'>
+2023-09-11 15:51:09,856 - INFO - start to pre-process 1 record: <class 'str'>
+2023-09-11 15:51:09,856 - INFO - split into url:
+socks5://127.0.0.1:1080
+tags:
+tiktok
+2023-09-11 15:51:09,856 - INFO - check url format socks5://127.0.0.1:1080
+2023-09-11 15:51:09,856 - INFO - check tag format tiktok
+2023-09-11 15:51:09,857 - INFO - end to validate 1 record: <class 'str'>
+2023-09-11 15:51:09,872 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 15:51:52,775 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 15:51:52,850 - INFO - TiktokaStudio GUI started
+2023-09-11 15:52:03,185 - INFO - start a new query: SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '0' ORDER by inserted_at DESC
+2023-09-11 15:52:03,188 - ERROR - query  to SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '0' ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) user-defined function raised exception
+[SQL: SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '0' ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 15:52:03,188 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 15:52:25,153 - INFO - start a new query: SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '0' ORDER by inserted_at DESC
+2023-09-11 15:52:25,154 - ERROR - query  to SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '0' ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) user-defined function raised exception
+[SQL: SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '0' ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 15:52:25,154 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 15:52:43,855 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 15:52:43,935 - INFO - TiktokaStudio GUI started
+2023-09-11 15:52:48,610 - INFO - detected 2 records to be added
+2023-09-11 15:52:48,611 - INFO - start to pre-process 0 record: <class 'str'>
+2023-09-11 15:52:48,611 - INFO - split into url:
+socks5://127.0.0.1:1080
+tags:
+tiktok
+2023-09-11 15:52:48,611 - INFO - check url format socks5://127.0.0.1:1080
+2023-09-11 15:52:48,611 - INFO - check tag format tiktok
+2023-09-11 15:52:48,611 - INFO - end to validate 0 record: <class 'str'>
+2023-09-11 15:52:48,611 - INFO - start to pre-process 1 record: <class 'str'>
+2023-09-11 15:52:48,611 - INFO - split into url:
+socks5://127.0.0.1:1088
+tags:
+youtube
+2023-09-11 15:52:48,611 - INFO - check url format socks5://127.0.0.1:1088
+2023-09-11 15:52:48,611 - INFO - check tag format youtube
+2023-09-11 15:52:48,611 - INFO - end to validate 1 record: <class 'str'>
+2023-09-11 15:52:48,633 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 15:52:54,987 - INFO - start a new query: SELECT * FROM proxies where status regexp '0' ORDER by inserted_at DESC
+2023-09-11 15:52:54,988 - ERROR - query  to SELECT * FROM proxies where status regexp '0' ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) user-defined function raised exception
+[SQL: SELECT * FROM proxies where status regexp '0' ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 15:52:54,989 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 15:55:10,287 - INFO - start a new query: SELECT * FROM proxies where status regexp '1' ORDER by inserted_at DESC
+2023-09-11 15:55:10,288 - ERROR - query  to SELECT * FROM proxies where status regexp '1' ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) user-defined function raised exception
+[SQL: SELECT * FROM proxies where status regexp '1' ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 15:55:10,289 - INFO - you proxy filter conditions without any change,keep the same
+2023-09-11 15:58:10,777 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 15:58:10,827 - INFO - TiktokaStudio GUI started
+2023-09-11 15:58:14,759 - INFO - start a new query: SELECT * FROM proxies where city regexp 'los' AND  country regexp 'usa' AND  tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC
+2023-09-11 15:58:14,765 - INFO - search and display finished
+2023-09-11 15:58:26,958 - INFO - start a new query: SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC
+2023-09-11 15:58:26,960 - ERROR - query  to SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) user-defined function raised exception
+[SQL: SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 15:58:26,960 - ERROR - search failed error:'NoneType' object has no attribute 'itertuples'
+2023-09-11 15:59:57,575 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 15:59:57,648 - INFO - TiktokaStudio GUI started
+2023-09-11 16:00:02,194 - INFO - start a new query: SELECT * FROM proxies where city regexp 'los' AND  country regexp 'usa' AND  tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC
+2023-09-11 16:00:02,198 - ERROR - search failed error:The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+2023-09-11 16:00:28,910 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 16:00:29,002 - INFO - TiktokaStudio GUI started
+2023-09-11 16:00:32,580 - INFO - start a new query: SELECT * FROM proxies where city regexp 'los' AND  country regexp 'usa' AND  tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC
+2023-09-11 16:00:32,584 - INFO - search and display finished
+2023-09-11 16:00:56,188 - INFO - start a new query: SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC
+2023-09-11 16:00:56,189 - ERROR - query  to SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) user-defined function raised exception
+[SQL: SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 16:00:56,189 - INFO - there is no matching records for query:
+city:;country:;tags:youtube;status:1
+2023-09-11 16:01:35,597 - INFO - start a new query: SELECT * FROM proxies where status regexp '0' ORDER by inserted_at DESC
+2023-09-11 16:01:35,598 - ERROR - query  to SELECT * FROM proxies where status regexp '0' ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) user-defined function raised exception
+[SQL: SELECT * FROM proxies where status regexp '0' ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 16:01:35,599 - INFO - there is no matching records for query:
+city:;country:;tags:;status:0
+2023-09-11 16:02:13,551 - INFO - detected 2 records to be added
+2023-09-11 16:02:13,552 - INFO - start to pre-process 0 record: <class 'str'>
+2023-09-11 16:02:13,552 - INFO - split into url:
+socks5://127.0.0.1:1088
+tags:
+youtube
+2023-09-11 16:02:13,552 - INFO - check url format socks5://127.0.0.1:1088
+2023-09-11 16:02:13,552 - INFO - check tag format youtube
+2023-09-11 16:02:13,552 - INFO - end to validate 0 record: <class 'str'>
+2023-09-11 16:02:13,552 - INFO - start to pre-process 1 record: <class 'str'>
+2023-09-11 16:02:13,552 - INFO - split into url:
+socks5://127.0.0.1:1080
+tags:
+tiktok
+2023-09-11 16:02:13,552 - INFO - check url format socks5://127.0.0.1:1080
+2023-09-11 16:02:13,552 - INFO - check tag format tiktok
+2023-09-11 16:02:13,552 - INFO - end to validate 1 record: <class 'str'>
+2023-09-11 16:02:13,567 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 16:02:17,014 - INFO - start a new query: SELECT * FROM proxies where status regexp '0' ORDER by inserted_at DESC
+2023-09-11 16:02:17,015 - ERROR - query  to SELECT * FROM proxies where status regexp '0' ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) user-defined function raised exception
+[SQL: SELECT * FROM proxies where status regexp '0' ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 16:02:17,015 - INFO - there is no matching records for query:
+city:;country:;tags:;status:0
+2023-09-11 16:02:24,344 - INFO - start a new query: SELECT * FROM proxies where status regexp '1' ORDER by inserted_at DESC
+2023-09-11 16:02:24,345 - ERROR - query  to SELECT * FROM proxies where status regexp '1' ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) user-defined function raised exception
+[SQL: SELECT * FROM proxies where status regexp '1' ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 16:02:24,345 - INFO - there is no matching records for query:
+city:;country:;tags:;status:1
+2023-09-11 16:07:30,794 - INFO - start a new query: SELECT * FROM proxies where status regexp '0' ORDER by inserted_at DESC
+2023-09-11 16:07:30,795 - ERROR - query  to SELECT * FROM proxies where status regexp '0' ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) user-defined function raised exception
+[SQL: SELECT * FROM proxies where status regexp '0' ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 16:07:30,796 - INFO - there is no matching records for query:
+city:;country:;tags:;status:0
+2023-09-11 16:08:40,337 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 16:08:40,407 - INFO - TiktokaStudio GUI started
+2023-09-11 16:08:43,645 - INFO - start a new query: SELECT * FROM proxies where city regexp 'los' AND  country regexp 'usa' AND  tags regexp 'youtube' ORDER by inserted_at DESC
+2023-09-11 16:08:43,652 - INFO - search and display finished
+2023-09-11 16:08:49,030 - INFO - start a new query: SELECT * FROM proxies where ORDER by inserted_at DESC
+2023-09-11 16:08:49,030 - ERROR - query  to SELECT * FROM proxies where ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) near "ORDER": syntax error
+[SQL: SELECT * FROM proxies where ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 16:08:49,030 - INFO - there is no matching records for query:
+city:;country:;tags:;status:1
+2023-09-11 16:10:08,114 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 16:10:08,187 - INFO - TiktokaStudio GUI started
+2023-09-11 16:10:11,768 - INFO - start a new query: SELECT * FROM proxies where city regexp 'los' AND  country regexp 'usa' AND  tags regexp 'youtube' ORDER by inserted_at DESC
+2023-09-11 16:10:11,773 - INFO - search and display finished
+2023-09-11 16:10:20,208 - INFO - start a new query: SELECT * FROM proxies where tags regexp 'youtube' ORDER by inserted_at DESC
+2023-09-11 16:10:20,211 - INFO - search and display finished
+2023-09-11 16:10:32,889 - INFO - start a new query: SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 16:10:32,892 - INFO - search and display finished
+2023-09-11 16:11:59,242 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 16:11:59,319 - INFO - TiktokaStudio GUI started
+2023-09-11 16:12:02,948 - INFO - start a new query:
+ SELECT * FROM proxies where city regexp 'los' AND  country regexp 'usa' AND  tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC
+2023-09-11 16:12:02,952 - INFO - search and display finished:
+SELECT * FROM proxies where city regexp 'los' AND  country regexp 'usa' AND  tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC
+2023-09-11 16:12:13,020 - INFO - start a new query:
+ SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC
+2023-09-11 16:12:13,021 - ERROR - query  to SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) user-defined function raised exception
+[SQL: SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 16:12:13,021 - INFO - there is no matching records for query:
+SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC
+2023-09-11 16:12:28,662 - INFO - start a new query:
+ SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '0' ORDER by inserted_at DESC
+2023-09-11 16:12:28,663 - ERROR - query  to SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '0' ORDER by inserted_at DESC>>> seems went wrong!(sqlite3.OperationalError) user-defined function raised exception
+[SQL: SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '0' ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-11 16:12:28,663 - INFO - there is no matching records for query:
+SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '0' ORDER by inserted_at DESC
+2023-09-11 16:15:14,225 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 16:15:14,298 - INFO - TiktokaStudio GUI started
+2023-09-11 16:15:18,555 - INFO - detected 2 records to be added
+2023-09-11 16:15:18,555 - INFO - start to pre-process 0 record: <class 'str'>
+2023-09-11 16:15:18,555 - INFO - split into url:
+socks5://127.0.0.1:1088
+tags:
+youtube
+2023-09-11 16:15:18,555 - INFO - check url format socks5://127.0.0.1:1088
+2023-09-11 16:15:18,555 - INFO - check tag format youtube
+2023-09-11 16:15:18,556 - INFO - end to validate 0 record: <class 'str'>
+2023-09-11 16:15:18,556 - INFO - start to pre-process 1 record: <class 'str'>
+2023-09-11 16:15:18,556 - INFO - split into url:
+socks5://127.0.0.1:1080
+tags:
+tiktok
+2023-09-11 16:15:18,556 - INFO - check url format socks5://127.0.0.1:1080
+2023-09-11 16:15:18,556 - INFO - check tag format tiktok
+2023-09-11 16:15:18,556 - INFO - end to validate 1 record: <class 'str'>
+2023-09-11 16:15:18,580 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 16:15:23,147 - INFO - start a new query:
+ SELECT * FROM proxies where city regexp 'los' AND  country regexp 'usa' AND  tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC
+2023-09-11 16:15:23,151 - INFO - search and display finished:
+SELECT * FROM proxies where city regexp 'los' AND  country regexp 'usa' AND  tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC
+2023-09-11 16:15:28,995 - INFO - start a new query:
+ SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC
+2023-09-11 16:15:28,998 - INFO - search and display finished:
+SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC
+2023-09-11 16:15:33,419 - INFO - start a new query:
+ SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '0' ORDER by inserted_at DESC
+2023-09-11 16:15:33,421 - INFO - search and display finished:
+SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '0' ORDER by inserted_at DESC
+2023-09-11 16:16:34,696 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 16:16:34,776 - INFO - TiktokaStudio GUI started
+2023-09-11 16:16:42,766 - INFO - detected 2 records to be added
+2023-09-11 16:16:42,767 - INFO - start to pre-process 0 record: <class 'str'>
+2023-09-11 16:16:42,767 - INFO - split into url:
+socks5://127.0.0.1:1088
+tags:
+youtube
+2023-09-11 16:16:42,767 - INFO - check url format socks5://127.0.0.1:1088
+2023-09-11 16:16:42,767 - INFO - check tag format youtube
+2023-09-11 16:16:42,767 - INFO - end to validate 0 record: <class 'str'>
+2023-09-11 16:16:42,767 - INFO - start to pre-process 1 record: <class 'str'>
+2023-09-11 16:16:42,767 - INFO - split into url:
+socks5://127.0.0.1:1080
+tags:
+tiktok
+2023-09-11 16:16:42,767 - INFO - check url format socks5://127.0.0.1:1080
+2023-09-11 16:16:42,767 - INFO - check tag format tiktok
+2023-09-11 16:16:42,767 - INFO - end to validate 1 record: <class 'str'>
+2023-09-11 16:16:42,787 - INFO - insert data to proxies>>> seems All good.
+2023-09-11 16:16:50,542 - INFO - start a new query:
+ SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC
+2023-09-11 16:16:50,544 - INFO - search and display finished:
+SELECT * FROM proxies where tags regexp 'youtube' AND  status regexp '1' ORDER by inserted_at DESC
+2023-09-11 16:16:55,447 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 16:16:55,449 - INFO - search and display finished:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 16:21:01,645 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 16:21:01,716 - INFO - TiktokaStudio GUI started
+2023-09-11 16:36:17,429 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 16:36:17,503 - INFO - TiktokaStudio GUI started
+2023-09-11 16:38:48,883 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 16:38:48,934 - INFO - TiktokaStudio GUI started
+2023-09-11 16:39:07,762 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 16:39:07,814 - INFO - TiktokaStudio GUI started
+2023-09-11 16:39:22,899 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 16:39:22,968 - INFO - TiktokaStudio GUI started
+2023-09-11 16:39:35,775 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 16:39:35,781 - INFO - search and display finished:
+SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 16:42:44,352 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 16:42:44,426 - INFO - TiktokaStudio GUI started
+2023-09-11 16:42:50,959 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 16:42:50,963 - ERROR - search failed error:bad listbox index "socks5://127.0.0.1:1088": must be active, anchor, end, @x,y, or a number
+2023-09-11 16:43:55,629 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 16:43:55,698 - INFO - TiktokaStudio GUI started
+2023-09-11 16:43:59,441 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 16:43:59,446 - ERROR - search failed error:bad listbox index "socks5://127.0.0.1:1088": must be active, anchor, end, @x,y, or a number
+2023-09-11 16:47:34,665 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 16:47:34,735 - INFO - TiktokaStudio GUI started
+2023-09-11 16:48:10,265 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 16:48:10,271 - ERROR - search failed error:bad listbox index "socks5://127.0.0.1:1088": must be active, anchor, end, @x,y, or a number
+2023-09-11 16:51:21,580 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 16:51:21,645 - INFO - TiktokaStudio GUI started
+2023-09-11 16:51:29,169 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 16:51:29,175 - ERROR - search failed error:bad listbox index "socks5://127.0.0.1:1088": must be active, anchor, end, @x,y, or a number
+2023-09-11 16:52:11,026 - INFO - start a new query:
+ SELECT * FROM proxies where city regexp 'as' AND  country regexp 'ds' AND  tags regexp 'asdsa' AND  status regexp '1' ORDER by inserted_at DESC
+2023-09-11 16:52:11,029 - INFO - search and display finished:
+SELECT * FROM proxies where city regexp 'as' AND  country regexp 'ds' AND  tags regexp 'asdsa' AND  status regexp '1' ORDER by inserted_at DESC
+2023-09-11 16:53:02,740 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 16:53:02,743 - ERROR - search failed error:bad listbox index "socks5://127.0.0.1:1088": must be active, anchor, end, @x,y, or a number
+2023-09-11 16:53:11,060 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 16:53:11,063 - ERROR - search failed error:bad listbox index "socks5://127.0.0.1:1088": must be active, anchor, end, @x,y, or a number
+2023-09-11 16:55:39,497 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 16:55:39,573 - INFO - TiktokaStudio GUI started
+2023-09-11 16:55:43,162 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 16:55:43,168 - ERROR - search failed error:'str' object cannot be interpreted as an integer
+2023-09-11 16:58:16,534 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 16:58:16,613 - INFO - TiktokaStudio GUI started
+2023-09-11 16:58:20,447 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 16:58:20,450 - INFO - we found 2 record matching 
+2023-09-11 16:58:20,452 - ERROR - search failed error:'str' object cannot be interpreted as an integer
+2023-09-11 17:01:44,937 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 17:01:44,989 - INFO - TiktokaStudio GUI started
+2023-09-11 17:01:52,895 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 17:01:52,899 - INFO - we found 2 record matching 
+2023-09-11 17:01:52,900 - ERROR - search failed error:'str' object cannot be interpreted as an integer
+2023-09-11 17:02:25,447 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 17:02:25,540 - INFO - TiktokaStudio GUI started
+2023-09-11 17:02:30,536 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 17:02:30,540 - INFO - we found 2 record matching 
+2023-09-11 17:02:30,541 - ERROR - search failed error:'str' object cannot be interpreted as an integer
+2023-09-11 17:03:04,541 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 17:03:04,613 - INFO - TiktokaStudio GUI started
+2023-09-11 17:03:07,498 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 17:03:07,502 - INFO - we found 2 record matching 
+2023-09-11 17:03:07,503 - ERROR - search failed error:'str' object cannot be interpreted as an integer
+2023-09-11 17:03:34,937 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 17:03:35,018 - INFO - TiktokaStudio GUI started
+2023-09-11 17:03:39,410 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 17:03:39,414 - INFO - we found 2 record matching 
+2023-09-11 17:03:39,416 - ERROR - search failed error:'str' object cannot be interpreted as an integer
+2023-09-11 17:05:32,644 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 17:05:32,723 - INFO - TiktokaStudio GUI started
+2023-09-11 17:05:35,615 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 17:05:35,618 - INFO - we found 2 record matching 
+2023-09-11 17:05:35,619 - ERROR - search failed error:'str' object cannot be interpreted as an integer
+2023-09-11 17:07:01,872 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 17:07:01,958 - INFO - TiktokaStudio GUI started
+2023-09-11 17:07:04,857 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 17:07:04,861 - INFO - we found 2 record matching 
+2023-09-11 17:07:04,862 - ERROR - search failed error:'str' object cannot be interpreted as an integer
+2023-09-11 17:07:54,481 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 17:07:54,564 - INFO - TiktokaStudio GUI started
+2023-09-11 17:08:09,637 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 17:08:09,641 - INFO - we found 2 record matching 
+2023-09-11 17:08:09,642 - ERROR - search failed error:'str' object cannot be interpreted as an integer
+2023-09-11 17:10:06,339 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 17:10:06,431 - INFO - TiktokaStudio GUI started
+2023-09-11 17:10:09,496 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 17:10:09,500 - INFO - we found 2 record matching 
+2023-09-11 17:10:09,501 - ERROR - search failed error:'str' object cannot be interpreted as an integer
+2023-09-11 17:11:50,230 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 17:11:50,301 - INFO - TiktokaStudio GUI started
+2023-09-11 17:11:53,525 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 17:11:53,528 - INFO - we found 2 record matching 
+2023-09-11 17:11:53,529 - ERROR - search failed error:'str' object cannot be interpreted as an integer
+2023-09-11 17:13:39,119 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 17:13:39,195 - INFO - TiktokaStudio GUI started
+2023-09-11 17:13:42,424 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 17:13:42,428 - INFO - we found 2 record matching 
+2023-09-11 17:13:42,429 - ERROR - search failed error:'str' object cannot be interpreted as an integer
+2023-09-11 17:16:13,143 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 17:16:13,216 - INFO - TiktokaStudio GUI started
+2023-09-11 17:16:16,670 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 17:16:16,675 - INFO - we found 2 record matching 
+2023-09-11 17:16:16,676 - ERROR - search failed error:'str' object cannot be interpreted as an integer
+2023-09-11 17:17:16,893 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 17:17:16,968 - INFO - TiktokaStudio GUI started
+2023-09-11 17:17:20,752 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 17:17:20,757 - INFO - we found 2 record matching 
+2023-09-11 17:17:20,759 - ERROR - search failed error:'str' object cannot be interpreted as an integer
+2023-09-11 17:19:18,062 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-11 17:19:18,135 - INFO - TiktokaStudio GUI started
+2023-09-11 17:19:21,124 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 17:19:21,127 - INFO - we found 2 record matching 
+2023-09-11 17:19:21,128 - ERROR - search failed error:'str' object cannot be interpreted as an integer
+2023-09-11 17:20:34,878 - INFO - start a new query:
+ SELECT * FROM proxies ORDER by inserted_at DESC
+2023-09-11 17:20:34,880 - INFO - we found 2 record matching 
+2023-09-11 17:20:34,881 - ERROR - search failed error:'str' object cannot be interpreted as an integer
