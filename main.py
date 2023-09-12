@@ -82,8 +82,17 @@ except ImportError:
     import Tkinter as tk # Python 2.x
     import ScrolledText
 import pyperclip as clip
-
+import platform
 from easy_i18n.t import Ai18n
+
+
+from UltraDict import UltraDict
+if platform.system()=='Windows':
+    
+    ultra = UltraDict(shared_lock=True,recurse=True)
+else:
+    ultra = UltraDict(recurse=True)
+
 config = {
     "load_path": "./locales", # 指定在 /locales 下找对应的翻译 json文件
     "default_module": "global", # 指定默认的全局模块，你可以为比如用户模块，订单模块单独设置翻译，如果不指定 module 则会去全局模块查找。
@@ -1517,6 +1526,77 @@ def createuploadsession(dbm,ttkframe,metafile):
             lab = tk.Label(ttkframe,text="创建失败，请参考日志修改文件后重新提交",bg="lightyellow",width=40)
             lab.place(x=10, y=220)       
             lab.after(10*1000,lab.destroy)
+def isPairedMetas(r,videofilename,meta_exts_list,dict,meta_name):
+
+    if dict[meta_name].has_key(videofilename)==False:
+        dict[meta_name][videofilename]=[]
+
+    for ext in meta_exts_list:
+        metapath = os.path.join(r, videofilename+ext)
+        if  os.path.exists(metapath):     
+            logger.info(f'this  {meta_name} exist:\n {metapath}')
+            if dict[meta_name] is not None and metapath not in dict[meta_name]:
+                dict[meta_name][videofilename].append(metapath)
+            return True
+
+def analyse_video_meta_pair(folder,frame,right_frame):
+    logger.info(f'detecting----------{ultra.has_key(folder)}')
+    if ultra.has_key(folder):
+        print(pd.Timestamp.now().value-ultra[folder] ['updatedAt'])
+        logger.info(f"we cached {pd.Timestamp.now().value-ultra[folder] ['updatedAt']} seconds before for  this folder {folder}")
+    else:
+        logger.info(f"create cached data for this folder:\n{folder}")
+        ultra[folder]={'videoCounts':0,'thumbCounts':0,'desCounts':0,
+                       'metaCounts':0,'updatedAt':pd.Timestamp.now().value,
+                       'filename':[],
+                       'videoFilePaths':[],
+                        'thumbFilePaths':{},
+                        'desFilePaths':{},
+                        'metaFilePaths':{},    
+                       } 
+    supported_video_exts=['.flv', '.mp4', '.avi']
+    supported_thumb_exts=['.jpeg', '.png', '.jpg','webp']
+    supported_des_exts=['.des', '.txt']
+    supported_meta_exts=['.json', '.xls','.xlsx','.csv']        
+    for r, d, f in os.walk(folder):
+        with os.scandir(r) as i:
+
+            for entry in i:
+                if entry.is_file():
+                    filename = os.path.splitext(entry.name)[0]
+
+                    ext = os.path.splitext(entry.name)[1]
+                    if ext in supported_video_exts:
+
+                        if ultra[folder] ['filename']!=[] and filename in ultra[folder] ['filename']:
+                            logger.info(f'we found same filename diff ext video:{filename},please rename or remove')
+                        else:
+                            ultra[folder] ['filename'].append(filename)
+
+
+                            videopath = os.path.join(r, entry.name)
+                            ultra[folder] ['videoFilePaths'].append(videopath)
+
+                            ultra[folder] ['videoCounts']+=1
+                            print(videopath,'==',ext,'counts now:',ultra[folder] ['videoCounts'],type(ultra[folder] ['videoCounts'])) 
+
+                            # if ultra[folder]['thumbFilePaths'].has_key(filename)==False:
+                            #     ultra[folder]['thumbFilePaths'][filename]=[]
+                            isPairedMetas(r,filename,supported_thumb_exts,ultra[folder],'thumbFilePaths')
+                            isPairedMetas(r,filename,supported_des_exts,ultra[folder],'desFilePaths')
+                            isPairedMetas(r,filename,supported_meta_exts,ultra[folder],'metaFilePaths')
+
+
+    if ultra[folder] ['videoCounts']==0:
+        logger.info(f"we could not find any video, video counts is {ultra[folder] ['videoCounts']},supported ext includes:\n{'.'.join(supported_video_exts)}")
+    ultra[folder] ['thumbCounts']=ultra[folder] ['videoCounts']-len(ultra[folder] ['thumbFilePaths'])
+    ultra[folder] ['desCounts']=ultra[folder] ['videoCounts']-len(ultra[folder] ['desFilePaths'])
+    ultra[folder] ['metaCounts']=ultra[folder] ['videoCounts']-len(ultra[folder] ['metaFilePaths'])
+    ultra[folder]['updatedAt']=pd.Timestamp.now().value
+
+
+    render_video_folder_check_results(frame,right_frame,folder)
+
 
 def analyse_video_thumb_pair(folder,frame):
     print(f'detecting----------{folder}')
@@ -1551,6 +1631,7 @@ def analyse_video_thumb_pair(folder,frame):
     checkvideocounts.set(checkvideocountsvalue)
     video_thumb_pairs_counts.set(checkvideopaircountsvalue)
     render_video_folder_check_results(frame)
+    render_thumb_gen(frame,True)
 
 def check_video_thumb_pair(dbm,folder,session):
     # print(f'detecting----------{folder}')
@@ -1910,88 +1991,228 @@ def thumbView(frame,ttkframe,lang):
     # print(checkvideopaircounts)
 
 
-def render_video_folder_check_results(frame):
+def render_video_folder_check_results(frame,right_frame,folder):
     lb_video_counts = tk.Label(frame, text='video total counts', font=(' ', 9))
-    lb_video_counts.place(x=140, y=110, anchor=tk.NE)
-    print(checkvideocounts.get())
 
-    lb_video_counts_value = tk.Label(frame, text=str(checkvideocounts.get()), font=(' ', 9))
-    lb_video_counts_value.place(x=200, y=110, width = 50, anchor=tk.NE)
+    lb_video_counts.grid(row = 2, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw')    
+
+    lb_video_counts_value = tk.Label(frame, text=str(ultra[folder] ['videoCounts']), font=(' ', 9))
+    lb_video_counts_value.grid(row = 2, column = 5, columnspan = 3, padx=14, pady=15,sticky='nw')    
 
 
     lb_video_thumb_pairs_counts = tk.Label(frame, text='video-thum paired', font=(' ', 9))
-    lb_video_thumb_pairs_counts.place(x=140, y=140, anchor=tk.NE)
+    lb_video_thumb_pairs_counts.grid(row = 3, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw')    
 
 
 
-    print(video_thumb_pairs_counts.get())
-    lb_video_thumb_pairs_counts_value = tk.Label(frame, text=str(video_thumb_pairs_counts.get()), font=(' ', 9))
-    lb_video_thumb_pairs_counts_value.place(x=200, y=140, width = 50, anchor=tk.NE)
+    lb_video_thumb_pairs_counts_value = tk.Label(frame, text=str(ultra[folder] ['thumbCounts']), font=(' ', 9))
+    lb_video_thumb_pairs_counts_value.grid(row = 3, column = 3, columnspan = 3, padx=14, pady=15,sticky='nw')    
 
 
-    lb_video_thumb_pairs_counts = tk.Label(frame, text='missing paired', font=(' ', 9))
-    lb_video_thumb_pairs_counts.place(x=140, y=160, anchor=tk.NE)
+    lb_video_thumb_missing_pairs_counts = tk.Label(frame, text='missing paired', font=(' ', 9))
+    lb_video_thumb_missing_pairs_counts.grid(row = 3, column = 7, columnspan = 3, padx=14, pady=15,sticky='nw')    
 
-    missing_video_thumb_pairs_counts=checkvideocounts.get()-video_thumb_pairs_counts.get()
+    missing_video_thumb_pairs_counts=ultra[folder] ['videoCounts']-ultra[folder] ['thumbCounts']
 
     lb_video_thumb_pairs_counts_value = tk.Label(frame, text=str(missing_video_thumb_pairs_counts), font=(' ', 9))
-    lb_video_thumb_pairs_counts_value.place(x=200, y=160, width = 50, anchor=tk.NE)
+    lb_video_thumb_pairs_counts_value.grid(row = 3, column = 10, columnspan = 3, padx=14, pady=15,sticky='nw')    
 
-    if missing_video_thumb_pairs_counts==0:
-        lb_thumb_wizard = tk.Label(frame, text='please try another video folder', font=(' ', 18))
-        lb_thumb_wizard.place(x=50, y=180,anchor=tk.NW)   
-    else:
-        lb_thumb_wizard = tk.Label(frame, text='you need create thumbnails for '+str(missing_video_thumb_pairs_counts)+'  videos', font=(' ', 18))
-        lb_thumb_wizard.place(x=50, y=180,anchor=tk.NW)        
+    if missing_video_thumb_pairs_counts>0:
+        b_gen_thumb=tk.Button(frame,text="Gen",command=lambda: threading.Thread(target=render_thumb_gen(right_frame,True)).start() )
+        b_gen_thumb.grid(row = 3, column = 13, columnspan = 3, padx=14, pady=15,sticky='nw')    
+
+
+    lb_video_des_pairs_counts = tk.Label(frame, text='video-des paired', font=(' ', 9))
+    lb_video_des_pairs_counts.grid(row = 4, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw')    
+
+
+
+    lb_video_des_pairs_counts_value = tk.Label(frame, text=str(ultra[folder] ['desCounts']), font=(' ', 9))
+    lb_video_des_pairs_counts_value.grid(row = 4, column = 3, columnspan = 3, padx=14, pady=15,sticky='nw')    
+
+
+    lb_video_des_missing_pairs_counts = tk.Label(frame, text='missing paired', font=(' ', 9))
+    lb_video_des_missing_pairs_counts.grid(row = 4, column = 7, columnspan = 3, padx=14, pady=15,sticky='nw')    
+
+    missing_video_des_missing_pairs_counts=ultra[folder] ['videoCounts']-ultra[folder] ['desCounts']
+
+    lb_video_des_missing_pairs_counts_value = tk.Label(frame, text=str(missing_video_des_missing_pairs_counts), font=(' ', 9))
+    lb_video_des_missing_pairs_counts_value.grid(row = 4, column = 10, columnspan = 3, padx=14, pady=15,sticky='nw')    
+    if missing_video_des_missing_pairs_counts>0:
+        b_gen_thumb=tk.Button(frame,text="Gen",command=lambda: threading.Thread(target=render_des_gen(right_frame,True)).start() )
+        b_gen_thumb.grid(row = 4, column = 13, columnspan = 3, padx=14, pady=15,sticky='nw')    
+
+
+
+
+    lb_video_meta_pairs_counts = tk.Label(frame, text='video-meta paired', font=(' ', 9))
+    lb_video_meta_pairs_counts.grid(row = 5, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw')    
+
+
+
+    lb_video_meta_pairs_counts_value = tk.Label(frame, text=str(ultra[folder] ['metaCounts']), font=(' ', 9))
+    lb_video_meta_pairs_counts_value.grid(row = 5, column = 3, columnspan = 3, padx=14, pady=15,sticky='nw')    
+
+
+    lb_video_meta_missing_pairs_counts = tk.Label(frame, text='missing paired', font=(' ', 9))
+    lb_video_meta_missing_pairs_counts.grid(row = 5, column = 7, columnspan = 3, padx=14, pady=15,sticky='nw')    
+
+    missing_video_meta_missing_pairs_counts=ultra[folder] ['videoCounts']-ultra[folder] ['metaCounts']
+
+    lb_video_meta_missing_pairs_counts_value = tk.Label(frame, text=str(missing_video_meta_missing_pairs_counts), font=(' ', 9))
+    lb_video_meta_missing_pairs_counts_value.grid(row = 5, column = 10, columnspan = 3, padx=14, pady=15,sticky='nw')    
+    if missing_video_meta_missing_pairs_counts>0:
+        b_gen_thumb=tk.Button(frame,text="Gen",command=lambda: threading.Thread(target=render_update_meta(right_frame,True)).start() )
+        b_gen_thumb.grid(row = 5, column = 13, columnspan = 3, padx=14, pady=15,sticky='nw')    
+        # if missing_video_thumb_pairs_counts==0:
+    #     lb_thumb_wizard = tk.Label(frame, text='please try another video folder', font=(' ', 18))
+    #     lb_thumb_wizard.place(x=50, y=180,anchor=tk.NW)   
+    # else:
+    #     lb_thumb_wizard = tk.Label(frame, text='you need create thumbnails for '+str(missing_video_thumb_pairs_counts)+'  videos', font=(' ', 18))
+    #     lb_thumb_wizard.place(x=50, y=180,anchor=tk.NW)    
+
+def render_des_gen(frame,isneed):
+    if isneed==True:
+        lang='en'
+        if len(frame.winfo_children())>0:
+            for widget in frame.winfo_children():
+                widget.destroy()
+        descriptionPrefix=tk.StringVar()
+        descriptionSuffix=tk.StringVar()
+
+        l_preferdesprefix = tk.Label(frame, text=i18labels("descriptionPrefix", locale=lang, module="g"))
+        l_preferdesprefix.grid(row = 0, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        e_preferdesprefix = tk.Entry(frame, width=55, textvariable=descriptionPrefix)
+        e_preferdesprefix.grid(row = 0, column = 5, columnspan = 3, padx=14, pady=15,sticky='nw') 
+
+
+        l_preferdessuffix = tk.Label(frame, text=i18labels("descriptionSuffix", locale=lang, module="g"))
+        l_preferdessuffix.grid(row = 1, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        e_preferdessuffix = tk.Entry(frame, width=55, textvariable=descriptionSuffix)
+        e_preferdessuffix.grid(row = 1, column = 5, columnspan = 3, padx=14, pady=15,sticky='nw') 
+
+        mode = tk.StringVar()
+        mode.set("4")
+
+        lab = tk.Label(frame,text="请选择视频描述主体从何而来",bg="lightyellow",width=30)
+        lab.grid(row = 4, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        mode1=tk.Radiobutton(frame,text="视频文件名称",variable=mode,value="1",command='')
+        mode1.grid(row = 5, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        mode2=tk.Radiobutton(frame,text="视频字幕总结",variable=mode,value="2",command='')
+        mode2.grid(row = 6, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        mode3=tk.Radiobutton(frame,text="视频音频总结",variable=mode,value="3",command='')
+        mode3.grid(row = 7, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        mode4=tk.Radiobutton(frame,text="从视频描述文件中来",variable=mode,value="4",command='')
+        mode4.grid(row = 8, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        b_import_thumb_metas_=tk.Button(frame,text="Step4:更新视频元数据文件",command=lambda: genThumbnailFromTemplate(videosView_video_folder.get(),thumbnail_template_file.get(),mode.get()))
+        b_import_thumb_metas_.grid(row = 9, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
+
+
+def render_update_meta(frame,isneed):
+    if isneed==True:
+        lang='en'
+        prefertags=tk.StringVar()
+        if len(frame.winfo_children())>0:
+            for widget in frame.winfo_children():
+                widget.destroy()
+        l_prefertags = tk.Label(frame, text=i18labels("preferTags", locale=lang, module="g"))
+        l_prefertags.grid(row = 0, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        el_prefertags = tk.Entry(frame, width=55, textvariable=prefertags)
+        el_prefertags.grid(row = 0, column = 5, columnspan = 3, padx=14, pady=15,sticky='nw') 
+
+
+
+        publishpolicy = tk.IntVar()
+        publishpolicy.set(4)
+
+        lab = tk.Label(frame,text="请选择你的发布策略",bg="lightyellow",width=30)
+        lab.grid(row = 1, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
+        mode0=tk.Radiobutton(frame,text="私有",variable=publishpolicy,value=0,command='')
+        mode0.grid(row = 2, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
+        mode1=tk.Radiobutton(frame,text="公开",variable=publishpolicy,value=1,command='')
+        mode1.grid(row = 3, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
+        mode2=tk.Radiobutton(frame,text="定时",variable=publishpolicy,value=2,command='')
+        mode2.grid(row = 4, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
+        mode3=tk.Radiobutton(frame,text="unlisted",variable=publishpolicy,value=3,command='')
+        mode3.grid(row = 5, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
+
+        mode4=tk.Radiobutton(frame,text="public&premiere",variable=publishpolicy,value=4,command='')
+        mode4.grid(row = 6, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
+
+        dailycount=tk.StringVar()
+
+        l_dailycount = tk.Label(frame, text=i18labels("dailyVideoLimit", locale=lang, module="g"))
+        l_dailycount.grid(row = 7, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
+
+
+
+        e_dailycount = tk.Entry(frame, width=55, textvariable=dailycount)
+        e_dailycount.grid(row = 7, column = 5, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        start_publish_date=tk.StringVar()
+
+        l_start_publish_date=tk.Label(frame, text=i18labels("offsetDays", locale=lang, module="g"))
+        l_start_publish_date.grid(row = 8, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        e_start_publish_date = tk.Entry(frame, width=55, textvariable=start_publish_date)
+        e_start_publish_date.grid(row = 8, column = 5, columnspan = 3, padx=14, pady=15,sticky='nw') 
+
+    
+
+
+def render_thumb_gen(frame,isneed):
+    if isneed==True:
+        if len(frame.winfo_children())>0:
+            for widget in frame.winfo_children():
+                widget.destroy()        
         b_edit_thumb=tk.Button(frame,text="Step2:make a new thumbnails template use editor",command=lambda: webbrowser.open_new('file:///{base_dir}/template.html'.format(base_dir=ROOT_DIR)))
 
-
-        b_edit_thumb.place(x=10, y=220)    
+        b_edit_thumb.grid(row = 0, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
 
         global thumbnail_template_file
         thumbnail_template_file = tk.StringVar()        
-        l_thumb_template = tk.Label(frame, text='thumbnail template file')
+        l_thumbnail_template_file = tk.Label(frame, text='choose thumbnail template file')
 
-        l_thumb_template.place(x=10, y=260)
-        e_video_folder = tk.Entry(frame, width=45, textvariable=thumbnail_template_file)
-        e_video_folder.place(x=150, y=260)
+        l_thumbnail_template_file.grid(row = 1, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
+
+        e_thumbnail_template_file = tk.Entry(frame, width=45, textvariable=thumbnail_template_file)
+        e_thumbnail_template_file.grid(row = 1, column = 3, columnspan = 3, padx=14, pady=15,sticky='nw') 
         
-        b_video_folder=tk.Button(frame,text="Select",command=lambda: threading.Thread(target=select_thumb_template_file).start() )
-        b_video_folder.place(x=580, y=260)    
+        b_thumbnail_template_file=tk.Button(frame,text="Select",command=lambda: threading.Thread(target=select_thumb_template_file).start() )
+        b_thumbnail_template_file.grid(row = 1, column = 5, columnspan = 3, padx=14, pady=15,sticky='nw') 
+   
 
 
 
 
         b_edit_thumb_metas=tk.Button(frame,text="Step3:make new video thumbnails metas use editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
-        b_edit_thumb_metas.place(x=10, y=300)    
+        b_edit_thumb_metas.grid(row = 2, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
 
         global thumbnail_metas_file
         thumbnail_metas_file = tk.StringVar()        
-        l_thumb_metas = tk.Label(frame, text='thumbnail metas file')
+        l_thumb_metas = tk.Label(frame, text='choose thumbnail metas file')
 
-        l_thumb_metas.place(x=10, y=340)
+        l_thumb_metas.grid(row = 3, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
         e_thumb_metas = tk.Entry(frame, width=45, textvariable=thumbnail_metas_file)
-        e_thumb_metas.place(x=150, y=340)
+        e_thumb_metas.grid(row = 3, column = 3, columnspan = 3, padx=14, pady=15,sticky='nw') 
 
         b_video_folder=tk.Button(frame,text="Select",command=lambda: threading.Thread(target=select_thumb_template_file).start() )
-        b_video_folder.place(x=580, y=340)    
+        b_video_folder.grid(row = 3, column = 5, columnspan = 3, padx=14, pady=15,sticky='nw') 
 
 
         mode = tk.StringVar()
         mode.set("4")
 
         lab = tk.Label(frame,text="请选择你的缩略图背景图片从何而来",bg="lightyellow",width=30)
-        lab.place(x=10, y=380)    
+        lab.grid(row = 4, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
         mode1=tk.Radiobutton(frame,text="视频第一帧作为背景图",variable=mode,value="1",command='')
-        mode1.place(x=10, y=420)    
+        mode1.grid(row = 5, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
         mode2=tk.Radiobutton(frame,text="视频任意关键帧作为背景图",variable=mode,value="2",command='')
-        mode2.place(x=10, y=450)    
+        mode2.grid(row = 6, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
         mode3=tk.Radiobutton(frame,text="文件夹中任意图片作为背景图",variable=mode,value="3",command='')
-        mode3.place(x=10, y=480)    
+        mode3.grid(row = 7, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
         mode4=tk.Radiobutton(frame,text="元数据中已指定背景图地址",variable=mode,value="4",command='')
-        mode4.place(x=10, y=510)    
-        b_import_thumb_metas_=tk.Button(frame,text="Step4:gen thumbnails use thumb metas and thumb template file",command=lambda: genThumbnailFromTemplate(videosView_video_folder.get(),thumbnail_template_file.get(),mode.get()))
-        b_import_thumb_metas_.place(x=10, y=560)    
+        mode4.grid(row = 8, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        b_import_thumb_metas_=tk.Button(frame,text="Step4:gen thumbnails use thumb metas and thumb template file,update video metajson",command=lambda: genThumbnailFromTemplate(videosView_video_folder.get(),thumbnail_template_file.get(),mode.get()))
+        b_import_thumb_metas_.grid(row = 9, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
 
 
 
@@ -2927,29 +3148,22 @@ def proxyView(frame,ttkframe,lang):
     
     # viewing_records()
 
-def metaView(frame,ttkframe,lang):
+def metaView(left,right,lang):
     global thumbView_video_folder
     thumbView_video_folder = tk.StringVar()
 
 
-    global checkvideocounts
-    checkvideocounts = tk.IntVar()
+    l_video_folder = tk.Label(left, text=i18labels("videoFolder", locale=lang, module="g"))
+    l_video_folder.grid(row = 0, column = 0, columnspan = 3, padx=14, pady=15,sticky=tk.W)    
 
-    global video_thumb_pairs_counts
-    video_thumb_pairs_counts = tk.IntVar()
 
-    # videosView_video_folder.set(setting['video_folder'])
-
-    l_video_folder = tk.Label(frame, text=i18labels("videoFolder", locale=lang, module="g"))
-    l_video_folder.place(x=10, y=20)
-    e_video_folder = tk.Entry(frame, width=45, textvariable=thumbView_video_folder)
-    e_video_folder.place(x=150, y=20)
+    e_video_folder = tk.Entry(left,textvariable=thumbView_video_folder)
+    e_video_folder.grid(row = 0, column = 5, columnspan = 3, padx=14, pady=15,sticky='nw')    
     
-    b_video_folder=tk.Button(frame,text="Select",command=lambda: threading.Thread(target=select_thumbView_video_folder).start() )
-    b_video_folder.place(x=580, y=20)    
-    b_video_folder_check=tk.Button(frame,text="Step1:check video assets",command=lambda: threading.Thread(target=analyse_video_thumb_pair(thumbView_video_folder.get(),frame)).start() )
-    b_video_folder_check.place(x=10, y=50)    
-    print(b_video_folder_check)
+    b_video_folder=tk.Button(left,text="Select",command=lambda: threading.Thread(target=select_thumbView_video_folder).start() )
+    b_video_folder.grid(row = 0, column = 10, columnspan = 3, padx=14, pady=15,sticky='nw')    
+    b_video_folder_check=tk.Button(left,text="Step1:check video assets",command=lambda: threading.Thread(target=analyse_video_meta_pair(thumbView_video_folder.get(),left,right)).start() )
+    b_video_folder_check.grid(row = 1, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw')    
     
     
 def metaView1(frame,ttkframe,lang):
@@ -3218,9 +3432,9 @@ def render(root,window,log_frame,lang):
     proxy_frame.columnconfigure((0,1), weight=1)
     proxy_frame_left = tk.Frame(proxy_frame, height = height)
     proxy_frame_left.grid(row=0,column=2,columnspan=3,pady=(5, 0), sticky='nw')   
-    proxy_frame__right = tk.Frame(proxy_frame, height = height)
+    proxy_frame_right = tk.Frame(proxy_frame, height = height)
     # account_frame_right.pack(side = tk.RIGHT)
-    proxy_frame__right.grid(row=0,column=10,pady=(5, 0), sticky='ne')   
+    proxy_frame_right.grid(row=0,column=10,pady=(5, 0), sticky='ne')   
     # input_canvas.grid(row=0, column=0, pady=(5, 0), sticky='nw')   
 
     account_frame = ttk.Frame(tab_control)
@@ -3240,11 +3454,24 @@ def render(root,window,log_frame,lang):
     upload_frame_left1.pack(side = tk.RIGHT)
 
 
+    # meta_frame = ttk.Frame(tab_control)
+    # meta_frame.rowconfigure(0, weight=1)
+    # meta_frame.columnconfigure((0,1), weight=1)
+    # meta_frame_left = tk.Frame(meta_frame,width=int(0.5*width),height = height)
+    # # meta_frame_left.pack(side = tk.LEFT)
+    # meta_frame_left.grid(row=0,column=3,columnspan=3, sticky='nw')
+    # meta_frame_right = tk.Frame(meta_frame,width=int(0.5*width), height = height)
+    # # meta_frame_right.pack(side = tk.RIGHT)
+    # meta_frame_right.grid(row=0,column=6,columnspan=3, sticky='ne')
+
+
     meta_frame = ttk.Frame(tab_control)
-    meta_frame_left1 = tk.Frame(meta_frame, width = width, height = height)
-    meta_frame_left1.pack(side = tk.RIGHT)
-
-
+    meta_frame.rowconfigure(0, weight=1)
+    meta_frame.columnconfigure((0,1), weight=1)
+    meta_frame_left = tk.Frame(meta_frame,width=int(0.5*width), height = height)
+    meta_frame_left.grid(row=0,column=0,columnspan=3,pady=(5, 0), sticky='nw')   
+    meta_frame_right = tk.Frame(meta_frame,width=int(0.5*width), height = height)
+    meta_frame_right.grid(row=0,column=20,pady=(5, 0), sticky='ne')     
 
     tab_control.add(doc_frame, text=i18labels("docView", locale=lang, module="g"))
     docView(doc_frame_left1,doc_frame,lang)
@@ -3257,7 +3484,7 @@ def render(root,window,log_frame,lang):
     accountView(account_frame_right,account_frame_left,lang)
 
     tab_control.add(proxy_frame, text=i18labels("proxyView", locale=lang, module="g"))
-    proxyView(proxy_frame_left,proxy_frame__right,lang)
+    proxyView(proxy_frame_left,proxy_frame_right,lang)
 
     tab_control.add(thumb_frame, text=i18labels("thumbView", locale=lang, module="g"))
     thumbView(thumb_frame_left1,thumb_frame,lang)
@@ -3268,7 +3495,8 @@ def render(root,window,log_frame,lang):
 
 
     tab_control.add(meta_frame, text=i18labels("metaView", locale=lang, module="g"))
-    metaView(meta_frame_left1,meta_frame,lang)
+    metaView(meta_frame_left,meta_frame_right,lang)
+    # metaView(meta_frame_right,meta_frame_left,lang)
 
 
     tab_control.add(upload_frame, text=i18labels("uploadView", locale=lang, module="g"))

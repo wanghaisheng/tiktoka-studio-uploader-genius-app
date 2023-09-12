@@ -11433,3 +11433,661 @@ SELECT * FROM proxies ORDER by inserted_at DESC
  SELECT * FROM accounts ORDER by inserted_at DESC
 2023-09-12 00:14:47,827 - INFO - we found 1 record matching 
 2023-09-12 00:14:47,828 - ERROR - search failed error:name 'latest_proxy_conditions_user' is not defined
+2023-09-12 08:44:04,853 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 08:44:04,936 - INFO - TiktokaStudio GUI started
+2023-09-12 14:09:20,091 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 14:09:20,139 - INFO - TiktokaStudio GUI started
+2023-09-12 14:09:26,146 - INFO - detecting----------False
+2023-09-12 14:09:26,148 - INFO - we could not find any video,supported ext includes:
+.flv..mp4..avi
+2023-09-12 14:09:41,395 - INFO - detecting----------False
+2023-09-12 14:21:08,842 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 14:21:08,903 - INFO - TiktokaStudio GUI started
+2023-09-12 14:21:14,267 - INFO - detecting----------False
+2023-09-12 14:21:14,268 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests
+2023-09-12 14:21:14,270 - INFO - we could not find any video,supported ext includes:
+.flv..mp4..avi
+2023-09-12 14:21:28,212 - INFO - detecting----------False
+2023-09-12 14:21:28,213 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 14:21:28,216 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 14:21:28,217 - INFO - we could not find any video,supported ext includes:
+.flv..mp4..avi
+2023-09-12 14:22:32,363 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 14:22:32,421 - INFO - TiktokaStudio GUI started
+2023-09-12 14:22:40,142 - INFO - detecting----------False
+2023-09-12 14:22:40,142 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 14:22:40,148 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 14:23:39,003 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 14:23:39,061 - INFO - TiktokaStudio GUI started
+2023-09-12 14:23:45,857 - INFO - detecting----------False
+2023-09-12 14:23:45,857 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 14:23:45,860 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 14:25:42,406 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 14:25:42,477 - INFO - TiktokaStudio GUI started
+2023-09-12 14:25:54,222 - INFO - detecting----------False
+2023-09-12 14:25:54,222 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 14:25:54,226 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 14:27:06,000 - INFO - detecting----------True
+2023-09-12 14:27:06,001 - INFO - we found same filename diff ext video:1 - \u526f\u672c,please rename or remove
+2023-09-12 14:27:06,001 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 14:28:45,198 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 14:28:45,259 - INFO - TiktokaStudio GUI started
+2023-09-12 14:28:53,924 - INFO - detecting----------False
+2023-09-12 14:30:14,524 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 14:30:14,585 - INFO - TiktokaStudio GUI started
+2023-09-12 14:30:24,415 - INFO - detecting----------False
+2023-09-12 14:30:24,415 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 14:30:24,419 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 14:30:33,567 - INFO - detecting----------True
+2023-09-12 14:30:33,567 - INFO - we analyse 9146260000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 14:30:33,568 - INFO - we found same filename diff ext video:1 - \u526f\u672c,please rename or remove
+2023-09-12 14:30:33,568 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 14:47:48,253 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 14:47:48,301 - INFO - TiktokaStudio GUI started
+2023-09-12 14:47:51,244 - INFO - detecting----------False
+2023-09-12 14:47:51,245 - INFO - create cached data for this folder:
+
+2023-09-12 14:47:51,246 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 14:47:57,997 - INFO - detecting----------False
+2023-09-12 14:47:57,997 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 14:47:58,001 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 14:57:44,631 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 14:57:44,690 - INFO - TiktokaStudio GUI started
+2023-09-12 14:57:48,313 - INFO - detecting----------False
+2023-09-12 14:57:48,313 - INFO - create cached data for this folder:
+
+2023-09-12 14:57:48,315 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 14:59:22,076 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 14:59:22,128 - INFO - TiktokaStudio GUI started
+2023-09-12 14:59:24,909 - INFO - detecting----------False
+2023-09-12 14:59:24,909 - INFO - create cached data for this folder:
+
+2023-09-12 14:59:24,911 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 15:00:02,523 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:00:02,584 - INFO - TiktokaStudio GUI started
+2023-09-12 15:00:04,303 - INFO - detecting----------False
+2023-09-12 15:00:04,303 - INFO - create cached data for this folder:
+
+2023-09-12 15:00:04,305 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 15:01:10,029 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:01:10,076 - INFO - TiktokaStudio GUI started
+2023-09-12 15:01:15,177 - INFO - detecting----------False
+2023-09-12 15:01:15,177 - INFO - create cached data for this folder:
+
+2023-09-12 15:01:15,178 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 15:01:27,328 - INFO - detecting----------True
+2023-09-12 15:01:27,329 - INFO - we cached 12149960000 seconds before for  this folder 
+2023-09-12 15:01:27,329 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 15:01:38,818 - INFO - detecting----------False
+2023-09-12 15:01:38,818 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 15:01:38,822 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 15:06:32,949 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:06:33,012 - INFO - TiktokaStudio GUI started
+2023-09-12 15:06:41,324 - INFO - detecting----------False
+2023-09-12 15:06:41,324 - INFO - create cached data for this folder:
+
+2023-09-12 15:06:41,326 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 15:08:18,309 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:08:18,368 - INFO - TiktokaStudio GUI started
+2023-09-12 15:08:21,527 - INFO - detecting----------False
+2023-09-12 15:08:21,527 - INFO - create cached data for this folder:
+
+2023-09-12 15:08:21,529 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 15:08:29,705 - INFO - detecting----------True
+2023-09-12 15:08:29,705 - INFO - we cached 8176076000 seconds before for  this folder 
+2023-09-12 15:08:29,705 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 15:08:36,024 - INFO - detecting----------False
+2023-09-12 15:08:36,024 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 15:08:36,028 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 15:09:46,150 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:09:46,211 - INFO - TiktokaStudio GUI started
+2023-09-12 15:09:54,564 - INFO - detecting----------False
+2023-09-12 15:09:54,564 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 15:09:54,569 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 15:19:43,828 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:19:43,889 - INFO - TiktokaStudio GUI started
+2023-09-12 15:22:46,927 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:22:46,981 - INFO - TiktokaStudio GUI started
+2023-09-12 15:25:31,667 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:25:31,728 - INFO - TiktokaStudio GUI started
+2023-09-12 15:26:36,291 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:26:36,353 - INFO - TiktokaStudio GUI started
+2023-09-12 15:27:11,628 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:27:11,691 - INFO - TiktokaStudio GUI started
+2023-09-12 15:27:42,004 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:27:42,065 - INFO - TiktokaStudio GUI started
+2023-09-12 15:29:08,457 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:29:08,518 - INFO - TiktokaStudio GUI started
+2023-09-12 15:30:25,851 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:30:25,906 - INFO - TiktokaStudio GUI started
+2023-09-12 15:31:52,945 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:31:53,007 - INFO - TiktokaStudio GUI started
+2023-09-12 15:32:46,997 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:32:47,063 - INFO - TiktokaStudio GUI started
+2023-09-12 15:33:44,276 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:33:44,341 - INFO - TiktokaStudio GUI started
+2023-09-12 15:33:54,838 - INFO - detecting----------False
+2023-09-12 15:33:54,838 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 15:33:54,842 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 15:37:22,866 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:37:22,928 - INFO - TiktokaStudio GUI started
+2023-09-12 15:37:27,733 - INFO - detecting----------False
+2023-09-12 15:37:27,735 - INFO - create cached data for this folder:
+
+2023-09-12 15:37:27,736 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 15:37:54,358 - INFO - detecting----------False
+2023-09-12 15:37:54,358 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 15:37:54,362 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 15:38:56,941 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:38:57,002 - INFO - TiktokaStudio GUI started
+2023-09-12 15:39:00,706 - INFO - detecting----------False
+2023-09-12 15:39:00,706 - INFO - create cached data for this folder:
+
+2023-09-12 15:39:00,708 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 15:39:06,513 - INFO - detecting----------False
+2023-09-12 15:39:06,513 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 15:39:06,518 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 15:39:53,158 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:39:53,205 - INFO - TiktokaStudio GUI started
+2023-09-12 15:39:56,611 - INFO - detecting----------False
+2023-09-12 15:39:56,611 - INFO - create cached data for this folder:
+
+2023-09-12 15:39:56,613 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 15:40:04,771 - INFO - detecting----------True
+2023-09-12 15:40:04,771 - INFO - we cached 8158731000 seconds before for  this folder 
+2023-09-12 15:40:04,771 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 15:40:11,882 - INFO - detecting----------False
+2023-09-12 15:40:11,883 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 15:40:11,887 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 15:42:28,049 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:42:28,107 - INFO - TiktokaStudio GUI started
+2023-09-12 15:42:38,007 - INFO - detecting----------False
+2023-09-12 15:42:38,009 - INFO - create cached data for this folder:
+
+2023-09-12 15:42:38,009 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 15:43:13,160 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:43:13,220 - INFO - TiktokaStudio GUI started
+2023-09-12 15:45:23,400 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:45:23,447 - INFO - TiktokaStudio GUI started
+2023-09-12 15:45:39,262 - INFO - detecting----------False
+2023-09-12 15:45:39,263 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 15:45:39,267 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 15:46:50,793 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:46:50,854 - INFO - TiktokaStudio GUI started
+2023-09-12 15:46:54,434 - INFO - detecting----------False
+2023-09-12 15:46:54,435 - INFO - create cached data for this folder:
+
+2023-09-12 15:46:54,437 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 15:47:12,130 - INFO - detecting----------False
+2023-09-12 15:47:12,130 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 15:47:12,134 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 15:48:27,344 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:48:27,389 - INFO - TiktokaStudio GUI started
+2023-09-12 15:48:34,493 - INFO - detecting----------False
+2023-09-12 15:48:34,493 - INFO - create cached data for this folder:
+
+2023-09-12 15:48:34,495 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 15:49:43,324 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:49:43,383 - INFO - TiktokaStudio GUI started
+2023-09-12 15:49:52,536 - INFO - detecting----------False
+2023-09-12 15:49:52,536 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 15:49:52,540 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 15:50:36,797 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:50:36,856 - INFO - TiktokaStudio GUI started
+2023-09-12 15:50:40,482 - INFO - detecting----------False
+2023-09-12 15:50:40,482 - INFO - create cached data for this folder:
+
+2023-09-12 15:50:40,484 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 15:50:45,345 - INFO - detecting----------False
+2023-09-12 15:50:45,346 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 15:50:45,350 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 15:51:26,717 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:51:26,777 - INFO - TiktokaStudio GUI started
+2023-09-12 15:51:29,891 - INFO - detecting----------False
+2023-09-12 15:51:29,892 - INFO - create cached data for this folder:
+
+2023-09-12 15:51:29,893 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 15:51:36,403 - INFO - detecting----------False
+2023-09-12 15:51:36,404 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 15:51:36,408 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 15:55:29,523 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:55:29,582 - INFO - TiktokaStudio GUI started
+2023-09-12 15:55:31,685 - INFO - detecting----------False
+2023-09-12 15:55:31,685 - INFO - create cached data for this folder:
+
+2023-09-12 15:55:31,687 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 15:55:36,236 - INFO - detecting----------False
+2023-09-12 15:55:36,237 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 15:55:36,241 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 15:56:29,652 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:56:29,712 - INFO - TiktokaStudio GUI started
+2023-09-12 15:56:38,630 - INFO - detecting----------False
+2023-09-12 15:56:38,630 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 15:56:38,634 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 15:57:35,950 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:57:36,012 - INFO - TiktokaStudio GUI started
+2023-09-12 15:57:43,313 - INFO - detecting----------False
+2023-09-12 15:57:43,313 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 15:57:43,317 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 15:58:15,795 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 15:58:15,856 - INFO - TiktokaStudio GUI started
+2023-09-12 15:58:21,961 - INFO - detecting----------False
+2023-09-12 15:58:21,961 - INFO - create cached data for this folder:
+
+2023-09-12 15:58:21,963 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 15:58:28,450 - INFO - detecting----------False
+2023-09-12 15:58:28,450 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 15:58:28,454 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 16:01:27,164 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 16:01:27,221 - INFO - TiktokaStudio GUI started
+2023-09-12 16:01:29,104 - INFO - detecting----------False
+2023-09-12 16:01:29,104 - INFO - create cached data for this folder:
+
+2023-09-12 16:01:29,106 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 16:01:35,264 - INFO - detecting----------False
+2023-09-12 16:01:35,265 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:01:35,268 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 16:02:34,097 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 16:02:34,153 - INFO - TiktokaStudio GUI started
+2023-09-12 16:02:42,603 - INFO - detecting----------False
+2023-09-12 16:02:42,603 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:02:42,607 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 16:03:22,219 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 16:03:22,277 - INFO - TiktokaStudio GUI started
+2023-09-12 16:03:31,268 - INFO - detecting----------False
+2023-09-12 16:03:31,268 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:03:31,272 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 16:04:42,998 - INFO - detecting----------True
+2023-09-12 16:04:42,999 - INFO - we cached 71726391000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:04:42,999 - INFO - we found same filename diff ext video:1 - \u526f\u672c,please rename or remove
+2023-09-12 16:04:43,000 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 16:04:43,928 - INFO - detecting----------True
+2023-09-12 16:04:43,928 - INFO - we cached 927642000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:04:43,928 - INFO - we found same filename diff ext video:1 - \u526f\u672c,please rename or remove
+2023-09-12 16:04:43,928 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 16:04:44,576 - INFO - detecting----------True
+2023-09-12 16:04:44,577 - INFO - we cached 646498000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:04:44,577 - INFO - we found same filename diff ext video:1 - \u526f\u672c,please rename or remove
+2023-09-12 16:04:44,577 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 16:04:44,784 - INFO - detecting----------True
+2023-09-12 16:04:44,784 - INFO - we cached 206260000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:04:44,785 - INFO - we found same filename diff ext video:1 - \u526f\u672c,please rename or remove
+2023-09-12 16:04:44,785 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 16:04:45,191 - INFO - detecting----------True
+2023-09-12 16:04:45,192 - INFO - we cached 406273000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:04:45,192 - INFO - we found same filename diff ext video:1 - \u526f\u672c,please rename or remove
+2023-09-12 16:04:45,192 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 16:04:45,384 - INFO - detecting----------True
+2023-09-12 16:04:45,385 - INFO - we cached 191743000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:04:45,385 - INFO - we found same filename diff ext video:1 - \u526f\u672c,please rename or remove
+2023-09-12 16:04:45,385 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 16:04:45,575 - INFO - detecting----------True
+2023-09-12 16:04:45,575 - INFO - we cached 189589000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:04:45,576 - INFO - we found same filename diff ext video:1 - \u526f\u672c,please rename or remove
+2023-09-12 16:04:45,576 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 16:04:45,760 - INFO - detecting----------True
+2023-09-12 16:04:45,760 - INFO - we cached 182095000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:04:45,761 - INFO - we found same filename diff ext video:1 - \u526f\u672c,please rename or remove
+2023-09-12 16:04:45,761 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 16:04:45,951 - INFO - detecting----------True
+2023-09-12 16:04:45,951 - INFO - we cached 189885000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:04:45,952 - INFO - we found same filename diff ext video:1 - \u526f\u672c,please rename or remove
+2023-09-12 16:04:45,952 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 16:04:46,160 - INFO - detecting----------True
+2023-09-12 16:04:46,161 - INFO - we cached 207226000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:04:46,161 - INFO - we found same filename diff ext video:1 - \u526f\u672c,please rename or remove
+2023-09-12 16:04:46,161 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 16:04:46,367 - INFO - detecting----------True
+2023-09-12 16:04:46,368 - INFO - we cached 206774000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:04:46,369 - INFO - we found same filename diff ext video:1 - \u526f\u672c,please rename or remove
+2023-09-12 16:04:46,369 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 16:04:46,583 - INFO - detecting----------True
+2023-09-12 16:04:46,584 - INFO - we cached 214008000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:04:46,584 - INFO - we found same filename diff ext video:1 - \u526f\u672c,please rename or remove
+2023-09-12 16:04:46,585 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 16:04:46,751 - INFO - detecting----------True
+2023-09-12 16:04:46,752 - INFO - we cached 166730000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:04:46,752 - INFO - we found same filename diff ext video:1 - \u526f\u672c,please rename or remove
+2023-09-12 16:04:46,753 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 16:04:46,928 - INFO - detecting----------True
+2023-09-12 16:04:46,929 - INFO - we cached 175255000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:04:46,929 - INFO - we found same filename diff ext video:1 - \u526f\u672c,please rename or remove
+2023-09-12 16:04:46,929 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 16:04:47,128 - INFO - detecting----------True
+2023-09-12 16:04:47,128 - INFO - we cached 198996000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:04:47,128 - INFO - we found same filename diff ext video:1 - \u526f\u672c,please rename or remove
+2023-09-12 16:04:47,128 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 16:04:47,319 - INFO - detecting----------True
+2023-09-12 16:04:47,320 - INFO - we cached 190640000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:04:47,320 - INFO - we found same filename diff ext video:1 - \u526f\u672c,please rename or remove
+2023-09-12 16:04:47,320 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 16:04:47,527 - INFO - detecting----------True
+2023-09-12 16:04:47,528 - INFO - we cached 206158000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:04:47,528 - INFO - we found same filename diff ext video:1 - \u526f\u672c,please rename or remove
+2023-09-12 16:04:47,528 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 16:04:47,775 - INFO - detecting----------True
+2023-09-12 16:04:47,776 - INFO - we cached 246476000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:04:47,776 - INFO - we found same filename diff ext video:1 - \u526f\u672c,please rename or remove
+2023-09-12 16:04:47,776 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 16:04:48,032 - INFO - detecting----------True
+2023-09-12 16:04:48,033 - INFO - we cached 255777000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:04:48,034 - INFO - we found same filename diff ext video:1 - \u526f\u672c,please rename or remove
+2023-09-12 16:04:48,034 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 16:04:49,167 - INFO - detecting----------True
+2023-09-12 16:04:49,168 - INFO - we cached 1133600000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:04:49,168 - INFO - we found same filename diff ext video:1 - \u526f\u672c,please rename or remove
+2023-09-12 16:04:49,168 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 16:04:49,511 - INFO - detecting----------True
+2023-09-12 16:04:49,512 - INFO - we cached 343092000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:04:49,512 - INFO - we found same filename diff ext video:1 - \u526f\u672c,please rename or remove
+2023-09-12 16:04:49,512 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 16:04:49,944 - INFO - detecting----------True
+2023-09-12 16:04:49,945 - INFO - we cached 431309000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:04:49,945 - INFO - we found same filename diff ext video:1 - \u526f\u672c,please rename or remove
+2023-09-12 16:04:49,946 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 16:06:41,827 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 16:06:41,874 - INFO - TiktokaStudio GUI started
+2023-09-12 16:06:45,628 - INFO - detecting----------False
+2023-09-12 16:06:45,628 - INFO - create cached data for this folder:
+
+2023-09-12 16:06:45,630 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 16:06:54,371 - INFO - detecting----------False
+2023-09-12 16:06:54,371 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:06:54,375 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 16:07:48,535 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 16:07:48,591 - INFO - TiktokaStudio GUI started
+2023-09-12 16:14:43,852 - INFO - detecting----------False
+2023-09-12 16:14:43,852 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:14:43,856 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 16:15:36,103 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 16:15:36,177 - INFO - TiktokaStudio GUI started
+2023-09-12 16:15:44,574 - INFO - detecting----------False
+2023-09-12 16:15:44,574 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:15:44,579 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 16:16:08,751 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 16:16:08,799 - INFO - TiktokaStudio GUI started
+2023-09-12 16:16:17,064 - INFO - detecting----------False
+2023-09-12 16:16:17,064 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:16:17,069 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 16:17:06,487 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 16:17:06,558 - INFO - TiktokaStudio GUI started
+2023-09-12 16:17:14,266 - INFO - detecting----------False
+2023-09-12 16:17:14,266 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:17:14,270 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 16:17:39,453 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 16:17:39,501 - INFO - TiktokaStudio GUI started
+2023-09-12 16:17:52,075 - INFO - detecting----------False
+2023-09-12 16:17:52,075 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:17:52,079 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 16:30:18,857 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 16:30:18,919 - INFO - TiktokaStudio GUI started
+2023-09-12 16:30:25,525 - INFO - detecting----------False
+2023-09-12 16:30:25,525 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:30:25,529 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 16:31:33,044 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 16:31:33,111 - INFO - TiktokaStudio GUI started
+2023-09-12 16:31:42,217 - INFO - detecting----------False
+2023-09-12 16:31:42,218 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:31:42,222 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 16:33:56,931 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 16:33:56,997 - INFO - TiktokaStudio GUI started
+2023-09-12 16:34:06,246 - INFO - detecting----------False
+2023-09-12 16:34:06,246 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:34:06,250 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 16:35:49,820 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 16:35:49,886 - INFO - TiktokaStudio GUI started
+2023-09-12 16:35:57,858 - INFO - detecting----------False
+2023-09-12 16:35:57,859 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:35:57,864 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 16:40:23,721 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 16:40:23,783 - INFO - TiktokaStudio GUI started
+2023-09-12 16:40:28,364 - INFO - detecting----------False
+2023-09-12 16:40:28,365 - INFO - create cached data for this folder:
+
+2023-09-12 16:40:28,366 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 16:40:35,324 - INFO - detecting----------False
+2023-09-12 16:40:35,324 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:40:35,328 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 16:41:42,630 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 16:41:42,698 - INFO - TiktokaStudio GUI started
+2023-09-12 16:41:44,974 - INFO - detecting----------False
+2023-09-12 16:41:44,975 - INFO - create cached data for this folder:
+
+2023-09-12 16:41:44,976 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 16:41:49,935 - INFO - detecting----------False
+2023-09-12 16:41:49,935 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:41:49,940 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 16:42:30,556 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 16:42:30,623 - INFO - TiktokaStudio GUI started
+2023-09-12 16:42:38,457 - INFO - detecting----------False
+2023-09-12 16:42:38,457 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:42:38,461 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 16:51:17,269 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 16:51:17,316 - INFO - TiktokaStudio GUI started
+2023-09-12 16:51:24,994 - INFO - detecting----------False
+2023-09-12 16:51:24,994 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:51:24,998 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 16:52:07,878 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 16:52:07,957 - INFO - TiktokaStudio GUI started
+2023-09-12 16:52:15,037 - INFO - detecting----------False
+2023-09-12 16:52:15,037 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:52:15,042 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 16:53:15,198 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 16:53:15,259 - INFO - TiktokaStudio GUI started
+2023-09-12 16:53:26,135 - INFO - detecting----------False
+2023-09-12 16:53:26,136 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 16:53:26,140 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 17:00:22,441 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 17:00:22,505 - INFO - TiktokaStudio GUI started
+2023-09-12 17:00:30,342 - INFO - detecting----------False
+2023-09-12 17:00:30,342 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 17:00:30,346 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 17:02:12,931 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 17:02:12,976 - INFO - TiktokaStudio GUI started
+2023-09-12 17:02:20,554 - INFO - detecting----------False
+2023-09-12 17:02:20,555 - INFO - create cached data for this folder:
+
+2023-09-12 17:02:20,556 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 17:02:27,354 - INFO - detecting----------False
+2023-09-12 17:02:27,354 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 17:02:27,357 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 17:04:43,181 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 17:04:43,245 - INFO - TiktokaStudio GUI started
+2023-09-12 17:04:50,695 - INFO - detecting----------False
+2023-09-12 17:04:50,695 - INFO - create cached data for this folder:
+
+2023-09-12 17:04:50,697 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 17:05:00,302 - INFO - detecting----------False
+2023-09-12 17:05:00,303 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 17:05:00,307 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 17:06:24,878 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 17:06:24,943 - INFO - TiktokaStudio GUI started
+2023-09-12 17:06:35,675 - INFO - detecting----------False
+2023-09-12 17:06:35,676 - INFO - create cached data for this folder:
+
+2023-09-12 17:06:35,678 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 17:06:42,179 - INFO - detecting----------False
+2023-09-12 17:06:42,179 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 17:06:42,183 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 17:08:25,613 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 17:08:25,677 - INFO - TiktokaStudio GUI started
+2023-09-12 17:08:34,311 - INFO - detecting----------False
+2023-09-12 17:08:34,311 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 17:08:34,316 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 17:09:28,926 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 17:09:28,995 - INFO - TiktokaStudio GUI started
+2023-09-12 17:09:36,801 - INFO - detecting----------False
+2023-09-12 17:09:36,801 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 17:09:36,805 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 17:09:47,514 - INFO - detecting----------True
+2023-09-12 17:09:47,515 - INFO - we cached 10707098000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 17:09:47,516 - INFO - we found same filename diff ext video:1 - \u526f\u672c,please rename or remove
+2023-09-12 17:09:47,516 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 17:09:49,186 - INFO - detecting----------True
+2023-09-12 17:09:49,187 - INFO - we cached 1670349000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 17:09:49,188 - INFO - we found same filename diff ext video:1 - \u526f\u672c,please rename or remove
+2023-09-12 17:09:49,188 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 17:13:23,006 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 17:13:23,068 - INFO - TiktokaStudio GUI started
+2023-09-12 17:13:30,946 - INFO - detecting----------False
+2023-09-12 17:13:30,946 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 17:13:30,952 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 17:15:07,102 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 17:15:07,162 - INFO - TiktokaStudio GUI started
+2023-09-12 17:15:13,645 - INFO - detecting----------False
+2023-09-12 17:15:13,645 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 17:15:13,650 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 17:15:56,740 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 17:15:56,804 - INFO - TiktokaStudio GUI started
+2023-09-12 17:16:02,023 - INFO - detecting----------False
+2023-09-12 17:16:02,023 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 17:16:02,028 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 17:16:31,561 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 17:16:31,611 - INFO - TiktokaStudio GUI started
+2023-09-12 17:16:43,464 - INFO - detecting----------False
+2023-09-12 17:16:43,464 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 17:16:43,468 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 17:17:29,888 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 17:17:29,951 - INFO - TiktokaStudio GUI started
+2023-09-12 17:17:35,506 - INFO - detecting----------False
+2023-09-12 17:17:35,506 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 17:17:35,510 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 17:18:31,426 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-12 17:18:31,474 - INFO - TiktokaStudio GUI started
+2023-09-12 17:18:38,629 - INFO - detecting----------False
+2023-09-12 17:18:38,629 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-12 17:18:38,633 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
