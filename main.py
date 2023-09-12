@@ -1994,82 +1994,76 @@ def thumbView(frame,ttkframe,lang):
 def render_video_folder_check_results(frame,right_frame,folder):
     lb_video_counts = tk.Label(frame, text='video total counts', font=(' ', 9))
 
-    lb_video_counts.grid(row = 2, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw')    
+    lb_video_counts.grid(row = 2, column = 0)    
 
     lb_video_counts_value = tk.Label(frame, text=str(ultra[folder] ['videoCounts']), font=(' ', 9))
-    lb_video_counts_value.grid(row = 2, column = 5, columnspan = 3, padx=14, pady=15,sticky='nw')    
+    lb_video_counts_value.grid(row = 2, column = 1)    
 
 
     lb_video_thumb_pairs_counts = tk.Label(frame, text='video-thum paired', font=(' ', 9))
-    lb_video_thumb_pairs_counts.grid(row = 3, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw')    
+    lb_video_thumb_pairs_counts.grid(row = 3, column = 0)    
 
 
 
     lb_video_thumb_pairs_counts_value = tk.Label(frame, text=str(ultra[folder] ['thumbCounts']), font=(' ', 9))
-    lb_video_thumb_pairs_counts_value.grid(row = 3, column = 3, columnspan = 3, padx=14, pady=15,sticky='nw')    
+    lb_video_thumb_pairs_counts_value.grid(row = 3, column = 1)    
 
 
     lb_video_thumb_missing_pairs_counts = tk.Label(frame, text='missing paired', font=(' ', 9))
-    lb_video_thumb_missing_pairs_counts.grid(row = 3, column = 7, columnspan = 3, padx=14, pady=15,sticky='nw')    
+    lb_video_thumb_missing_pairs_counts.grid(row = 3, column = 2)    
 
     missing_video_thumb_pairs_counts=ultra[folder] ['videoCounts']-ultra[folder] ['thumbCounts']
 
     lb_video_thumb_pairs_counts_value = tk.Label(frame, text=str(missing_video_thumb_pairs_counts), font=(' ', 9))
-    lb_video_thumb_pairs_counts_value.grid(row = 3, column = 10, columnspan = 3, padx=14, pady=15,sticky='nw')    
+    lb_video_thumb_pairs_counts_value.grid(row = 3, column = 3)    
 
     if missing_video_thumb_pairs_counts>0:
         b_gen_thumb=tk.Button(frame,text="Gen",command=lambda: threading.Thread(target=render_thumb_gen(right_frame,True)).start() )
-        b_gen_thumb.grid(row = 3, column = 13, columnspan = 3, padx=14, pady=15,sticky='nw')    
+        b_gen_thumb.grid(row = 3, column = 4)    
 
 
     lb_video_des_pairs_counts = tk.Label(frame, text='video-des paired', font=(' ', 9))
-    lb_video_des_pairs_counts.grid(row = 4, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw')    
+    lb_video_des_pairs_counts.grid(row = 4, column = 0)    
 
 
 
     lb_video_des_pairs_counts_value = tk.Label(frame, text=str(ultra[folder] ['desCounts']), font=(' ', 9))
-    lb_video_des_pairs_counts_value.grid(row = 4, column = 3, columnspan = 3, padx=14, pady=15,sticky='nw')    
+    lb_video_des_pairs_counts_value.grid(row = 4, column = 1)    
 
 
     lb_video_des_missing_pairs_counts = tk.Label(frame, text='missing paired', font=(' ', 9))
-    lb_video_des_missing_pairs_counts.grid(row = 4, column = 7, columnspan = 3, padx=14, pady=15,sticky='nw')    
+    lb_video_des_missing_pairs_counts.grid(row = 4, column = 2)    
 
     missing_video_des_missing_pairs_counts=ultra[folder] ['videoCounts']-ultra[folder] ['desCounts']
 
     lb_video_des_missing_pairs_counts_value = tk.Label(frame, text=str(missing_video_des_missing_pairs_counts), font=(' ', 9))
-    lb_video_des_missing_pairs_counts_value.grid(row = 4, column = 10, columnspan = 3, padx=14, pady=15,sticky='nw')    
+    lb_video_des_missing_pairs_counts_value.grid(row = 4, column = 3)    
     if missing_video_des_missing_pairs_counts>0:
         b_gen_thumb=tk.Button(frame,text="Gen",command=lambda: threading.Thread(target=render_des_gen(right_frame,True)).start() )
-        b_gen_thumb.grid(row = 4, column = 13, columnspan = 3, padx=14, pady=15,sticky='nw')    
+        b_gen_thumb.grid(row = 4, column = 4)    
 
 
 
 
     lb_video_meta_pairs_counts = tk.Label(frame, text='video-meta paired', font=(' ', 9))
-    lb_video_meta_pairs_counts.grid(row = 5, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw')    
+    lb_video_meta_pairs_counts.grid(row = 5, column = 0)    
 
 
 
     lb_video_meta_pairs_counts_value = tk.Label(frame, text=str(ultra[folder] ['metaCounts']), font=(' ', 9))
-    lb_video_meta_pairs_counts_value.grid(row = 5, column = 3, columnspan = 3, padx=14, pady=15,sticky='nw')    
+    lb_video_meta_pairs_counts_value.grid(row = 5, column = 1)    
 
 
     lb_video_meta_missing_pairs_counts = tk.Label(frame, text='missing paired', font=(' ', 9))
-    lb_video_meta_missing_pairs_counts.grid(row = 5, column = 7, columnspan = 3, padx=14, pady=15,sticky='nw')    
+    lb_video_meta_missing_pairs_counts.grid(row = 5, column = 2)    
 
     missing_video_meta_missing_pairs_counts=ultra[folder] ['videoCounts']-ultra[folder] ['metaCounts']
 
     lb_video_meta_missing_pairs_counts_value = tk.Label(frame, text=str(missing_video_meta_missing_pairs_counts), font=(' ', 9))
-    lb_video_meta_missing_pairs_counts_value.grid(row = 5, column = 10, columnspan = 3, padx=14, pady=15,sticky='nw')    
+    lb_video_meta_missing_pairs_counts_value.grid(row = 5, column = 3)    
     if missing_video_meta_missing_pairs_counts>0:
         b_gen_thumb=tk.Button(frame,text="Gen",command=lambda: threading.Thread(target=render_update_meta(right_frame,True)).start() )
-        b_gen_thumb.grid(row = 5, column = 13, columnspan = 3, padx=14, pady=15,sticky='nw')    
-        # if missing_video_thumb_pairs_counts==0:
-    #     lb_thumb_wizard = tk.Label(frame, text='please try another video folder', font=(' ', 18))
-    #     lb_thumb_wizard.place(x=50, y=180,anchor=tk.NW)   
-    # else:
-    #     lb_thumb_wizard = tk.Label(frame, text='you need create thumbnails for '+str(missing_video_thumb_pairs_counts)+'  videos', font=(' ', 18))
-    #     lb_thumb_wizard.place(x=50, y=180,anchor=tk.NW)    
+        b_gen_thumb.grid(row = 5, column = 4)    
 
 def render_des_gen(frame,isneed):
     if isneed==True:
@@ -2718,9 +2712,9 @@ def  queryTasks(tree,engine,logger,vid):
 def uploadView(frame,ttkframe,lang):
 
     # treeview_flight
-    tree = ttk.Treeview(frame, height = 20, column = 9)
+    tree = ttk.Treeview(ttkframe, height = 20, column = 9)
     tree["column"]=('#0','#1','#2','#3','#4','#5','#6','#7')
-    tree.grid(row = 0, column = 0, columnspan = 10, padx=14, pady=15)
+    tree.grid(row = 3, column = 0, columnspan = 10, padx=14, pady=15)
 
     tree.heading('#0', text = 'Task No.')
     tree.column('#0', anchor = 'center', width = 70)
@@ -2743,68 +2737,88 @@ def uploadView(frame,ttkframe,lang):
     tree.column('#8', anchor = 'center', width = 80)
 
     btn5= tk.Button(ttkframe, text="Get Info", command = lambda: threading.Thread(target=queryTasks(tree,prod_engine,logger,vid.get())).start())
-    btn5.place(x=800, y=15, anchor=tk.NE)    
+    btn5.grid(row = 0, column = 1, columnspan = 10, padx=14, pady=15)
     
     
         
     global vid
     vid = tk.StringVar()
     lbl15 = tk.Label(ttkframe, text='Enter vid.')
-    lbl15.place(x=430, y=15, anchor=tk.NE)
+    lbl15.grid(row = 0, column = 1)
     txt15 = tk.Entry(ttkframe, width=11,textvariable=vid)
     txt15.insert(0,'input task id')
-    txt15.place(x=580, y=15, anchor=tk.NE)
+    txt15.grid(row = 1, column = 1)
 
 
 
 
     lb_youtube_counts = tk.Label(ttkframe, text='youtube', font=(' ', 15))
-    lb_youtube_counts.place(x=350, y=530, anchor=tk.NE)    
+    lb_youtube_counts.grid(row = 5, column = 0)
 
     lb_tiktok_counts = tk.Label(ttkframe, text='tiktok', font=(' ', 15))
-    lb_tiktok_counts.place(x=330, y=560, anchor=tk.NE)    
+    lb_tiktok_counts.grid(row = 6, column =0)
+
+    lb_total_counts = tk.Label(ttkframe, text='all', font=(' ', 15))
+    lb_total_counts.grid(row = 7, column =0)
     
     lb_video_counts = tk.Label(ttkframe, text='success', font=(' ', 15))
-    lb_video_counts.place(x=450, y=510, anchor=tk.NE)
+    lb_video_counts.grid(row = 4, column = 1)
+    
+    lb_video_queuedcounts = tk.Label(ttkframe, text='queued', font=(' ', 15))
+    lb_video_queuedcounts.grid(row = 4, column = 2)
 
-    lb_video_counts_value = tk.Label(ttkframe, text=str(checkvideocounts.get()), font=(' ', 18))
-    lb_video_counts_value.place(x=550, y=510, width = 20, anchor=tk.NE)
-
-
-    lb_video_thumb_pairs_counts = tk.Label(ttkframe, text='queued', font=(' ', 15))
-    lb_video_thumb_pairs_counts.place(x=650, y=510, anchor=tk.NE)
-
+    lb_video_failure_counts = tk.Label(ttkframe, text='failure', font=(' ', 15))
+    lb_video_failure_counts.grid(row = 4, column = 3)
 
 
-    lb_video_thumb_pairs_counts_value = tk.Label(ttkframe, text=str(video_thumb_pairs_counts.get()), font=(' ', 18))
-    lb_video_thumb_pairs_counts_value.place(x=750, y=510, width = 20, anchor=tk.NE)
+    lb_youtube_success_counts_value = tk.Label(ttkframe, text=str(checkvideocounts.get()), font=(' ', 18))
+    lb_youtube_success_counts_value.grid(row = 5, column = 1)
 
+    lb_youtube_queued_counts_value = tk.Label(ttkframe, text=str(checkvideocounts.get()), font=(' ', 18))
+    lb_youtube_queued_counts_value.grid(row = 5, column = 2)
 
-    lb_video_thumb_pairs_counts = tk.Label(ttkframe, text='failure', font=(' ', 15))
-    lb_video_thumb_pairs_counts.place(x=850, y=510, anchor=tk.NE)
+    lb_youtube_failure_counts_value = tk.Label(ttkframe, text=str(checkvideocounts.get()), font=(' ', 18))
+    lb_youtube_failure_counts_value.grid(row = 5, column = 3)
+    
+    
+    lb_tiktok_success_counts_value = tk.Label(ttkframe, text=str(checkvideocounts.get()), font=(' ', 18))
+    lb_tiktok_success_counts_value.grid(row = 6, column = 1)
 
-    missing_video_thumb_pairs_counts=checkvideocounts.get()-video_thumb_pairs_counts.get()
+    lb_tiktok_queued_counts_value = tk.Label(ttkframe, text=str(checkvideocounts.get()), font=(' ', 18))
+    lb_tiktok_queued_counts_value.grid(row = 6, column = 2)
 
-    lb_video_thumb_pairs_counts_value = tk.Label(ttkframe, text=str(missing_video_thumb_pairs_counts), font=(' ', 18))
-    lb_video_thumb_pairs_counts_value.place(x=950, y=510, width = 20, anchor=tk.NE)
+    lb_tiktok_failure_counts_value = tk.Label(ttkframe, text=str(checkvideocounts.get()), font=(' ', 18))
+    lb_tiktok_failure_counts_value.grid(row = 6, column = 3)
+    
+    
+
+    lb_total_success_counts_value = tk.Label(ttkframe, text=str(checkvideocounts.get()), font=(' ', 18))
+    lb_total_success_counts_value.grid(row = 7, column = 1)
+
+    lb_total_queued_counts_value = tk.Label(ttkframe, text=str(checkvideocounts.get()), font=(' ', 18))
+    lb_total_queued_counts_value.grid(row = 7, column = 2)
+
+    lb_total_failure_counts_value = tk.Label(ttkframe, text=str(checkvideocounts.get()), font=(' ', 18))
+    lb_total_failure_counts_value.grid(row = 7, column = 3)
+    
 
         
     
-    b_down_video_metas_temp = tk.Button(ttkframe, text=i18labels("downVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=downVideoMetas).start())
+    b_down_video_metas_temp = tk.Button(frame, text=i18labels("downVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=downVideoMetas).start())
     b_down_video_metas_temp.place(x=10, y=int(50))    
     
 
-    b_editVideoMetas = tk.Button(ttkframe, text=i18labels("editVideoMetas", locale=lang, module="g"), command=
+    b_editVideoMetas = tk.Button(frame, text=i18labels("editVideoMetas", locale=lang, module="g"), command=
                                 #  lambda: webbrowser.open_new("https://jsoncrack.com/editor")
                                  lambda: threading.Thread(target=webbrowser.open_new("https://jsoncrack.com/editor")).start())
     b_editVideoMetas.place(x=10, y=int(100))
     
 
 
-    l_import_video_metas = tk.Label(ttkframe, text=i18labels("importVideoMetas", locale=lang, module="g"), font=(' ', 14))
+    l_import_video_metas = tk.Label(frame, text=i18labels("importVideoMetas", locale=lang, module="g"), font=(' ', 14))
     l_import_video_metas.place(x=10, y=150, anchor=tk.NW)
     global video_meta_json_path
-    b_imported_video_metas_file=tk.Button(ttkframe,text="Select",command=SelectVideoMetasfile)
+    b_imported_video_metas_file=tk.Button(frame,text="Select",command=SelectVideoMetasfile)
     b_imported_video_metas_file.place(x=200, y=150)   
 
 
@@ -2813,20 +2827,20 @@ def uploadView(frame,ttkframe,lang):
     # l_imported_video_metas_file = tk.Label(ttkframe, text='thumbnail template file')
 
     # l_imported_video_metas_file.place(x=10, y=200)
-    e_imported_video_metas_file = tk.Entry(ttkframe, width=int(width*0.02), textvariable=imported_video_metas_file)
+    e_imported_video_metas_file = tk.Entry(frame, width=int(width*0.02), textvariable=imported_video_metas_file)
     e_imported_video_metas_file.place(x=10, y=200)
 
   
-    b_validate_video_metas = tk.Button(ttkframe, text=i18labels("validateVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=validateMetafile(test_engine,ttkframe,imported_video_metas_file.get())).start())
+    b_validate_video_metas = tk.Button(frame, text=i18labels("validateVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=validateMetafile(test_engine,ttkframe,imported_video_metas_file.get())).start())
     b_validate_video_metas.place(x=10, y=int(250))
-    b_createuploadsession = tk.Button(ttkframe, text=i18labels("createuploadsession", locale=lang, module="g"), command=lambda: threading.Thread(target=validateMetafile(prod_engine,ttkframe,imported_video_metas_file.get())).start())
+    b_createuploadsession = tk.Button(frame, text=i18labels("createuploadsession", locale=lang, module="g"), command=lambda: threading.Thread(target=validateMetafile(prod_engine,ttkframe,imported_video_metas_file.get())).start())
     b_createuploadsession.place(x=10, y=int(300))
 
     # test upload  跳转到一个单独页面，录入一个视频的上传信息，点击上传进行测试。
-    b_upload = tk.Button(ttkframe, text=i18labels("testupload", locale=lang, module="g"), command=lambda: threading.Thread(target=testupload(DBM('test'),ttkframe)).start())
+    b_upload = tk.Button(frame, text=i18labels("testupload", locale=lang, module="g"), command=lambda: threading.Thread(target=testupload(DBM('test'),ttkframe)).start())
     b_upload.place(x=10, y=int(350))
 
-    b_upload = tk.Button(ttkframe, text=i18labels("upload", locale=lang, module="g"), command=lambda: threading.Thread(target=upload).start())
+    b_upload = tk.Button(frame, text=i18labels("upload", locale=lang, module="g"), command=lambda: threading.Thread(target=upload).start())
     b_upload.place(x=10, y=int(400))
 
 
@@ -3154,14 +3168,14 @@ def metaView(left,right,lang):
 
 
     l_video_folder = tk.Label(left, text=i18labels("videoFolder", locale=lang, module="g"))
-    l_video_folder.grid(row = 0, column = 0, columnspan = 3, padx=14, pady=15,sticky=tk.W)    
+    l_video_folder.grid(row = 0, column = 0, padx=14, pady=15,sticky=tk.W)    
 
 
     e_video_folder = tk.Entry(left,textvariable=thumbView_video_folder)
-    e_video_folder.grid(row = 0, column = 5, columnspan = 3, padx=14, pady=15,sticky='nw')    
+    e_video_folder.grid(row = 0, column = 1, padx=14, pady=15,sticky='nw')    
     
     b_video_folder=tk.Button(left,text="Select",command=lambda: threading.Thread(target=select_thumbView_video_folder).start() )
-    b_video_folder.grid(row = 0, column = 10, columnspan = 3, padx=14, pady=15,sticky='nw')    
+    b_video_folder.grid(row = 0, column = 2, padx=14, pady=15,sticky='nw')    
     b_video_folder_check=tk.Button(left,text="Step1:check video assets",command=lambda: threading.Thread(target=analyse_video_meta_pair(thumbView_video_folder.get(),left,right)).start() )
     b_video_folder_check.grid(row = 1, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw')    
     
@@ -3348,13 +3362,6 @@ def metaView1(frame,ttkframe,lang):
     
 
     
-    # l_mode_1 = tk.Label(frame, text=i18labels("mode1", locale=lang, module="g"))
-    # l_mode_1.place(x=10, y=int(height-200))
-
-    # b_editVideoMetas = tk.Button(frame, text=i18labels("editVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=editVideoMetas).start())
-    # b_editVideoMetas.place(x=150, y=int(height-200))
-    
-    
     
         
     l_mode_2 = tk.Label(frame, text=i18labels("mode2", locale=lang, module="g"))
@@ -3369,28 +3376,6 @@ def metaView1(frame,ttkframe,lang):
 
 
 
-        
-    # l_mode_3 = tk.Label(frame, text=i18labels("mode3", locale=lang, module="g"))
-    # l_mode_3.place(x=10, y=int(height-100))
-    
-
-    # b_import_video_metas = tk.Button(frame, text=i18labels("importVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=importVideoMetas).start())
-    # b_import_video_metas.place(x=150, y=int(height-100))
-    
-    # b_down_video_metas_temp = tk.Button(frame, text=i18labels("downVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=downVideoMetas).start())
-    # b_down_video_metas_temp.place(x=350, y=int(height-100))    
-    
-
-    # b_createuploadsession = tk.Button(frame, text=i18labels("createuploadsession", locale=lang, module="g"), command=lambda: threading.Thread(target=createuploadsession).start())
-    # b_createuploadsession.place(x=150, y=int(height-50))
-
-
-
-    # b_upload = tk.Button(frame, text=i18labels("testupload", locale=lang, module="g"), command=lambda: threading.Thread(target=testupload).start())
-    # b_upload.place(x=350, y=int(height-50))
-
-    # b_upload = tk.Button(frame, text=i18labels("upload", locale=lang, module="g"), command=lambda: threading.Thread(target=upload).start())
-    # b_upload.place(x=550, y=int(height-50))
 
 
     
@@ -3407,51 +3392,95 @@ def render(root,window,log_frame,lang):
     global doc_frame,install_frame,thumb_frame,video_frame,proxy_frame,account_frame,upload_frame,meta_frame
 
     tab_control = ttk.Notebook(window)
+    
     doc_frame = ttk.Frame(tab_control)
-    doc_frame_left1 = tk.Frame(doc_frame, width = width, height = height)
-    doc_frame_left1.pack(side = tk.TOP)
+    doc_frame.grid_rowconfigure(0, weight=1)
+    doc_frame.grid_columnconfigure(0, weight=1, uniform="group1")
+    doc_frame.grid_columnconfigure(1, weight=1, uniform="group1")
+    doc_frame.columnconfigure((0,1), weight=1)
+    
+    doc_frame_left = tk.Frame(doc_frame, height = height)
+    doc_frame_left.grid(row=0,column=0,sticky="nsew")
+    doc_frame_right = tk.Frame(doc_frame, height = height)
+    doc_frame_right.grid(row=0,column=1,sticky="nsew") 
 
 
 
     install_frame = ttk.Frame(tab_control)
-    install_frame_left1 = tk.Frame(install_frame, width = width, height = height)
-    install_frame_left1.pack(side = tk.LEFT)
+    install_frame.grid_rowconfigure(0, weight=1)
+    install_frame.grid_columnconfigure(0, weight=1, uniform="group1")
+    install_frame.grid_columnconfigure(1, weight=1, uniform="group1")
+    install_frame.columnconfigure((0,1), weight=1)
+    
+    install_frame_left = tk.Frame(install_frame, height = height)
+    install_frame_left.grid(row=0,column=0,sticky="nsew")
+    install_frame_right = tk.Frame(install_frame, height = height)
+    install_frame_right.grid(row=0,column=1,sticky="nsew") 
+
+
+
+
 
     thumb_frame = ttk.Frame(tab_control)
-    thumb_frame_left1 = tk.Frame(thumb_frame, width = width, height = height)
-    thumb_frame_left1.pack(side = tk.LEFT)
+    thumb_frame.grid_rowconfigure(0, weight=1)
+    thumb_frame.grid_columnconfigure(0, weight=1, uniform="group1")
+    thumb_frame.grid_columnconfigure(1, weight=1, uniform="group1")
+    thumb_frame.columnconfigure((0,1), weight=1)
+    
+    thumb_frame_left = tk.Frame(thumb_frame, height = height)
+    thumb_frame_left.grid(row=0,column=0,sticky="nsew")
+    thumb_frame_right = tk.Frame(thumb_frame, height = height)
+    thumb_frame_right.grid(row=0,column=1,sticky="nsew") 
+
 
 
     video_frame = ttk.Frame(tab_control)
 
-    video_frame_left1 = tk.Frame(video_frame, width = width, height = height)
-    video_frame_left1.pack(side = tk.LEFT)
+    video_frame.grid_rowconfigure(0, weight=1)
+    video_frame.grid_columnconfigure(0, weight=1, uniform="group1")
+    video_frame.grid_columnconfigure(1, weight=1, uniform="group1")
+    video_frame.columnconfigure((0,1), weight=1)
+    
+    video_frame_left = tk.Frame(video_frame, height = height)
+    video_frame_left.grid(row=0,column=0,sticky="nsew")
+    video_frame_right = tk.Frame(video_frame, height = height)
+    video_frame_right.grid(row=0,column=1,sticky="nsew") 
+
+
 
     proxy_frame = ttk.Frame(tab_control)
-    proxy_frame.rowconfigure(0, weight=1)
+    proxy_frame.grid_rowconfigure(0, weight=1)
+    proxy_frame.grid_columnconfigure(0, weight=1, uniform="group1")
+    proxy_frame.grid_columnconfigure(1, weight=1, uniform="group1")
     proxy_frame.columnconfigure((0,1), weight=1)
+    
     proxy_frame_left = tk.Frame(proxy_frame, height = height)
-    proxy_frame_left.grid(row=0,column=2,columnspan=3,pady=(5, 0), sticky='nw')   
+    proxy_frame_left.grid(row=0,column=0,sticky="nsew")
     proxy_frame_right = tk.Frame(proxy_frame, height = height)
-    # account_frame_right.pack(side = tk.RIGHT)
-    proxy_frame_right.grid(row=0,column=10,pady=(5, 0), sticky='ne')   
+    proxy_frame_right.grid(row=0,column=1,sticky="nsew") 
     # input_canvas.grid(row=0, column=0, pady=(5, 0), sticky='nw')   
 
     account_frame = ttk.Frame(tab_control)
-    account_frame.rowconfigure(0, weight=1)
+    account_frame.grid_rowconfigure(0, weight=1)
+    account_frame.grid_columnconfigure(0, weight=1, uniform="group1")
+    account_frame.grid_columnconfigure(1, weight=1, uniform="group1")
     account_frame.columnconfigure((0,1), weight=1)
-    account_frame_left = tk.Frame(account_frame,width=int(0.5*width),height = height)
-    # account_frame_left.pack(side = tk.LEFT)
-    account_frame_left.grid(row=0,column=3,columnspan=3)
-    account_frame_right = tk.Frame(account_frame,width=int(0.5*width), height = height)
-    # account_frame_right.pack(side = tk.RIGHT)
-    account_frame_right.grid(row=0,column=6,columnspan=3)
+    
+    account_frame_left = tk.Frame(account_frame, height = height)
+    account_frame_left.grid(row=0,column=0,sticky="nsew")
+    account_frame_right = tk.Frame(account_frame, height = height)
+    account_frame_right.grid(row=0,column=1,sticky="nsew") 
 
     upload_frame = ttk.Frame(tab_control)
-    upload_frame.rowconfigure(0, weight=1)
+    upload_frame.grid_rowconfigure(0, weight=1)
+    upload_frame.grid_columnconfigure(0, weight=1, uniform="group1")
+    upload_frame.grid_columnconfigure(1, weight=1, uniform="group1")
     upload_frame.columnconfigure((0,1), weight=1)
-    upload_frame_left1 = tk.Frame(upload_frame, width = width, height = height)
-    upload_frame_left1.pack(side = tk.RIGHT)
+    
+    upload_frame_left = tk.Frame(upload_frame, height = height)
+    upload_frame_left.grid(row=0,column=0,sticky="nsew")
+    upload_frame_right = tk.Frame(upload_frame, height = height)
+    upload_frame_right.grid(row=0,column=1,sticky="nsew") 
 
 
     # meta_frame = ttk.Frame(tab_control)
@@ -3466,18 +3495,27 @@ def render(root,window,log_frame,lang):
 
 
     meta_frame = ttk.Frame(tab_control)
-    meta_frame.rowconfigure(0, weight=1)
+    meta_frame.grid_rowconfigure(0, weight=1)
+    meta_frame.grid_columnconfigure(0, weight=1, uniform="group1")
+    meta_frame.grid_columnconfigure(1, weight=1, uniform="group1")
     meta_frame.columnconfigure((0,1), weight=1)
-    meta_frame_left = tk.Frame(meta_frame,width=int(0.5*width), height = height)
-    meta_frame_left.grid(row=0,column=0,columnspan=3,pady=(5, 0), sticky='nw')   
-    meta_frame_right = tk.Frame(meta_frame,width=int(0.5*width), height = height)
-    meta_frame_right.grid(row=0,column=20,pady=(5, 0), sticky='ne')     
+    
+    meta_frame_left = tk.Frame(meta_frame, height = height)
+    meta_frame_left.grid(row=0,column=0,sticky="nsew")
+    meta_frame_right = tk.Frame(meta_frame, height = height)
+    meta_frame_right.grid(row=0,column=1,sticky="nsew") 
+
+
+    meta_frame.grid_columnconfigure(0, weight=1, uniform="group1")
+    meta_frame.grid_columnconfigure(1, weight=1, uniform="group1")
+    meta_frame.grid_rowconfigure(0, weight=1)
+
 
     tab_control.add(doc_frame, text=i18labels("docView", locale=lang, module="g"))
-    docView(doc_frame_left1,doc_frame,lang)
+    docView(doc_frame_left,doc_frame_right,lang)
 
     tab_control.add(install_frame, text=i18labels("installView", locale=lang, module="g"))
-    installView(install_frame_left1,install_frame,lang)
+    installView(install_frame_left,install_frame_right,lang)
 
 
     tab_control.add(account_frame, text=i18labels("accountView", locale=lang, module="g"))
@@ -3487,11 +3525,11 @@ def render(root,window,log_frame,lang):
     proxyView(proxy_frame_left,proxy_frame_right,lang)
 
     tab_control.add(thumb_frame, text=i18labels("thumbView", locale=lang, module="g"))
-    thumbView(thumb_frame_left1,thumb_frame,lang)
+    thumbView(thumb_frame_left,thumb_frame_right,lang)
 
 
     tab_control.add(video_frame, text=i18labels("videosView", locale=lang, module="g"))
-    videosView(video_frame_left1,video_frame,lang)
+    videosView(video_frame_left,video_frame_right,lang)
 
 
     tab_control.add(meta_frame, text=i18labels("metaView", locale=lang, module="g"))
@@ -3500,7 +3538,7 @@ def render(root,window,log_frame,lang):
 
 
     tab_control.add(upload_frame, text=i18labels("uploadView", locale=lang, module="g"))
-    uploadView(upload_frame_left1,upload_frame,lang)
+    uploadView(upload_frame_left,upload_frame_right,lang)
 
     tab_control.pack(expand=1, fill='both')
 

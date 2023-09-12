@@ -12091,3 +12091,124 @@ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
 D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
 2023-09-12 17:18:38,633 - INFO - this  thumbFilePaths exist:
  D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-12 20:02:56,117 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 20:02:58,135 - INFO - TiktokaStudio GUI started
+2023-09-12 20:04:06,623 - INFO - detecting----------False
+2023-09-12 20:04:06,651 - INFO - create cached data for this folder:
+
+2023-09-12 20:04:06,657 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 20:04:17,119 - INFO - detecting----------False
+2023-09-12 20:04:17,120 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-12 20:05:34,640 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 20:05:36,247 - INFO - TiktokaStudio GUI started
+2023-09-12 20:05:55,208 - INFO - detecting----------False
+2023-09-12 20:05:55,209 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-12 20:10:13,288 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 20:10:14,799 - INFO - TiktokaStudio GUI started
+2023-09-12 20:11:14,276 - INFO - detecting----------False
+2023-09-12 20:11:14,301 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-12 20:11:55,933 - INFO - detecting----------True
+2023-09-12 20:11:55,992 - INFO - we cached 41688214000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-12 20:11:55,992 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-12 20:12:20,349 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 20:12:21,091 - INFO - TiktokaStudio GUI started
+2023-09-12 20:13:20,833 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 20:13:21,095 - INFO - TiktokaStudio GUI started
+2023-09-12 20:14:02,057 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 20:14:02,363 - INFO - TiktokaStudio GUI started
+2023-09-12 20:14:16,551 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 20:14:16,829 - INFO - TiktokaStudio GUI started
+2023-09-12 20:14:19,807 - INFO - detecting----------False
+2023-09-12 20:14:19,807 - INFO - create cached data for this folder:
+
+2023-09-12 20:14:19,809 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 20:14:33,295 - INFO - detecting----------False
+2023-09-12 20:14:33,295 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-12 20:16:15,467 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 20:16:15,790 - INFO - TiktokaStudio GUI started
+2023-09-12 20:16:19,050 - INFO - detecting----------False
+2023-09-12 20:16:19,050 - INFO - create cached data for this folder:
+
+2023-09-12 20:16:19,052 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 20:16:25,930 - INFO - detecting----------False
+2023-09-12 20:16:25,930 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-12 20:17:52,513 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 20:17:52,769 - INFO - TiktokaStudio GUI started
+2023-09-12 20:17:55,234 - INFO - detecting----------False
+2023-09-12 20:17:55,234 - INFO - create cached data for this folder:
+
+2023-09-12 20:17:55,236 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 20:18:08,434 - INFO - detecting----------False
+2023-09-12 20:18:08,435 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-12 20:19:35,744 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 20:19:36,050 - INFO - TiktokaStudio GUI started
+2023-09-12 20:19:39,559 - INFO - detecting----------False
+2023-09-12 20:19:39,559 - INFO - create cached data for this folder:
+
+2023-09-12 20:19:39,561 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 20:19:50,130 - INFO - detecting----------False
+2023-09-12 20:19:50,130 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-12 20:21:07,651 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 20:21:07,930 - INFO - TiktokaStudio GUI started
+2023-09-12 20:21:10,187 - INFO - detecting----------False
+2023-09-12 20:21:10,187 - INFO - create cached data for this folder:
+
+2023-09-12 20:21:10,189 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 20:21:17,611 - INFO - detecting----------False
+2023-09-12 20:21:17,611 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-12 20:23:59,125 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 20:23:59,443 - INFO - TiktokaStudio GUI started
+2023-09-12 20:24:02,506 - INFO - detecting----------False
+2023-09-12 20:24:02,506 - INFO - create cached data for this folder:
+
+2023-09-12 20:24:02,507 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 20:24:08,849 - INFO - detecting----------False
+2023-09-12 20:24:08,850 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-12 20:26:57,089 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 20:26:57,389 - INFO - TiktokaStudio GUI started
+2023-09-12 20:27:22,970 - INFO - detecting----------False
+2023-09-12 20:27:22,970 - INFO - create cached data for this folder:
+
+2023-09-12 20:27:22,972 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-12 20:28:18,212 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 20:28:18,466 - INFO - TiktokaStudio GUI started
+2023-09-12 20:29:55,136 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 20:29:55,439 - INFO - TiktokaStudio GUI started
+2023-09-12 20:31:17,434 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 20:31:17,776 - INFO - TiktokaStudio GUI started
+2023-09-12 20:33:15,422 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 20:33:15,697 - INFO - TiktokaStudio GUI started
+2023-09-12 20:33:43,603 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 20:33:43,943 - INFO - TiktokaStudio GUI started
+2023-09-12 20:36:58,912 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 20:36:59,194 - INFO - TiktokaStudio GUI started
+2023-09-12 20:37:36,447 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 20:37:36,737 - INFO - TiktokaStudio GUI started
+2023-09-12 20:38:42,134 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 20:38:42,393 - INFO - TiktokaStudio GUI started
+2023-09-12 20:39:47,178 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 20:39:47,535 - INFO - TiktokaStudio GUI started
+2023-09-12 20:43:52,944 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 20:43:53,215 - INFO - TiktokaStudio GUI started
+2023-09-12 20:47:36,238 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-12 20:47:36,542 - INFO - TiktokaStudio GUI started
+2023-09-12 20:48:22,396 - INFO - detecting----------False
+2023-09-12 20:48:22,437 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader/tests
