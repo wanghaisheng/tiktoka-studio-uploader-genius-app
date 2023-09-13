@@ -1611,7 +1611,7 @@ def analyse_video_meta_pair(folder,frame,right_frame):
                                    "des_gen_setting":{
                                        "prefix":"",
                                        "suffix":"",
-                                       "mode":"manually from des file or append prefix suffix with des file or auto summary from subtitle or auto summary from tts"
+                                       "mode":"manually from .des file or append prefix suffix with des file or auto summary from subtitle or auto summary from tts"
                                    },
                                    "schedule_gen_setting":{
                                        'daily_limit':4,
@@ -1619,7 +1619,7 @@ def analyse_video_meta_pair(folder,frame,right_frame):
                                    },
                                    "tag_gen_setting":{
                                        'preferred':"",
-                                       'mode':"manually or manually +preferred or api or auto"
+                                       'mode':"manually from .tag file or manually +preferred or just preferred or api or auto"
                                    },
                                    "thumb_gen_setting":{
                                     "result_image_size": "800x600",
