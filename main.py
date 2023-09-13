@@ -1680,7 +1680,7 @@ def analyse_video_meta_pair(folder,frame,right_frame):
                             isPairedMetas(r,filename,supported_thumb_exts,ultra[folder],'thumbFilePaths')
                             isPairedMetas(r,filename,supported_des_exts,ultra[folder],'desFilePaths')
                             isPairedMetas(r,filename,supported_meta_exts,ultra[folder],'metaFilePaths')
-                            print('---------\n',jsons.dump(ultra[folder]))
+
 
 
     if ultra[folder] ['videoCounts']==0:
@@ -1689,8 +1689,14 @@ def analyse_video_meta_pair(folder,frame,right_frame):
     ultra[folder] ['desCounts']=len(ultra[folder] ['desFilePaths'])
     ultra[folder] ['metaCounts']=len(ultra[folder] ['metaFilePaths'])
     ultra[folder]['updatedAt']=pd.Timestamp.now().value
-
-
+    print('---------\n',jsons.dump(ultra[folder]))
+    tmpjson='video-assets.json'
+    if os.path.exists(tmpjson):
+        with open(tmpjson,'w') as f:
+            f.write(jsons.dumps(ultra[folder]))        
+    else:
+        with open(tmpjson,'a') as f:
+            f.write(jsons.dumps(ultra[folder]))             
     render_video_folder_check_results(frame,right_frame,folder)
 
 

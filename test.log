@@ -13088,3 +13088,61 @@ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
 2023-09-14 02:36:39,020 - INFO - after check:
 {'1': ['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']}
 2023-09-14 02:36:39,020 - INFO - update to 1 meta json
+2023-09-14 03:45:58,031 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-14 03:45:58,785 - INFO - TiktokaStudio GUI started
+2023-09-14 03:46:09,084 - INFO - detecting----------False
+2023-09-14 03:46:09,084 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-14 03:46:09,088 - INFO - start to check thumbFilePaths for 1
+2023-09-14 03:46:09,088 - INFO - before check:
+{}
+2023-09-14 03:46:09,089 - INFO - after check:
+{}
+2023-09-14 03:46:09,089 - INFO - update to 1 meta json
+2023-09-14 03:46:09,090 - INFO - start to check desFilePaths for 1
+2023-09-14 03:46:09,090 - INFO - before check:
+{}
+2023-09-14 03:46:09,091 - INFO - after check:
+{}
+2023-09-14 03:46:09,091 - INFO - update to 1 meta json
+2023-09-14 03:46:09,092 - INFO - start to check metaFilePaths for 1
+2023-09-14 03:46:09,092 - INFO - before check:
+{}
+2023-09-14 03:46:09,092 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader/tests/1.json
+2023-09-14 03:46:09,092 - INFO - intial metaFilePaths for 1:
+
+2023-09-14 03:46:09,092 - INFO - append result:
+['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']
+2023-09-14 03:46:09,093 - INFO - after check:
+{'1': ['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']}
+2023-09-14 03:46:09,093 - INFO - update to 1 meta json
+2023-09-14 03:47:43,423 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-14 03:47:44,092 - INFO - TiktokaStudio GUI started
+2023-09-14 03:51:13,245 - INFO - detecting----------False
+2023-09-14 03:51:13,268 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-14 03:51:13,272 - INFO - start to check thumbFilePaths for 1
+2023-09-14 03:51:13,272 - INFO - before check:
+{}
+2023-09-14 03:51:13,272 - INFO - after check:
+{}
+2023-09-14 03:51:13,273 - INFO - update to 1 meta json
+2023-09-14 03:51:13,274 - INFO - start to check desFilePaths for 1
+2023-09-14 03:51:13,274 - INFO - before check:
+{}
+2023-09-14 03:51:13,274 - INFO - after check:
+{}
+2023-09-14 03:51:13,274 - INFO - update to 1 meta json
+2023-09-14 03:51:13,275 - INFO - start to check metaFilePaths for 1
+2023-09-14 03:51:13,276 - INFO - before check:
+{}
+2023-09-14 03:51:13,276 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader/tests/1.json
+2023-09-14 03:51:13,276 - INFO - intial metaFilePaths for 1:
+
+2023-09-14 03:51:13,276 - INFO - append result:
+['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']
+2023-09-14 03:51:13,276 - INFO - after check:
+{'1': ['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']}
+2023-09-14 03:51:13,277 - INFO - update to 1 meta json
