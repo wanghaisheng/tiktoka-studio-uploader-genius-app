@@ -12212,3 +12212,821 @@ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
 2023-09-12 20:48:22,396 - INFO - detecting----------False
 2023-09-12 20:48:22,437 - INFO - create cached data for this folder:
 /Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-13 14:57:55,791 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 14:57:55,889 - INFO - TiktokaStudio GUI started
+2023-09-13 14:58:05,556 - INFO - detecting----------False
+2023-09-13 14:58:05,556 - INFO - create cached data for this folder:
+
+2023-09-13 14:58:05,558 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-13 14:58:19,901 - INFO - detecting----------False
+2023-09-13 14:58:19,901 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-13 14:58:19,905 - INFO - create a fresh 1 - \u526f\u672c meta json
+2023-09-13 15:02:24,279 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 15:02:24,337 - INFO - TiktokaStudio GUI started
+2023-09-13 15:02:32,767 - INFO - detecting----------False
+2023-09-13 15:02:32,767 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-13 15:02:32,770 - INFO - create a fresh 1 - \u526f\u672c meta json
+2023-09-13 15:02:32,771 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 15:02:32,773 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 15:02:32,774 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-13 15:02:32,775 - INFO - create a fresh 1 meta json
+2023-09-13 15:02:32,776 - INFO - update to 1 meta json
+2023-09-13 15:03:29,101 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 15:03:29,187 - INFO - TiktokaStudio GUI started
+2023-09-13 15:03:38,320 - INFO - detecting----------False
+2023-09-13 15:03:38,320 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-13 15:03:38,323 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 15:04:39,809 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 15:04:39,882 - INFO - TiktokaStudio GUI started
+2023-09-13 15:04:45,850 - INFO - detecting----------False
+2023-09-13 15:04:45,850 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-13 15:04:45,856 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 15:04:45,858 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 15:04:45,860 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 15:04:45,862 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-13 15:04:45,863 - INFO - update to 1 meta json
+2023-09-13 15:04:45,866 - INFO - update to 1 meta json
+2023-09-13 15:17:05,854 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 15:17:05,931 - INFO - TiktokaStudio GUI started
+2023-09-13 15:17:53,053 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 15:17:53,155 - INFO - TiktokaStudio GUI started
+2023-09-13 15:18:01,606 - INFO - detecting----------False
+2023-09-13 15:18:01,607 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-13 15:18:01,612 - INFO - create a fresh 1 - \u526f\u672c meta json
+2023-09-13 15:18:01,614 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 15:18:01,617 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 15:18:01,619 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-13 15:18:01,622 - INFO - create a fresh 1 meta json
+2023-09-13 15:18:01,625 - INFO - update to 1 meta json
+2023-09-13 15:24:54,514 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 15:24:54,620 - INFO - TiktokaStudio GUI started
+2023-09-13 15:25:00,541 - INFO - detecting----------False
+2023-09-13 15:25:00,542 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-13 15:25:00,547 - INFO - create a fresh 1 - \u526f\u672c meta json
+2023-09-13 15:25:00,548 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 15:25:00,549 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1 - \u526f\u672c.json
+2023-09-13 15:25:00,551 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-13 15:25:00,553 - INFO - create a fresh 1 meta json
+2023-09-13 15:25:00,554 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.json
+2023-09-13 15:29:36,060 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 15:29:36,155 - INFO - TiktokaStudio GUI started
+2023-09-13 15:33:31,167 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 15:33:31,285 - INFO - TiktokaStudio GUI started
+2023-09-13 15:33:34,256 - ERROR - please choose a valid video folder
+2023-09-13 15:33:41,992 - ERROR - please choose a valid video folder
+2023-09-13 15:34:30,525 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 15:34:30,586 - INFO - TiktokaStudio GUI started
+2023-09-13 15:34:36,842 - ERROR - please choose a valid video folder:
+
+2023-09-13 15:34:46,915 - ERROR - please choose a valid video folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-13 15:36:13,061 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 15:36:13,113 - INFO - TiktokaStudio GUI started
+2023-09-13 15:40:15,758 - INFO - detecting----------False
+2023-09-13 15:40:15,759 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-13 15:40:15,764 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 15:40:15,767 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 15:40:15,768 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1 - \u526f\u672c.json
+2023-09-13 15:40:15,770 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-13 15:40:15,772 - INFO - update to 1 meta json
+2023-09-13 15:40:15,774 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.json
+2023-09-13 15:46:52,454 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 15:46:52,562 - INFO - TiktokaStudio GUI started
+2023-09-13 15:46:58,868 - INFO - detecting----------False
+2023-09-13 15:46:58,868 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-13 15:46:58,872 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 15:46:58,874 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 15:46:58,875 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1 - \u526f\u672c.json
+2023-09-13 15:46:58,877 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-13 15:46:58,879 - INFO - update to 1 meta json
+2023-09-13 15:46:58,880 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.json
+2023-09-13 15:50:17,838 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 15:50:17,924 - INFO - TiktokaStudio GUI started
+2023-09-13 15:50:25,445 - INFO - detecting----------False
+2023-09-13 15:50:25,445 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-13 15:50:25,451 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 15:50:25,452 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 15:50:25,453 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1 - \u526f\u672c.json
+2023-09-13 15:50:25,455 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-13 15:50:25,457 - INFO - update to 1 meta json
+2023-09-13 15:50:25,458 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.json
+2023-09-13 15:59:55,008 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 15:59:55,110 - INFO - TiktokaStudio GUI started
+2023-09-13 16:00:06,808 - INFO - detecting----------False
+2023-09-13 16:00:06,809 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-13 16:00:06,814 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:00:06,816 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:00:06,817 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1 - \u526f\u672c.json
+2023-09-13 16:02:48,269 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 16:02:48,350 - INFO - TiktokaStudio GUI started
+2023-09-13 16:02:59,502 - INFO - detecting----------False
+2023-09-13 16:02:59,502 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-13 16:02:59,508 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:02:59,510 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:02:59,511 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1 - \u526f\u672c.json
+2023-09-13 16:05:03,096 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 16:05:03,168 - INFO - TiktokaStudio GUI started
+2023-09-13 16:05:09,251 - INFO - detecting----------False
+2023-09-13 16:05:09,251 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-13 16:05:09,257 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:05:09,259 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:05:09,259 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1 - \u526f\u672c.json
+2023-09-13 16:05:09,260 - INFO - intial []
+2023-09-13 16:05:09,261 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-13 16:05:09,261 - INFO - intial []
+2023-09-13 16:05:09,264 - INFO - update to 1 meta json
+2023-09-13 16:05:09,265 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.json
+2023-09-13 16:05:09,265 - INFO - intial []
+2023-09-13 16:06:42,669 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 16:06:42,721 - INFO - TiktokaStudio GUI started
+2023-09-13 16:06:51,646 - INFO - detecting----------False
+2023-09-13 16:06:51,646 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-13 16:06:51,649 - INFO - start to check thumbFilePaths for 1 - \u526f\u672c
+2023-09-13 16:06:51,650 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:06:51,651 - INFO - start to check desFilePaths for 1 - \u526f\u672c
+2023-09-13 16:06:51,653 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:06:51,653 - INFO - start to check metaFilePaths for 1 - \u526f\u672c
+2023-09-13 16:06:51,654 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1 - \u526f\u672c.json
+2023-09-13 16:06:51,654 - INFO - intial metaFilePaths for 1 - \u526f\u672c
+2023-09-13 16:06:51,655 - INFO - start to check thumbFilePaths for 1
+2023-09-13 16:06:51,655 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-13 16:06:51,656 - INFO - intial thumbFilePaths for 1
+2023-09-13 16:06:51,656 - INFO - start to check desFilePaths for 1
+2023-09-13 16:06:51,658 - INFO - update to 1 meta json
+2023-09-13 16:06:51,659 - INFO - start to check metaFilePaths for 1
+2023-09-13 16:06:51,660 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.json
+2023-09-13 16:06:51,660 - INFO - intial metaFilePaths for 1
+2023-09-13 16:08:30,827 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 16:08:30,902 - INFO - TiktokaStudio GUI started
+2023-09-13 16:08:36,794 - INFO - detecting----------False
+2023-09-13 16:08:36,794 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-13 16:08:36,799 - INFO - start to check thumbFilePaths for 1 - \u526f\u672c
+2023-09-13 16:08:36,800 - INFO - {'videoCounts': 1, 'thumbCounts': 0, 'desCounts': 0, 'metaCounts': 0, 'updatedAt': 1694621316794978000, 'filenames': ['1 - \u526f\u672c'], 'videoFilePaths': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.mp4'], 'thumbFilePaths': {}, 'desFilePaths': {}, 'metaFilePaths': {}, 'videos': {'1 - \u526f\u672c': {'video_local_path': 'D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.mp4', 'video_title': '', 'video_description': '', 'thumbnail_local_path': [], 'publish_policy': 0, 'tags': ''}}}
+2023-09-13 16:08:36,800 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:08:36,801 - INFO - start to check desFilePaths for 1 - \u526f\u672c
+2023-09-13 16:08:36,801 - INFO - {'videoCounts': 1, 'thumbCounts': 0, 'desCounts': 0, 'metaCounts': 0, 'updatedAt': 1694621316794978000, 'filenames': ['1 - \u526f\u672c'], 'videoFilePaths': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.mp4'], 'thumbFilePaths': {}, 'desFilePaths': {}, 'metaFilePaths': {}, 'videos': {'1 - \u526f\u672c': {'video_local_path': 'D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.mp4', 'video_title': '', 'video_description': '', 'thumbnail_local_path': [], 'publish_policy': 0, 'tags': ''}}}
+2023-09-13 16:08:36,802 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:08:36,802 - INFO - start to check metaFilePaths for 1 - \u526f\u672c
+2023-09-13 16:08:36,802 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1 - \u526f\u672c.json
+2023-09-13 16:08:36,803 - INFO - intial metaFilePaths for 1 - \u526f\u672c
+2023-09-13 16:08:36,804 - INFO - start to check thumbFilePaths for 1
+2023-09-13 16:08:36,804 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-13 16:08:36,805 - INFO - intial thumbFilePaths for 1
+2023-09-13 16:08:36,805 - INFO - start to check desFilePaths for 1
+2023-09-13 16:08:36,806 - INFO - {'videoCounts': 2, 'thumbCounts': 0, 'desCounts': 0, 'metaCounts': 0, 'updatedAt': 1694621316794978000, 'filenames': ['1 - \u526f\u672c', '1'], 'videoFilePaths': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.mp4', 'D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.mp4'], 'thumbFilePaths': {'1': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.png']}, 'desFilePaths': {}, 'metaFilePaths': {'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']}, 'videos': {'1 - \u526f\u672c': {'video_local_path': 'D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.mp4', 'video_title': '', 'video_description': '', 'thumbnail_local_path': [], 'publish_policy': 0, 'tags': ''}, '1': {'video_local_path': 'D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.mp4', 'video_title': '', 'video_description': '', 'thumbnail_local_path': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.png'], 'publish_policy': 0, 'tags': ''}}}
+2023-09-13 16:08:36,806 - INFO - update to 1 meta json
+2023-09-13 16:08:36,807 - INFO - start to check metaFilePaths for 1
+2023-09-13 16:08:36,807 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.json
+2023-09-13 16:08:36,807 - INFO - intial metaFilePaths for 1
+2023-09-13 16:11:46,288 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 16:11:46,363 - INFO - TiktokaStudio GUI started
+2023-09-13 16:12:33,934 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 16:12:34,009 - INFO - TiktokaStudio GUI started
+2023-09-13 16:12:49,867 - INFO - detecting----------False
+2023-09-13 16:12:49,867 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-13 16:12:49,871 - INFO - start to check thumbFilePaths for 1 - \u526f\u672c
+2023-09-13 16:12:49,871 - INFO - after check:
+{}
+2023-09-13 16:12:49,871 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:12:49,872 - INFO - start to check desFilePaths for 1 - \u526f\u672c
+2023-09-13 16:12:49,873 - INFO - after check:
+{}
+2023-09-13 16:12:49,873 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:12:49,873 - INFO - start to check metaFilePaths for 1 - \u526f\u672c
+2023-09-13 16:12:49,874 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1 - \u526f\u672c.json
+2023-09-13 16:12:49,874 - INFO - intial metaFilePaths for 1 - \u526f\u672c
+2023-09-13 16:12:49,876 - INFO - start to check thumbFilePaths for 1
+2023-09-13 16:12:49,876 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-13 16:12:49,876 - INFO - intial thumbFilePaths for 1
+2023-09-13 16:12:49,876 - INFO - start to check desFilePaths for 1
+2023-09-13 16:12:49,877 - INFO - after check:
+{}
+2023-09-13 16:12:49,877 - INFO - update to 1 meta json
+2023-09-13 16:12:49,878 - INFO - start to check metaFilePaths for 1
+2023-09-13 16:12:49,878 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.json
+2023-09-13 16:12:49,878 - INFO - intial metaFilePaths for 1
+2023-09-13 16:13:38,961 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 16:13:39,033 - INFO - TiktokaStudio GUI started
+2023-09-13 16:13:44,789 - INFO - detecting----------False
+2023-09-13 16:13:44,790 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-13 16:13:44,793 - INFO - start to check thumbFilePaths for 1 - \u526f\u672c
+2023-09-13 16:13:44,793 - INFO - before check:
+{}
+2023-09-13 16:13:44,794 - INFO - after check:
+{}
+2023-09-13 16:13:44,794 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:13:44,795 - INFO - start to check desFilePaths for 1 - \u526f\u672c
+2023-09-13 16:13:44,795 - INFO - before check:
+{}
+2023-09-13 16:13:44,795 - INFO - after check:
+{}
+2023-09-13 16:13:44,795 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:13:44,796 - INFO - start to check metaFilePaths for 1 - \u526f\u672c
+2023-09-13 16:13:44,796 - INFO - before check:
+{}
+2023-09-13 16:13:44,796 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1 - \u526f\u672c.json
+2023-09-13 16:13:44,796 - INFO - intial metaFilePaths for 1 - \u526f\u672c
+2023-09-13 16:13:44,797 - INFO - start to check thumbFilePaths for 1
+2023-09-13 16:13:44,797 - INFO - before check:
+{}
+2023-09-13 16:13:44,798 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-13 16:13:44,799 - INFO - intial thumbFilePaths for 1
+2023-09-13 16:13:44,799 - INFO - start to check desFilePaths for 1
+2023-09-13 16:13:44,799 - INFO - before check:
+{}
+2023-09-13 16:13:44,799 - INFO - after check:
+{}
+2023-09-13 16:13:44,800 - INFO - update to 1 meta json
+2023-09-13 16:13:44,800 - INFO - start to check metaFilePaths for 1
+2023-09-13 16:13:44,801 - INFO - before check:
+{'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']}
+2023-09-13 16:13:44,801 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.json
+2023-09-13 16:13:44,801 - INFO - intial metaFilePaths for 1
+2023-09-13 16:17:03,113 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 16:17:03,194 - INFO - TiktokaStudio GUI started
+2023-09-13 16:17:10,781 - INFO - detecting----------False
+2023-09-13 16:17:10,781 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-13 16:17:10,785 - INFO - start to check thumbFilePaths for 1 - \u526f\u672c
+2023-09-13 16:17:10,785 - INFO - before check:
+{}
+2023-09-13 16:17:10,786 - INFO - after check:
+{}
+2023-09-13 16:17:10,786 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:17:10,787 - INFO - start to check desFilePaths for 1 - \u526f\u672c
+2023-09-13 16:17:10,787 - INFO - before check:
+{}
+2023-09-13 16:17:10,787 - INFO - after check:
+{}
+2023-09-13 16:17:10,787 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:17:10,788 - INFO - start to check metaFilePaths for 1 - \u526f\u672c
+2023-09-13 16:17:10,788 - INFO - before check:
+{}
+2023-09-13 16:17:10,788 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1 - \u526f\u672c.json
+2023-09-13 16:17:10,788 - INFO - intial metaFilePaths for 1 - \u526f\u672c:
+
+2023-09-13 16:17:10,788 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']
+2023-09-13 16:17:10,789 - INFO - start to check thumbFilePaths for 1
+2023-09-13 16:17:10,790 - INFO - before check:
+{}
+2023-09-13 16:17:10,790 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-13 16:17:10,790 - INFO - intial thumbFilePaths for 1:
+
+2023-09-13 16:17:10,790 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.png']
+2023-09-13 16:17:10,790 - INFO - start to check desFilePaths for 1
+2023-09-13 16:17:10,790 - INFO - before check:
+{}
+2023-09-13 16:17:10,791 - INFO - after check:
+{}
+2023-09-13 16:17:10,791 - INFO - update to 1 meta json
+2023-09-13 16:17:10,791 - INFO - start to check metaFilePaths for 1
+2023-09-13 16:17:10,792 - INFO - before check:
+{'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']}
+2023-09-13 16:17:10,792 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.json
+2023-09-13 16:17:10,792 - INFO - intial metaFilePaths for 1:
+
+2023-09-13 16:17:10,792 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.json']
+2023-09-13 16:19:52,858 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 16:19:52,940 - INFO - TiktokaStudio GUI started
+2023-09-13 16:20:03,955 - INFO - detecting----------False
+2023-09-13 16:20:03,955 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-13 16:20:03,960 - INFO - start to check thumbFilePaths for 1 - \u526f\u672c
+2023-09-13 16:20:03,960 - INFO - before check:
+{}
+2023-09-13 16:20:03,961 - INFO - after check:
+{}
+2023-09-13 16:20:03,961 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:20:03,962 - INFO - start to check desFilePaths for 1 - \u526f\u672c
+2023-09-13 16:20:03,962 - INFO - before check:
+{}
+2023-09-13 16:20:03,962 - INFO - after check:
+{}
+2023-09-13 16:20:03,962 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:20:03,963 - INFO - start to check metaFilePaths for 1 - \u526f\u672c
+2023-09-13 16:20:03,963 - INFO - before check:
+{}
+2023-09-13 16:20:03,963 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1 - \u526f\u672c.json
+2023-09-13 16:20:03,964 - INFO - intial metaFilePaths for 1 - \u526f\u672c:
+
+2023-09-13 16:20:03,964 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']
+2023-09-13 16:20:03,964 - INFO - after check:
+{'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']}
+2023-09-13 16:20:03,964 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:20:03,966 - INFO - start to check thumbFilePaths for 1
+2023-09-13 16:20:03,966 - INFO - before check:
+{}
+2023-09-13 16:20:03,966 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-13 16:20:03,967 - INFO - intial thumbFilePaths for 1:
+
+2023-09-13 16:20:03,967 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.png']
+2023-09-13 16:20:03,967 - INFO - after check:
+{'1': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.png']}
+2023-09-13 16:20:03,967 - INFO - update to 1 meta json
+2023-09-13 16:20:03,968 - INFO - start to check desFilePaths for 1
+2023-09-13 16:20:03,969 - INFO - before check:
+{}
+2023-09-13 16:20:03,969 - INFO - after check:
+{}
+2023-09-13 16:20:03,969 - INFO - update to 1 meta json
+2023-09-13 16:20:03,970 - INFO - start to check metaFilePaths for 1
+2023-09-13 16:20:03,970 - INFO - before check:
+{'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']}
+2023-09-13 16:20:03,970 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.json
+2023-09-13 16:20:03,971 - INFO - intial metaFilePaths for 1:
+
+2023-09-13 16:20:03,971 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.json']
+2023-09-13 16:20:03,971 - INFO - after check:
+{'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json'], '1': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.json']}
+2023-09-13 16:20:03,971 - INFO - update to 1 meta json
+2023-09-13 16:21:36,560 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 16:21:36,631 - INFO - TiktokaStudio GUI started
+2023-09-13 16:21:41,926 - INFO - detecting----------False
+2023-09-13 16:21:41,926 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-13 16:21:41,929 - INFO - start to check thumbFilePaths for 1 - \u526f\u672c
+2023-09-13 16:21:41,930 - INFO - before check:
+{}
+2023-09-13 16:21:41,930 - INFO - after check:
+{}
+2023-09-13 16:21:41,930 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:21:41,931 - INFO - start to check desFilePaths for 1 - \u526f\u672c
+2023-09-13 16:21:41,931 - INFO - before check:
+{}
+2023-09-13 16:21:41,932 - INFO - after check:
+{}
+2023-09-13 16:21:41,932 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:21:41,932 - INFO - start to check metaFilePaths for 1 - \u526f\u672c
+2023-09-13 16:21:41,933 - INFO - before check:
+{}
+2023-09-13 16:21:41,933 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1 - \u526f\u672c.json
+2023-09-13 16:21:41,933 - INFO - intial metaFilePaths for 1 - \u526f\u672c:
+
+2023-09-13 16:21:41,933 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']
+2023-09-13 16:21:41,933 - INFO - after check:
+{'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']}
+2023-09-13 16:21:41,934 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:21:41,937 - INFO - start to check thumbFilePaths for 1
+2023-09-13 16:21:41,937 - INFO - before check:
+{}
+2023-09-13 16:21:41,937 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-13 16:21:41,938 - INFO - intial thumbFilePaths for 1:
+
+2023-09-13 16:21:41,938 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.png']
+2023-09-13 16:21:41,938 - INFO - after check:
+{'1': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.png']}
+2023-09-13 16:21:41,938 - INFO - update to 1 meta json
+2023-09-13 16:21:41,939 - INFO - start to check desFilePaths for 1
+2023-09-13 16:21:41,939 - INFO - before check:
+{}
+2023-09-13 16:21:41,939 - INFO - after check:
+{}
+2023-09-13 16:21:41,939 - INFO - update to 1 meta json
+2023-09-13 16:21:41,940 - INFO - start to check metaFilePaths for 1
+2023-09-13 16:21:41,940 - INFO - before check:
+{'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']}
+2023-09-13 16:21:41,941 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.json
+2023-09-13 16:21:41,941 - INFO - intial metaFilePaths for 1:
+
+2023-09-13 16:21:41,941 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.json']
+2023-09-13 16:21:41,941 - INFO - after check:
+{'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json'], '1': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.json']}
+2023-09-13 16:21:41,941 - INFO - update to 1 meta json
+2023-09-13 16:28:59,006 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 16:28:59,060 - INFO - TiktokaStudio GUI started
+2023-09-13 16:29:05,797 - INFO - detecting----------False
+2023-09-13 16:29:05,798 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-13 16:29:05,801 - INFO - start to check thumbFilePaths for 1 - \u526f\u672c
+2023-09-13 16:29:05,801 - INFO - before check:
+{}
+2023-09-13 16:29:05,802 - INFO - after check:
+{}
+2023-09-13 16:29:05,802 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:29:05,803 - INFO - start to check desFilePaths for 1 - \u526f\u672c
+2023-09-13 16:29:05,803 - INFO - before check:
+{}
+2023-09-13 16:29:05,803 - INFO - after check:
+{}
+2023-09-13 16:29:05,804 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:29:05,804 - INFO - start to check metaFilePaths for 1 - \u526f\u672c
+2023-09-13 16:29:05,804 - INFO - before check:
+{}
+2023-09-13 16:29:05,804 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1 - \u526f\u672c.json
+2023-09-13 16:29:05,805 - INFO - intial metaFilePaths for 1 - \u526f\u672c:
+
+2023-09-13 16:29:05,805 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']
+2023-09-13 16:29:05,805 - INFO - after check:
+{'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']}
+2023-09-13 16:29:05,805 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:29:05,807 - INFO - start to check thumbFilePaths for 1
+2023-09-13 16:29:05,808 - INFO - before check:
+{}
+2023-09-13 16:29:05,808 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-13 16:29:05,808 - INFO - intial thumbFilePaths for 1:
+
+2023-09-13 16:29:05,808 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.png']
+2023-09-13 16:29:05,808 - INFO - after check:
+{'1': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.png']}
+2023-09-13 16:29:05,809 - INFO - update to 1 meta json
+2023-09-13 16:29:05,809 - INFO - start to check desFilePaths for 1
+2023-09-13 16:29:05,809 - INFO - before check:
+{}
+2023-09-13 16:29:05,810 - INFO - after check:
+{}
+2023-09-13 16:29:05,810 - INFO - update to 1 meta json
+2023-09-13 16:29:05,810 - INFO - start to check metaFilePaths for 1
+2023-09-13 16:29:05,811 - INFO - before check:
+{'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']}
+2023-09-13 16:29:05,811 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.json
+2023-09-13 16:29:05,811 - INFO - intial metaFilePaths for 1:
+
+2023-09-13 16:29:05,811 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.json']
+2023-09-13 16:29:05,811 - INFO - after check:
+{'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json'], '1': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.json']}
+2023-09-13 16:29:05,812 - INFO - update to 1 meta json
+2023-09-13 16:32:26,281 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 16:32:26,355 - INFO - TiktokaStudio GUI started
+2023-09-13 16:33:22,534 - INFO - detecting----------False
+2023-09-13 16:33:22,534 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-13 16:33:22,537 - INFO - start to check thumbFilePaths for 1 - \u526f\u672c
+2023-09-13 16:33:22,538 - INFO - before check:
+{}
+2023-09-13 16:33:22,538 - INFO - after check:
+{}
+2023-09-13 16:33:22,538 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:33:22,539 - INFO - start to check desFilePaths for 1 - \u526f\u672c
+2023-09-13 16:33:22,539 - INFO - before check:
+{}
+2023-09-13 16:33:22,540 - INFO - after check:
+{}
+2023-09-13 16:33:22,540 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:33:22,540 - INFO - start to check metaFilePaths for 1 - \u526f\u672c
+2023-09-13 16:33:22,541 - INFO - before check:
+{}
+2023-09-13 16:33:22,541 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1 - \u526f\u672c.json
+2023-09-13 16:33:22,541 - INFO - intial metaFilePaths for 1 - \u526f\u672c:
+
+2023-09-13 16:33:22,541 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']
+2023-09-13 16:33:22,541 - INFO - after check:
+{'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']}
+2023-09-13 16:33:22,542 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:33:22,545 - INFO - start to check thumbFilePaths for 1
+2023-09-13 16:33:22,545 - INFO - before check:
+{}
+2023-09-13 16:33:22,546 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-13 16:33:22,546 - INFO - intial thumbFilePaths for 1:
+
+2023-09-13 16:33:22,546 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.png']
+2023-09-13 16:33:22,546 - INFO - after check:
+{'1': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.png']}
+2023-09-13 16:33:22,547 - INFO - update to 1 meta json
+2023-09-13 16:33:22,547 - INFO - start to check desFilePaths for 1
+2023-09-13 16:33:22,547 - INFO - before check:
+{}
+2023-09-13 16:33:22,548 - INFO - after check:
+{}
+2023-09-13 16:33:22,548 - INFO - update to 1 meta json
+2023-09-13 16:33:22,549 - INFO - start to check metaFilePaths for 1
+2023-09-13 16:33:22,549 - INFO - before check:
+{'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']}
+2023-09-13 16:33:22,549 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.json
+2023-09-13 16:33:22,549 - INFO - intial metaFilePaths for 1:
+
+2023-09-13 16:33:22,549 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.json']
+2023-09-13 16:33:22,550 - INFO - after check:
+{'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json'], '1': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.json']}
+2023-09-13 16:33:22,550 - INFO - update to 1 meta json
+2023-09-13 16:40:03,004 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 16:40:03,058 - INFO - TiktokaStudio GUI started
+2023-09-13 16:40:31,069 - INFO - detecting----------False
+2023-09-13 16:40:31,070 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-13 16:40:31,075 - INFO - start to check thumbFilePaths for 1 - \u526f\u672c
+2023-09-13 16:40:31,076 - INFO - before check:
+{}
+2023-09-13 16:40:31,076 - INFO - after check:
+{}
+2023-09-13 16:40:31,076 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:40:31,077 - INFO - start to check desFilePaths for 1 - \u526f\u672c
+2023-09-13 16:40:31,077 - INFO - before check:
+{}
+2023-09-13 16:40:31,078 - INFO - after check:
+{}
+2023-09-13 16:40:31,078 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:40:31,079 - INFO - start to check metaFilePaths for 1 - \u526f\u672c
+2023-09-13 16:40:31,079 - INFO - before check:
+{}
+2023-09-13 16:40:31,079 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1 - \u526f\u672c.json
+2023-09-13 16:40:31,079 - INFO - intial metaFilePaths for 1 - \u526f\u672c:
+
+2023-09-13 16:40:31,080 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']
+2023-09-13 16:40:31,080 - INFO - after check:
+{'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']}
+2023-09-13 16:40:31,080 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 16:40:31,084 - INFO - start to check thumbFilePaths for 1
+2023-09-13 16:40:31,084 - INFO - before check:
+{}
+2023-09-13 16:40:31,085 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-13 16:40:31,085 - INFO - intial thumbFilePaths for 1:
+
+2023-09-13 16:40:31,085 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.png']
+2023-09-13 16:40:31,086 - INFO - after check:
+{'1': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.png']}
+2023-09-13 16:40:31,086 - INFO - update to 1 meta json
+2023-09-13 16:40:31,087 - INFO - start to check desFilePaths for 1
+2023-09-13 16:40:31,087 - INFO - before check:
+{}
+2023-09-13 16:40:31,088 - INFO - after check:
+{}
+2023-09-13 16:40:31,088 - INFO - update to 1 meta json
+2023-09-13 16:40:31,089 - INFO - start to check metaFilePaths for 1
+2023-09-13 16:40:31,089 - INFO - before check:
+{'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']}
+2023-09-13 16:40:31,089 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.json
+2023-09-13 16:40:31,090 - INFO - intial metaFilePaths for 1:
+
+2023-09-13 16:40:31,090 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.json']
+2023-09-13 16:40:31,090 - INFO - after check:
+{'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json'], '1': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.json']}
+2023-09-13 16:40:31,090 - INFO - update to 1 meta json
+2023-09-13 16:56:45,360 - ERROR - this query >>> seems went wrong:
+SELECT * FROM uploadtasks ORDER by inserted_at DESC,full error message:
+(sqlite3.OperationalError) no such table: uploadtasks
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-13 17:00:09,542 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 17:00:09,623 - INFO - TiktokaStudio GUI started
+2023-09-13 17:00:36,074 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 17:00:36,157 - INFO - TiktokaStudio GUI started
+2023-09-13 17:00:39,001 - INFO - detecting----------False
+2023-09-13 17:00:39,001 - INFO - create cached data for this folder:
+
+2023-09-13 17:00:39,003 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-13 17:00:47,865 - INFO - detecting----------False
+2023-09-13 17:00:47,865 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-13 17:00:47,869 - INFO - start to check thumbFilePaths for 1 - \u526f\u672c
+2023-09-13 17:00:47,870 - INFO - before check:
+{}
+2023-09-13 17:00:47,871 - INFO - after check:
+{}
+2023-09-13 17:00:47,871 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 17:00:47,872 - INFO - start to check desFilePaths for 1 - \u526f\u672c
+2023-09-13 17:00:47,873 - INFO - before check:
+{}
+2023-09-13 17:00:47,873 - INFO - after check:
+{}
+2023-09-13 17:00:47,873 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 17:00:47,874 - INFO - start to check metaFilePaths for 1 - \u526f\u672c
+2023-09-13 17:00:47,874 - INFO - before check:
+{}
+2023-09-13 17:00:47,874 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1 - \u526f\u672c.json
+2023-09-13 17:00:47,874 - INFO - intial metaFilePaths for 1 - \u526f\u672c:
+
+2023-09-13 17:00:47,874 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']
+2023-09-13 17:00:47,875 - INFO - after check:
+{'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']}
+2023-09-13 17:00:47,875 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 17:00:47,880 - INFO - start to check thumbFilePaths for 1
+2023-09-13 17:00:47,881 - INFO - before check:
+{}
+2023-09-13 17:00:47,881 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-13 17:00:47,881 - INFO - intial thumbFilePaths for 1:
+
+2023-09-13 17:00:47,882 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.png']
+2023-09-13 17:00:47,882 - INFO - after check:
+{'1': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.png']}
+2023-09-13 17:00:47,882 - INFO - update to 1 meta json
+2023-09-13 17:00:47,883 - INFO - start to check desFilePaths for 1
+2023-09-13 17:00:47,883 - INFO - before check:
+{}
+2023-09-13 17:00:47,884 - INFO - after check:
+{}
+2023-09-13 17:00:47,884 - INFO - update to 1 meta json
+2023-09-13 17:00:47,885 - INFO - start to check metaFilePaths for 1
+2023-09-13 17:00:47,885 - INFO - before check:
+{'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']}
+2023-09-13 17:00:47,885 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.json
+2023-09-13 17:00:47,885 - INFO - intial metaFilePaths for 1:
+
+2023-09-13 17:00:47,886 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.json']
+2023-09-13 17:00:47,886 - INFO - after check:
+{'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json'], '1': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.json']}
+2023-09-13 17:00:47,886 - INFO - update to 1 meta json
+2023-09-13 17:01:15,535 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 17:01:15,593 - INFO - TiktokaStudio GUI started
+2023-09-13 17:01:19,290 - INFO - detecting----------False
+2023-09-13 17:01:19,290 - INFO - create cached data for this folder:
+
+2023-09-13 17:01:19,293 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-13 17:01:27,274 - INFO - detecting----------False
+2023-09-13 17:01:27,275 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-13 17:01:27,279 - INFO - start to check thumbFilePaths for 1 - \u526f\u672c
+2023-09-13 17:01:27,279 - INFO - before check:
+{}
+2023-09-13 17:01:27,280 - INFO - after check:
+{}
+2023-09-13 17:01:27,280 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 17:01:27,281 - INFO - start to check desFilePaths for 1 - \u526f\u672c
+2023-09-13 17:01:27,282 - INFO - before check:
+{}
+2023-09-13 17:01:27,282 - INFO - after check:
+{}
+2023-09-13 17:01:27,282 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 17:01:27,283 - INFO - start to check metaFilePaths for 1 - \u526f\u672c
+2023-09-13 17:01:27,283 - INFO - before check:
+{}
+2023-09-13 17:01:27,283 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1 - \u526f\u672c.json
+2023-09-13 17:01:27,284 - INFO - intial metaFilePaths for 1 - \u526f\u672c:
+
+2023-09-13 17:01:27,284 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']
+2023-09-13 17:01:27,284 - INFO - after check:
+{'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']}
+2023-09-13 17:01:27,284 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 17:01:27,289 - INFO - start to check thumbFilePaths for 1
+2023-09-13 17:01:27,289 - INFO - before check:
+{}
+2023-09-13 17:01:27,289 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-13 17:01:27,289 - INFO - intial thumbFilePaths for 1:
+
+2023-09-13 17:01:27,289 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.png']
+2023-09-13 17:01:27,290 - INFO - after check:
+{'1': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.png']}
+2023-09-13 17:01:27,290 - INFO - update to 1 meta json
+2023-09-13 17:01:27,291 - INFO - start to check desFilePaths for 1
+2023-09-13 17:01:27,291 - INFO - before check:
+{}
+2023-09-13 17:01:27,292 - INFO - after check:
+{}
+2023-09-13 17:01:27,292 - INFO - update to 1 meta json
+2023-09-13 17:01:27,293 - INFO - start to check metaFilePaths for 1
+2023-09-13 17:01:27,293 - INFO - before check:
+{'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']}
+2023-09-13 17:01:27,294 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.json
+2023-09-13 17:01:27,294 - INFO - intial metaFilePaths for 1:
+
+2023-09-13 17:01:27,294 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.json']
+2023-09-13 17:01:27,294 - INFO - after check:
+{'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json'], '1': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.json']}
+2023-09-13 17:01:27,295 - INFO - update to 1 meta json
+2023-09-13 17:02:02,962 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-13 17:02:03,015 - INFO - TiktokaStudio GUI started
+2023-09-13 17:02:14,556 - INFO - detecting----------False
+2023-09-13 17:02:14,556 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
+2023-09-13 17:02:14,560 - INFO - start to check thumbFilePaths for 1 - \u526f\u672c
+2023-09-13 17:02:14,561 - INFO - before check:
+{}
+2023-09-13 17:02:14,561 - INFO - after check:
+{}
+2023-09-13 17:02:14,562 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 17:02:14,562 - INFO - start to check desFilePaths for 1 - \u526f\u672c
+2023-09-13 17:02:14,563 - INFO - before check:
+{}
+2023-09-13 17:02:14,563 - INFO - after check:
+{}
+2023-09-13 17:02:14,563 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 17:02:14,564 - INFO - start to check metaFilePaths for 1 - \u526f\u672c
+2023-09-13 17:02:14,564 - INFO - before check:
+{}
+2023-09-13 17:02:14,565 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1 - \u526f\u672c.json
+2023-09-13 17:02:14,565 - INFO - intial metaFilePaths for 1 - \u526f\u672c:
+
+2023-09-13 17:02:14,565 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']
+2023-09-13 17:02:14,566 - INFO - after check:
+{'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']}
+2023-09-13 17:02:14,566 - INFO - update to 1 - \u526f\u672c meta json
+2023-09-13 17:02:14,571 - INFO - start to check thumbFilePaths for 1
+2023-09-13 17:02:14,571 - INFO - before check:
+{}
+2023-09-13 17:02:14,571 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.png
+2023-09-13 17:02:14,571 - INFO - intial thumbFilePaths for 1:
+
+2023-09-13 17:02:14,571 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.png']
+2023-09-13 17:02:14,572 - INFO - after check:
+{'1': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.png']}
+2023-09-13 17:02:14,572 - INFO - update to 1 meta json
+2023-09-13 17:02:14,573 - INFO - start to check desFilePaths for 1
+2023-09-13 17:02:14,573 - INFO - before check:
+{}
+2023-09-13 17:02:14,573 - INFO - after check:
+{}
+2023-09-13 17:02:14,573 - INFO - update to 1 meta json
+2023-09-13 17:02:14,574 - INFO - start to check metaFilePaths for 1
+2023-09-13 17:02:14,574 - INFO - before check:
+{'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json']}
+2023-09-13 17:02:14,575 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\1.json
+2023-09-13 17:02:14,575 - INFO - intial metaFilePaths for 1:
+
+2023-09-13 17:02:14,575 - INFO - append result:
+['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.json']
+2023-09-13 17:02:14,575 - INFO - after check:
+{'1 - \u526f\u672c': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1 - \u526f\u672c.json'], '1': ['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests\\1.json']}
+2023-09-13 17:02:14,575 - INFO - update to 1 meta json

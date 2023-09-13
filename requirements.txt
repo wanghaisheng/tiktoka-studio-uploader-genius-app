@@ -7,3 +7,4 @@ SQLAlchemy
 easy_i18n
 UltraDict
 atomics
+jsons
