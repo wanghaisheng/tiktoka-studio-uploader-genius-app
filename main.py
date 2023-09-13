@@ -1608,7 +1608,41 @@ def analyse_video_meta_pair(folder,frame,right_frame):
                             # default single video meta json
                             video={'video_local_path':'',
                                    "video_title":'',
+                                   "des_gen_setting":{
+                                       "prefix":"",
+                                       "suffix":"",
+                                       "mode":"manually from des file or append prefix suffix with des file or auto summary from subtitle or auto summary from tts"
+                                   },
+                                   "schedule_gen_setting":{
+                                       'daily_limit':4,
+                                       'offset':1
+                                   },
+                                   "tag_gen_setting":{
+                                       'preferred':"",
+                                       'mode':"manually or manually +preferred or api or auto"
+                                   },
+                                   "thumb_gen_setting":{
+                                    "result_image_size": "800x600",
+                                    "title": "Sample Title",
+                                    "subtitle": "Sample Subtitle",
+                                    "extra_text": "Sample Extra Text",
+                                    "background_image": "bg1.jpg",
+                                    "title_font_size": 32,
+                                    "subtitle_font_size": 24,
+                                    "extra_text_font_size": 16,
+                                    "title_area_number": 1,
+                                    "subtitle_area_number": 5,
+                                    "extra_text_area_number": 9,
+                                    "title_font": "MSYHMONO.ttf",
+                                    # font name look up in system default path, if not look for font file local path
+                                    "subtitle_font": "MSYHMONO.ttf",
+                                    "extra_text_font": "MSYHMONO.ttf",
+                                    "title_color": "#000000",
+                                    "sub_title_color": "#FF0000",
+                                    "extra_text_color": "#00FF00"
+                                   },
                                    "video_description":"",
+                                   
                                    "thumbnail_local_path":[],
                                    "release_date":"",
                                    "release_date_hour":"10:15",
@@ -1637,6 +1671,7 @@ def analyse_video_meta_pair(folder,frame,right_frame):
                                    'tags':''}
                             ultra[folder] ['videos'][filename]=video
                             ultra[folder] ['videos'][filename]['video_local_path']=videopath
+                            ultra[folder] ['videos'][filename]['video_title']=filename
                             ultra[folder] ['videoCounts']+=1
                             print(videopath,'==',ext,'counts now:',ultra[folder] ['videoCounts'],type(ultra[folder] ['videoCounts'])) 
 
