@@ -16543,3 +16543,262 @@ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
 2023-09-14 16:20:55,118 - INFO - we found same filename diff ext video:1,please rename or remove
 2023-09-14 16:40:07,386 - INFO - start to down video metas json template from:https://raw.githubusercontent.com/wanghaisheng/tiktoka-studio-uploader-app/main/assets/youtube-videos-meta-comments.json
 2023-09-14 16:40:10,398 - INFO - finish to down video metas json template
+2023-09-14 19:29:01,458 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-14 19:29:02,298 - INFO - TiktokaStudio GUI started
+2023-09-14 19:29:14,823 - INFO - detecting----------False
+2023-09-14 19:29:14,823 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-14 19:29:14,830 - INFO - start to check thumbFilePaths for 1
+2023-09-14 19:29:14,830 - INFO - before check:
+{}
+2023-09-14 19:29:14,831 - INFO - after check:
+{}
+2023-09-14 19:29:14,831 - INFO - update to 1 meta json
+2023-09-14 19:29:14,832 - INFO - start to check desFilePaths for 1
+2023-09-14 19:29:14,832 - INFO - before check:
+{}
+2023-09-14 19:29:14,833 - INFO - after check:
+{}
+2023-09-14 19:29:14,833 - INFO - update to 1 meta json
+2023-09-14 19:29:14,834 - INFO - start to check metaFilePaths for 1
+2023-09-14 19:29:14,834 - INFO - before check:
+{}
+2023-09-14 19:29:14,834 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader/tests/1.json
+2023-09-14 19:29:14,834 - INFO - intial metaFilePaths for 1:
+
+2023-09-14 19:29:14,834 - INFO - append result:
+['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']
+2023-09-14 19:29:14,834 - INFO - after check:
+{'1': ['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']}
+2023-09-14 19:29:14,834 - INFO - update to 1 meta json
+2023-09-14 20:44:38,973 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-14 20:44:39,876 - INFO - TiktokaStudio GUI started
+2023-09-14 20:45:21,581 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-14 20:45:22,260 - INFO - TiktokaStudio GUI started
+2023-09-14 20:45:36,339 - INFO - detecting----------False
+2023-09-14 20:45:36,356 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-14 20:45:36,364 - INFO - start to check thumbFilePaths for 1
+2023-09-14 20:45:36,364 - INFO - before check:
+{}
+2023-09-14 20:45:36,364 - INFO - after check:
+{}
+2023-09-14 20:45:36,364 - INFO - update to 1 meta json
+2023-09-14 20:45:36,365 - INFO - start to check desFilePaths for 1
+2023-09-14 20:45:36,366 - INFO - before check:
+{}
+2023-09-14 20:45:36,366 - INFO - after check:
+{}
+2023-09-14 20:45:36,366 - INFO - update to 1 meta json
+2023-09-14 20:45:36,367 - INFO - start to check metaFilePaths for 1
+2023-09-14 20:45:36,367 - INFO - before check:
+{}
+2023-09-14 20:45:36,367 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader/tests/1.json
+2023-09-14 20:45:36,367 - INFO - intial metaFilePaths for 1:
+
+2023-09-14 20:45:36,367 - INFO - append result:
+['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']
+2023-09-14 20:45:36,368 - INFO - after check:
+{'1': ['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']}
+2023-09-14 20:45:36,368 - INFO - update to 1 meta json
+2023-09-14 20:46:09,331 - ERROR - this thumb template json can not be parsed,check the error msg:
+'str' object has no attribute 'read'
+2023-09-14 20:46:09,344 - INFO - update metajson with thumb gen setting
+2023-09-14 20:49:08,793 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-14 20:49:09,162 - INFO - TiktokaStudio GUI started
+2023-09-14 20:49:20,515 - INFO - detecting----------False
+2023-09-14 20:49:20,515 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-14 20:49:20,520 - INFO - start to check thumbFilePaths for 1
+2023-09-14 20:49:20,520 - INFO - before check:
+{}
+2023-09-14 20:49:20,520 - INFO - after check:
+{}
+2023-09-14 20:49:20,520 - INFO - update to 1 meta json
+2023-09-14 20:49:20,522 - INFO - start to check desFilePaths for 1
+2023-09-14 20:49:20,522 - INFO - before check:
+{}
+2023-09-14 20:49:20,522 - INFO - after check:
+{}
+2023-09-14 20:49:20,522 - INFO - update to 1 meta json
+2023-09-14 20:49:20,523 - INFO - start to check metaFilePaths for 1
+2023-09-14 20:49:20,523 - INFO - before check:
+{}
+2023-09-14 20:49:20,523 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader/tests/1.json
+2023-09-14 20:49:20,524 - INFO - intial metaFilePaths for 1:
+
+2023-09-14 20:49:20,524 - INFO - append result:
+['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']
+2023-09-14 20:49:20,524 - INFO - after check:
+{'1': ['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']}
+2023-09-14 20:49:20,524 - INFO - update to 1 meta json
+2023-09-14 20:49:45,559 - INFO - load thumbnail gen setting json from:
+ /Users/wenke/github/tiktoka-studio-uploader-app/assets/thumb-gen/template.json
+2023-09-14 20:49:45,591 - ERROR - this thumb template json can not be parsed,check the error msg:
+'str' object has no attribute 'read'
+2023-09-14 20:49:45,591 - INFO - update metajson with thumb gen setting
+2023-09-14 20:51:25,469 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-14 20:51:25,865 - INFO - TiktokaStudio GUI started
+2023-09-14 20:51:34,349 - INFO - detecting----------False
+2023-09-14 20:51:34,349 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-14 20:51:34,354 - INFO - start to check thumbFilePaths for 1
+2023-09-14 20:51:34,354 - INFO - before check:
+{}
+2023-09-14 20:51:34,354 - INFO - after check:
+{}
+2023-09-14 20:51:34,354 - INFO - update to 1 meta json
+2023-09-14 20:51:34,356 - INFO - start to check desFilePaths for 1
+2023-09-14 20:51:34,356 - INFO - before check:
+{}
+2023-09-14 20:51:34,356 - INFO - after check:
+{}
+2023-09-14 20:51:34,357 - INFO - update to 1 meta json
+2023-09-14 20:51:34,357 - INFO - start to check metaFilePaths for 1
+2023-09-14 20:51:34,357 - INFO - before check:
+{}
+2023-09-14 20:51:34,358 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader/tests/1.json
+2023-09-14 20:51:34,358 - INFO - intial metaFilePaths for 1:
+
+2023-09-14 20:51:34,358 - INFO - append result:
+['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']
+2023-09-14 20:51:34,358 - INFO - after check:
+{'1': ['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']}
+2023-09-14 20:51:34,358 - INFO - update to 1 meta json
+2023-09-14 20:51:50,917 - INFO - load thumbnail gen setting json from:
+ /Users/wenke/github/tiktoka-studio-uploader-app/assets/thumb-gen/template.json
+2023-09-14 20:51:50,918 - ERROR - this thumb template json can not be parsed,check the error msg:
+'str' object has no attribute 'read'
+2023-09-14 20:51:50,918 - INFO - update metajson with thumb gen setting
+2023-09-14 20:53:53,422 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-14 20:53:53,751 - INFO - TiktokaStudio GUI started
+2023-09-14 20:54:02,949 - INFO - detecting----------False
+2023-09-14 20:54:02,949 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-14 20:54:02,954 - INFO - start to check thumbFilePaths for 1
+2023-09-14 20:54:02,954 - INFO - before check:
+{}
+2023-09-14 20:54:02,955 - INFO - after check:
+{}
+2023-09-14 20:54:02,955 - INFO - update to 1 meta json
+2023-09-14 20:54:02,956 - INFO - start to check desFilePaths for 1
+2023-09-14 20:54:02,956 - INFO - before check:
+{}
+2023-09-14 20:54:02,956 - INFO - after check:
+{}
+2023-09-14 20:54:02,956 - INFO - update to 1 meta json
+2023-09-14 20:54:02,957 - INFO - start to check metaFilePaths for 1
+2023-09-14 20:54:02,957 - INFO - before check:
+{}
+2023-09-14 20:54:02,957 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader/tests/1.json
+2023-09-14 20:54:02,957 - INFO - intial metaFilePaths for 1:
+
+2023-09-14 20:54:02,957 - INFO - append result:
+['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']
+2023-09-14 20:54:02,958 - INFO - after check:
+{'1': ['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']}
+2023-09-14 20:54:02,958 - INFO - update to 1 meta json
+2023-09-14 20:54:15,714 - INFO - load thumbnail gen setting json from:
+ /Users/wenke/github/tiktoka-studio-uploader-app/assets/thumb-gen/template.json
+2023-09-14 20:54:15,716 - INFO - update metajson with thumb gen setting
+2023-09-14 21:11:22,858 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-14 21:11:23,230 - INFO - TiktokaStudio GUI started
+2023-09-14 21:11:47,148 - INFO - detecting----------False
+2023-09-14 21:11:47,148 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-14 21:11:47,153 - INFO - start to check thumbFilePaths for 1
+2023-09-14 21:11:47,153 - INFO - before check:
+{}
+2023-09-14 21:11:47,154 - INFO - after check:
+{}
+2023-09-14 21:11:47,154 - INFO - update to 1 meta json
+2023-09-14 21:11:47,155 - INFO - start to check desFilePaths for 1
+2023-09-14 21:11:47,155 - INFO - before check:
+{}
+2023-09-14 21:11:47,155 - INFO - after check:
+{}
+2023-09-14 21:11:47,155 - INFO - update to 1 meta json
+2023-09-14 21:11:47,156 - INFO - start to check metaFilePaths for 1
+2023-09-14 21:11:47,156 - INFO - before check:
+{}
+2023-09-14 21:11:47,157 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader/tests/1.json
+2023-09-14 21:11:47,157 - INFO - intial metaFilePaths for 1:
+
+2023-09-14 21:11:47,157 - INFO - append result:
+['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']
+2023-09-14 21:11:47,157 - INFO - after check:
+{'1': ['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']}
+2023-09-14 21:11:47,157 - INFO - update to 1 meta json
+2023-09-14 21:12:10,737 - INFO - load thumbnail gen setting json from:
+ /Users/wenke/github/tiktoka-studio-uploader-app/assets/thumb-gen/template.json
+2023-09-14 21:12:10,773 - INFO - update metajson with thumb gen setting
+2023-09-14 21:18:30,960 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-14 21:18:31,318 - INFO - TiktokaStudio GUI started
+2023-09-14 21:18:42,122 - INFO - detecting----------False
+2023-09-14 21:18:42,122 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-14 21:18:42,126 - INFO - start to check thumbFilePaths for 1
+2023-09-14 21:18:42,126 - INFO - before check:
+{}
+2023-09-14 21:18:42,127 - INFO - after check:
+{}
+2023-09-14 21:18:42,127 - INFO - update to 1 meta json
+2023-09-14 21:18:42,128 - INFO - start to check desFilePaths for 1
+2023-09-14 21:18:42,128 - INFO - before check:
+{}
+2023-09-14 21:18:42,128 - INFO - after check:
+{}
+2023-09-14 21:18:42,128 - INFO - update to 1 meta json
+2023-09-14 21:18:42,129 - INFO - start to check metaFilePaths for 1
+2023-09-14 21:18:42,129 - INFO - before check:
+{}
+2023-09-14 21:18:42,129 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader/tests/1.json
+2023-09-14 21:18:42,129 - INFO - intial metaFilePaths for 1:
+
+2023-09-14 21:18:42,130 - INFO - append result:
+['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']
+2023-09-14 21:18:42,130 - INFO - after check:
+{'1': ['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']}
+2023-09-14 21:18:42,130 - INFO - update to 1 meta json
+2023-09-14 21:18:57,258 - INFO - load thumbnail gen setting json from:
+ /Users/wenke/github/tiktoka-studio-uploader-app/assets/thumb-gen/template.json
+2023-09-14 21:18:57,258 - INFO - update metajson with thumb gen setting
+2023-09-14 21:20:19,761 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-14 21:20:20,175 - INFO - TiktokaStudio GUI started
+2023-09-14 21:20:27,264 - INFO - detecting----------False
+2023-09-14 21:20:27,264 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-14 21:20:27,269 - INFO - start to check thumbFilePaths for 1
+2023-09-14 21:20:27,269 - INFO - before check:
+{}
+2023-09-14 21:20:27,270 - INFO - after check:
+{}
+2023-09-14 21:20:27,270 - INFO - update to 1 meta json
+2023-09-14 21:20:27,271 - INFO - start to check desFilePaths for 1
+2023-09-14 21:20:27,271 - INFO - before check:
+{}
+2023-09-14 21:20:27,271 - INFO - after check:
+{}
+2023-09-14 21:20:27,271 - INFO - update to 1 meta json
+2023-09-14 21:20:27,272 - INFO - start to check metaFilePaths for 1
+2023-09-14 21:20:27,272 - INFO - before check:
+{}
+2023-09-14 21:20:27,273 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader/tests/1.json
+2023-09-14 21:20:27,273 - INFO - intial metaFilePaths for 1:
+
+2023-09-14 21:20:27,273 - INFO - append result:
+['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']
+2023-09-14 21:20:27,273 - INFO - after check:
+{'1': ['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']}
+2023-09-14 21:20:27,273 - INFO - update to 1 meta json
+2023-09-14 21:20:41,888 - INFO - load thumbnail gen setting json from:
+ /Users/wenke/github/tiktoka-studio-uploader-app/assets/thumb-gen/template.json
+2023-09-14 21:20:41,923 - INFO - update metajson with thumb gen setting

@@ -824,7 +824,7 @@ def select_thumb_template_file(folder):
             ("Json", "*.json"), ("All Files", "*")])[0]
 
         thumbnail_template_file.set(thumbnail_template_file_path)
-        ultra[folder]['thumb_gen_template']=thumbnail_template_file_path
+        # ultra[folder]['thumb_gen_template']=thumbnail_template_file_path
     except:
         print('please select a valid template json file')
 
@@ -1601,9 +1601,13 @@ def analyse_video_meta_pair(folder,frame,right_frame):
                         'thumbFilePaths':{},
                         'desFilePaths':{},
                         'metaFilePaths':{},  
-                        'thumb_gen_template':"",  
+                        'thumb_gen_template':{
+                        "result_image_size": "",
+                        "bg_image": "",                            
+                        "text":[]    
+                            },  
                         "thumb_gen_bg_folder":"",
-                        "thumb_gen_bg_image":"",
+                        "thumb_gen_bg_folder_images":[],
 
                         'videos':{}
 
@@ -1649,10 +1653,10 @@ def analyse_video_meta_pair(folder,frame,right_frame):
                                        'mode':"manually from .tag file or manually +preferred or just preferred or api or auto"
                                    },
                                    "thumb_gen_setting":{
-                                    "bg_image": "bg1.jpg",
-                                    "heading":"sample",
-                                    "subheading":"sample22",
-                                    "extraheading":"extra"
+                                    "bg_image": "",
+                                    "heading":"",
+                                    "subheading":"",
+                                    "extraheading":""
                                     # template content read from template.json file
                                     # 'template':{
                                         # "result_image_size": "800x600",
@@ -1759,7 +1763,7 @@ def analyse_video_meta_pair(folder,frame,right_frame):
     ultra[folder] ['metaCounts']=len(ultra[folder] ['metaFilePaths'])
     ultra[folder]['updatedAt']=pd.Timestamp.now().value
     print('---------\n',jsons.dump(ultra[folder]))
-    tmpjson='video-assets.json'
+    tmpjson=os.path.join(folder,'video-assets.json')
     if os.path.exists(tmpjson):
         with open(tmpjson,'w') as f:
             f.write(jsons.dumps(ultra[folder]))        
@@ -1804,6 +1808,24 @@ def analyse_video_thumb_pair(folder,frame):
     render_video_folder_check_results(frame)
     render_thumb_gen(frame,True)
 
+
+def check_folder_thumb_bg(folder):
+    supported_thumb_exts=['.jpeg', '.png', '.jpg','webp']
+    bg_images=[]
+    for r, d, f in os.walk(folder):
+        with os.scandir(r) as i:
+
+            for entry in i:
+                if entry.is_file():
+                    filename = os.path.splitext(entry.name)[0]
+
+                    ext = os.path.splitext(entry.name)[1]
+                    if ext in supported_thumb_exts:
+                        filepath=os.path.join(r,filename+ext)
+                        bg_images.append(filepath)
+    if len(bg_images)==0:
+        logger.info(f'please choose another bg folder,there is no image found:\n{folder}')
+    return bg_images
 def check_video_thumb_pair(dbm,folder,session):
     # print(f'detecting----------{folder}')
 
@@ -2332,6 +2354,8 @@ def render_update_meta(frame,isneed):
 
         b_import_thumb_metas_=tk.Button(frame,text="Step4:更新视频元数据文件",command=lambda: genThumbnailFromTemplate(videosView_video_folder.get(),thumbnail_template_file.get(),mode.get()))
         b_import_thumb_metas_.grid(row = 9, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
+
+
 def UpdateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thummbnail_bg_file_path,thummbnail_bg_folder_path):
     if mode_value=='5':
         logger.info('ignore the thumbnail gen process')    
@@ -2341,10 +2365,14 @@ def UpdateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thumm
         
 
         else:
+            logger.info(f'load thumbnail gen setting json from:\n {thumbnail_template_file_path}')
             if os.path.exists(thumbnail_template_file_path):
                 try:
-                    setting=json.load(thumbnail_template_file_path)            
-                    ultra[folder]['thumb_gen_template']=thumbnail_template_file_path
+                    # fp = open(thumbnail_template_file_path, 'r', encoding='utf-8')
+                    # setting_json = fp.read()                    
+                    setting=json.load(open(thumbnail_template_file_path, 'r', encoding='utf-8')) 
+                            #    validate template format ,contain videoID  contain text type ,hints for user to edit temporary
+                    ultra[folder]['thumb_gen_template']['text']=setting['videoID']
                 except Exception as e:
                     logger.error(f'this thumb template json can not be parsed,check the error msg:\n{e}')
 
@@ -2353,12 +2381,27 @@ def UpdateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thumm
         elif mode_value=='2':
             print('extract random key frame of video')
         elif mode_value=='3':
-            ultra[folder]['thumb_gen_bg_folder']=thummbnail_bg_folder_path
+            bg_images=check_folder_thumb_bg(thummbnail_bg_folder_path)
+            if len(bg_images)>0:
+                ultra[folder]['thumb_gen_bg_folder']=thummbnail_bg_folder_path
+                
+                ultra[folder]['thumb_gen_bg_folder_images']=bg_images
+                for filename in  ultra[folder]['filenames']:
+                    ultra[folder]['videos'][filename]['thumb_gen_setting']['bg_image']=random.choice(bg_images)
         elif mode_value=='4':
-            ultra[folder]['thumb_gen_bg_image']=thummbnail_bg_file_path
+            ultra[folder]['thumb_gen_template']['bg_image']=thummbnail_bg_file_path            
 
         else:
             print('')     
+    logger.info('update metajson with thumb gen setting')
+    tmpjson=os.path.join(folder,'video-assets.json')
+    if os.path.exists(tmpjson):
+        with open(tmpjson,'w') as f:
+            f.write(jsons.dumps(ultra[folder]))        
+    else:
+        with open(tmpjson,'a') as f:
+            f.write(jsons.dumps(ultra[folder]))    
+        
 def render_thumb_gen(frame,isneed,folder):
     if isneed==True:
         if len(frame.winfo_children())>0:
@@ -2419,14 +2462,13 @@ def render_thumb_gen(frame,isneed,folder):
         b_thumbnail_bg_file.grid(row = 5, column = 1,  padx=14, pady=15,sticky='nswe') 
         e_thumbnail_bg_file = tk.Entry(frame, width=45, textvariable=thummbnail_bg_file)
         e_thumbnail_bg_file.grid(row = 6, column = 1, padx=14, pady=15,sticky='nswe') 
-        select_cookie_file
 
 
         b_update_metas_=tk.Button(frame,text="update meta",command=lambda: UpdateThumbnailGenMetas(folder,thumbnail_template_file.get(),mode.get(),thummbnail_bg_file.get(),thummbnail_bg_folder.get()))
         b_update_metas_.grid(row = 8, column = 0,  padx=14, pady=15,sticky='nswe') 
 
 
-        b_check_metas_=tk.Button(frame,text="check metajson",command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
+        b_check_metas_=tk.Button(frame,text="check metajson",command=lambda: threading.Thread(target=openLocal(os.path.join(metaView_video_folder.get(),'video-assets.json'))).start() )
         b_check_metas_.grid(row = 8, column = 1, padx=14, pady=15,sticky='nswe') 
 
         b_edit_thumb_metas=tk.Button(frame,text="Manually update video thumbnails gen metas use editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
