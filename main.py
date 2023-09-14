@@ -69,6 +69,7 @@ from PIL import Image,ImageTk
 import multiprocessing as mp
 from src.upload import *
 from src.ai_detector import AiThumbnailGenerator
+from src.tooltip import Tooltip
 from datetime import datetime,date,timedelta
 import asyncio
 import requests
@@ -578,7 +579,7 @@ def select_videos_folder():
 
     except:
         print('please choose a valid video folder')
-def select_musics_folder():
+def select_folder(dict,value):
     global music_folder_path
     try:
         music_folder_path = filedialog.askdirectory(
@@ -587,8 +588,8 @@ def select_musics_folder():
 
         if os.path.exists(music_folder_path):
             print("You chose %s" % music_folder_path)
-            music_folder.set(music_folder_path)
-            setting['music_folder'] = music_folder_path
+            dict = music_folder_path
+            value.set(music_folder_path)
         else:
             print('please choose a valid music folder')
     except:
@@ -816,15 +817,36 @@ def auto_gen_cookie_file():
 def genThumbnailFromTemplate(video_folder,thumb_template,mode):
     print('find missing files')
     print('render thumbnails for videos')
-def select_thumb_template_file():
+def select_thumb_template_file(folder):
     global thumbnail_template_file_path
     try:
         thumbnail_template_file_path = filedialog.askopenfilenames(title="请选择 template文件", filetypes=[
             ("Json", "*.json"), ("All Files", "*")])[0]
 
         thumbnail_template_file.set(thumbnail_template_file_path)
+        ultra[folder]['thumb_gen_template']=thumbnail_template_file_path
     except:
         print('please select a valid template json file')
+
+
+
+
+def select_file(title,cached,variable,limited='all'):
+    file_path=''
+    try:
+        if limited=='json':
+            file_path = filedialog.askopenfilenames(title=title, filetypes=[
+                ("Json", "*.json"), ("All Files", "*")])[0]
+        elif limited=='images':
+            file_path = filedialog.askopenfilenames(title=title, filetypes=[
+                ("JPEG", "*.jpg"),("PNG", "*.png"),("JPG", "*.jpg"),("WebP", "*.webp"), ("All Files", "*")])[0]
+        else:
+            file_path = filedialog.askopenfilenames(title=title, filetypes=[ ("All Files", "*")])[0]
+        variable.set(file_path)
+        cached=file_path
+    except:
+        print('please select a valid  file')
+
 
 def select_cookie_file(channel_cookie_user):
 
@@ -1578,8 +1600,13 @@ def analyse_video_meta_pair(folder,frame,right_frame):
                        'videoFilePaths':[],
                         'thumbFilePaths':{},
                         'desFilePaths':{},
-                        'metaFilePaths':{},    
+                        'metaFilePaths':{},  
+                        'thumb_gen_template':"",  
+                        "thumb_gen_bg_folder":"",
+                        "thumb_gen_bg_image":"",
+
                         'videos':{}
+
                        } 
 
         ultra[folder].dump()
@@ -1622,24 +1649,66 @@ def analyse_video_meta_pair(folder,frame,right_frame):
                                        'mode':"manually from .tag file or manually +preferred or just preferred or api or auto"
                                    },
                                    "thumb_gen_setting":{
-                                    "result_image_size": "800x600",
-                                    "title": "Sample Title",
-                                    "subtitle": "Sample Subtitle",
-                                    "extra_text": "Sample Extra Text",
-                                    "background_image": "bg1.jpg",
-                                    "title_font_size": 32,
-                                    "subtitle_font_size": 24,
-                                    "extra_text_font_size": 16,
-                                    "title_area_number": 1,
-                                    "subtitle_area_number": 5,
-                                    "extra_text_area_number": 9,
-                                    "title_font": "MSYHMONO.ttf",
-                                    # font name look up in system default path, if not look for font file local path
-                                    "subtitle_font": "MSYHMONO.ttf",
-                                    "extra_text_font": "MSYHMONO.ttf",
-                                    "title_color": "#000000",
-                                    "sub_title_color": "#FF0000",
-                                    "extra_text_color": "#00FF00"
+                                    "bg_image": "bg1.jpg",
+                                    "heading":"sample",
+                                    "subheading":"sample22",
+                                    "extraheading":"extra"
+                                    # template content read from template.json file
+                                    # 'template':{
+                                        # "result_image_size": "800x600",
+                                        # "bg_image": "bg1.jpg",
+
+                                    #     "texts":{
+                                    #     "type": "heading",		
+                                    #     "fontFile": "MSYHMONO.ttf",
+                                    #     "x": 326,
+                                    #     "y": 375,
+                                    #     "width": 813,
+                                    #     "height": 82,
+                                    #     "topLeft": "(326, 375)",
+                                    #     "topRight": "(1139, 375)",
+                                    #     "bottomLeft": "(326, 457)",
+                                    #     "bottomRight": "(1139, 457)",
+                                    #     "fontSize": 21,
+                                    #     "fontName": "MSYHMONO.ttf",
+                                    #     "gridSize": 10,
+                                    #     "nearestGridSerialNumber": 43,
+                                    #     "fontcolor": "rgb(0, 240, 255)"
+                                    # }, {
+                                    #     "type": "subheading",		
+                                    #     "fontFile": "",
+                                    #     "x": 150,
+                                    #     "y": 54,
+                                    #     "width": 320,
+                                    #     "height": 114,
+                                    #     "topLeft": "(150, 54)",
+                                    #     "topRight": "(470, 54)",
+                                    #     "bottomLeft": "(150, 168)",
+                                    #     "bottomRight": "(470, 168)",
+                                    #     "fontSize": 29,
+                                    #     "fontName": "Times New Roman",
+                                    #     "gridSize": 10,
+                                    #     "nearestGridSerialNumber": 2,
+                                    #     "fontcolor": "rgb(255, 255, 255)"
+                                    # }, {
+                                    #     "type": "extraheading",		
+
+                                    #     "fontFile": "",
+                                    #     "x": 351,
+                                    #     "y": 565,
+                                    #     "width": 784,
+                                    #     "height": 40,
+                                    #     "topLeft": "(351, 565)",
+                                    #     "topRight": "(1135, 565)",
+                                    #     "bottomLeft": "(351, 605)",
+                                    #     "bottomRight": "(1135, 605)",
+                                    #     "fontSize": 10,
+                                    #     "fontName": "Unknown",
+                                    #     "gridSize": 10,
+                                    #     "nearestGridSerialNumber": 63,
+                                    #     "fontcolor": "rgb(254, 218, 0)"
+                                    # }]
+
                                    },
                                    "video_description":"",
                                    
@@ -2123,7 +2192,7 @@ def render_video_folder_check_results(frame,right_frame,folder):
         label_str='Update'
 
 
-    b_gen_thumb=tk.Button(frame,text=label_str,command=lambda: threading.Thread(target=render_thumb_gen(right_frame,True)).start() )
+    b_gen_thumb=tk.Button(frame,text=label_str,command=lambda: threading.Thread(target=render_thumb_gen(right_frame,True,folder)).start() )
     b_gen_thumb.grid(row = 3, column = 4)    
 
 
@@ -2175,7 +2244,7 @@ def render_video_folder_check_results(frame,right_frame,folder):
 
 
     b_gen_thumb=tk.Button(frame,text=label_str,command=lambda: threading.Thread(target=render_update_meta(right_frame,True)).start() )
-    b_gen_thumb.grid(row = 5,columnspan=5, column = 4)    
+    b_gen_thumb.grid(row = 5, column = 4,sticky='nesw')    
 
 def render_des_gen(frame,isneed):
     if isneed==True:
@@ -2263,64 +2332,116 @@ def render_update_meta(frame,isneed):
 
         b_import_thumb_metas_=tk.Button(frame,text="Step4:更新视频元数据文件",command=lambda: genThumbnailFromTemplate(videosView_video_folder.get(),thumbnail_template_file.get(),mode.get()))
         b_import_thumb_metas_.grid(row = 9, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
+def UpdateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thummbnail_bg_file_path,thummbnail_bg_folder_path):
+    if mode_value=='5':
+        logger.info('ignore the thumbnail gen process')    
+    else: 
+        if thumbnail_template_file_path is None or thumbnail_template_file_path=='':
+            logger.error('please choose a thumbtemplate first')
+        
 
+        else:
+            if os.path.exists(thumbnail_template_file_path):
+                try:
+                    setting=json.load(thumbnail_template_file_path)            
+                    ultra[folder]['thumb_gen_template']=thumbnail_template_file_path
+                except Exception as e:
+                    logger.error(f'this thumb template json can not be parsed,check the error msg:\n{e}')
 
-def render_thumb_gen(frame,isneed):
+        if mode_value=='1':
+            print('extract first frame of video')
+        elif mode_value=='2':
+            print('extract random key frame of video')
+        elif mode_value=='3':
+            ultra[folder]['thumb_gen_bg_folder']=thummbnail_bg_folder_path
+        elif mode_value=='4':
+            ultra[folder]['thumb_gen_bg_image']=thummbnail_bg_file_path
+
+        else:
+            print('')     
+def render_thumb_gen(frame,isneed,folder):
     if isneed==True:
         if len(frame.winfo_children())>0:
             for widget in frame.winfo_children():
                 widget.destroy()        
         b_edit_thumb=tk.Button(frame,text="Step2:make a new thumbnails template use editor",command=lambda: webbrowser.open_new('file:///{base_dir}/template.html'.format(base_dir=ROOT_DIR)))
 
-        b_edit_thumb.grid(row = 0, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        b_edit_thumb.grid(row = 0, column = 0, padx=14, pady=15,sticky='nswe') 
+        Tooltip(b_edit_thumb, text='figure out  heading,subheading,extra text position,font,fontclolor use editor.you can update the json manually to set heading,subheading,extra type,adjust font name and font file ,because fontcolor,fontsize is auto detected, it need to be verify.and set a default bg image for all the videos to use' , wraplength=200)
 
         global thumbnail_template_file
         thumbnail_template_file = tk.StringVar()        
-        l_thumbnail_template_file = tk.Label(frame, text='choose thumbnail template file')
 
-        l_thumbnail_template_file.grid(row = 1, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
 
+        b_thumbnail_template_file=tk.Button(frame,text="choose thumbnail template file",command=lambda: threading.Thread(target=select_file('select thumb template json file',ultra[folder]['thumb_gen_template'],thumbnail_template_file,'json')).start() )
+        b_thumbnail_template_file.grid(row = 1, column = 0,  padx=14, pady=15,sticky='nw') 
         e_thumbnail_template_file = tk.Entry(frame, width=45, textvariable=thumbnail_template_file)
-        e_thumbnail_template_file.grid(row = 1, column = 3, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        e_thumbnail_template_file.grid(row = 1, column = 1, padx=14, pady=15,sticky='nw') 
         
-        b_thumbnail_template_file=tk.Button(frame,text="Select",command=lambda: threading.Thread(target=select_thumb_template_file).start() )
-        b_thumbnail_template_file.grid(row = 1, column = 5, columnspan = 3, padx=14, pady=15,sticky='nw') 
+
    
 
 
 
 
-        b_edit_thumb_metas=tk.Button(frame,text="Step3:make new video thumbnails metas use editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
-        b_edit_thumb_metas.grid(row = 2, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
-
-        global thumbnail_metas_file
+        global thumbnail_metas_file,thummbnail_bg_folder,thummbnail_bg_file
         thumbnail_metas_file = tk.StringVar()        
-        l_thumb_metas = tk.Label(frame, text='choose thumbnail metas file')
-
-        l_thumb_metas.grid(row = 3, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
-        e_thumb_metas = tk.Entry(frame, width=45, textvariable=thumbnail_metas_file)
-        e_thumb_metas.grid(row = 3, column = 3, columnspan = 3, padx=14, pady=15,sticky='nw') 
-
-        b_video_folder=tk.Button(frame,text="Select",command=lambda: threading.Thread(target=select_thumb_template_file).start() )
-        b_video_folder.grid(row = 3, column = 5, columnspan = 3, padx=14, pady=15,sticky='nw') 
-
+        thummbnail_bg_folder = tk.StringVar()        
+        thummbnail_bg_file = tk.StringVar()        
 
         mode = tk.StringVar()
         mode.set("4")
 
         lab = tk.Label(frame,text="请选择你的缩略图背景图片从何而来",bg="lightyellow",width=30)
-        lab.grid(row = 4, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        lab.grid(row = 2, column = 0,  padx=14, pady=15,sticky='nw') 
         mode1=tk.Radiobutton(frame,text="视频第一帧作为背景图",variable=mode,value="1",command='')
-        mode1.grid(row = 5, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        mode1.grid(row = 3, column = 0,  padx=14, pady=15,sticky='nw') 
         mode2=tk.Radiobutton(frame,text="视频任意关键帧作为背景图",variable=mode,value="2",command='')
-        mode2.grid(row = 6, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
-        mode3=tk.Radiobutton(frame,text="文件夹中任意图片作为背景图",variable=mode,value="3",command='')
-        mode3.grid(row = 7, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
-        mode4=tk.Radiobutton(frame,text="元数据中已指定背景图地址",variable=mode,value="4",command='')
-        mode4.grid(row = 8, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
-        b_import_thumb_metas_=tk.Button(frame,text="Step4:gen thumbnails use thumb metas and thumb template file,update video metajson",command=lambda: genThumbnailFromTemplate(videosView_video_folder.get(),thumbnail_template_file.get(),mode.get()))
-        b_import_thumb_metas_.grid(row = 9, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        mode2.grid(row = 3, column = 1,  padx=14, pady=15,sticky='nw') 
+        mode3=tk.Radiobutton(frame,text="文件夹中随机一张图片作为背景图",variable=mode,value="3",command='')
+        mode3.grid(row = 4, column = 0,  padx=14, pady=15,sticky='nw') 
+        Tooltip(mode3, text='select the bg folder' , wraplength=200)
 
+        mode4=tk.Radiobutton(frame,text="使用统一背景图",variable=mode,value="4",command='')
+        mode4.grid(row = 4, column = 1,  padx=14, pady=15,sticky='nw') 
+        Tooltip(mode4, text='select the bg image file' , wraplength=200)
+
+        mode5=tk.Radiobutton(frame,text="后续在视频元数据中个性化设置背景图地址",variable=mode,value="5",command='')
+        mode5.grid(row = 7, column = 0, padx=14, pady=15,sticky='nw') 
+
+        b_thumbnail_bg_folder=tk.Button(frame,text="choose thumbnail bg image folder",command=lambda: threading.Thread(target=select_folder(ultra[folder]['thumb_gen_bg_folder'],thummbnail_bg_folder)).start() )
+        b_thumbnail_bg_folder.grid(row = 5, column = 0,  padx=14, pady=15,sticky='nswe') 
+        e_thumbnail_bg_folder = tk.Entry(frame, width=45, textvariable=thummbnail_bg_folder)
+        e_thumbnail_bg_folder.grid(row = 6, column = 0, padx=14, pady=15,sticky='nswe') 
+
+
+        b_thumbnail_bg_file=tk.Button(frame,text="choose thumbnail bg image file",command=lambda: threading.Thread(target=select_file('please select a image',ultra[folder]['thumb_gen_bg_image'],thummbnail_bg_file,'images')).start() )
+        b_thumbnail_bg_file.grid(row = 5, column = 1,  padx=14, pady=15,sticky='nswe') 
+        e_thumbnail_bg_file = tk.Entry(frame, width=45, textvariable=thummbnail_bg_file)
+        e_thumbnail_bg_file.grid(row = 6, column = 1, padx=14, pady=15,sticky='nswe') 
+        select_cookie_file
+
+
+        b_update_metas_=tk.Button(frame,text="update meta",command=lambda: UpdateThumbnailGenMetas(folder,thumbnail_template_file.get(),mode.get(),thummbnail_bg_file.get(),thummbnail_bg_folder.get()))
+        b_update_metas_.grid(row = 8, column = 0,  padx=14, pady=15,sticky='nswe') 
+
+
+        b_check_metas_=tk.Button(frame,text="check metajson",command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
+        b_check_metas_.grid(row = 8, column = 1, padx=14, pady=15,sticky='nswe') 
+
+        b_edit_thumb_metas=tk.Button(frame,text="Manually update video thumbnails gen metas use editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
+        b_edit_thumb_metas.grid(row = 9, column = 0, padx=14, pady=15,sticky='nswe') 
+        Tooltip(b_edit_thumb_metas, text='fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field' , wraplength=200)
+        b_open_video_folder=tk.Button(frame,text="copy and replace the old file",command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
+        b_open_video_folder.grid(row = 9, column = 1, padx=14, pady=15,sticky='nswe')    
+
+
+        b_gen_thumb_=tk.Button(frame,text="gen thumb",command=lambda: genThumbnailFromTemplate(videosView_video_folder.get(),thumbnail_template_file.get(),mode.get()))
+        b_gen_thumb_.grid(row = 10, column =0, padx=14, pady=15,sticky='nswe') 
+
+
+        b_check_metas_=tk.Button(frame,text="check metajson",command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
+        b_check_metas_.grid(row = 10, column = 1, padx=14, pady=15,sticky='nswe') 
 
 
 def printValues(choices):
