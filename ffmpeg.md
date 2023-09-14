@@ -1,3 +1,30 @@
+Video Harmonization Tool
+
+https://github.com/ozeliurs/harmopy
+
+
+
+compress
+
+https://github.com/kbdevs/kbclip
+
+
+
+https://github.com/trek-view/gopro2gsv
+
+
+https://github.com/NangInShell/VSET
+
+
+
+# metadata remove
+
+https://github.com/Anish-M-code/Metadata-Remover/blob/master/Source%20Code/Python%20Source%20Code/MRT/mat2.py
+
+
+## multi lang audio track 
+
+https://github.com/etherealxx/audiomerger-volumetweak
 
 
 ## extract metadata as json 
@@ -6,7 +33,7 @@ ffprobe -v quiet -show_format -show_streams -print_format json input.mp4
 
 
 ffprobe -v quiet -show_format -print_format json input.mp4
-
+https://github.com/hclivess/nameer/blob/main/nameer.py
 
 
 ##  embed metadata 
