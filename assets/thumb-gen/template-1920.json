@@ -1,0 +1,55 @@
+{
+    "width": 1920,
+    "height": 1080,
+    "texts": [
+        {
+            "textType": "heading",
+            "fontFile": "",
+            "x": 336,
+            "y": 262,
+            "width": 690,
+            "height": 197,
+            "topLeft": "(336, 262)",
+            "topRight": "(1026, 262)",
+            "bottomLeft": "(336, 459)",
+            "bottomRight": "(1026, 459)",
+            "fontSize": 49,
+            "fontName": "simsun",
+            "gridSize": 10,
+            "nearestGridSerialNumber": 33,
+            "fontcolor": "rgb(255, 0, 0)"
+        }, {
+            "textType": "subheading",
+            "fontFile": "",
+            "x": 329,
+            "y": 504,
+            "width": 742,
+            "height": 88,
+            "topLeft": "(329, 504)",
+            "topRight": "(1071, 504)",
+            "bottomLeft": "(329, 592)",
+            "bottomRight": "(1071, 592)",
+            "fontSize": 22,
+            "fontName": "Unknown",
+            "gridSize": 10,
+            "nearestGridSerialNumber": 63,
+            "fontcolor": "rgb(243, 245, 244)"
+        }, {
+            "textType": "extra",
+            "fontFile": "",
+            "x": 42,
+            "y": 42,
+            "width": 456,
+            "height": 115,
+            "topLeft": "(42, 42)",
+            "topRight": "(498, 42)",
+            "bottomLeft": "(42, 157)",
+            "bottomRight": "(498, 157)",
+            "fontSize": 29,
+            "fontName": "simsun",
+            "gridSize": 10,
+            "nearestGridSerialNumber": 1,
+            "fontcolor": "rgb(247, 248, 250)"
+        }
+    ]
+}

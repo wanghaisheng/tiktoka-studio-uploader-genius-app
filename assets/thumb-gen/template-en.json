@@ -1,0 +1,53 @@
+{
+	"width": 1480,
+	"height": 920,
+	"texts": [{
+		"textType": "heading",
+		"fontFile": "MSYHMONO.ttf",
+		"x": 325,
+		"y": 336,
+		"width": 740,
+		"height": 94,
+		"topLeft": "(325, 336)",
+		"topRight": "(1065, 336)",
+		"bottomLeft": "(325, 430)",
+		"bottomRight": "(1065, 430)",
+		"fontSize": 24,
+		"fontName": "Unknown",
+		"gridSize": 10,
+		"nearestGridSerialNumber": 43,
+		"fontcolor": "rgb(0, 240, 255)"
+	}, {
+		"textType": "subheading",
+		"fontFile": "MSYHMONO.ttf",
+		"x": 314,
+		"y": 517,
+		"width": 752,
+		"height": 63,
+		"topLeft": "(314, 517)",
+		"topRight": "(1066, 517)",
+		"bottomLeft": "(314, 580)",
+		"bottomRight": "(1066, 580)",
+		"fontSize": 16,
+		"fontName": "Unknown",
+		"gridSize": 10,
+		"nearestGridSerialNumber": 63,
+		"fontcolor": "rgb(254, 218, 0)"
+	}, {
+		"textType": "extra",
+		"fontFile": "MSYHMONO.ttf",
+		"x": 134,
+		"y": 58,
+		"width": 254,
+		"height": 61,
+		"topLeft": "(134, 58)",
+		"topRight": "(388, 58)",
+		"bottomLeft": "(134, 119)",
+		"bottomRight": "(388, 119)",
+		"fontSize": 15,
+		"fontName": "Times New Roman",
+		"gridSize": 10,
+		"nearestGridSerialNumber": 1,
+		"fontcolor": "rgb(255, 255, 255)"
+	}]
+}
