@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-      <title>Thumbnail Template Image Annotation</title>
+      <title>TiktokaStudio Thumbnail Template Image Annotation</title>
       <style>
             #canvas-container {
                 position: relative;
@@ -29,31 +29,51 @@
     </head>
     <body>
         <div>
-            <p>select background image:
+            <p>select target image:
             <input type="file" id="file-input" accept="image/*" />
         
             <button id="save-button">Save template</button>
         
         </p>
-            <button id="start-button">Start Drawing</button>
-            <button id="clear-button">Clear Drawing</button>
+
 
         </div>
         <p>settings:        
-
+            <label for="canvas-width-input">Canvas Width:</label>
+            <input type="number" id="canvas-width-input" min="1" value="1480" />
+            
+            <label for="canvas-height-input">Canvas Height:</label>
+            <input type="number" id="canvas-height-input" min="1" value="920" />
+            
             <label for="grid-size-input">Grid Size:</label>
             <input type="number" id="grid-size-input" min="1" value="10"/>
+            <!-- <label for="display-text-color-input">Display Text Color:</label>
+            <input type="text" id="display-text-color-input" value="yellow"/> -->
+
             <label for="display-text-color-input">Display Text Color:</label>
-            <input type="text" id="display-text-color-input" value="yellow"/>
+            <select id="display-text-color-input">
+                <option value="yellow">Yellow</option>
+                <option value="red">Red</option>
+                <option value="blue">Blue</option>
+                <option value="green">Green</option>
+                <!-- Add more color options here -->
+            </select>
+            
             <label for="display-grid-checkbox">Display Grid Zone Number:</label>
             <input type="checkbox" id="display-grid-checkbox" name="display-grid" checked/>
     </p>
-        <div>
-            <input type="file" id="json-file-input" accept=".json" hidden>
 
-            <button id="select-json-file-button">gen thumbnail from JSON File</button>
-
-            </div>
+    <button id="start-button" title="Before drawing a bounding box, please select a specific text type or add a custom text type for your needs.">Start Drawing</button>
+    <button id="clear-button">Clear Drawing</button>
+    <label for="text-type-dropdown">Text Type:</label>
+    <select id="text-type-dropdown">
+        <option value="heading">Heading</option>
+        <option value="subheading">Subheading</option>
+        <option value="extra">Extra</option>
+    </select>
+    <input type="text" id="custom-text-type" placeholder="Custom Text Type">
+    <button id="add-custom-text-type">Add</button>
+    
         <div id="canvas-container">
             <canvas id="canvas" width="1480" height="920"></canvas>
             <div id="grid-lines"></div>
@@ -84,6 +104,99 @@
                 const gridLinesContainer = document.getElementById("grid-lines");
                 const boundingBoxesContainer = document.getElementById("bounding-boxes");
                 const displayGridCheckbox = document.getElementById("display-grid-checkbox");
+                const canvasWidthInput = document.getElementById("canvas-width-input");
+                const canvasHeightInput = document.getElementById("canvas-height-input");
+                let canvasWidth = 1480; // Default width
+let canvasHeight = 920; // Default height
+
+
+canvasWidthInput.addEventListener("input", () => {
+    const newWidth = parseInt(canvasWidthInput.value);
+    if (!isNaN(newWidth) && newWidth >= 1) {
+        canvasWidth = newWidth; // Update canvas width
+        canvas.width = canvasWidth; // Update canvas element
+        drawGridlines();
+        renderBoundingBox();
+    }
+});
+
+canvasHeightInput.addEventListener("input", () => {
+    const newHeight = parseInt(canvasHeightInput.value);
+    if (!isNaN(newHeight) && newHeight >= 1) {
+        canvasHeight = newHeight; // Update canvas height
+        canvas.height = canvasHeight; // Update canvas element
+        drawGridlines();
+        renderBoundingBox();
+    }
+});
+
+
+const textTypeDropdown = document.getElementById("text-type-dropdown");
+const customTextTypeInput = document.getElementById("custom-text-type");
+const addCustomTextTypeButton = document.getElementById("add-custom-text-type");
+
+// Default text types
+const defaultTextTypes = ["heading", "subheading", "extra"];
+
+// Function to populate the text type dropdown with default and custom options
+function populateTextTypeDropdown() {
+    textTypeDropdown.innerHTML = ""; // Clear existing options
+
+    // Add default options
+    defaultTextTypes.forEach((textType) => {
+        const option = document.createElement("option");
+        option.value = textType;
+        option.textContent = textType.charAt(0).toUpperCase() + textType.slice(1);
+        textTypeDropdown.appendChild(option);
+    });
+
+    // Add custom options
+    customTextTypes.forEach((textType) => {
+        const option = document.createElement("option");
+        option.value = textType;
+        option.textContent = textType;
+        textTypeDropdown.appendChild(option);
+    });
+}
+
+// Event listener for the "Add" button to add custom text types
+addCustomTextTypeButton.addEventListener("click", () => {
+    const customTextType = customTextTypeInput.value.trim();
+    if (customTextType !== "" && !customTextTypes.includes(customTextType)) {
+        customTextTypes.push(customTextType);
+        populateTextTypeDropdown();
+        customTextTypeInput.value = ""; // Clear the input field
+    }
+});
+
+// Initialize custom text types array
+let customTextTypes = [];
+
+// Populate the initial text type dropdown options
+populateTextTypeDropdown();
+let selectedTextType = ""; // Initialize with an empty string
+
+// Event listener for the text type dropdown
+textTypeDropdown.addEventListener("change", () => {
+
+    selectedTextType = textTypeDropdown.value; // Assign the selected text type
+
+    if (selectedTextType) {
+        // Tag the bounding box with the selected text type
+        currentBoundingBox.textType = selectedTextType;
+    }
+});
+
+let currentBoundingBox = {
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+    fontSize: 0,
+    textType: textTypeDropdown.value,
+    nearestGridSerialNumber: 0,
+};
+
                 gridSerialNumberElements = Array.from(document.getElementsByClassName("grid-serial-number"));
                 gridLinesContainer.innerHTML = "";
 
@@ -120,9 +233,12 @@
 
                 saveButton.addEventListener("click", () => { // Save the bounding box coordinates, font size, and font name
                     const data = {
-                        videoID: boundingBox.map(
+                        
+        width: canvasWidth, // Add canvas width
+        height: canvasHeight, // Add canvas height
+                        texts: boundingBox.map(
                             (box, index) => ({
-                                textType: "",
+                                textType: box.textType,
                                 fontFile: "",
                                 x: box.x,
                                 y: box.y,
@@ -156,16 +272,29 @@
                             })
                         )
                     };
-                    const jsonData = JSON.stringify(data);
-                    const blob = new Blob([jsonData], {type: "application/json;charset=utf-8"});
-                    const url = URL.createObjectURL(blob);
-                    const link = document.createElement("a");
-                    link.href = url;
-                    link.download = "template.json";
-                    link.click();
+                    // const jsonData = JSON.stringify(data);
+                    // const blob = new Blob([jsonData], {type: "application/json;charset=utf-8"});
+                    // const url = URL.createObjectURL(blob);
+                    // const link = document.createElement("a");
+                    // link.href = url;
+                    // link.download = "template.json";
+                    // link.click();
 
-                    isDrawing = false;
-                    startButton.disabled = false;
+                    // isDrawing = false;
+                    // startButton.disabled = false;
+
+                    const jsonData = JSON.stringify(data);
+    const blob = new Blob([jsonData], { type: "application/json;charset=utf-8" });
+    
+    // Create a temporary anchor element to trigger the download
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    
+    // Set the download attribute to specify the file name (e.g., template.json)
+    a.download = "template.json";
+    
+    // Programmatically click the anchor element to trigger the download
+    a.click();                    
                 });
 
                 clearButton.addEventListener("click", () => {
@@ -232,18 +361,20 @@
                 }
 
                 function stopDrawing() {
-                    if (isDrawing && imageLoaded) {
-                        renderBoundingBox();
-                        boundingBox.push({
-                            x: Math.min(startX, endX),
-                            y: Math.min(startY, endY),
-                            width: Math.abs(endX - startX),
-                            height: Math.abs(endY - startY),
-                            fontSize: calculateFontSize(Math.abs(endY - startY)),
-                            nearestGridSerialNumber: nearestGridSerialNumber
-                        });
-                    }
-                }
+    if (isDrawing && imageLoaded) {
+        renderBoundingBox();
+        boundingBox.push({
+            x: Math.min(startX, endX),
+            y: Math.min(startY, endY),
+            width: Math.abs(endX - startX),
+            height: Math.abs(endY - startY),
+            fontSize: calculateFontSize(Math.abs(endY - startY)),
+            textType: currentBoundingBox.textType, // Include the text type
+            nearestGridSerialNumber: nearestGridSerialNumber,
+        });
+    }
+}
+
 
                 function drawRectangle(event) {
                     if (isDrawing && imageLoaded) {
@@ -469,34 +600,6 @@
                     }
                 }
 
-                // Assuming you have a reference to the "Select JSON File" button and the JSON file input
-                const selectJsonFileButton = document.getElementById('select-json-file-button');
-                const jsonFileInput = document.getElementById('json-file-input');
-
-                // Add an event listener to the "Select JSON File" button
-                selectJsonFileButton.addEventListener('click', () => {
-                    jsonFileInput.click();
-                });
-
-                // Add an event listener to the JSON file input
-                jsonFileInput.addEventListener('change', () => {
-                    const file = jsonFileInput.files[0];
-                    const reader = new FileReader();
-
-                    reader.onload = (event) => {
-                        const jsonContent = event.target.result;
-                        const parsedData = JSON.parse(jsonContent);
-
-                        // Access the "boundingBox" property in the parsed JSON data
-                        const boundingBox = parsedData.boundingBox;
-
-                        // Do something with the parsed JSON data
-                        console.log(boundingBox);
-                        // You can iterate over the boundingBox array and perform necessary actions
-                    };
-
-                    reader.readAsText(file);
-                });
 
 
             });

@@ -1601,14 +1601,16 @@ def analyse_video_meta_pair(folder,frame,right_frame):
                         'thumbFilePaths':{},
                         'desFilePaths':{},
                         'metaFilePaths':{},  
-                        'thumb_gen_template':{
-                        "result_image_size": "",
-                        "bg_image": "",                            
-                        "text":[]    
-                            },  
-                        "thumb_gen_bg_folder":"",
-                        "thumb_gen_bg_folder_images":[],
-
+                        "thumb_gen_setting":{
+                        "mode":'4',
+                        "result_image_width": "",
+                        "result_image_height": "",                        
+                        "bg_image": "",  
+                        "template_path":"",                          
+                        "template":[] ,  
+                        "bg_folder":"",
+                        "bg_folder_images":[]                            
+                        },
                         'videos':{}
 
                        } 
@@ -2357,6 +2359,10 @@ def render_update_meta(frame,isneed):
 
 
 def UpdateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thummbnail_bg_file_path,thummbnail_bg_folder_path):
+    if mode_value and mode_value is not None:
+        ultra[folder]['thumb_gen_setting']['template']=mode_value
+    else:
+        logger.info('please provide a valid mode value')
     if mode_value=='5':
         logger.info('ignore the thumbnail gen process')    
     else: 
@@ -2372,7 +2378,22 @@ def UpdateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thumm
                     # setting_json = fp.read()                    
                     setting=json.load(open(thumbnail_template_file_path, 'r', encoding='utf-8')) 
                             #    validate template format ,contain videoID  contain text type ,hints for user to edit temporary
-                    ultra[folder]['thumb_gen_template']['text']=setting['videoID']
+                    ultra[folder]['thumb_gen_setting']['template']=setting['texts']
+                    ultra[folder]['thumb_gen_setting']['result_image_width']=setting['width']
+                    ultra[folder]['thumb_gen_setting']['result_image_height']=setting['height']
+                    
+
+
+                        # "thumb_gen_setting":{
+                        # "mode":'4',
+                        # "result_image_size": "",
+                        # "bg_image": "",                            
+                        # "template":[] ,  
+                        # "bg_folder":"",
+                        # "bg_folder_images":[]                            
+                        # },
+
+
                 except Exception as e:
                     logger.error(f'this thumb template json can not be parsed,check the error msg:\n{e}')
 
@@ -2383,14 +2404,14 @@ def UpdateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thumm
         elif mode_value=='3':
             bg_images=check_folder_thumb_bg(thummbnail_bg_folder_path)
             if len(bg_images)>0:
-                ultra[folder]['thumb_gen_bg_folder']=thummbnail_bg_folder_path
+                ultra[folder]['thumb_gen_setting']['bg_folder']=thummbnail_bg_folder_path
                 
-                ultra[folder]['thumb_gen_bg_folder_images']=bg_images
+                ultra[folder]['thumb_gen_setting']['bg_images']=bg_images
                 for filename in  ultra[folder]['filenames']:
                     ultra[folder]['videos'][filename]['thumb_gen_setting']['bg_image']=random.choice(bg_images)
         elif mode_value=='4':
-            ultra[folder]['thumb_gen_template']['bg_image']=thummbnail_bg_file_path            
-
+            ultra[folder]['thumb_gen_setting']['bg_image']=thummbnail_bg_file_path            
+            
         else:
             print('')     
     logger.info('update metajson with thumb gen setting')
@@ -2407,7 +2428,7 @@ def render_thumb_gen(frame,isneed,folder):
         if len(frame.winfo_children())>0:
             for widget in frame.winfo_children():
                 widget.destroy()        
-        b_edit_thumb=tk.Button(frame,text="Step2:make a new thumbnails template use editor",command=lambda: webbrowser.open_new('file:///{base_dir}/template.html'.format(base_dir=ROOT_DIR)))
+        b_edit_thumb=tk.Button(frame,text="create thumbnails template with editor",command=lambda: webbrowser.open_new('file:///{base_dir}/template.html'.format(base_dir=ROOT_DIR)))
 
         b_edit_thumb.grid(row = 0, column = 0, padx=14, pady=15,sticky='nswe') 
         Tooltip(b_edit_thumb, text='figure out  heading,subheading,extra text position,font,fontclolor use editor.you can update the json manually to set heading,subheading,extra type,adjust font name and font file ,because fontcolor,fontsize is auto detected, it need to be verify.and set a default bg image for all the videos to use' , wraplength=200)
@@ -2416,10 +2437,10 @@ def render_thumb_gen(frame,isneed,folder):
         thumbnail_template_file = tk.StringVar()        
 
 
-        b_thumbnail_template_file=tk.Button(frame,text="choose thumbnail template file",command=lambda: threading.Thread(target=select_file('select thumb template json file',ultra[folder]['thumb_gen_template'],thumbnail_template_file,'json')).start() )
-        b_thumbnail_template_file.grid(row = 1, column = 0,  padx=14, pady=15,sticky='nw') 
-        e_thumbnail_template_file = tk.Entry(frame, width=45, textvariable=thumbnail_template_file)
-        e_thumbnail_template_file.grid(row = 1, column = 1, padx=14, pady=15,sticky='nw') 
+        b_thumbnail_template_file=tk.Button(frame,text="import template file",command=lambda: threading.Thread(target=select_file('select thumb template json file',ultra[folder]['thumb_gen_setting']['template_path'],thumbnail_template_file,'json')).start() )
+        b_thumbnail_template_file.grid(row = 1, column = 0,  padx=14, pady=15,sticky='nswe') 
+        e_thumbnail_template_file = tk.Entry(frame, textvariable=thumbnail_template_file)
+        e_thumbnail_template_file.grid(row = 1, column = 1, padx=14, pady=15,sticky='nswe') 
         
 
    
@@ -2433,7 +2454,7 @@ def render_thumb_gen(frame,isneed,folder):
         thummbnail_bg_file = tk.StringVar()        
 
         mode = tk.StringVar()
-        mode.set("4")
+        mode.set("3")
 
         lab = tk.Label(frame,text="请选择你的缩略图背景图片从何而来",bg="lightyellow",width=30)
         lab.grid(row = 2, column = 0,  padx=14, pady=15,sticky='nw') 
@@ -2445,23 +2466,21 @@ def render_thumb_gen(frame,isneed,folder):
         mode3.grid(row = 4, column = 0,  padx=14, pady=15,sticky='nw') 
         Tooltip(mode3, text='select the bg folder' , wraplength=200)
 
-        mode4=tk.Radiobutton(frame,text="使用统一背景图",variable=mode,value="4",command='')
-        mode4.grid(row = 4, column = 1,  padx=14, pady=15,sticky='nw') 
-        Tooltip(mode4, text='select the bg image file' , wraplength=200)
+
+        b_thumbnail_bg_folder=tk.Button(frame,text="select",command=lambda: threading.Thread(target=select_folder(ultra[folder]['thumb_gen_setting']['bg_folder'],thummbnail_bg_folder)).start() )
+        b_thumbnail_bg_folder.grid(row = 4, column = 2, padx=14, pady=15,sticky='nswe') 
+        e_thumbnail_bg_folder = tk.Entry(frame, textvariable=thummbnail_bg_folder)
+        e_thumbnail_bg_folder.grid(row = 4, column =1, padx=14, pady=15,sticky='nswe') 
 
         mode5=tk.Radiobutton(frame,text="后续在视频元数据中个性化设置背景图地址",variable=mode,value="5",command='')
-        mode5.grid(row = 7, column = 0, padx=14, pady=15,sticky='nw') 
-
-        b_thumbnail_bg_folder=tk.Button(frame,text="choose thumbnail bg image folder",command=lambda: threading.Thread(target=select_folder(ultra[folder]['thumb_gen_bg_folder'],thummbnail_bg_folder)).start() )
-        b_thumbnail_bg_folder.grid(row = 5, column = 0,  padx=14, pady=15,sticky='nswe') 
-        e_thumbnail_bg_folder = tk.Entry(frame, width=45, textvariable=thummbnail_bg_folder)
-        e_thumbnail_bg_folder.grid(row = 6, column = 0, padx=14, pady=15,sticky='nswe') 
+        mode5.grid(row = 6, column = 0, padx=14, pady=15,sticky='nw') 
 
 
-        b_thumbnail_bg_file=tk.Button(frame,text="choose thumbnail bg image file",command=lambda: threading.Thread(target=select_file('please select a image',ultra[folder]['thumb_gen_bg_image'],thummbnail_bg_file,'images')).start() )
-        b_thumbnail_bg_file.grid(row = 5, column = 1,  padx=14, pady=15,sticky='nswe') 
-        e_thumbnail_bg_file = tk.Entry(frame, width=45, textvariable=thummbnail_bg_file)
-        e_thumbnail_bg_file.grid(row = 6, column = 1, padx=14, pady=15,sticky='nswe') 
+
+        # b_thumbnail_bg_file=tk.Button(frame,text="choose thumbnail bg image file",command=lambda: threading.Thread(target=select_file('please select a image',ultra[folder]['thumb_gen_bg_image'],thummbnail_bg_file,'images')).start() )
+        # b_thumbnail_bg_file.grid(row = 5, column = 1,  padx=14, pady=15,sticky='nswe') 
+        # e_thumbnail_bg_file = tk.Entry(frame, width=45, textvariable=thummbnail_bg_file)
+        # e_thumbnail_bg_file.grid(row = 6, column = 1, padx=14, pady=15,sticky='nswe') 
 
 
         b_update_metas_=tk.Button(frame,text="update meta",command=lambda: UpdateThumbnailGenMetas(folder,thumbnail_template_file.get(),mode.get(),thummbnail_bg_file.get(),thummbnail_bg_folder.get()))
