@@ -29914,3 +29914,131 @@ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
 2023-09-19 16:43:26,205 - WARNING - D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app\main.py:1841: FutureWarning: Passing literal json to 'read_json' is deprecated and will be removed in a future version. To read from a literal string, wrap it in a 'StringIO' object.
   df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'records')
 
+2023-09-19 20:52:44,915 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-19 20:52:45,600 - INFO - TiktokaStudio GUI started
+2023-09-19 20:53:22,471 - INFO - detecting----------False
+2023-09-19 20:53:22,471 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-19 20:53:22,477 - INFO - start to check thumbFilePaths for 1
+2023-09-19 20:53:22,478 - INFO - before check:
+{}
+2023-09-19 20:53:22,478 - INFO - after check:
+{}
+2023-09-19 20:53:22,478 - INFO - update to 1 meta json
+2023-09-19 20:53:22,479 - INFO - start to check desFilePaths for 1
+2023-09-19 20:53:22,479 - INFO - before check:
+{}
+2023-09-19 20:53:22,479 - INFO - after check:
+{}
+2023-09-19 20:53:22,480 - INFO - update to 1 meta json
+2023-09-19 20:53:22,480 - INFO - start to check metaFilePaths for 1
+2023-09-19 20:53:22,480 - INFO - before check:
+{}
+2023-09-19 20:53:22,481 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader/tests/1.json
+2023-09-19 20:53:22,481 - INFO - intial metaFilePaths for 1:
+
+2023-09-19 20:53:22,481 - INFO - append result:
+['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']
+2023-09-19 20:53:22,481 - INFO - after check:
+{'1': ['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']}
+2023-09-19 20:53:22,481 - INFO - update to 1 meta json
+2023-09-19 20:54:38,530 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-19 20:54:38,845 - INFO - TiktokaStudio GUI started
+2023-09-19 20:54:52,045 - INFO - detecting----------False
+2023-09-19 20:54:52,045 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-19 20:54:52,050 - INFO - start to check thumbFilePaths for 1
+2023-09-19 20:54:52,051 - INFO - before check:
+{}
+2023-09-19 20:54:52,051 - INFO - after check:
+{}
+2023-09-19 20:54:52,051 - INFO - update to 1 meta json
+2023-09-19 20:54:52,052 - INFO - start to check desFilePaths for 1
+2023-09-19 20:54:52,053 - INFO - before check:
+{}
+2023-09-19 20:54:52,053 - INFO - after check:
+{}
+2023-09-19 20:54:52,053 - INFO - update to 1 meta json
+2023-09-19 20:54:52,054 - INFO - start to check metaFilePaths for 1
+2023-09-19 20:54:52,055 - INFO - before check:
+{}
+2023-09-19 20:54:52,055 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader/tests/1.json
+2023-09-19 20:54:52,055 - INFO - intial metaFilePaths for 1:
+
+2023-09-19 20:54:52,055 - INFO - append result:
+['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']
+2023-09-19 20:54:52,055 - INFO - after check:
+{'1': ['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']}
+2023-09-19 20:54:52,056 - INFO - update to 1 meta json
+2023-09-19 20:55:08,373 - INFO - detecting----------True
+2023-09-19 20:55:08,373 - INFO - we cached 16316659000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-19 20:55:08,374 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-19 21:02:48,741 - INFO - detecting----------True
+2023-09-19 21:02:48,742 - INFO - we cached 460367044000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-19 21:02:48,742 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-19 21:05:30,480 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-19 21:05:30,780 - INFO - TiktokaStudio GUI started
+2023-09-19 21:05:41,458 - INFO - detecting----------False
+2023-09-19 21:05:41,458 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-19 21:05:41,463 - INFO - start to check thumbFilePaths for 1
+2023-09-19 21:05:41,463 - INFO - before check:
+{}
+2023-09-19 21:05:41,464 - INFO - after check:
+{}
+2023-09-19 21:05:41,464 - INFO - update to 1 meta json
+2023-09-19 21:05:41,466 - INFO - start to check desFilePaths for 1
+2023-09-19 21:05:41,466 - INFO - before check:
+{}
+2023-09-19 21:05:41,466 - INFO - after check:
+{}
+2023-09-19 21:05:41,466 - INFO - update to 1 meta json
+2023-09-19 21:05:41,467 - INFO - start to check metaFilePaths for 1
+2023-09-19 21:05:41,467 - INFO - before check:
+{}
+2023-09-19 21:05:41,467 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader/tests/1.json
+2023-09-19 21:05:41,468 - INFO - intial metaFilePaths for 1:
+
+2023-09-19 21:05:41,468 - INFO - append result:
+['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']
+2023-09-19 21:05:41,468 - INFO - after check:
+{'1': ['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']}
+2023-09-19 21:05:41,468 - INFO - update to 1 meta json
+2023-09-19 21:09:18,518 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-19 21:09:18,866 - INFO - TiktokaStudio GUI started
+2023-09-19 21:09:27,974 - INFO - detecting----------False
+2023-09-19 21:09:27,974 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-19 21:09:27,979 - INFO - start to check thumbFilePaths for 1
+2023-09-19 21:09:27,979 - INFO - before check:
+{}
+2023-09-19 21:09:27,980 - INFO - after check:
+{}
+2023-09-19 21:09:27,980 - INFO - update to 1 meta json
+2023-09-19 21:09:27,981 - INFO - start to check desFilePaths for 1
+2023-09-19 21:09:27,981 - INFO - before check:
+{}
+2023-09-19 21:09:27,981 - INFO - after check:
+{}
+2023-09-19 21:09:27,981 - INFO - update to 1 meta json
+2023-09-19 21:09:27,982 - INFO - start to check metaFilePaths for 1
+2023-09-19 21:09:27,982 - INFO - before check:
+{}
+2023-09-19 21:09:27,982 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader/tests/1.json
+2023-09-19 21:09:27,983 - INFO - intial metaFilePaths for 1:
+
+2023-09-19 21:09:27,983 - INFO - append result:
+['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']
+2023-09-19 21:09:27,983 - INFO - after check:
+{'1': ['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']}
+2023-09-19 21:09:27,983 - INFO - update to 1 meta json
+2023-09-19 21:09:41,273 - INFO - detecting----------True
+2023-09-19 21:09:41,274 - INFO - we cached 13288987000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-19 21:09:41,274 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-19 21:10:09,288 - INFO - detecting----------True
+2023-09-19 21:10:09,288 - INFO - we cached 28013895000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-19 21:10:09,289 - INFO - we found same filename diff ext video:1,please rename or remove

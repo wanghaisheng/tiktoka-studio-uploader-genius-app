@@ -1843,7 +1843,7 @@ def analyse_video_meta_pair(folder,frame,right_frame,selectedMetafileformat,isTh
         # json is the default ,there is always a videometa.json file after folder check
         metajson=os.path.join(folder,'videos-meta.json')
 
-        df_metas.to_json(metajson,index=False)
+        df_metas.to_json(metajson)
 
      
     render_video_folder_check_results(frame,right_frame,folder,isThumbView)
@@ -2231,8 +2231,9 @@ def thumbView(left,right,lang):
     def selectedmetafileformat(event):
         box = event.widget
         
-        print('selected platform is :',metafileformatbox.get())
+        print('selected metafileformat is :',metafileformatbox.get())
         metafileformat.set(metafileformatbox.get())
+        analyse_video_meta_pair(thumbView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=True)
     metafileformatbox['values'] = ( 'json','xlsx', 'csv')
     metafileformatbox.current(0)
     metafileformatbox.bind("<<ComboboxSelected>>", selectedmetafileformat)
@@ -2246,6 +2247,20 @@ def thumbView(left,right,lang):
     b_video_folder_check.grid(row = 2, column = 0,sticky='w', padx=14, pady=15)    
 
 
+
+def openXLSX(xlsxpath):
+    
+    if  platform.system()=='Linux':
+    
+        
+        os.system("open -a 'Microsoft Excel' 'path/file.xlsx'") 
+
+    elif platform.system()=='macos':
+        os.system("open -a 'Microsoft Excel' 'path/file.xlsx'") 
+    else:
+        os.system('start "excel" "C:\\path\\to\\myfile.xlsx"')
+
+    
 def render_video_folder_check_results(frame,right_frame,folder,isThumbView=False):
     lb_video_counts = tk.Label(frame, text='video total counts')
 
@@ -3892,8 +3907,10 @@ def metaView(left,right,lang):
     def selectedmetafileformat(event):
         box = event.widget
         
-        print('selected platform is :',metafileformatbox.get())
+        print('metafileformat changed to :',metafileformatbox.get())
         metafileformat.set(metafileformatbox.get())
+        analyse_video_meta_pair(metaView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=True)
+        
     metafileformatbox['values'] = ( 'json','xlsx', 'csv')
     metafileformatbox.current(0)
     metafileformatbox.bind("<<ComboboxSelected>>", selectedmetafileformat)
