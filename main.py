@@ -1585,7 +1585,7 @@ def isPairedMetas(r,videofilename,meta_exts_list,dict,meta_name):
         with open(tmpjson,'a') as f:
             f.write(jsons.dumps(dict['videos'][videofilename]))
         
-def analyse_video_meta_pair(folder,frame,right_frame,selectedMetafileformat):
+def analyse_video_meta_pair(folder,frame,right_frame,selectedMetafileformat,isThumbView=False):
     logger.info(f'detecting----------{ultra.has_key(folder)}')
     if ultra.has_key(folder):
         print(pd.Timestamp.now().value-ultra[folder] ['updatedAt'])
@@ -1846,43 +1846,10 @@ def analyse_video_meta_pair(folder,frame,right_frame,selectedMetafileformat):
         df_metas.to_json(metajson,index=False)
 
      
-    render_video_folder_check_results(frame,right_frame,folder)
+    render_video_folder_check_results(frame,right_frame,folder,isThumbView)
 
 
-def analyse_video_thumb_pair(folder,frame):
-    print(f'detecting----------{folder}')
-    checkvideopaircountsvalue=0
-    checkvideocountsvalue=0
-    for r, d, f in os.walk(folder):
-        with os.scandir(r) as i:
 
-            for entry in i:
-                if entry.is_file():
-                    filename = os.path.splitext(entry.name)[0]
-                    ext = os.path.splitext(entry.name)[1]
-
-                    start_index=1
-                    if ext in ('.flv', '.mp4', '.avi'):
-                        videopath = os.path.join(r, entry.name)
-                        print(videopath,'==',ext) 
-                        checkvideocountsvalue+=1
-
-                        isPaired=0
-                        for image_ext in ['.jpeg', '.png', '.jpg','webp']:
-                            thumbpath = os.path.join(r, filename+image_ext)
-
-                            if  os.path.exists(thumbpath):     
-                                isPaired=1
-                        if isPaired==1:
-                            checkvideopaircountsvalue+=1
-                        start_index=start_index+1
-    if checkvideocountsvalue==0:
-        print('we could not find any video,prefer format mp4,mkv,flv,mov')
-    print('dingding',checkvideopaircountsvalue,checkvideocountsvalue)
-    checkvideocounts.set(checkvideocountsvalue)
-    video_thumb_pairs_counts.set(checkvideopaircountsvalue)
-    render_video_folder_check_results(frame)
-    render_thumb_gen(frame,True)
 
 
 def check_folder_thumb_bg(folder):
@@ -2232,37 +2199,54 @@ def videosView(frame,ttkframe,lang):
     b_hiddenwatermark = tk.Button(frame, text=i18labels("hiddenwatermark", locale=lang, module="g"), command=lambda: threading.Thread(target=hiddenwatermark))
     b_hiddenwatermark.place(x=500,y=int(height-250))
 
-def thumbView(frame,ttkframe,lang):
+def thumbView(left,right,lang):
     global thumbView_video_folder
     thumbView_video_folder = tk.StringVar()
 
 
-    global checkvideocounts
-    checkvideocounts = tk.IntVar()
+    l_video_folder = tk.Label(left, text=i18labels("videoFolder", locale=lang, module="g"))
+    l_video_folder.grid(row = 0, column = 0, sticky='w', padx=14, pady=15)    
 
-    global video_thumb_pairs_counts
-    video_thumb_pairs_counts = tk.IntVar()
 
-    # videosView_video_folder.set(setting['video_folder'])
-
-    l_video_folder = tk.Label(frame, text=i18labels("videoFolder", locale=lang, module="g"))
-    l_video_folder.grid(row = 0, column = 0)    
-    e_video_folder = tk.Entry(frame, width=45, textvariable=thumbView_video_folder)
-    e_video_folder.grid(row = 0, column = 1)    
+    e_video_folder = tk.Entry(left,textvariable=thumbView_video_folder)
+    e_video_folder.grid(row = 0, column = 1, sticky='w', padx=14, pady=15)     
     
-    b_video_folder=tk.Button(frame,text="Select",command=lambda: threading.Thread(target=select_thumbView_video_folder).start() )
-    b_video_folder.grid(row = 0, column = 0)    
+    b_video_folder=tk.Button(left,text="Select",command=lambda: threading.Thread(target=select_thumbView_video_folder(thumbView_video_folder)).start() )
+    b_video_folder.grid(row = 0, column = 2, sticky='w', padx=14, pady=15)       
+
+    b_open_video_folder=tk.Button(left,text="open local",command=lambda: threading.Thread(target=openLocal(thumbView_video_folder.get())).start() )
+    b_open_video_folder.grid(row = 0, column = 3, sticky='w', padx=14, pady=15)    
+    l_meta_format = tk.Label(left, text=i18labels("preferred meta file format", locale=lang, module="g"))
+    # l_platform.place(x=10, y=90)
+    l_meta_format.grid(row = 1, column = 0, sticky='w', padx=14, pady=15)    
+    global metafileformat
+    metafileformat = tk.StringVar()
+    metafileformat.set('json')
+
+    keepmetafileformat = metafileformat.get()    
+    metafileformatbox = ttk.Combobox(left, width=int(width*0.01), textvariable=keepmetafileformat, state='readonly')
+    # box.place(x=10, y=120)
+    metafileformatbox.grid(row = 1, column = 1, sticky='w', padx=14, pady=15)      
+
+    def selectedmetafileformat(event):
+        box = event.widget
+        
+        print('selected platform is :',metafileformatbox.get())
+        metafileformat.set(metafileformatbox.get())
+    metafileformatbox['values'] = ( 'json','xlsx', 'csv')
+    metafileformatbox.current(0)
+    metafileformatbox.bind("<<ComboboxSelected>>", selectedmetafileformat)
+    print(f'right now metafileformatbox.get():{metafileformatbox.get()}')
+
+    b_download_meta_templates=tk.Button(left,text="download templates",command=lambda: threading.Thread(target=openLocal(thumbView_video_folder.get())).start() )
+    b_download_meta_templates.grid(row = 1, column = 3, sticky='w', padx=14, pady=15)  
+    Tooltip(b_download_meta_templates, text='run the check video assets will auto gen templates under folder if they dont' , wraplength=200)
+
+    b_video_folder_check=tk.Button(left,text="Step1:check video assets",command=lambda: threading.Thread(target=analyse_video_meta_pair(thumbView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=True)).start() )
+    b_video_folder_check.grid(row = 2, column = 0,sticky='w', padx=14, pady=15)    
 
 
-    b_video_folder_check=tk.Button(frame,text="Step1:check video assets",command=lambda: threading.Thread(target=analyse_video_thumb_pair(thumbView_video_folder.get(),frame)).start() )
-    b_video_folder_check.grid(row = 0, column = 0, columnspan = 3, padx=14, pady=15)    
-    print(b_video_folder_check)
-    # print(checkvideocounts)
-    # print('===============')
-    # print(checkvideopaircounts)
-
-
-def render_video_folder_check_results(frame,right_frame,folder):
+def render_video_folder_check_results(frame,right_frame,folder,isThumbView=False):
     lb_video_counts = tk.Label(frame, text='video total counts')
 
     lb_video_counts.grid(row = 3, column = 0,sticky='w')    
@@ -2298,110 +2282,177 @@ def render_video_folder_check_results(frame,right_frame,folder):
     b_gen_thumb=tk.Button(frame,text=label_str,command=lambda: threading.Thread(target=render_thumb_gen(right_frame,True,folder)).start() )
     b_gen_thumb.grid(row = 4, column = 4)     
 
-
-    lb_video_des_pairs_counts = tk.Label(frame, text='video-des paired')
-    lb_video_des_pairs_counts.grid(row = 5, column = 0,sticky='w')    
-
-
-
-    lb_video_des_pairs_counts_value = tk.Label(frame, text=str(ultra[folder] ['desCounts']))
-    lb_video_des_pairs_counts_value.grid(row =5, column = 1)    
-
-
-    lb_video_des_missing_pairs_counts = tk.Label(frame, text='missing paired')
-    lb_video_des_missing_pairs_counts.grid(row = 5, column = 2)    
-
-    missing_video_des_missing_pairs_counts=ultra[folder] ['videoCounts']-ultra[folder] ['desCounts']
-
-    lb_video_des_missing_pairs_counts_value = tk.Label(frame, text=str(missing_video_des_missing_pairs_counts))
-    lb_video_des_missing_pairs_counts_value.grid(row = 5, column = 3)    
-    label_str='Gen'
-    if missing_video_des_missing_pairs_counts>0:
-        label_str='Update'
-
-    b_gen_des=tk.Button(frame,text=label_str,command=lambda: threading.Thread(target=render_des_gen(right_frame,True)).start() )
-    b_gen_des.grid(row = 5, column = 4)    
+    if isThumbView==False:
+        lb_video_des_pairs_counts = tk.Label(frame, text='video-des paired')
+        lb_video_des_pairs_counts.grid(row = 5, column = 0,sticky='w')    
 
 
 
-
-    lb_video_schedule_pairs_counts = tk.Label(frame, text='video-schedule paired')
-    lb_video_schedule_pairs_counts.grid(row = 6, column = 0,sticky='w')    
-
+        lb_video_des_pairs_counts_value = tk.Label(frame, text=str(ultra[folder] ['desCounts']))
+        lb_video_des_pairs_counts_value.grid(row =5, column = 1)    
 
 
-    lb_video_schedule_pairs_counts_value = tk.Label(frame, text=str(ultra[folder] ['metaCounts']))
-    lb_video_schedule_pairs_counts_value.grid(row = 6, column = 1)    
+        lb_video_des_missing_pairs_counts = tk.Label(frame, text='missing paired')
+        lb_video_des_missing_pairs_counts.grid(row = 5, column = 2)    
 
+        missing_video_des_missing_pairs_counts=ultra[folder] ['videoCounts']-ultra[folder] ['desCounts']
 
-    lb_video_schedule_missing_pairs_counts = tk.Label(frame, text='missing paired')
-    lb_video_schedule_missing_pairs_counts.grid(row = 6, column = 2)    
+        lb_video_des_missing_pairs_counts_value = tk.Label(frame, text=str(missing_video_des_missing_pairs_counts))
+        lb_video_des_missing_pairs_counts_value.grid(row = 5, column = 3)    
+        label_str='Gen'
+        if missing_video_des_missing_pairs_counts>0:
+            label_str='Update'
 
-    missing_video_schedule_missing_pairs_counts=ultra[folder] ['videoCounts']-ultra[folder] ['metaCounts']
-
-    lb_video_schedule_missing_pairs_counts_value = tk.Label(frame, text=str(missing_video_schedule_missing_pairs_counts))
-    lb_video_schedule_missing_pairs_counts_value.grid(row = 6, column = 3)    
-    label_str='Gen'
-    if missing_video_schedule_missing_pairs_counts>0:
-        label_str='Update'
-
-    b_gen_schedule=tk.Button(frame,text=label_str,command=lambda: threading.Thread(target=render_update_schedule(right_frame,True)).start() )
-    b_gen_schedule.grid(row = 6, column = 4,sticky='nesw')    
-
-
-    lb_video_tags_pairs_counts = tk.Label(frame, text='video-tags paired')
-    lb_video_tags_pairs_counts.grid(row = 7, column = 0,sticky='w')    
+        b_gen_des=tk.Button(frame,text=label_str,command=lambda: threading.Thread(target=render_des_gen(right_frame,True,folder)).start() )
+        b_gen_des.grid(row = 5, column = 4)    
 
 
 
-    lb_video_tags_pairs_counts_value = tk.Label(frame, text=str(ultra[folder] ['metaCounts']))
-    lb_video_tags_pairs_counts_value.grid(row = 7, column = 1)    
 
-
-    lb_video_tags_missing_pairs_counts = tk.Label(frame, text='missing paired')
-    lb_video_tags_missing_pairs_counts.grid(row = 7, column = 2)    
-
-    missing_video_tags_missing_pairs_counts=ultra[folder] ['videoCounts']-ultra[folder] ['metaCounts']
-
-    lb_video_tags_missing_pairs_counts_value = tk.Label(frame, text=str(missing_video_tags_missing_pairs_counts))
-    lb_video_tags_missing_pairs_counts_value.grid(row = 7, column = 3)    
-    label_str='Gen'
-    if missing_video_tags_missing_pairs_counts>0:
-        label_str='Update'
-    b_gen_thumb=tk.Button(frame,text=label_str,command=lambda: threading.Thread(target=render_update_tags(right_frame,True)).start() )
-    b_gen_thumb.grid(row = 7, column = 4,sticky='nesw')    
+        lb_video_schedule_pairs_counts = tk.Label(frame, text='video-schedule paired')
+        lb_video_schedule_pairs_counts.grid(row = 6, column = 0,sticky='w')    
 
 
 
-    lb_video_meta_pairs_counts = tk.Label(frame, text='video-meta paired')
-    lb_video_meta_pairs_counts.grid(row = 8, column = 0,sticky='w')    
+        lb_video_schedule_pairs_counts_value = tk.Label(frame, text=str(ultra[folder] ['metaCounts']))
+        lb_video_schedule_pairs_counts_value.grid(row = 6, column = 1)    
+
+
+        lb_video_schedule_missing_pairs_counts = tk.Label(frame, text='missing paired')
+        lb_video_schedule_missing_pairs_counts.grid(row = 6, column = 2)    
+
+        missing_video_schedule_missing_pairs_counts=ultra[folder] ['videoCounts']-ultra[folder] ['metaCounts']
+
+        lb_video_schedule_missing_pairs_counts_value = tk.Label(frame, text=str(missing_video_schedule_missing_pairs_counts))
+        lb_video_schedule_missing_pairs_counts_value.grid(row = 6, column = 3)    
+        label_str='Gen'
+        if missing_video_schedule_missing_pairs_counts>0:
+            label_str='Update'
+
+        b_gen_schedule=tk.Button(frame,text=label_str,command=lambda: threading.Thread(target=render_update_schedule(right_frame,True)).start() )
+        b_gen_schedule.grid(row = 6, column = 4,sticky='nesw')    
+
+
+        lb_video_tags_pairs_counts = tk.Label(frame, text='video-tags paired')
+        lb_video_tags_pairs_counts.grid(row = 7, column = 0,sticky='w')    
 
 
 
-    lb_video_meta_pairs_counts_value = tk.Label(frame, text=str(ultra[folder] ['metaCounts']))
-    lb_video_meta_pairs_counts_value.grid(row = 8, column = 1)    
+        lb_video_tags_pairs_counts_value = tk.Label(frame, text=str(ultra[folder] ['metaCounts']))
+        lb_video_tags_pairs_counts_value.grid(row = 7, column = 1)    
 
 
-    lb_video_meta_missing_pairs_counts = tk.Label(frame, text='missing paired')
-    lb_video_meta_missing_pairs_counts.grid(row = 8, column = 2)    
+        lb_video_tags_missing_pairs_counts = tk.Label(frame, text='missing paired')
+        lb_video_tags_missing_pairs_counts.grid(row = 7, column = 2)    
 
-    missing_video_meta_missing_pairs_counts=ultra[folder] ['videoCounts']-ultra[folder] ['metaCounts']
+        missing_video_tags_missing_pairs_counts=ultra[folder] ['videoCounts']-ultra[folder] ['metaCounts']
 
-    lb_video_meta_missing_pairs_counts_value = tk.Label(frame, text=str(missing_video_meta_missing_pairs_counts))
-    lb_video_meta_missing_pairs_counts_value.grid(row = 8, column = 3)    
-    label_str='Gen'
-    if missing_video_meta_missing_pairs_counts>0:
-        label_str='Update'
+        lb_video_tags_missing_pairs_counts_value = tk.Label(frame, text=str(missing_video_tags_missing_pairs_counts))
+        lb_video_tags_missing_pairs_counts_value.grid(row = 7, column = 3)    
+        label_str='Gen'
+        if missing_video_tags_missing_pairs_counts>0:
+            label_str='Update'
+        b_gen_thumb=tk.Button(frame,text=label_str,command=lambda: threading.Thread(target=render_update_tags(right_frame,True)).start() )
+        b_gen_thumb.grid(row = 7, column = 4,sticky='nesw')    
 
-    b_gen_meta=tk.Button(frame,text=label_str,command=lambda: threading.Thread(target=render_update_meta(right_frame,True)).start() )
-    b_gen_meta.grid(row = 8, column = 4,sticky='nesw')    
 
-def render_des_gen(frame,isneed):
+
+        lb_video_meta_pairs_counts = tk.Label(frame, text='video-meta paired')
+        lb_video_meta_pairs_counts.grid(row = 8, column = 0,sticky='w')    
+
+
+
+        lb_video_meta_pairs_counts_value = tk.Label(frame, text=str(ultra[folder] ['metaCounts']))
+        lb_video_meta_pairs_counts_value.grid(row = 8, column = 1)    
+
+
+        lb_video_meta_missing_pairs_counts = tk.Label(frame, text='missing paired')
+        lb_video_meta_missing_pairs_counts.grid(row = 8, column = 2)    
+
+        missing_video_meta_missing_pairs_counts=ultra[folder] ['videoCounts']-ultra[folder] ['metaCounts']
+
+        lb_video_meta_missing_pairs_counts_value = tk.Label(frame, text=str(missing_video_meta_missing_pairs_counts))
+        lb_video_meta_missing_pairs_counts_value.grid(row = 8, column = 3)    
+        label_str='Gen'
+        if missing_video_meta_missing_pairs_counts>0:
+            label_str='Update'
+
+        b_gen_meta=tk.Button(frame,text=label_str,command=lambda: threading.Thread(target=render_update_meta(right_frame,True)).start() )
+        b_gen_meta.grid(row = 8, column = 4,sticky='nesw')    
+def render_des_gen(frame,isneed,folder):
     if isneed==True:
-        lang='en'
         if len(frame.winfo_children())>0:
             for widget in frame.winfo_children():
-                widget.destroy()
+                widget.destroy()        
+        global thumbnail_metas_file,thummbnail_bg_folder,thummbnail_bg_file,thumbnail_template_file
+        thumbnail_metas_file = tk.StringVar()        
+        thummbnail_bg_folder = tk.StringVar()        
+        thummbnail_bg_file = tk.StringVar()      
+
+        new_canvas = tk.Frame(frame)
+        new_canvas.grid(row=2, column=0, pady=(5, 0), sticky='nw')     
+
+
+        desmode = tk.IntVar()
+        # thumbmode.set(1)
+
+        lab = tk.Label(new_canvas,text="请选择你的视频描述从何而来",bg="lightyellow",width=30)
+        lab.grid(row = 1, column = 0,  padx=14, pady=15,sticky='nw') 
+   
+        thumbmode1=tk.Radiobutton(new_canvas,text="手动准备",variable=desmode,value=1,command=lambda:render_des_update_view(new_canvas,folder,desmode,frame))
+        thumbmode1.grid(row = 1, column = 1,  padx=14, pady=15,sticky='nw') 
+        thumbmode2=tk.Radiobutton(new_canvas,text=" 批量生成",variable=desmode,value=2,command=lambda:render_des_update_view(new_canvas,folder,desmode,frame))
+        thumbmode2.grid(row = 1, column = 2,  padx=14, pady=15,sticky='nw') 
+
+        # thumbmode.trace_add('write', render_thumb_update_view(new_canvas,folder,thumbmode))
+
+
+
+
+def render_des_update_view(frame,folder,thumbmode,previous_frame=None):
+    print('thumbmode',type(thumbmode.get()),thumbmode.get())    
+    lang='en'
+
+    if len(frame.winfo_children())>0:
+        for widget in frame.winfo_children():
+            widget.destroy()      
+   
+    if thumbmode.get() ==1:
+        lbl15 = tk.Label(frame, text='两种选择')
+        lbl15.grid(row=0,column=0,padx=14, pady=15,sticky='w') 
+       
+        lbl15 = tk.Label(frame, text='1.手动准备视频描述，填充到元数据对应字段即可，元数据格式支持xlsx json csv',wraplength=600)
+        lbl15.grid(row=1,column=0, sticky='w')
+
+        lbl15 = tk.Label(frame, text='2.\r',wraplength=600)
+        lbl15.grid(row=2,column=0, sticky='w')
+
+
+
+        b_check_metas_=tk.Button(frame,text="edit videometa with local editor",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
+        b_check_metas_.grid(row = 6, column = 0, padx=14, pady=15,sticky='nswe') 
+
+        b_edit_thumb_metas=tk.Button(frame,text="edit json with online editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
+        b_edit_thumb_metas.grid(row = 5, column = 0, padx=14, pady=15,sticky='nswe') 
+        Tooltip(b_edit_thumb_metas, text='fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field' , wraplength=200)
+        b_open_video_folder=tk.Button(frame,text="open local",command=lambda: threading.Thread(target=openLocal(folder)).start() )
+        b_open_video_folder.grid(row = 4, column = 0, padx=14, pady=15,sticky='nswe')      
+
+
+        b_update_metas_=tk.Button(frame,text="validate meta",command=lambda: ValidateThumbnailGenMetas(folder,thumbnail_template_file.get(),mode.get(),thummbnail_bg_file.get(),thummbnail_bg_folder.get()))
+        b_update_metas_.grid(row = 7, column = 0,  padx=14, pady=15,sticky='nswe') 
+
+        b_return=tk.Button(frame,text="Back to previous page",command=lambda: render_des_gen(previous_frame,True,folder))
+        b_return.grid(row = 8, column =0)   
+
+    else:
+
+        b_return=tk.Button(frame,text="Back to previous page",command=lambda: render_des_gen(previous_frame,True,folder))
+        b_return.grid(row = 0, column =1)   
+
+
+        lab = tk.Label(frame,text="Step2:是否使用统一前缀后缀",bg="lightyellow",width=30)
+        lab.grid(row = 4, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw')         
         descriptionPrefix=tk.StringVar()
         descriptionSuffix=tk.StringVar()
 
@@ -2419,7 +2470,7 @@ def render_des_gen(frame,isneed):
         mode = tk.StringVar()
         mode.set("4")
 
-        lab = tk.Label(frame,text="请选择视频描述主体从何而来",bg="lightyellow",width=30)
+        lab = tk.Label(frame,text="Step1:请选择视频描述主体从何而来",bg="lightyellow",width=30)
         lab.grid(row = 4, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
         mode1=tk.Radiobutton(frame,text="视频文件名称",variable=mode,value="1",command='')
         mode1.grid(row = 5, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
@@ -2429,8 +2480,42 @@ def render_des_gen(frame,isneed):
         mode3.grid(row = 7, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
         mode4=tk.Radiobutton(frame,text="从视频描述文件中来",variable=mode,value="4",command='')
         mode4.grid(row = 8, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
-        b_import_thumb_metas_=tk.Button(frame,text="Step4:更新视频元数据文件",command=lambda: genThumbnailFromTemplate(videosView_video_folder.get(),thumbnail_template_file.get(),mode.get()))
-        b_import_thumb_metas_.grid(row = 9, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
+        mode5=tk.Radiobutton(frame,text="从元数据中来",variable=mode,value="5",command='')
+        mode5.grid(row = 9, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
+
+
+        
+        lab = tk.Label(frame,text="Step3:请编辑视频元数据",bg="lightyellow",width=30)
+        lab.grid(row = 7, column = 0,  padx=14, pady=15,sticky='nw')         
+
+
+
+
+        b_check_metas_=tk.Button(frame,text="edit videometa",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
+        b_check_metas_.grid(row = 8, column = 0, padx=14, pady=15,sticky='nswe') 
+
+        b_edit_thumb_metas=tk.Button(frame,text="edit json with online editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
+        b_edit_thumb_metas.grid(row = 8, column = 1, padx=14, pady=15,sticky='nswe') 
+        Tooltip(b_edit_thumb_metas, text='fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field' , wraplength=200)
+        b_open_video_folder=tk.Button(frame,text="open local",command=lambda: threading.Thread(target=openLocal(folder)).start() )
+        b_open_video_folder.grid(row = 8, column = 2, padx=14, pady=15,sticky='nswe')    
+        lab = tk.Label(frame,text="Step4:生成视频描述",bg="lightyellow",width=30)
+        lab.grid(row = 9, column = 0,  padx=14, pady=15,sticky='nw')         
+
+
+        b_update_metas_=tk.Button(frame,text="validate meta",command=lambda: ValidateThumbnailGenMetas(folder,thumbnail_template_file.get(),mode.get(),thummbnail_bg_file.get(),thummbnail_bg_folder.get()))
+        b_update_metas_.grid(row = 10, column = 0,  padx=14, pady=15,sticky='nswe') 
+        
+
+
+
+        b_gen_thumb_=tk.Button(frame,text="gen thumb",command=lambda: genThumbnailFromTemplate(folder,thumbnail_template_file.get(),mode))
+        b_gen_thumb_.grid(row = 11, column =0, padx=14, pady=15,sticky='nswe') 
+
+
+        b_check_metas_=tk.Button(frame,text="check metajson",command=lambda: threading.Thread(target=openLocal(folder)).start() )
+        b_check_metas_.grid(row = 12, column = 0, padx=14, pady=15,sticky='nswe') 
+
 
 def render_update_tags(frame,isneed):
     if isneed==True:
@@ -2647,10 +2732,10 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
     else:
         with open(tmpjson,'a') as f:
             f.write(jsons.dumps(ultra[folder]))    
-def openVideoMetaFile():
+def openVideoMetaFile(folder):
     print(f'you choose metafile format is:{metafileformat.get()}')
     if metafileformat.get():
-        openLocal(os.path.join(metaView_video_folder.get(),'videos-meta.'+metafileformat.get()))
+        openLocal(os.path.join(folder,'videos-meta.'+metafileformat.get()))
     else:
         logger.error(f'you dont choose a valid meta fileformat:{metafileformat.get()}')
 
@@ -2690,81 +2775,138 @@ def render_thumb_gen(frame,isneed,folder):
         if len(frame.winfo_children())>0:
             for widget in frame.winfo_children():
                 widget.destroy()        
-        b_edit_thumb=tk.Button(frame,text="create thumbnails template with editor",command=lambda: webbrowser.open_new('file:///{base_dir}/template.html'.format(base_dir=ROOT_DIR)))
-
-        b_edit_thumb.grid(row = 0, column = 0, padx=14, pady=15,sticky='nswe') 
-        Tooltip(b_edit_thumb, text='figure out  heading,subheading,extra text position,font,fontclolor use editor.you can update the json manually to set heading,subheading,extra type,adjust font name and font file ,because fontcolor,fontsize is auto detected, it need to be verify.and set a default bg image for all the videos to use' , wraplength=200)
-
-        global thumbnail_template_file
-        thumbnail_template_file = tk.StringVar()        
-
-
-        b_thumbnail_template_file=tk.Button(frame,text="import template file",command=lambda: threading.Thread(target=select_file('select thumb template json file',ultra[folder]['thumb_gen_setting']['template_path'],thumbnail_template_file,'json')).start() )
-        b_thumbnail_template_file.grid(row = 1, column = 0,  padx=14, pady=15,sticky='nswe') 
-        e_thumbnail_template_file = tk.Entry(frame, textvariable=thumbnail_template_file)
-        e_thumbnail_template_file.grid(row = 1, column = 1, padx=14, pady=15,sticky='nswe') 
-        
-
-   
-
-
-
-
-        global thumbnail_metas_file,thummbnail_bg_folder,thummbnail_bg_file
+        global thumbnail_metas_file,thummbnail_bg_folder,thummbnail_bg_file,thumbnail_template_file
         thumbnail_metas_file = tk.StringVar()        
         thummbnail_bg_folder = tk.StringVar()        
-        thummbnail_bg_file = tk.StringVar()        
+        thummbnail_bg_file = tk.StringVar()      
 
-        mode = tk.StringVar()
-        mode.set("3")
+        new_canvas = tk.Frame(frame)
+        new_canvas.grid(row=2, column=0, pady=(5, 0), sticky='nw')     
 
-        lab = tk.Label(frame,text="请选择你的缩略图背景图片从何而来",bg="lightyellow",width=30)
-        lab.grid(row = 2, column = 0,  padx=14, pady=15,sticky='nw') 
-        mode1=tk.Radiobutton(frame,text="视频第一帧作为背景图",variable=mode,value="1",command='')
-        mode1.grid(row = 3, column = 0,  padx=14, pady=15,sticky='nw') 
-        mode2=tk.Radiobutton(frame,text="视频任意关键帧作为背景图",variable=mode,value="2",command='')
-        mode2.grid(row = 3, column = 1,  padx=14, pady=15,sticky='nw') 
-        mode3=tk.Radiobutton(frame,text="文件夹中随机一张图片作为背景图",variable=mode,value="3",command='')
-        mode3.grid(row = 4, column = 0,  padx=14, pady=15,sticky='nw') 
-        Tooltip(mode3, text='select the bg folder' , wraplength=200)
+
+        thumbmode = tk.IntVar()
+        # thumbmode.set(1)
+
+        lab = tk.Label(new_canvas,text="请选择你的缩略图从何而来",bg="lightyellow",width=30)
+        lab.grid(row = 1, column = 0,  padx=14, pady=15,sticky='nw') 
+   
+        thumbmode1=tk.Radiobutton(new_canvas,text="手动准备",variable=thumbmode,value=1,command=lambda:render_thumb_update_view(new_canvas,folder,thumbmode,frame))
+        thumbmode1.grid(row = 1, column = 1,  padx=14, pady=15,sticky='nw') 
+        thumbmode2=tk.Radiobutton(new_canvas,text=" 批量生成",variable=thumbmode,value=2,command=lambda:render_thumb_update_view(new_canvas,folder,thumbmode,frame))
+        thumbmode2.grid(row = 1, column = 2,  padx=14, pady=15,sticky='nw') 
+
+        # thumbmode.trace_add('write', render_thumb_update_view(new_canvas,folder,thumbmode))
+
+
+
+
+def render_thumb_update_view(frame,folder,thumbmode,previous_frame=None):
+    print('thumbmode',type(thumbmode.get()),thumbmode.get())    
+
+    if len(frame.winfo_children())>0:
+        for widget in frame.winfo_children():
+            widget.destroy()      
+   
+    if thumbmode.get() ==1:
+        lbl15 = tk.Label(frame, text='两种选择')
+        lbl15.grid(row=0,column=0,padx=14, pady=15,sticky='w') 
+       
+        lbl15 = tk.Label(frame, text='1.手动准备缩略图文件，需放在视频所在文件夹下，且与视频文件同名,完成后再次检测即可',wraplength=600)
+        lbl15.grid(row=1,column=0, sticky='w')
+
+        lbl15 = tk.Label(frame, text='2.如果缩略图后文件与视频不在同一个文件夹或者缩略图文件为自定义命名，\r需手动编辑视频元数据中缩略图文件路径,编辑完成后可再次进行检测\r',wraplength=600)
+        lbl15.grid(row=2,column=0, sticky='w')
+
+
+
+        b_check_metas_=tk.Button(frame,text="edit videometa with local editor",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
+        b_check_metas_.grid(row = 6, column = 0, padx=14, pady=15,sticky='nswe') 
+
+        b_edit_thumb_metas=tk.Button(frame,text="edit json with online editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
+        b_edit_thumb_metas.grid(row = 5, column = 0, padx=14, pady=15,sticky='nswe') 
+        Tooltip(b_edit_thumb_metas, text='fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field' , wraplength=200)
+        b_open_video_folder=tk.Button(frame,text="open local",command=lambda: threading.Thread(target=openLocal(folder)).start() )
+        b_open_video_folder.grid(row = 4, column = 0, padx=14, pady=15,sticky='nswe')      
+
+
+        b_update_metas_=tk.Button(frame,text="validate meta",command='validate thumbpath is there')
+        b_update_metas_.grid(row = 7, column = 0,  padx=14, pady=15,sticky='nswe') 
+
+        b_return=tk.Button(frame,text="Back to previous page",command=lambda: render_thumb_gen(previous_frame,True,folder))
+        b_return.grid(row = 8, column =0)   
+
+    else:
+        mode = tk.IntVar()
+        mode.set(5)
+        lab = tk.Label(frame,text="Step1:请选择你的缩略图生成模式",bg="lightyellow",width=30)
+        lab.grid(row = 1, column = 0,  padx=14, pady=15,sticky='nw')    
+        b_return=tk.Button(frame,text="Back to previous page",command=lambda: render_thumb_gen(previous_frame,True,folder))
+        b_return.grid(row = 1, column = 2,  padx=14, pady=15,sticky='e')              
+        mode1=tk.Radiobutton(frame,text="选择视频第一帧作为缩略图背景图",variable=mode,value=1,command='')
+        mode1.grid(row = 2, column = 0,  padx=14, pady=15,sticky='nw') 
+        mode2=tk.Radiobutton(frame,text="视频任意关键帧作为背景图",variable=mode,value=2,command='')
+        mode2.grid(row = 2, column = 1,  padx=14, pady=15,sticky='nw') 
+        mode3=tk.Radiobutton(frame,text="文件夹中随机一张图片作为背景图",variable=mode,value=3,command='')
+        mode3.grid(row = 3, column = 0,  padx=14, pady=15,sticky='nw') 
+        Tooltip(mode3, text='please select the bg image folder ' , wraplength=200)
 
 
         b_thumbnail_bg_folder=tk.Button(frame,text="select",command=lambda: threading.Thread(target=select_folder(ultra[folder]['thumb_gen_setting']['bg_folder'],thummbnail_bg_folder)).start() )
-        b_thumbnail_bg_folder.grid(row = 4, column = 2, padx=14, pady=15,sticky='nswe') 
+        b_thumbnail_bg_folder.grid(row = 3, column = 2, padx=14, pady=15,sticky='nswe') 
         e_thumbnail_bg_folder = tk.Entry(frame, textvariable=thummbnail_bg_folder)
-        e_thumbnail_bg_folder.grid(row = 4, column =1, padx=14, pady=15,sticky='nswe') 
+        e_thumbnail_bg_folder.grid(row = 3, column =1, padx=14, pady=15,sticky='nswe') 
 
-        mode5=tk.Radiobutton(frame,text="后续在视频元数据中个性化设置背景图地址",variable=mode,value="5",command='')
-        mode5.grid(row = 6, column = 0, padx=14, pady=15,sticky='nw') 
+        lab = tk.Label(frame,text="Step2:请选择你的缩略图模板",bg="lightyellow",width=30)
+        lab.grid(row = 5, column = 0,  padx=14, pady=15,sticky='nw')         
+
+        b_check_metas_=tk.Button(frame,text="edit metajson",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
+        b_check_metas_.grid(row = 6, column = 1, padx=14, pady=15,sticky='nswe')   
+        
+
+        b_edit_thumb=tk.Button(frame,text="create thumbnails template with editor",command=lambda: webbrowser.open_new('file:///{base_dir}/template.html'.format(base_dir=ROOT_DIR)))
+
+        b_edit_thumb.grid(row = 6, column = 0, padx=14, pady=15,sticky='nswe') 
+        Tooltip(b_edit_thumb, text='figure out  heading,subheading,extra text position,font,fontclolor use editor.you can update the json manually to set heading,subheading,extra type,adjust font name and font file ,because fontcolor,fontsize is auto detected, it need to be verify.and set a default bg image for all the videos to use' , wraplength=200)
+
+
+        thumbnail_template_file = tk.StringVar()        
+
+
+        b_thumbnail_template_file=tk.Button(frame,text="select",command=lambda: threading.Thread(target=select_file('select thumb template json file',ultra[folder]['thumb_gen_setting']['template_path'],thumbnail_template_file,'json')).start() )
+        b_thumbnail_template_file.grid(row = 6, column = 2,  padx=14, pady=15,sticky='nswe') 
+        e_thumbnail_template_file = tk.Entry(frame, textvariable=thumbnail_template_file)
+        e_thumbnail_template_file.grid(row = 6, column = 1, padx=14, pady=15,sticky='nswe') 
+        
+        lab = tk.Label(frame,text="Step3:请编辑视频元数据",bg="lightyellow",width=30)
+        lab.grid(row = 7, column = 0,  padx=14, pady=15,sticky='nw')         
 
 
 
-        # b_thumbnail_bg_file=tk.Button(frame,text="choose thumbnail bg image file",command=lambda: threading.Thread(target=select_file('please select a image',ultra[folder]['thumb_gen_bg_image'],thummbnail_bg_file,'images')).start() )
-        # b_thumbnail_bg_file.grid(row = 5, column = 1,  padx=14, pady=15,sticky='nswe') 
-        # e_thumbnail_bg_file = tk.Entry(frame, width=45, textvariable=thummbnail_bg_file)
-        # e_thumbnail_bg_file.grid(row = 6, column = 1, padx=14, pady=15,sticky='nswe') 
+
+        b_check_metas_=tk.Button(frame,text="edit videometa",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
+        b_check_metas_.grid(row = 8, column = 0, padx=14, pady=15,sticky='nswe') 
+
+        b_edit_thumb_metas=tk.Button(frame,text="edit json with online editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
+        b_edit_thumb_metas.grid(row = 8, column = 1, padx=14, pady=15,sticky='nswe') 
+        Tooltip(b_edit_thumb_metas, text='fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field' , wraplength=200)
+        b_open_video_folder=tk.Button(frame,text="open local",command=lambda: threading.Thread(target=openLocal(folder)).start() )
+        b_open_video_folder.grid(row = 8, column = 2, padx=14, pady=15,sticky='nswe')    
+        lab = tk.Label(frame,text="Step4:生成缩略图",bg="lightyellow",width=30)
+        lab.grid(row = 9, column = 0,  padx=14, pady=15,sticky='nw')         
 
 
         b_update_metas_=tk.Button(frame,text="validate meta",command=lambda: ValidateThumbnailGenMetas(folder,thumbnail_template_file.get(),mode.get(),thummbnail_bg_file.get(),thummbnail_bg_folder.get()))
-        b_update_metas_.grid(row = 8, column = 0,  padx=14, pady=15,sticky='nswe') 
+        b_update_metas_.grid(row = 10, column = 0,  padx=14, pady=15,sticky='nswe') 
         
 
-        b_check_metas_=tk.Button(frame,text="edit metajson",command=lambda: threading.Thread(target=openVideoMetaFile).start() )
-        b_check_metas_.grid(row = 8, column = 1, padx=14, pady=15,sticky='nswe') 
-
-        b_edit_thumb_metas=tk.Button(frame,text="use online editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
-        b_edit_thumb_metas.grid(row = 9, column = 0, padx=14, pady=15,sticky='nswe') 
-        Tooltip(b_edit_thumb_metas, text='fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field' , wraplength=200)
-        b_open_video_folder=tk.Button(frame,text="copy and replace the old file",command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
-        b_open_video_folder.grid(row = 9, column = 1, padx=14, pady=15,sticky='nswe')    
 
 
-        b_gen_thumb_=tk.Button(frame,text="gen thumb",command=lambda: genThumbnailFromTemplate(videosView_video_folder.get(),thumbnail_template_file.get(),mode.get()))
-        b_gen_thumb_.grid(row = 10, column =0, padx=14, pady=15,sticky='nswe') 
+        b_gen_thumb_=tk.Button(frame,text="gen thumb",command=lambda: genThumbnailFromTemplate(folder,thumbnail_template_file.get(),mode))
+        b_gen_thumb_.grid(row = 11, column =0, padx=14, pady=15,sticky='nswe') 
 
 
-        b_check_metas_=tk.Button(frame,text="check metajson",command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
-        b_check_metas_.grid(row = 10, column = 1, padx=14, pady=15,sticky='nswe') 
+        b_check_metas_=tk.Button(frame,text="check metajson",command=lambda: threading.Thread(target=openLocal(folder)).start() )
+        b_check_metas_.grid(row = 12, column = 0, padx=14, pady=15,sticky='nswe') 
 
 
 def printValues(choices):
@@ -3327,34 +3469,34 @@ def uploadView(frame,ttkframe,lang):
     lb_video_failure_counts.grid(row = 4, column = 3)
 
 
-    lb_youtube_success_counts_value = tk.Label(ttkframe, text=str(checkvideocounts.get()), font=(' ', 18))
+    lb_youtube_success_counts_value = tk.Label(ttkframe, text=str(checkvideocounts), font=(' ', 18))
     lb_youtube_success_counts_value.grid(row = 5, column = 1)
 
-    lb_youtube_queued_counts_value = tk.Label(ttkframe, text=str(checkvideocounts.get()), font=(' ', 18))
+    lb_youtube_queued_counts_value = tk.Label(ttkframe, text=str(checkvideocounts), font=(' ', 18))
     lb_youtube_queued_counts_value.grid(row = 5, column = 2)
 
-    lb_youtube_failure_counts_value = tk.Label(ttkframe, text=str(checkvideocounts.get()), font=(' ', 18))
+    lb_youtube_failure_counts_value = tk.Label(ttkframe, text=str(checkvideocounts), font=(' ', 18))
     lb_youtube_failure_counts_value.grid(row = 5, column = 3)
     
     
-    lb_tiktok_success_counts_value = tk.Label(ttkframe, text=str(checkvideocounts.get()), font=(' ', 18))
+    lb_tiktok_success_counts_value = tk.Label(ttkframe, text=str(checkvideocounts), font=(' ', 18))
     lb_tiktok_success_counts_value.grid(row = 6, column = 1)
 
-    lb_tiktok_queued_counts_value = tk.Label(ttkframe, text=str(checkvideocounts.get()), font=(' ', 18))
+    lb_tiktok_queued_counts_value = tk.Label(ttkframe, text=str(checkvideocounts), font=(' ', 18))
     lb_tiktok_queued_counts_value.grid(row = 6, column = 2)
 
-    lb_tiktok_failure_counts_value = tk.Label(ttkframe, text=str(checkvideocounts.get()), font=(' ', 18))
+    lb_tiktok_failure_counts_value = tk.Label(ttkframe, text=str(checkvideocounts), font=(' ', 18))
     lb_tiktok_failure_counts_value.grid(row = 6, column = 3)
     
     
 
-    lb_total_success_counts_value = tk.Label(ttkframe, text=str(checkvideocounts.get()), font=(' ', 18))
+    lb_total_success_counts_value = tk.Label(ttkframe, text=str(checkvideocounts), font=(' ', 18))
     lb_total_success_counts_value.grid(row = 7, column = 1)
 
-    lb_total_queued_counts_value = tk.Label(ttkframe, text=str(checkvideocounts.get()), font=(' ', 18))
+    lb_total_queued_counts_value = tk.Label(ttkframe, text=str(checkvideocounts), font=(' ', 18))
     lb_total_queued_counts_value.grid(row = 7, column = 2)
 
-    lb_total_failure_counts_value = tk.Label(ttkframe, text=str(checkvideocounts.get()), font=(' ', 18))
+    lb_total_failure_counts_value = tk.Label(ttkframe, text=str(checkvideocounts), font=(' ', 18))
     lb_total_failure_counts_value.grid(row = 7, column = 3)
     
 
