@@ -30042,3 +30042,40 @@ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
 2023-09-19 21:10:09,288 - INFO - detecting----------True
 2023-09-19 21:10:09,288 - INFO - we cached 28013895000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader/tests
 2023-09-19 21:10:09,289 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-19 21:25:50,408 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-19 21:25:50,728 - INFO - TiktokaStudio GUI started
+2023-09-19 21:26:16,942 - INFO - detecting----------False
+2023-09-19 21:26:16,942 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-19 21:26:16,950 - INFO - start to check thumbFilePaths for 1
+2023-09-19 21:26:16,951 - INFO - before check:
+{}
+2023-09-19 21:26:16,951 - INFO - after check:
+{}
+2023-09-19 21:26:16,951 - INFO - update to 1 meta json
+2023-09-19 21:26:16,952 - INFO - start to check desFilePaths for 1
+2023-09-19 21:26:16,953 - INFO - before check:
+{}
+2023-09-19 21:26:16,953 - INFO - after check:
+{}
+2023-09-19 21:26:16,953 - INFO - update to 1 meta json
+2023-09-19 21:26:16,954 - INFO - start to check metaFilePaths for 1
+2023-09-19 21:26:16,954 - INFO - before check:
+{}
+2023-09-19 21:26:16,954 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader/tests/1.json
+2023-09-19 21:26:16,954 - INFO - intial metaFilePaths for 1:
+
+2023-09-19 21:26:16,954 - INFO - append result:
+['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']
+2023-09-19 21:26:16,955 - INFO - after check:
+{'1': ['/Users/wenke/github/tiktoka-studio-uploader/tests/1.json']}
+2023-09-19 21:26:16,955 - INFO - update to 1 meta json
+2023-09-19 21:26:25,015 - INFO - detecting----------True
+2023-09-19 21:26:25,016 - INFO - we cached 8059563000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-19 21:26:25,016 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-19 21:26:25,355 - INFO - reload results when metafileformat changed to :xlsx
+2023-09-19 21:26:37,845 - INFO - detecting----------True
+2023-09-19 21:26:37,845 - INFO - we cached 12828941000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-19 21:26:37,846 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-19 21:26:37,916 - INFO - reload results when metafileformat changed to :csv

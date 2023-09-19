@@ -3910,11 +3910,10 @@ def metaView(left,right,lang):
         print('metafileformat changed to :',metafileformatbox.get())
         metafileformat.set(metafileformatbox.get())
         analyse_video_meta_pair(metaView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=True)
-        
+        logger.info(f'reload results when metafileformat changed to :{metafileformatbox.get()}')
     metafileformatbox['values'] = ( 'json','xlsx', 'csv')
     metafileformatbox.current(0)
     metafileformatbox.bind("<<ComboboxSelected>>", selectedmetafileformat)
-    print(f'right now metafileformatbox.get():{metafileformatbox.get()}')
 
     b_download_meta_templates=tk.Button(left,text="download templates",command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
     b_download_meta_templates.grid(row = 1, column = 3, sticky='w', padx=14, pady=15)  
