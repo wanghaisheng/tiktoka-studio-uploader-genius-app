@@ -79,3 +79,10 @@ https://jsoncrack.com/editor
 * 4.可查看已上传任务列表
 * 5.可查看上传失败任务列表，可设置自动重试
 
+
+
+
+get json schema from online tool
+
+https://www.liquid-technologies.com/online-json-to-schema-converter
+

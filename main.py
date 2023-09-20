@@ -47,6 +47,8 @@ from moviepy.audio.fx.volumex import volumex
 import moviepy.audio.fx.all  as afx
 import moviepy.video.fx.all as vfx
 # here put the import lib
+from jsonschema import validate
+from jsonschema import ValidationError
 import json
 import jsons
 import tkinter as tk
@@ -98,12 +100,18 @@ config = {
     "load_path": "./locales", # 指定在 /locales 下找对应的翻译 json文件
     "default_module": "global", # 指定默认的全局模块，你可以为比如用户模块，订单模块单独设置翻译，如果不指定 module 则会去全局模块查找。
 }
+videoassetsfilename='videos-assets.json'
 a_i18n = Ai18n(locales=["en", "zh"], config=config)
 
 i18labels= a_i18n.translate
 window_size='1024x720'
 height=720
 width=1024
+supported_video_exts=['.flv', '.mp4', '.avi']
+supported_thumb_exts=['.jpeg', '.png', '.jpg','webp']
+supported_des_exts=['.des', '.txt']
+supported_meta_exts=['.json', '.xls','.xlsx','.csv']      
+
 # Logging configuration
 logging.basicConfig(filename='test.log',
     level=logging.DEBUG, 
@@ -1554,8 +1562,8 @@ def createuploadsession(dbm,ttkframe,metafile):
             lab.place(x=10, y=220)       
             lab.after(10*1000,lab.destroy)
 def isPairedMetas(r,videofilename,meta_exts_list,dict,meta_name):
-    logger.info(f'start to check {meta_name} for {videofilename}')
-    logger.info(f'before check:\n{jsons.dump(dict[meta_name])}')
+    logger.info(f'start to check {meta_name} for video: {videofilename}')
+    print(f'before check:\n{jsons.dump(dict[meta_name])}')
 
     for ext in meta_exts_list:
         metapath = os.path.join(r, videofilename+ext)
@@ -1567,14 +1575,14 @@ def isPairedMetas(r,videofilename,meta_exts_list,dict,meta_name):
                     logger.info(f'intial {meta_name} for {videofilename}:\n')
 
                 dict[meta_name][videofilename].append(metapath)
-                logger.info(f'append result:\n{dict[meta_name][videofilename]}')
+                print(f'append result:\n{dict[meta_name][videofilename]}')
                 if meta_name=='thumbFilePaths':
                     dict['videos'][videofilename]['thumbnail_local_path'].append(metapath)
                 if meta_name=='desFilePaths':
                     with open(metapath,'r') as f:
                         contents=f.readlines()
                         dict['videos'][videofilename]['video_description']=contents               
-    logger.info(f'after check:\n{jsons.dump(dict[meta_name])}')
+    print(f'after check:\n{jsons.dump(dict[meta_name])}')
     tmpjson=os.path.join(r, videofilename+'.json')
     if os.path.exists(tmpjson):
         logger.info(f'update to {videofilename} meta json')
@@ -1586,289 +1594,168 @@ def isPairedMetas(r,videofilename,meta_exts_list,dict,meta_name):
             f.write(jsons.dumps(dict['videos'][videofilename]))
         
 def analyse_video_meta_pair(folder,frame,right_frame,selectedMetafileformat,isThumbView=False):
-    logger.info(f'detecting----------{ultra.has_key(folder)}')
-    if ultra.has_key(folder):
-        print(pd.Timestamp.now().value-ultra[folder] ['updatedAt'])
-        logger.info(f"we cached {pd.Timestamp.now().value-ultra[folder] ['updatedAt']} seconds before for  this folder {folder}")
+    if folder=='':
+        logger.info('please choose a folder first')
     else:
-        logger.info(f"create cached data for this folder:\n{folder}")
-        ultra[folder]={'videoCounts':0,'thumbCounts':0,'desCounts':0,
-                       'metaCounts':0,'updatedAt':pd.Timestamp.now().value,
-                       'filenames':[],
-                       'videoFilePaths':[],
-                        'thumbFilePaths':{},
-                        'desFilePaths':{},
-                        'metaFilePaths':{},  
-                        "thumb_gen_setting":{
-                        "mode":'4',
-                        "result_image_width": "",
-                        "result_image_height": "",                        
-                        "bg_image": "",  
-                        "template_path":"",     
-                        "bg_folder":"",
-                        "bg_folder_images":[],                         
-                        "template":  {},
+        logger.info(f'detecting----------{ultra.has_key(folder)}')
+        if ultra.has_key(folder):
+            print(pd.Timestamp.now().value-ultra[folder] ['updatedAt'])
+            logger.info(f"we cached {pd.Timestamp.now().value-ultra[folder] ['updatedAt']} seconds before for  this folder {folder}")
+        else:
+            logger.info(f"create cached data for this folder:\n{folder}")
+            ultra[folder]={'videoCounts':0,'thumbCounts':0,'desCounts':0,
+                        'metaCounts':0,'updatedAt':pd.Timestamp.now().value,
+                        'filenames':[],
+                        'videoFilePaths':[],
+                            'thumbFilePaths':{},
+                            'desFilePaths':{},
+                            'metaFilePaths':{},  
+                            "thumb_gen_setting":{
+                            "mode":3,
+                            "result_image_width": "",
+                            "result_image_height": "",                        
+                            # "bg_image": "",  
+                            "template_path":"",     
+                            "bg_folder":"",
+                            "bg_folder_images":[],                         
+                            "template":  {},
 
-                                    #     "texts":{
-                                    #     "type": "heading",		
-                                    #     "fontFile": "MSYHMONO.ttf",
-                                    #     "x": 326,
-                                    #     "y": 375,
-                                    #     "width": 813,
-                                    #     "height": 82,
-                                    #     "topLeft": "(326, 375)",
-                                    #     "topRight": "(1139, 375)",
-                                    #     "bottomLeft": "(326, 457)",
-                                    #     "bottomRight": "(1139, 457)",
-                                    #     "fontSize": 21,
-                                    #     "fontName": "MSYHMONO.ttf",
-                                    #     "gridSize": 10,
-                                    #     "nearestGridSerialNumber": 43,
-                                    #     "fontcolor": "rgb(0, 240, 255)"
-                                    # }, {
-                                    #     "type": "subheading",		
-                                    #     "fontFile": "",
-                                    #     "x": 150,
-                                    #     "y": 54,
-                                    #     "width": 320,
-                                    #     "height": 114,
-                                    #     "topLeft": "(150, 54)",
-                                    #     "topRight": "(470, 54)",
-                                    #     "bottomLeft": "(150, 168)",
-                                    #     "bottomRight": "(470, 168)",
-                                    #     "fontSize": 29,
-                                    #     "fontName": "Times New Roman",
-                                    #     "gridSize": 10,
-                                    #     "nearestGridSerialNumber": 2,
-                                    #     "fontcolor": "rgb(255, 255, 255)"
-                                    # }, {
-                                    #     "type": "extraheading",		
-
-                                    #     "fontFile": "",
-                                    #     "x": 351,
-                                    #     "y": 565,
-                                    #     "width": 784,
-                                    #     "height": 40,
-                                    #     "topLeft": "(351, 565)",
-                                    #     "topRight": "(1135, 565)",
-                                    #     "bottomLeft": "(351, 605)",
-                                    #     "bottomRight": "(1135, 605)",
-                                    #     "fontSize": 10,
-                                    #     "fontName": "Unknown",
-                                    #     "gridSize": 10,
-                                    #     "nearestGridSerialNumber": 63,
-                                    #     "fontcolor": "rgb(254, 218, 0)"
-                                    # }]                                    # 'template':{
-                                        # "result_image_size": "800x600",
-                                        # "bg_image": "bg1.jpg",
-
-                                    #     "texts":{
-                                    #     "type": "heading",		
-                                    #     "fontFile": "MSYHMONO.ttf",
-                                    #     "x": 326,
-                                    #     "y": 375,
-                                    #     "width": 813,
-                                    #     "height": 82,
-                                    #     "topLeft": "(326, 375)",
-                                    #     "topRight": "(1139, 375)",
-                                    #     "bottomLeft": "(326, 457)",
-                                    #     "bottomRight": "(1139, 457)",
-                                    #     "fontSize": 21,
-                                    #     "fontName": "MSYHMONO.ttf",
-                                    #     "gridSize": 10,
-                                    #     "nearestGridSerialNumber": 43,
-                                    #     "fontcolor": "rgb(0, 240, 255)"
-                                    # }, {
-                                    #     "type": "subheading",		
-                                    #     "fontFile": "",
-                                    #     "x": 150,
-                                    #     "y": 54,
-                                    #     "width": 320,
-                                    #     "height": 114,
-                                    #     "topLeft": "(150, 54)",
-                                    #     "topRight": "(470, 54)",
-                                    #     "bottomLeft": "(150, 168)",
-                                    #     "bottomRight": "(470, 168)",
-                                    #     "fontSize": 29,
-                                    #     "fontName": "Times New Roman",
-                                    #     "gridSize": 10,
-                                    #     "nearestGridSerialNumber": 2,
-                                    #     "fontcolor": "rgb(255, 255, 255)"
-                                    # }, {
-                                    #     "type": "extraheading",		
-
-                                    #     "fontFile": "",
-                                    #     "x": 351,
-                                    #     "y": 565,
-                                    #     "width": 784,
-                                    #     "height": 40,
-                                    #     "topLeft": "(351, 565)",
-                                    #     "topRight": "(1135, 565)",
-                                    #     "bottomLeft": "(351, 605)",
-                                    #     "bottomRight": "(1135, 605)",
-                                    #     "fontSize": 10,
-                                    #     "fontName": "Unknown",
-                                    #     "gridSize": 10,
-                                    #     "nearestGridSerialNumber": 63,
-                                    #     "fontcolor": "rgb(254, 218, 0)"
-                                    # }] ,  
+                            },
+                                    "des_gen_setting":{
+                                        "prefix":"",
+                                        "suffix":"",
+                                        "mode":"manually from .des file or append prefix suffix with des file or auto summary from subtitle or auto summary from tts"
+                                    },
+                                    "schedule_gen_setting":{
+                                        'daily_limit':4,
+                                        'offset':1
+                                    },
+                                    "tag_gen_setting":{
+                                        'preferred':"",
+                                        'mode':"manually from .tag file or manually +preferred or just preferred or api or auto"
+                                    },
                         
-                        },
-                                   "des_gen_setting":{
-                                       "prefix":"",
-                                       "suffix":"",
-                                       "mode":"manually from .des file or append prefix suffix with des file or auto summary from subtitle or auto summary from tts"
-                                   },
-                                   "schedule_gen_setting":{
-                                       'daily_limit':4,
-                                       'offset':1
-                                   },
-                                   "tag_gen_setting":{
-                                       'preferred':"",
-                                       'mode':"manually from .tag file or manually +preferred or just preferred or api or auto"
-                                   },
-                       
-                        'videos':{},
-                        'videosmeta':{}
+                            'videos':{},
+                            'videosmeta':{}
 
-                       } 
+                        } 
 
-        ultra[folder].dump()
-    supported_video_exts=['.flv', '.mp4', '.avi']
-    supported_thumb_exts=['.jpeg', '.png', '.jpg','webp']
-    supported_des_exts=['.des', '.txt']
-    supported_meta_exts=['.json', '.xls','.xlsx','.csv']        
+            ultra[folder].dump()   
 
-    for r, d, f in os.walk(folder):
-        videos=[]        
-        with os.scandir(r) as i:
+        for r, d, f in os.walk(folder):
+            videos=[]        
+            with os.scandir(r) as i:
 
-            for entry in i:
-                if entry.is_file():
-                    filename = os.path.splitext(entry.name)[0]
+                for entry in i:
+                    if entry.is_file():
+                        filename = os.path.splitext(entry.name)[0]
 
-                    ext = os.path.splitext(entry.name)[1]
-                    if ext in supported_video_exts:
+                        ext = os.path.splitext(entry.name)[1]
+                        if ext in supported_video_exts:
 
-                        if ultra[folder] ['filenames']!=[] and filename in ultra[folder] ['filenames']:
-                            logger.info(f'we found same filename diff ext video:{filename},please rename or remove')
-                        else:
-                            ultra[folder] ['filenames'].append(filename)
+                            if ultra[folder] ['filenames']!=[] and filename in ultra[folder] ['filenames']:
+                                logger.info(f'we found same filename diff ext video:{filename},please rename or remove')
+                            else:
+                                ultra[folder] ['filenames'].append(filename)
 
 
-                            videopath = os.path.join(r, entry.name)
-                            ultra[folder] ['videoFilePaths'].append(videopath)
-                            # default single video meta json
-                            video={'video_local_path':videopath,
-                                "video_filename":entry.name,
-                                   "video_title":'',
-                                    "thumb_heading":"",
-                                    "thumb_subheading":"",
-                                    "thumb_extraheading":"",
-                                   "video_description":"",
-                                    "thumbnail_bg_image_path": "",
+                                videopath = os.path.join(r, entry.name)
+                                ultra[folder] ['videoFilePaths'].append(videopath)
+                                # default single video meta json
+                                video={'video_local_path':videopath,
+                                    "video_filename":entry.name,
+                                    "video_title":'',
+                                        "heading":"",
+                                        "subheading":"",
+                                        "extraheading":"",
+                                    "video_description":"",
+                                        "thumbnail_bg_image_path": "",
 
-                                   "thumbnail_local_path":[],
-                                   "release_date":"",
-                                   "release_date_hour":"10:15",
-                                    "is_not_for_kid": True,
-                                    "categories": 3,
-                                    "comments_ratings_policy": 1,
-                                    "is_age_restriction": False,
-                                    "is_paid_promotion": False,
-                                    "is_automatic_chapters": True,
-                                    "is_featured_place": True,
-                                    "video_language": "",
-                                    "captions_certification": 0,
-                                    "video_film_date": "",
-                                    "video_film_location": "",
-                                    "license_type": 0,
-                                    "is_allow_embedding": True,
-                                    "is_publish_to_subscriptions_feed_notify": True,
-                                    "shorts_remixing_type": 0,
-                                    "is_show_howmany_likes": True,
-                                    "is_monetization_allowed": True,
-                                    "first_comment": "",
-                                    "subtitles": "",
-                                    "is_not_for_kid": True,
-                                    "categories": '',
-                                    "comments_ratings_policy": 1,
-                                   'tags':''}
-                            ultra[folder] ['videos'][filename]=video
-                            videos.append(video)
-                            ultra[folder] ['videos'][filename]['video_local_path']=videopath
-                            ultra[folder] ['videos'][filename]['video_title']=filename
-                            ultra[folder] ['videoCounts']+=1
-                            print(videopath,'==',ext,'counts now:',ultra[folder] ['videoCounts'],type(ultra[folder] ['videoCounts'])) 
+                                    "thumbnail_local_path":[],
+                                    "release_date":"",
+                                    "release_date_hour":"10:15",
+                                        "is_not_for_kid": True,
+                                        "categories": 3,
+                                        "comments_ratings_policy": 1,
+                                        "is_age_restriction": False,
+                                        "is_paid_promotion": False,
+                                        "is_automatic_chapters": True,
+                                        "is_featured_place": True,
+                                        "video_language": "",
+                                        "captions_certification": 0,
+                                        "video_film_date": "",
+                                        "video_film_location": "",
+                                        "license_type": 0,
+                                        "is_allow_embedding": True,
+                                        "is_publish_to_subscriptions_feed_notify": True,
+                                        "shorts_remixing_type": 0,
+                                        "is_show_howmany_likes": True,
+                                        "is_monetization_allowed": True,
+                                        "first_comment": "",
+                                        "subtitles": "",
+                                        "is_not_for_kid": True,
+                                        "categories": '',
+                                        "comments_ratings_policy": 1,
+                                    'tags':''}
+                                ultra[folder] ['videos'][filename]=video
+                                videos.append(video)
+                                ultra[folder] ['videos'][filename]['video_local_path']=videopath
+                                ultra[folder] ['videos'][filename]['video_title']=filename
+                                ultra[folder] ['videoCounts']+=1
+                                print(videopath,'==',ext,'counts now:',ultra[folder] ['videoCounts'],type(ultra[folder] ['videoCounts'])) 
 
-                            # if ultra[folder]['thumbFilePaths'].has_key(filename)==False:
-                            #     ultra[folder]['thumbFilePaths'][filename]=[]
-                            isPairedMetas(r,filename,supported_thumb_exts,ultra[folder],'thumbFilePaths')
-                            isPairedMetas(r,filename,supported_des_exts,ultra[folder],'desFilePaths')
-                            isPairedMetas(r,filename,supported_meta_exts,ultra[folder],'metaFilePaths')
+                                # if ultra[folder]['thumbFilePaths'].has_key(filename)==False:
+                                #     ultra[folder]['thumbFilePaths'][filename]=[]
+                                isPairedMetas(r,filename,supported_thumb_exts,ultra[folder],'thumbFilePaths')
+                                isPairedMetas(r,filename,supported_des_exts,ultra[folder],'desFilePaths')
+                                isPairedMetas(r,filename,supported_meta_exts,ultra[folder],'metaFilePaths')
 
 
 
-    if ultra[folder] ['videoCounts']==0:
-        logger.info(f"we could not find any video, video counts is {ultra[folder] ['videoCounts']},supported ext includes:\n{'.'.join(supported_video_exts)}")
-    ultra[folder] ['thumbCounts']=len(ultra[folder] ['thumbFilePaths'])
-    ultra[folder] ['desCounts']=len(ultra[folder] ['desFilePaths'])
-    ultra[folder] ['metaCounts']=len(ultra[folder] ['metaFilePaths'])
-    ultra[folder]['updatedAt']=pd.Timestamp.now().value
-    print('---------\n',type(ultra[folder]),type(jsons.dump(ultra[folder])),jsons.dump(ultra[folder]))
-    tmpjson=os.path.join(folder,'videos-assets.json')
+        if ultra[folder] ['videoCounts']==0:
+            logger.info(f"we could not find any video, video counts is {ultra[folder] ['videoCounts']},supported ext includes:\n{'.'.join(supported_video_exts)}")
+        ultra[folder] ['thumbCounts']=len(ultra[folder] ['thumbFilePaths'])
+        ultra[folder] ['desCounts']=len(ultra[folder] ['desFilePaths'])
+        ultra[folder] ['metaCounts']=len(ultra[folder] ['metaFilePaths'])
+        ultra[folder]['updatedAt']=pd.Timestamp.now().value
+        print('---------\n',type(ultra[folder]),type(jsons.dump(ultra[folder])),jsons.dump(ultra[folder]))
+        tmpjson=os.path.join(folder,videoassetsfilename)
 
-    if os.path.exists(tmpjson):
-        with open(tmpjson,'w') as f:
-            f.write(jsons.dumps(ultra[folder]))        
-    else:
-        with open(tmpjson,'a') as f:
-            f.write(jsons.dumps(ultra[folder]))        
+        if os.path.exists(tmpjson):
+            with open(tmpjson,'w') as f:
+                f.write(jsons.dumps(ultra[folder]))        
+        else:
+            with open(tmpjson,'a') as f:
+                f.write(jsons.dumps(ultra[folder]))        
 
+        ultra[folder]['metafileformat']=selectedMetafileformat
+        if selectedMetafileformat=='xlsx':
+            df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'index')
 
-    if selectedMetafileformat=='xlsx':
-        df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'index')
+            metaxls=os.path.join(folder,'videos-meta.xlsx')
+            df_metas.to_excel(metaxls)
+        elif selectedMetafileformat=='csv':
+            df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'index')
 
-        metaxls=os.path.join(folder,'videos-meta.xlsx')
-        df_metas.to_excel(metaxls)
-    elif selectedMetafileformat=='csv':
-        df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'index')
+            metacsv=os.path.join(folder,'videos-meta.csv')
 
-        metacsv=os.path.join(folder,'videos-meta.csv')
+            df_metas.to_csv(metacsv)
+        else:
+            df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'records')
 
-        df_metas.to_csv(metacsv)
-    else:
-        df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'records')
+            # json is the default ,there is always a videometa.json file after folder check
+            metajson=os.path.join(folder,'videos-meta.json')
 
-        # json is the default ,there is always a videometa.json file after folder check
-        metajson=os.path.join(folder,'videos-meta.json')
+            df_metas.to_json(metajson)
 
-        df_metas.to_json(metajson)
-
-     
-    render_video_folder_check_results(frame,right_frame,folder,isThumbView)
+        
+        render_video_folder_check_results(frame,right_frame,folder,isThumbView)
 
 
 
 
 
-def check_folder_thumb_bg(folder):
-    supported_thumb_exts=['.jpeg', '.png', '.jpg','webp']
-    bg_images=[]
-    for r, d, f in os.walk(folder):
-        with os.scandir(r) as i:
 
-            for entry in i:
-                if entry.is_file():
-                    filename = os.path.splitext(entry.name)[0]
-
-                    ext = os.path.splitext(entry.name)[1]
-                    if ext in supported_thumb_exts:
-                        filepath=os.path.join(r,filename+ext)
-                        bg_images.append(filepath)
-    if len(bg_images)==0:
-        logger.info(f'please choose another bg folder,there is no image found:\n{folder}')
-    return bg_images
 def check_video_thumb_pair(dbm,folder,session):
     # print(f'detecting----------{folder}')
 
@@ -2206,6 +2093,7 @@ def thumbView(left,right,lang):
 
     l_video_folder = tk.Label(left, text=i18labels("videoFolder", locale=lang, module="g"))
     l_video_folder.grid(row = 0, column = 0, sticky='w', padx=14, pady=15)    
+    Tooltip(l_video_folder, text='Start from where your video lives' , wraplength=200)
 
 
     e_video_folder = tk.Entry(left,textvariable=thumbView_video_folder)
@@ -2216,9 +2104,13 @@ def thumbView(left,right,lang):
 
     b_open_video_folder=tk.Button(left,text="open local",command=lambda: threading.Thread(target=openLocal(thumbView_video_folder.get())).start() )
     b_open_video_folder.grid(row = 0, column = 3, sticky='w', padx=14, pady=15)    
+    Tooltip(b_open_video_folder, text='open video folder to find out files change' , wraplength=200)
+
     l_meta_format = tk.Label(left, text=i18labels("preferred meta file format", locale=lang, module="g"))
     # l_platform.place(x=10, y=90)
     l_meta_format.grid(row = 1, column = 0, sticky='w', padx=14, pady=15)    
+    Tooltip(l_meta_format, text='Choose the one you like to edit metadata' , wraplength=200)
+
     global metafileformat
     metafileformat = tk.StringVar()
     metafileformat.set('json')
@@ -2233,18 +2125,20 @@ def thumbView(left,right,lang):
         
         print('selected metafileformat is :',metafileformatbox.get())
         metafileformat.set(metafileformatbox.get())
+        
         analyse_video_meta_pair(thumbView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=True)
     metafileformatbox['values'] = ( 'json','xlsx', 'csv')
     metafileformatbox.current(0)
     metafileformatbox.bind("<<ComboboxSelected>>", selectedmetafileformat)
     print(f'right now metafileformatbox.get():{metafileformatbox.get()}')
 
-    b_download_meta_templates=tk.Button(left,text="download templates",command=lambda: threading.Thread(target=openLocal(thumbView_video_folder.get())).start() )
+    b_download_meta_templates=tk.Button(left,text="check video meta files",command=lambda: threading.Thread(target=openLocal(thumbView_video_folder.get())).start() )
     b_download_meta_templates.grid(row = 1, column = 3, sticky='w', padx=14, pady=15)  
     Tooltip(b_download_meta_templates, text='run the check video assets will auto gen templates under folder if they dont' , wraplength=200)
 
     b_video_folder_check=tk.Button(left,text="Step1:check video assets",command=lambda: threading.Thread(target=analyse_video_meta_pair(thumbView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=True)).start() )
     b_video_folder_check.grid(row = 2, column = 0,sticky='w', padx=14, pady=15)    
+    Tooltip(b_video_folder_check, text='calculate video counts,thumb file count and others' , wraplength=200)
 
 
 
@@ -2272,6 +2166,7 @@ def render_video_folder_check_results(frame,right_frame,folder,isThumbView=False
 
     lb_video_thumb_pairs_counts = tk.Label(frame, text='video-thum paired')
     lb_video_thumb_pairs_counts.grid(row = 4, column = 0,sticky='w')    
+    Tooltip(lb_video_thumb_pairs_counts, text='if there is the same filename image exist for video,we take it as paired' , wraplength=200)
 
 
 
@@ -2294,8 +2189,10 @@ def render_video_folder_check_results(frame,right_frame,folder,isThumbView=False
         label_str='Update'
 
 
+
     b_gen_thumb=tk.Button(frame,text=label_str,command=lambda: threading.Thread(target=render_thumb_gen(right_frame,True,folder)).start() )
     b_gen_thumb.grid(row = 4, column = 4)     
+    Tooltip(b_gen_thumb, text='Click below button to Learn more' , wraplength=200)
 
     if isThumbView==False:
         lb_video_des_pairs_counts = tk.Label(frame, text='video-des paired')
@@ -2446,9 +2343,11 @@ def render_des_update_view(frame,folder,thumbmode,previous_frame=None):
 
         b_check_metas_=tk.Button(frame,text="edit videometa with local editor",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
         b_check_metas_.grid(row = 6, column = 0, padx=14, pady=15,sticky='nswe') 
+        Tooltip(b_check_metas_, text='fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field' , wraplength=200)
 
-        b_edit_thumb_metas=tk.Button(frame,text="edit json with online editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
-        b_edit_thumb_metas.grid(row = 5, column = 0, padx=14, pady=15,sticky='nswe') 
+        if ultra[folder]['metafileformat']=='json':
+            b_edit_thumb_metas=tk.Button(frame,text="edit json with online editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
+            b_edit_thumb_metas.grid(row = 5, column = 0, padx=14, pady=15,sticky='nswe') 
         Tooltip(b_edit_thumb_metas, text='fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field' , wraplength=200)
         b_open_video_folder=tk.Button(frame,text="open local",command=lambda: threading.Thread(target=openLocal(folder)).start() )
         b_open_video_folder.grid(row = 4, column = 0, padx=14, pady=15,sticky='nswe')      
@@ -2508,9 +2407,10 @@ def render_des_update_view(frame,folder,thumbmode,previous_frame=None):
 
         b_check_metas_=tk.Button(frame,text="edit videometa",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
         b_check_metas_.grid(row = 8, column = 0, padx=14, pady=15,sticky='nswe') 
+        if ultra[folder]['metafileformat']=='json':
 
-        b_edit_thumb_metas=tk.Button(frame,text="edit json with online editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
-        b_edit_thumb_metas.grid(row = 8, column = 1, padx=14, pady=15,sticky='nswe') 
+            b_edit_thumb_metas=tk.Button(frame,text="edit json with online editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
+            b_edit_thumb_metas.grid(row = 8, column = 1, padx=14, pady=15,sticky='nswe') 
         Tooltip(b_edit_thumb_metas, text='fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field' , wraplength=200)
         b_open_video_folder=tk.Button(frame,text="open local",command=lambda: threading.Thread(target=openLocal(folder)).start() )
         b_open_video_folder.grid(row = 8, column = 2, padx=14, pady=15,sticky='nswe')    
@@ -2682,71 +2582,276 @@ def render_update_meta(frame,isneed):
         b_import_thumb_metas_=tk.Button(frame,text="Step4:更新视频元数据文件",command=lambda: genThumbnailFromTemplate(videosView_video_folder.get(),thumbnail_template_file.get(),mode.get()))
         b_import_thumb_metas_.grid(row = 9, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
 
+def check_folder_thumb_bg(folder):
+    supported_thumb_exts=['.jpeg', '.png', '.jpg','webp']
+    bg_images=[]
+    for r, d, f in os.walk(folder):
+        with os.scandir(r) as i:
 
-def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thummbnail_bg_file_path,thummbnail_bg_folder_path):
+            for entry in i:
+                if entry.is_file():
+                    filename = os.path.splitext(entry.name)[0]
+
+                    ext = os.path.splitext(entry.name)[1]
+                    if ext in supported_thumb_exts:
+                        filepath=os.path.join(r,filename+ext)
+                        bg_images.append(filepath)
+    if len(bg_images)==0:
+        logger.info(f'please choose another bg folder,there is no image found:\n{folder}')
+    return bg_images
+
+def check_fields_and_empty_values(data_dict, allowed_fields):
+    for key, entry in data_dict.items():
+        missing_fields = [field for field in allowed_fields if field not in entry.keys()]
+
+        if missing_fields:
+            print(f"The following allowed fields are missing in entry {key}: {', '.join(missing_fields)}")
+            return False
+
+        empty_fields = any(entry[field] == "" for field in allowed_fields)
+
+        if empty_fields:
+            print(f"There are empty values in one or more of the allowed fields in entry {key}.")
+            return False
+
+    return True
+def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thummbnail_bg_folder_path,frame=None):
+    passed=True
+
     if mode_value and mode_value is not None:
-        ultra[folder]['thumb_gen_setting']['template']=mode_value
+        ultra[folder]['thumb_gen_setting']['mode']=mode_value
+
+        if mode_value not in [1,2,3]:
+            logger.info('ignore the thumbnail gen process')    
+        else: 
+            if thumbnail_template_file_path is None or thumbnail_template_file_path=='':
+                logger.error('please choose a thumbtemplate first')
+            
+
+            else:
+                logger.info(f'start to load thumbnail gen setting json from::\r{thumbnail_template_file_path}')
+
+                if os.path.exists(thumbnail_template_file_path):
+                    try:
+                        # fp = open(thumbnail_template_file_path, 'r', encoding='utf-8')
+                        # setting_json = fp.read()                    
+                        setting=json.load(open(thumbnail_template_file_path, 'r', encoding='utf-8')) 
+                        templateschema = {
+                                        "$schema": "http://json-schema.org/draft-04/schema#",
+                                        "type": "object",
+                                        "properties": {
+                                            "width": {
+                                            "type": "integer"
+                                            },
+                                            "height": {
+                                            "type": "integer"
+                                            },
+                                            "texts": {
+                                            "type": "array",
+                                            "items": [
+                                                {
+                                                "type": "object",
+                                                "properties": {
+                                                    "textType": {
+                                                    "type": "string"
+                                                    },
+                                                    "fontFile": {
+                                                    "type": "string"
+                                                    },
+                                                    "x": {
+                                                    "type": "integer"
+                                                    },
+                                                    "y": {
+                                                    "type": "integer"
+                                                    },
+                                                    "width": {
+                                                    "type": "integer"
+                                                    },
+                                                    "height": {
+                                                    "type": "integer"
+                                                    },
+                                                    "topLeft": {
+                                                    "type": "string"
+                                                    },
+                                                    "topRight": {
+                                                    "type": "string"
+                                                    },
+                                                    "bottomLeft": {
+                                                    "type": "string"
+                                                    },
+                                                    "bottomRight": {
+                                                    "type": "string"
+                                                    },
+                                                    "fontSize": {
+                                                    "type": "integer"
+                                                    },
+                                                    "fontName": {
+                                                    "type": "string"
+                                                    },
+                                                    "gridSize": {
+                                                    "type": "integer"
+                                                    },
+                                                    "nearestGridSerialNumber": {
+                                                    "type": "integer"
+                                                    },
+                                                    "fontcolor": {
+                                                    "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "textType",
+                                                    "fontFile",
+                                                    "x",
+                                                    "y",
+                                                    "width",
+                                                    "height",
+                                                    "topLeft",
+                                                    "topRight",
+                                                    "bottomLeft",
+                                                    "bottomRight",
+                                                    "fontSize",
+                                                    "fontName",
+                                                    "gridSize",
+                                                    "nearestGridSerialNumber",
+                                                    "fontcolor"
+                                                ]
+                                                }
+                                            ]
+                                            }
+                                        },
+                                        "required": [
+                                            "width",
+                                            "height",
+                                            "texts"
+                                        ]
+                                        }
+
+                        try:
+                            logger.info('start to validate template')
+                            print(f'start to validate template:\r{setting}')
+
+                            validate(setting, schema=templateschema)
+                                #    validate template format ,contain videoID  contain text type ,hints for user to edit temporary
+                            ultra[folder]['thumb_gen_setting']['template']=setting['texts']
+                            ultra[folder]['thumb_gen_setting']['result_image_width']=setting['width']
+                            ultra[folder]['thumb_gen_setting']['result_image_height']=setting['height']
+                            ultra[folder]['thumb_gen_setting']['template_path']=thumbnail_template_file_path
+
+                            logger.info(f'validate thumbnail gen template passed')
+
+
+
+                            logger.info('start to validate metadata for thumbgen setting')
+                            allowedTextTypes=[]
+                            for item in setting['texts']:
+                                allowedTextTypes.append(item['textType'])
+                            df=None                            
+                            if len(allowedTextTypes)==0:
+                                logger.error('it seemed textType in the template is empty')
+                                passed=False
+                            else:
+
+                                if ultra[folder]['metafileformat']=='xlsx':
+                                    df=pd.read_excel(os.path.join(folder,'videos-meta.xlsx'))
+                                elif ultra[folder]['metafileformat']=='json':
+                                    df=pd.read_json(os.path.join(folder,'videos-meta.json'))        
+                                elif ultra[folder]['metafileformat']=='csv':
+                                    df=pd.read_csv(os.path.join(folder,'videos-meta.csv'))   
+                                # List of allowed field names
+                                logger.info(f'start to check {allowedTextTypes} defined in template')
+
+                                # Check the data dictionary for allowed fields and empty values in each entry
+                                for key, entry in df.items():
+                                    missing_fields = [field for field in allowedTextTypes if field not in entry.keys()]
+
+                                    if missing_fields:
+                                        print(f"The following allowed fields are missing in entry {key}: {', '.join(missing_fields)}")
+                                        logger.error(f'{missing_fields} filed in defined in template,but not found in metafile,add a column named {missing_fields} in metafile')                                    
+
+                                        passed=False
+
+                                    else:
+                                        for field in allowedTextTypes:
+                                            value = entry[field]
+                                            if value == "":
+                                                logger.error(f'{field} value is empty in entry {key}.')   
+                                                passed=False
+                                             
+                                            else:
+                                                logger.info(f'{field} value is {value} in entry {key}.')                                                
+
+                            if passed==True:
+                                logger.info('validate metadata for thumbgen setting passed')
+                                if df is not None:
+                                    logger.info('update user submited metafile to video assets')
+                                    logger.info(f'user submited:\r{df.to_json(orient="records")}')
+                                    ultra[folder]['videos']=df.to_json(orient='records')
+                            else:
+                                logger.error('validate metadata for thumbgen setting failed')
+
+                        
+                        except ValidationError as e:
+                            logger.error(f'validate thumbnail gen template failed')
+
+                            logger.error(f'this thumb template json dont follow json schema format,check the error msg:\n{e}')
+                            passed=False
+                    except Exception as e:
+                        logger.error(f'this thumb template json can not be loaded and parsed,check the error msg:\n{e}')
+                        passed=False
+
+            if mode_value==1:
+                logger.info('extract first frame of video,this extension is not supported yet')
+            elif mode_value==2:
+                logger.info('extract random key frame of video,this extension is not supported yet')
+            elif mode_value==3:
+                if os.path.exists(thummbnail_bg_folder_path):
+                    logger.info('start to validate bg folder')
+
+                    bg_images=check_folder_thumb_bg(thummbnail_bg_folder_path)
+                    if len(bg_images)>0:
+                        ultra[folder]['thumb_gen_setting']['bg_folder']=thummbnail_bg_folder_path
+                        
+                        ultra[folder]['thumb_gen_setting']['bg_folder_images']=bg_images
+                        print('debug-------',bg_images)
+                        for filename in  ultra[folder]['filenames']:
+                            ultra[folder]['videos'][filename]['thumbnail_bg_image_path']=random.choice(bg_images)
+                        logger.info('validate bg folder passed')
+
+ 
+
+                    else:
+                        logger.error('validate bg folder failed')
+                        passed=False
+
+                        logger.info(f'there is no images under {thummbnail_bg_folder_path}.please choose another folder')
+                else:
+                    logger.error('please choose a valid thummbnail_bg_folder_path ')   
+                    passed=False
+
+            else:
+                logger.error('validate bg folder failed')
+
+                logger.info(f' modevalue is {mode_value} ,this extension is not supported yet')
+                passed=False
+
+
+
     else:
         logger.info('please provide a valid mode value')
-    if mode_value=='5':
-        logger.info('ignore the thumbnail gen process')    
-    else: 
-        if thumbnail_template_file_path is None or thumbnail_template_file_path=='':
-            logger.error('please choose a thumbtemplate first')
-        
+    if passed==True:
+        lab = tk.Label(frame,text="validation passed, go to gen thumbnail",bg="lightyellow")
+        lab.grid(row = 10, column = 1,  padx=14, pady=15,sticky='nw')     
+        lab.after(5000,lab.destroy)    
+        print(f'sync total video assets with thumb gen video meta {ultra[folder]["videos"]}')
 
+        totaljson=os.path.join(folder,videoassetsfilename)
+
+        if os.path.exists(totaljson):
+            with open(totaljson,'w') as f:
+                f.write(jsons.dumps(ultra[folder]))        
         else:
-            logger.info(f'load thumbnail gen setting json from:\n {thumbnail_template_file_path}')
-            if os.path.exists(thumbnail_template_file_path):
-                try:
-                    # fp = open(thumbnail_template_file_path, 'r', encoding='utf-8')
-                    # setting_json = fp.read()                    
-                    setting=json.load(open(thumbnail_template_file_path, 'r', encoding='utf-8')) 
-                            #    validate template format ,contain videoID  contain text type ,hints for user to edit temporary
-                    ultra[folder]['thumb_gen_setting']['template']=setting['texts']
-                    ultra[folder]['thumb_gen_setting']['result_image_width']=setting['width']
-                    ultra[folder]['thumb_gen_setting']['result_image_height']=setting['height']
-                    
-
-
-                        # "thumb_gen_setting":{
-                        # "mode":'4',
-                        # "result_image_size": "",
-                        # "bg_image": "",                            
-                        # "template":[] ,  
-                        # "bg_folder":"",
-                        # "bg_folder_images":[]                            
-                        # },
-
-
-                except Exception as e:
-                    logger.error(f'this thumb template json can not be parsed,check the error msg:\n{e}')
-
-        if mode_value=='1':
-            print('extract first frame of video')
-        elif mode_value=='2':
-            print('extract random key frame of video')
-        elif mode_value=='3':
-            bg_images=check_folder_thumb_bg(thummbnail_bg_folder_path)
-            if len(bg_images)>0:
-                ultra[folder]['thumb_gen_setting']['bg_folder']=thummbnail_bg_folder_path
-                
-                ultra[folder]['thumb_gen_setting']['bg_images']=bg_images
-                for filename in  ultra[folder]['filenames']:
-                    ultra[folder]['videos'][filename]['thumb_gen_setting']['bg_image']=random.choice(bg_images)
-        elif mode_value=='4':
-            ultra[folder]['thumb_gen_setting']['bg_image']=thummbnail_bg_file_path            
-            
-        else:
-            print('')     
-    logger.info('update metajson with thumb gen setting')
-    tmpjson=os.path.join(folder,'video-assets.json')
-    if os.path.exists(tmpjson):
-        with open(tmpjson,'w') as f:
-            f.write(jsons.dumps(ultra[folder]))        
-    else:
-        with open(tmpjson,'a') as f:
-            f.write(jsons.dumps(ultra[folder]))    
+            with open(totaljson,'a') as f:
+                f.write(jsons.dumps(ultra[folder]))    
 def openVideoMetaFile(folder):
     print(f'you choose metafile format is:{metafileformat.get()}')
     if metafileformat.get():
@@ -2754,36 +2859,20 @@ def openVideoMetaFile(folder):
     else:
         logger.error(f'you dont choose a valid meta fileformat:{metafileformat.get()}')
 
-def genThumbnailFromTemplate(video_folder,thumb_template,mode,bg_folder):
+def genThumbnailFromTemplate(folder,thumbnail_template_file_path,mode_value,thummbnail_bg_folder_path,frame=None):
 
-    ValidateThumbnailGenMetas()
-    print('find missing files')
-    print('render thumbnails for videos')
-    print('load thumb template to exist settings')
-    thumbtemplatejson=json.load(open(thumb_template))
-    # validate template
-    ultra[video_folder]['thumb_gen_setting']['template']=thumbtemplatejson
-    print('5 mode for humb gen settings field update')
-    if mode==3:
-        print('3=',ultra[video_folder]['thumb_gen_setting']['bg_folder'])
+    ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thummbnail_bg_folder_path,frame)
+
+
     print('read video meta')
 
-    if metafileformat.get()=='xlsx':
-        pd.read_excel(os.path.join(video_folder,'videos.xlsx'))
-    elif metafileformat.get()=='json':
-        pd.read_excel(os.path.join(video_folder,'videos.json'))        
-    elif metafileformat.get()=='csv':
-        pd.read_excel(os.path.join(video_folder,'videos.csv'))     
-# validate heading subheading text exist or empty should tell user to entry
+ 
     print('read thumb gen settings')
-    	# 	"mode": "4",
-		# "result_image_width": "",
-		# "result_image_height": "",
-		# "bg_image": "",
-		# "template_path": "",
-		# "bg_folder": "",
-		# "bg_folder_images": [],
+
     ultra[video_folder]['thumb_gen_setting']        
+
+
+
 
 def render_thumb_gen(frame,isneed,folder):
     if isneed==True:
@@ -2836,10 +2925,11 @@ def render_thumb_update_view(frame,folder,thumbmode,previous_frame=None):
 
         b_check_metas_=tk.Button(frame,text="edit videometa with local editor",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
         b_check_metas_.grid(row = 6, column = 0, padx=14, pady=15,sticky='nswe') 
+        if ultra[folder]['metafileformat']=='json':
 
-        b_edit_thumb_metas=tk.Button(frame,text="edit json with online editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
-        b_edit_thumb_metas.grid(row = 5, column = 0, padx=14, pady=15,sticky='nswe') 
-        Tooltip(b_edit_thumb_metas, text='fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field' , wraplength=200)
+            b_edit_thumb_metas=tk.Button(frame,text="edit json with online editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
+            b_edit_thumb_metas.grid(row = 5, column = 0, padx=14, pady=15,sticky='nswe') 
+            Tooltip(b_edit_thumb_metas, text='fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field' , wraplength=200)
         b_open_video_folder=tk.Button(frame,text="open local",command=lambda: threading.Thread(target=openLocal(folder)).start() )
         b_open_video_folder.grid(row = 4, column = 0, padx=14, pady=15,sticky='nswe')      
 
@@ -2852,14 +2942,20 @@ def render_thumb_update_view(frame,folder,thumbmode,previous_frame=None):
 
     else:
         mode = tk.IntVar()
-        mode.set(5)
+        mode.set(3)
         lab = tk.Label(frame,text="Step1:请选择你的缩略图生成模式",bg="lightyellow",width=30)
         lab.grid(row = 1, column = 0,  padx=14, pady=15,sticky='nw')    
         b_return=tk.Button(frame,text="Back to previous page",command=lambda: render_thumb_gen(previous_frame,True,folder))
         b_return.grid(row = 1, column = 2,  padx=14, pady=15,sticky='e')              
         mode1=tk.Radiobutton(frame,text="选择视频第一帧作为缩略图背景图",variable=mode,value=1,command='')
+        mode1.configure(state = tk.DISABLED)
+        Tooltip(mode1, text='you dont install this extension yet' , wraplength=200)
+
         mode1.grid(row = 2, column = 0,  padx=14, pady=15,sticky='nw') 
         mode2=tk.Radiobutton(frame,text="视频任意关键帧作为背景图",variable=mode,value=2,command='')
+        mode2.configure(state = tk.DISABLED)
+        Tooltip(mode2, text='you dont install this extension yet' , wraplength=200)
+
         mode2.grid(row = 2, column = 1,  padx=14, pady=15,sticky='nw') 
         mode3=tk.Radiobutton(frame,text="文件夹中随机一张图片作为背景图",variable=mode,value=3,command='')
         mode3.grid(row = 3, column = 0,  padx=14, pady=15,sticky='nw') 
@@ -2900,23 +2996,26 @@ def render_thumb_update_view(frame,folder,thumbmode,previous_frame=None):
 
         b_check_metas_=tk.Button(frame,text="edit videometa",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
         b_check_metas_.grid(row = 8, column = 0, padx=14, pady=15,sticky='nswe') 
+        Tooltip(b_check_metas_, text='fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field' , wraplength=200)
 
-        b_edit_thumb_metas=tk.Button(frame,text="edit json with online editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
-        b_edit_thumb_metas.grid(row = 8, column = 1, padx=14, pady=15,sticky='nswe') 
-        Tooltip(b_edit_thumb_metas, text='fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field' , wraplength=200)
+        if ultra[folder]['metafileformat']=='json':
+
+            b_edit_thumb_metas=tk.Button(frame,text="edit json with online editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
+            b_edit_thumb_metas.grid(row = 8, column = 1, padx=14, pady=15,sticky='nswe') 
+            Tooltip(b_edit_thumb_metas, text='if you dont have json editor locally,try this' , wraplength=200)
         b_open_video_folder=tk.Button(frame,text="open local",command=lambda: threading.Thread(target=openLocal(folder)).start() )
         b_open_video_folder.grid(row = 8, column = 2, padx=14, pady=15,sticky='nswe')    
         lab = tk.Label(frame,text="Step4:生成缩略图",bg="lightyellow",width=30)
         lab.grid(row = 9, column = 0,  padx=14, pady=15,sticky='nw')         
 
 
-        b_update_metas_=tk.Button(frame,text="validate meta",command=lambda: ValidateThumbnailGenMetas(folder,thumbnail_template_file.get(),mode.get(),thummbnail_bg_file.get(),thummbnail_bg_folder.get()))
+        b_update_metas_=tk.Button(frame,text="validate meta",command=lambda: ValidateThumbnailGenMetas(folder,thumbnail_template_file.get(),mode.get(),thummbnail_bg_folder.get(),frame))
         b_update_metas_.grid(row = 10, column = 0,  padx=14, pady=15,sticky='nswe') 
         
 
 
 
-        b_gen_thumb_=tk.Button(frame,text="gen thumb",command=lambda: genThumbnailFromTemplate(folder,thumbnail_template_file.get(),mode))
+        b_gen_thumb_=tk.Button(frame,text="gen thumb",command=lambda: genThumbnailFromTemplate(folder,thumbnail_template_file.get(),mode.get(),thummbnail_bg_folder.get(),frame))
         b_gen_thumb_.grid(row = 11, column =0, padx=14, pady=15,sticky='nswe') 
 
 
@@ -3427,7 +3526,7 @@ def uploadView(frame,ttkframe,lang):
     # treeview_flight
     tree = ttk.Treeview(ttkframe, height = 20, column = 9)
     tree["column"]=('#0','#1','#2','#3','#4','#5','#6','#7')
-    tree.grid(row = 3, column = 0, columnspan = 10, padx=14, pady=15)
+    tree.grid(row = 3, column =3,columnspan=50,padx=14, pady=15,sticky='w')
 
     tree.heading('#0', text = 'Task No.')
     tree.column('#0', anchor = 'center', width = 70)
@@ -3449,90 +3548,55 @@ def uploadView(frame,ttkframe,lang):
     tree.heading('#8', text = 'local path')
     tree.column('#8', anchor = 'center', width = 80)
 
-    btn5= tk.Button(ttkframe, text="Get Info", command = lambda: threading.Thread(target=queryTasks(tree,prod_engine,logger,vid.get())).start())
-    btn5.grid(row = 0, column = 1, columnspan = 10, padx=14, pady=15)
+
     
     
         
     global vid
     vid = tk.StringVar()
     lbl15 = tk.Label(ttkframe, text='Enter vid.')
-    lbl15.grid(row = 0, column = 1)
-    txt15 = tk.Entry(ttkframe, width=11,textvariable=vid)
+    lbl15.grid(row = 0, column = 3,sticky='w')
+    txt15 = tk.Entry(ttkframe, textvariable=vid)
     txt15.insert(0,'input task id')
-    txt15.grid(row = 1, column = 1)
+    txt15.grid(row = 1, column = 3,sticky='w',columnspan=2)
+
+    channelname = tk.StringVar()
+    lbl16 = tk.Label(ttkframe, text='Enter channelname.')
+    lbl16.grid(row = 0, column = 6,sticky='w')
+    txt16 = tk.Entry(ttkframe,textvariable=channelname)
+    txt16.insert(0,'input channelname')
+    txt16.grid(row = 1, column = 6,sticky='w',columnspan=2)
+
+    releasedata = tk.StringVar()
+    lbl17 = tk.Label(ttkframe, text='Enter releasedata.')
+    lbl17.grid(row = 0, column = 9,sticky='w')
+    txt17 = tk.Entry(ttkframe, textvariable=releasedata)
+    txt17.insert(0,'input releasedata')
+    txt17.grid(row = 1, column = 9,sticky='w',columnspan=2)
 
 
+    btn5= tk.Button(ttkframe, text="Get Info", command = lambda: threading.Thread(target=queryTasks(tree,prod_engine,logger,vid.get())).start())
+    btn5.grid(row = 0, column = 12,  padx=14, pady=15)
 
-
-    lb_youtube_counts = tk.Label(ttkframe, text='youtube', font=(' ', 15))
-    lb_youtube_counts.grid(row = 5, column = 0)
-
-    lb_tiktok_counts = tk.Label(ttkframe, text='tiktok', font=(' ', 15))
-    lb_tiktok_counts.grid(row = 6, column =0)
-
-    lb_total_counts = tk.Label(ttkframe, text='all', font=(' ', 15))
-    lb_total_counts.grid(row = 7, column =0)
-    
-    lb_video_counts = tk.Label(ttkframe, text='success', font=(' ', 15))
-    lb_video_counts.grid(row = 4, column = 1)
-    
-    lb_video_queuedcounts = tk.Label(ttkframe, text='queued', font=(' ', 15))
-    lb_video_queuedcounts.grid(row = 4, column = 2)
-
-    lb_video_failure_counts = tk.Label(ttkframe, text='failure', font=(' ', 15))
-    lb_video_failure_counts.grid(row = 4, column = 3)
-
-
-    lb_youtube_success_counts_value = tk.Label(ttkframe, text=str(checkvideocounts), font=(' ', 18))
-    lb_youtube_success_counts_value.grid(row = 5, column = 1)
-
-    lb_youtube_queued_counts_value = tk.Label(ttkframe, text=str(checkvideocounts), font=(' ', 18))
-    lb_youtube_queued_counts_value.grid(row = 5, column = 2)
-
-    lb_youtube_failure_counts_value = tk.Label(ttkframe, text=str(checkvideocounts), font=(' ', 18))
-    lb_youtube_failure_counts_value.grid(row = 5, column = 3)
-    
-    
-    lb_tiktok_success_counts_value = tk.Label(ttkframe, text=str(checkvideocounts), font=(' ', 18))
-    lb_tiktok_success_counts_value.grid(row = 6, column = 1)
-
-    lb_tiktok_queued_counts_value = tk.Label(ttkframe, text=str(checkvideocounts), font=(' ', 18))
-    lb_tiktok_queued_counts_value.grid(row = 6, column = 2)
-
-    lb_tiktok_failure_counts_value = tk.Label(ttkframe, text=str(checkvideocounts), font=(' ', 18))
-    lb_tiktok_failure_counts_value.grid(row = 6, column = 3)
-    
-    
-
-    lb_total_success_counts_value = tk.Label(ttkframe, text=str(checkvideocounts), font=(' ', 18))
-    lb_total_success_counts_value.grid(row = 7, column = 1)
-
-    lb_total_queued_counts_value = tk.Label(ttkframe, text=str(checkvideocounts), font=(' ', 18))
-    lb_total_queued_counts_value.grid(row = 7, column = 2)
-
-    lb_total_failure_counts_value = tk.Label(ttkframe, text=str(checkvideocounts), font=(' ', 18))
-    lb_total_failure_counts_value.grid(row = 7, column = 3)
-    
 
         
     
     b_down_video_metas_temp = tk.Button(frame, text=i18labels("downVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=downVideoMetas).start())
-    b_down_video_metas_temp.place(x=10, y=int(50))    
+    b_down_video_metas_temp.grid(row = 0, column = 0, padx=14, pady=15)
     
 
     b_editVideoMetas = tk.Button(frame, text=i18labels("editVideoMetas", locale=lang, module="g"), command=
                                 #  lambda: webbrowser.open_new("https://jsoncrack.com/editor")
                                  lambda: threading.Thread(target=webbrowser.open_new("https://jsoncrack.com/editor")).start())
-    b_editVideoMetas.place(x=10, y=int(100))
+    b_editVideoMetas.grid(row = 0, column = 1, padx=14, pady=15)
     
 
 
     l_import_video_metas = tk.Label(frame, text=i18labels("importVideoMetas", locale=lang, module="g"), font=(' ', 14))
-    l_import_video_metas.place(x=10, y=150, anchor=tk.NW)
+    l_import_video_metas.grid(row = 2, column = 0, padx=14, pady=15)
     global video_meta_json_path
     b_imported_video_metas_file=tk.Button(frame,text="Select",command=SelectVideoMetasfile)
-    b_imported_video_metas_file.place(x=200, y=150)   
+    b_imported_video_metas_file.grid(row = 2, column = 2, padx=14, pady=15)
 
 
     global imported_video_metas_file   
@@ -3541,23 +3605,74 @@ def uploadView(frame,ttkframe,lang):
 
     # l_imported_video_metas_file.place(x=10, y=200)
     e_imported_video_metas_file = tk.Entry(frame, width=int(width*0.02), textvariable=imported_video_metas_file)
-    e_imported_video_metas_file.place(x=10, y=200)
+    e_imported_video_metas_file.grid(row = 2, column = 1, padx=14, pady=15)
 
   
     b_validate_video_metas = tk.Button(frame, text=i18labels("validateVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=validateMetafile(test_engine,ttkframe,imported_video_metas_file.get())).start())
-    b_validate_video_metas.place(x=10, y=int(250))
+    b_validate_video_metas.grid(row = 4, column = 0, padx=14, pady=15)
     b_createuploadsession = tk.Button(frame, text=i18labels("createuploadsession", locale=lang, module="g"), command=lambda: threading.Thread(target=validateMetafile(prod_engine,ttkframe,imported_video_metas_file.get())).start())
-    b_createuploadsession.place(x=10, y=int(300))
+    b_createuploadsession.grid(row = 5, column = 0, padx=14, pady=15)
 
     # test upload  跳转到一个单独页面，录入一个视频的上传信息，点击上传进行测试。
     b_upload = tk.Button(frame, text=i18labels("testupload", locale=lang, module="g"), command=lambda: threading.Thread(target=testupload(DBM('test'),ttkframe)).start())
-    b_upload.place(x=10, y=int(350))
+    b_upload.grid(row = 4, column = 1, padx=14, pady=15)
 
     b_upload = tk.Button(frame, text=i18labels("upload", locale=lang, module="g"), command=lambda: threading.Thread(target=upload).start())
-    b_upload.place(x=10, y=int(400))
+    b_upload.grid(row = 5, column = 1, padx=14, pady=15)
+
+    lb_youtube_counts = tk.Label(frame, text='youtube', font=(' ', 15))
+    lb_youtube_counts.grid(row = 8, column = 0)
+
+    lb_tiktok_counts = tk.Label(frame, text='tiktok', font=(' ', 15))
+    lb_tiktok_counts.grid(row = 9, column =0)
+
+    lb_total_counts = tk.Label(frame, text='all', font=(' ', 15))
+    lb_total_counts.grid(row = 10, column =0)
+
+    lb_account_counts = tk.Label(frame, text='account', font=(' ', 15))
+    lb_account_counts.grid(row = 7, column = 1)
+
+    lb_video_counts = tk.Label(frame, text='success', font=(' ', 15))
+    lb_video_counts.grid(row = 7, column = 2)
+    
+    lb_video_queuedcounts = tk.Label(frame, text='queued', font=(' ', 15))
+    lb_video_queuedcounts.grid(row = 7, column = 3)
+
+    lb_video_failure_counts = tk.Label(frame, text='failure', font=(' ', 15))
+    lb_video_failure_counts.grid(row = 7, column = 4)
 
 
-    # queryTasks(tree,prod_engine,logger,vid.get())
+    lb_youtube_success_counts_value = tk.Label(frame, text=str(checkvideocounts), font=(' ', 18))
+    lb_youtube_success_counts_value.grid(row = 8, column = 1)
+
+    lb_youtube_queued_counts_value = tk.Label(frame, text=str(checkvideocounts), font=(' ', 18))
+    lb_youtube_queued_counts_value.grid(row = 8, column = 2)
+
+    lb_youtube_failure_counts_value = tk.Label(frame, text=str(checkvideocounts), font=(' ', 18))
+    lb_youtube_failure_counts_value.grid(row = 8, column = 3)
+    
+    
+    lb_tiktok_success_counts_value = tk.Label(frame, text=str(checkvideocounts), font=(' ', 18))
+    lb_tiktok_success_counts_value.grid(row = 9, column = 1)
+
+    lb_tiktok_queued_counts_value = tk.Label(frame, text=str(checkvideocounts), font=(' ', 18))
+    lb_tiktok_queued_counts_value.grid(row = 9, column = 2)
+
+    lb_tiktok_failure_counts_value = tk.Label(frame, text=str(checkvideocounts), font=(' ', 18))
+    lb_tiktok_failure_counts_value.grid(row = 9, column = 3)
+    
+    
+
+    lb_total_success_counts_value = tk.Label(frame, text=str(checkvideocounts), font=(' ', 18))
+    lb_total_success_counts_value.grid(row = 10, column =1)
+
+    lb_total_queued_counts_value = tk.Label(frame, text=str(checkvideocounts), font=(' ', 18))
+    lb_total_queued_counts_value.grid(row = 10, column = 2)
+
+    lb_total_failure_counts_value = tk.Label(frame, text=str(checkvideocounts), font=(' ', 18))
+    lb_total_failure_counts_value.grid(row = 10, column = 3)
+    
+
     
 def  filterProxiesLocations(newWindow,langlist,engine,logger,city,country,tags,status,latest_conditions_value):
     city=city.lower()
@@ -3915,7 +4030,7 @@ def metaView(left,right,lang):
     metafileformatbox.current(0)
     metafileformatbox.bind("<<ComboboxSelected>>", selectedmetafileformat)
 
-    b_download_meta_templates=tk.Button(left,text="download templates",command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
+    b_download_meta_templates=tk.Button(left,text="check video meta files",command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
     b_download_meta_templates.grid(row = 1, column = 3, sticky='w', padx=14, pady=15)  
     Tooltip(b_download_meta_templates, text='run the check video assets will auto gen templates under folder if they dont' , wraplength=200)
 
@@ -4216,15 +4331,25 @@ def render(root,window,log_frame,lang):
 
     upload_frame = ttk.Frame(tab_control)
     upload_frame.grid_rowconfigure(0, weight=1)
-    upload_frame.grid_columnconfigure(0, weight=1, uniform="group1")
-    upload_frame.grid_columnconfigure(1, weight=1, uniform="group1")
-    upload_frame.columnconfigure((0,1), weight=1)
+    # upload_frame.grid_columnconfigure(0, weight=1, uniform="group1")
+    # upload_frame.grid_columnconfigure(1, weight=2, uniform="group1")
+    upload_frame.grid_columnconfigure(0, weight=1 )
+    upload_frame.grid_columnconfigure(1, weight=3)
+
+    # upload_frame.columnconfigure((0), weight=1)
+    # upload_frame.columnconfigure((1), weight=2)
     
+    # upload_frame.grid_columnconfigure(0, weight=1)
+    # upload_frame.grid_columnconfigure(1, weight=2) 
+     # Right frame occupies twice the width
+
     upload_frame_left = tk.Frame(upload_frame, height = height)
     upload_frame_left.grid(row=0,column=0,sticky="nsew")
     upload_frame_right = tk.Frame(upload_frame, height = height)
-    upload_frame_right.grid(row=0,column=1,sticky="nsew") 
+    upload_frame_right.grid(row=0,column=1,sticky="nse") 
 
+    # upload_frame_right.columnconfigure((0,1,2,3,4), weight=1)
+    # upload_frame_right.grid_columnconfigure((0,1,2,3,4), weight=1)
 
     # meta_frame = ttk.Frame(tab_control)
     # meta_frame.rowconfigure(0, weight=1)
@@ -4354,9 +4479,11 @@ if __name__ == '__main__':
         global root
         root = tk.Tk()
         # root.geometry('1280x720')
-        root.geometry(window_size)
+        # root.geometry(window_size)
 
         window=tk.Frame(root,width=str(width),  height=str(height+200),  )
+        window=tk.Frame(root  )
+
         # from src.collapsiblepane import CollapsiblePane as cp
         log_frame =tk.Frame(window, width = width, height = 5)
         # = cp(root, 'Expanded', 'Collapsed')
