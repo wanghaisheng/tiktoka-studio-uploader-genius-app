@@ -2787,14 +2787,21 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
                                 if df is not None:
                                     logger.info('start to update user submited metafile to video assets')
                                     # df.to_json()==str  直接赋值 这个key的值就是str 后面没法拿video的字段值
-                                    print('==1==',type(ultra[folder]['videos']))
-                                    print('==2==',ultra[folder]['videos'])
+                                    # print('==1==',type(ultra[folder]['videos']))
+                                    # print('==2==',ultra[folder]['videos'])
 
 
-                                    print('==3==',type(json.loads(df.to_json())))
-                                    print('==4==',json.loads(df.to_json()))
+                                    # print('==3==',type(json.loads(df.to_json())))
+                                    # print('==4==',json.loads(df.to_json()))
+                                    new=UltraDict()
+                                    for key in json.loads(df.to_json()).keys():
+                                        new[key]  =json.loads(df.to_json())[key]                             
+                                    
+                                    # new=json.loads(df.to_json())
+                                    # 如果不先 new一个UltraDict 而是仅仅凭借json.loads(df.to_json() python 内置的dict类型直接赋值，就会出错
+                                    # 奇怪的是这种方法不行，得像上面那样遍历每一个key 赋值以后才行
                                     try:
-                                        ultra[folder]['videos']=json.loads(df.to_json())
+                                        ultra[folder]['videos']=new
                                     except Exception as e:
                                         print(f'wohhha {e}')
                                     logger.info('update user submited metafile to video assets passed')
@@ -2830,20 +2837,12 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
                         for filename in  ultra[folder]['filenames']:
                             bgpath=random.choice(bg_images)
 
-                                
-                                
-                            # print('111',ultra[folder]['videos'][filename]['thumbnail_local_path'])
-                            # print('333',ultra[folder]['videos'][filename]['thumbnail_bg_image_path'])
-
-                            # for key in ultra[folder]['videos'][filename].keys():
-                            #     key_type = type(key)
-                            #     print(f"The type of the key '{key}' is {key_type.__name__}")                                
+                                            
                             if  ultra[folder]['videos'][filename]['thumbnail_local_path']==[]:
                                 ultra[folder]['videos'][filename]['thumbnail_bg_image_path']=bgpath
                             else:
                                 logger.info(f"{ultra[folder]['videos'][filename]} has got thumbnail setup:\r{ultra[folder]['videos'][filename]['thumbnail_local_path']}")
 
-                            print('222',ultra[folder]['videos'][filename]['thumbnail_bg_image_path'])
 
                         logger.info('validate bg folder passed')
 
