@@ -33261,3 +33261,736 @@ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader/tests
 2023-09-20 17:04:54,659 - INFO - validate metadata for thumbgen setting passed
 2023-09-20 17:04:54,659 - INFO - update user submited metafile to video assets
 2023-09-20 17:04:54,662 - INFO - start to validate bg folder
+2023-09-20 20:25:41,692 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-20 20:25:42,516 - INFO - TiktokaStudio GUI started
+2023-09-20 20:26:25,397 - INFO - detecting----------False
+2023-09-20 20:26:25,417 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader/tests
+2023-09-20 20:26:25,424 - INFO - start to check thumbFilePaths for video: 1
+2023-09-20 20:26:25,424 - INFO - update to 1 meta json
+2023-09-20 20:26:25,426 - INFO - start to check desFilePaths for video: 1
+2023-09-20 20:26:25,426 - INFO - update to 1 meta json
+2023-09-20 20:26:25,427 - INFO - start to check metaFilePaths for video: 1
+2023-09-20 20:26:25,427 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader/tests/1.json
+2023-09-20 20:26:25,427 - INFO - intial metaFilePaths for 1:
+
+2023-09-20 20:26:25,428 - INFO - update to 1 meta json
+2023-09-20 20:34:00,422 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 20:34:00,446 - INFO - start to validate template
+2023-09-20 20:34:00,483 - INFO - validate thumbnail gen template passed
+2023-09-20 20:34:00,484 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 20:34:00,490 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 20:34:00,491 - ERROR - heading value is empty in entry 1.
+2023-09-20 20:34:00,492 - ERROR - subheading value is empty in entry 1.
+2023-09-20 20:34:00,492 - ERROR - validate metadata for thumbgen setting failed
+2023-09-20 20:34:00,492 - INFO - start to validate bg folder
+2023-09-20 20:34:00,493 - INFO - validate bg folder passed
+2023-09-20 20:34:58,668 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 20:34:58,690 - INFO - start to validate template
+2023-09-20 20:34:58,696 - INFO - validate thumbnail gen template passed
+2023-09-20 20:34:58,696 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 20:34:58,701 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 20:34:58,701 - INFO - heading value is xxxxxxx in entry 1.
+2023-09-20 20:34:58,702 - INFO - subheading value is yyyyyyy in entry 1.
+2023-09-20 20:34:58,702 - INFO - validate metadata for thumbgen setting passed
+2023-09-20 20:34:58,702 - INFO - update user submited metafile to video assets
+2023-09-20 20:34:58,702 - INFO - user submited:[{"1":0},{"1":""},{"1":1},{"1":""},{"1":""},{"1":"xxxxxxx"},{"1":false},{"1":true},{"1":true},{"1":true},{"1":true},{"1":true},{"1":false},{"1":true},{"1":true},{"1":0},{"1":""},{"1":"10:15"},{"1":0},{"1":"yyyyyyy"},{"1":""},{"1":""},{"1":""},{"1":[]},{"1":""},{"1":"1.mp4"},{"1":""},{"1":""},{"1":""},{"1":"\/Users\/wenke\/github\/tiktoka-studio-uploader\/tests\/1.mp4"},{"1":"1"}]
+2023-09-20 20:34:58,703 - INFO - start to validate bg folder
+2023-09-20 20:42:37,367 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-20 20:42:37,751 - INFO - TiktokaStudio GUI started
+2023-09-20 20:43:05,013 - INFO - detecting----------False
+2023-09-20 20:43:05,014 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos
+2023-09-20 20:43:05,023 - INFO - start to check thumbFilePaths for video: 1
+2023-09-20 20:43:05,023 - INFO - create a fresh 1 meta json
+2023-09-20 20:43:05,025 - INFO - start to check desFilePaths for video: 1
+2023-09-20 20:43:05,025 - INFO - update to 1 meta json
+2023-09-20 20:43:05,026 - INFO - start to check metaFilePaths for video: 1
+2023-09-20 20:43:05,026 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/1.json
+2023-09-20 20:43:05,026 - INFO - intial metaFilePaths for 1:
+
+2023-09-20 20:43:05,027 - INFO - update to 1 meta json
+2023-09-20 20:43:49,269 - INFO - detecting----------True
+2023-09-20 20:43:49,281 - INFO - we cached 44253730000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos
+2023-09-20 20:43:49,282 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-20 20:46:20,835 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 20:46:20,836 - INFO - start to validate template
+2023-09-20 20:46:20,889 - INFO - validate thumbnail gen template passed
+2023-09-20 20:46:20,889 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 20:46:20,895 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 20:46:20,897 - ERROR - heading value is empty in entry 1.
+2023-09-20 20:46:20,897 - ERROR - subheading value is empty in entry 1.
+2023-09-20 20:46:20,897 - ERROR - validate metadata for thumbgen setting failed
+2023-09-20 20:46:20,897 - INFO - start to validate bg folder
+2023-09-20 20:46:20,898 - INFO - validate bg folder passed
+2023-09-20 20:47:01,819 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 20:47:01,820 - INFO - start to validate template
+2023-09-20 20:47:01,825 - INFO - validate thumbnail gen template passed
+2023-09-20 20:47:01,825 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 20:47:01,830 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 20:47:01,830 - INFO - heading value is xxxxxxxx in entry 1.
+2023-09-20 20:47:01,830 - INFO - subheading value is zzzzzzz in entry 1.
+2023-09-20 20:47:01,831 - INFO - validate metadata for thumbgen setting passed
+2023-09-20 20:47:01,831 - INFO - update user submited metafile to video assets
+2023-09-20 20:47:01,831 - INFO - start to validate bg folder
+2023-09-20 20:52:30,495 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-20 20:52:30,831 - INFO - TiktokaStudio GUI started
+2023-09-20 20:52:47,962 - INFO - detecting----------False
+2023-09-20 20:52:48,018 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos
+2023-09-20 20:52:48,025 - INFO - start to check thumbFilePaths for video: 1
+2023-09-20 20:52:48,026 - INFO - update to 1 meta json
+2023-09-20 20:52:48,028 - INFO - start to check desFilePaths for video: 1
+2023-09-20 20:52:48,028 - INFO - update to 1 meta json
+2023-09-20 20:52:48,029 - INFO - start to check metaFilePaths for video: 1
+2023-09-20 20:52:48,029 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/1.json
+2023-09-20 20:52:48,029 - INFO - intial metaFilePaths for 1:
+
+2023-09-20 20:52:48,030 - INFO - update to 1 meta json
+2023-09-20 20:53:20,558 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 20:53:20,559 - INFO - start to validate template
+2023-09-20 20:53:20,589 - INFO - validate thumbnail gen template passed
+2023-09-20 20:53:20,589 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 20:53:20,595 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 20:53:20,595 - INFO - heading value is xxxxxx in entry 1.
+2023-09-20 20:53:20,596 - INFO - subheading value is yyyyyyy in entry 1.
+2023-09-20 20:53:20,596 - INFO - validate metadata for thumbgen setting passed
+2023-09-20 20:53:20,596 - INFO - update user submited metafile to video assets
+2023-09-20 20:53:20,597 - INFO - start to validate bg folder
+2023-09-20 20:55:13,198 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-20 20:55:13,544 - INFO - TiktokaStudio GUI started
+2023-09-20 20:55:27,999 - INFO - detecting----------False
+2023-09-20 20:55:28,000 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos
+2023-09-20 20:55:28,005 - INFO - start to check thumbFilePaths for video: 1
+2023-09-20 20:55:28,005 - INFO - update to 1 meta json
+2023-09-20 20:55:28,006 - INFO - start to check desFilePaths for video: 1
+2023-09-20 20:55:28,007 - INFO - update to 1 meta json
+2023-09-20 20:55:28,007 - INFO - start to check metaFilePaths for video: 1
+2023-09-20 20:55:28,008 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/1.json
+2023-09-20 20:55:28,008 - INFO - intial metaFilePaths for 1:
+
+2023-09-20 20:55:28,008 - INFO - update to 1 meta json
+2023-09-20 20:55:42,926 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 20:55:42,927 - INFO - start to validate template
+2023-09-20 20:55:42,936 - INFO - validate thumbnail gen template passed
+2023-09-20 20:55:42,937 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 20:55:42,940 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 20:55:42,940 - ERROR - heading value is empty in entry 1.
+2023-09-20 20:55:42,940 - ERROR - subheading value is empty in entry 1.
+2023-09-20 20:55:42,940 - ERROR - validate metadata for thumbgen setting failed
+2023-09-20 20:55:42,940 - INFO - start to validate bg folder
+2023-09-20 20:55:42,941 - INFO - validate bg folder passed
+2023-09-20 20:56:02,951 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 20:56:02,952 - INFO - start to validate template
+2023-09-20 20:56:02,958 - INFO - validate thumbnail gen template passed
+2023-09-20 20:56:02,958 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 20:56:02,964 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 20:56:02,965 - INFO - heading value is zzzzzzzz in entry 1.
+2023-09-20 20:56:02,965 - INFO - subheading value is yttttt in entry 1.
+2023-09-20 20:56:02,965 - INFO - validate metadata for thumbgen setting passed
+2023-09-20 20:56:02,965 - INFO - update user submited metafile to video assets
+2023-09-20 20:56:02,966 - INFO - start to validate bg folder
+2023-09-20 20:59:31,263 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-20 20:59:31,622 - INFO - TiktokaStudio GUI started
+2023-09-20 20:59:42,539 - INFO - detecting----------False
+2023-09-20 20:59:42,556 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos
+2023-09-20 20:59:42,561 - INFO - start to check thumbFilePaths for video: 1
+2023-09-20 20:59:42,562 - INFO - update to 1 meta json
+2023-09-20 20:59:42,563 - INFO - start to check desFilePaths for video: 1
+2023-09-20 20:59:42,564 - INFO - update to 1 meta json
+2023-09-20 20:59:42,564 - INFO - start to check metaFilePaths for video: 1
+2023-09-20 20:59:42,565 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/1.json
+2023-09-20 20:59:42,565 - INFO - intial metaFilePaths for 1:
+
+2023-09-20 20:59:42,565 - INFO - update to 1 meta json
+2023-09-20 21:00:07,451 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 21:00:07,453 - INFO - start to validate template
+2023-09-20 21:00:07,465 - INFO - validate thumbnail gen template passed
+2023-09-20 21:00:07,465 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 21:00:07,470 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 21:00:07,470 - INFO - heading value is 111111 in entry 1.
+2023-09-20 21:00:07,470 - INFO - subheading value is 222222 in entry 1.
+2023-09-20 21:00:07,471 - INFO - validate metadata for thumbgen setting passed
+2023-09-20 21:00:07,471 - INFO - update user submited metafile to video assets
+2023-09-20 21:00:07,472 - INFO - start to validate bg folder
+2023-09-20 21:03:25,018 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-20 21:03:25,353 - INFO - TiktokaStudio GUI started
+2023-09-20 21:03:34,304 - INFO - detecting----------False
+2023-09-20 21:03:34,305 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos
+2023-09-20 21:03:34,310 - INFO - start to check thumbFilePaths for video: 1
+2023-09-20 21:03:34,310 - INFO - update to 1 meta json
+2023-09-20 21:03:34,312 - INFO - start to check desFilePaths for video: 1
+2023-09-20 21:03:34,312 - INFO - update to 1 meta json
+2023-09-20 21:03:34,313 - INFO - start to check metaFilePaths for video: 1
+2023-09-20 21:03:34,313 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/1.json
+2023-09-20 21:03:34,313 - INFO - intial metaFilePaths for 1:
+
+2023-09-20 21:03:34,313 - INFO - update to 1 meta json
+2023-09-20 21:03:53,408 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 21:03:53,471 - INFO - start to validate template
+2023-09-20 21:03:53,482 - INFO - validate thumbnail gen template passed
+2023-09-20 21:03:53,483 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 21:03:53,487 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 21:03:53,487 - ERROR - heading value is empty in entry 1.
+2023-09-20 21:03:53,487 - ERROR - subheading value is empty in entry 1.
+2023-09-20 21:03:53,487 - ERROR - validate metadata for thumbgen setting failed
+2023-09-20 21:03:53,488 - INFO - start to validate bg folder
+2023-09-20 21:03:53,488 - INFO - validate bg folder passed
+2023-09-20 21:04:18,975 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 21:04:18,976 - INFO - start to validate template
+2023-09-20 21:04:18,980 - INFO - validate thumbnail gen template passed
+2023-09-20 21:04:18,980 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 21:04:18,984 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 21:04:18,984 - INFO - heading value is sssssss in entry 1.
+2023-09-20 21:04:18,985 - INFO - subheading value is sssssss in entry 1.
+2023-09-20 21:04:18,985 - INFO - validate metadata for thumbgen setting passed
+2023-09-20 21:04:18,985 - INFO - update user submited metafile to video assets
+2023-09-20 21:04:18,985 - INFO - start to validate bg folder
+2023-09-20 21:04:18,986 - INFO - validate bg folder passed
+2023-09-20 21:07:03,295 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-20 21:07:03,644 - INFO - TiktokaStudio GUI started
+2023-09-20 21:07:13,732 - INFO - detecting----------False
+2023-09-20 21:07:13,733 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos
+2023-09-20 21:07:13,738 - INFO - start to check thumbFilePaths for video: 1
+2023-09-20 21:07:13,739 - INFO - update to 1 meta json
+2023-09-20 21:07:13,741 - INFO - start to check desFilePaths for video: 1
+2023-09-20 21:07:13,741 - INFO - update to 1 meta json
+2023-09-20 21:07:13,742 - INFO - start to check metaFilePaths for video: 1
+2023-09-20 21:07:13,742 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/1.json
+2023-09-20 21:07:13,742 - INFO - intial metaFilePaths for 1:
+
+2023-09-20 21:07:13,743 - INFO - update to 1 meta json
+2023-09-20 21:07:25,613 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 21:07:25,640 - INFO - start to validate template
+2023-09-20 21:07:25,652 - INFO - validate thumbnail gen template passed
+2023-09-20 21:07:25,652 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 21:07:25,656 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 21:07:25,657 - ERROR - heading value is empty in entry 1.
+2023-09-20 21:07:25,657 - ERROR - subheading value is empty in entry 1.
+2023-09-20 21:07:25,657 - ERROR - validate metadata for thumbgen setting failed
+2023-09-20 21:07:25,657 - INFO - start to validate bg folder
+2023-09-20 21:07:25,657 - INFO - validate bg folder passed
+2023-09-20 21:07:47,028 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 21:07:47,029 - INFO - start to validate template
+2023-09-20 21:07:47,035 - INFO - validate thumbnail gen template passed
+2023-09-20 21:07:47,035 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 21:07:47,040 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 21:07:47,041 - INFO - heading value is xxxxxxxx in entry 1.
+2023-09-20 21:07:47,041 - INFO - subheading value is sssssssss in entry 1.
+2023-09-20 21:07:47,041 - INFO - validate metadata for thumbgen setting passed
+2023-09-20 21:07:47,041 - INFO - update user submited metafile to video assets
+2023-09-20 21:07:47,042 - INFO - start to validate bg folder
+2023-09-20 21:07:47,042 - INFO - validate bg folder passed
+2023-09-20 21:10:53,088 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-20 21:10:53,426 - INFO - TiktokaStudio GUI started
+2023-09-20 21:11:05,191 - INFO - detecting----------False
+2023-09-20 21:11:05,207 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos
+2023-09-20 21:11:05,212 - INFO - start to check thumbFilePaths for video: 1
+2023-09-20 21:11:05,212 - INFO - update to 1 meta json
+2023-09-20 21:11:05,213 - INFO - start to check desFilePaths for video: 1
+2023-09-20 21:11:05,214 - INFO - update to 1 meta json
+2023-09-20 21:11:05,214 - INFO - start to check metaFilePaths for video: 1
+2023-09-20 21:11:05,215 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/1.json
+2023-09-20 21:11:05,215 - INFO - intial metaFilePaths for 1:
+
+2023-09-20 21:11:05,215 - INFO - update to 1 meta json
+2023-09-20 21:11:29,127 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 21:11:29,230 - INFO - start to validate template
+2023-09-20 21:11:29,241 - INFO - validate thumbnail gen template passed
+2023-09-20 21:11:29,241 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 21:11:29,246 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 21:11:29,246 - INFO - heading value is xxxxxxx in entry 1.
+2023-09-20 21:11:29,246 - INFO - subheading value is 222222 in entry 1.
+2023-09-20 21:11:29,246 - INFO - validate metadata for thumbgen setting passed
+2023-09-20 21:11:29,246 - INFO - update user submited metafile to video assets
+2023-09-20 21:11:29,247 - INFO - start to validate bg folder
+2023-09-20 21:11:29,247 - INFO - validate bg folder passed
+2023-09-20 21:13:12,370 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-20 21:13:12,708 - INFO - TiktokaStudio GUI started
+2023-09-20 21:13:21,453 - INFO - detecting----------False
+2023-09-20 21:13:21,453 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos
+2023-09-20 21:13:21,458 - INFO - start to check thumbFilePaths for video: 1
+2023-09-20 21:13:21,459 - INFO - update to 1 meta json
+2023-09-20 21:13:21,461 - INFO - start to check desFilePaths for video: 1
+2023-09-20 21:13:21,462 - INFO - update to 1 meta json
+2023-09-20 21:13:21,463 - INFO - start to check metaFilePaths for video: 1
+2023-09-20 21:13:21,464 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/1.json
+2023-09-20 21:13:21,464 - INFO - intial metaFilePaths for 1:
+
+2023-09-20 21:13:21,465 - INFO - update to 1 meta json
+2023-09-20 21:13:46,302 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 21:13:46,304 - INFO - start to validate template
+2023-09-20 21:13:46,316 - INFO - validate thumbnail gen template passed
+2023-09-20 21:13:46,316 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 21:13:46,320 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 21:13:46,321 - INFO - heading value is 11111 in entry 1.
+2023-09-20 21:13:46,321 - INFO - subheading value is 33333 in entry 1.
+2023-09-20 21:13:46,321 - INFO - validate metadata for thumbgen setting passed
+2023-09-20 21:13:46,321 - INFO - update user submited metafile to video assets
+2023-09-20 21:13:46,322 - INFO - start to validate bg folder
+2023-09-20 21:13:46,323 - INFO - validate bg folder passed
+2023-09-20 21:15:18,440 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-20 21:15:18,759 - INFO - TiktokaStudio GUI started
+2023-09-20 21:15:30,003 - INFO - detecting----------False
+2023-09-20 21:15:30,003 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos
+2023-09-20 21:15:30,010 - INFO - start to check thumbFilePaths for video: 1
+2023-09-20 21:15:30,010 - INFO - update to 1 meta json
+2023-09-20 21:15:30,012 - INFO - start to check desFilePaths for video: 1
+2023-09-20 21:15:30,012 - INFO - update to 1 meta json
+2023-09-20 21:15:30,013 - INFO - start to check metaFilePaths for video: 1
+2023-09-20 21:15:30,013 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/1.json
+2023-09-20 21:15:30,013 - INFO - intial metaFilePaths for 1:
+
+2023-09-20 21:15:30,014 - INFO - update to 1 meta json
+2023-09-20 21:15:40,659 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 21:15:40,660 - INFO - start to validate template
+2023-09-20 21:15:40,670 - INFO - validate thumbnail gen template passed
+2023-09-20 21:15:40,671 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 21:15:40,675 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 21:15:40,675 - ERROR - heading value is empty in entry 1.
+2023-09-20 21:15:40,675 - ERROR - subheading value is empty in entry 1.
+2023-09-20 21:15:40,675 - ERROR - validate metadata for thumbgen setting failed
+2023-09-20 21:15:40,675 - INFO - start to validate bg folder
+2023-09-20 21:15:40,676 - INFO - validate bg folder passed
+2023-09-20 21:16:05,563 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 21:16:05,563 - INFO - start to validate template
+2023-09-20 21:16:05,568 - INFO - validate thumbnail gen template passed
+2023-09-20 21:16:05,568 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 21:16:05,575 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 21:16:05,576 - INFO - heading value is 22222 in entry 1.
+2023-09-20 21:16:05,576 - INFO - subheading value is 333333 in entry 1.
+2023-09-20 21:16:05,576 - INFO - validate metadata for thumbgen setting passed
+2023-09-20 21:16:05,576 - INFO - update user submited metafile to video assets
+2023-09-20 21:16:05,577 - INFO - start to validate bg folder
+2023-09-20 21:16:05,577 - INFO - validate bg folder passed
+2023-09-20 21:24:44,293 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-20 21:24:44,662 - INFO - TiktokaStudio GUI started
+2023-09-20 21:24:54,810 - INFO - detecting----------False
+2023-09-20 21:24:54,810 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos
+2023-09-20 21:24:54,815 - INFO - start to check thumbFilePaths for video: 1
+2023-09-20 21:24:54,816 - INFO - update to 1 meta json
+2023-09-20 21:24:54,817 - INFO - start to check desFilePaths for video: 1
+2023-09-20 21:24:54,817 - INFO - update to 1 meta json
+2023-09-20 21:24:54,818 - INFO - start to check metaFilePaths for video: 1
+2023-09-20 21:24:54,818 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/1.json
+2023-09-20 21:24:54,818 - INFO - intial metaFilePaths for 1:
+
+2023-09-20 21:24:54,819 - INFO - update to 1 meta json
+2023-09-20 21:25:16,954 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 21:25:16,973 - INFO - start to validate template
+2023-09-20 21:25:16,984 - INFO - validate thumbnail gen template passed
+2023-09-20 21:25:16,984 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 21:25:16,990 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 21:25:16,990 - INFO - heading value is rrrrrr in entry 1.
+2023-09-20 21:25:16,991 - INFO - subheading value is dddddddd in entry 1.
+2023-09-20 21:25:16,991 - INFO - validate metadata for thumbgen setting passed
+2023-09-20 21:25:16,991 - INFO - update user submited metafile to video assets
+2023-09-20 21:25:16,992 - ERROR - this thumb template json can not be loaded and parsed,check the error msg:
+data
+2023-09-20 21:25:16,993 - INFO - start to validate bg folder
+2023-09-20 21:25:16,993 - INFO - assign bg to each video
+2023-09-20 21:25:16,993 - INFO - {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/1.mp4', 'video_filename': '1.mp4', 'video_title': '1', 'heading': '', 'subheading': '', 'extraheading': '', 'video_description': '', 'thumbnail_bg_image_path': '', 'thumbnail_local_path': [], 'release_date': '', 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': '', 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': '', 'captions_certification': 0, 'video_film_date': '', 'video_film_location': '', 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': '', 'subtitles': '', 'tags': ''} has got thumbnail setup:[]
+2023-09-20 21:25:16,994 - INFO - validate bg folder passed
+2023-09-20 21:28:56,710 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-20 21:28:57,069 - INFO - TiktokaStudio GUI started
+2023-09-20 21:29:05,723 - INFO - detecting----------False
+2023-09-20 21:29:05,723 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos
+2023-09-20 21:29:05,729 - INFO - start to check thumbFilePaths for video: 1
+2023-09-20 21:29:05,729 - INFO - update to 1 meta json
+2023-09-20 21:29:05,731 - INFO - start to check desFilePaths for video: 1
+2023-09-20 21:29:05,731 - INFO - update to 1 meta json
+2023-09-20 21:29:05,732 - INFO - start to check metaFilePaths for video: 1
+2023-09-20 21:29:05,733 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/1.json
+2023-09-20 21:29:05,733 - INFO - intial metaFilePaths for 1:
+
+2023-09-20 21:29:05,733 - INFO - update to 1 meta json
+2023-09-20 21:29:16,569 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 21:29:16,570 - INFO - start to validate template
+2023-09-20 21:29:16,582 - INFO - validate thumbnail gen template passed
+2023-09-20 21:29:16,582 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 21:29:16,586 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 21:29:16,587 - ERROR - heading value is empty in entry 1.
+2023-09-20 21:29:16,587 - ERROR - subheading value is empty in entry 1.
+2023-09-20 21:29:16,587 - ERROR - validate metadata for thumbgen setting failed
+2023-09-20 21:29:16,587 - INFO - start to validate bg folder
+2023-09-20 21:29:16,588 - INFO - assign bg to each video
+2023-09-20 21:29:16,589 - INFO - {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/1.mp4', 'video_filename': '1.mp4', 'video_title': '1', 'heading': '', 'subheading': '', 'extraheading': '', 'video_description': '', 'thumbnail_bg_image_path': '', 'thumbnail_local_path': [], 'release_date': '', 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': '', 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': '', 'captions_certification': 0, 'video_film_date': '', 'video_film_location': '', 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': '', 'subtitles': '', 'tags': ''} has got thumbnail setup:[]
+2023-09-20 21:29:16,589 - INFO - validate bg folder passed
+2023-09-20 21:29:38,168 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 21:29:38,169 - INFO - start to validate template
+2023-09-20 21:29:38,172 - INFO - validate thumbnail gen template passed
+2023-09-20 21:29:38,172 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 21:29:38,178 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 21:29:38,178 - ERROR - heading value is empty in entry 1.
+2023-09-20 21:29:38,179 - ERROR - subheading value is empty in entry 1.
+2023-09-20 21:29:38,179 - ERROR - validate metadata for thumbgen setting failed
+2023-09-20 21:29:38,179 - INFO - start to validate bg folder
+2023-09-20 21:29:38,180 - INFO - assign bg to each video
+2023-09-20 21:29:38,180 - INFO - {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/1.mp4', 'video_filename': '1.mp4', 'video_title': '1', 'heading': '', 'subheading': '', 'extraheading': '', 'video_description': '', 'thumbnail_bg_image_path': '', 'thumbnail_local_path': [], 'release_date': '', 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': '', 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': '', 'captions_certification': 0, 'video_film_date': '', 'video_film_location': '', 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': '', 'subtitles': '', 'tags': ''} has got thumbnail setup:[]
+2023-09-20 21:29:38,180 - INFO - validate bg folder passed
+2023-09-20 21:29:56,496 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 21:29:56,497 - INFO - start to validate template
+2023-09-20 21:29:56,501 - INFO - validate thumbnail gen template passed
+2023-09-20 21:29:56,502 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 21:29:56,507 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 21:29:56,507 - INFO - heading value is sssssss in entry 1.
+2023-09-20 21:29:56,507 - INFO - subheading value is rrrrrrr in entry 1.
+2023-09-20 21:29:56,507 - INFO - validate metadata for thumbgen setting passed
+2023-09-20 21:29:56,508 - INFO - update user submited metafile to video assets
+2023-09-20 21:29:56,509 - ERROR - this thumb template json can not be loaded and parsed,check the error msg:
+data
+2023-09-20 21:29:56,510 - INFO - start to validate bg folder
+2023-09-20 21:29:56,510 - INFO - assign bg to each video
+2023-09-20 21:29:56,511 - INFO - {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/1.mp4', 'video_filename': '1.mp4', 'video_title': '1', 'heading': '', 'subheading': '', 'extraheading': '', 'video_description': '', 'thumbnail_bg_image_path': '', 'thumbnail_local_path': [], 'release_date': '', 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': '', 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': '', 'captions_certification': 0, 'video_film_date': '', 'video_film_location': '', 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': '', 'subtitles': '', 'tags': ''} has got thumbnail setup:[]
+2023-09-20 21:29:56,511 - INFO - validate bg folder passed
+2023-09-20 21:33:40,907 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-20 21:33:41,257 - INFO - TiktokaStudio GUI started
+2023-09-20 21:33:49,565 - INFO - detecting----------False
+2023-09-20 21:33:49,565 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos
+2023-09-20 21:33:49,570 - INFO - start to check thumbFilePaths for video: 1
+2023-09-20 21:33:49,571 - INFO - update to 1 meta json
+2023-09-20 21:33:49,572 - INFO - start to check desFilePaths for video: 1
+2023-09-20 21:33:49,573 - INFO - update to 1 meta json
+2023-09-20 21:33:49,574 - INFO - start to check metaFilePaths for video: 1
+2023-09-20 21:33:49,574 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/1.json
+2023-09-20 21:33:49,574 - INFO - intial metaFilePaths for 1:
+
+2023-09-20 21:33:49,574 - INFO - update to 1 meta json
+2023-09-20 21:34:14,972 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 21:34:14,973 - INFO - start to validate template
+2023-09-20 21:34:14,985 - INFO - validate thumbnail gen template passed
+2023-09-20 21:34:14,985 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 21:34:14,990 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 21:34:14,990 - INFO - heading value is 444444 in entry 1.
+2023-09-20 21:34:14,990 - INFO - subheading value is 5555555 in entry 1.
+2023-09-20 21:34:14,991 - INFO - validate metadata for thumbgen setting passed
+2023-09-20 21:34:14,991 - INFO - update user submited metafile to video assets
+2023-09-20 21:34:14,992 - ERROR - this thumb template json can not be loaded and parsed,check the error msg:
+data
+2023-09-20 21:34:14,992 - INFO - start to validate bg folder
+2023-09-20 21:34:14,993 - INFO - assign bg to each video
+2023-09-20 21:34:14,993 - INFO - {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/1.mp4', 'video_filename': '1.mp4', 'video_title': '1', 'heading': '', 'subheading': '', 'extraheading': '', 'video_description': '', 'thumbnail_bg_image_path': '', 'thumbnail_local_path': [], 'release_date': '', 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': '', 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': '', 'captions_certification': 0, 'video_film_date': '', 'video_film_location': '', 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': '', 'subtitles': '', 'tags': ''} has got thumbnail setup:[]
+2023-09-20 21:34:14,993 - INFO - validate bg folder passed
+2023-09-20 21:35:56,884 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-20 21:35:57,284 - INFO - TiktokaStudio GUI started
+2023-09-20 21:36:05,746 - INFO - detecting----------False
+2023-09-20 21:36:05,746 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos
+2023-09-20 21:36:05,751 - INFO - start to check thumbFilePaths for video: 1
+2023-09-20 21:36:05,751 - INFO - update to 1 meta json
+2023-09-20 21:36:05,752 - INFO - start to check desFilePaths for video: 1
+2023-09-20 21:36:05,753 - INFO - update to 1 meta json
+2023-09-20 21:36:05,753 - INFO - start to check metaFilePaths for video: 1
+2023-09-20 21:36:05,754 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/1.json
+2023-09-20 21:36:05,754 - INFO - intial metaFilePaths for 1:
+
+2023-09-20 21:36:05,754 - INFO - update to 1 meta json
+2023-09-20 21:36:28,490 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 21:36:28,491 - INFO - start to validate template
+2023-09-20 21:36:28,503 - INFO - validate thumbnail gen template passed
+2023-09-20 21:36:28,503 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 21:36:28,508 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 21:36:28,508 - INFO - heading value is 1111 in entry 1.
+2023-09-20 21:36:28,508 - INFO - subheading value is 3333 in entry 1.
+2023-09-20 21:36:28,508 - INFO - validate metadata for thumbgen setting passed
+2023-09-20 21:36:28,508 - INFO - update user submited metafile to video assets
+2023-09-20 21:36:28,509 - ERROR - this thumb template json can not be loaded and parsed,check the error msg:
+data
+2023-09-20 21:36:28,510 - INFO - start to validate bg folder
+2023-09-20 21:36:28,510 - INFO - assign bg to each video
+2023-09-20 21:36:28,511 - INFO - validate bg folder passed
+2023-09-20 21:44:07,002 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-20 21:44:07,320 - INFO - TiktokaStudio GUI started
+2023-09-20 21:44:15,913 - INFO - detecting----------False
+2023-09-20 21:44:15,914 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos
+2023-09-20 21:44:15,918 - INFO - start to check thumbFilePaths for video: 1
+2023-09-20 21:44:15,919 - INFO - update to 1 meta json
+2023-09-20 21:44:15,920 - INFO - start to check desFilePaths for video: 1
+2023-09-20 21:44:15,920 - INFO - update to 1 meta json
+2023-09-20 21:44:15,921 - INFO - start to check metaFilePaths for video: 1
+2023-09-20 21:44:15,921 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/1.json
+2023-09-20 21:44:15,921 - INFO - intial metaFilePaths for 1:
+
+2023-09-20 21:44:15,921 - INFO - update to 1 meta json
+2023-09-20 21:44:26,978 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 21:44:26,985 - INFO - start to validate template
+2023-09-20 21:44:26,995 - INFO - validate thumbnail gen template passed
+2023-09-20 21:44:26,995 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 21:44:26,999 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 21:44:26,999 - ERROR - heading value is empty in entry 1.
+2023-09-20 21:44:26,999 - ERROR - subheading value is empty in entry 1.
+2023-09-20 21:44:26,999 - ERROR - validate metadata for thumbgen setting failed
+2023-09-20 21:44:51,225 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 21:44:51,226 - INFO - start to validate template
+2023-09-20 21:44:51,231 - INFO - validate thumbnail gen template passed
+2023-09-20 21:44:51,231 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 21:44:51,237 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 21:44:51,238 - INFO - heading value is ssss in entry 1.
+2023-09-20 21:44:51,238 - INFO - subheading value is 333333 in entry 1.
+2023-09-20 21:44:51,238 - INFO - validate metadata for thumbgen setting passed
+2023-09-20 21:44:51,238 - INFO - start to validate bg folder
+2023-09-20 21:44:51,239 - INFO - assign bg to each video
+2023-09-20 21:44:51,239 - INFO - validate bg folder passed
+2023-09-20 21:44:51,240 - INFO - update user submited metafile to video assets
+2023-09-20 21:44:51,241 - ERROR - this thumb template json can not be loaded and parsed,check the error msg:
+data
+2023-09-20 22:29:08,386 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-20 22:29:08,727 - INFO - TiktokaStudio GUI started
+2023-09-20 22:29:18,257 - INFO - detecting----------False
+2023-09-20 22:29:18,257 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos
+2023-09-20 22:29:18,265 - INFO - start to check thumbFilePaths for video: 1
+2023-09-20 22:29:18,265 - INFO - update to 1 meta json
+2023-09-20 22:29:18,266 - INFO - start to check desFilePaths for video: 1
+2023-09-20 22:29:18,267 - INFO - update to 1 meta json
+2023-09-20 22:29:18,268 - INFO - start to check metaFilePaths for video: 1
+2023-09-20 22:29:18,268 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/1.json
+2023-09-20 22:29:18,268 - INFO - intial metaFilePaths for 1:
+
+2023-09-20 22:29:18,268 - INFO - update to 1 meta json
+2023-09-20 22:29:31,159 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 22:29:31,177 - INFO - start to validate template
+2023-09-20 22:29:31,188 - INFO - validate thumbnail gen template passed
+2023-09-20 22:29:31,188 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 22:29:31,191 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 22:29:31,192 - ERROR - heading value is empty in entry 1.
+2023-09-20 22:29:31,192 - ERROR - subheading value is empty in entry 1.
+2023-09-20 22:29:31,192 - ERROR - validate metadata for thumbgen setting failed
+2023-09-20 22:29:31,192 - INFO - start to validate bg folder
+2023-09-20 22:29:31,193 - INFO - assign bg to each video
+2023-09-20 22:29:31,193 - INFO - validate bg folder passed
+2023-09-20 22:30:27,349 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 22:30:27,350 - INFO - start to validate template
+2023-09-20 22:30:27,354 - INFO - validate thumbnail gen template passed
+2023-09-20 22:30:27,354 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 22:30:27,359 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 22:30:27,359 - INFO - heading value is xxxx in entry 1.
+2023-09-20 22:30:27,359 - INFO - subheading value is 222222 in entry 1.
+2023-09-20 22:30:27,359 - INFO - validate metadata for thumbgen setting passed
+2023-09-20 22:30:27,359 - INFO - start to update user submited metafile to video assets
+2023-09-20 22:30:27,360 - ERROR - this thumb template json can not be loaded and parsed,check the error msg:
+data
+2023-09-20 22:30:27,361 - INFO - start to validate bg folder
+2023-09-20 22:30:27,362 - INFO - assign bg to each video
+2023-09-20 22:30:27,362 - INFO - validate bg folder passed
+2023-09-20 22:35:05,240 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-20 22:35:05,568 - INFO - TiktokaStudio GUI started
+2023-09-20 22:35:14,529 - INFO - detecting----------False
+2023-09-20 22:35:14,530 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos
+2023-09-20 22:35:14,534 - INFO - start to check thumbFilePaths for video: 1
+2023-09-20 22:35:14,535 - INFO - update to 1 meta json
+2023-09-20 22:35:14,536 - INFO - start to check desFilePaths for video: 1
+2023-09-20 22:35:14,537 - INFO - update to 1 meta json
+2023-09-20 22:35:14,537 - INFO - start to check metaFilePaths for video: 1
+2023-09-20 22:35:14,538 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/1.json
+2023-09-20 22:35:14,538 - INFO - intial metaFilePaths for 1:
+
+2023-09-20 22:35:14,538 - INFO - update to 1 meta json
+2023-09-20 22:35:30,025 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 22:35:30,048 - INFO - start to validate template
+2023-09-20 22:35:30,059 - INFO - validate thumbnail gen template passed
+2023-09-20 22:35:30,059 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 22:35:30,063 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 22:35:30,064 - ERROR - heading value is empty in entry 1.
+2023-09-20 22:35:30,064 - ERROR - subheading value is empty in entry 1.
+2023-09-20 22:35:30,064 - ERROR - validate metadata for thumbgen setting failed
+2023-09-20 22:35:30,064 - INFO - start to validate bg folder
+2023-09-20 22:35:30,065 - INFO - assign bg to each video
+2023-09-20 22:35:30,065 - INFO - validate bg folder passed
+2023-09-20 22:35:49,281 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 22:35:49,281 - INFO - start to validate template
+2023-09-20 22:35:49,285 - INFO - validate thumbnail gen template passed
+2023-09-20 22:35:49,286 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 22:35:49,292 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 22:35:49,292 - INFO - heading value is 21 in entry 1.
+2023-09-20 22:35:49,292 - INFO - subheading value is 12 in entry 1.
+2023-09-20 22:35:49,293 - INFO - validate metadata for thumbgen setting passed
+2023-09-20 22:35:49,293 - INFO - start to update user submited metafile to video assets
+2023-09-20 22:35:49,294 - ERROR - this thumb template json can not be loaded and parsed,check the error msg:
+data
+2023-09-20 22:35:49,295 - INFO - start to validate bg folder
+2023-09-20 22:35:49,295 - INFO - assign bg to each video
+2023-09-20 22:35:49,295 - INFO - validate bg folder passed
+2023-09-20 22:39:12,192 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-20 22:39:12,546 - INFO - TiktokaStudio GUI started
+2023-09-20 22:39:21,430 - INFO - detecting----------False
+2023-09-20 22:39:21,430 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos
+2023-09-20 22:39:21,434 - INFO - start to check thumbFilePaths for video: 1
+2023-09-20 22:39:21,435 - INFO - update to 1 meta json
+2023-09-20 22:39:21,436 - INFO - start to check desFilePaths for video: 1
+2023-09-20 22:39:21,436 - INFO - update to 1 meta json
+2023-09-20 22:39:21,437 - INFO - start to check metaFilePaths for video: 1
+2023-09-20 22:39:21,437 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/1.json
+2023-09-20 22:39:21,437 - INFO - intial metaFilePaths for 1:
+
+2023-09-20 22:39:21,438 - INFO - update to 1 meta json
+2023-09-20 22:39:33,350 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 22:39:33,350 - INFO - start to validate template
+2023-09-20 22:39:33,361 - INFO - validate thumbnail gen template passed
+2023-09-20 22:39:33,361 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 22:39:33,365 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 22:39:33,365 - ERROR - heading value is empty in entry 1.
+2023-09-20 22:39:33,365 - ERROR - subheading value is empty in entry 1.
+2023-09-20 22:39:33,366 - ERROR - validate metadata for thumbgen setting failed
+2023-09-20 22:39:33,366 - INFO - start to validate bg folder
+2023-09-20 22:39:33,366 - INFO - assign bg to each video
+2023-09-20 22:39:33,366 - INFO - validate bg folder passed
+2023-09-20 22:39:50,671 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 22:39:50,672 - INFO - start to validate template
+2023-09-20 22:39:50,676 - INFO - validate thumbnail gen template passed
+2023-09-20 22:39:50,677 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 22:39:50,682 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 22:39:50,682 - INFO - heading value is sdasdas in entry 1.
+2023-09-20 22:39:50,683 - INFO - subheading value is ssssss in entry 1.
+2023-09-20 22:39:50,683 - INFO - validate metadata for thumbgen setting passed
+2023-09-20 22:39:50,683 - INFO - start to update user submited metafile to video assets
+2023-09-20 22:39:50,683 - INFO - update user submited metafile to video assets passed
+2023-09-20 22:39:50,683 - INFO - start to validate bg folder
+2023-09-20 22:39:50,684 - INFO - assign bg to each video
+2023-09-20 22:39:50,684 - INFO - validate bg folder passed
+2023-09-20 22:49:57,887 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-20 22:49:58,225 - INFO - TiktokaStudio GUI started
+2023-09-20 22:50:07,299 - INFO - detecting----------False
+2023-09-20 22:50:07,299 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos
+2023-09-20 22:50:07,304 - INFO - start to check thumbFilePaths for video: 1
+2023-09-20 22:50:07,304 - INFO - update to 1 meta json
+2023-09-20 22:50:07,305 - INFO - start to check desFilePaths for video: 1
+2023-09-20 22:50:07,306 - INFO - update to 1 meta json
+2023-09-20 22:50:07,306 - INFO - start to check metaFilePaths for video: 1
+2023-09-20 22:50:07,307 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/1.json
+2023-09-20 22:50:07,307 - INFO - intial metaFilePaths for 1:
+
+2023-09-20 22:50:07,307 - INFO - update to 1 meta json
+2023-09-20 22:50:19,830 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 22:50:19,845 - INFO - start to validate template
+2023-09-20 22:50:19,854 - INFO - validate thumbnail gen template passed
+2023-09-20 22:50:19,855 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 22:50:19,858 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 22:50:19,858 - ERROR - heading value is empty in entry 1.
+2023-09-20 22:50:19,858 - ERROR - subheading value is empty in entry 1.
+2023-09-20 22:50:19,858 - ERROR - validate metadata for thumbgen setting failed
+2023-09-20 22:50:19,858 - INFO - start to validate bg folder
+2023-09-20 22:50:19,860 - INFO - assign bg to each video
+2023-09-20 22:50:19,860 - INFO - validate bg folder passed
+2023-09-20 22:50:40,461 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 22:50:40,462 - INFO - start to validate template
+2023-09-20 22:50:40,466 - INFO - validate thumbnail gen template passed
+2023-09-20 22:50:40,466 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 22:50:40,471 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 22:50:40,472 - INFO - heading value is ssss in entry 1.
+2023-09-20 22:50:40,472 - ERROR - this thumb template json can not be loaded and parsed,check the error msg:
+1
+2023-09-20 22:50:40,472 - INFO - start to validate bg folder
+2023-09-20 22:50:40,472 - INFO - assign bg to each video
+2023-09-20 22:50:40,473 - INFO - validate bg folder passed
+2023-09-20 22:54:21,398 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-20 22:54:21,733 - INFO - TiktokaStudio GUI started
+2023-09-20 22:54:39,808 - INFO - detecting----------False
+2023-09-20 22:54:39,808 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos
+2023-09-20 22:54:39,814 - INFO - start to check thumbFilePaths for video: 1
+2023-09-20 22:54:39,814 - INFO - update to 1 meta json
+2023-09-20 22:54:39,816 - INFO - start to check desFilePaths for video: 1
+2023-09-20 22:54:39,816 - INFO - update to 1 meta json
+2023-09-20 22:54:39,817 - INFO - start to check metaFilePaths for video: 1
+2023-09-20 22:54:39,817 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/1.json
+2023-09-20 22:54:39,817 - INFO - intial metaFilePaths for 1:
+
+2023-09-20 22:54:39,818 - INFO - update to 1 meta json
+2023-09-20 22:54:52,422 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 22:54:52,437 - INFO - start to validate template
+2023-09-20 22:54:52,447 - INFO - validate thumbnail gen template passed
+2023-09-20 22:54:52,448 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 22:54:52,451 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 22:54:52,452 - ERROR - heading value is empty in entry 1.
+2023-09-20 22:54:52,452 - ERROR - subheading value is empty in entry 1.
+2023-09-20 22:54:52,452 - ERROR - validate metadata for thumbgen setting failed
+2023-09-20 22:54:52,452 - INFO - start to validate bg folder
+2023-09-20 22:54:52,453 - INFO - assign bg to each video
+2023-09-20 22:54:52,454 - INFO - validate bg folder passed
+2023-09-20 22:55:08,166 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 22:55:08,167 - INFO - start to validate template
+2023-09-20 22:55:08,172 - INFO - validate thumbnail gen template passed
+2023-09-20 22:55:08,172 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 22:55:08,177 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 22:55:08,177 - INFO - heading value is 555555 in entry 1.
+2023-09-20 22:55:08,177 - INFO - subheading value is 6666666 in entry 1.
+2023-09-20 22:55:08,177 - INFO - validate metadata for thumbgen setting passed
+2023-09-20 22:55:08,177 - INFO - start to update user submited metafile to video assets
+2023-09-20 22:55:08,179 - INFO - update user submited metafile to video assets passed
+2023-09-20 22:55:08,179 - INFO - start to validate bg folder
+2023-09-20 22:55:08,180 - INFO - assign bg to each video
+2023-09-20 22:55:08,180 - INFO - validate bg folder passed
+2023-09-20 23:00:19,534 - DEBUG - installation path is/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-20 23:00:19,880 - INFO - TiktokaStudio GUI started
+2023-09-20 23:00:29,537 - INFO - detecting----------False
+2023-09-20 23:00:29,537 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos
+2023-09-20 23:00:29,541 - INFO - start to check thumbFilePaths for video: 1
+2023-09-20 23:00:29,542 - INFO - update to 1 meta json
+2023-09-20 23:00:29,543 - INFO - start to check desFilePaths for video: 1
+2023-09-20 23:00:29,544 - INFO - update to 1 meta json
+2023-09-20 23:00:29,545 - INFO - start to check metaFilePaths for video: 1
+2023-09-20 23:00:29,546 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/1.json
+2023-09-20 23:00:29,546 - INFO - intial metaFilePaths for 1:
+
+2023-09-20 23:00:29,547 - INFO - update to 1 meta json
+2023-09-20 23:00:48,360 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 23:00:48,374 - INFO - start to validate template
+2023-09-20 23:00:48,384 - INFO - validate thumbnail gen template passed
+2023-09-20 23:00:48,384 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 23:00:48,389 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 23:00:48,389 - ERROR - heading value is empty in entry 1.
+2023-09-20 23:00:48,389 - ERROR - subheading value is empty in entry 1.
+2023-09-20 23:00:48,389 - ERROR - validate metadata for thumbgen setting failed
+2023-09-20 23:00:48,389 - INFO - start to validate bg folder
+2023-09-20 23:00:48,390 - INFO - assign bg to each video
+2023-09-20 23:00:48,391 - INFO - validate bg folder passed
+2023-09-20 23:01:07,312 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-20 23:01:07,313 - INFO - start to validate template
+2023-09-20 23:01:07,317 - INFO - validate thumbnail gen template passed
+2023-09-20 23:01:07,317 - INFO - start to validate metadata for thumbgen setting
+2023-09-20 23:01:07,322 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-20 23:01:07,322 - INFO - heading value is 3333 in entry 1.
+2023-09-20 23:01:07,322 - INFO - subheading value is 2222 in entry 1.
+2023-09-20 23:01:07,322 - INFO - validate metadata for thumbgen setting passed
+2023-09-20 23:01:07,323 - INFO - start to update user submited metafile to video assets
+2023-09-20 23:01:07,324 - INFO - update user submited metafile to video assets passed
+2023-09-20 23:01:07,325 - INFO - start to validate bg folder
+2023-09-20 23:01:07,325 - INFO - assign bg to each video
+2023-09-20 23:01:07,325 - INFO - validate bg folder passed

@@ -2617,13 +2617,15 @@ def check_fields_and_empty_values(data_dict, allowed_fields):
     return True
 def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thummbnail_bg_folder_path,frame=None):
     passed=True
-
+    bg_images=[]
     if mode_value and mode_value is not None:
         ultra[folder]['thumb_gen_setting']['mode']=mode_value
 
-        if mode_value not in [1,2,3]:
-            logger.info('ignore the thumbnail gen process')    
-        else: 
+        if mode_value==1:
+            logger.info('extract first frame of video,this extension is not supported yet')
+        elif mode_value==2:
+            logger.info('extract random key frame of video,this extension is not supported yet')
+        elif mode_value==3:
             if thumbnail_template_file_path is None or thumbnail_template_file_path=='':
                 logger.error('please choose a thumbtemplate first')
             
@@ -2779,13 +2781,24 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
                                              
                                             else:
                                                 logger.info(f'{field} value is {value} in entry {key}.')                                                
-
+                                                # ultra[folder]['videos'][key][field]=value
                             if passed==True:
                                 logger.info('validate metadata for thumbgen setting passed')
                                 if df is not None:
-                                    logger.info('update user submited metafile to video assets')
-                                    logger.info(f'user submited:\r{df.to_json(orient="records")}')
-                                    ultra[folder]['videos']=df.to_json(orient='records')
+                                    logger.info('start to update user submited metafile to video assets')
+                                    # df.to_json()==str  直接赋值 这个key的值就是str 后面没法拿video的字段值
+                                    print('==1==',type(ultra[folder]['videos']))
+                                    print('==2==',ultra[folder]['videos'])
+
+
+                                    print('==3==',type(json.loads(df.to_json())))
+                                    print('==4==',json.loads(df.to_json()))
+                                    try:
+                                        ultra[folder]['videos']=json.loads(df.to_json())
+                                    except Exception as e:
+                                        print(f'wohhha {e}')
+                                    logger.info('update user submited metafile to video assets passed')
+
                             else:
                                 logger.error('validate metadata for thumbgen setting failed')
 
@@ -2798,26 +2811,44 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
                     except Exception as e:
                         logger.error(f'this thumb template json can not be loaded and parsed,check the error msg:\n{e}')
                         passed=False
-
-            if mode_value==1:
-                logger.info('extract first frame of video,this extension is not supported yet')
-            elif mode_value==2:
-                logger.info('extract random key frame of video,this extension is not supported yet')
-            elif mode_value==3:
+                else:
+                    logger.error("template json is not found")
+                    passed =False
+                    
+                logger.info('start to validate bg folder')
+     
                 if os.path.exists(thummbnail_bg_folder_path):
-                    logger.info('start to validate bg folder')
 
                     bg_images=check_folder_thumb_bg(thummbnail_bg_folder_path)
                     if len(bg_images)>0:
                         ultra[folder]['thumb_gen_setting']['bg_folder']=thummbnail_bg_folder_path
                         
                         ultra[folder]['thumb_gen_setting']['bg_folder_images']=bg_images
-                        print('debug-------',bg_images)
+                        logger.info('assign bg to each video')
+
+
                         for filename in  ultra[folder]['filenames']:
-                            ultra[folder]['videos'][filename]['thumbnail_bg_image_path']=random.choice(bg_images)
+                            bgpath=random.choice(bg_images)
+
+                                
+                                
+                            # print('111',ultra[folder]['videos'][filename]['thumbnail_local_path'])
+                            # print('333',ultra[folder]['videos'][filename]['thumbnail_bg_image_path'])
+
+                            # for key in ultra[folder]['videos'][filename].keys():
+                            #     key_type = type(key)
+                            #     print(f"The type of the key '{key}' is {key_type.__name__}")                                
+                            if  ultra[folder]['videos'][filename]['thumbnail_local_path']==[]:
+                                ultra[folder]['videos'][filename]['thumbnail_bg_image_path']=bgpath
+                            else:
+                                logger.info(f"{ultra[folder]['videos'][filename]} has got thumbnail setup:\r{ultra[folder]['videos'][filename]['thumbnail_local_path']}")
+
+                            print('222',ultra[folder]['videos'][filename]['thumbnail_bg_image_path'])
+
                         logger.info('validate bg folder passed')
 
- 
+
+                        
 
                     else:
                         logger.error('validate bg folder failed')
@@ -2825,20 +2856,24 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
 
                         logger.info(f'there is no images under {thummbnail_bg_folder_path}.please choose another folder')
                 else:
+                    logger.error('validate bg folder failed')
+                    
                     logger.error('please choose a valid thummbnail_bg_folder_path ')   
-                    passed=False
+                    passed=False       
+        else: 
 
-            else:
-                logger.error('validate bg folder failed')
-
-                logger.info(f' modevalue is {mode_value} ,this extension is not supported yet')
-                passed=False
+            logger.error(f'no valid mode:{mode_value}')
 
 
 
     else:
-        logger.info('please provide a valid mode value')
+        logger.info('mode value is none')
+        passed=False
+    print(f'passed is {passed}')
     if passed==True:
+        
+
+        
         lab = tk.Label(frame,text="validation passed, go to gen thumbnail",bg="lightyellow")
         lab.grid(row = 10, column = 1,  padx=14, pady=15,sticky='nw')     
         lab.after(5000,lab.destroy)    
@@ -2852,6 +2887,8 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
         else:
             with open(totaljson,'a') as f:
                 f.write(jsons.dumps(ultra[folder]))    
+    else:
+        print('pass failed')
 def openVideoMetaFile(folder):
     print(f'you choose metafile format is:{metafileformat.get()}')
     if metafileformat.get():
