@@ -35213,3 +35213,216 @@ the JSON object must be str, bytes or bytearray, not dict
 2023-09-21 22:28:40,249 - INFO - Random assign bg to each video
 2023-09-21 22:28:40,249 - INFO - {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.mp4', 'video_filename': '1.mp4', 'video_title': 1, 'heading': None, 'subheading': None, 'extraheading': None, 'video_description': None, 'thumbnail_bg_image_path': None, 'thumbnail_local_path': '[]', 'release_date': None, 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': None, 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': None, 'captions_certification': 0, 'video_film_date': None, 'video_film_location': None, 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': None, 'subtitles': None, 'tags': None} has got thumbnail setup:[]
 2023-09-21 22:28:40,249 - INFO - validate bg folder passed
+2023-09-21 22:34:08,484 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-21 22:34:08,484 - INFO - TiktokaStudio GUI started
+2023-09-21 22:34:19,765 - INFO - detecting----------False
+2023-09-21 22:34:19,765 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:34:19,769 - INFO - start to check thumbFilePaths for video: 1
+2023-09-21 22:34:19,770 - INFO - update to 1 meta json
+2023-09-21 22:34:19,771 - INFO - start to check desFilePaths for video: 1
+2023-09-21 22:34:19,771 - INFO - update to 1 meta json
+2023-09-21 22:34:19,772 - INFO - start to check metaFilePaths for video: 1
+2023-09-21 22:34:19,773 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.json
+2023-09-21 22:34:19,773 - INFO - intial metaFilePaths for 1:
+
+2023-09-21 22:34:19,773 - INFO - update to 1 meta json
+2023-09-21 22:35:11,989 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-09-21 22:35:11,990 - INFO - start to validate template
+2023-09-21 22:35:12,001 - INFO - validate thumbnail gen template passed
+2023-09-21 22:35:12,001 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 22:35:12,060 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 22:35:12,061 - INFO - heading value is ssssss in entry 1.
+2023-09-21 22:35:12,061 - INFO - subheading value is ddddd in entry 1.
+2023-09-21 22:35:12,061 - INFO - validate metadata for thumbgen setting passed
+2023-09-21 22:35:12,061 - INFO - start to update user submited metafile to video assets
+2023-09-21 22:35:12,062 - INFO - update user submited metafile to video assets passed
+2023-09-21 22:35:12,062 - INFO - start to validate bg folder
+2023-09-21 22:35:12,063 - INFO - Random assign bg to each video
+2023-09-21 22:35:12,063 - INFO - {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.mp4', 'video_filename': '1.mp4', 'video_title': 1, 'heading': 'ssssss', 'subheading': 'ddddd', 'extraheading': None, 'video_description': None, 'thumbnail_bg_image_path': None, 'thumbnail_local_path': '[]', 'release_date': None, 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': None, 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': None, 'captions_certification': 0, 'video_film_date': None, 'video_film_location': None, 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': None, 'subtitles': None, 'tags': None} has got thumbnail setup:[]
+2023-09-21 22:35:12,063 - INFO - validate bg folder passed
+2023-09-21 22:41:14,168 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-21 22:41:14,194 - INFO - TiktokaStudio GUI started
+2023-09-21 22:41:38,455 - INFO - detecting----------False
+2023-09-21 22:41:38,456 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:41:38,466 - INFO - start to check thumbFilePaths for video: 1
+2023-09-21 22:41:38,467 - INFO - update to 1 meta json
+2023-09-21 22:41:38,469 - INFO - start to check desFilePaths for video: 1
+2023-09-21 22:41:38,470 - INFO - update to 1 meta json
+2023-09-21 22:41:38,470 - INFO - start to check metaFilePaths for video: 1
+2023-09-21 22:41:38,471 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.json
+2023-09-21 22:41:38,471 - INFO - intial metaFilePaths for 1:
+
+2023-09-21 22:41:38,471 - INFO - update to 1 meta json
+2023-09-21 22:43:21,133 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-09-21 22:43:21,185 - INFO - start to validate template
+2023-09-21 22:43:21,200 - INFO - validate thumbnail gen template passed
+2023-09-21 22:43:21,200 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 22:43:21,272 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 22:43:21,272 - INFO - heading value is 我是中文 in entry 1.
+2023-09-21 22:43:21,273 - INFO - subheading value is english please in entry 1.
+2023-09-21 22:43:21,273 - INFO - validate metadata for thumbgen setting passed
+2023-09-21 22:43:21,273 - INFO - start to update user submited metafile to video assets
+2023-09-21 22:43:21,275 - INFO - update user submited metafile to video assets passed
+2023-09-21 22:43:21,275 - INFO - start to validate bg folder
+2023-09-21 22:43:21,276 - INFO - bg folder image list :['/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/sp/1-003.jpg', '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/sp/1-002.jpg', '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/sp/1-001.jpg']
+2023-09-21 22:43:21,276 - INFO - {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.mp4', 'video_filename': '1.mp4', 'video_title': 1, 'heading': '我是中文', 'subheading': 'english please', 'extraheading': None, 'video_description': None, 'thumbnail_bg_image_path': None, 'thumbnail_local_path': '[]', 'release_date': None, 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': None, 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': None, 'captions_certification': 0, 'video_film_date': None, 'video_film_location': None, 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': None, 'subtitles': None, 'tags': None} has got thumbnail setup:[]
+2023-09-21 22:43:21,276 - INFO - validate bg folder passed
+2023-09-21 22:43:31,676 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-09-21 22:43:31,676 - INFO - start to validate template
+2023-09-21 22:43:31,680 - INFO - validate thumbnail gen template passed
+2023-09-21 22:43:31,681 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 22:43:31,731 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 22:43:31,731 - INFO - heading value is 我是中文 in entry 1.
+2023-09-21 22:43:31,731 - INFO - subheading value is english please in entry 1.
+2023-09-21 22:43:31,731 - INFO - validate metadata for thumbgen setting passed
+2023-09-21 22:43:31,732 - INFO - start to update user submited metafile to video assets
+2023-09-21 22:43:31,733 - INFO - update user submited metafile to video assets passed
+2023-09-21 22:43:31,733 - INFO - start to validate bg folder
+2023-09-21 22:43:31,733 - INFO - bg folder image list :['/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/sp/1-003.jpg', '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/sp/1-002.jpg', '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/sp/1-001.jpg']
+2023-09-21 22:43:31,733 - INFO - {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.mp4', 'video_filename': '1.mp4', 'video_title': 1, 'heading': '我是中文', 'subheading': 'english please', 'extraheading': None, 'video_description': None, 'thumbnail_bg_image_path': None, 'thumbnail_local_path': '[]', 'release_date': None, 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': None, 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': None, 'captions_certification': 0, 'video_film_date': None, 'video_film_location': None, 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': None, 'subtitles': None, 'tags': None} has got thumbnail setup:[]
+2023-09-21 22:43:31,733 - INFO - validate bg folder passed
+2023-09-21 22:48:00,153 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-21 22:48:00,172 - INFO - TiktokaStudio GUI started
+2023-09-21 22:48:12,174 - INFO - detecting----------False
+2023-09-21 22:48:12,174 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:48:12,180 - INFO - start to check thumbFilePaths for video: 1
+2023-09-21 22:48:12,180 - INFO - this  thumbFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.png
+2023-09-21 22:48:12,181 - INFO - intial thumbFilePaths for 1:
+
+2023-09-21 22:48:12,181 - INFO - update to 1 meta json
+2023-09-21 22:48:12,182 - INFO - start to check desFilePaths for video: 1
+2023-09-21 22:48:12,183 - INFO - update to 1 meta json
+2023-09-21 22:48:12,185 - INFO - start to check metaFilePaths for video: 1
+2023-09-21 22:48:12,185 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.json
+2023-09-21 22:48:12,185 - INFO - intial metaFilePaths for 1:
+
+2023-09-21 22:48:12,186 - INFO - update to 1 meta json
+2023-09-21 22:48:55,175 - INFO - detecting----------True
+2023-09-21 22:48:55,175 - INFO - we cached 42986724000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:48:55,176 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-21 22:48:57,199 - INFO - detecting----------True
+2023-09-21 22:48:57,199 - INFO - we cached 2021769000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:48:57,200 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-21 22:48:57,967 - INFO - detecting----------True
+2023-09-21 22:48:57,968 - INFO - we cached 766785000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:48:57,968 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-21 22:48:58,863 - INFO - detecting----------True
+2023-09-21 22:48:58,864 - INFO - we cached 893491000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:48:58,864 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-21 22:48:59,383 - INFO - detecting----------True
+2023-09-21 22:48:59,384 - INFO - we cached 518636000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:48:59,385 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-21 22:48:59,914 - INFO - detecting----------True
+2023-09-21 22:48:59,914 - INFO - we cached 528086000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:48:59,914 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-21 22:49:00,383 - INFO - detecting----------True
+2023-09-21 22:49:00,384 - INFO - we cached 468304000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:49:00,384 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-21 22:49:00,919 - INFO - detecting----------True
+2023-09-21 22:49:00,919 - INFO - we cached 534133000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:49:00,920 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-21 22:49:01,823 - INFO - detecting----------True
+2023-09-21 22:49:01,823 - INFO - we cached 901802000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:49:01,823 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-21 22:49:02,255 - INFO - detecting----------True
+2023-09-21 22:49:02,255 - INFO - we cached 430385000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:49:02,255 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-21 22:49:02,647 - INFO - detecting----------True
+2023-09-21 22:49:02,647 - INFO - we cached 390502000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:49:02,647 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-21 22:49:03,145 - INFO - detecting----------True
+2023-09-21 22:49:03,145 - INFO - we cached 496146000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:49:03,146 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-21 22:49:03,655 - INFO - detecting----------True
+2023-09-21 22:49:03,655 - INFO - we cached 508445000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:49:03,656 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-21 22:49:17,278 - INFO - detecting----------True
+2023-09-21 22:49:17,279 - INFO - we cached 13622091000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:49:17,279 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-21 22:49:17,896 - INFO - detecting----------True
+2023-09-21 22:49:17,896 - INFO - we cached 615900000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:49:17,897 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-21 22:49:18,087 - INFO - detecting----------True
+2023-09-21 22:49:18,091 - INFO - we cached 193303000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:49:18,092 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-21 22:49:18,287 - INFO - detecting----------True
+2023-09-21 22:49:18,287 - INFO - we cached 194162000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:49:18,287 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-21 22:49:18,470 - INFO - detecting----------True
+2023-09-21 22:49:18,471 - INFO - we cached 181807000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:49:18,471 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-21 22:49:18,671 - INFO - detecting----------True
+2023-09-21 22:49:18,671 - INFO - we cached 199338000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:49:18,672 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-21 22:49:18,895 - INFO - detecting----------True
+2023-09-21 22:49:18,896 - INFO - we cached 218884000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:49:18,896 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-21 22:49:19,295 - INFO - detecting----------True
+2023-09-21 22:49:19,295 - INFO - we cached 397553000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:49:19,295 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-21 22:49:19,751 - INFO - detecting----------True
+2023-09-21 22:49:19,751 - INFO - we cached 454372000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:49:19,751 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-21 22:57:20,499 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-21 22:57:20,500 - INFO - TiktokaStudio GUI started
+2023-09-21 22:57:33,167 - INFO - detecting----------False
+2023-09-21 22:57:33,167 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:57:33,173 - INFO - start to check thumbFilePaths for video: 1
+2023-09-21 22:57:33,174 - INFO - update to 1 meta json
+2023-09-21 22:57:33,176 - INFO - start to check desFilePaths for video: 1
+2023-09-21 22:57:33,177 - INFO - update to 1 meta json
+2023-09-21 22:57:33,178 - INFO - start to check metaFilePaths for video: 1
+2023-09-21 22:57:33,178 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.json
+2023-09-21 22:57:33,178 - INFO - intial metaFilePaths for 1:
+
+2023-09-21 22:57:33,179 - INFO - update to 1 meta json
+2023-09-21 22:57:50,862 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-09-21 22:57:50,862 - INFO - start to validate template
+2023-09-21 22:57:50,872 - INFO - validate thumbnail gen template passed
+2023-09-21 22:57:50,872 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 22:57:50,953 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 22:57:50,954 - ERROR - heading value is empty in entry 1.
+2023-09-21 22:57:50,954 - ERROR - subheading value is empty in entry 1.
+2023-09-21 22:57:50,955 - ERROR - validate metadata for thumbgen setting failed
+2023-09-21 22:57:50,955 - INFO - start to validate bg folder
+2023-09-21 22:57:50,955 - INFO - bg folder image list :['/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/sp/1-003.jpg', '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/sp/1-002.jpg', '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/sp/1-001.jpg']
+2023-09-21 22:57:50,956 - INFO - Random assign bg:/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/sp/1-003.jpg to  video:1
+2023-09-21 22:57:50,956 - INFO - validate bg folder passed
+2023-09-21 22:57:59,454 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-09-21 22:57:59,454 - INFO - start to validate template
+2023-09-21 22:57:59,458 - INFO - validate thumbnail gen template passed
+2023-09-21 22:57:59,458 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 22:57:59,509 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 22:57:59,509 - ERROR - heading value is empty in entry 1.
+2023-09-21 22:57:59,510 - ERROR - subheading value is empty in entry 1.
+2023-09-21 22:57:59,510 - ERROR - validate metadata for thumbgen setting failed
+2023-09-21 22:57:59,510 - INFO - start to validate bg folder
+2023-09-21 22:57:59,510 - INFO - bg folder image list :['/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/sp/1-003.jpg', '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/sp/1-002.jpg', '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/sp/1-001.jpg']
+2023-09-21 22:57:59,511 - INFO - Random assign bg:/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/sp/1-001.jpg to  video:1
+2023-09-21 22:57:59,511 - INFO - validate bg folder passed
+2023-09-21 22:58:30,213 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-09-21 22:58:30,226 - INFO - start to validate template
+2023-09-21 22:58:30,230 - INFO - validate thumbnail gen template passed
+2023-09-21 22:58:30,230 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 22:58:30,287 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 22:58:30,287 - INFO - heading value is 我是中文 in entry 1.
+2023-09-21 22:58:30,288 - INFO - subheading value is english please in entry 1.
+2023-09-21 22:58:30,288 - INFO - validate metadata for thumbgen setting passed
+2023-09-21 22:58:30,288 - INFO - start to update user submited metafile to video assets
+2023-09-21 22:58:30,289 - INFO - update user submited metafile to video assets passed
+2023-09-21 22:58:30,290 - INFO - start to validate bg folder
+2023-09-21 22:58:30,290 - INFO - bg folder image list :['/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/sp/1-003.jpg', '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/sp/1-002.jpg', '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/sp/1-001.jpg']
+2023-09-21 22:58:30,290 - INFO - Random assign bg:/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/sp/1-001.jpg to  video:1
+2023-09-21 22:58:30,290 - INFO - validate bg folder passed
+2023-09-21 22:58:59,629 - INFO - detecting----------True
+2023-09-21 22:58:59,629 - INFO - we cached 86448993000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:58:59,630 - INFO - we found same filename diff ext video:1,please rename or remove

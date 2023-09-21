@@ -1602,6 +1602,9 @@ def analyse_video_meta_pair(folder,frame,right_frame,selectedMetafileformat,isTh
         if ultra.has_key(folder):
             print(pd.Timestamp.now().value-ultra[folder] ['updatedAt'])
             logger.info(f"we cached {pd.Timestamp.now().value-ultra[folder] ['updatedAt']} seconds before for  this folder {folder}")
+            
+            b_delete_folder_cache=tk.Button(frame,text="remove cache data to re-gen",command=lambda: threading.Thread(target=ultra[folder].unlink()).start() )
+            b_delete_folder_cache.grid(row = 6, column = 1,sticky='w', padx=14, pady=15)  
         else:
             logger.info(f"create cached data for this folder:\n{folder}")
             ultra[folder]={'videoCounts':0,'thumbCounts':0,'desCounts':0,
@@ -2858,19 +2861,19 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
                 if os.path.exists(thummbnail_bg_folder_path):
 
                     bg_images=check_folder_thumb_bg(thummbnail_bg_folder_path)
+                    logger.info(f'bg folder image list :{bg_images}')
                     if len(bg_images)>0:
                         ultra[folder]['thumb_gen_setting']['bg_folder']=thummbnail_bg_folder_path
                         
                         ultra[folder]['thumb_gen_setting']['bg_folder_images']=bg_images
-                        logger.info('Random assign bg to each video')
 
 
                         for filename in  ultra[folder]['filenames']:
                             bgpath=random.choice(bg_images)
-                            print('===',type(filename),ultra[folder]['videos'].has_key(filename))
-                            print(ultra[folder]['videos'])               
-                            if  ultra[folder]['videos'][filename]['thumbnail_local_path']==[]:
+                            if  ultra[folder]['videos'][filename]['thumbnail_local_path'] in [[],'[]']:
                                 ultra[folder]['videos'][filename]['thumbnail_bg_image_path']=bgpath
+                                logger.info(f"Random assign bg:{bgpath} to  video:{filename}")
+                                
                             else:
                                 logger.info(f"{ultra[folder]['videos'][filename]} has got thumbnail setup:\r{ultra[folder]['videos'][filename]['thumbnail_local_path']}")
 
@@ -2969,8 +2972,8 @@ def genThumbnailFromTemplate(folder,thumbnail_template_file_path,mode_value,thum
         # 在渲染的时候从bg_images里读取尺寸要求相同的背景图即可
         filename=video_id+ext
         # filename=video_id+"_"+str(result_image_width)+"x"+str(result_image_height)+ext
-        draw_text_on_image(video_info,thumb_gen_setting,result_image_width,result_image_height,render_style,output_folder,filename)
-
+        outputpath=draw_text_on_image(video_info,thumb_gen_setting,result_image_width,result_image_height,render_style,output_folder,filename)
+        video_data[video_id]['thumbnail_local_path'].append(outputpath)
         if result_image_width > result_image_height:
             basedir=output_folder+os.sep+'16-9'
             os.makedirs(basedir, exist_ok=True)

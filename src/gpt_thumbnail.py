@@ -226,6 +226,7 @@ def draw_text_on_image(row,thumb_gen_setting,result_image_width,result_image_hei
 
     output_path = os.path.join(output_folder, filename)
     canvas_image.save(output_path)
+    return output_path
 def overlay_gridlines(image, width, height):
     draw = ImageDraw.Draw(image)
     for x in range(width // 10, width, width // 10):
