@@ -10,3 +10,4 @@ atomics
 jsons
 lastversion
 jsonschema
+pycld3

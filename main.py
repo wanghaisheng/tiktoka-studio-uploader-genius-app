@@ -2938,9 +2938,10 @@ def genThumbnailFromTemplate(folder,thumbnail_template_file_path,mode_value,thum
 
 
         }
-
+        # 如果想同时为一个视频生成多个平台的缩略图，需要准备不同尺寸的背景图，那么这些背景图读进来会放在bg_images，就不能用原来的随机分配一张到文件里了，
+        # 在渲染的时候从bg_images里读取尺寸要求相同的背景图即可
         filename=video_id+ext
-        filename=video_id+"_"+str(result_image_width)+"x"+str(result_image_height)+ext
+        # filename=video_id+"_"+str(result_image_width)+"x"+str(result_image_height)+ext
         draw_text_on_image(video_info,thumb_gen_setting,result_image_width,result_image_height,render_style,output_folder,filename)
 
         if result_image_width > result_image_height:
