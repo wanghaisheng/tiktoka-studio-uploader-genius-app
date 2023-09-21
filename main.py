@@ -2977,7 +2977,7 @@ def genThumbnailFromTemplate(folder,thumbnail_template_file_path,mode_value,thum
                 result_image_width=int(result_image_width)
                 result_image_height=int(result_image_height)
 
-                draw_text_on_image(video_info,thumb_gen_setting,result_image_width,result_image_height,render_style,output_folder+os.sep+'9-16'+os.sep+key,filename)
+                draw_text_on_image(video_info,thumb_gen_setting,result_image_width,result_image_height,render_style,output_folder,filename)
 
 
 
