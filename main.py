@@ -2758,16 +2758,28 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
                             else:
 
                                 if ultra[folder]['metafileformat']=='xlsx':
-                                    df=pd.read_excel(os.path.join(folder,'videos-meta.xlsx'))
+                                    df=pd.read_excel(os.path.join(folder,'videos-meta.xlsx'), index_col=[0])
+                                    df.replace('nan', '')
+                                    
+                                    dfdict=df.iterrows()
                                 elif ultra[folder]['metafileformat']=='json':
-                                    df=pd.read_json(os.path.join(folder,'videos-meta.json'))        
+                                    df=pd.read_json(os.path.join(folder,'videos-meta.json'))  
+                                    df.replace('nan', '')
+                                    
+                                    dfdict=df.items()      
                                 elif ultra[folder]['metafileformat']=='csv':
-                                    df=pd.read_csv(os.path.join(folder,'videos-meta.csv'))   
+                                    df=pd.read_csv(os.path.join(folder,'videos-meta.csv'), index_col=[0])
+                                    df.replace('nan', '')
+                                    
+                                    dfdict=df.iterrows()
+   
                                 # List of allowed field names
+                                print('reading video meta\r',df)
+                                
                                 logger.info(f'start to check {allowedTextTypes} defined in template')
 
                                 # Check the data dictionary for allowed fields and empty values in each entry
-                                for key, entry in df.items():
+                                for key, entry in dfdict:
                                     missing_fields = [field for field in allowedTextTypes if field not in entry.keys()]
 
                                     if missing_fields:
@@ -2779,7 +2791,7 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
                                     else:
                                         for field in allowedTextTypes:
                                             value = entry[field]
-                                            if value == "":
+                                            if not value  or pd.isna(value) or value == "":
                                                 logger.error(f'{field} value is empty in entry {key}.')   
                                                 passed=False
                                              
@@ -2798,8 +2810,23 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
                                     # print('==3==',type(json.loads(df.to_json())))
                                     # print('==4==',json.loads(df.to_json()))
                                     new=UltraDict()
-                                    for key in json.loads(df.to_json()).keys():
-                                        new[key]  =json.loads(df.to_json())[key]                             
+                                    tmpdict=None
+                                    
+                                    if ultra[folder]['metafileformat']=='xlsx':
+                                        tmpdict=json.loads(df.to_json(orient = 'index'))   
+
+
+                                    elif ultra[folder]['metafileformat']=='json':
+                                        tmpdict=json.loads(df.to_json())   
+                                        
+ 
+                                    elif ultra[folder]['metafileformat']=='csv':
+                                        tmpdict=json.loads(df.to_json(orient = 'index'))   
+
+                                    for key in tmpdict.keys():
+                                        new[key]  =tmpdict[key]   
+                                    
+                         
                                     
                                     # new=json.loads(df.to_json())
                                     # 如果不先 new一个UltraDict 而是仅仅凭借json.loads(df.to_json() python 内置的dict类型直接赋值，就会出错
@@ -2840,8 +2867,8 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
 
                         for filename in  ultra[folder]['filenames']:
                             bgpath=random.choice(bg_images)
-
-                                            
+                            print('===',type(filename),ultra[folder]['videos'].has_key(filename))
+                            print(ultra[folder]['videos'])               
                             if  ultra[folder]['videos'][filename]['thumbnail_local_path']==[]:
                                 ultra[folder]['videos'][filename]['thumbnail_bg_image_path']=bgpath
                             else:

@@ -34675,3 +34675,541 @@ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/videos/v
 2023-09-21 20:32:06,218 - INFO - start to validate bg folder
 2023-09-21 20:32:06,218 - INFO - Random assign bg to each video
 2023-09-21 20:32:06,218 - INFO - validate bg folder passed
+2023-09-21 21:12:45,083 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-21 21:12:45,112 - INFO - TiktokaStudio GUI started
+2023-09-21 21:13:49,036 - INFO - detecting----------False
+2023-09-21 21:13:49,037 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 21:13:49,041 - INFO - start to check thumbFilePaths for video: 1
+2023-09-21 21:13:49,042 - INFO - update to 1 meta json
+2023-09-21 21:13:49,043 - INFO - start to check desFilePaths for video: 1
+2023-09-21 21:13:49,044 - INFO - update to 1 meta json
+2023-09-21 21:13:49,044 - INFO - start to check metaFilePaths for video: 1
+2023-09-21 21:13:49,045 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.json
+2023-09-21 21:13:49,045 - INFO - intial metaFilePaths for 1:
+
+2023-09-21 21:13:49,045 - INFO - update to 1 meta json
+2023-09-21 21:19:23,739 - ERROR - please choose a thumbtemplate first
+2023-09-21 21:19:33,987 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-09-21 21:19:34,037 - INFO - start to validate template
+2023-09-21 21:19:34,049 - INFO - validate thumbnail gen template passed
+2023-09-21 21:19:34,049 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 21:19:34,076 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 21:19:34,077 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,077 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,077 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,077 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,078 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,078 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,078 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,078 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,078 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,079 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,079 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,079 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,079 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,080 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,080 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,080 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,080 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,080 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,080 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,081 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,081 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,081 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,081 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,081 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,081 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,081 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,082 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,082 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,082 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,082 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,082 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,082 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:19:34,082 - ERROR - validate metadata for thumbgen setting failed
+2023-09-21 21:19:34,083 - INFO - start to validate bg folder
+2023-09-21 21:19:34,083 - INFO - Random assign bg to each video
+2023-09-21 21:19:34,083 - INFO - validate bg folder passed
+2023-09-21 21:21:52,491 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-21 21:21:52,505 - INFO - TiktokaStudio GUI started
+2023-09-21 21:22:07,437 - INFO - detecting----------False
+2023-09-21 21:22:07,438 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 21:22:07,444 - INFO - start to check thumbFilePaths for video: 1
+2023-09-21 21:22:07,445 - INFO - update to 1 meta json
+2023-09-21 21:22:07,446 - INFO - start to check desFilePaths for video: 1
+2023-09-21 21:22:07,446 - INFO - update to 1 meta json
+2023-09-21 21:22:07,447 - INFO - start to check metaFilePaths for video: 1
+2023-09-21 21:22:07,448 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.json
+2023-09-21 21:22:07,448 - INFO - intial metaFilePaths for 1:
+
+2023-09-21 21:22:07,448 - INFO - update to 1 meta json
+2023-09-21 21:22:46,753 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-09-21 21:22:46,818 - INFO - start to validate template
+2023-09-21 21:22:46,829 - INFO - validate thumbnail gen template passed
+2023-09-21 21:22:46,829 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 21:22:46,897 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 21:22:46,897 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,898 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,898 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,898 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,898 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,898 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,898 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,899 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,899 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,899 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,899 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,899 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,899 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,900 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,900 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,900 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,900 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,900 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,900 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,900 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,901 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,901 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,901 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,901 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,901 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,901 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,901 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,902 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,902 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,902 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,902 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,902 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:22:46,902 - ERROR - validate metadata for thumbgen setting failed
+2023-09-21 21:22:46,902 - INFO - start to validate bg folder
+2023-09-21 21:22:46,903 - INFO - Random assign bg to each video
+2023-09-21 21:22:46,903 - INFO - validate bg folder passed
+2023-09-21 21:24:48,052 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-21 21:24:48,052 - INFO - TiktokaStudio GUI started
+2023-09-21 21:24:58,364 - INFO - detecting----------False
+2023-09-21 21:24:58,364 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 21:24:58,369 - INFO - start to check thumbFilePaths for video: 1
+2023-09-21 21:24:58,370 - INFO - update to 1 meta json
+2023-09-21 21:24:58,371 - INFO - start to check desFilePaths for video: 1
+2023-09-21 21:24:58,371 - INFO - update to 1 meta json
+2023-09-21 21:24:58,621 - INFO - start to check metaFilePaths for video: 1
+2023-09-21 21:24:58,621 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.json
+2023-09-21 21:24:58,622 - INFO - intial metaFilePaths for 1:
+
+2023-09-21 21:24:58,622 - INFO - update to 1 meta json
+2023-09-21 21:25:11,382 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-09-21 21:25:11,383 - INFO - start to validate template
+2023-09-21 21:25:11,394 - INFO - validate thumbnail gen template passed
+2023-09-21 21:25:11,394 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 21:25:11,446 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 21:25:11,447 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,447 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,447 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,447 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,448 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,448 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,448 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,448 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,448 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,448 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,449 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,449 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,449 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,449 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,449 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,449 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,450 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,450 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,450 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,450 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,450 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,450 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,450 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,451 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,451 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,451 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,451 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,451 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,451 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,451 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,451 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,452 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:25:11,452 - ERROR - validate metadata for thumbgen setting failed
+2023-09-21 21:25:11,452 - INFO - start to validate bg folder
+2023-09-21 21:25:11,452 - INFO - Random assign bg to each video
+2023-09-21 21:25:11,452 - INFO - validate bg folder passed
+2023-09-21 21:28:43,141 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-21 21:28:43,167 - INFO - TiktokaStudio GUI started
+2023-09-21 21:29:00,873 - INFO - detecting----------False
+2023-09-21 21:29:00,890 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 21:29:00,895 - INFO - start to check thumbFilePaths for video: 1
+2023-09-21 21:29:00,896 - INFO - update to 1 meta json
+2023-09-21 21:29:00,897 - INFO - start to check desFilePaths for video: 1
+2023-09-21 21:29:00,897 - INFO - update to 1 meta json
+2023-09-21 21:29:00,898 - INFO - start to check metaFilePaths for video: 1
+2023-09-21 21:29:00,898 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.json
+2023-09-21 21:29:00,899 - INFO - intial metaFilePaths for 1:
+
+2023-09-21 21:29:00,899 - INFO - update to 1 meta json
+2023-09-21 21:29:15,173 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-09-21 21:29:15,173 - INFO - start to validate template
+2023-09-21 21:29:15,182 - INFO - validate thumbnail gen template passed
+2023-09-21 21:29:15,182 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 21:29:15,236 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 21:29:15,236 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,237 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,237 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,237 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,237 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,238 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,238 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,238 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,238 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,238 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,239 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,239 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,239 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,239 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,239 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,239 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,240 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,240 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,240 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,240 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,240 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,241 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,241 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,241 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,241 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,241 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,241 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,241 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,242 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,242 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,242 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,242 - ERROR - ['heading', 'subheading'] filed in defined in template,but not found in metafile,add a column named ['heading', 'subheading'] in metafile
+2023-09-21 21:29:15,242 - ERROR - validate metadata for thumbgen setting failed
+2023-09-21 21:29:15,242 - INFO - start to validate bg folder
+2023-09-21 21:29:15,243 - INFO - Random assign bg to each video
+2023-09-21 21:29:15,243 - INFO - validate bg folder passed
+2023-09-21 21:30:25,248 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-21 21:30:25,248 - INFO - TiktokaStudio GUI started
+2023-09-21 21:30:37,722 - INFO - detecting----------False
+2023-09-21 21:30:37,722 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 21:30:37,727 - INFO - start to check thumbFilePaths for video: 1
+2023-09-21 21:30:37,728 - INFO - update to 1 meta json
+2023-09-21 21:30:37,729 - INFO - start to check desFilePaths for video: 1
+2023-09-21 21:30:37,729 - INFO - update to 1 meta json
+2023-09-21 21:30:37,730 - INFO - start to check metaFilePaths for video: 1
+2023-09-21 21:30:37,730 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.json
+2023-09-21 21:30:37,730 - INFO - intial metaFilePaths for 1:
+
+2023-09-21 21:30:37,731 - INFO - update to 1 meta json
+2023-09-21 21:30:50,777 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-09-21 21:30:50,777 - INFO - start to validate template
+2023-09-21 21:30:50,786 - INFO - validate thumbnail gen template passed
+2023-09-21 21:30:50,787 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 21:30:50,801 - ERROR - this thumb template json can not be loaded and parsed,check the error msg:
+0
+2023-09-21 21:30:50,801 - INFO - start to validate bg folder
+2023-09-21 21:30:50,802 - INFO - Random assign bg to each video
+2023-09-21 21:30:50,802 - INFO - validate bg folder passed
+2023-09-21 21:53:13,360 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-21 21:53:13,384 - INFO - TiktokaStudio GUI started
+2023-09-21 21:53:24,407 - INFO - detecting----------False
+2023-09-21 21:53:24,407 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 21:53:24,413 - INFO - start to check thumbFilePaths for video: 1
+2023-09-21 21:53:24,414 - INFO - update to 1 meta json
+2023-09-21 21:53:24,415 - INFO - start to check desFilePaths for video: 1
+2023-09-21 21:53:24,415 - INFO - update to 1 meta json
+2023-09-21 21:53:24,416 - INFO - start to check metaFilePaths for video: 1
+2023-09-21 21:53:24,416 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.json
+2023-09-21 21:53:24,417 - INFO - intial metaFilePaths for 1:
+
+2023-09-21 21:53:24,417 - INFO - update to 1 meta json
+2023-09-21 21:53:38,073 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-09-21 21:53:38,107 - INFO - start to validate template
+2023-09-21 21:53:38,118 - INFO - validate thumbnail gen template passed
+2023-09-21 21:53:38,118 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 21:53:38,188 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 21:53:38,189 - INFO - heading value is nan in entry 0.
+2023-09-21 21:53:38,189 - INFO - subheading value is nan in entry 0.
+2023-09-21 21:53:38,189 - INFO - validate metadata for thumbgen setting passed
+2023-09-21 21:53:38,189 - INFO - start to update user submited metafile to video assets
+2023-09-21 21:53:38,196 - INFO - update user submited metafile to video assets passed
+2023-09-21 21:53:38,196 - INFO - start to validate bg folder
+2023-09-21 21:53:38,196 - INFO - Random assign bg to each video
+2023-09-21 21:53:44,225 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-09-21 21:53:44,225 - INFO - start to validate template
+2023-09-21 21:53:44,229 - INFO - validate thumbnail gen template passed
+2023-09-21 21:53:44,229 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 21:53:44,275 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 21:53:44,276 - INFO - heading value is nan in entry 0.
+2023-09-21 21:53:44,276 - INFO - subheading value is nan in entry 0.
+2023-09-21 21:53:44,276 - INFO - validate metadata for thumbgen setting passed
+2023-09-21 21:53:44,276 - INFO - start to update user submited metafile to video assets
+2023-09-21 21:53:44,281 - INFO - update user submited metafile to video assets passed
+2023-09-21 21:53:44,281 - INFO - start to validate bg folder
+2023-09-21 21:53:44,281 - INFO - Random assign bg to each video
+2023-09-21 22:00:17,363 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-21 22:00:17,363 - INFO - TiktokaStudio GUI started
+2023-09-21 22:00:35,904 - INFO - detecting----------False
+2023-09-21 22:00:35,917 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:00:35,926 - INFO - start to check thumbFilePaths for video: 1
+2023-09-21 22:00:35,926 - INFO - update to 1 meta json
+2023-09-21 22:00:35,927 - INFO - start to check desFilePaths for video: 1
+2023-09-21 22:00:35,928 - INFO - update to 1 meta json
+2023-09-21 22:00:35,929 - INFO - start to check metaFilePaths for video: 1
+2023-09-21 22:00:35,929 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.json
+2023-09-21 22:00:35,929 - INFO - intial metaFilePaths for 1:
+
+2023-09-21 22:00:35,930 - INFO - update to 1 meta json
+2023-09-21 22:00:50,380 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-09-21 22:00:50,381 - INFO - start to validate template
+2023-09-21 22:00:50,390 - INFO - validate thumbnail gen template passed
+2023-09-21 22:00:50,390 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 22:00:50,460 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 22:00:50,461 - INFO - heading value is nan in entry 0.
+2023-09-21 22:00:50,461 - INFO - subheading value is nan in entry 0.
+2023-09-21 22:00:50,461 - INFO - validate metadata for thumbgen setting passed
+2023-09-21 22:00:50,461 - INFO - start to update user submited metafile to video assets
+2023-09-21 22:00:50,467 - INFO - update user submited metafile to video assets passed
+2023-09-21 22:00:50,467 - INFO - start to validate bg folder
+2023-09-21 22:00:50,468 - INFO - Random assign bg to each video
+2023-09-21 22:01:04,162 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-09-21 22:01:04,163 - INFO - start to validate template
+2023-09-21 22:01:04,167 - INFO - validate thumbnail gen template passed
+2023-09-21 22:01:04,167 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 22:01:04,217 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 22:01:04,218 - INFO - heading value is nan in entry 0.
+2023-09-21 22:01:04,218 - INFO - subheading value is nan in entry 0.
+2023-09-21 22:01:04,218 - INFO - validate metadata for thumbgen setting passed
+2023-09-21 22:01:04,218 - INFO - start to update user submited metafile to video assets
+2023-09-21 22:01:04,222 - INFO - update user submited metafile to video assets passed
+2023-09-21 22:01:04,223 - INFO - start to validate bg folder
+2023-09-21 22:01:04,223 - INFO - Random assign bg to each video
+2023-09-21 22:06:32,278 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-21 22:06:32,278 - INFO - TiktokaStudio GUI started
+2023-09-21 22:06:43,411 - INFO - detecting----------False
+2023-09-21 22:06:43,412 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:06:43,418 - INFO - start to check thumbFilePaths for video: 1
+2023-09-21 22:06:43,419 - INFO - update to 1 meta json
+2023-09-21 22:06:43,420 - INFO - start to check desFilePaths for video: 1
+2023-09-21 22:06:43,420 - INFO - update to 1 meta json
+2023-09-21 22:06:43,421 - INFO - start to check metaFilePaths for video: 1
+2023-09-21 22:06:43,421 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.json
+2023-09-21 22:06:43,421 - INFO - intial metaFilePaths for 1:
+
+2023-09-21 22:06:43,422 - INFO - update to 1 meta json
+2023-09-21 22:06:55,900 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-09-21 22:06:55,939 - INFO - start to validate template
+2023-09-21 22:06:55,951 - INFO - validate thumbnail gen template passed
+2023-09-21 22:06:55,951 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 22:06:56,007 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 22:06:56,008 - INFO - heading value is nan in entry 0.
+2023-09-21 22:06:56,008 - INFO - subheading value is nan in entry 0.
+2023-09-21 22:06:56,008 - INFO - validate metadata for thumbgen setting passed
+2023-09-21 22:06:56,008 - INFO - start to update user submited metafile to video assets
+2023-09-21 22:06:56,009 - ERROR - this thumb template json can not be loaded and parsed,check the error msg:
+'generator' object has no attribute 'to_json'
+2023-09-21 22:06:56,009 - INFO - start to validate bg folder
+2023-09-21 22:06:56,009 - INFO - Random assign bg to each video
+2023-09-21 22:06:56,009 - INFO - validate bg folder passed
+2023-09-21 22:07:01,644 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-09-21 22:07:01,644 - INFO - start to validate template
+2023-09-21 22:07:01,648 - INFO - validate thumbnail gen template passed
+2023-09-21 22:07:01,648 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 22:07:01,695 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 22:07:01,695 - INFO - heading value is nan in entry 0.
+2023-09-21 22:07:01,696 - INFO - subheading value is nan in entry 0.
+2023-09-21 22:07:01,696 - INFO - validate metadata for thumbgen setting passed
+2023-09-21 22:07:01,696 - INFO - start to update user submited metafile to video assets
+2023-09-21 22:07:01,696 - ERROR - this thumb template json can not be loaded and parsed,check the error msg:
+'generator' object has no attribute 'to_json'
+2023-09-21 22:07:01,697 - INFO - start to validate bg folder
+2023-09-21 22:07:01,697 - INFO - Random assign bg to each video
+2023-09-21 22:07:01,697 - INFO - validate bg folder passed
+2023-09-21 22:10:29,860 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-21 22:10:29,861 - INFO - TiktokaStudio GUI started
+2023-09-21 22:10:39,997 - INFO - detecting----------False
+2023-09-21 22:10:39,997 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:10:40,003 - INFO - start to check thumbFilePaths for video: 1
+2023-09-21 22:10:40,003 - INFO - update to 1 meta json
+2023-09-21 22:10:40,005 - INFO - start to check desFilePaths for video: 1
+2023-09-21 22:10:40,005 - INFO - update to 1 meta json
+2023-09-21 22:10:40,006 - INFO - start to check metaFilePaths for video: 1
+2023-09-21 22:10:40,006 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.json
+2023-09-21 22:10:40,006 - INFO - intial metaFilePaths for 1:
+
+2023-09-21 22:10:40,007 - INFO - update to 1 meta json
+2023-09-21 22:10:53,294 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-09-21 22:10:53,295 - INFO - start to validate template
+2023-09-21 22:10:53,306 - INFO - validate thumbnail gen template passed
+2023-09-21 22:10:53,307 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 22:10:53,363 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 22:10:53,363 - INFO - heading value is nan in entry 0.
+2023-09-21 22:10:53,363 - INFO - subheading value is nan in entry 0.
+2023-09-21 22:10:53,363 - INFO - validate metadata for thumbgen setting passed
+2023-09-21 22:10:53,364 - INFO - start to update user submited metafile to video assets
+2023-09-21 22:10:53,364 - ERROR - this thumb template json can not be loaded and parsed,check the error msg:
+'generator' object has no attribute 'to_json'
+2023-09-21 22:10:53,364 - INFO - start to validate bg folder
+2023-09-21 22:10:53,365 - INFO - Random assign bg to each video
+2023-09-21 22:10:53,365 - INFO - validate bg folder passed
+2023-09-21 22:11:18,567 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-09-21 22:11:18,568 - INFO - start to validate template
+2023-09-21 22:11:18,571 - INFO - validate thumbnail gen template passed
+2023-09-21 22:11:18,572 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 22:11:18,624 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 22:11:18,625 - INFO - heading value is xxxxxxxxss in entry 0.
+2023-09-21 22:11:18,625 - INFO - subheading value is sssssss in entry 0.
+2023-09-21 22:11:18,625 - INFO - validate metadata for thumbgen setting passed
+2023-09-21 22:11:18,625 - INFO - start to update user submited metafile to video assets
+2023-09-21 22:11:18,626 - ERROR - this thumb template json can not be loaded and parsed,check the error msg:
+'generator' object has no attribute 'to_json'
+2023-09-21 22:11:18,626 - INFO - start to validate bg folder
+2023-09-21 22:11:18,627 - INFO - Random assign bg to each video
+2023-09-21 22:11:18,628 - INFO - validate bg folder passed
+2023-09-21 22:11:24,006 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-09-21 22:11:24,006 - INFO - start to validate template
+2023-09-21 22:11:24,010 - INFO - validate thumbnail gen template passed
+2023-09-21 22:11:24,010 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 22:11:24,060 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 22:11:24,061 - INFO - heading value is xxxxxxxxss in entry 0.
+2023-09-21 22:11:24,061 - INFO - subheading value is sssssss in entry 0.
+2023-09-21 22:11:24,061 - INFO - validate metadata for thumbgen setting passed
+2023-09-21 22:11:24,061 - INFO - start to update user submited metafile to video assets
+2023-09-21 22:11:24,061 - ERROR - this thumb template json can not be loaded and parsed,check the error msg:
+'generator' object has no attribute 'to_json'
+2023-09-21 22:11:24,061 - INFO - start to validate bg folder
+2023-09-21 22:11:24,062 - INFO - Random assign bg to each video
+2023-09-21 22:11:24,063 - INFO - validate bg folder passed
+2023-09-21 22:22:41,657 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-21 22:22:41,671 - INFO - TiktokaStudio GUI started
+2023-09-21 22:22:52,841 - INFO - detecting----------False
+2023-09-21 22:22:52,841 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:22:52,845 - INFO - start to check thumbFilePaths for video: 1
+2023-09-21 22:22:52,846 - INFO - update to 1 meta json
+2023-09-21 22:22:52,847 - INFO - start to check desFilePaths for video: 1
+2023-09-21 22:22:52,848 - INFO - update to 1 meta json
+2023-09-21 22:22:52,849 - INFO - start to check metaFilePaths for video: 1
+2023-09-21 22:22:52,849 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.json
+2023-09-21 22:22:52,850 - INFO - intial metaFilePaths for 1:
+
+2023-09-21 22:22:52,850 - INFO - update to 1 meta json
+2023-09-21 22:23:13,962 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-09-21 22:23:13,963 - INFO - start to validate template
+2023-09-21 22:23:13,973 - INFO - validate thumbnail gen template passed
+2023-09-21 22:23:13,973 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 22:23:14,035 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 22:23:14,036 - INFO - heading value is nan in entry 0.
+2023-09-21 22:23:14,036 - INFO - subheading value is nan in entry 0.
+2023-09-21 22:23:14,036 - INFO - validate metadata for thumbgen setting passed
+2023-09-21 22:23:14,036 - INFO - start to update user submited metafile to video assets
+2023-09-21 22:23:14,037 - ERROR - this thumb template json can not be loaded and parsed,check the error msg:
+the JSON object must be str, bytes or bytearray, not dict
+2023-09-21 22:23:14,037 - INFO - start to validate bg folder
+2023-09-21 22:23:14,037 - INFO - Random assign bg to each video
+2023-09-21 22:23:14,038 - INFO - validate bg folder passed
+2023-09-21 22:25:11,001 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-21 22:25:11,002 - INFO - TiktokaStudio GUI started
+2023-09-21 22:25:20,111 - INFO - detecting----------False
+2023-09-21 22:25:20,111 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:25:20,116 - INFO - start to check thumbFilePaths for video: 1
+2023-09-21 22:25:20,116 - INFO - update to 1 meta json
+2023-09-21 22:25:20,118 - INFO - start to check desFilePaths for video: 1
+2023-09-21 22:25:20,118 - INFO - update to 1 meta json
+2023-09-21 22:25:20,119 - INFO - start to check metaFilePaths for video: 1
+2023-09-21 22:25:20,120 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.json
+2023-09-21 22:25:20,120 - INFO - intial metaFilePaths for 1:
+
+2023-09-21 22:25:20,121 - INFO - update to 1 meta json
+2023-09-21 22:25:32,447 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-09-21 22:25:32,448 - INFO - start to validate template
+2023-09-21 22:25:32,458 - INFO - validate thumbnail gen template passed
+2023-09-21 22:25:32,458 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 22:25:32,512 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 22:25:32,513 - INFO - heading value is nan in entry 0.
+2023-09-21 22:25:32,513 - INFO - subheading value is nan in entry 0.
+2023-09-21 22:25:32,513 - INFO - validate metadata for thumbgen setting passed
+2023-09-21 22:25:32,513 - INFO - start to update user submited metafile to video assets
+2023-09-21 22:25:32,514 - INFO - update user submited metafile to video assets passed
+2023-09-21 22:25:32,514 - INFO - start to validate bg folder
+2023-09-21 22:25:32,514 - INFO - Random assign bg to each video
+2023-09-21 22:25:38,447 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-09-21 22:25:38,448 - INFO - start to validate template
+2023-09-21 22:25:38,452 - INFO - validate thumbnail gen template passed
+2023-09-21 22:25:38,452 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 22:25:38,506 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 22:25:38,506 - INFO - heading value is nan in entry 0.
+2023-09-21 22:25:38,507 - INFO - subheading value is nan in entry 0.
+2023-09-21 22:25:38,507 - INFO - validate metadata for thumbgen setting passed
+2023-09-21 22:25:38,507 - INFO - start to update user submited metafile to video assets
+2023-09-21 22:25:38,507 - INFO - update user submited metafile to video assets passed
+2023-09-21 22:25:38,508 - INFO - start to validate bg folder
+2023-09-21 22:25:38,508 - INFO - Random assign bg to each video
+2023-09-21 22:27:51,601 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-21 22:27:51,620 - INFO - TiktokaStudio GUI started
+2023-09-21 22:28:01,252 - INFO - detecting----------False
+2023-09-21 22:28:01,252 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-21 22:28:01,257 - INFO - start to check thumbFilePaths for video: 1
+2023-09-21 22:28:01,258 - INFO - create a fresh 1 meta json
+2023-09-21 22:28:01,259 - INFO - start to check desFilePaths for video: 1
+2023-09-21 22:28:01,260 - INFO - update to 1 meta json
+2023-09-21 22:28:01,261 - INFO - start to check metaFilePaths for video: 1
+2023-09-21 22:28:01,261 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.json
+2023-09-21 22:28:01,261 - INFO - intial metaFilePaths for 1:
+
+2023-09-21 22:28:01,262 - INFO - update to 1 meta json
+2023-09-21 22:28:30,325 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-09-21 22:28:30,325 - INFO - start to validate template
+2023-09-21 22:28:30,337 - INFO - validate thumbnail gen template passed
+2023-09-21 22:28:30,337 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 22:28:30,405 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 22:28:30,406 - INFO - heading value is nan in entry 1.
+2023-09-21 22:28:30,406 - INFO - subheading value is nan in entry 1.
+2023-09-21 22:28:30,406 - INFO - validate metadata for thumbgen setting passed
+2023-09-21 22:28:30,406 - INFO - start to update user submited metafile to video assets
+2023-09-21 22:28:30,408 - INFO - update user submited metafile to video assets passed
+2023-09-21 22:28:30,408 - INFO - start to validate bg folder
+2023-09-21 22:28:30,409 - INFO - Random assign bg to each video
+2023-09-21 22:28:30,409 - INFO - {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.mp4', 'video_filename': '1.mp4', 'video_title': 1, 'heading': None, 'subheading': None, 'extraheading': None, 'video_description': None, 'thumbnail_bg_image_path': None, 'thumbnail_local_path': '[]', 'release_date': None, 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': None, 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': None, 'captions_certification': 0, 'video_film_date': None, 'video_film_location': None, 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': None, 'subtitles': None, 'tags': None} has got thumbnail setup:[]
+2023-09-21 22:28:30,409 - INFO - validate bg folder passed
+2023-09-21 22:28:40,188 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-09-21 22:28:40,188 - INFO - start to validate template
+2023-09-21 22:28:40,192 - INFO - validate thumbnail gen template passed
+2023-09-21 22:28:40,192 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 22:28:40,246 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 22:28:40,247 - INFO - heading value is nan in entry 1.
+2023-09-21 22:28:40,247 - INFO - subheading value is nan in entry 1.
+2023-09-21 22:28:40,247 - INFO - validate metadata for thumbgen setting passed
+2023-09-21 22:28:40,247 - INFO - start to update user submited metafile to video assets
+2023-09-21 22:28:40,248 - INFO - update user submited metafile to video assets passed
+2023-09-21 22:28:40,249 - INFO - start to validate bg folder
+2023-09-21 22:28:40,249 - INFO - Random assign bg to each video
+2023-09-21 22:28:40,249 - INFO - {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.mp4', 'video_filename': '1.mp4', 'video_title': 1, 'heading': None, 'subheading': None, 'extraheading': None, 'video_description': None, 'thumbnail_bg_image_path': None, 'thumbnail_local_path': '[]', 'release_date': None, 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': None, 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': None, 'captions_certification': 0, 'video_film_date': None, 'video_film_location': None, 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': None, 'subtitles': None, 'tags': None} has got thumbnail setup:[]
+2023-09-21 22:28:40,249 - INFO - validate bg folder passed
