@@ -1645,7 +1645,8 @@ def analyse_video_meta_pair(folder,frame,right_frame,selectedMetafileformat,isTh
         for r, d, f in os.walk(folder):
             videos=[]        
             with os.scandir(r) as i:
-
+# how to deal sub-folder and fodler
+# if folder has no video but got 1 subfolder has 1 video, where to put metafiles
                 for entry in i:
                     if entry.is_file():
                         filename = os.path.splitext(entry.name)[0]
@@ -1709,7 +1710,8 @@ def analyse_video_meta_pair(folder,frame,right_frame,selectedMetafileformat,isTh
                                 isPairedMetas(r,filename,supported_thumb_exts,ultra[folder],'thumbFilePaths')
                                 isPairedMetas(r,filename,supported_des_exts,ultra[folder],'desFilePaths')
                                 isPairedMetas(r,filename,supported_meta_exts,ultra[folder],'metaFilePaths')
-
+                    else:
+                        print('is folder',r,d,i)
 
 
         if ultra[folder] ['videoCounts']==0:
@@ -4553,7 +4555,23 @@ if __name__ == '__main__':
                                     #     height = 5, 
                                         state='disabled')
         st.bind_all("<Control-c>",_copy)
-        
+
+        def clear_text():
+
+            st.configure(state='normal')  # Enable text widget
+            st.delete(1.0, tk.END)  # Delete all text
+            st.configure(state='disabled')  # Disable text widget again
+        # Create a right-click context menu
+        def show_context_menu(event):
+            context_menu.post(event.x_root, event.y_root)
+
+        context_menu = tk.Menu(root, tearoff=0)
+        context_menu.add_command(label="Clear All Text", command=clear_text)
+
+
+        # Bind right-click event to show context menu
+        st.bind("<Button-3>", show_context_menu)
+
         st.configure(font='TkFixedFont')
         st.grid(column=0, 
                 row=0, 
@@ -4565,7 +4583,7 @@ if __name__ == '__main__':
         logger.addHandler(text_handler)    
 
 
-        logger.debug(f'installation path is{ROOT_DIR}')
+        logger.debug(f'Installation path is:{ROOT_DIR}')
 
         logger.info('TiktokaStudio GUI started')
         render(paned_window,mainwindow,log_frame,'en')

@@ -34156,3 +34156,139 @@ SELECT * FROM uploadtasks ORDER by inserted_at DESC,full error message:
 2023-09-21 10:04:58,153 - INFO - TiktokaStudio GUI started
 2023-09-21 10:05:47,114 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
 2023-09-21 10:05:47,115 - INFO - TiktokaStudio GUI started
+2023-09-21 10:07:50,538 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 10:07:50,538 - INFO - TiktokaStudio GUI started
+2023-09-21 10:09:05,024 - INFO - detecting----------False
+2023-09-21 10:09:05,024 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests
+2023-09-21 10:09:05,032 - INFO - start to check thumbFilePaths for video: 1
+2023-09-21 10:09:05,033 - INFO - update to 1 meta json
+2023-09-21 10:09:05,035 - INFO - start to check desFilePaths for video: 1
+2023-09-21 10:09:05,036 - INFO - update to 1 meta json
+2023-09-21 10:09:05,037 - INFO - start to check metaFilePaths for video: 1
+2023-09-21 10:09:05,038 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests\videos\1.json
+2023-09-21 10:09:05,038 - INFO - intial metaFilePaths for 1:
+
+2023-09-21 10:09:05,040 - INFO - update to 1 meta json
+2023-09-21 10:09:05,048 - WARNING - D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app\main.py:1744: FutureWarning: Passing literal json to 'read_json' is deprecated and will be removed in a future version. To read from a literal string, wrap it in a 'StringIO' object.
+  df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'records')
+
+2023-09-21 10:09:51,017 - INFO - detecting----------True
+2023-09-21 10:09:51,017 - INFO - we cached 45974424000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests
+2023-09-21 10:09:51,019 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-21 10:09:51,024 - WARNING - D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app\main.py:1744: FutureWarning: Passing literal json to 'read_json' is deprecated and will be removed in a future version. To read from a literal string, wrap it in a 'StringIO' object.
+  df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'records')
+
+2023-09-21 10:14:21,738 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 10:14:21,738 - INFO - TiktokaStudio GUI started
+2023-09-21 10:14:27,579 - INFO - detecting----------False
+2023-09-21 10:14:27,580 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests
+2023-09-21 10:14:27,588 - INFO - start to check thumbFilePaths for video: 1
+2023-09-21 10:14:27,590 - INFO - create a fresh 1 meta json
+2023-09-21 10:14:27,591 - INFO - start to check desFilePaths for video: 1
+2023-09-21 10:14:27,592 - INFO - update to 1 meta json
+2023-09-21 10:14:27,594 - INFO - start to check metaFilePaths for video: 1
+2023-09-21 10:14:27,594 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests\videos\1.json
+2023-09-21 10:14:27,595 - INFO - intial metaFilePaths for 1:
+
+2023-09-21 10:14:27,596 - INFO - update to 1 meta json
+2023-09-21 10:14:27,605 - WARNING - D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app\main.py:1745: FutureWarning: Passing literal json to 'read_json' is deprecated and will be removed in a future version. To read from a literal string, wrap it in a 'StringIO' object.
+  df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'records')
+
+2023-09-21 10:16:56,374 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 10:16:56,374 - INFO - TiktokaStudio GUI started
+2023-09-21 10:17:02,345 - INFO - detecting----------False
+2023-09-21 10:17:02,345 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests
+2023-09-21 10:17:02,356 - INFO - start to check thumbFilePaths for video: 1
+2023-09-21 10:17:02,358 - INFO - update to 1 meta json
+2023-09-21 10:17:02,359 - INFO - start to check desFilePaths for video: 1
+2023-09-21 10:17:02,361 - INFO - update to 1 meta json
+2023-09-21 10:17:02,362 - INFO - start to check metaFilePaths for video: 1
+2023-09-21 10:17:02,363 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests\videos\1.json
+2023-09-21 10:17:02,363 - INFO - intial metaFilePaths for 1:
+
+2023-09-21 10:17:02,364 - INFO - update to 1 meta json
+2023-09-21 10:17:02,373 - WARNING - D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app\main.py:1746: FutureWarning: Passing literal json to 'read_json' is deprecated and will be removed in a future version. To read from a literal string, wrap it in a 'StringIO' object.
+  df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'records')
+
+2023-09-21 10:20:35,196 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 10:20:35,197 - INFO - TiktokaStudio GUI started
+2023-09-21 10:20:46,809 - INFO - detecting----------False
+2023-09-21 10:20:46,809 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests
+2023-09-21 10:20:46,820 - INFO - start to check thumbFilePaths for video: 1
+2023-09-21 10:20:46,822 - INFO - update to 1 meta json
+2023-09-21 10:20:46,823 - INFO - start to check desFilePaths for video: 1
+2023-09-21 10:20:46,824 - INFO - update to 1 meta json
+2023-09-21 10:20:46,825 - INFO - start to check metaFilePaths for video: 1
+2023-09-21 10:20:46,826 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests\videos\1.json
+2023-09-21 10:20:46,826 - INFO - intial metaFilePaths for 1:
+
+2023-09-21 10:20:46,828 - INFO - update to 1 meta json
+2023-09-21 10:20:46,837 - WARNING - D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app\main.py:1746: FutureWarning: Passing literal json to 'read_json' is deprecated and will be removed in a future version. To read from a literal string, wrap it in a 'StringIO' object.
+  df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'records')
+
+2023-09-21 10:27:01,021 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 10:27:01,021 - INFO - TiktokaStudio GUI started
+2023-09-21 10:27:05,312 - INFO - detecting----------False
+2023-09-21 10:27:05,312 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests
+2023-09-21 10:27:05,323 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-21 10:27:05,328 - WARNING - D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app\main.py:1746: FutureWarning: Passing literal json to 'read_json' is deprecated and will be removed in a future version. To read from a literal string, wrap it in a 'StringIO' object.
+  df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'records')
+
+2023-09-21 10:30:07,848 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 10:30:07,848 - INFO - TiktokaStudio GUI started
+2023-09-21 10:33:00,246 - INFO - detecting----------False
+2023-09-21 10:33:00,246 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests
+2023-09-21 10:33:00,254 - INFO - we could not find any video, video counts is 0,supported ext includes:
+.flv..mp4..avi
+2023-09-21 10:33:00,258 - WARNING - D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app\main.py:1750: FutureWarning: Passing literal json to 'read_json' is deprecated and will be removed in a future version. To read from a literal string, wrap it in a 'StringIO' object.
+  df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'records')
+
+2023-09-21 10:33:00,268 - INFO - start to check thumbFilePaths for video: 1
+2023-09-21 10:33:00,270 - INFO - update to 1 meta json
+2023-09-21 10:33:00,271 - INFO - start to check desFilePaths for video: 1
+2023-09-21 10:33:00,272 - INFO - update to 1 meta json
+2023-09-21 10:33:00,273 - INFO - start to check metaFilePaths for video: 1
+2023-09-21 10:33:00,274 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests\videos\1.json
+2023-09-21 10:33:00,275 - INFO - intial metaFilePaths for 1:
+
+2023-09-21 10:33:00,276 - INFO - update to 1 meta json
+2023-09-21 10:33:00,295 - WARNING - D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app\main.py:1750: FutureWarning: Passing literal json to 'read_json' is deprecated and will be removed in a future version. To read from a literal string, wrap it in a 'StringIO' object.
+  df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'records')
+
+2023-09-21 10:33:00,307 - WARNING - D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app\main.py:1750: FutureWarning: Passing literal json to 'read_json' is deprecated and will be removed in a future version. To read from a literal string, wrap it in a 'StringIO' object.
+  df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'records')
+
+2023-09-21 10:41:34,824 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 10:41:34,824 - INFO - TiktokaStudio GUI started
+2023-09-21 10:45:55,822 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 10:45:55,822 - INFO - TiktokaStudio GUI started
+2023-09-21 10:47:43,744 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 10:47:43,745 - INFO - TiktokaStudio GUI started
+2023-09-21 10:47:58,385 - INFO - detecting----------False
+2023-09-21 10:47:58,385 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests
+2023-09-21 10:47:58,393 - INFO - start to check thumbFilePaths for video: 1
+2023-09-21 10:47:58,395 - INFO - update to 1 meta json
+2023-09-21 10:47:58,396 - INFO - start to check desFilePaths for video: 1
+2023-09-21 10:47:58,397 - INFO - update to 1 meta json
+2023-09-21 10:47:58,398 - INFO - start to check metaFilePaths for video: 1
+2023-09-21 10:47:58,399 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests\videos\1.json
+2023-09-21 10:47:58,399 - INFO - intial metaFilePaths for 1:
+
+2023-09-21 10:47:58,400 - INFO - update to 1 meta json
+2023-09-21 10:47:58,410 - WARNING - D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app\main.py:1746: FutureWarning: Passing literal json to 'read_json' is deprecated and will be removed in a future version. To read from a literal string, wrap it in a 'StringIO' object.
+  df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'records')
+
