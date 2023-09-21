@@ -1,6 +1,6 @@
 import pandas as pd
 import json
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont,ImageColor
 import os
 import sys
 

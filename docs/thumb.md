@@ -55,3 +55,6 @@ The maximum file size of images you can upload to use as a thumbnail image on Yo
 
 Image file formats you can upload to YouTube include JPG (or JPEG), GIF (non animated), PNG, and BMP.
 
+
+
+

@@ -2925,7 +2925,7 @@ def genThumbnailFromTemplate(folder,thumbnail_template_file_path,mode_value,thum
             'xhs':"1080*1440px",
             'dy':"1080*1920px",
             'wx':"1080*1260px",
-            'youtube':"1280*720",
+            'youtube':"1920*1080px",
             'tiktok':"1080*1920px"
 
         }
@@ -2933,7 +2933,7 @@ def genThumbnailFromTemplate(folder,thumbnail_template_file_path,mode_value,thum
             'xhs':"1440*1080px",
             'dy':"1080*608px",
             'wx':"1080*608px",
-            'youtube':"1920 * 1080",
+            'youtube':"1280*720px",
             'tiktok':"1080*608px"
 
 

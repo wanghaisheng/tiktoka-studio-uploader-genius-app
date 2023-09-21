@@ -16,7 +16,7 @@
 		"fontName": "Unknown",
 		"gridSize": 10,
 		"nearestGridSerialNumber": 13,
-		"fontcolor": "rgb(24, 78, 164)"
+		"fontcolor": "red"
 	}, {
 		"textType": "subheading",
 		"fontFile": "",
