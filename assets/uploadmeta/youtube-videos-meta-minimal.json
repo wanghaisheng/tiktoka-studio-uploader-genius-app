@@ -1,0 +1,77 @@
+{
+  "uploadSetting": [{
+    "proxy_option": "socks5://127.0.0.1:1080",
+    "browser_type": "firefox",
+    "channel_cookie_path": "/Users/wenke/github/tiktoka-studio-uploader/offloaddogsboner-cookie.json"
+  }],
+  "videos": [
+    {
+      "video_local_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4",
+      "video_title": "my test video_title private draft",
+      "video_description": "my test video_description",
+      "thumbnail_local_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg",
+      "publish_policy": 0,
+      "tags": 
+        "Radiation resistance,Turning tiny,Radiation blast"
+      
+    },
+    {
+      "video_local_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4",
+      "video_title": "instant publish my test video_title",
+      "video_description": "my test video_description",
+      "thumbnail_local_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg",
+      "publish_policy": 1,
+      "is_not_for_kid": true,
+      "categories": 10,
+      "comments_ratings_policy": 1,
+      "tags": 
+        "Radiation resistance,Turning tiny,Radiation blast"
+      
+    },
+    {
+      "video_local_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4",
+      "video_title": "scheduletopublish_at_specific_date my test video_title",
+      "video_description": "my test video_description",
+      "thumbnail_local_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg",
+      "publish_policy": 2,
+      "release_date": "2023-12-01",
+      "release_date_hour": "10:15",
+      "is_not_for_kid": true,
+      "categories": 10,
+      "comments_ratings_policy": 1,
+      "tags": 
+        "Radiation resistance,Turning tiny,Radiation blast"
+      
+    },
+    {
+      "video_local_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4",
+      "video_title": "Unlisted my test video_title",
+      "video_description": "my test video_description",
+      "thumbnail_local_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg",
+      "publish_policy": 3,
+      "release_date": "2023-12-01",
+      "release_date_hour": "10:15",
+      "is_not_for_kid": true,
+      "categories": 10,
+      "comments_ratings_policy": 1,
+      "tags": 
+        "Radiation resistance,Turning tiny,Radiation blast"
+      
+    },
+    {
+      "video_local_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1.mp4",
+      "video_title": "public&premiere my test video_title",
+      "video_description": "my test video_description",
+      "thumbnail_local_path": "/Users/wenke/github/tiktoka-studio-uploader/tests/1/sp/1-001.jpg",
+      "publish_policy": 4,
+      "release_date": "2023-12-01",
+      "release_date_hour": "10:15",
+      "is_not_for_kid": true,
+      "categories": 10,
+      "comments_ratings_policy": 1,
+      "tags": 
+        "Radiation resistance,Turning tiny,Radiation blast"
+      
+    }
+  ]
+}

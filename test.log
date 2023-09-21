@@ -34292,3 +34292,223 @@ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests
 2023-09-21 10:47:58,410 - WARNING - D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app\main.py:1746: FutureWarning: Passing literal json to 'read_json' is deprecated and will be removed in a future version. To read from a literal string, wrap it in a 'StringIO' object.
   df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'records')
 
+2023-09-21 10:51:41,395 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 10:51:41,395 - INFO - TiktokaStudio GUI started
+2023-09-21 10:52:03,825 - INFO - detecting----------False
+2023-09-21 10:52:03,825 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests
+2023-09-21 10:52:03,833 - INFO - start to check thumbFilePaths for video: 1
+2023-09-21 10:52:03,835 - INFO - update to 1 meta json
+2023-09-21 10:52:03,836 - INFO - start to check desFilePaths for video: 1
+2023-09-21 10:52:03,837 - INFO - update to 1 meta json
+2023-09-21 10:52:03,838 - INFO - start to check metaFilePaths for video: 1
+2023-09-21 10:52:03,839 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests\videos\1.json
+2023-09-21 10:52:03,839 - INFO - intial metaFilePaths for 1:
+
+2023-09-21 10:52:03,840 - INFO - update to 1 meta json
+2023-09-21 10:52:03,849 - WARNING - D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app\main.py:1746: FutureWarning: Passing literal json to 'read_json' is deprecated and will be removed in a future version. To read from a literal string, wrap it in a 'StringIO' object.
+  df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'records')
+
+2023-09-21 10:52:19,873 - INFO - start to load thumbnail gen setting json from::D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-21 10:52:19,879 - INFO - start to validate template
+2023-09-21 10:52:19,890 - INFO - validate thumbnail gen template passed
+2023-09-21 10:52:19,891 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 10:52:19,898 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 10:52:19,898 - ERROR - heading value is empty in entry 1.
+2023-09-21 10:52:19,898 - ERROR - subheading value is empty in entry 1.
+2023-09-21 10:52:19,898 - ERROR - validate metadata for thumbgen setting failed
+2023-09-21 10:52:19,898 - INFO - start to validate bg folder
+2023-09-21 10:52:19,899 - INFO - assign bg to each video
+2023-09-21 10:52:19,900 - INFO - validate bg folder passed
+2023-09-21 10:52:41,050 - INFO - start to load thumbnail gen setting json from::D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-21 10:52:41,051 - INFO - start to validate template
+2023-09-21 10:52:41,054 - INFO - validate thumbnail gen template passed
+2023-09-21 10:52:41,054 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 10:52:41,056 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 10:52:41,056 - ERROR - heading value is empty in entry 1.
+2023-09-21 10:52:41,056 - ERROR - subheading value is empty in entry 1.
+2023-09-21 10:52:41,056 - ERROR - validate metadata for thumbgen setting failed
+2023-09-21 10:52:41,056 - INFO - start to validate bg folder
+2023-09-21 10:52:41,057 - INFO - assign bg to each video
+2023-09-21 10:52:41,057 - INFO - validate bg folder passed
+2023-09-21 10:53:14,523 - INFO - start to load thumbnail gen setting json from::D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-21 10:53:14,524 - INFO - start to validate template
+2023-09-21 10:53:14,527 - INFO - validate thumbnail gen template passed
+2023-09-21 10:53:14,527 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 10:53:14,529 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 10:53:14,530 - INFO - heading value is \u662f\u662f\u65bd\u6c0f\u98df\u72ee\u53f2 in entry 1.
+2023-09-21 10:53:14,530 - INFO - subheading value is \u8c22\u8c22\u8c22\u8c22\u8c22\u8c22\u8c22\u8c22\u8c22\u8c22\u8c22\u8c22\u4f11\u606f\u4e0b in entry 1.
+2023-09-21 10:53:14,530 - INFO - validate metadata for thumbgen setting passed
+2023-09-21 10:53:14,530 - INFO - start to update user submited metafile to video assets
+2023-09-21 10:53:14,531 - WARNING - You are running on win32, potentially without locks. Consider setting shared_lock=True
+2023-09-21 10:53:14,532 - INFO - update user submited metafile to video assets passed
+2023-09-21 10:53:14,532 - INFO - start to validate bg folder
+2023-09-21 10:53:14,533 - INFO - assign bg to each video
+2023-09-21 10:53:14,533 - INFO - validate bg folder passed
+2023-09-21 10:56:12,810 - INFO - start to load thumbnail gen setting json from::D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/videos/template (15).json
+2023-09-21 10:56:12,811 - INFO - start to validate template
+2023-09-21 10:56:12,814 - INFO - validate thumbnail gen template passed
+2023-09-21 10:56:12,814 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 10:56:12,816 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 10:56:12,816 - INFO - heading value is \u662f\u662f\u65bd\u6c0f\u98df\u72ee\u53f2 in entry 1.
+2023-09-21 10:56:12,816 - INFO - subheading value is \u8c22\u8c22\u8c22\u8c22\u8c22\u8c22\u8c22\u8c22\u8c22\u8c22\u8c22\u8c22\u4f11\u606f\u4e0b in entry 1.
+2023-09-21 10:56:12,817 - INFO - validate metadata for thumbgen setting passed
+2023-09-21 10:56:12,817 - INFO - start to update user submited metafile to video assets
+2023-09-21 10:56:12,817 - WARNING - You are running on win32, potentially without locks. Consider setting shared_lock=True
+2023-09-21 10:56:12,817 - INFO - update user submited metafile to video assets passed
+2023-09-21 10:56:12,817 - INFO - start to validate bg folder
+2023-09-21 10:56:12,818 - INFO - assign bg to each video
+2023-09-21 10:56:12,818 - INFO - validate bg folder passed
+2023-09-21 16:17:40,057 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 16:17:40,058 - INFO - TiktokaStudio GUI started
+2023-09-21 16:21:57,733 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 16:21:57,733 - INFO - TiktokaStudio GUI started
+2023-09-21 16:22:11,336 - INFO - detecting----------False
+2023-09-21 16:22:11,337 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/TiktokaVideoEditing/assets/videos
+2023-09-21 16:22:11,348 - INFO - start to check thumbFilePaths for video: mcstay-1
+2023-09-21 16:22:11,350 - INFO - create a fresh mcstay-1 meta json
+2023-09-21 16:22:11,352 - INFO - start to check desFilePaths for video: mcstay-1
+2023-09-21 16:22:11,354 - INFO - update to mcstay-1 meta json
+2023-09-21 16:22:11,355 - INFO - start to check metaFilePaths for video: mcstay-1
+2023-09-21 16:22:11,356 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/TiktokaVideoEditing/assets/videos\mcstay-1.json
+2023-09-21 16:22:11,356 - INFO - intial metaFilePaths for mcstay-1:
+
+2023-09-21 16:22:11,357 - INFO - update to mcstay-1 meta json
+2023-09-21 16:22:11,361 - INFO - start to check thumbFilePaths for video: mcstay-2
+2023-09-21 16:22:11,362 - INFO - create a fresh mcstay-2 meta json
+2023-09-21 16:22:11,364 - INFO - start to check desFilePaths for video: mcstay-2
+2023-09-21 16:22:11,365 - INFO - update to mcstay-2 meta json
+2023-09-21 16:22:11,366 - INFO - start to check metaFilePaths for video: mcstay-2
+2023-09-21 16:22:11,367 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/TiktokaVideoEditing/assets/videos\mcstay-2.json
+2023-09-21 16:22:11,367 - INFO - intial metaFilePaths for mcstay-2:
+
+2023-09-21 16:22:11,369 - INFO - update to mcstay-2 meta json
+2023-09-21 16:22:11,372 - INFO - start to check thumbFilePaths for video: OP
+2023-09-21 16:22:11,374 - INFO - create a fresh OP meta json
+2023-09-21 16:22:11,375 - INFO - start to check desFilePaths for video: OP
+2023-09-21 16:22:11,376 - INFO - update to OP meta json
+2023-09-21 16:22:11,377 - INFO - start to check metaFilePaths for video: OP
+2023-09-21 16:22:11,378 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/TiktokaVideoEditing/assets/videos\OP.json
+2023-09-21 16:22:11,378 - INFO - intial metaFilePaths for OP:
+
+2023-09-21 16:22:11,380 - INFO - update to OP meta json
+2023-09-21 16:22:11,390 - WARNING - D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app\main.py:1748: FutureWarning: Passing literal json to 'read_json' is deprecated and will be removed in a future version. To read from a literal string, wrap it in a 'StringIO' object.
+  df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'records')
+
+2023-09-21 16:23:42,779 - INFO - detecting----------False
+2023-09-21 16:23:42,779 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/videos/9-16
+2023-09-21 16:23:42,786 - INFO - start to check thumbFilePaths for video: 1
+2023-09-21 16:23:42,787 - INFO - create a fresh 1 meta json
+2023-09-21 16:23:42,788 - INFO - start to check desFilePaths for video: 1
+2023-09-21 16:23:42,790 - INFO - update to 1 meta json
+2023-09-21 16:23:42,791 - INFO - start to check metaFilePaths for video: 1
+2023-09-21 16:23:42,791 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/videos/9-16\1.json
+2023-09-21 16:23:42,792 - INFO - intial metaFilePaths for 1:
+
+2023-09-21 16:23:42,794 - INFO - update to 1 meta json
+2023-09-21 16:23:42,800 - WARNING - D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app\main.py:1748: FutureWarning: Passing literal json to 'read_json' is deprecated and will be removed in a future version. To read from a literal string, wrap it in a 'StringIO' object.
+  df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'records')
+
+2023-09-21 16:24:32,573 - INFO - start to load thumbnail gen setting json from::D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/videos/9-16/template (9).json
+2023-09-21 16:24:32,573 - INFO - start to validate template
+2023-09-21 16:24:32,585 - INFO - validate thumbnail gen template passed
+2023-09-21 16:24:32,585 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 16:24:32,593 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 16:24:32,594 - ERROR - heading value is empty in entry 1.
+2023-09-21 16:24:32,594 - ERROR - subheading value is empty in entry 1.
+2023-09-21 16:24:32,594 - ERROR - validate metadata for thumbgen setting failed
+2023-09-21 16:24:32,595 - INFO - start to validate bg folder
+2023-09-21 16:24:32,596 - INFO - Random assign bg to each video
+2023-09-21 16:24:32,596 - INFO - validate bg folder passed
+2023-09-21 16:25:19,638 - INFO - start to load thumbnail gen setting json from::D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/videos/9-16/template (9).json
+2023-09-21 16:25:19,639 - INFO - start to validate template
+2023-09-21 16:25:19,642 - INFO - validate thumbnail gen template passed
+2023-09-21 16:25:19,642 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 16:25:19,644 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 16:25:19,645 - INFO - heading value is \u7f57\u7fd4\u8001\u5e08\u68d2\u68d2\u7684 in entry 1.
+2023-09-21 16:25:19,645 - INFO - subheading value is \u4e00\u4e2a\u9992\u5934\u5f15\u53d1\u7684\u8840\u6848 in entry 1.
+2023-09-21 16:25:19,645 - INFO - validate metadata for thumbgen setting passed
+2023-09-21 16:25:19,645 - INFO - start to update user submited metafile to video assets
+2023-09-21 16:25:19,645 - WARNING - You are running on win32, potentially without locks. Consider setting shared_lock=True
+2023-09-21 16:25:19,646 - INFO - update user submited metafile to video assets passed
+2023-09-21 16:25:19,646 - INFO - start to validate bg folder
+2023-09-21 16:25:19,646 - INFO - Random assign bg to each video
+2023-09-21 16:25:19,647 - INFO - validate bg folder passed
+2023-09-21 16:25:25,415 - INFO - start to load thumbnail gen setting json from::D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/videos/9-16/template (9).json
+2023-09-21 16:25:25,416 - INFO - start to validate template
+2023-09-21 16:25:25,418 - INFO - validate thumbnail gen template passed
+2023-09-21 16:25:25,419 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 16:25:25,421 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 16:25:25,421 - INFO - heading value is \u7f57\u7fd4\u8001\u5e08\u68d2\u68d2\u7684 in entry 1.
+2023-09-21 16:25:25,421 - INFO - subheading value is \u4e00\u4e2a\u9992\u5934\u5f15\u53d1\u7684\u8840\u6848 in entry 1.
+2023-09-21 16:25:25,421 - INFO - validate metadata for thumbgen setting passed
+2023-09-21 16:25:25,421 - INFO - start to update user submited metafile to video assets
+2023-09-21 16:25:25,421 - WARNING - You are running on win32, potentially without locks. Consider setting shared_lock=True
+2023-09-21 16:25:25,422 - INFO - update user submited metafile to video assets passed
+2023-09-21 16:25:25,422 - INFO - start to validate bg folder
+2023-09-21 16:25:25,422 - INFO - Random assign bg to each video
+2023-09-21 16:25:25,423 - INFO - validate bg folder passed
+2023-09-21 16:48:57,872 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 16:48:57,872 - INFO - TiktokaStudio GUI started
+2023-09-21 16:49:07,917 - INFO - detecting----------False
+2023-09-21 16:49:07,917 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/videos/9-16
+2023-09-21 16:49:07,923 - INFO - start to check thumbFilePaths for video: 1
+2023-09-21 16:49:07,924 - INFO - update to 1 meta json
+2023-09-21 16:49:07,925 - INFO - start to check desFilePaths for video: 1
+2023-09-21 16:49:07,926 - INFO - update to 1 meta json
+2023-09-21 16:49:07,927 - INFO - start to check metaFilePaths for video: 1
+2023-09-21 16:49:07,928 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/videos/9-16\1.json
+2023-09-21 16:49:07,928 - INFO - intial metaFilePaths for 1:
+
+2023-09-21 16:49:07,930 - INFO - update to 1 meta json
+2023-09-21 16:49:07,940 - WARNING - D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app\main.py:1748: FutureWarning: Passing literal json to 'read_json' is deprecated and will be removed in a future version. To read from a literal string, wrap it in a 'StringIO' object.
+  df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'records')
+
+2023-09-21 16:50:28,432 - INFO - start to load thumbnail gen setting json from::D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/videos/9-16/template (9).json
+2023-09-21 16:50:28,432 - INFO - start to validate template
+2023-09-21 16:50:28,437 - INFO - validate thumbnail gen template passed
+2023-09-21 16:50:28,437 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 16:50:28,440 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 16:50:28,440 - ERROR - heading value is empty in entry 1.
+2023-09-21 16:50:28,440 - ERROR - subheading value is empty in entry 1.
+2023-09-21 16:50:28,440 - ERROR - validate metadata for thumbgen setting failed
+2023-09-21 16:50:28,440 - INFO - start to validate bg folder
+2023-09-21 16:50:28,441 - INFO - Random assign bg to each video
+2023-09-21 16:50:28,441 - INFO - validate bg folder passed
+2023-09-21 16:52:18,420 - INFO - start to load thumbnail gen setting json from::D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/videos/9-16/template (9).json
+2023-09-21 16:52:18,420 - INFO - start to validate template
+2023-09-21 16:52:18,424 - INFO - validate thumbnail gen template passed
+2023-09-21 16:52:18,424 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 16:52:18,426 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 16:52:18,427 - INFO - heading value is \u7238\u7238\u5462 in entry 1.
+2023-09-21 16:52:18,427 - INFO - subheading value is \u6211\u7684\u53bb\u53bb\u53bb in entry 1.
+2023-09-21 16:52:18,427 - INFO - validate metadata for thumbgen setting passed
+2023-09-21 16:52:18,427 - INFO - start to update user submited metafile to video assets
+2023-09-21 16:52:18,427 - WARNING - You are running on win32, potentially without locks. Consider setting shared_lock=True
+2023-09-21 16:52:18,428 - INFO - update user submited metafile to video assets passed
+2023-09-21 16:52:18,428 - INFO - start to validate bg folder
+2023-09-21 16:52:18,428 - INFO - Random assign bg to each video
+2023-09-21 16:52:18,428 - INFO - validate bg folder passed
+2023-09-21 16:52:25,669 - INFO - start to load thumbnail gen setting json from::D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/videos/9-16/template (9).json
+2023-09-21 16:52:25,669 - INFO - start to validate template
+2023-09-21 16:52:25,672 - INFO - validate thumbnail gen template passed
+2023-09-21 16:52:25,673 - INFO - start to validate metadata for thumbgen setting
+2023-09-21 16:52:25,675 - INFO - start to check ['heading', 'subheading'] defined in template
+2023-09-21 16:52:25,675 - INFO - heading value is \u7238\u7238\u5462 in entry 1.
+2023-09-21 16:52:25,676 - INFO - subheading value is \u6211\u7684\u53bb\u53bb\u53bb in entry 1.
+2023-09-21 16:52:25,676 - INFO - validate metadata for thumbgen setting passed
+2023-09-21 16:52:25,676 - INFO - start to update user submited metafile to video assets
+2023-09-21 16:52:25,676 - WARNING - You are running on win32, potentially without locks. Consider setting shared_lock=True
+2023-09-21 16:52:25,676 - INFO - update user submited metafile to video assets passed
+2023-09-21 16:52:25,676 - INFO - start to validate bg folder
+2023-09-21 16:52:25,677 - INFO - Random assign bg to each video
+2023-09-21 16:52:25,678 - INFO - validate bg folder passed

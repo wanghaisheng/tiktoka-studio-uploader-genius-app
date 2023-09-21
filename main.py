@@ -80,6 +80,7 @@ import calendar
 from tsup.utils.webdriver.setupPL import checkRequirments
 import logging
 from src.database import createEngine,pd2table,query2df,rmEngine
+from src.gpt_thumbnail import draw_text_on_image,validateSeting
 try:
     import tkinter.scrolledtext as ScrolledText
 except ImportError:
@@ -1612,6 +1613,7 @@ def analyse_video_meta_pair(folder,frame,right_frame,selectedMetafileformat,isTh
                             'metaFilePaths':{},  
                             "thumb_gen_setting":{
                             "mode":3,
+                            "render_style":'cord',
                             "result_image_width": "",
                             "result_image_height": "",                        
                             # "bg_image": "",  
@@ -2833,7 +2835,7 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
                         ultra[folder]['thumb_gen_setting']['bg_folder']=thummbnail_bg_folder_path
                         
                         ultra[folder]['thumb_gen_setting']['bg_folder_images']=bg_images
-                        logger.info('assign bg to each video')
+                        logger.info('Random assign bg to each video')
 
 
                         for filename in  ultra[folder]['filenames']:
@@ -2890,6 +2892,7 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
                 f.write(jsons.dumps(ultra[folder]))    
     else:
         print('pass failed')
+    return passed
 def openVideoMetaFile(folder):
     print(f'you choose metafile format is:{metafileformat.get()}')
     if metafileformat.get():
@@ -2899,7 +2902,7 @@ def openVideoMetaFile(folder):
 
 def genThumbnailFromTemplate(folder,thumbnail_template_file_path,mode_value,thummbnail_bg_folder_path,frame=None):
 
-    ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thummbnail_bg_folder_path,frame)
+    passed=ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thummbnail_bg_folder_path,frame)
 
 
     print('read video meta')
@@ -2907,8 +2910,74 @@ def genThumbnailFromTemplate(folder,thumbnail_template_file_path,mode_value,thum
  
     print('read thumb gen settings')
 
-    ultra[video_folder]['thumb_gen_setting']        
+    template_data=validateSeting(ultra[folder]['thumb_gen_setting']     )
+    video_data = ultra[folder]['videos']
+    render_style=template_data.get("render_style") 
+    result_image_width=int(template_data.get('result_image_width'))
+    result_image_height=int(template_data.get('result_image_height'))        
+    output_folder=folder
+    for video_id, video_info in video_data.items():
+        print('1',video_info)
+        thumb_gen_setting = template_data.get("template", [])
 
+        ext='.png'
+        dict_9_16={
+            'xhs':"1080*1440px",
+            'dy':"1080*1920px",
+            'wx':"1080*1260px",
+            'youtube':"1280*720",
+            'tiktok':"1080*1920px"
+
+        }
+        dict_16_9={
+            'xhs':"1440*1080px",
+            'dy':"1080*608px",
+            'wx':"1080*608px",
+            'youtube':"1920 * 1080",
+            'tiktok':"1080*608px"
+
+
+        }
+
+        filename=video_id+ext
+        filename=video_id+"_"+str(result_image_width)+"x"+str(result_image_height)+ext
+        draw_text_on_image(video_info,thumb_gen_setting,result_image_width,result_image_height,render_style,output_folder,filename)
+
+        if result_image_width > result_image_height:
+            basedir=output_folder+os.sep+'16-9'
+            os.makedirs(basedir, exist_ok=True)
+
+            # 16:9 aspect ratio        
+            for key,value in dict_16_9.items():
+                output_folder=basedir+os.sep+key
+                os.makedirs(output_folder, exist_ok=True)
+                filename=video_id+ext
+                value=value.replace("px","")
+                result_image_width=value.split("*")[0]
+                result_image_height=value.split("*")[-1]
+                filename=video_id+"_"+value.replace("*","x")+ext
+                result_image_width=int(result_image_width)
+                result_image_height=int(result_image_height)
+
+
+                draw_text_on_image(video_info,thumb_gen_setting,result_image_width,result_image_height,render_style,output_folder,filename)
+        else:
+            # 9:16 aspect ratio    
+            basedir=output_folder+os.sep+'9-16'
+
+            os.makedirs(basedir, exist_ok=True)
+            for key,value in dict_9_16.items():
+                output_folder=basedir+os.sep+key
+                os.makedirs(output_folder, exist_ok=True)
+                filename=video_id+ext
+                value=value.replace("px","")
+                result_image_width=value.split("*")[0]
+                result_image_height=value.split("*")[-1]
+                filename=video_id+"_"+value.replace("*","x")+ext
+                result_image_width=int(result_image_width)
+                result_image_height=int(result_image_height)
+
+                draw_text_on_image(video_info,thumb_gen_setting,result_image_width,result_image_height,render_style,output_folder+os.sep+'9-16'+os.sep+key,filename)
 
 
 
