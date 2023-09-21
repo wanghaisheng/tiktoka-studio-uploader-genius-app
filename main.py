@@ -4444,7 +4444,8 @@ def render(root,window,log_frame,lang):
     tab_control.add(upload_frame, text=i18labels("uploadView", locale=lang, module="g"))
     uploadView(upload_frame_left,upload_frame_right,lang)
 
-    tab_control.pack(expand=1, fill='both')
+    # tab_control.pack(expand=1, fill='both')
+    tab_control.grid(row=0,column=0)
 
 
 
@@ -4492,7 +4493,7 @@ def render(root,window,log_frame,lang):
 
 
 
-    root.config(menu=menubar)
+    # root.config(menu=menubar)
     # return langchoosen.get()
 
 
@@ -4514,47 +4515,66 @@ if __name__ == '__main__':
     if gui_flag:
         global root
         root = tk.Tk()
-        # root.geometry('1280x720')
-        # root.geometry(window_size)
+        root.geometry(window_size)
+        # root.resizable(width=True, height=True)
+        root.iconbitmap("assets/icon.ico")
+        root.title(i18labels("title", locale='en', module="g"))        
+        # Create a PanedWindow widget (vertical)
+        paned_window = tk.PanedWindow(root, orient=tk.VERTICAL)
+        paned_window.pack(expand=True, fill="both")
 
-        window=tk.Frame(root,width=str(width),  height=str(height+200),  )
-        window=tk.Frame(root  )
+        # Configure weights for mainwindow and log_frame
+        paned_window.grid_rowconfigure(0, weight=5)
+        paned_window.grid_rowconfigure(1, weight=1)
 
-        # from src.collapsiblepane import CollapsiblePane as cp
-        log_frame =tk.Frame(window, width = width, height = 5)
-        # = cp(root, 'Expanded', 'Collapsed')
-        # log_frame.resizable(width=True, height=True)
-        log_frame.pack(side = tk.BOTTOM)
+        # Create the frame for the notebook
+        mainwindow = ttk.Frame(paned_window)
+        paned_window.add(mainwindow)
+        mainwindow.grid_rowconfigure(0, weight=1)
+        mainwindow.grid_columnconfigure(0, weight=1)
+
+
+        
+
+
+        log_frame =tk.Frame(paned_window)
+        paned_window.add(log_frame)
+
+        log_frame.grid_rowconfigure(0, weight=1)
+        log_frame.grid_columnconfigure(0, weight=1)
+        log_frame.columnconfigure(0, weight=1)
+        log_frame.rowconfigure(0, weight=1)
+
+
+
+
         st = ScrolledText.ScrolledText(log_frame,                                      
-                                    width = width, 
-                                        height = 5, 
+                                    # width = width, 
+                                    #     height = 5, 
                                         state='disabled')
         st.bind_all("<Control-c>",_copy)
         
         st.configure(font='TkFixedFont')
         st.grid(column=0, 
                 row=0, 
-                # sticky='n',
+                sticky='nwse',
                 # columnspan=4
                 )
-        # st.pack(padx=10, pady=10,side= tk.LEFT, fill=tk.X, expand=True)
-        # Create textLogger
         text_handler = TextHandler(st)
 
         logger.addHandler(text_handler)    
-        # print('debug message')
-        # print('info message')
-        # logger.warning('warn message')
-        # logger.error('error message')
-        # logger.critical('critical message')
-        window.pack()
+
 
         logger.debug(f'installation path is{ROOT_DIR}')
-        root.resizable(width=True, height=True)
-        root.iconbitmap("assets/icon.ico")
 
-        render(root,window,log_frame,'en')
-        root.title(i18labels("title", locale='en', module="g"))        
         logger.info('TiktokaStudio GUI started')
+        render(paned_window,mainwindow,log_frame,'en')
+    #     root.update_idletasks()
 
+    # # Set the initial size of the notebook frame (4/5 of total height)
+        mainwindow_initial_percentage = 5 / 6  
+
+        # Calculate the initial height of mainwindow based on the percentage
+        initial_height = int(float(root.winfo_height()) * mainwindow_initial_percentage)
+        mainwindow.config(height=initial_height)
         root.mainloop()

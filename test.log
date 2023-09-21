@@ -34089,3 +34089,70 @@ data
 2023-09-20 23:27:46,491 - INFO - start to validate bg folder
 2023-09-20 23:27:46,492 - INFO - assign bg to each video
 2023-09-20 23:27:46,492 - INFO - validate bg folder passed
+2023-09-21 08:50:16,471 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 08:50:16,565 - INFO - TiktokaStudio GUI started
+2023-09-21 08:53:13,864 - ERROR - this query >>> seems went wrong:
+SELECT * FROM uploadtasks ORDER by inserted_at DESC,full error message:
+(sqlite3.OperationalError) no such table: uploadtasks
+[SQL: SELECT * FROM uploadtasks ORDER by inserted_at DESC]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-21 08:58:33,348 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 09:00:36,214 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 09:01:25,729 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 09:01:25,803 - INFO - TiktokaStudio GUI started
+2023-09-21 09:04:41,246 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 09:04:41,323 - INFO - TiktokaStudio GUI started
+2023-09-21 09:05:55,682 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 09:05:55,724 - INFO - TiktokaStudio GUI started
+2023-09-21 09:07:18,046 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 09:07:18,083 - INFO - TiktokaStudio GUI started
+2023-09-21 09:07:59,398 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 09:07:59,430 - INFO - TiktokaStudio GUI started
+2023-09-21 09:09:02,204 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 09:09:02,239 - INFO - TiktokaStudio GUI started
+2023-09-21 09:33:04,095 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 09:33:04,096 - INFO - TiktokaStudio GUI started
+2023-09-21 09:35:18,218 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 09:35:18,218 - INFO - TiktokaStudio GUI started
+2023-09-21 09:37:10,330 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 09:37:10,330 - INFO - TiktokaStudio GUI started
+2023-09-21 09:37:40,498 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 09:37:40,498 - INFO - TiktokaStudio GUI started
+2023-09-21 09:38:05,976 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 09:38:05,976 - INFO - TiktokaStudio GUI started
+2023-09-21 09:39:34,056 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 09:39:34,056 - INFO - TiktokaStudio GUI started
+2023-09-21 09:42:26,672 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 09:42:26,672 - INFO - TiktokaStudio GUI started
+2023-09-21 09:44:08,401 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 09:44:08,401 - INFO - TiktokaStudio GUI started
+2023-09-21 09:44:53,129 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 09:44:53,129 - INFO - TiktokaStudio GUI started
+2023-09-21 09:45:47,664 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 09:45:47,664 - INFO - TiktokaStudio GUI started
+2023-09-21 09:46:28,994 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 09:46:28,994 - INFO - TiktokaStudio GUI started
+2023-09-21 09:49:05,603 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 09:49:05,604 - INFO - TiktokaStudio GUI started
+2023-09-21 09:49:29,393 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 09:49:29,394 - INFO - TiktokaStudio GUI started
+2023-09-21 09:51:54,569 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 09:51:54,569 - INFO - TiktokaStudio GUI started
+2023-09-21 09:56:51,479 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 09:56:51,479 - INFO - TiktokaStudio GUI started
+2023-09-21 09:57:24,506 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 09:57:24,506 - INFO - TiktokaStudio GUI started
+2023-09-21 09:57:55,741 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 09:57:55,741 - INFO - TiktokaStudio GUI started
+2023-09-21 10:01:31,542 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 10:01:31,542 - INFO - TiktokaStudio GUI started
+2023-09-21 10:02:02,576 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 10:02:02,576 - INFO - TiktokaStudio GUI started
+2023-09-21 10:02:28,883 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 10:02:28,884 - INFO - TiktokaStudio GUI started
+2023-09-21 10:02:44,840 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 10:02:44,840 - INFO - TiktokaStudio GUI started
+2023-09-21 10:04:58,152 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 10:04:58,153 - INFO - TiktokaStudio GUI started
+2023-09-21 10:05:47,114 - DEBUG - installation path isD:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-app
+2023-09-21 10:05:47,115 - INFO - TiktokaStudio GUI started
