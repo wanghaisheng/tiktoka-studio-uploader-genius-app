@@ -2067,6 +2067,53 @@ def installView(frame,ttkframe,lang):
 
     b_view_version=tk.Button(frame,text=i18labels("testsettingok", locale=lang, module="g"),command=lambda: threading.Thread(target=ValidateSetting).start() )
     b_view_version.place(x=50, y=300)    
+
+    displayLang = tk.StringVar()
+    debugLevel = tk.StringVar()
+
+
+    l_lanauage = tk.Label(ttkframe, text=i18labels("lanauage", locale=lang, module="g"))
+    # l_platform.place(x=10, y=90)
+    l_lanauage.grid(row = 0, column = 0, columnspan = 3, padx=14, pady=15)    
+
+
+    keeppLang = displayLang.get()    
+    box = ttk.Combobox(ttkframe, width=int(width*0.01), textvariable=keeppLang, state='readonly')
+    # box.place(x=10, y=120)
+    box.grid(row = 0, column = 5, columnspan = 3, padx=14, pady=15)    
+
+    def selectedLang(event):
+        box = event.widget
+        
+        print('selected Lang is :',box.get())
+        changeLang(box.get(),window,log_frame)
+    box['values'] = ('zh', 'en')
+    box.current(1)
+    box.bind("<<ComboboxSelected>>", selectedLang)
+
+    l_debug = tk.Label(ttkframe, text=i18labels("debugLevel", locale=lang, module="g"))
+    # l_platform.place(x=10, y=90)
+    l_debug.grid(row = 2, column = 0, columnspan = 3, padx=14, pady=15)    
+
+
+    keeppDebugLevel = debugLevel.get()    
+    box = ttk.Combobox(ttkframe, width=int(width*0.01), textvariable=keeppDebugLevel, state='readonly')
+    # box.place(x=10, y=120)
+    box.grid(row = 2, column = 5, columnspan = 3, padx=14, pady=15)    
+
+    def selectedDebugLevel(event):
+        box = event.widget
+        
+
+
+        level = logging.getLevelName(box.get())
+        logger.setLevel(level)        
+        print(' log level switched to :',box.get())
+        logger.info(f"log level switched to :{box.get()}")
+    box['values'] = ('DEBUG', 'INFO','WARNING','ERROR','CRITICAL')
+    box.current(0)
+    box.bind("<<ComboboxSelected>>", selectedDebugLevel)
+
 def videosView(frame,ttkframe,lang):
     global videosView_video_folder
     videosView_video_folder = tk.StringVar()
