@@ -3,8 +3,10 @@ import json
 from PIL import Image, ImageDraw, ImageFont,ImageColor
 import os
 import sys
-import cld3
+from eld import LanguageDetector
 
+lang_subset = ['en', 'zh']
+detector = LanguageDetector()
 def calculate_text_size(text, font):
     width, height = font.getsize(text)
     return width, height
@@ -206,8 +208,8 @@ def draw_text_on_image(row,thumb_gen_setting,result_image_width,result_image_hei
 
         grid_size = template_element["gridSize"]
         # Load the font
-        lang=cld3.get_language(row[text_type]).language
-
+        # lang=cld3.get_language(row[text_type]).language
+        lang=detector.detect(row[text_type]).language
         font = load_font(font_name,font_file, font_size, lang)
         if row[text_type]:
             if render_style== 'cord':
