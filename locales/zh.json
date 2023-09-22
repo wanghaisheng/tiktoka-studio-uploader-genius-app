@@ -19,7 +19,7 @@
 		"videosView": "视频",
 		"metaView": "元数据",
 		"uploadView": "上传",
-		"loglevel": "loglevel",
+		"loglevel": "日志等级",
 
 		"upload": "开始上传",
 		"batchchangebgmusic": "批量替换背景音乐",
