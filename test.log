@@ -35777,3 +35777,52 @@ the JSON object must be str, bytes or bytearray, not dict
 2023-09-23 00:12:07,521 - INFO - TiktokaStudio GUI started
 2023-09-23 00:14:24,851 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
 2023-09-23 00:14:24,989 - INFO - TiktokaStudio GUI started
+2023-09-23 22:42:17,398 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-23 22:42:17,410 - INFO - TiktokaStudio GUI started
+2023-09-23 22:43:05,242 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-23 22:43:05,291 - INFO - TiktokaStudio GUI started
+2023-09-23 22:54:35,655 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-23 22:54:35,666 - INFO - TiktokaStudio GUI started
+2023-09-23 22:55:08,735 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-23 22:55:08,736 - INFO - TiktokaStudio GUI started
+2023-09-23 22:55:57,252 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-23 22:55:57,267 - INFO - TiktokaStudio GUI started
+2023-09-23 22:59:25,774 - INFO - detecting----------False
+2023-09-23 22:59:25,792 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests
+2023-09-23 22:59:25,801 - INFO - start to check thumbFilePaths for video: OP
+2023-09-23 22:59:25,802 - INFO - create a fresh OP meta json
+2023-09-23 22:59:25,804 - INFO - start to check desFilePaths for video: OP
+2023-09-23 22:59:25,805 - INFO - update to OP meta json
+2023-09-23 22:59:25,806 - INFO - start to check metaFilePaths for video: OP
+2023-09-23 22:59:25,806 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.json
+2023-09-23 22:59:25,806 - INFO - intial metaFilePaths for OP:
+
+2023-09-23 22:59:25,806 - INFO - update to OP meta json
+2023-09-23 22:59:25,808 - INFO - start to check thumbFilePaths for video: 1
+2023-09-23 22:59:25,808 - INFO - this  thumbFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.png
+2023-09-23 22:59:25,808 - INFO - intial thumbFilePaths for 1:
+
+2023-09-23 22:59:25,809 - INFO - update to 1 meta json
+2023-09-23 22:59:25,810 - INFO - start to check desFilePaths for video: 1
+2023-09-23 22:59:25,811 - INFO - update to 1 meta json
+2023-09-23 22:59:25,813 - INFO - start to check metaFilePaths for video: 1
+2023-09-23 22:59:25,813 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.json
+2023-09-23 22:59:25,813 - INFO - intial metaFilePaths for 1:
+
+2023-09-23 22:59:25,814 - INFO - update to 1 meta json
+2023-09-23 23:04:23,672 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-23 23:04:23,699 - INFO - TiktokaStudio GUI started
+2023-09-23 23:05:19,189 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-23 23:05:19,189 - INFO - TiktokaStudio GUI started
+2023-09-23 23:06:00,960 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-23 23:06:00,989 - INFO - TiktokaStudio GUI started
+2023-09-23 23:06:05,093 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-23 23:06:05,093 - INFO - TiktokaStudio GUI started
+2023-09-23 23:06:05,175 - INFO - switch lang to locale:en
+2023-09-23 23:06:09,050 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-23 23:06:09,050 - INFO - TiktokaStudio GUI started
+2023-09-23 23:06:09,118 - INFO - switch lang to locale:zh

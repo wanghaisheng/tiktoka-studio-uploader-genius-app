@@ -2277,7 +2277,7 @@ def installView(frame,ttkframe,lang):
     b_view_version=tk.Button(frame,text=i18labels("testsettingok", locale=lang, module="g"),command=lambda: threading.Thread(target=ValidateSetting).start() )
     b_view_version.grid(row = 2, column = 1, sticky='w', padx=14, pady=15)      
     
-    sociallang = tk.StringVar()
+    locale_tkstudio = tk.StringVar()
 
 
     l_lang = tk.Label(ttkframe, text=i18labels("chooseLang", locale=lang, module="g"))
@@ -2285,19 +2285,20 @@ def installView(frame,ttkframe,lang):
     l_lang.grid(row = 3, column = 0, columnspan = 3, padx=14, pady=15)    
 
 
-    keeplang = sociallang.get()    
-    box = ttk.Combobox(ttkframe, width=int(width*0.01), textvariable=keeplang, state='readonly')
-    # box.place(x=10, y=120)
-    box.grid(row = 4, column = 1, columnspan = 3, padx=14, pady=15)    
+    def locale_tkstudioOptionCallBack(*args):
+        print(locale_tkstudio.get())
+        print(locale_tkstudio_box.current())
+        changeDisplayLang(locale_tkstudio.get())
 
-    def selectedlang(event):
-        box = event.widget
-        
-        print('selected lang is :',box.get())
-        changeDisplayLang(box.get())
-    box['values'] = ('en', 'zh')
-    box.current(box['values'].index(lang))
-    box.bind("<<ComboboxSelected>>", selectedlang)
+    locale_tkstudio.set("Select From Langs")
+    locale_tkstudio.trace('w', locale_tkstudioOptionCallBack)
+
+
+    locale_tkstudio_box = ttk.Combobox(ttkframe, textvariable=locale_tkstudio)
+    locale_tkstudio_box.config(values =('en', 'zh'))
+    locale_tkstudio_box.grid(row = 4, column = 1, columnspan = 3, padx=14, pady=15)    
+
+
       
 def videosView(frame,ttkframe,lang):
     global videosView_video_folder
@@ -2350,26 +2351,21 @@ def thumbView(left,right,lang):
     l_meta_format.grid(row = 1, column = 0, sticky='w', padx=14, pady=15)    
     Tooltip(l_meta_format, text='Choose the one you like to edit metadata' , wraplength=200)
 
-    global metafileformat
     metafileformat = tk.StringVar()
-    metafileformat.set('json')
 
-    keepmetafileformat = metafileformat.get()    
-    metafileformatbox = ttk.Combobox(left, width=int(width*0.01), textvariable=keepmetafileformat, state='readonly')
-    # box.place(x=10, y=120)
+
+    def metafileformatCallBack(*args):
+        print(metafileformat.get())
+        print(metafileformatbox.current())
+
+    metafileformat.set("Select From format")
+    metafileformat.trace('w', metafileformatCallBack)
+
+
+    metafileformatbox = ttk.Combobox(left, textvariable=metafileformat)
+    metafileformatbox.config(values = ( 'json','xlsx', 'csv'))
     metafileformatbox.grid(row = 1, column = 1, sticky='w', padx=14, pady=15)      
-
-    def selectedmetafileformat(event):
-        box = event.widget
-        
-        print('selected metafileformat is :',metafileformatbox.get())
-        metafileformat.set(metafileformatbox.get())
-        
-        analyse_video_meta_pair(thumbView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=True)
-    metafileformatbox['values'] = ( 'json','xlsx', 'csv')
-    metafileformatbox.current(0)
     
-    metafileformatbox.bind("<<ComboboxSelected>>", selectedmetafileformat)
     print(f'right now metafileformatbox.get():{metafileformatbox.get()}')
 
     b_download_meta_templates=tk.Button(left,text="check video meta files",command=lambda: threading.Thread(target=openLocal(thumbView_video_folder.get())).start() )
@@ -3726,7 +3722,6 @@ def accountView(frame,ttkframe,lang):
     channel_cookie_user= tk.StringVar()
     username = tk.StringVar()
     proxy_option_account = tk.StringVar()
-    socialplatform = tk.StringVar()
     password = tk.StringVar()
 
 
@@ -3735,23 +3730,33 @@ def accountView(frame,ttkframe,lang):
     l_platform.grid(row = 0, column = 0, columnspan = 3, padx=14, pady=15)    
 
 
-    keepplatform = socialplatform.get()   
-    keepplatform='youtube' 
-    box_platform = ttk.Combobox(ttkframe, width=int(width*0.01), textvariable=keepplatform, state='readonly')
-    # box.place(x=10, y=120)
-    box_platform.grid(row = 0, column = 5, columnspan = 3, padx=14, pady=15)    
 
-    def selectedplatform(event):
-        box = event.widget
-        print('selected platform is :',box.get())
-        keepplatform=box.get()
-        box_platform.current()    
+
+    def socialplatformOptionCallBack(*args):
+        print(socialplatform.get())
+        print(socialplatform_box.current())
+
+    socialplatform = tk.StringVar()
+    socialplatform.set("Select From Platforms")
+    socialplatform.trace('w', socialplatformOptionCallBack)
+
+
+    socialplatform_box = ttk.Combobox(ttkframe, textvariable=socialplatform)
+    socialplatform_box.config(values =('youtube', 'tiktok', 'douyin'))
+    socialplatform_box.grid(row = 0, column = 5, columnspan = 3, padx=14, pady=15)    
+
+
+    # def selectedplatform(event):
+    #     box = event.widget
+    #     print('selected platform is :',box.get())
+    #     keepplatform=box.get()
+    #     box_platform.current()    
         
-    box_platform['values'] = ('youtube', 'tiktok', 'douyin')
-    index=box_platform['values'].index(keepplatform)
-    box_platform.current(index)    
+    # box_platform['values'] = ('youtube', 'tiktok', 'douyin')
+    # index=box_platform['values'].index(keepplatform)
+    # box_platform.current(index)    
 
-    box_platform.bind("<<ComboboxSelected>>", selectedplatform)
+    # box_platform.bind("<<ComboboxSelected>>", selectedplatform)
 
 
 
@@ -3836,28 +3841,21 @@ def accountView(frame,ttkframe,lang):
     lb18 = tk.Label(frame, text='By platform.')
     lb18.grid(row=0,column=3, sticky=tk.W)
 
-    qPlatform = q_platform_account.get()   
-    qPlatform='youtube' 
-    q_platform_accountbox = ttk.Combobox(frame, width=int(width*0.01), textvariable=qPlatform, state='readonly')
-    # box.place(x=10, y=120)
+
+    q_platform = tk.StringVar()
+
+
+    def q_platformOptionCallBack(*args):
+        print(q_platform.get())
+        print(q_platform_accountbox.current())
+
+    q_platform.set("Select From Platforms")
+    q_platform.trace('w', q_platformOptionCallBack)
+
+
+    q_platform_accountbox = ttk.Combobox(frame, textvariable=q_platform)
+    q_platform_accountbox.config(values =('youtube', 'tiktok', 'douyin'))
     q_platform_accountbox.grid(row = 1, column = 2, columnspan = 3, padx=14, pady=15)    
-
-    def selectedq_platform_accountbox(event):
-        box = event.widget
-        
-        print('selected status is :',box.get())
-        qPlatform=box.get()
-        q_platform_accountbox.current()    
-
-    q_platform_accountbox['values'] = ('youtube', 'tiktok')
-    index=q_platform_accountbox['values'].index(qPlatform)
-    print('status',index,qPlatform)
-    q_platform_accountbox.current(index)    
-
-   
-   
-   
-    q_platform_accountbox.bind("<<ComboboxSelected>>", selectedq_platform_accountbox)
 
 
 
@@ -4315,7 +4313,6 @@ def proxyView(frame,ttkframe,lang):
     city = tk.StringVar()
     country = tk.StringVar()
     proxyTags = tk.StringVar()
-    proxyStatus = tk.BooleanVar()
 
     lbl15 = tk.Label(ttkframe, text='by city.')
     # lbl15.place(x=430, y=30, anchor=tk.NE)
@@ -4344,18 +4341,25 @@ def proxyView(frame,ttkframe,lang):
     lb18 = tk.Label(ttkframe, text='by status.')
     lb18.grid(row=0,column=3, sticky=tk.W)
 
-    keepStatus = proxyStatus.get()    
-    proxyStatusbox = ttk.Combobox(ttkframe, width=int(width*0.01), textvariable=keepStatus, state='readonly')
-    # box.place(x=10, y=120)
+
+    proxyStatus = tk.StringVar()
+
+
+    def proxyStatusCallBack(*args):
+        print(proxyStatus.get())
+        print(proxyStatusbox.current())
+
+    proxyStatus.set("Select From Status")
+    proxyStatus.trace('w', proxyStatusCallBack)
+
+
+    proxyStatusbox = ttk.Combobox(ttkframe, textvariable=proxyStatus)
+    proxyStatusbox.config(values = ('valid', 'invalid'))
     proxyStatusbox.grid(row = 1, column = 3, columnspan = 3, padx=14, pady=15)    
 
-    def selectedproxyStatus(event):
-        box = event.widget
-        
-        print('selected status is :',box.get())
-    proxyStatusbox['values'] = ('valid', 'invalid')
-    proxyStatusbox.current(0)
-    proxyStatusbox.bind("<<ComboboxSelected>>", selectedproxyStatus)
+
+
+
 
     btn5= tk.Button(ttkframe, text="Get proxy list", padx = 0, pady = 0,command = lambda: threading.Thread(target=queryProxies(tree,prod_engine,logger,city.get(),country.get(),proxyTags.get(),proxyStatusbox.get(),latest_conditions.get())).start())
     btn5.grid(row=2,column=0, sticky=tk.W)    
@@ -4409,24 +4413,24 @@ def metaView(left,right,lang):
     # l_platform.place(x=10, y=90)
     l_meta_format.grid(row = 1, column = 0, sticky='w', padx=14, pady=15)    
     global metafileformat
+    
+
     metafileformat = tk.StringVar()
-    metafileformat.set('json')
 
-    keepmetafileformat = metafileformat.get()    
-    metafileformatbox = ttk.Combobox(left, width=int(width*0.01), textvariable=keepmetafileformat, state='readonly')
-    # box.place(x=10, y=120)
+
+    def metafileformatCallBack(*args):
+        print(metafileformat.get())
+        print(metafileformatbox.current())
+
+    metafileformat.set("Select From format")
+    metafileformat.trace('w', metafileformatCallBack)
+
+
+    metafileformatbox = ttk.Combobox(left, textvariable=metafileformat)
+    metafileformatbox.config(values = ( 'json','xlsx', 'csv'))
     metafileformatbox.grid(row = 1, column = 1, sticky='w', padx=14, pady=15)      
+    
 
-    def selectedmetafileformat(event):
-        box = event.widget
-        
-        print('metafileformat changed to :',metafileformatbox.get())
-        metafileformat.set(metafileformatbox.get())
-        analyse_video_meta_pair(metaView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=True)
-        logger.info(f'reload results when metafileformat changed to :{metafileformatbox.get()}')
-    metafileformatbox['values'] = ( 'json','xlsx', 'csv')
-    metafileformatbox.current(0)
-    metafileformatbox.bind("<<ComboboxSelected>>", selectedmetafileformat)
 
     b_download_meta_templates=tk.Button(left,text="check video meta files",command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
     b_download_meta_templates.grid(row = 1, column = 3, sticky='w', padx=14, pady=15)  
