@@ -133,27 +133,30 @@ class TextHandler(logging.Handler):
 def docView(frame,ttkframe,lang):
   
     
-    sociallang = tk.StringVar()
+    
+    locale_tkstudio = tk.StringVar()
 
 
-    l_lang = tk.Label(ttkframe, text='display lang')
-    # l_lang.place(x=10, y=90)
+    l_lang = tk.Label(ttkframe, text='chooseLang')
     l_lang.grid(row = 3, column = 0, columnspan = 3, padx=14, pady=15)    
 
 
-    keeplang = sociallang.get()    
-    box = ttk.Combobox(ttkframe, textvariable=keeplang, state='readonly')
-    # box.place(x=10, y=120)
-    box.grid(row = 4, column = 1, columnspan = 3, padx=14, pady=15)    
+    def locale_tkstudioOptionCallBack(*args):
+        print(locale_tkstudio.get())
+        print(locale_tkstudio_box.current())
+        changeDisplayLang(locale_tkstudio.get())
 
-    def selectedlang(event):
-        box = event.widget
-        
-        print('selected lang is :',box.get())
-        changeDisplayLang(box.get())
-    box['values'] = ('en', 'zh')
-    box.current(0)
-    box.bind("<<ComboboxSelected>>", selectedlang)
+    locale_tkstudio.set("Select From Langs")
+    locale_tkstudio.trace('w', locale_tkstudioOptionCallBack)
+
+
+    locale_tkstudio_box = ttk.Combobox(ttkframe, textvariable=locale_tkstudio)
+    locale_tkstudio_box.config(values =('en', 'zh'))
+    locale_tkstudio_box.grid(row = 4, column = 1, columnspan = 3, padx=14, pady=15)    
+
+    
+    
+    
 def render(root,window,log_frame,lang):
     global doc_frame
     tab_control = ttk.Notebook(window)

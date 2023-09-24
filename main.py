@@ -1344,11 +1344,138 @@ def SelectVideoMetasfile():
     # setting['channelcookiepath'] = channel_cookie_path
     logger.debug('finished to import prepared video metas in json format')
 
-def downVideoMetas():
-    template_url='https://raw.githubusercontent.com/wanghaisheng/tiktoka-studio-uploader-app/main/assets/youtube-videos-meta-comments.json'
-    logger.info(f'start to down video metas json template from:{template_url}')
-    time.sleep(3)
-    logger.info('finish to down video metas json template')
+def createVideoMetas(left,right):
+    newWindow = tk.Toplevel(right)
+    newWindow.geometry(window_size)
+    username = tk.StringVar()
+
+    
+    newWindow.title('create tasks from scratch')
+
+    if username=='':
+        username='this user account'
+
+    label = tk.Label(newWindow,
+                text = f"Select the proxies for {username} below : ",
+                font = ("Times New Roman", 10),
+                padx = 10, pady = 10)
+    # label.pack()
+    label.grid(row=0,column=0, sticky=tk.W)
+    
+ 
+    
+    global city_user,country_user,proxyTags_user,proxyStatus_user,proxy_str
+    city_user = tk.StringVar()
+    country_user = tk.StringVar()
+    proxyTags_user = tk.StringVar()
+    proxyStatus_user = tk.BooleanVar()
+    global latest_proxy_conditions_user
+    latest_proxy_conditions_user = tk.StringVar()
+    lbl15 = tk.Label(newWindow, text='select video metas')
+    # lbl15.place(x=430, y=30, anchor=tk.NE)
+    # lbl15.pack(side='left')
+    proxy_str = tk.StringVar()
+
+    lbl15.grid(row=1,column=0, sticky=tk.W)
+
+    txt15 = tk.Entry(newWindow,textvariable=city_user,width=int(0.01*width))
+    txt15.insert(0,'')
+    # txt15.place(x=580, y=30, anchor=tk.NE)
+    # txt15.pack(side='left')
+    txt15.grid(row=1,column=1, sticky=tk.W)
+
+    lbl16 = tk.Label(newWindow, text='select user')
+    lbl16.grid(row=2,column=0, sticky=tk.W)
+    txt16 = tk.Entry(newWindow,textvariable=country_user,width=int(0.01*width))
+    txt16.insert(0,'')
+    txt16.grid(row=2,column=1, sticky=tk.W)
+    
+    lb17 = tk.Label(newWindow, text='upload setting')
+    lb17.grid(row=3,column=0, sticky=tk.W)
+    txt17 = tk.Entry(newWindow,textvariable=proxyTags_user,width=int(0.01*width))
+    txt17.insert(0,'')
+    txt17.grid(row=3,column=2, sticky=tk.W)
+
+    lb18 = tk.Label(newWindow, text='Runs on.')
+    lb18.grid(row=4,column=0, sticky=tk.W)
+
+
+    proxyStatus = tk.StringVar()
+
+
+    def proxyStatusCallBack(*args):
+        print(proxyStatus.get())
+        print(proxyStatusbox.current())
+
+    proxyStatus.set("Select From Status")
+    proxyStatus.trace('w', proxyStatusCallBack)
+
+
+    proxyStatusbox = ttk.Combobox(newWindow, textvariable=proxyStatus)
+    proxyStatusbox.config(values = ('embed browser', 'adspower','phone emulator','iphone','android'))
+    proxyStatusbox.grid(row = 4, column = 2, columnspan = 3, padx=14, pady=15)    
+
+
+
+
+    
+
+     
+     
+
+    # Create a frame for the canvas with non-zero row&column weights
+    frame_canvas = tk.Frame(newWindow)
+    frame_canvas.grid(row=6, column=0, pady=(5, 0), sticky='nw')
+    frame_canvas.grid_rowconfigure(0, weight=1)
+    frame_canvas.grid_columnconfigure(0, weight=1)
+    # Set grid_propagate to False to allow 5-by-5 buttons resizing later
+    frame_canvas.grid_propagate(False)     
+
+    # for scrolling vertically
+    # for scrolling vertically
+    yscrollbar = tk.Scrollbar(frame_canvas)
+    yscrollbar.pack(side = tk.RIGHT, fill = 'both')
+     
+    langlist = tk.Listbox(frame_canvas, selectmode = "multiple",
+                yscrollcommand = yscrollbar.set)
+    langlist.pack(padx = 10, pady = 10,
+            expand = tk.YES, fill = "both")
+
+    def CurSelet(event):
+        listbox = event.widget
+        # values = [listbox.get(idx) for idx in listbox.curselection()]
+        selection=listbox.curselection()
+        # picked = listbox.get(selection[1])
+        print(selection,list(selection),listbox.get(0))
+        tmp=''
+        for i in list(selection):
+            tmp=tmp+listbox.get(i)+';'
+        proxy_str.set(tmp)
+        print('000000',proxy_str.get())
+        if len(list(selection))==3:
+            lbl15 = tk.Label(newWindow, text='you have reached 3 proxy limit for one account.dont select anymore')
+            lbl15.grid(row=6,column=0, sticky=tk.W)
+            lbl15.after(5*1000,lbl15.destroy)        
+        
+        elif len(list(selection))>3:
+            print('you should choose no more than 3 proxy for one account')
+            lbl15 = tk.Label(newWindow, text='you should choose no more than 3 proxy for one account.please remove')
+            lbl15.grid(row=6,column=0, sticky=tk.W)
+            lbl15.after(3*1000,lbl15.destroy)
+        else:
+            lbl15 = tk.Label(newWindow, text='you can add at least 1 and max 3 proxy for one account.')
+            lbl15.grid(row=6,column=0, sticky=tk.W)
+            lbl15.after(500,lbl15.destroy)
+
+    langlist.bind('<<ListboxSelect>>',CurSelet)
+    btn5= tk.Button(newWindow, text="Get proxy list", padx = 0, 
+                    pady = 0,command = lambda: threading.Thread(target=
+                    filterProxiesLocations(newWindow,langlist,prod_engine,logger,city_user.get(),country_user.get(),proxyTags_user.get(),proxyStatusbox.get(),latest_proxy_conditions_user.get())).start())
+    btn5.grid(row=5,column=0, sticky=tk.W)    
+    btn6= tk.Button(newWindow, text="add selected", padx = 10, pady = 10,command = lambda: threading.Thread(target=setEntry(proxy_str.get())).start())
+    # btn5.place(x=800, y=30, anchor=tk.NE)    
+    # btn6.pack(side='left')          
+    btn6.grid(row=7,column=0, sticky=tk.W)
 
     
 def genVideoMetas():
@@ -3452,20 +3579,21 @@ def chooseProxies(ttkframe,username):
     lb18 = tk.Label(newWindow, text='by status.')
     lb18.grid(row=4,column=0, sticky=tk.W)
 
-    keepStatus = proxyStatus_user.get()    
-    proxyStatusbox = ttk.Combobox(newWindow, width=int(width*0.01), textvariable=keepStatus, state='readonly')
-    # box.place(x=10, y=120)
+
+    proxyStatus = tk.StringVar()
+
+
+    def proxyStatusCallBack(*args):
+        print(proxyStatus.get())
+        print(proxyStatusbox.current())
+
+    proxyStatus.set("Select From Status")
+    proxyStatus.trace('w', proxyStatusCallBack)
+
+
+    proxyStatusbox = ttk.Combobox(ttkframe, textvariable=proxyStatus)
+    proxyStatusbox.config(values = ('valid', 'invalid'))
     proxyStatusbox.grid(row = 4, column = 2, columnspan = 3, padx=14, pady=15)    
-
-    def selectedproxyStatus(event):
-        box = event.widget
-        
-        print('selected status is :',box.get())
-    proxyStatusbox['values'] = ('valid', 'invalid')
-    # proxyStatusbox.current(0)
-    proxyStatusbox.current(proxyStatusbox['values'].index(keepStatus))    
-    proxyStatusbox.bind("<<ComboboxSelected>>", selectedproxyStatus)
-
 
 
 
@@ -3976,7 +4104,7 @@ def uploadView(frame,ttkframe,lang):
 
         
     
-    b_down_video_metas_temp = tk.Button(frame, text=i18labels("downVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=downVideoMetas).start())
+    b_down_video_metas_temp = tk.Button(frame, text=i18labels("createVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=createVideoMetas(frame,ttkframe)).start())
     b_down_video_metas_temp.grid(row = 0, column = 0, padx=14, pady=15)
     
 
@@ -4780,15 +4908,7 @@ def render(root,window,log_frame,lang):
     meta_frame.grid_columnconfigure(1, weight=1, uniform="group1")
     meta_frame.grid_rowconfigure(0, weight=1)
 
-    print(f"label  doc:{settings[lang]['docView']}")
-    if lang=='en':
-        print('1111')
-        tab_control.add(doc_frame, text=settings[lang]['docView'])
-    else:
-        tab_control.add(doc_frame, text='帮助')
-        print('222')
 
-    docView(doc_frame_left,doc_frame_right,lang)
 
 
     tab_control.add(install_frame, text=i18labels("installView", locale=lang, module="g"))
@@ -4816,7 +4936,16 @@ def render(root,window,log_frame,lang):
 
     tab_control.add(upload_frame, text=i18labels("uploadView", locale=lang, module="g"))
     uploadView(upload_frame_left,upload_frame_right,lang)
+    
+    print(f"label  doc:{settings[lang]['docView']}")
+    if lang=='en':
+        print('1111')
+        tab_control.add(doc_frame, text=settings[lang]['docView'])
+    else:
+        tab_control.add(doc_frame, text='帮助')
+        print('222')
 
+    docView(doc_frame_left,doc_frame_right,lang)
     # tab_control.pack(expand=1, fill='both')
     tab_control.grid(row=0,column=0)
 
