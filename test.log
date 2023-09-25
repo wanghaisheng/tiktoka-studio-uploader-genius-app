@@ -967,3 +967,62 @@ Expecting value: line 29 column 18 (char 544)
 2023-09-25 23:51:07,649 - INFO - TiktokaStudio GUI started
 2023-09-26 00:29:08,417 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
 2023-09-26 00:29:08,428 - INFO - TiktokaStudio GUI started
+2023-09-26 01:35:03,940 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 01:35:03,949 - INFO - TiktokaStudio GUI started
+2023-09-26 01:36:11,765 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 01:36:11,769 - INFO - TiktokaStudio GUI started
+2023-09-26 01:44:29,915 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 01:44:29,916 - INFO - TiktokaStudio GUI started
+2023-09-26 01:45:05,666 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 01:45:05,675 - INFO - TiktokaStudio GUI started
+2023-09-26 01:50:17,045 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 01:50:17,056 - INFO - TiktokaStudio GUI started
+2023-09-26 01:59:17,529 - DEBUG - Importing BlpImagePlugin
+2023-09-26 01:59:17,540 - DEBUG - Importing BmpImagePlugin
+2023-09-26 01:59:17,541 - DEBUG - Importing BufrStubImagePlugin
+2023-09-26 01:59:17,541 - DEBUG - Importing CurImagePlugin
+2023-09-26 01:59:17,542 - DEBUG - Importing DcxImagePlugin
+2023-09-26 01:59:17,543 - DEBUG - Importing DdsImagePlugin
+2023-09-26 01:59:17,544 - DEBUG - Importing EpsImagePlugin
+2023-09-26 01:59:17,545 - DEBUG - Importing FitsImagePlugin
+2023-09-26 01:59:17,545 - DEBUG - Importing FitsStubImagePlugin
+2023-09-26 01:59:17,546 - DEBUG - Importing FliImagePlugin
+2023-09-26 01:59:17,547 - DEBUG - Importing FpxImagePlugin
+2023-09-26 01:59:17,547 - DEBUG - Image: failed to import FpxImagePlugin: No module named 'olefile'
+2023-09-26 01:59:17,548 - DEBUG - Importing FtexImagePlugin
+2023-09-26 01:59:17,549 - DEBUG - Importing GbrImagePlugin
+2023-09-26 01:59:17,549 - DEBUG - Importing GifImagePlugin
+2023-09-26 01:59:17,550 - DEBUG - Importing GribStubImagePlugin
+2023-09-26 01:59:17,550 - DEBUG - Importing Hdf5StubImagePlugin
+2023-09-26 01:59:17,551 - DEBUG - Importing IcnsImagePlugin
+2023-09-26 01:59:17,554 - DEBUG - Importing IcoImagePlugin
+2023-09-26 01:59:17,555 - DEBUG - Importing ImImagePlugin
+2023-09-26 01:59:17,557 - DEBUG - Importing ImtImagePlugin
+2023-09-26 01:59:17,558 - DEBUG - Importing IptcImagePlugin
+2023-09-26 01:59:17,559 - DEBUG - Importing JpegImagePlugin
+2023-09-26 01:59:17,559 - DEBUG - Importing Jpeg2KImagePlugin
+2023-09-26 01:59:17,559 - DEBUG - Importing McIdasImagePlugin
+2023-09-26 01:59:17,560 - DEBUG - Importing MicImagePlugin
+2023-09-26 01:59:17,561 - DEBUG - Image: failed to import MicImagePlugin: No module named 'olefile'
+2023-09-26 01:59:17,561 - DEBUG - Importing MpegImagePlugin
+2023-09-26 01:59:17,562 - DEBUG - Importing MpoImagePlugin
+2023-09-26 01:59:17,572 - DEBUG - Importing MspImagePlugin
+2023-09-26 01:59:17,573 - DEBUG - Importing PalmImagePlugin
+2023-09-26 01:59:17,574 - DEBUG - Importing PcdImagePlugin
+2023-09-26 01:59:17,575 - DEBUG - Importing PcxImagePlugin
+2023-09-26 01:59:17,575 - DEBUG - Importing PdfImagePlugin
+2023-09-26 01:59:17,589 - DEBUG - Importing PixarImagePlugin
+2023-09-26 01:59:17,590 - DEBUG - Importing PngImagePlugin
+2023-09-26 01:59:17,590 - DEBUG - Importing PpmImagePlugin
+2023-09-26 01:59:17,590 - DEBUG - Importing PsdImagePlugin
+2023-09-26 01:59:17,591 - DEBUG - Importing QoiImagePlugin
+2023-09-26 01:59:17,592 - DEBUG - Importing SgiImagePlugin
+2023-09-26 01:59:17,592 - DEBUG - Importing SpiderImagePlugin
+2023-09-26 01:59:17,594 - DEBUG - Importing SunImagePlugin
+2023-09-26 01:59:17,595 - DEBUG - Importing TgaImagePlugin
+2023-09-26 01:59:17,595 - DEBUG - Importing TiffImagePlugin
+2023-09-26 01:59:17,595 - DEBUG - Importing WebPImagePlugin
+2023-09-26 01:59:17,606 - DEBUG - Importing WmfImagePlugin
+2023-09-26 01:59:17,607 - DEBUG - Importing XbmImagePlugin
+2023-09-26 01:59:17,608 - DEBUG - Importing XpmImagePlugin
+2023-09-26 01:59:17,609 - DEBUG - Importing XVThumbImagePlugin

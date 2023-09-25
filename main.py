@@ -89,7 +89,8 @@ except ImportError:
 import pyperclip as clip
 import platform
 from easy_i18n.t import Ai18n
-
+from pystray import MenuItem as item
+import pystray
 
 from UltraDict import UltraDict
 if platform.system()=='Windows':
@@ -5132,10 +5133,30 @@ def changeDisplayLang(lang):
     
     root.mainloop()
 
+
+
+
+def quit_window(icon, item):
+    icon.stop()
+    root.destroy()
+
+def show_window(icon, item):
+    icon.stop()
+    root.after(0,root.deiconify)
+
+def withdraw_window():  
+    root.withdraw()
+    image = Image.open("assets/icon.ico")
+    menu = (item('Quit', quit_window), item('Show', show_window))
+    icon = pystray.Icon("name", image, "title", menu)
+    icon.run_detached()
 if __name__ == '__main__':
     global root
     root = tk.Tk()
     start('en')
+
+    root.protocol('WM_DELETE_WINDOW', withdraw_window)
+    
     root.mainloop()
 
 
