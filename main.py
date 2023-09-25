@@ -55,7 +55,7 @@ import tkinter as tk
 import webbrowser
 from tkinter import OptionMenu, filedialog,ttk
 import pandas as pd
-import os
+import os,queue
 import base64
 import subprocess
 import sys
@@ -95,8 +95,168 @@ from UltraDict import UltraDict
 if platform.system()=='Windows':
     
     ultra = UltraDict(shared_lock=True,recurse=True)
+    settings = UltraDict(shared_lock=True,recurse=True)
+
 else:
     ultra = UltraDict(recurse=True)
+    settings = UltraDict(recurse=True)
+
+settings['zh']={
+		"title": "TiktokaStudio 视频批量上传助手测试版",
+		"select_musics_folder": "选择背景音樂文件夹",
+		"select_videos_folder": "选择视频文件夹",
+		"setups": "安装配置",
+		"select_cookie_file": "选择cookie json",
+		"select_profile_folder": "选择profile文件夹",
+		"settings": "配置",
+		"createuploadsession": "创建上传任务",
+		"autothumb": "自动生成缩略图",
+		"testupload": "开始上传前測試",
+		"videosMenu": "视频管理",
+		"docView": "帮助",		
+		"installView": "安装配置",
+		"accountView": "账号",
+		"proxyView": "代理",
+		"thumbView": "缩略图",
+		"videosView": "视频",
+		"metaView": "元数据",
+		"uploadView": "上传",
+		"loglevel": "loglevel",
+
+		"upload": "开始上传",
+		"batchchangebgmusic": "批量替换背景音乐",
+		"is_open_browser": "静默模式",
+		"is_record_video": "录像模式",
+		"debug": "开启日志",
+		"start-loading-setting": "开始读取最近保存的配置文件",
+		"loading-default-setting": "读取配置文件失败 加载默认模版",
+
+		"hiddenwatermark": "添加隐形水印",
+		
+		"downVideoMetas":"下载视频元信息json模板",
+		"toolkits":"工具箱",
+		"mode1":"模式1",
+		"mode2":"模式2",
+		"mode3":"模式3",
+		
+		"save_setting": "保存配置",
+		"testsettingok": "测试配置",
+		"testnetwork": "测试网络",
+		"version":"版本",
+		"version_str":"V0.1.16\\n1.source code for this GUI:https://github.com/wanghaisheng/tiktoka-studio-uploader-app \\n2.core lib for this GUI: https://github.com/wanghaisheng/tiktoka-studio-uploader",
+
+		"docs":"说明文档",
+		"docs_str":"安装配置篇\\n1.安装\\n2.配置\\n导入默认配置后可以通过测试网络、测试安装、测试配置文件来知晓具体情况\\n1.从文件夹生成视频元数据规则\\n r1:尝试使用ffmpeg读取视频元数据,从其中获取视频标题、描述、制作日期、制作地点、字幕文件等信息。\\n r2:r1未命中则读取文件名称作为视频名称,如果视频名称超过20个字符,则将视频名称作为视频描述\\n r3:如果存在字幕文件,尝试从字幕总结出视频描述,如果不存在多语种字幕，尝试使用外部工具翻译多语种字幕\\n r4:如果存在同名的图片文件,则将其作为缩略图，如果没有则使用自动提取关键帧工具生成缩略图底图供后续封面图生成使用\\n r5:如果设置了每日发布的数量，则自动按照数量从次日起安排视频定时公开的日期\\n如果没有设置每日发布的数量，则根据发布策略的值来决定视频是立即公开还是私有发布。1.如果是多个账户,你需要为每个账号准备一个cookie,然后每个账户配置一个单独的配置文件\\n2.安装浏览器插件Cookie-Editor,登录youtube,导出cookie3.免版权的音乐可以在\\nhttps://icons8.com/music/\\n=====================\\n1.首次使用请选择对应的配置模板,比如默认private、public和schedule,文件路径为软件安装路径下的assets/config/setting-template.json,请按照自己的情况修改,修改完成后点击保存\\n文件和文件夹 你可以通过菜单里的浏览器配置、视频素材来点选,你也可以自行在文本框中填写\\n首选标签：这一批上传的视频我们想设置一些通用的标签,在这里设置,其他的标签请放在视频文件名中即可\\n视频描述前缀:一般而言频道的视频描述都会有个模板,类似作文里总分总结构\\n视频描述后缀:一般是一些免责声明之类\\n发布策略:0表示上传为私有,1表示上传后立马公开2表示定时公开 当你选了2,可配合每日发布数量来自动设置对应视频公开的日期,起始日期默认为上传日期+1\\n频道名称:只是用来保存配置文件\\ncookie json:请使用浏览器插件导出并保存\\n2.第二步需要检查素材,因为目前上传逻辑中只有支持视频和缩略图名字一样才能进行上传\\n背景音乐批量替换:请设置好免费音乐所在文件夹,可先对1个视频处理,调节背景音乐音量为最佳效果\\n 3.点击上传即可",
+		"contact":"联系我",
+		"contact_str":"1.发送邮件到admin@tiktokastudio.com\\n",
+
+		"contact_str_group":"2.扫码加入讨论组参与讨论",
+		"contact_str_personal":"3.特殊情况,299元红包可添加私人微信",
+		"chooseLang": "语言:",
+		"genVideoMetas":"从视频文件夹生成视频元信息",
+		"helpcenter":"帮助中心",
+		"importVideoMetas":"导入视频元信息json文件",
+
+		"validateVideoMetas":"验证视频元信息json文件",
+		"editVideoMetas":"纯手动编辑视频元信息json文件",
+		"username": "账号名称",
+		"password": "账号密码",
+
+		"testinstall": "测试安装",
+		"load_setting_file": "加载配置文件",
+		"create_setting_file": "新建配置文件",
+
+		"cookiejson": "cookie json 文件",
+		"proxySetting": "代理配置",
+		"profileFolder": "profile文件夹",
+		"videoFolder": "视频文件夹",
+		"channelName": "频道名称",
+		"offsetDays": "起始发布日期-当日(天数)",
+		"dailyVideoLimit": "每日公开视频数量",
+		"publishPolicy": "发布策略",
+		"bgMucisVolume": "背景音乐音量",
+		"descriptionSuffix": "视频描述后缀",
+		"descriptionPrefix": "视频描述前缀",
+		"preferTags": "首选标签",
+		"bgVideoFolder": "背景音乐文件夹",
+		"chooseCookie": "请选择该频道对应cookie文件",
+		"chooseChannelSetting": "请选择该频道配置文件"
+	}
+settings['en']={
+		"title": "TiktokaStudio Video Bulk Upload GUI Demo",
+		"select_musics_folder''": "choose music folder",
+		"select_videos_folder": "choose video folder",
+		"setups": "setups",
+		"select_cookie_file": "choose cookie json",
+		"select_profile_folder": "choose profile folder",
+		"settings": "settings",
+		"createuploadsession": "create uploadsession",
+		"autothumb": "auto thumbnail",
+		"testupload": "test video upload ",
+		"videosMenu": "视频管理",
+		"docView": "Docs",		
+		"installView": "Setup",
+		"accountView": "Accounts",
+		"proxyView": "Proxies",
+		"thumbView": "Thumbnails",
+		"videosView": "Videos",
+		"metaView": "Metas",
+		"uploadView": "Upload",
+		"upload": "start upload",
+		"batchchangebgmusic": "batch replace audio",
+		"is_open_browser": "silent mode",
+		"is_record_video": "recording",
+		"genVideoMetas":"gen  video metas",
+		"helpcenter":"helpcenter",
+		"importVideoMetas":"import video metajson file",
+		"editVideoMetas":"edit video metajson file",
+		"username": "username",
+		"password": "password",
+		"save_setting": "save config",
+		"chooseLang": "Lang",
+		"contact":"contact",
+		"contact_str":"1.Email send to admin@tiktokastudio.com\\n",
+		"debug": "debug",
+		"loglevel": "loglevel",
+		"validateVideoMetas":"validate meta json",
+
+		"start-loading-setting": "start loading latest used setting file",
+		"loading-default-setting": "loading failed,use default setting template",
+		"contact_str_group":"2.Join discussion group",
+		"contact_str_personal":"3.Pay $99 to add personal wechat",
+		"version":"version",
+		"version_str":"V0.1.16\\n1.source code for this GUI:https://github.com/wanghaisheng/tiktoka-studio-uploader-app \\n2.core lib for this GUI: https://github.com/wanghaisheng/tiktoka-studio-uploader",
+		"hiddenwatermark": "add hidden watermark",
+		"docs_str":"安装配置篇\\n1.安装\\n2.配置\\n导入默认配置后可以通过测试网络、测试安装、测试配置文件来知晓具体情况\\n1.从文件夹生成视频元数据规则\\n r1:尝试使用ffmpeg读取视频元数据,从其中获取视频标题、描述、制作日期、制作地点、字幕文件等信息。\\n r2:r1未命中则读取文件名称作为视频名称,如果视频名称超过20个字符,则将视频名称作为视频描述\\n r3:如果存在字幕文件,尝试从字幕总结出视频描述,如果不存在多语种字幕，尝试使用外部工具翻译多语种字幕\\n r4:如果存在同名的图片文件,则将其作为缩略图，如果没有则使用自动提取关键帧工具生成缩略图底图供后续封面图生成使用\\n r5:如果设置了每日发布的数量，则自动按照数量从次日起安排视频定时公开的日期\\n如果没有设置每日发布的数量，则根据发布策略的值来决定视频是立即公开还是私有发布。1.如果是多个账户,你需要为每个账号准备一个cookie,然后每个账户配置一个单独的配置文件\\n2.安装浏览器插件Cookie-Editor,登录youtube,导出cookie3.免版权的音乐可以在\\nhttps://icons8.com/music/\\n=====================\\n1.首次使用请选择对应的配置模板,比如默认private、public和schedule,文件路径为软件安装路径下的assets/config/setting-template.json,请按照自己的情况修改,修改完成后点击保存\\n文件和文件夹 你可以通过菜单里的浏览器配置、视频素材来点选,你也可以自行在文本框中填写\\n首选标签：这一批上传的视频我们想设置一些通用的标签,在这里设置,其他的标签请放在视频文件名中即可\\n视频描述前缀:一般而言频道的视频描述都会有个模板,类似作文里总分总结构\\n视频描述后缀:一般是一些免责声明之类\\n发布策略:0表示上传为私有,1表示上传后立马公开2表示定时公开 当你选了2,可配合每日发布数量来自动设置对应视频公开的日期,起始日期默认为上传日期+1\\n频道名称:只是用来保存配置文件\\ncookie json:请使用浏览器插件导出并保存\\n2.第二步需要检查素材,因为目前上传逻辑中只有支持视频和缩略图名字一样才能进行上传\\n背景音乐批量替换:请设置好免费音乐所在文件夹,可先对1个视频处理,调节背景音乐音量为最佳效果\\n 3.点击上传即可",
+		"testsettingok": "test config",
+		"testinstall": "test install",
+		"testnetwork": "test network",
+		"load_setting_file": "load setting",
+		"docs": "Read First",
+		"cookiejson": "cookie json",
+		"proxySetting": "proxy",
+		"profileFolder": "profile folder",
+		"videoFolder": "video folder",
+		"create_setting_file": "new setting file",
+		"downVideoMetas":"download metajson template",
+		"toolkits":"toolkits",
+		"mode1":"mode 1",
+		"mode2":"mode 2",
+		"mode3":"mode 3",
+		"channelName": "channel name",
+		"offsetDays": "days offset",
+		"dailyVideoLimit": "daily publish count",
+		"publishPolicy": "publish policy",
+		"bgMucisVolume": "music volumn",
+		"descriptionSuffix": "preferred des suffix",
+		"descriptionPrefix": "preferred des prefix",
+		"preferTags": "preferred tags",
+		"bgVideoFolder": "free music folder",
+		"chooseCookie": "select specific cookie file",
+		"chooseChannelSetting": "select channel setting file"
+	}
+
+
 config = {
     "load_path": "./locales", # 指定在 /locales 下找对应的翻译 json文件
     "default_module": "global", # 指定默认的全局模块，你可以为比如用户模块，订单模块单独设置翻译，如果不指定 module 则会去全局模块查找。
@@ -227,6 +387,90 @@ availableScheduleTimes = [
 "23:15",
 "23:30",
 "23:45"] 
+
+
+class QueueHandler(logging.Handler):
+    """Class to send logging records to a queue
+
+    It can be used from different threads
+    """
+
+    def __init__(self, log_queue):
+        super().__init__()
+        self.log_queue = log_queue
+
+    def emit(self, record):
+        self.log_queue.put(record)
+        
+
+
+class ConsoleUi:
+    """Poll messages from a logging queue and display them in a scrolled text widget"""
+
+    def __init__(self, frame,root):
+        self.frame = frame
+        # Create a ScrolledText wdiget
+        self.scrolled_text = ScrolledText.ScrolledText(frame, state='disabled', height=12)
+        
+        self.scrolled_text.bind_all("<Control-c>",self.copy)
+
+
+
+        # Bind right-click event to show context menu
+        self.scrolled_text.bind("<Button-3>", self.show_context_menu)
+
+        self.context_menu = tk.Menu(root, tearoff=0)
+        self.context_menu.add_command(label="Clear All Text", command=self.clear_text)
+            
+        self.scrolled_text.grid(row=0, column=0, sticky=(tk.N, tk.S, tk.W, tk.E))
+        self.scrolled_text.configure(font='TkFixedFont')
+        self.scrolled_text.tag_config('INFO', foreground='black')
+        self.scrolled_text.tag_config('DEBUG', foreground='gray')
+        self.scrolled_text.tag_config('WARNING', foreground='orange')
+        self.scrolled_text.tag_config('ERROR', foreground='red')
+        self.scrolled_text.tag_config('CRITICAL', foreground='red', underline=1)
+        # Create a logging handler using a queue
+        self.log_queue = queue.Queue()
+        self.queue_handler = QueueHandler(self.log_queue)
+        formatter = logging.Formatter('%(asctime)s: %(message)s')
+        self.queue_handler.setFormatter(formatter)
+        logger.addHandler(self.queue_handler)
+        # Start polling messages from the queue
+        self.frame.after(100, self.poll_log_queue)
+    def clear_text(self):
+
+        self.scrolled_text.configure(state='normal')  # Enable text widget
+        self.scrolled_text.delete(1.0, tk.END)  # Delete all text
+        self.scrolled_text.configure(state='disabled')  # Disable text widget again
+    # Create a right-click context menu
+    def show_context_menu(self,event):
+        self.context_menu.post(event.x_root, event.y_root)
+
+
+    def copy(self,event):
+        try:
+            string = event.widget.selection_get()
+            clip.copy(string)
+        except:
+            pass
+    def display(self, record):
+        msg = self.queue_handler.format(record)
+        self.scrolled_text.configure(state='normal')
+        self.scrolled_text.insert(tk.END, msg + '\n', record.levelname)
+        self.scrolled_text.configure(state='disabled')
+        # Autoscroll to the bottom
+        self.scrolled_text.yview(tk.END)
+
+    def poll_log_queue(self):
+        # Check every 100ms if there is a new message in the queue to display
+        while True:
+            try:
+                record = self.log_queue.get(block=False)
+            except queue.Empty:
+                break
+            else:
+                self.display(record)
+        self.frame.after(100, self.poll_log_queue)
 
 class TextHandler(logging.Handler):
     # This class allows you to log to a Tkinter Text or ScrolledText widget
@@ -978,41 +1222,6 @@ def changeLoglevel(level,window,log_frame):
             format='%(asctime)s - %(levelname)s - %(message)s') 
 
 
-def changeDisplayLang(lang,window,log_frame):
-
-    window.destroy()
-    log_frame.destroy()
-    root.title(i18labels("title", locale=lang, module="g"))        
-    window=tk.Frame(root,width=str(width),  height=str(height+200),  )
-    
-    log_frame = tk.Frame(window, width = width, height = 5)
-    log_frame.pack(side = tk.BOTTOM)
-    st = ScrolledText.ScrolledText(log_frame,                                      
-                                width = width, 
-                                    height = 5, 
-                                     wrap=tk.WORD,
-                                    state='disabled')
-    st.bind_all("<Control-c>",_copy)
-
-    st.configure(font='TkFixedFont')
-    st.grid(column=0, 
-            row=0, 
-            # sticky='n',
-            # columnspan=4
-            )
-    # st.pack(padx=10, pady=10,side= tk.LEFT, fill=tk.X, expand=True)
-    # Create textLogger
-    text_handler = TextHandler(st)
-
-    logger.addHandler(text_handler)    
-    # print('debug message')
-    # print('info message')
-    # logger.warning('warn message')
-    # logger.error('error message')
-    # logger.critical('critical message')
-    window.pack()
-    render(root,window,log_frame,lang)
-    logger.info(f'switch lang to locale:{lang}')
 
 def hiddenwatermark():
     print('add hiddenwatermark to each video for  copyright theft')
@@ -1135,11 +1344,138 @@ def SelectVideoMetasfile():
     # setting['channelcookiepath'] = channel_cookie_path
     logger.debug('finished to import prepared video metas in json format')
 
-def downVideoMetas():
-    template_url='https://raw.githubusercontent.com/wanghaisheng/tiktoka-studio-uploader-app/main/assets/youtube-videos-meta-comments.json'
-    logger.info(f'start to down video metas json template from:{template_url}')
-    time.sleep(3)
-    logger.info('finish to down video metas json template')
+def createVideoMetas(left,right):
+    newWindow = tk.Toplevel(right)
+    newWindow.geometry(window_size)
+    username = tk.StringVar()
+
+    
+    newWindow.title('create tasks from scratch')
+
+    if username=='':
+        username='this user account'
+
+    label = tk.Label(newWindow,
+                text = f"Select the proxies for {username} below : ",
+                font = ("Times New Roman", 10),
+                padx = 10, pady = 10)
+    # label.pack()
+    label.grid(row=0,column=0, sticky=tk.W)
+    
+ 
+    
+    global city_user,country_user,proxyTags_user,proxyStatus_user,proxy_str
+    city_user = tk.StringVar()
+    country_user = tk.StringVar()
+    proxyTags_user = tk.StringVar()
+    proxyStatus_user = tk.BooleanVar()
+    global latest_proxy_conditions_user
+    latest_proxy_conditions_user = tk.StringVar()
+    lbl15 = tk.Label(newWindow, text='select video metas')
+    # lbl15.place(x=430, y=30, anchor=tk.NE)
+    # lbl15.pack(side='left')
+    proxy_str = tk.StringVar()
+
+    lbl15.grid(row=1,column=0, sticky=tk.W)
+
+    txt15 = tk.Entry(newWindow,textvariable=city_user,width=int(0.01*width))
+    txt15.insert(0,'')
+    # txt15.place(x=580, y=30, anchor=tk.NE)
+    # txt15.pack(side='left')
+    txt15.grid(row=1,column=1, sticky=tk.W)
+
+    lbl16 = tk.Label(newWindow, text='select user')
+    lbl16.grid(row=2,column=0, sticky=tk.W)
+    txt16 = tk.Entry(newWindow,textvariable=country_user,width=int(0.01*width))
+    txt16.insert(0,'')
+    txt16.grid(row=2,column=1, sticky=tk.W)
+    
+    lb17 = tk.Label(newWindow, text='upload setting')
+    lb17.grid(row=3,column=0, sticky=tk.W)
+    txt17 = tk.Entry(newWindow,textvariable=proxyTags_user,width=int(0.01*width))
+    txt17.insert(0,'')
+    txt17.grid(row=3,column=2, sticky=tk.W)
+
+    lb18 = tk.Label(newWindow, text='Runs on.')
+    lb18.grid(row=4,column=0, sticky=tk.W)
+
+
+    proxyStatus = tk.StringVar()
+
+
+    def proxyStatusCallBack(*args):
+        print(proxyStatus.get())
+        print(proxyStatusbox.current())
+
+    proxyStatus.set("Select From Status")
+    proxyStatus.trace('w', proxyStatusCallBack)
+
+
+    proxyStatusbox = ttk.Combobox(newWindow, textvariable=proxyStatus)
+    proxyStatusbox.config(values = ('embed browser', 'adspower','phone emulator','iphone','android'))
+    proxyStatusbox.grid(row = 4, column = 2, columnspan = 3, padx=14, pady=15)    
+
+
+
+
+    
+
+     
+     
+
+    # Create a frame for the canvas with non-zero row&column weights
+    frame_canvas = tk.Frame(newWindow)
+    frame_canvas.grid(row=6, column=0, pady=(5, 0), sticky='nw')
+    frame_canvas.grid_rowconfigure(0, weight=1)
+    frame_canvas.grid_columnconfigure(0, weight=1)
+    # Set grid_propagate to False to allow 5-by-5 buttons resizing later
+    frame_canvas.grid_propagate(False)     
+
+    # for scrolling vertically
+    # for scrolling vertically
+    yscrollbar = tk.Scrollbar(frame_canvas)
+    yscrollbar.pack(side = tk.RIGHT, fill = 'both')
+     
+    langlist = tk.Listbox(frame_canvas, selectmode = "multiple",
+                yscrollcommand = yscrollbar.set)
+    langlist.pack(padx = 10, pady = 10,
+            expand = tk.YES, fill = "both")
+
+    def CurSelet(event):
+        listbox = event.widget
+        # values = [listbox.get(idx) for idx in listbox.curselection()]
+        selection=listbox.curselection()
+        # picked = listbox.get(selection[1])
+        print(selection,list(selection),listbox.get(0))
+        tmp=''
+        for i in list(selection):
+            tmp=tmp+listbox.get(i)+';'
+        proxy_str.set(tmp)
+        print('000000',proxy_str.get())
+        if len(list(selection))==3:
+            lbl15 = tk.Label(newWindow, text='you have reached 3 proxy limit for one account.dont select anymore')
+            lbl15.grid(row=6,column=0, sticky=tk.W)
+            lbl15.after(5*1000,lbl15.destroy)        
+        
+        elif len(list(selection))>3:
+            print('you should choose no more than 3 proxy for one account')
+            lbl15 = tk.Label(newWindow, text='you should choose no more than 3 proxy for one account.please remove')
+            lbl15.grid(row=6,column=0, sticky=tk.W)
+            lbl15.after(3*1000,lbl15.destroy)
+        else:
+            lbl15 = tk.Label(newWindow, text='you can add at least 1 and max 3 proxy for one account.')
+            lbl15.grid(row=6,column=0, sticky=tk.W)
+            lbl15.after(500,lbl15.destroy)
+
+    langlist.bind('<<ListboxSelect>>',CurSelet)
+    btn5= tk.Button(newWindow, text="Get proxy list", padx = 0, 
+                    pady = 0,command = lambda: threading.Thread(target=
+                    filterProxiesLocations(newWindow,langlist,prod_engine,logger,city_user.get(),country_user.get(),proxyTags_user.get(),proxyStatusbox.get(),latest_proxy_conditions_user.get())).start())
+    btn5.grid(row=5,column=0, sticky=tk.W)    
+    btn6= tk.Button(newWindow, text="add selected", padx = 10, pady = 10,command = lambda: threading.Thread(target=setEntry(proxy_str.get())).start())
+    # btn5.place(x=800, y=30, anchor=tk.NE)    
+    # btn6.pack(side='left')          
+    btn6.grid(row=7,column=0, sticky=tk.W)
 
     
 def genVideoMetas():
@@ -2059,14 +2395,38 @@ def docView(frame,ttkframe,lang):
 
 def installView(frame,ttkframe,lang):
     b_view_readme=tk.Button(frame,text=i18labels("testinstall", locale=lang, module="g"),command=lambda: threading.Thread(target=testInstallRequirements).start() )
-    b_view_readme.place(x=50, y=100)    
+    b_view_readme.grid(row = 0, column = 1, sticky='w', padx=14, pady=15)      
 
     b_view_contact=tk.Button(frame,text=i18labels("testnetwork", locale=lang, module="g"),command=lambda: threading.Thread(target=testNetwork).start() )
-    b_view_contact.place(x=50, y=200)    
+    b_view_contact.grid(row = 1, column = 1, sticky='w', padx=14, pady=15)      
     
 
     b_view_version=tk.Button(frame,text=i18labels("testsettingok", locale=lang, module="g"),command=lambda: threading.Thread(target=ValidateSetting).start() )
-    b_view_version.place(x=50, y=300)    
+    b_view_version.grid(row = 2, column = 1, sticky='w', padx=14, pady=15)      
+    
+    locale_tkstudio = tk.StringVar()
+
+
+    l_lang = tk.Label(ttkframe, text=i18labels("chooseLang", locale=lang, module="g"))
+    # l_lang.place(x=10, y=90)
+    l_lang.grid(row = 3, column = 0, columnspan = 3, padx=14, pady=15)    
+
+
+    def locale_tkstudioOptionCallBack(*args):
+        print(locale_tkstudio.get())
+        print(locale_tkstudio_box.current())
+        changeDisplayLang(locale_tkstudio.get())
+
+    locale_tkstudio.set("Select From Langs")
+    locale_tkstudio.trace('w', locale_tkstudioOptionCallBack)
+
+
+    locale_tkstudio_box = ttk.Combobox(ttkframe, textvariable=locale_tkstudio)
+    locale_tkstudio_box.config(values =('en', 'zh'))
+    locale_tkstudio_box.grid(row = 4, column = 1, columnspan = 3, padx=14, pady=15)    
+
+
+      
 def videosView(frame,ttkframe,lang):
     global videosView_video_folder
     videosView_video_folder = tk.StringVar()
@@ -2118,25 +2478,21 @@ def thumbView(left,right,lang):
     l_meta_format.grid(row = 1, column = 0, sticky='w', padx=14, pady=15)    
     Tooltip(l_meta_format, text='Choose the one you like to edit metadata' , wraplength=200)
 
-    global metafileformat
     metafileformat = tk.StringVar()
-    metafileformat.set('json')
 
-    keepmetafileformat = metafileformat.get()    
-    metafileformatbox = ttk.Combobox(left, width=int(width*0.01), textvariable=keepmetafileformat, state='readonly')
-    # box.place(x=10, y=120)
+
+    def metafileformatCallBack(*args):
+        print(metafileformat.get())
+        print(metafileformatbox.current())
+
+    metafileformat.set("Select From format")
+    metafileformat.trace('w', metafileformatCallBack)
+
+
+    metafileformatbox = ttk.Combobox(left, textvariable=metafileformat)
+    metafileformatbox.config(values = ( 'json','xlsx', 'csv'))
     metafileformatbox.grid(row = 1, column = 1, sticky='w', padx=14, pady=15)      
-
-    def selectedmetafileformat(event):
-        box = event.widget
-        
-        print('selected metafileformat is :',metafileformatbox.get())
-        metafileformat.set(metafileformatbox.get())
-        
-        analyse_video_meta_pair(thumbView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=True)
-    metafileformatbox['values'] = ( 'json','xlsx', 'csv')
-    metafileformatbox.current(0)
-    metafileformatbox.bind("<<ComboboxSelected>>", selectedmetafileformat)
+    
     print(f'right now metafileformatbox.get():{metafileformatbox.get()}')
 
     b_download_meta_templates=tk.Button(left,text="check video meta files",command=lambda: threading.Thread(target=openLocal(thumbView_video_folder.get())).start() )
@@ -3223,19 +3579,21 @@ def chooseProxies(ttkframe,username):
     lb18 = tk.Label(newWindow, text='by status.')
     lb18.grid(row=4,column=0, sticky=tk.W)
 
-    keepStatus = proxyStatus_user.get()    
-    proxyStatusbox = ttk.Combobox(newWindow, width=int(width*0.01), textvariable=keepStatus, state='readonly')
-    # box.place(x=10, y=120)
+
+    proxyStatus = tk.StringVar()
+
+
+    def proxyStatusCallBack(*args):
+        print(proxyStatus.get())
+        print(proxyStatusbox.current())
+
+    proxyStatus.set("Select From Status")
+    proxyStatus.trace('w', proxyStatusCallBack)
+
+
+    proxyStatusbox = ttk.Combobox(ttkframe, textvariable=proxyStatus)
+    proxyStatusbox.config(values = ('valid', 'invalid'))
     proxyStatusbox.grid(row = 4, column = 2, columnspan = 3, padx=14, pady=15)    
-
-    def selectedproxyStatus(event):
-        box = event.widget
-        
-        print('selected status is :',box.get())
-    proxyStatusbox['values'] = ('valid', 'invalid')
-    proxyStatusbox.current(0)
-    proxyStatusbox.bind("<<ComboboxSelected>>", selectedproxyStatus)
-
 
 
 
@@ -3328,6 +3686,13 @@ def bulkImportUsers(ttkframe):
     b_choose_proxy=tk.Button(input_canvas,text="load  from file",command=lambda: threading.Thread(target=select_cookie_file).start() )
     b_choose_proxy.grid(row=2,column=0, sticky=tk.W)
 
+    
+    
+    hints='bulk pull sessionid and cookies'
+
+    b_bulk_pull_cookies=tk.Button(ttkframe,text=hints,command=lambda: threading.Thread(target=bulkImportUsers(ttkframe)).start() )
+    # b_bulk_import_users.place(x=10, y=450)    
+    b_bulk_pull_cookies.grid(row = 9, column = 4, columnspan = 3, padx=14, pady=15)        
     
     res_canvas = tk.Frame(newWindow,width=int(0.5*width))
     res_canvas.grid(row=0, column=10,pady=(5, 0), sticky='ne')    
@@ -3485,7 +3850,6 @@ def accountView(frame,ttkframe,lang):
     channel_cookie_user= tk.StringVar()
     username = tk.StringVar()
     proxy_option_account = tk.StringVar()
-    socialplatform = tk.StringVar()
     password = tk.StringVar()
 
 
@@ -3494,18 +3858,33 @@ def accountView(frame,ttkframe,lang):
     l_platform.grid(row = 0, column = 0, columnspan = 3, padx=14, pady=15)    
 
 
-    keepplatform = socialplatform.get()    
-    box = ttk.Combobox(ttkframe, width=int(width*0.01), textvariable=keepplatform, state='readonly')
-    # box.place(x=10, y=120)
-    box.grid(row = 0, column = 5, columnspan = 3, padx=14, pady=15)    
 
-    def selectedplatform(event):
-        box = event.widget
+
+    def socialplatformOptionCallBack(*args):
+        print(socialplatform.get())
+        print(socialplatform_box.current())
+
+    socialplatform = tk.StringVar()
+    socialplatform.set("Select From Platforms")
+    socialplatform.trace('w', socialplatformOptionCallBack)
+
+
+    socialplatform_box = ttk.Combobox(ttkframe, textvariable=socialplatform)
+    socialplatform_box.config(values =('youtube', 'tiktok', 'douyin'))
+    socialplatform_box.grid(row = 0, column = 5, columnspan = 3, padx=14, pady=15)    
+
+
+    # def selectedplatform(event):
+    #     box = event.widget
+    #     print('selected platform is :',box.get())
+    #     keepplatform=box.get()
+    #     box_platform.current()    
         
-        print('selected platform is :',box.get())
-    box['values'] = ('youtube', 'tiktok', 'douyin')
-    box.current(0)
-    box.bind("<<ComboboxSelected>>", selectedplatform)
+    # box_platform['values'] = ('youtube', 'tiktok', 'douyin')
+    # index=box_platform['values'].index(keepplatform)
+    # box_platform.current(index)    
+
+    # box_platform.bind("<<ComboboxSelected>>", selectedplatform)
 
 
 
@@ -3556,7 +3935,7 @@ def accountView(frame,ttkframe,lang):
     b_channel_cookie.grid(row = 6, column = 3, columnspan = 2, padx=14, pady=15)    
 
     
-    b_channel_cookie_gen=tk.Button(ttkframe,text="gen",command=auto_gen_cookie_file)
+    b_channel_cookie_gen=tk.Button(ttkframe,text="pull",command=auto_gen_cookie_file)
     # b_channel_cookie_gen.place(x=100, y=390)    
     b_channel_cookie_gen.grid(row = 6, column = 5, columnspan = 3, padx=14, pady=15)    
 
@@ -3570,6 +3949,9 @@ def accountView(frame,ttkframe,lang):
     b_bulk_import_users=tk.Button(ttkframe,text="bulk import",command=lambda: threading.Thread(target=bulkImportUsers(ttkframe)).start() )
     # b_bulk_import_users.place(x=10, y=450)    
     b_bulk_import_users.grid(row = 8, column = 4, columnspan = 3, padx=14, pady=15)    
+
+        
+    
 
     global q_username_account,latest_user_conditions_user,q_platform_account
     q_username_account = tk.StringVar()
@@ -3587,18 +3969,21 @@ def accountView(frame,ttkframe,lang):
     lb18 = tk.Label(frame, text='By platform.')
     lb18.grid(row=0,column=3, sticky=tk.W)
 
-    keepStatus = q_platform_account.get()    
-    q_platform_accountbox = ttk.Combobox(frame, width=int(width*0.01), textvariable=keepStatus, state='readonly')
-    # box.place(x=10, y=120)
-    q_platform_accountbox.grid(row = 1, column = 2, columnspan = 3, padx=14, pady=15)    
 
-    def selectedq_platform_accountbox(event):
-        box = event.widget
-        
-        print('selected status is :',box.get())
-    q_platform_accountbox['values'] = ('youtube', 'tiktok')
-    q_platform_accountbox.current(0)
-    q_platform_accountbox.bind("<<ComboboxSelected>>", selectedq_platform_accountbox)
+    q_platform = tk.StringVar()
+
+
+    def q_platformOptionCallBack(*args):
+        print(q_platform.get())
+        print(q_platform_accountbox.current())
+
+    q_platform.set("Select From Platforms")
+    q_platform.trace('w', q_platformOptionCallBack)
+
+
+    q_platform_accountbox = ttk.Combobox(frame, textvariable=q_platform)
+    q_platform_accountbox.config(values =('youtube', 'tiktok', 'douyin'))
+    q_platform_accountbox.grid(row = 1, column = 2, columnspan = 3, padx=14, pady=15)    
 
 
 
@@ -3719,7 +4104,7 @@ def uploadView(frame,ttkframe,lang):
 
         
     
-    b_down_video_metas_temp = tk.Button(frame, text=i18labels("downVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=downVideoMetas).start())
+    b_down_video_metas_temp = tk.Button(frame, text=i18labels("createVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=createVideoMetas(frame,ttkframe)).start())
     b_down_video_metas_temp.grid(row = 0, column = 0, padx=14, pady=15)
     
 
@@ -3999,12 +4384,13 @@ def returnProxy_textfield(event):
     return proxy_textfield_str.get()
 
 
-
 def _copy(event):
-   try:
-      string = event.widget.selection_get()
-      clip.copy(string)
-   except:pass
+    try:
+        string = event.widget.selection_get()
+        clip.copy(string)
+    except:
+        pass
+
 def proxyView(frame,ttkframe,lang):
 
     
@@ -4055,7 +4441,6 @@ def proxyView(frame,ttkframe,lang):
     city = tk.StringVar()
     country = tk.StringVar()
     proxyTags = tk.StringVar()
-    proxyStatus = tk.BooleanVar()
 
     lbl15 = tk.Label(ttkframe, text='by city.')
     # lbl15.place(x=430, y=30, anchor=tk.NE)
@@ -4084,18 +4469,25 @@ def proxyView(frame,ttkframe,lang):
     lb18 = tk.Label(ttkframe, text='by status.')
     lb18.grid(row=0,column=3, sticky=tk.W)
 
-    keepStatus = proxyStatus.get()    
-    proxyStatusbox = ttk.Combobox(ttkframe, width=int(width*0.01), textvariable=keepStatus, state='readonly')
-    # box.place(x=10, y=120)
+
+    proxyStatus = tk.StringVar()
+
+
+    def proxyStatusCallBack(*args):
+        print(proxyStatus.get())
+        print(proxyStatusbox.current())
+
+    proxyStatus.set("Select From Status")
+    proxyStatus.trace('w', proxyStatusCallBack)
+
+
+    proxyStatusbox = ttk.Combobox(ttkframe, textvariable=proxyStatus)
+    proxyStatusbox.config(values = ('valid', 'invalid'))
     proxyStatusbox.grid(row = 1, column = 3, columnspan = 3, padx=14, pady=15)    
 
-    def selectedproxyStatus(event):
-        box = event.widget
-        
-        print('selected status is :',box.get())
-    proxyStatusbox['values'] = ('valid', 'invalid')
-    proxyStatusbox.current(0)
-    proxyStatusbox.bind("<<ComboboxSelected>>", selectedproxyStatus)
+
+
+
 
     btn5= tk.Button(ttkframe, text="Get proxy list", padx = 0, pady = 0,command = lambda: threading.Thread(target=queryProxies(tree,prod_engine,logger,city.get(),country.get(),proxyTags.get(),proxyStatusbox.get(),latest_conditions.get())).start())
     btn5.grid(row=2,column=0, sticky=tk.W)    
@@ -4149,24 +4541,24 @@ def metaView(left,right,lang):
     # l_platform.place(x=10, y=90)
     l_meta_format.grid(row = 1, column = 0, sticky='w', padx=14, pady=15)    
     global metafileformat
+    
+
     metafileformat = tk.StringVar()
-    metafileformat.set('json')
 
-    keepmetafileformat = metafileformat.get()    
-    metafileformatbox = ttk.Combobox(left, width=int(width*0.01), textvariable=keepmetafileformat, state='readonly')
-    # box.place(x=10, y=120)
+
+    def metafileformatCallBack(*args):
+        print(metafileformat.get())
+        print(metafileformatbox.current())
+
+    metafileformat.set("Select From format")
+    metafileformat.trace('w', metafileformatCallBack)
+
+
+    metafileformatbox = ttk.Combobox(left, textvariable=metafileformat)
+    metafileformatbox.config(values = ( 'json','xlsx', 'csv'))
     metafileformatbox.grid(row = 1, column = 1, sticky='w', padx=14, pady=15)      
+    
 
-    def selectedmetafileformat(event):
-        box = event.widget
-        
-        print('metafileformat changed to :',metafileformatbox.get())
-        metafileformat.set(metafileformatbox.get())
-        analyse_video_meta_pair(metaView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=True)
-        logger.info(f'reload results when metafileformat changed to :{metafileformatbox.get()}')
-    metafileformatbox['values'] = ( 'json','xlsx', 'csv')
-    metafileformatbox.current(0)
-    metafileformatbox.bind("<<ComboboxSelected>>", selectedmetafileformat)
 
     b_download_meta_templates=tk.Button(left,text="check video meta files",command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
     b_download_meta_templates.grid(row = 1, column = 3, sticky='w', padx=14, pady=15)  
@@ -4517,8 +4909,7 @@ def render(root,window,log_frame,lang):
     meta_frame.grid_rowconfigure(0, weight=1)
 
 
-    tab_control.add(doc_frame, text=i18labels("docView", locale=lang, module="g"))
-    docView(doc_frame_left,doc_frame_right,lang)
+
 
     tab_control.add(install_frame, text=i18labels("installView", locale=lang, module="g"))
     installView(install_frame_left,install_frame_right,lang)
@@ -4545,7 +4936,16 @@ def render(root,window,log_frame,lang):
 
     tab_control.add(upload_frame, text=i18labels("uploadView", locale=lang, module="g"))
     uploadView(upload_frame_left,upload_frame_right,lang)
+    
+    print(f"label  doc:{settings[lang]['docView']}")
+    if lang=='en':
+        print('1111')
+        tab_control.add(doc_frame, text=settings[lang]['docView'])
+    else:
+        tab_control.add(doc_frame, text='帮助')
+        print('222')
 
+    docView(doc_frame_left,doc_frame_right,lang)
     # tab_control.pack(expand=1, fill='both')
     tab_control.grid(row=0,column=0)
 
@@ -4568,8 +4968,8 @@ def render(root,window,log_frame,lang):
  
  
      # definition of the menu one level up...
-    Cascade_button.menu.choices.add_command(label='zh',command=lambda:changeDisplayLang('zh',window,log_frame))
-    Cascade_button.menu.choices.add_command(label='en',command=lambda:changeDisplayLang('en',window,log_frame))
+    Cascade_button.menu.choices.add_command(label='zh',command=lambda:changeDisplayLang('zh'))
+    Cascade_button.menu.choices.add_command(label='en',command=lambda:changeDisplayLang('en'))
     Cascade_button.menu.add_cascade(label= i18labels("chooseLang", locale=lang, module="g"),
                                     
                                      menu=Cascade_button.menu.choices)    
@@ -4595,16 +4995,10 @@ def render(root,window,log_frame,lang):
 
 
 
-    # root.config(menu=menubar)
+    root.config(menu=menubar)
     # return langchoosen.get()
 
-
-if __name__ == '__main__':
-
-    gui_flag = 1
-
-    # log_file = "log.txt"
-
+def start(lang):
 
     load_setting()
     global ROOT_DIR
@@ -4612,87 +5006,95 @@ if __name__ == '__main__':
         os.path.abspath(__file__)
     )
 
+    global root,paned_window,log_frame,mainwindow,text_handler
+
+    root.geometry(window_size)
+    # root.resizable(width=True, height=True)
+    root.iconbitmap("assets/icon.ico")
+    root.title(i18labels("title", locale=lang, module="g"))        
+    # Create a PanedWindow widget (vertical)
+    paned_window = tk.PanedWindow(root, orient=tk.VERTICAL)
+    paned_window.pack(expand=True, fill="both")
+
+    # Configure weights for mainwindow and log_frame
+    paned_window.grid_rowconfigure(0, weight=5)
+    paned_window.grid_rowconfigure(1, weight=1)
+
+    # Create the frame for the notebook
+    mainwindow = ttk.Frame(paned_window)
+    paned_window.add(mainwindow)
+    mainwindow.grid_rowconfigure(0, weight=1)
+    mainwindow.grid_columnconfigure(0, weight=1)
 
 
-    if gui_flag:
-        global root
-        root = tk.Tk()
-        root.geometry(window_size)
-        # root.resizable(width=True, height=True)
-        root.iconbitmap("assets/icon.ico")
-        root.title(i18labels("title", locale='en', module="g"))        
-        # Create a PanedWindow widget (vertical)
-        paned_window = tk.PanedWindow(root, orient=tk.VERTICAL)
-        paned_window.pack(expand=True, fill="both")
+    
 
-        # Configure weights for mainwindow and log_frame
-        paned_window.grid_rowconfigure(0, weight=5)
-        paned_window.grid_rowconfigure(1, weight=1)
 
-        # Create the frame for the notebook
-        mainwindow = ttk.Frame(paned_window)
-        paned_window.add(mainwindow)
-        mainwindow.grid_rowconfigure(0, weight=1)
-        mainwindow.grid_columnconfigure(0, weight=1)
+    log_frame =tk.Frame(paned_window)
+    paned_window.add(log_frame)
+
+    log_frame.grid_rowconfigure(0, weight=1)
+    log_frame.grid_columnconfigure(0, weight=1)
+    log_frame.columnconfigure(0, weight=1)
+    log_frame.rowconfigure(0, weight=1)
+
+
+    st =ConsoleUi(log_frame,root)
+
+    logger.debug(f'Installation path is:{ROOT_DIR}')
+
+    logger.info('TiktokaStudio GUI started')
+    render(root,mainwindow,log_frame,lang)
+    root.update_idletasks()
+
+# # Set the initial size of the notebook frame (4/5 of total height)
+    mainwindow_initial_percentage = 5 / 6  
+
+    # Calculate the initial height of mainwindow based on the percentage
+    initial_height = int(float(root.winfo_height()) * mainwindow_initial_percentage)
+    mainwindow.config(height=initial_height)
+def all_children (window) :
+    _list = window.winfo_children()
+
+    for item in _list :
+        if item.winfo_children() :
+            _list.extend(item.winfo_children())
+
+    return _list
+def changeDisplayLang(lang):
+    # widget_list = all_children(mainwindow)
+    # for item in widget_list:
+    #     print('233,',item)
+    #     item.pack_forget()     
+    mainwindow.destroy()
+    # del text_handler   
+
+    # widget_list = all_children(log_frame)
+    # for item in widget_list:
+    #     print('234,',item)
+    #     item.pack_forget()    
+    # log_frame= None
+    log_frame.destroy()
+    
+    # widget_list = all_children(paned_window)
+    # for item in widget_list:
+    #     print('235,',item)
+    #     item.pack_forget()        
+    paned_window.destroy()
+    
+    
+    # root.quit()    
+    
+    start(lang)
+    logger.info(f'switch lang to locale:{lang}')
+    
+    root.mainloop()
+
+if __name__ == '__main__':
+    global root
+    root = tk.Tk()
+    start('en')
+    root.mainloop()
 
 
         
-
-
-        log_frame =tk.Frame(paned_window)
-        paned_window.add(log_frame)
-
-        log_frame.grid_rowconfigure(0, weight=1)
-        log_frame.grid_columnconfigure(0, weight=1)
-        log_frame.columnconfigure(0, weight=1)
-        log_frame.rowconfigure(0, weight=1)
-
-
-
-
-        st = ScrolledText.ScrolledText(log_frame,                                      
-                                    # width = width, 
-                                    #     height = 5, 
-                                        state='disabled')
-        st.bind_all("<Control-c>",_copy)
-
-        def clear_text():
-
-            st.configure(state='normal')  # Enable text widget
-            st.delete(1.0, tk.END)  # Delete all text
-            st.configure(state='disabled')  # Disable text widget again
-        # Create a right-click context menu
-        def show_context_menu(event):
-            context_menu.post(event.x_root, event.y_root)
-
-        context_menu = tk.Menu(root, tearoff=0)
-        context_menu.add_command(label="Clear All Text", command=clear_text)
-
-
-        # Bind right-click event to show context menu
-        st.bind("<Button-3>", show_context_menu)
-
-        st.configure(font='TkFixedFont')
-        st.grid(column=0, 
-                row=0, 
-                sticky='nwse',
-                # columnspan=4
-                )
-        text_handler = TextHandler(st)
-
-        logger.addHandler(text_handler)    
-
-
-        logger.debug(f'Installation path is:{ROOT_DIR}')
-
-        logger.info('TiktokaStudio GUI started')
-        render(paned_window,mainwindow,log_frame,'en')
-    #     root.update_idletasks()
-
-    # # Set the initial size of the notebook frame (4/5 of total height)
-        mainwindow_initial_percentage = 5 / 6  
-
-        # Calculate the initial height of mainwindow based on the percentage
-        initial_height = int(float(root.winfo_height()) * mainwindow_initial_percentage)
-        mainwindow.config(height=initial_height)
-        root.mainloop()
