@@ -1399,13 +1399,15 @@ def createTaskMetas(left,right):
 
     txt15 = tk.Entry(newWindow,textvariable=city_user,width=int(0.01*width))
     txt15.insert(0,'')
+    b_thumbnail_template_file=tk.Button(newWindow,text="select",command=lambda: threading.Thread(target=select_file('select video meta  file','','','all')).start() )
+    b_thumbnail_template_file.grid(row = 1, column = 2,  padx=14, pady=15,sticky='nswe')     
     # txt15.place(x=580, y=30, anchor=tk.NE)
     # txt15.pack(side='left')
     txt15.grid(row=1,column=1, sticky=tk.W)
 
 
     lbl15 = tk.Label(newWindow, text='Start from video folder')
-    lbl15.grid(row=1,column=2, sticky=tk.W)
+    lbl15.grid(row=1,column=3, sticky=tk.W)
 
     uploadStrategy = tk.StringVar()
     uploadStrategy.set("start from template")
