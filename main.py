@@ -980,40 +980,7 @@ def create_setting_file():
     if os.path.exists(ROOT_DIR+os.path.sep+'./assets/config/'+channelname.get()+".json"):
         print('setting file create done')
 
-def videosMenuMangement():
-    # global frame
-    # frame=tk.Frame(root,width=str(width),  height=str(height),  )
-    # frame.pack()
-    window = tk.Tk()
-    
-    window.title("Airline Management System")
 
-    window.geometry('550x450')    
-    tab_control = ttk.Notebook(window)
-    
-    right = ttk.Frame(tab_control)
-    
-    left = ttk.Frame(tab_control)
-
-    three = ttk.Frame(tab_control)
-
-    four = ttk.Frame(tab_control)
-
-    right1 = tk.Frame(three, width = 500, height = 500)
-    right1.pack(side = tk.RIGHT)
-
-    left1 = tk.Frame(three, width = 500, height = 500)
-    left1.pack(side = tk.LEFT)
-
-    tab_control.add(right, text='Passenger Info')
-    
-    tab_control.add(left, text='Airline Info')
-
-    tab_control.add(three, text='Book Ticket')
-
-    tab_control.add(four, text='Boarding Pass')
-    tab_control.pack(expand=1, fill='both')
-    window.mainloop()
 def load_setting_file():
     ROOT_DIR = os.path.dirname(
         os.path.abspath(__file__)
@@ -1343,89 +1310,17 @@ def SelectVideoMetasfile():
         logger.error('you should choose a valid path')
     # setting['channelcookiepath'] = channel_cookie_path
     logger.debug('finished to import prepared video metas in json format')
-
-def createVideoMetas(left,right):
-    newWindow = tk.Toplevel(right)
-    newWindow.geometry(window_size)
-    username = tk.StringVar()
-
-    
-    newWindow.title('create tasks from scratch')
-
-    if username=='':
-        username='this user account'
-
-    label = tk.Label(newWindow,
-                text = f"Select the proxies for {username} below : ",
-                font = ("Times New Roman", 10),
-                padx = 10, pady = 10)
-    # label.pack()
-    label.grid(row=0,column=0, sticky=tk.W)
-    
- 
-    
-    global city_user,country_user,proxyTags_user,proxyStatus_user,proxy_str
-    city_user = tk.StringVar()
-    country_user = tk.StringVar()
-    proxyTags_user = tk.StringVar()
-    proxyStatus_user = tk.BooleanVar()
-    global latest_proxy_conditions_user
-    latest_proxy_conditions_user = tk.StringVar()
-    lbl15 = tk.Label(newWindow, text='select video metas')
-    # lbl15.place(x=430, y=30, anchor=tk.NE)
-    # lbl15.pack(side='left')
-    proxy_str = tk.StringVar()
-
-    lbl15.grid(row=1,column=0, sticky=tk.W)
-
-    txt15 = tk.Entry(newWindow,textvariable=city_user,width=int(0.01*width))
-    txt15.insert(0,'')
-    # txt15.place(x=580, y=30, anchor=tk.NE)
-    # txt15.pack(side='left')
-    txt15.grid(row=1,column=1, sticky=tk.W)
-
-    lbl16 = tk.Label(newWindow, text='select user')
-    lbl16.grid(row=2,column=0, sticky=tk.W)
-    txt16 = tk.Entry(newWindow,textvariable=country_user,width=int(0.01*width))
-    txt16.insert(0,'')
-    txt16.grid(row=2,column=1, sticky=tk.W)
-    
-    lb17 = tk.Label(newWindow, text='upload setting')
-    lb17.grid(row=3,column=0, sticky=tk.W)
-    txt17 = tk.Entry(newWindow,textvariable=proxyTags_user,width=int(0.01*width))
-    txt17.insert(0,'')
-    txt17.grid(row=3,column=2, sticky=tk.W)
-
-    lb18 = tk.Label(newWindow, text='Runs on.')
-    lb18.grid(row=4,column=0, sticky=tk.W)
-
-
-    proxyStatus = tk.StringVar()
-
-
-    def proxyStatusCallBack(*args):
-        print(proxyStatus.get())
-        print(proxyStatusbox.current())
-
-    proxyStatus.set("Select From Status")
-    proxyStatus.trace('w', proxyStatusCallBack)
-
-
-    proxyStatusbox = ttk.Combobox(newWindow, textvariable=proxyStatus)
-    proxyStatusbox.config(values = ('embed browser', 'adspower','phone emulator','iphone','android'))
-    proxyStatusbox.grid(row = 4, column = 2, columnspan = 3, padx=14, pady=15)    
-
-
-
-
+def proxyaddView(newWindow):
+    btn6= tk.Button(newWindow, text="add selected", padx = 10, pady = 10,command = lambda: threading.Thread(target=setEntry(proxy_str.get())).start())     
+    btn6.grid(row=9,column=0, sticky=tk.W)
     
 
-     
-     
+    
+    
 
     # Create a frame for the canvas with non-zero row&column weights
     frame_canvas = tk.Frame(newWindow)
-    frame_canvas.grid(row=6, column=0, pady=(5, 0), sticky='nw')
+    frame_canvas.grid(row=7, column=0, pady=(5, 0), sticky='nw')
     frame_canvas.grid_rowconfigure(0, weight=1)
     frame_canvas.grid_columnconfigure(0, weight=1)
     # Set grid_propagate to False to allow 5-by-5 buttons resizing later
@@ -1435,12 +1330,16 @@ def createVideoMetas(left,right):
     # for scrolling vertically
     yscrollbar = tk.Scrollbar(frame_canvas)
     yscrollbar.pack(side = tk.RIGHT, fill = 'both')
-     
+    
     langlist = tk.Listbox(frame_canvas, selectmode = "multiple",
                 yscrollcommand = yscrollbar.set)
     langlist.pack(padx = 10, pady = 10,
             expand = tk.YES, fill = "both")
 
+    btn5= tk.Button(newWindow, text="Get proxy list", padx = 0, 
+                    pady = 0,command = lambda: threading.Thread(target=
+                    filterProxiesLocations(newWindow,langlist,prod_engine,logger,city_user.get(),country_user.get(),proxyTags_user.get(),proxyStatusbox.get(),latest_proxy_conditions_user.get())).start())
+    btn5.grid(row=6,column=2, sticky=tk.W)    
     def CurSelet(event):
         listbox = event.widget
         # values = [listbox.get(idx) for idx in listbox.curselection()]
@@ -1467,15 +1366,136 @@ def createVideoMetas(left,right):
             lbl15.grid(row=6,column=0, sticky=tk.W)
             lbl15.after(500,lbl15.destroy)
 
-    langlist.bind('<<ListboxSelect>>',CurSelet)
-    btn5= tk.Button(newWindow, text="Get proxy list", padx = 0, 
-                    pady = 0,command = lambda: threading.Thread(target=
-                    filterProxiesLocations(newWindow,langlist,prod_engine,logger,city_user.get(),country_user.get(),proxyTags_user.get(),proxyStatusbox.get(),latest_proxy_conditions_user.get())).start())
-    btn5.grid(row=5,column=0, sticky=tk.W)    
-    btn6= tk.Button(newWindow, text="add selected", padx = 10, pady = 10,command = lambda: threading.Thread(target=setEntry(proxy_str.get())).start())
-    # btn5.place(x=800, y=30, anchor=tk.NE)    
-    # btn6.pack(side='left')          
-    btn6.grid(row=7,column=0, sticky=tk.W)
+    langlist.bind('<<ListboxSelect>>',CurSelet)    
+def createTaskMetas(left,right):
+    newWindow = tk.Toplevel(right)
+    newWindow.geometry(window_size)
+    username = tk.StringVar()
+
+    
+    newWindow.title('create tasks from scratch')
+
+    if username=='':
+        username='this user account'
+
+    label = tk.Label(newWindow,
+                text = f"If you are new,try to start from a folder with videos",
+                font = ("Times New Roman", 10),
+                padx = 10, pady = 10)
+    # label.pack()
+    label.grid(row=0,column=0, sticky=tk.W)
+    
+ 
+    
+    global city_user,country_user,proxyTags_user,proxyStatus_user,proxy_str
+    city_user = tk.StringVar()
+    country_user = tk.StringVar()
+    proxyTags_user = tk.StringVar()
+    proxyStatus_user = tk.BooleanVar()
+    global latest_proxy_conditions_user
+    latest_proxy_conditions_user = tk.StringVar()
+    lbl15 = tk.Label(newWindow, text='load video metas from file')
+    lbl15.grid(row=1,column=0, sticky=tk.W)
+
+    txt15 = tk.Entry(newWindow,textvariable=city_user,width=int(0.01*width))
+    txt15.insert(0,'')
+    # txt15.place(x=580, y=30, anchor=tk.NE)
+    # txt15.pack(side='left')
+    txt15.grid(row=1,column=1, sticky=tk.W)
+
+
+    lbl15 = tk.Label(newWindow, text='Start from video folder')
+    lbl15.grid(row=1,column=2, sticky=tk.W)
+
+    uploadStrategy = tk.StringVar()
+    uploadStrategy.set("start from template")
+
+
+    uploadStrategybox = ttk.Combobox(newWindow, textvariable=uploadStrategy)
+    uploadStrategybox.config(values = ('单帐号', '主副帐号平均发布','多帐号平均发布'))
+    uploadStrategybox.grid(row = 3, column = 2, padx=14, pady=15)    
+
+
+    
+    lb17 = tk.Label(newWindow, text='load upload setting')
+    lb17.grid(row=3,column=0, sticky=tk.W)
+    txt17 = tk.Entry(newWindow,textvariable=proxyTags_user)
+    txt17.insert(0,'')
+    txt17.grid(row=3,column=1, sticky=tk.W)
+
+    def uploadStrategyCallBack(*args):
+        print(uploadStrategy.get())
+        print(uploadStrategybox.current())
+        if uploadStrategybox.current()==0 or uploadStrategy.get()=='单帐号' :
+
+
+
+
+
+
+            lbl16 = tk.Label(newWindow, text='select user')
+            lbl16.grid(row=5,column=0, sticky=tk.W)
+            txt16 = tk.Entry(newWindow,textvariable=country_user,width=int(0.01*width))
+            txt16.insert(0,'')
+            txt16.grid(row=5,column=1, sticky=tk.W)
+
+            lbl16 = tk.Label(newWindow, text='proxy')
+            lbl16.grid(row=6,column=0, sticky=tk.W)
+            txt16 = tk.Entry(newWindow,textvariable=country_user,width=int(0.01*width))
+            txt16.insert(0,'')
+            txt16.grid(row=6,column=1, sticky=tk.W)
+
+
+            lb18 = tk.Label(newWindow, text='Runs on.')
+            lb18.grid(row=4,column=0, sticky=tk.W)
+
+
+            deviceType = tk.StringVar()
+
+
+            def deviceTypeCallBack(*args):
+                print(deviceType.get())
+                print(deviceTypebox.current())
+                if 'browser' in deviceType.get():
+                    browserType = tk.StringVar()
+
+                    browserType.set("Select From Browsers")
+                    def browserTypeCallBack(*args):
+                        print(browserType.get())
+                        print(browserTypebox.current())
+                    browserType.trace('w', browserTypeCallBack)
+
+                    browserTypebox = ttk.Combobox(newWindow, textvariable=browserType)
+                    browserTypebox.config(values = ('firefox', 'webkit','chrome'))
+                    browserTypebox.grid(row = 4, column = 2,padx=14, pady=15)    
+
+
+            deviceType.set("Select From device")
+            deviceType.trace('w', deviceTypeCallBack)
+
+
+            deviceTypebox = ttk.Combobox(newWindow, textvariable=deviceType)
+            deviceTypebox.config(values = ('embed browser', 'adspower','phone emulator','iphone','android'))
+            deviceTypebox.grid(row = 4, column = 1, padx=14, pady=15)    
+
+
+
+
+
+    uploadStrategy.trace('w', uploadStrategyCallBack)
+
+    uploadPlatform = tk.StringVar()
+    uploadPlatform.set("choose target platform")
+
+
+    uploadPlatformbox = ttk.Combobox(newWindow, textvariable=uploadPlatform)
+    uploadPlatformbox.config(values = ('tiktok', 'youtube','xhs'))
+    uploadPlatformbox.grid(row = 3, column = 3, padx=14, pady=15)    
+    def uploadPlatformboxCallBack(*args):
+        print(uploadPlatform.get())
+        print(uploadPlatformbox.current())
+
+    uploadPlatform.trace('w', uploadPlatformboxCallBack)
 
     
 def genVideoMetas():
@@ -2410,6 +2430,8 @@ def installView(frame,ttkframe,lang):
     l_lang = tk.Label(ttkframe, text=i18labels("chooseLang", locale=lang, module="g"))
     # l_lang.place(x=10, y=90)
     l_lang.grid(row = 3, column = 0, columnspan = 3, padx=14, pady=15)    
+    def display_selected_item_index(event): 
+        locale_tkstudio_box.set(locale_tkstudio.get())
 
 
     def locale_tkstudioOptionCallBack(*args):
@@ -2423,7 +2445,9 @@ def installView(frame,ttkframe,lang):
 
     locale_tkstudio_box = ttk.Combobox(ttkframe, textvariable=locale_tkstudio)
     locale_tkstudio_box.config(values =('en', 'zh'))
+    # locale_tkstudio_box.set(locale_tkstudio.get())    
     locale_tkstudio_box.grid(row = 4, column = 1, columnspan = 3, padx=14, pady=15)    
+    locale_tkstudio_box.bind("<<ComboboxSelected>>", display_selected_item_index)  
 
 
       
@@ -2431,7 +2455,7 @@ def videosView(frame,ttkframe,lang):
     global videosView_video_folder
     videosView_video_folder = tk.StringVar()
 
-    videosView_video_folder.set(setting['video_folder'])
+    # videosView_video_folder.set(setting['video_folder'])
 
     l_video_folder = tk.Label(frame, text=i18labels("videoFolder", locale=lang, module="g"))
     l_video_folder.place(x=10, y=20)
@@ -2481,19 +2505,19 @@ def thumbView(left,right,lang):
     metafileformat = tk.StringVar()
 
 
-    def metafileformatCallBack(*args):
-        print(metafileformat.get())
-        print(metafileformatbox.current())
 
     metafileformat.set("Select From format")
-    metafileformat.trace('w', metafileformatCallBack)
 
 
     metafileformatbox = ttk.Combobox(left, textvariable=metafileformat)
     metafileformatbox.config(values = ( 'json','xlsx', 'csv'))
     metafileformatbox.grid(row = 1, column = 1, sticky='w', padx=14, pady=15)      
-    
+    def metafileformatCallBack(*args):
+        print(metafileformat.get())
+        print(metafileformatbox.current())
+        analyse_video_meta_pair(thumbView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=True)
     print(f'right now metafileformatbox.get():{metafileformatbox.get()}')
+    metafileformat.trace('w', metafileformatCallBack)
 
     b_download_meta_templates=tk.Button(left,text="check video meta files",command=lambda: threading.Thread(target=openLocal(thumbView_video_folder.get())).start() )
     b_download_meta_templates.grid(row = 1, column = 3, sticky='w', padx=14, pady=15)  
@@ -3056,6 +3080,17 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
                                                     "gridSize": {
                                                     "type": "integer"
                                                     },
+                                                    "isdrawborder": {
+                                                    "type": "boolean"
+                                                    },                                                    
+                                                    "bordersize": {
+                                                    "type": "integer"
+                                                    },                                                    
+                                                    "bordercolor": {
+                                                    "type": "string"
+                                                    },
+
+
                                                     "nearestGridSerialNumber": {
                                                     "type": "integer"
                                                     },
@@ -3280,11 +3315,11 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
         print('pass failed')
     return passed
 def openVideoMetaFile(folder):
-    print(f'you choose metafile format is:{metafileformat.get()}')
-    if metafileformat.get():
-        openLocal(os.path.join(folder,'videos-meta.'+metafileformat.get()))
+    print(f"you choose metafile format is:{ultra[folder]['metafileformat']}")
+    if ultra[folder]['metafileformat']:
+        openLocal(os.path.join(folder,'videos-meta.'+ultra[folder]['metafileformat']))
     else:
-        logger.error(f'you dont choose a valid meta fileformat:{metafileformat.get()}')
+        logger.error(f"you dont choose a valid meta fileformat:{ultra[folder]['metafileformat']}")
 
 def genThumbnailFromTemplate(folder,thumbnail_template_file_path,mode_value,thummbnail_bg_folder_path,frame=None):
 
@@ -4104,7 +4139,8 @@ def uploadView(frame,ttkframe,lang):
 
         
     
-    b_down_video_metas_temp = tk.Button(frame, text=i18labels("createVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=createVideoMetas(frame,ttkframe)).start())
+    b_down_video_metas_temp = tk.Button(frame, text=i18labels("createTaskMetas", locale=lang, module="g"),
+                                         command=lambda: threading.Thread(target=createTaskMetas(frame,ttkframe)).start())
     b_down_video_metas_temp.grid(row = 0, column = 0, padx=14, pady=15)
     
 
@@ -4549,7 +4585,7 @@ def metaView(left,right,lang):
     def metafileformatCallBack(*args):
         print(metafileformat.get())
         print(metafileformatbox.current())
-
+        ultra[metaView_video_folder]['metafileformat']=metafileformat.get()
     metafileformat.set("Select From format")
     metafileformat.trace('w', metafileformatCallBack)
 
@@ -4866,30 +4902,12 @@ def render(root,window,log_frame,lang):
     upload_frame.grid_columnconfigure(0, weight=1 )
     upload_frame.grid_columnconfigure(1, weight=3)
 
-    # upload_frame.columnconfigure((0), weight=1)
-    # upload_frame.columnconfigure((1), weight=2)
-    
-    # upload_frame.grid_columnconfigure(0, weight=1)
-    # upload_frame.grid_columnconfigure(1, weight=2) 
-     # Right frame occupies twice the width
 
     upload_frame_left = tk.Frame(upload_frame, height = height)
     upload_frame_left.grid(row=0,column=0,sticky="nsew")
     upload_frame_right = tk.Frame(upload_frame, height = height)
     upload_frame_right.grid(row=0,column=1,sticky="nse") 
 
-    # upload_frame_right.columnconfigure((0,1,2,3,4), weight=1)
-    # upload_frame_right.grid_columnconfigure((0,1,2,3,4), weight=1)
-
-    # meta_frame = ttk.Frame(tab_control)
-    # meta_frame.rowconfigure(0, weight=1)
-    # meta_frame.columnconfigure((0,1), weight=1)
-    # meta_frame_left = tk.Frame(meta_frame,width=int(0.5*width),height = height)
-    # # meta_frame_left.pack(side = tk.LEFT)
-    # meta_frame_left.grid(row=0,column=3,columnspan=3, sticky='nw')
-    # meta_frame_right = tk.Frame(meta_frame,width=int(0.5*width), height = height)
-    # # meta_frame_right.pack(side = tk.RIGHT)
-    # meta_frame_right.grid(row=0,column=6,columnspan=3, sticky='ne')
 
 
     meta_frame = ttk.Frame(tab_control)
@@ -4911,39 +4929,45 @@ def render(root,window,log_frame,lang):
 
 
 
-    tab_control.add(install_frame, text=i18labels("installView", locale=lang, module="g"))
+    tab_control.add(install_frame, 
+                     text=settings[lang]['installView'])
+                    
     installView(install_frame_left,install_frame_right,lang)
 
 
-    tab_control.add(account_frame, text=i18labels("accountView", locale=lang, module="g"))
+    tab_control.add(account_frame, 
+                     text=settings[lang]['accountView'])
+                    
     accountView(account_frame_right,account_frame_left,lang)
 
-    tab_control.add(proxy_frame, text=i18labels("proxyView", locale=lang, module="g"))
+    tab_control.add(proxy_frame,
+                    text=settings[lang]['proxyView'])
+
     proxyView(proxy_frame_left,proxy_frame_right,lang)
 
-    tab_control.add(thumb_frame, text=i18labels("thumbView", locale=lang, module="g"))
+    tab_control.add(thumb_frame, 
+                     text=settings[lang]['thumbView'])
+                    
+
     thumbView(thumb_frame_left,thumb_frame_right,lang)
 
 
-    tab_control.add(video_frame, text=i18labels("videosView", locale=lang, module="g"))
+    tab_control.add(video_frame, text=settings[lang]['videosView']
+                    )
     videosView(video_frame_left,video_frame_right,lang)
 
 
-    tab_control.add(meta_frame, text=i18labels("metaView", locale=lang, module="g"))
+    tab_control.add(meta_frame, 
+                     text=settings[lang]['metaView'])
     metaView(meta_frame_left,meta_frame_right,lang)
     # metaView(meta_frame_right,meta_frame_left,lang)
 
 
-    tab_control.add(upload_frame, text=i18labels("uploadView", locale=lang, module="g"))
+    tab_control.add(upload_frame, text=settings[lang]['uploadView'])
     uploadView(upload_frame_left,upload_frame_right,lang)
     
-    print(f"label  doc:{settings[lang]['docView']}")
-    if lang=='en':
-        print('1111')
-        tab_control.add(doc_frame, text=settings[lang]['docView'])
-    else:
-        tab_control.add(doc_frame, text='帮助')
-        print('222')
+
+    tab_control.add(doc_frame, text=settings[lang]['docView'])
 
     docView(doc_frame_left,doc_frame_right,lang)
     # tab_control.pack(expand=1, fill='both')
@@ -5000,7 +5024,7 @@ def render(root,window,log_frame,lang):
 
 def start(lang):
 
-    load_setting()
+    # load_setting()
     global ROOT_DIR
     ROOT_DIR = os.path.dirname(
         os.path.abspath(__file__)
@@ -5011,7 +5035,7 @@ def start(lang):
     root.geometry(window_size)
     # root.resizable(width=True, height=True)
     root.iconbitmap("assets/icon.ico")
-    root.title(i18labels("title", locale=lang, module="g"))        
+    root.title(settings[lang]['title'])        
     # Create a PanedWindow widget (vertical)
     paned_window = tk.PanedWindow(root, orient=tk.VERTICAL)
     paned_window.pack(expand=True, fill="both")

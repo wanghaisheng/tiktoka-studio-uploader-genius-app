@@ -1,7 +1,7 @@
 import pandas as pd
 import json
 from PIL import Image, ImageDraw, ImageFont,ImageColor
-import os
+import os,re
 import sys
 from eld import LanguageDetector
 
@@ -11,9 +11,19 @@ def calculate_text_size(text, font):
     width, height = font.getsize(text)
     return width, height
 
+
+def spliteKeyWord(str):
+
+    # https://stackoverflow.com/questions/3797746/how-to-do-a-python-split-on-languages-like-chinese-that-dont-use-whitespace
+    regex = r"[\u4e00-\ufaff]|[0-9]+|[a-zA-Z]+\'*[a-z]*"
+    matches = re.findall(regex, str, re.UNICODE)
+    return matches
+
+
+
 def calculate_text_lines(text, font, max_width):
     lines = []
-    words = text.split()
+    words =spliteKeyWord(text)
     current_line = words[0]
     for word in words[1:]:
         line_width, _ = calculate_text_size(current_line + " " + word, font)
@@ -33,14 +43,25 @@ def convert_canvas_coord_to_corner(canvas_coord, zone_width, zone_height):
     corner_y = zone_row * zone_height
     return corner_x, corner_y
 
-def draw_multiline_text(draw, text, start_coord, font, max_width, font_size, font_color):
+def draw_multiline_text(draw, text, start_coord, font, max_width, font_size, font_color,isdrawborder=False,bordersize=2,bordercolor="rgb(255,255,255)"):
     lines = calculate_text_lines(text, font, max_width)
+    print(f'lines cal:max_width is {max_width},{lines}')
+
     x, y = start_coord
-    # font = ImageFont.truetype(font, size=int(font_size))
+    #font = ImageFont.truetype(font, size=int(font_size))
     for line in lines:
         draw.text((x, y), line, font=font, fill=font_color)
-        x, y = start_coord[0], y + font.getsize(line)[1]
+        if isdrawborder==True:
+            # bordersize=2
+            # bordercolor=(255, 255, 255)
+            draw.text((x+bordersize, y+bordersize), text, fill=bordercolor, font=font)
+            draw.text((x-bordersize, y+bordersize), text, fill=bordercolor, font=font)
+            draw.text((x+bordersize, y-bordersize), text, fill=bordercolor, font=font)
+            draw.text((x-bordersize, y-bordersize), text, fill=bordercolor,  font=font)
 
+   
+        x, y = start_coord[0], y + font.getsize(line)[1]
+    # https://github.com/ultralytics/yolov5/issues/11838
 def clean_column_name(column_name):
     return column_name.replace(" ", "_")
 
@@ -77,14 +98,43 @@ def get_default_font(language):
         return default_fonts["win32"]["en"]
 
 def load_font(font_name,font_file, font_size, default_language):
+
+
+    if sys.platform=='win32':
+        basedir=r'C:\Windows\fonts'
+    elif sys.platform=='darwin':
+        basedir=r'/Library/Fonts'
+    elif sys.platform=='linux2':
+        basedir=r"/usr/share/fonts/"
+
+    installedFonts=os.listdir(basedir)
+    print('all fonts installed:',installedFonts)
+    try:
+        index = [idx for idx, s in enumerate(installedFonts) if font_name.lower() in s][0]
+        font_name=os.path.join(basedir,installedFonts[index])
+        print(f'we find the font name {font_name} installed in system path')
+    except:
+        try:
+            index = [idx for idx, s in enumerate(installedFonts) if font_name.upper() in s][0]
+            font_name=os.path.join(basedir,installedFonts[index])
+            print(f'we find the font name {font_name} installed in system path')     
+        except:       
+            print(f'we could not find the font name {font_name} installed in system path')
+
     try:
         font = ImageFont.truetype(font_name, size=int(font_size))
+        print(f'we use you specify fontname {font_name}')
+
     except (OSError, FileNotFoundError):
 
         try:
             font = ImageFont.truetype(font_file, size=int(font_size))
+            print(f'we use you specify fontfile due to fontname is not found {font_file}')
+
         except (OSError, FileNotFoundError):
             font = ImageFont.truetype(get_default_font(default_language), size=int(font_size))
+            print(f'we use default fontname {get_default_font(default_language)}')
+
     return font
 
 
@@ -125,16 +175,22 @@ def validateSeting(setting):
         grid_size = template_item.get("gridSize", 0)
         nearest_grid_serial_number = template_item.get("nearestGridSerialNumber", 0)
         font_color = template_item.get("fontcolor", "")
-        try:
-            font = ImageFont.truetype(font_name, size=int(font_size))
-        except (OSError, FileNotFoundError):
-            print(f'cannot find font named {font_name}')
+        isdrawborder = template_item.get("isdrawborder", False)
+        bordersize = template_item.get("isdrawborder", 2)
+        bordercolor = template_item.get("isdrawborder", "rgb(255, 255, 255)")
 
-        # Validate font file
-        if font_file:
-            if not validate_font_path(font_file):
-                print(f"Warning: Font file '{font_file}' is invalid or cannot be found. Using default font.")
-                font_file = ""
+
+        # try:
+        #     font = ImageFont.truetype(font_name, size=int(font_size))
+        # except (OSError, FileNotFoundError):
+        #     print(f'cannot find font named {font_name}')
+
+
+        # # Validate font file
+        # if font_file:
+        #     if not validate_font_path(font_file):
+        #         print(f"Warning: Font file '{font_file}' is invalid or cannot be found. Using default font.")
+        #         font_file = ""
 
 
 
@@ -191,7 +247,7 @@ def draw_text_on_image(row,thumb_gen_setting,result_image_width,result_image_hei
     # Load and resize the background image
     if thumbnail_bg_image_path:
         bg_image = Image.open(thumbnail_bg_image_path)
-        bg_image = bg_image.resize((result_image_width, result_image_height), Image.ANTIALIAS)  # Resize
+        bg_image = bg_image.resize((result_image_width, result_image_height), Image.LANCZOS)  # Resize
 
         # Overlay the background image on the canvas
         canvas_image.paste(bg_image, (0, 0))
@@ -207,20 +263,25 @@ def draw_text_on_image(row,thumb_gen_setting,result_image_width,result_image_hei
         font_file = template_element["fontFile"]
 
         grid_size = template_element["gridSize"]
+
+        isdrawborder = template_element["isdrawborder"]
+        bordersize = template_element["bordersize"]
+        bordercolor = template_element["bordercolor"]       
         # Load the font
         # lang=cld3.get_language(row[text_type]).language
         lang=detector.detect(row[text_type]).language
         font = load_font(font_name,font_file, font_size, lang)
+        print(f'render text {row[text_type]}use font :{font}')
         if row[text_type]:
             if render_style== 'cord':
                 # Render using topLeft as the starting point
-                draw_multiline_text(draw, row[text_type], (x, y), font, max_width, font_size,font_color)
+                draw_multiline_text(draw, row[text_type], (x, y), font, max_width, font_size,font_color,isdrawborder,bordersize,bordercolor)
             else:
                 # Render using nearestGridSerialNumber and gridSize to calculate coordinates
                 corner_x, corner_y = convert_canvas_coord_to_corner(
                     nearest_grid_serial_number, result_image_width // grid_size, result_image_height // grid_size
                 )
-                draw_multiline_text(draw, row[text_type], (corner_x , corner_y), font, max_width, font_size,font_color)
+                draw_multiline_text(draw, row[text_type], (corner_x , corner_y), font, max_width, font_size,font_color,isdrawborder,bordersize,bordercolor)
         #save image to output folder with filename
     # Save the image to the output folder with the specified filename
     print('save dir',output_folder)
