@@ -2430,16 +2430,32 @@ def installView(frame,ttkframe,lang):
     l_lang = tk.Label(ttkframe, text=i18labels("chooseLang", locale=lang, module="g"))
     # l_lang.place(x=10, y=90)
     l_lang.grid(row = 3, column = 0, columnspan = 3, padx=14, pady=15)    
+    try:
+        settings['locale']
+        print(f"cache locale exist {settings['locale']}")
+        locale_tkstudio.set(settings['locale'])
+    except:
+        print('keep the default locale placeholder')
+        # locale_tkstudio_box.set("Select From Langs")
+        locale_tkstudio.set("Select From Langs")    
     def display_selected_item_index(event): 
-        locale_tkstudio_box.set(locale_tkstudio.get())
-
-
+        try:
+            settings['locale']
+            print(f"cache locale exist {settings['locale']}")
+            locale_tkstudio.set(settings['locale'])
+        except:
+            print('keep the default locale')
+            # locale_tkstudio_box.set("Select From Langs")
+            locale_tkstudio.set("Select From Langs")
     def locale_tkstudioOptionCallBack(*args):
         print(locale_tkstudio.get())
         print(locale_tkstudio_box.current())
+        settings['locale']=locale_tkstudio.get()
+        print(f"save locale to cache { settings['locale']}")        
         changeDisplayLang(locale_tkstudio.get())
 
-    locale_tkstudio.set("Select From Langs")
+
+
     locale_tkstudio.trace('w', locale_tkstudioOptionCallBack)
 
 

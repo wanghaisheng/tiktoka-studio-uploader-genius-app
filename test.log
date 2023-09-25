@@ -829,3 +829,100 @@ Expecting value: line 29 column 18 (char 544)
 2023-09-25 17:06:15,110 - INFO - bg folder image list :['D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/videos/vertical/sp\\1-002.jpg', 'D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/videos/vertical/sp\\1-003.jpg']
 2023-09-25 17:06:15,110 - INFO - Random assign bg:D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-app/tests/videos/vertical/sp\1-002.jpg to  video:1
 2023-09-25 17:06:15,110 - INFO - validate bg folder passed
+2023-09-25 22:42:14,458 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 22:42:14,459 - INFO - TiktokaStudio GUI started
+2023-09-25 23:02:58,213 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:02:58,220 - INFO - TiktokaStudio GUI started
+2023-09-25 23:03:02,374 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:03:02,375 - INFO - TiktokaStudio GUI started
+2023-09-25 23:03:02,445 - INFO - switch lang to locale:zh
+2023-09-25 23:03:06,547 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:03:06,547 - INFO - TiktokaStudio GUI started
+2023-09-25 23:03:06,606 - INFO - switch lang to locale:en
+2023-09-25 23:03:47,396 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:03:47,409 - INFO - TiktokaStudio GUI started
+2023-09-25 23:03:51,222 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:03:51,222 - INFO - TiktokaStudio GUI started
+2023-09-25 23:03:51,281 - INFO - switch lang to locale:zh
+2023-09-25 23:03:52,641 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:03:52,641 - INFO - TiktokaStudio GUI started
+2023-09-25 23:03:52,702 - INFO - switch lang to locale:en
+2023-09-25 23:04:33,552 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:04:33,552 - INFO - TiktokaStudio GUI started
+2023-09-25 23:04:36,625 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:04:36,625 - INFO - TiktokaStudio GUI started
+2023-09-25 23:04:36,686 - INFO - switch lang to locale:en
+2023-09-25 23:04:37,838 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:04:37,838 - INFO - TiktokaStudio GUI started
+2023-09-25 23:04:37,910 - INFO - switch lang to locale:zh
+2023-09-25 23:06:01,857 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:06:01,857 - INFO - TiktokaStudio GUI started
+2023-09-25 23:06:04,265 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:06:04,265 - INFO - TiktokaStudio GUI started
+2023-09-25 23:06:04,325 - INFO - switch lang to locale:zh
+2023-09-25 23:06:08,128 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:06:08,128 - INFO - TiktokaStudio GUI started
+2023-09-25 23:06:08,189 - INFO - switch lang to locale:en
+2023-09-25 23:06:41,674 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:06:41,674 - INFO - TiktokaStudio GUI started
+2023-09-25 23:06:43,533 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:06:43,533 - INFO - TiktokaStudio GUI started
+2023-09-25 23:06:43,602 - INFO - switch lang to locale:zh
+2023-09-25 23:06:47,638 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:06:47,638 - INFO - TiktokaStudio GUI started
+2023-09-25 23:06:47,703 - INFO - switch lang to locale:en
+2023-09-25 23:06:51,398 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:06:51,398 - INFO - TiktokaStudio GUI started
+2023-09-25 23:06:51,466 - INFO - switch lang to locale:zh
+2023-09-25 23:07:21,638 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:07:21,646 - INFO - TiktokaStudio GUI started
+2023-09-25 23:07:24,201 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:07:24,201 - INFO - TiktokaStudio GUI started
+2023-09-25 23:07:24,273 - INFO - switch lang to locale:zh
+2023-09-25 23:07:28,037 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:07:28,038 - INFO - TiktokaStudio GUI started
+2023-09-25 23:07:28,099 - INFO - switch lang to locale:en
+2023-09-25 23:09:03,929 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:09:03,930 - INFO - TiktokaStudio GUI started
+2023-09-25 23:09:06,609 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:09:06,609 - INFO - TiktokaStudio GUI started
+2023-09-25 23:09:06,673 - INFO - switch lang to locale:zh
+2023-09-25 23:09:11,860 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:09:11,861 - INFO - TiktokaStudio GUI started
+2023-09-25 23:09:11,916 - INFO - switch lang to locale:en
+2023-09-25 23:09:18,075 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:09:18,075 - INFO - TiktokaStudio GUI started
+2023-09-25 23:09:18,139 - INFO - switch lang to locale:zh
+2023-09-25 23:09:41,963 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:09:41,970 - INFO - TiktokaStudio GUI started
+2023-09-25 23:09:44,838 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:09:44,838 - INFO - TiktokaStudio GUI started
+2023-09-25 23:09:44,905 - INFO - switch lang to locale:zh
+2023-09-25 23:09:46,461 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:09:46,461 - INFO - TiktokaStudio GUI started
+2023-09-25 23:09:46,516 - INFO - switch lang to locale:en
+2023-09-25 23:10:12,113 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:10:12,114 - INFO - TiktokaStudio GUI started
+2023-09-25 23:10:16,317 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:10:16,317 - INFO - TiktokaStudio GUI started
+2023-09-25 23:10:16,385 - INFO - switch lang to locale:en
+2023-09-25 23:10:17,662 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:10:17,663 - INFO - TiktokaStudio GUI started
+2023-09-25 23:10:17,734 - INFO - switch lang to locale:zh
+2023-09-25 23:10:19,260 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:10:19,260 - INFO - TiktokaStudio GUI started
+2023-09-25 23:10:19,316 - INFO - switch lang to locale:en
+2023-09-25 23:11:54,266 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:11:54,266 - INFO - TiktokaStudio GUI started
+2023-09-25 23:11:57,006 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:11:57,006 - INFO - TiktokaStudio GUI started
+2023-09-25 23:11:57,083 - INFO - switch lang to locale:zh
+2023-09-25 23:11:58,892 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:11:58,892 - INFO - TiktokaStudio GUI started
+2023-09-25 23:11:58,951 - INFO - switch lang to locale:en
+2023-09-25 23:12:01,723 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:12:01,723 - INFO - TiktokaStudio GUI started
+2023-09-25 23:12:01,801 - INFO - switch lang to locale:zh
+2023-09-25 23:12:03,602 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-25 23:12:03,602 - INFO - TiktokaStudio GUI started
+2023-09-25 23:12:03,673 - INFO - switch lang to locale:en
