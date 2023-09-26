@@ -58,3 +58,8 @@ Image file formats you can upload to YouTube include JPG (or JPEG), GIF (non ani
 
 
 
+1.导入图片文件后，自动读入width height画板数值
+2.可加载预置的各平台，横版竖版样例图片
+3.boundingbox画完以后弹出字体 大小 颜色确认框
+
+

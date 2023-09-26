@@ -1,7 +1,7 @@
 import pandas as pd
 import json
-from PIL import Image, ImageDraw, ImageFont,ImageColor
-import os,re
+from PIL import Image, ImageDraw, ImageFont,ImageColor,ImageFilter
+import os,re,itertools
 import sys
 from eld import LanguageDetector
 
@@ -43,7 +43,7 @@ def convert_canvas_coord_to_corner(canvas_coord, zone_width, zone_height):
     corner_y = zone_row * zone_height
     return corner_x, corner_y
 
-def draw_multiline_text(draw, text, start_coord, font, max_width, font_size, font_color,isdrawborder=False,bordersize=2,bordercolor="rgb(255,255,255)"):
+def draw_multiline_text(draw, text, start_coord, font, max_width, font_size, font_color,isdrawborder=False,bordersize=2,bordercolor="rgb(255,255,255)",isdrawshadow=False,shadowsize=2):
     lines = calculate_text_lines(text, font, max_width)
     print(f'lines cal:max_width is {max_width},{lines}')
 
@@ -58,8 +58,14 @@ def draw_multiline_text(draw, text, start_coord, font, max_width, font_size, fon
             draw.text((x-bordersize, y+bordersize), text, fill=bordercolor, font=font)
             draw.text((x+bordersize, y-bordersize), text, fill=bordercolor, font=font)
             draw.text((x-bordersize, y-bordersize), text, fill=bordercolor,  font=font)
-
+        if isdrawshadow==True:
+            
+            shadow = draw.filter(ImageFilter.BLUR)
+            draw.paste(shadow, (x+shadowsize, y+shadowsize))
    
+# 添加一个3-5宽度的灰色阴影。
+            for i, j in itertools.product((-3, 0, -3), (-5, 0, 5)):
+                draw.text((x + i, y + j), text, font=font, fill="gray")
         x, y = start_coord[0], y + font.getsize(line)[1]
     # https://github.com/ultralytics/yolov5/issues/11838
 def clean_column_name(column_name):

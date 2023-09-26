@@ -11,3 +11,4 @@ jsons
 lastversion
 jsonschema
 eld
+pystray

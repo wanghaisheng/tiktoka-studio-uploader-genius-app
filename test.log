@@ -1026,3 +1026,153 @@ Expecting value: line 29 column 18 (char 544)
 2023-09-26 01:59:17,607 - DEBUG - Importing XbmImagePlugin
 2023-09-26 01:59:17,608 - DEBUG - Importing XpmImagePlugin
 2023-09-26 01:59:17,609 - DEBUG - Importing XVThumbImagePlugin
+2023-09-26 09:16:40,716 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 09:16:40,716 - INFO - TiktokaStudio GUI started
+2023-09-26 09:57:43,174 - ERROR - An error occurred when calling message handler
+Traceback (most recent call last):
+  File "D:\Programs\anaconda\lib\site-packages\pystray\_win32.py", line 412, in _dispatcher
+    return int(icon._message_handlers.get(
+  File "D:\Programs\anaconda\lib\site-packages\pystray\_win32.py", line 224, in _on_notify
+    descriptors[index - 1](self)
+  File "D:\Programs\anaconda\lib\site-packages\pystray\_base.py", line 328, in inner
+    callback(self)
+  File "D:\Programs\anaconda\lib\site-packages\pystray\_base.py", line 453, in __call__
+    return self._action(icon, self)
+  File "D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius\main.py", line 5141, in quit_window
+  File "D:\Programs\anaconda\lib\tkinter\__init__.py", line 2311, in destroy
+    for c in list(self.children.values()): c.destroy()
+  File "D:\Programs\anaconda\lib\tkinter\__init__.py", line 2579, in destroy
+    for c in list(self.children.values()): c.destroy()
+  File "D:\Programs\anaconda\lib\tkinter\__init__.py", line 2579, in destroy
+    for c in list(self.children.values()): c.destroy()
+  File "D:\Programs\anaconda\lib\tkinter\__init__.py", line 2579, in destroy
+    for c in list(self.children.values()): c.destroy()
+  [Previous line repeated 2 more times]
+  File "D:\Programs\anaconda\lib\tkinter\__init__.py", line 2580, in destroy
+    self.tk.call('destroy', self._w)
+RuntimeError: main thread is not in main loop
+2023-09-26 09:58:51,132 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 09:58:51,132 - INFO - TiktokaStudio GUI started
+2023-09-26 10:05:56,923 - ERROR - An error occurred when calling message handler
+Traceback (most recent call last):
+  File "D:\Programs\anaconda\lib\site-packages\pystray\_win32.py", line 412, in _dispatcher
+    return int(icon._message_handlers.get(
+  File "D:\Programs\anaconda\lib\site-packages\pystray\_win32.py", line 224, in _on_notify
+    descriptors[index - 1](self)
+  File "D:\Programs\anaconda\lib\site-packages\pystray\_base.py", line 328, in inner
+    callback(self)
+  File "D:\Programs\anaconda\lib\site-packages\pystray\_base.py", line 453, in __call__
+    return self._action(icon, self)
+  File "D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius\main.py", line 5246, in quit_window
+  File "D:\Programs\anaconda\lib\tkinter\__init__.py", line 2311, in destroy
+    for c in list(self.children.values()): c.destroy()
+  File "D:\Programs\anaconda\lib\tkinter\__init__.py", line 2579, in destroy
+    for c in list(self.children.values()): c.destroy()
+  File "D:\Programs\anaconda\lib\tkinter\__init__.py", line 2579, in destroy
+    for c in list(self.children.values()): c.destroy()
+  File "D:\Programs\anaconda\lib\tkinter\__init__.py", line 2579, in destroy
+    for c in list(self.children.values()): c.destroy()
+  [Previous line repeated 2 more times]
+  File "D:\Programs\anaconda\lib\tkinter\__init__.py", line 2580, in destroy
+    self.tk.call('destroy', self._w)
+RuntimeError: main thread is not in main loop
+2023-09-26 10:06:06,759 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 10:06:06,759 - INFO - TiktokaStudio GUI started
+2023-09-26 10:09:22,093 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 10:09:22,093 - INFO - TiktokaStudio GUI started
+2023-09-26 10:13:47,562 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 10:13:47,562 - INFO - TiktokaStudio GUI started
+2023-09-26 10:13:49,066 - ERROR - this query >>> seems went wrong:
+SELECT DISTINCT platform FROM accounts,full error message:
+'OptionEngine' object has no attribute 'execute'
+2023-09-26 10:15:11,951 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 10:15:11,952 - INFO - TiktokaStudio GUI started
+2023-09-26 10:16:49,547 - ERROR - this query >>> seems went wrong:
+SELECT DISTINCT platform FROM accounts,full error message:
+'OptionEngine' object has no attribute 'execute'
+2023-09-26 10:17:44,877 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 10:17:44,878 - INFO - TiktokaStudio GUI started
+2023-09-26 10:17:46,477 - ERROR - this query >>> seems went wrong:
+SELECT DISTINCT platform FROM accounts,full error message:
+'OptionEngine' object has no attribute 'execute'
+2023-09-26 10:18:09,042 - ERROR - this query >>> seems went wrong:
+SELECT DISTINCT platform FROM accounts,full error message:
+'OptionEngine' object has no attribute 'execute'
+2023-09-26 10:19:41,474 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 10:19:41,474 - INFO - TiktokaStudio GUI started
+2023-09-26 10:19:42,759 - ERROR - this query >>> seems went wrong:
+SELECT DISTINCT platform FROM accounts,full error message:
+'OptionEngine' object has no attribute 'execute'
+2023-09-26 10:21:07,950 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 10:21:07,950 - INFO - TiktokaStudio GUI started
+2023-09-26 10:21:26,606 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 10:21:26,606 - INFO - TiktokaStudio GUI started
+2023-09-26 10:21:27,997 - ERROR - this query >>> seems went wrong:
+SELECT DISTINCT platform FROM accounts,full error message:
+'OptionEngine' object has no attribute 'execute'
+2023-09-26 10:22:05,153 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 10:22:05,153 - INFO - TiktokaStudio GUI started
+2023-09-26 10:22:33,724 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 10:22:33,724 - INFO - TiktokaStudio GUI started
+2023-09-26 10:22:36,036 - ERROR - this query >>> seems went wrong:
+SELECT DISTINCT platform FROM accounts,full error message:
+'OptionEngine' object has no attribute 'execute'
+2023-09-26 10:29:27,800 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 10:29:27,801 - INFO - TiktokaStudio GUI started
+2023-09-26 10:40:22,757 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 10:40:22,758 - INFO - TiktokaStudio GUI started
+2023-09-26 10:42:01,238 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 10:42:01,238 - INFO - TiktokaStudio GUI started
+2023-09-26 10:43:04,810 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 10:43:04,810 - INFO - TiktokaStudio GUI started
+2023-09-26 10:43:07,512 - ERROR - this query >>> seems went wrong:
+SELECT DISTINCT platform FROM accounts,full error message:
+'OptionEngine' object has no attribute 'execute'
+2023-09-26 10:44:56,197 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 10:44:56,197 - INFO - TiktokaStudio GUI started
+2023-09-26 10:44:59,583 - ERROR - this query >>> seems went wrong:
+SELECT DISTINCT platform FROM accounts,full error message:
+'OptionEngine' object has no attribute 'execute'
+2023-09-26 10:51:00,373 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 10:51:00,373 - INFO - TiktokaStudio GUI started
+2023-09-26 10:51:03,789 - ERROR - this query >>> seems went wrong:
+SELECT DISTINCT platform FROM accounts,full error message:
+'OptionEngine' object has no attribute 'execute'
+2023-09-26 11:01:40,170 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 11:01:40,170 - INFO - TiktokaStudio GUI started
+2023-09-26 11:02:11,699 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 11:02:11,699 - INFO - TiktokaStudio GUI started
+2023-09-26 11:02:14,166 - ERROR - this query >>> seems went wrong:
+SELECT DISTINCT platform FROM accounts,full error message:
+'OptionEngine' object has no attribute 'execute'
+2023-09-26 11:04:07,443 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 11:04:07,443 - INFO - TiktokaStudio GUI started
+2023-09-26 11:04:32,353 - ERROR - this query >>> seems went wrong:
+SELECT DISTINCT platform FROM accounts,full error message:
+'OptionEngine' object has no attribute 'execute'
+2023-09-26 11:05:38,741 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 11:05:38,741 - INFO - TiktokaStudio GUI started
+2023-09-26 11:05:47,934 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 11:05:47,934 - INFO - TiktokaStudio GUI started
+2023-09-26 11:05:52,532 - ERROR - this query >>> seems went wrong:
+SELECT DISTINCT platform FROM accounts,full error message:
+'OptionEngine' object has no attribute 'execute'
+2023-09-26 11:20:06,821 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 11:20:06,822 - INFO - TiktokaStudio GUI started
+2023-09-26 11:21:38,981 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 11:21:38,981 - INFO - TiktokaStudio GUI started
+2023-09-26 11:21:48,036 - ERROR - this query >>> seems went wrong:
+SELECT DISTINCT platform FROM accounts,full error message:
+'OptionEngine' object has no attribute 'execute'
+2023-09-26 11:23:04,217 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 11:23:04,217 - INFO - TiktokaStudio GUI started
+2023-09-26 11:25:15,977 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 11:25:15,977 - INFO - TiktokaStudio GUI started
+2023-09-26 11:32:15,281 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 11:32:15,281 - INFO - TiktokaStudio GUI started
+2023-09-26 11:32:23,283 - ERROR - this query >>> seems went wrong:
+SELECT DISTINCT platform FROM accounts,full error message:
+'OptionEngine' object has no attribute 'execute'
+2023-09-26 11:33:09,638 - ERROR - this query >>> seems went wrong:
+SELECT DISTINCT platform FROM accounts,full error message:
+'OptionEngine' object has no attribute 'execute'

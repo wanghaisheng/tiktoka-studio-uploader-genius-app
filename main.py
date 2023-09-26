@@ -1368,6 +1368,184 @@ def proxyaddView(newWindow):
             lbl15.after(500,lbl15.destroy)
 
     langlist.bind('<<ListboxSelect>>',CurSelet)    
+
+
+def chooseAccountsView(newWindow):
+    newWindow = tk.Toplevel(newWindow)
+    newWindow.geometry(window_size)
+
+    
+    def on_platform_selected(event):
+        selected_platform = platform_var.get()
+
+        # Clear the current selection in the account dropdown
+        # account_var.set("")
+        # account_var.set("Select Accounts:")        
+
+        if selected_platform:
+            # Connect to the SQLite database
+
+            # Execute a query to retrieve the dynamic platform list
+            query="SELECT DISTINCT platform FROM accounts"
+            engine=prod_engine
+            platform_rows = query2df(engine,query,logger)
+
+
+            # Extract platform names and set them as options in the platform dropdown
+            if platform_rows is None:
+                platform_combo["values"]=[]
+            else:
+                platform_names = [row[0] for row in platform_rows]
+                platform_combo["values"] = platform_names
+
+                # Execute a query to retrieve accounts based on the selected platform
+                query=f"SELECT account_name FROM your_table WHERE platform = {selected_platform}"
+                if selected_platform in platform_names:
+                    engine=prod_engine
+                    account_rows = query2df(engine,query,logger)
+                    # Extract account names and set them as options in the account dropdown
+                    if platform_rows is None:
+                        langlist.delete(0,tk.END)
+                    else:                
+                        account_names = [row[0] for row in account_rows]
+                        logger.info(f'we found {len(account_names)} record matching ')
+
+                        langlist.delete(0,tk.END)
+                        i=0
+                        for row in account_names:
+
+                            langlist.insert(tk.END, row)
+                            langlist.itemconfig(int(i), bg = "lime")                        
+    account_var = tk.StringVar()
+
+
+    lbl16 = tk.Label(newWindow, text='select user')
+    lbl16.grid(row=1,column=0, sticky=tk.W)
+    txt16 = tk.Entry(newWindow,textvariable=account_var)
+    txt16.insert(0,'')
+    txt16.grid(row=1,column=1, sticky=tk.W)
+
+
+    # Create a label for the platform dropdown
+    platform_label = ttk.Label(newWindow, text="Select Platform:")
+    platform_label.grid(row=2, column=0, padx=10, pady=10, sticky=tk.W)
+    # Create a Combobox for the platform selection
+    platform_var = tk.StringVar()
+    platform_var.set("choose one:")
+    platform_combo = ttk.Combobox(newWindow, textvariable=platform_var)
+    platform_combo.grid(row=2, column=1, padx=10, pady=10, sticky=tk.W)
+
+    # Bind the platform selection event to the on_platform_selected function
+    platform_combo.bind("<<ComboboxSelected>>", on_platform_selected)
+
+
+    # Create a label for the account dropdown
+    account_label = ttk.Label(newWindow, text="Select Account(one or many):")
+    account_label.grid(row=3, column=0, padx=10, pady=10, sticky=tk.W)
+
+
+    # Initialize the platform dropdown by calling the event handler
+    on_platform_selected(None)
+    
+
+    btn6= tk.Button(newWindow, text="save selected", padx = 10, pady = 10,command = lambda: threading.Thread(target=setEntry(account_var.get(),choosedAccounts)).start())     
+    btn6.grid(row=5,column=1, sticky=tk.W)
+    # Create a frame for the canvas with non-zero row&column weights
+    frame_canvas = tk.Frame(newWindow)
+    frame_canvas.grid(row=4, column=0, pady=(5, 0), sticky='nw')
+    frame_canvas.grid_rowconfigure(0, weight=1)
+    frame_canvas.grid_columnconfigure(0, weight=1)
+    # Set grid_propagate to False to allow 5-by-5 buttons resizing later
+    frame_canvas.grid_propagate(False)     
+
+    # for scrolling vertically
+    yscrollbar = tk.Scrollbar(frame_canvas)
+    yscrollbar.pack(side = tk.RIGHT, fill = 'both')
+    
+    langlist = tk.Listbox(frame_canvas, selectmode = "multiple",
+                yscrollcommand = yscrollbar.set)
+    langlist.pack(padx = 10, pady = 10,
+            expand = tk.YES, fill = "both")
+
+
+    def add_selected_accounts(event):
+        listbox = event.widget
+        # values = [listbox.get(idx) for idx in listbox.curselection()]
+        selection=listbox.curselection()
+        # picked = listbox.get(selection[1])
+        print(selection,list(selection),listbox.get(0))
+        tmp=''
+        for i in list(selection):
+            tmp=tmp+listbox.get(i)+';'
+
+
+        print('selected accounts',tmp)
+        print('previous selected accounts',account_var.get())
+        print('update selected accounts',account_var.get())
+        if len(list(selection))==0:
+            lbl15 = tk.Label(newWindow, text='you have not selected  accounts at all.choose one or more')
+            lbl15.grid(row=6,column=0, sticky=tk.W)
+            lbl15.after(5*1000,lbl15.destroy)        
+        
+        elif tmp==account_var.get():
+            lbl15 = tk.Label(newWindow, text='you have not selected new accounts at all')
+            lbl15.grid(row=6,column=0, sticky=tk.W)
+            lbl15.after(5*1000,lbl15.destroy)        
+        
+        else:
+            for item in selection:
+                if item in list(account_var.get().split(',')):
+                    lbl15 = tk.Label(newWindow, text=f'this account {item} added before')
+                    lbl15.grid(row=6,column=0, sticky=tk.W)
+                    lbl15.after(5*1000,lbl15.destroy)   
+                else:
+                    account_var.set(account_var.get()+','+item)
+
+    langlist.bind('<<ListboxSelect>>',add_selected_accounts)    
+
+def filterUserPlatform(engine=prod_engine,platform=None,username=None,newWindow=None):
+
+    availableProxies=[]
+    now_conditions='platform:'+platform+';username:'+username
+
+
+    if username is not None and username !='' and 'input' not in username:
+    # or platform is not None and platform !='' :
+        query = f"SELECT * FROM accounts where"
+        clause=[]
+        if username is not None and username !='':
+            clause.append(f" username regexp '{username}'")
+        if platform is not None and platform !='':
+            clause.append(f" platform regexp '{platform}'")
+
+
+        query=query+' AND '.join(clause)+" ORDER by inserted_at DESC"
+
+    else:
+        query = f"SELECT * FROM accounts ORDER by inserted_at DESC"
+
+
+    try:
+        logger.info(f'start a new query:\n {query}')
+        
+        table_name='accounts'
+        tableexist_query_sqlite=f"SELECT name FROM sqlite_master WHERE type='table' AND name='{table_name}'"
+
+        tableexist=query2df(engine,tableexist_query_sqlite,logger)
+        if  tableexist is None and newWindow is not None:
+            hints='there is no  records for query.add accounts before then try again'
+                
+            lbl15 = tk.Label(newWindow,bg="lightyellow", text=hints)
+            lbl15.grid(row=6,column=2, sticky=tk.W)
+            lbl15.after(2000,lbl15.destroy)                
+        else:
+            platform_rows_query=f"SELECT DISTINCT platform FROM {table_name}"
+            platform_rows=query2df(engine,platform_rows_query,logger)
+            platform_names = [row[0] for row in platform_rows]
+            db_rows = query2df(engine,query,logger)
+    except Exception as e:
+        print(f'sql run exception :{e}')
+                        
 def createTaskMetas(left,right):
     newWindow = tk.Toplevel(right)
     newWindow.geometry(window_size)
@@ -1388,11 +1566,10 @@ def createTaskMetas(left,right):
     
  
     
-    global city_user,country_user,proxyTags_user,proxyStatus_user,proxy_str
+    global city_user,country_user,uploadsettingid,proxyStatus_user,choosedAccounts
     city_user = tk.StringVar()
-    country_user = tk.StringVar()
-    proxyTags_user = tk.StringVar()
-    proxyStatus_user = tk.BooleanVar()
+    uploadsettingid = tk.StringVar()
+    choosedAccounts = tk.StringVar()
     global latest_proxy_conditions_user
     latest_proxy_conditions_user = tk.StringVar()
     lbl15 = tk.Label(newWindow, text='load video metas from file')
@@ -1406,9 +1583,8 @@ def createTaskMetas(left,right):
     # txt15.pack(side='left')
     txt15.grid(row=1,column=1, sticky=tk.W)
 
-
-    lbl15 = tk.Label(newWindow, text='Start from video folder')
-    lbl15.grid(row=1,column=3, sticky=tk.W)
+    button1 = ttk.Button(newWindow, text="Start from video folder", command=lambda: (newWindow.withdraw(),tab_control.select(4)))
+    button1.grid(row=1,column=3, sticky=tk.W)
 
     uploadStrategy = tk.StringVar()
     uploadStrategy.set("start from template")
@@ -1422,10 +1598,25 @@ def createTaskMetas(left,right):
     
     lb17 = tk.Label(newWindow, text='load upload setting')
     lb17.grid(row=3,column=0, sticky=tk.W)
-    txt17 = tk.Entry(newWindow,textvariable=proxyTags_user)
+    txt17 = tk.Entry(newWindow,textvariable=uploadsettingid)
     txt17.insert(0,'')
     txt17.grid(row=3,column=1, sticky=tk.W)
 
+
+
+
+
+    
+    lb17 = tk.Label(newWindow, text='choose accounts')
+    lb17.grid(row=5,column=0, sticky=tk.W)
+    txt17 = tk.Entry(newWindow,textvariable=choosedAccounts)
+    txt17.insert(0,'')
+    txt17.grid(row=5,column=1, sticky=tk.W)
+
+
+
+    button1 = ttk.Button(newWindow, text="choose accounts", command=lambda:chooseAccountsView(newWindow))
+    button1.grid(row=5,column=4, sticky=tk.W)
     def uploadStrategyCallBack(*args):
         print(uploadStrategy.get())
         print(uploadStrategybox.current())
@@ -1436,17 +1627,12 @@ def createTaskMetas(left,right):
 
 
 
-            lbl16 = tk.Label(newWindow, text='select user')
-            lbl16.grid(row=5,column=0, sticky=tk.W)
-            txt16 = tk.Entry(newWindow,textvariable=country_user,width=int(0.01*width))
-            txt16.insert(0,'')
-            txt16.grid(row=5,column=1, sticky=tk.W)
 
-            lbl16 = tk.Label(newWindow, text='proxy')
-            lbl16.grid(row=6,column=0, sticky=tk.W)
-            txt16 = tk.Entry(newWindow,textvariable=country_user,width=int(0.01*width))
-            txt16.insert(0,'')
-            txt16.grid(row=6,column=1, sticky=tk.W)
+            # lbl16 = tk.Label(newWindow, text='proxy')
+            # lbl16.grid(row=6,column=0, sticky=tk.W)
+            # txt16 = tk.Entry(newWindow,textvariable=country_user,width=int(0.01*width))
+            # txt16.insert(0,'')
+            # txt16.grid(row=6,column=1, sticky=tk.W)
 
 
             lb18 = tk.Label(newWindow, text='Runs on.')
@@ -1487,18 +1673,18 @@ def createTaskMetas(left,right):
 
     uploadStrategy.trace('w', uploadStrategyCallBack)
 
-    uploadPlatform = tk.StringVar()
-    uploadPlatform.set("choose target platform")
+    # uploadPlatform = tk.StringVar()
+    # uploadPlatform.set("choose target platform")
 
 
-    uploadPlatformbox = ttk.Combobox(newWindow, textvariable=uploadPlatform)
-    uploadPlatformbox.config(values = ('tiktok', 'youtube','xhs'))
-    uploadPlatformbox.grid(row = 3, column = 3, padx=14, pady=15)    
-    def uploadPlatformboxCallBack(*args):
-        print(uploadPlatform.get())
-        print(uploadPlatformbox.current())
+    # uploadPlatformbox = ttk.Combobox(newWindow, textvariable=uploadPlatform)
+    # uploadPlatformbox.config(values = ('tiktok', 'youtube','xhs'))
+    # uploadPlatformbox.grid(row = 3, column = 3, padx=14, pady=15)    
+    # def uploadPlatformboxCallBack(*args):
+    #     print(uploadPlatform.get())
+    #     print(uploadPlatformbox.current())
 
-    uploadPlatform.trace('w', uploadPlatformboxCallBack)
+    # uploadPlatform.trace('w', uploadPlatformboxCallBack)
 
     
 def genVideoMetas():
@@ -3575,9 +3761,8 @@ def printValues(choices):
     for name, var in choices.items():
         print("%s: %s" % (name, var.get()))
 
-def setEntry(str):
-    proxy_option_account.set(str) 
-    print('2222',proxy_option_account.get())
+def setEntry(str,var):
+    var.set(str) 
     
 def chooseProxies(ttkframe,username):
     newWindow = tk.Toplevel(ttkframe)
@@ -3829,7 +4014,7 @@ def  queryAccounts(newWindow,tree,engine,logger,username,platform,latest_conditi
 
     
     if set(list(latest_conditions_value))==set(now_conditions):
-        logger.info('you proxy filter conditions without any change,keep the same')
+        logger.info('you account filter conditions without any change,keep the same')
 
     else:    
         if username is not None and username !='' and 'input' not in username:
@@ -4832,7 +5017,7 @@ def metaView1(frame,ttkframe,lang):
     b_hiddenwatermark.place(x=500,y=int(height-250))
 
 def render(root,window,log_frame,lang):
-    global doc_frame,install_frame,thumb_frame,video_frame,proxy_frame,account_frame,upload_frame,meta_frame
+    global doc_frame,install_frame,thumb_frame,video_frame,proxy_frame,account_frame,upload_frame,meta_frame,tab_control
 
     tab_control = ttk.Notebook(window)
     
@@ -5155,7 +5340,7 @@ if __name__ == '__main__':
     root = tk.Tk()
     start('en')
 
-    root.protocol('WM_DELETE_WINDOW', withdraw_window)
+    # root.protocol('WM_DELETE_WINDOW', withdraw_window)
     
     root.mainloop()
 
