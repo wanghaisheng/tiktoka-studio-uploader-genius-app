@@ -4,6 +4,18 @@ from .UploadSession import *
 import os
 import pandas as pd
 
+
+import bcrypt
+
+# Define a base for declarative class definitions
+Base = declarative_base()
+
+# Define a User table
+class User(Base):
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True)
+    username = Column(String(50), unique=True, nullable=False)
+    password_hash = Column(String(64), nullable=False)
 def rmEngine(name):
     if os.path.exists(os.getcwd()+os.sep+f"{name}.sqlite3"):
         os.remove(os.getcwd()+os.sep+f"{name}.sqlite3")    
@@ -60,6 +72,40 @@ def  query2df(engine,query,logger):
     except Exception as e:
         logger.error(f"this query >>> seems went wrong:\n{query},full error message:\n{e}")
         return None
+
+def hash_password(password):
+    # Generate a salt and hash the password
+    salt = bcrypt.gensalt()
+    hashed = bcrypt.hashpw(password.encode(), salt)
+    return hashed
+
+def register_user(session, username, password, logger):
+    # Hash the password
+    password_hash = hash_password(password)
+
+    # Create a new user record
+    user = User(username=username, password_hash=password_hash)
+
+    try:
+        session.add(user)
+        session.commit()
+        logger.info(f"User {username} registered successfully.")
+        return True
+    except Exception as e:
+        session.rollback()
+        logger.error(f"User registration failed: {e}")
+        return False
+
+def login_user(session, username, password, logger):
+    user = session.query(User).filter_by(username=username).first()
+
+    if user and bcrypt.checkpw(password.encode(), user.password_hash.encode()):
+        logger.info(f"User {username} logged in successfully.")
+        return True
+    else:
+        logger.error("Login failed. Invalid username or password.")
+        return False
+
 
 dbsession_test=createSessonMaker('test')
 dbsession_pro=createSessonMaker('prod')

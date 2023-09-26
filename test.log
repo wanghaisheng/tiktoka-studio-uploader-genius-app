@@ -1810,3 +1810,65 @@ SELECT account_name FROM your_table WHERE platform = youtube,full error message:
 (sqlite3.OperationalError) no such table: your_table
 [SQL: SELECT account_name FROM your_table WHERE platform = youtube]
 (Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-26 23:19:34,856 - ERROR - User registration failed: 'str' object has no attribute 'connect'
+2023-09-26 23:21:13,718 - ERROR - User registration failed: 'str' object has no attribute 'connect'
+2023-09-26 23:23:20,885 - ERROR - User registration failed: 'str' object has no attribute 'connect'
+2023-09-26 23:24:51,802 - ERROR - User registration failed: 'str' object has no attribute 'connect'
+2023-09-26 23:24:53,994 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 23:24:53,994 - INFO - TiktokaStudio GUI started
+2023-09-26 23:24:54,662 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 23:24:54,662 - INFO - TiktokaStudio GUI started
+2023-09-26 23:26:57,778 - ERROR - User registration failed: 'str' object has no attribute 'connect'
+2023-09-26 23:26:59,625 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 23:26:59,625 - INFO - TiktokaStudio GUI started
+2023-09-26 23:26:59,947 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 23:26:59,947 - INFO - TiktokaStudio GUI started
+2023-09-26 23:28:38,966 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 23:28:38,977 - INFO - TiktokaStudio GUI started
+2023-09-26 23:28:39,314 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 23:28:39,314 - INFO - TiktokaStudio GUI started
+2023-09-26 23:29:08,718 - ERROR - User registration failed: 'str' object has no attribute 'connect'
+2023-09-26 23:29:10,621 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 23:29:10,621 - INFO - TiktokaStudio GUI started
+2023-09-26 23:29:10,935 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 23:29:10,936 - INFO - TiktokaStudio GUI started
+2023-09-26 23:30:30,964 - ERROR - User registration failed: 'str' object has no attribute 'connect'
+2023-09-26 23:30:32,746 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 23:30:32,747 - INFO - TiktokaStudio GUI started
+2023-09-26 23:30:33,080 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 23:30:33,080 - INFO - TiktokaStudio GUI started
+2023-09-26 23:32:24,089 - ERROR - User registration failed: 'str' object has no attribute 'connect'
+2023-09-26 23:32:25,986 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 23:32:25,986 - INFO - TiktokaStudio GUI started
+2023-09-26 23:32:26,272 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 23:32:26,273 - INFO - TiktokaStudio GUI started
+2023-09-26 23:33:56,672 - ERROR - User registration failed: 'str' object has no attribute 'connect'
+2023-09-26 23:33:58,591 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 23:33:58,591 - INFO - TiktokaStudio GUI started
+2023-09-26 23:33:58,919 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 23:33:58,920 - INFO - TiktokaStudio GUI started
+2023-09-26 23:35:31,319 - ERROR - User registration failed: 'str' object has no attribute 'connect'
+2023-09-26 23:35:34,624 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 23:35:34,624 - INFO - TiktokaStudio GUI started
+2023-09-26 23:35:34,910 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 23:35:34,910 - INFO - TiktokaStudio GUI started
+2023-09-26 23:36:38,987 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 23:36:38,987 - INFO - TiktokaStudio GUI started
+2023-09-26 23:36:39,329 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 23:36:39,329 - INFO - TiktokaStudio GUI started
+2023-09-26 23:37:12,723 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 23:37:12,724 - INFO - TiktokaStudio GUI started
+2023-09-26 23:37:13,028 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 23:37:13,029 - INFO - TiktokaStudio GUI started
+2023-09-26 23:37:55,057 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 23:37:55,058 - INFO - TiktokaStudio GUI started
+2023-09-26 23:37:55,363 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 23:37:55,364 - INFO - TiktokaStudio GUI started
+2023-09-26 23:38:22,622 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 23:38:22,622 - INFO - TiktokaStudio GUI started
+2023-09-26 23:38:22,952 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 23:38:22,953 - INFO - TiktokaStudio GUI started
+2023-09-26 23:39:09,561 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 23:39:09,561 - INFO - TiktokaStudio GUI started
+2023-09-26 23:39:09,870 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 23:39:09,870 - INFO - TiktokaStudio GUI started

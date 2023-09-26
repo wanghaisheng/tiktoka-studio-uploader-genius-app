@@ -5023,14 +5023,14 @@ def hide_log_frame():
     log_frame.grid_forget()
 
 def show_log_frame():
-    log_frame.pack()
+    log_frame.grid(row=1, column=0, sticky="nsew")
 
 def on_tab_change(event):
     selected_tab = tab_control.index(tab_control.select())
     if selected_tab == 11:  # Assuming you want to hide the log frame when the first tab is selected
         hide_log_frame()
-    # else:
-    #     show_log_frame()
+    else:
+        show_log_frame()
 
 def render(root,window,log_frame,lang):
     global doc_frame,install_frame,thumb_frame,video_frame,proxy_frame,account_frame,upload_frame,meta_frame,tab_control
@@ -5301,7 +5301,7 @@ def render(root,window,log_frame,lang):
     root.config(menu=menubar)
     # return langchoosen.get()
 
-def start(lang):
+def start(lang,root=None):
 
     # load_setting()
     global ROOT_DIR
@@ -5309,23 +5309,27 @@ def start(lang):
         os.path.abspath(__file__)
     )
 
-    global root,paned_window,log_frame,mainwindow,text_handler
+    global paned_window,log_frame,mainwindow,text_handler
 
     root.geometry(window_size)
     # root.resizable(width=True, height=True)
     root.iconbitmap("assets/icon.ico")
     root.title(settings[lang]['title'])        
+
     # Create a PanedWindow widget (vertical)
     paned_window = tk.PanedWindow(root, orient=tk.VERTICAL)
-    paned_window.pack(expand=True, fill="both")
+    # paned_window.pack(expand=True, fill="both")
+    paned_window.grid(row=0, column=0, sticky="nsew")
 
-    # Configure weights for mainwindow and log_frame
-    paned_window.grid_rowconfigure(0, weight=5)
+    # # Configure weights for mainwindow and log_frame
+    paned_window.grid_rowconfigure(0, weight=3)
     paned_window.grid_rowconfigure(1, weight=1)
 
     # Create the frame for the notebook
     mainwindow = ttk.Frame(paned_window)
     paned_window.add(mainwindow)
+    mainwindow.grid(row=0, column=0, sticky="nsew")
+
     mainwindow.grid_rowconfigure(0, weight=1)
     mainwindow.grid_columnconfigure(0, weight=1)
 
@@ -5335,6 +5339,7 @@ def start(lang):
 
     log_frame =tk.Frame(paned_window)
     paned_window.add(log_frame)
+    log_frame.grid(row=1, column=0, sticky="nsew")
 
     log_frame.grid_rowconfigure(0, weight=1)
     log_frame.grid_columnconfigure(0, weight=1)
@@ -5413,7 +5418,7 @@ def withdraw_window():
 if __name__ == '__main__':
     global root
     root = tk.Tk()
-    start('en')
+    start('en',root)
 
     # root.protocol('WM_DELETE_WINDOW', withdraw_window)
     

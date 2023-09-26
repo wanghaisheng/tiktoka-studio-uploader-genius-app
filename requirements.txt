@@ -12,3 +12,4 @@ lastversion
 jsonschema
 eld
 pystray
+bcrypt
