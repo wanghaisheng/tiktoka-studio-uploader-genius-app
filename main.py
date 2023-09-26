@@ -428,7 +428,13 @@ class ConsoleUi:
 
 
         # Bind right-click event to show context menu
-        self.scrolled_text.bind("<Button-3>", self.show_context_menu)
+        MAC_OS = False
+        if sys.platform == 'darwin':
+            MAC_OS = True
+        if MAC_OS:
+            self.scrolled_text.bind('<Button-2>', self.show_context_menu)
+        else:
+            self.scrolled_text.bind('<Button-3>', self.show_context_menu)        
 
         self.context_menu = tk.Menu(root, tearoff=0)
         self.context_menu.add_command(label="Clear All Text", command=self.clear_text)
@@ -788,7 +794,7 @@ def select_profile_folder():
     except:
         print('please choose a valid profile folder')
 
-def select_thumbView_video_folder(folder_variable):
+def select_tabview_video_folder(folder_variable,cache_var):
     global thumbView_video_folder_path
     try:
         thumbView_video_folder_path = filedialog.askdirectory(
@@ -796,7 +802,7 @@ def select_thumbView_video_folder(folder_variable):
         if os.path.exists(thumbView_video_folder_path):
             print("You chose %s" % thumbView_video_folder_path)
             folder_variable.set(thumbView_video_folder_path)
-            ultra['thumbView_video_folder']=thumbView_video_folder_path         
+            ultra[cache_var]=thumbView_video_folder_path         
             print("You chose %s" % folder_variable.get())
 
         else:
@@ -2164,7 +2170,7 @@ def thumbView(left,right,lang):
     thumbView_video_folder.trace('w', e_video_folderCallBack)
 
     
-    b_video_folder=tk.Button(left,text="Select",command=lambda: threading.Thread(target=select_thumbView_video_folder(thumbView_video_folder)).start() )
+    b_video_folder=tk.Button(left,text="Select",command=lambda: threading.Thread(target=select_tabview_video_folder(thumbView_video_folder,'thumbView_video_folder')).start() )
     b_video_folder.grid(row = 0, column = 2, sticky='w', padx=14, pady=15)       
 
     b_open_video_folder=tk.Button(left,text="open local",command=lambda: threading.Thread(target=openLocal(thumbView_video_folder.get())).start() )
@@ -2334,7 +2340,7 @@ def render_video_folder_check_results(frame,right_frame,folder,isThumbView=True,
         b_gen_thumb.grid(row = 7, column = 4,sticky='nesw')    
 
 
-
+    if isDesView==True and isScheduleView==True and isTagsView==True and isThumbView==True:
         lb_video_meta_pairs_counts = tk.Label(frame, text='video-meta paired')
         lb_video_meta_pairs_counts.grid(row = 8, column = 0,sticky='w')    
 
@@ -2520,30 +2526,6 @@ def render_update_tags(frame,isneed):
         mode0=tk.Radiobutton(frame,text="rapidtags",variable=publishpolicy,value=0,command='')
         mode0.grid(row = 2, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
         mode1=tk.Radiobutton(frame,text="openai",variable=publishpolicy,value=1,command='')
-        # mode1.grid(row = 3, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
-        # mode2=tk.Radiobutton(frame,text="定时",variable=publishpolicy,value=2,command='')
-        # mode2.grid(row = 4, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
-        # mode3=tk.Radiobutton(frame,text="unlisted",variable=publishpolicy,value=3,command='')
-        # mode3.grid(row = 5, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
-
-        # mode4=tk.Radiobutton(frame,text="public&premiere",variable=publishpolicy,value=4,command='')
-        # mode4.grid(row = 6, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
-
-        # dailycount=tk.StringVar()
-
-        # l_dailycount = tk.Label(frame, text=i18labels("dailyVideoLimit", locale=lang, module="g"))
-        # l_dailycount.grid(row = 7, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
-
-
-
-        # e_dailycount = tk.Entry(frame, width=55, textvariable=dailycount)
-        # e_dailycount.grid(row = 7, column = 5, columnspan = 3, padx=14, pady=15,sticky='nw') 
-        # start_publish_date=tk.StringVar()
-
-        # l_start_publish_date=tk.Label(frame, text=i18labels("offsetDays", locale=lang, module="g"))
-        # l_start_publish_date.grid(row = 8, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
-        # e_start_publish_date = tk.Entry(frame, width=55, textvariable=start_publish_date)
-        # e_start_publish_date.grid(row = 8, column = 5, columnspan = 3, padx=14, pady=15,sticky='nw') 
 
         b_import_thumb_metas_=tk.Button(frame,text="Step4:更新视频元数据文件",command=lambda: genThumbnailFromTemplate(videosView_video_folder.get(),thumbnail_template_file.get(),mode.get()))
         b_import_thumb_metas_.grid(row = 9, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
@@ -2601,8 +2583,9 @@ def render_update_meta(frame,isneed):
         if len(frame.winfo_children())>0:
             for widget in frame.winfo_children():
                 widget.destroy()
+        
         lab = tk.Label(frame,text="batch modify video metas",bg="lightyellow",width=30)
-
+        # dropdown platform   so they can have diff fields
         l_prefertags = tk.Label(frame, text=i18labels("is_not_for_kid", locale=lang, module="g"))
         l_prefertags.grid(row = 0, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
         el_prefertags = tk.Entry(frame, width=55, textvariable=prefertags)
@@ -4397,12 +4380,10 @@ def uploadView(frame,ttkframe,lang):
 
     l_import_video_metas = tk.Label(frame, text=settings[lang]['importVideoMetas'], font=(' ', 14))
     l_import_video_metas.grid(row = 2, column = 0, padx=14, pady=15,sticky='w')
-    global video_meta_json_path
     b_imported_video_metas_file=tk.Button(frame,text="Select",command=SelectVideoMetasfile)
     b_imported_video_metas_file.grid(row = 2, column = 2, padx=14, pady=15)
 
 
-    global imported_video_metas_file   
     imported_video_metas_file = tk.StringVar()        
     # l_imported_video_metas_file = tk.Label(ttkframe, text='thumbnail template file')
 
@@ -4812,7 +4793,7 @@ def metaView(left,right,lang):
     e_video_folder = tk.Entry(left,textvariable=metaView_video_folder)
     e_video_folder.grid(row = 0, column = 1, sticky='w', padx=14, pady=15)     
     
-    b_video_folder=tk.Button(left,text="Select",command=lambda: threading.Thread(target=select_thumbView_video_folder(metaView_video_folder)).start() )
+    b_video_folder=tk.Button(left,text="Select",command=lambda: threading.Thread(target=select_tabview_video_folder(metaView_video_folder,'metaView_video_folder')).start() )
     b_video_folder.grid(row = 0, column = 2, sticky='w', padx=14, pady=15)       
 
     b_open_video_folder=tk.Button(left,text="open local",command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
@@ -4847,214 +4828,7 @@ def metaView(left,right,lang):
     b_video_folder_check=tk.Button(left,text="Step1:check video assets",command=lambda: threading.Thread(target=analyse_video_meta_pair(metaView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=True,isDesView=True,isTagsView=True,isScheduleView=True)).start() )
     b_video_folder_check.grid(row = 2, column = 0,sticky='w', padx=14, pady=15)    
     
-    
-def metaView1(frame,ttkframe,lang):
 
-    # 
-    global is_debug,is_open_browser,is_record_video,start_publish_date,channelname,ratio,publishpolicy,prefertags,preferdesprefix,preferdessuffix,channel_cookie,proxy_option,firefox_profile_folder,video_folder,dailycount,music_folder
-    is_debug = tk.BooleanVar()
-    is_debug.set(setting['is_debug']) 
-
-    is_open_browser = tk.BooleanVar()
-    is_open_browser.set(setting['is_open_browser']) 
-    is_record_video = tk.BooleanVar()
-    is_record_video.set(setting['is_record_video'])
-
-    prefertags = tk.StringVar()
-    prefertags.set(setting['prefertags'])
-    preferdesprefix = tk.StringVar()
-    preferdesprefix.set(setting['preferdesprefix'])
-    preferdessuffix = tk.StringVar()
-    preferdessuffix.set(setting['preferdessuffix'])
-    dailycount = tk.StringVar()
-    dailycount.set(setting['dailycount'])
-    music_folder = tk.StringVar()
-    music_folder.set(setting['music_folder'])
-
-    ratio = tk.StringVar()
-    ratio.set(setting['ratio'])        
-    video_folder = tk.StringVar()
-    video_folder.set(setting['video_folder'])
-    firefox_profile_folder = tk.StringVar()
-    firefox_profile_folder.set(setting['firefox_profile_folder'])
-    proxy_option = tk.StringVar()
-    proxy_option.set(setting['proxy_option'])
-    channelname = tk.StringVar()
-    channelname.set(setting['channelname'])
-    channel_cookie = tk.StringVar()
-    channel_cookie.set(setting['channelcookiepath'])
-    publishpolicy = tk.StringVar()
-    publishpolicy.set(setting['publishpolicy'])
-    start_publish_date = tk.StringVar()
-    start_publish_date.set(setting['start_publish_date'])
-    username = tk.StringVar()
-    username.set(setting['username'])
-
-    password = tk.StringVar()
-    password.set(setting['password'])    
-    
-
-    
-    
-    
-
-    l_prefertags = tk.Label(frame, text=i18labels("preferTags", locale=lang, module="g"))
-    l_prefertags.place(x=10, y=50)
-    el_prefertags = tk.Entry(frame, width=55, textvariable=prefertags)
-    el_prefertags.place(x=150, y=50)
-
-    l_preferdesprefix = tk.Label(frame, text=i18labels("descriptionPrefix", locale=lang, module="g"))
-    l_preferdesprefix.place(x=10, y=70)
-    e_preferdesprefix = tk.Entry(frame, width=55, textvariable=preferdesprefix)
-    e_preferdesprefix.place(x=150, y=70)
-
-
-    l_preferdessuffix = tk.Label(frame, text=i18labels("descriptionSuffix", locale=lang, module="g"))
-    l_preferdessuffix.place(x=10, y=100)
-    e_preferdessuffix = tk.Entry(frame, width=55, textvariable=preferdessuffix)
-    e_preferdessuffix.place(x=150, y=100)
-
-
-    l_music_folder = tk.Label(frame, text=i18labels("bgVideoFolder", locale=lang, module="g"))
-    l_music_folder.place(in_=frame, x=10, y=130)
-    
-    el_music_folder = tk.Entry(frame, width=45, textvariable=music_folder)
-    el_music_folder.place(x=150, y=130)
-    
-    b_music_folder=tk.Button(frame,text="Select",command=select_musics_folder)
-    b_music_folder.place(x=580, y=130)        
-    
-    
-
-    l_bgMucisVolume = tk.Label(frame, text=i18labels("bgMucisVolume", locale=lang, module="g"))
-    l_bgMucisVolume.place(x=10, y=160)
-    e_bgMucisVolume = tk.Entry(frame, width=55, textvariable=ratio)
-    e_bgMucisVolume.place(x=150, y=160)
-    
-    l_publishpolicy = tk.Label(frame, text=i18labels("publishPolicy", locale=lang, module="g"))
-    l_publishpolicy.place(x=10, y=180)
-    e_publishpolicy = tk.Entry(frame, width=55, textvariable=publishpolicy)
-    e_publishpolicy.place(x=150, y=180)
-
-
-    l_dailycount = tk.Label(frame, text=i18labels("dailyVideoLimit", locale=lang, module="g"))
-    l_dailycount.place(x=10, y=200)
-
-
-
-    e_dailycount = tk.Entry(frame, width=55, textvariable=dailycount)
-    e_dailycount.place(x=150, y=200)
-
-    l_start_publish_date=tk.Label(frame, text=i18labels("offsetDays", locale=lang, module="g"))
-    l_start_publish_date.place(x=10, y=220)
-    e_start_publish_date = tk.Entry(frame, width=55, textvariable=start_publish_date)
-    e_start_publish_date.place(x=150, y=220)
-
-    
-
-
-    l_channelname = tk.Label(frame, text=i18labels("channelName", locale=lang, module="g"))
-    l_channelname.place(x=10, y=240)
-    e_channelname = tk.Entry(frame, width=55, textvariable=channelname)
-    e_channelname.place(x=150, y=240)
-
-    l_video_folder = tk.Label(frame, text=i18labels("videoFolder", locale=lang, module="g"))
-    l_video_folder.place(x=10, y=270)
-    e_video_folder = tk.Entry(frame, width=45, textvariable=video_folder)
-    e_video_folder.place(x=150, y=270)
-    
-    b_video_folder=tk.Button(frame,text="Select",command=lambda: threading.Thread(target=select_videos_folder).start() )
-    b_video_folder.place(x=580, y=270)    
-    
-
-    l_firefox_profile_folder = tk.Label(frame, text=i18labels("profileFolder", locale=lang, module="g"))
-    l_firefox_profile_folder.place(x=10, y=300)
-    e_firefox_profile_folder = tk.Entry(frame, width=45, textvariable=firefox_profile_folder)
-    e_firefox_profile_folder.place(x=150, y=300)
-
-
-    b_firefox_profile_folder=tk.Button(frame,text="Select",command=lambda: threading.Thread(target=select_profile_folder).start() )
-    b_firefox_profile_folder.place(x=580, y=300)
-
-
-    l_proxy_option = tk.Label(frame, text=i18labels("proxySetting", locale=lang, module="g"))
-    l_proxy_option.place(x=10, y=330)
-    e_proxy_option = tk.Entry(frame, width=55, textvariable=proxy_option)
-    e_proxy_option.place(x=150, y=330)
-
-    l_channel_cookie = tk.Label(frame, text=i18labels("cookiejson", locale=lang, module="g"))
-    l_channel_cookie.place(x=10, y=360)
-    e_channel_cookie = tk.Entry(frame, width=35, textvariable=channel_cookie)
-    e_channel_cookie.place(x=150, y=360)
-
-    b_channel_cookie=tk.Button(frame,text="Select",command=lambda: threading.Thread(target=select_cookie_file).start() )
-    b_channel_cookie.place(x=480, y=360)    
-    
-    
-    b_channel_cookie_gen=tk.Button(frame,text="gen",command=auto_gen_cookie_file)
-    b_channel_cookie_gen.place(x=550, y=360)    
-
-    l_username = tk.Label(frame, text=i18labels("username", locale=lang, module="g"))
-    l_username.place(x=10, y=390)
-    e_username = tk.Entry(frame, width=55, textvariable=username)
-    e_username.place(x=150, y=390)
-
-    l_password = tk.Label(frame, text=i18labels("password", locale=lang, module="g"))
-    l_password.place(x=10, y=420)
-    e_password = tk.Entry(frame, width=55, textvariable=password)
-    e_password.place(x=150, y=420)
-
-
-
-    
-    # b_readfist = tk.Button(frame, text="Read First", command=docs)
-    # b_readfist.place(x=10, y=10)
-
-
-
-
-    
-
-    b_is_open_browser = tk.Checkbutton(frame, text=i18labels("is_open_browser", locale=lang, module="g"), variable=is_open_browser)
-    b_is_open_browser.place(x=280, y=10)
-
-
-    b_recordvideo = tk.Checkbutton(frame, text=i18labels("is_record_video", locale=lang, module="g"), variable=is_record_video)
-    b_recordvideo.place(x=200, y=10)
-
-
-    b_debug = tk.Checkbutton(frame, text=i18labels("debug", locale=lang, module="g"), variable=is_debug)
-    b_debug.place(x=120, y=10)
-
-    
-    
-
-    
-    
-        
-    l_mode_2 = tk.Label(frame, text=i18labels("mode2", locale=lang, module="g"))
-    l_mode_2.place(x=10, y=int(height-150))
-    
-    
-    
-    b_gen_video_metas = tk.Button(frame, text=i18labels("genVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=genVideoMetas).start())
-    b_gen_video_metas.place(x=150, y=int(height-150))
-
-
-
-
-
-
-
-    
-    b_autothumb = tk.Button(frame, text=i18labels("load_setting_file", locale=lang, module="g"), command=lambda: threading.Thread(target=load_setting_file).start())
-    b_autothumb.place(x=150, y=int(height-250))
-    b_batchchangebgmusic = tk.Button(frame, text=i18labels("save_setting", locale=lang, module="g"), command=lambda: threading.Thread(target=save_setting).start())
-    b_batchchangebgmusic.place(x=350,y=int(height-250))
-    
-    
-    b_hiddenwatermark = tk.Button(frame, text=i18labels("create_setting_file", locale=lang, module="g"), command=lambda: threading.Thread(target=create_setting_file))
-    b_hiddenwatermark.place(x=500,y=int(height-250))
 
 def tagsView(left,right,lang):
     tagView_video_folder = tk.StringVar()
@@ -5068,7 +4842,7 @@ def tagsView(left,right,lang):
     e_video_folder = tk.Entry(left,textvariable=tagView_video_folder)
     e_video_folder.grid(row = 0, column = 1, sticky='w', padx=14, pady=15)     
     
-    b_video_folder=tk.Button(left,text="Select",command=lambda: threading.Thread(target=select_thumbView_video_folder(tagView_video_folder)).start() )
+    b_video_folder=tk.Button(left,text="Select",command=lambda: threading.Thread(target=select_tabview_video_folder(tagView_video_folder,'tagView_video_folder')).start() )
     b_video_folder.grid(row = 0, column = 2, sticky='w', padx=14, pady=15)       
 
     b_open_video_folder=tk.Button(left,text="open local",command=lambda: threading.Thread(target=openLocal(tagView_video_folder.get())).start() )
@@ -5119,7 +4893,7 @@ def desView(left,right,lang):
     e_video_folder = tk.Entry(left,textvariable=desView_video_folder)
     e_video_folder.grid(row = 0, column = 1, sticky='w', padx=14, pady=15)     
     
-    b_video_folder=tk.Button(left,text="Select",command=lambda: threading.Thread(target=select_thumbView_video_folder(desView_video_folder)).start() )
+    b_video_folder=tk.Button(left,text="Select",command=lambda: threading.Thread(target=select_tabview_video_folder(desView_video_folder,'desView_video_folder')).start() )
     b_video_folder.grid(row = 0, column = 2, sticky='w', padx=14, pady=15)       
 
     b_open_video_folder=tk.Button(left,text="open local",command=lambda: threading.Thread(target=openLocal(desView_video_folder.get())).start() )
@@ -5170,7 +4944,7 @@ def scheduleView(left,right,lang):
     e_video_folder = tk.Entry(left,textvariable=scheduleView_video_folder)
     e_video_folder.grid(row = 0, column = 1, sticky='w', padx=14, pady=15)     
     
-    b_video_folder=tk.Button(left,text="Select",command=lambda: threading.Thread(target=select_thumbView_video_folder(scheduleView_video_folder)).start() )
+    b_video_folder=tk.Button(left,text="Select",command=lambda: threading.Thread(target=select_tabview_video_folder(scheduleView_video_folder,'scheduleView_video_folder')).start() )
     b_video_folder.grid(row = 0, column = 2, sticky='w', padx=14, pady=15)       
 
     b_open_video_folder=tk.Button(left,text="open local",command=lambda: threading.Thread(target=openLocal(scheduleView_video_folder.get())).start() )
@@ -5204,7 +4978,7 @@ def scheduleView(left,right,lang):
     b_download_meta_templates.grid(row = 1, column = 3, sticky='w', padx=14, pady=15)  
     Tooltip(b_download_meta_templates, text='run the check video assets will auto gen templates under folder if they dont' , wraplength=200)
 
-    b_video_folder_check=tk.Button(left,text="Step1:check video assets",command=lambda: threading.Thread(target=analyse_video_meta_pair(thumbView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=False,isDesView=False,isTagsView=False,isScheduleView=True)).start() )
+    b_video_folder_check=tk.Button(left,text="Step1:check video assets",command=lambda: threading.Thread(target=analyse_video_meta_pair(scheduleView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=False,isDesView=False,isTagsView=False,isScheduleView=True)).start() )
     b_video_folder_check.grid(row = 2, column = 0,sticky='w', padx=14, pady=15)    
     Tooltip(b_video_folder_check, text='calculate video counts,thumb file count and others' , wraplength=200)
 

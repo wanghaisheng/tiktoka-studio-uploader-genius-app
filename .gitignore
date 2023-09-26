@@ -20,3 +20,4 @@ test.log
 .DS_Store
 tests/videos/vertical/9-16/*
 tests/videos/vertical/16-9/*
+src/__pycache__/*

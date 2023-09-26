@@ -1461,3 +1461,169 @@ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/video
 2023-09-26 17:17:34,575 - INFO - detecting----------True
 2023-09-26 17:17:34,575 - INFO - we cached 6324643000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
 2023-09-26 17:17:34,577 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-26 18:48:38,510 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 18:48:38,511 - INFO - TiktokaStudio GUI started
+2023-09-26 18:48:39,048 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 18:48:39,049 - INFO - TiktokaStudio GUI started
+2023-09-26 18:49:30,143 - INFO - detecting----------False
+2023-09-26 18:49:30,155 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos
+2023-09-26 18:49:30,162 - INFO - start to check thumbFilePaths for video: OP
+2023-09-26 18:49:30,163 - INFO - update to OP meta json
+2023-09-26 18:49:30,164 - INFO - start to check desFilePaths for video: OP
+2023-09-26 18:49:30,164 - INFO - update to OP meta json
+2023-09-26 18:49:30,165 - INFO - start to check metaFilePaths for video: OP
+2023-09-26 18:49:30,165 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.json
+2023-09-26 18:49:30,165 - INFO - intial metaFilePaths for OP:
+
+2023-09-26 18:49:30,166 - INFO - update to OP meta json
+2023-09-26 18:49:30,168 - INFO - start to check thumbFilePaths for video: 1
+2023-09-26 18:49:30,169 - INFO - this  thumbFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.png
+2023-09-26 18:49:30,169 - INFO - intial thumbFilePaths for 1:
+
+2023-09-26 18:49:30,169 - INFO - update to 1 meta json
+2023-09-26 18:49:30,171 - INFO - start to check desFilePaths for video: 1
+2023-09-26 18:49:30,171 - INFO - update to 1 meta json
+2023-09-26 18:49:30,172 - INFO - start to check metaFilePaths for video: 1
+2023-09-26 18:49:30,172 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.json
+2023-09-26 18:49:30,173 - INFO - intial metaFilePaths for 1:
+
+2023-09-26 18:49:30,173 - INFO - update to 1 meta json
+2023-09-26 18:50:44,371 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 18:50:44,372 - INFO - TiktokaStudio GUI started
+2023-09-26 18:50:44,754 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 18:50:44,754 - INFO - TiktokaStudio GUI started
+2023-09-26 18:51:29,650 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 18:51:29,651 - INFO - TiktokaStudio GUI started
+2023-09-26 18:51:29,991 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 18:51:29,991 - INFO - TiktokaStudio GUI started
+2023-09-26 18:51:45,725 - INFO - detecting----------False
+2023-09-26 18:51:45,733 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests
+2023-09-26 18:51:45,739 - INFO - start to check thumbFilePaths for video: OP
+2023-09-26 18:51:45,740 - INFO - update to OP meta json
+2023-09-26 18:51:45,741 - INFO - start to check desFilePaths for video: OP
+2023-09-26 18:51:45,742 - INFO - update to OP meta json
+2023-09-26 18:51:45,743 - INFO - start to check metaFilePaths for video: OP
+2023-09-26 18:51:45,744 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.json
+2023-09-26 18:51:45,744 - INFO - intial metaFilePaths for OP:
+
+2023-09-26 18:51:45,744 - INFO - update to OP meta json
+2023-09-26 18:51:45,746 - INFO - start to check thumbFilePaths for video: 1
+2023-09-26 18:51:45,747 - INFO - this  thumbFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.png
+2023-09-26 18:51:45,747 - INFO - intial thumbFilePaths for 1:
+
+2023-09-26 18:51:45,747 - INFO - update to 1 meta json
+2023-09-26 18:51:45,748 - INFO - start to check desFilePaths for video: 1
+2023-09-26 18:51:45,748 - INFO - update to 1 meta json
+2023-09-26 18:51:45,749 - INFO - start to check metaFilePaths for video: 1
+2023-09-26 18:51:45,750 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.json
+2023-09-26 18:51:45,750 - INFO - intial metaFilePaths for 1:
+
+2023-09-26 18:51:45,751 - INFO - update to 1 meta json
+2023-09-26 18:52:18,636 - INFO - detecting----------True
+2023-09-26 18:52:18,644 - INFO - we cached 32890767000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests
+2023-09-26 18:52:18,645 - INFO - we found same filename diff ext video:OP,please rename or remove
+2023-09-26 18:52:18,646 - INFO - we found same filename diff ext video:1,please rename or remove
+2023-09-26 19:04:14,072 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 19:04:14,084 - INFO - TiktokaStudio GUI started
+2023-09-26 19:04:14,609 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 19:04:14,610 - INFO - TiktokaStudio GUI started
+2023-09-26 20:36:32,966 - INFO - detecting----------False
+2023-09-26 20:36:32,975 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests
+2023-09-26 20:36:32,981 - INFO - start to check thumbFilePaths for video: OP
+2023-09-26 20:36:32,982 - INFO - update to OP meta json
+2023-09-26 20:36:32,984 - INFO - start to check desFilePaths for video: OP
+2023-09-26 20:36:32,984 - INFO - update to OP meta json
+2023-09-26 20:36:32,985 - INFO - start to check metaFilePaths for video: OP
+2023-09-26 20:36:32,985 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.json
+2023-09-26 20:36:32,986 - INFO - intial metaFilePaths for OP:
+
+2023-09-26 20:36:32,986 - INFO - update to OP meta json
+2023-09-26 20:36:32,988 - INFO - start to check thumbFilePaths for video: 1
+2023-09-26 20:36:32,988 - INFO - this  thumbFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.png
+2023-09-26 20:36:32,989 - INFO - intial thumbFilePaths for 1:
+
+2023-09-26 20:36:32,989 - INFO - update to 1 meta json
+2023-09-26 20:36:32,990 - INFO - start to check desFilePaths for video: 1
+2023-09-26 20:36:32,990 - INFO - update to 1 meta json
+2023-09-26 20:36:32,991 - INFO - start to check metaFilePaths for video: 1
+2023-09-26 20:36:32,991 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.json
+2023-09-26 20:36:32,991 - INFO - intial metaFilePaths for 1:
+
+2023-09-26 20:36:32,992 - INFO - update to 1 meta json
+2023-09-26 20:58:05,112 - INFO - detecting----------False
+2023-09-26 20:58:05,129 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical
+2023-09-26 20:58:05,135 - INFO - start to check thumbFilePaths for video: 1
+2023-09-26 20:58:05,135 - INFO - this  thumbFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.png
+2023-09-26 20:58:05,136 - INFO - intial thumbFilePaths for 1:
+
+2023-09-26 20:58:05,136 - INFO - update to 1 meta json
+2023-09-26 20:58:05,137 - INFO - start to check desFilePaths for video: 1
+2023-09-26 20:58:05,137 - INFO - update to 1 meta json
+2023-09-26 20:58:05,138 - INFO - start to check metaFilePaths for video: 1
+2023-09-26 20:58:05,138 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/1.json
+2023-09-26 20:58:05,138 - INFO - intial metaFilePaths for 1:
+
+2023-09-26 20:58:05,138 - INFO - update to 1 meta json
+2023-09-26 21:07:18,208 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 21:07:18,208 - INFO - TiktokaStudio GUI started
+2023-09-26 21:07:18,581 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 21:07:18,581 - INFO - TiktokaStudio GUI started
+2023-09-26 21:07:21,738 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 21:07:21,738 - INFO - TiktokaStudio GUI started
+2023-09-26 21:07:21,781 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 21:07:21,781 - INFO - TiktokaStudio GUI started
+2023-09-26 21:07:21,819 - INFO - switch lang to locale:zh
+2023-09-26 21:21:49,803 - ERROR - this query >>> seems went wrong:
+SELECT account_name FROM your_table WHERE platform = p,full error message:
+(sqlite3.OperationalError) no such table: your_table
+[SQL: SELECT account_name FROM your_table WHERE platform = p]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-26 21:21:51,834 - ERROR - this query >>> seems went wrong:
+SELECT account_name FROM your_table WHERE platform = p,full error message:
+(sqlite3.OperationalError) no such table: your_table
+[SQL: SELECT account_name FROM your_table WHERE platform = p]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-26 21:21:53,133 - ERROR - this query >>> seems went wrong:
+SELECT account_name FROM your_table WHERE platform = p,full error message:
+(sqlite3.OperationalError) no such table: your_table
+[SQL: SELECT account_name FROM your_table WHERE platform = p]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-26 21:21:55,284 - ERROR - this query >>> seems went wrong:
+SELECT account_name FROM your_table WHERE platform = p,full error message:
+(sqlite3.OperationalError) no such table: your_table
+[SQL: SELECT account_name FROM your_table WHERE platform = p]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-26 21:21:56,333 - ERROR - this query >>> seems went wrong:
+SELECT account_name FROM your_table WHERE platform = p,full error message:
+(sqlite3.OperationalError) no such table: your_table
+[SQL: SELECT account_name FROM your_table WHERE platform = p]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-26 21:21:57,468 - ERROR - this query >>> seems went wrong:
+SELECT account_name FROM your_table WHERE platform = p,full error message:
+(sqlite3.OperationalError) no such table: your_table
+[SQL: SELECT account_name FROM your_table WHERE platform = p]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-26 21:22:15,268 - ERROR - this query >>> seems went wrong:
+SELECT account_name FROM your_table WHERE platform = p,full error message:
+(sqlite3.OperationalError) no such table: your_table
+[SQL: SELECT account_name FROM your_table WHERE platform = p]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-26 21:28:23,070 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 21:28:23,070 - INFO - TiktokaStudio GUI started
+2023-09-26 21:28:23,865 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 21:28:23,865 - INFO - TiktokaStudio GUI started
