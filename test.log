@@ -1627,3 +1627,186 @@ SELECT account_name FROM your_table WHERE platform = p,full error message:
 2023-09-26 21:28:23,070 - INFO - TiktokaStudio GUI started
 2023-09-26 21:28:23,865 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
 2023-09-26 21:28:23,865 - INFO - TiktokaStudio GUI started
+2023-09-26 21:29:50,728 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 21:29:50,728 - INFO - TiktokaStudio GUI started
+2023-09-26 21:29:51,138 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 21:29:51,138 - INFO - TiktokaStudio GUI started
+2023-09-26 21:31:22,661 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 21:31:22,677 - INFO - TiktokaStudio GUI started
+2023-09-26 21:31:23,043 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 21:31:23,044 - INFO - TiktokaStudio GUI started
+2023-09-26 21:32:27,816 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 21:32:27,816 - INFO - TiktokaStudio GUI started
+2023-09-26 21:32:28,131 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 21:32:28,131 - INFO - TiktokaStudio GUI started
+2023-09-26 21:49:31,692 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 21:49:31,701 - INFO - TiktokaStudio GUI started
+2023-09-26 21:49:32,082 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 21:49:32,082 - INFO - TiktokaStudio GUI started
+2023-09-26 21:50:24,053 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 21:50:24,053 - INFO - TiktokaStudio GUI started
+2023-09-26 21:50:24,369 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 21:50:24,369 - INFO - TiktokaStudio GUI started
+2023-09-26 21:53:33,365 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 21:53:33,370 - INFO - TiktokaStudio GUI started
+2023-09-26 21:53:34,106 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 21:53:34,106 - INFO - TiktokaStudio GUI started
+2023-09-26 21:54:55,804 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 21:54:55,816 - INFO - TiktokaStudio GUI started
+2023-09-26 21:54:56,515 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 21:54:56,515 - INFO - TiktokaStudio GUI started
+2023-09-26 21:55:58,811 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 21:55:58,812 - INFO - TiktokaStudio GUI started
+2023-09-26 21:55:59,126 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 21:55:59,126 - INFO - TiktokaStudio GUI started
+2023-09-26 21:59:13,583 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 21:59:13,583 - INFO - TiktokaStudio GUI started
+2023-09-26 22:00:44,472 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:00:44,472 - INFO - TiktokaStudio GUI started
+2023-09-26 22:02:27,624 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:02:27,643 - INFO - TiktokaStudio GUI started
+2023-09-26 22:03:19,898 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:03:19,899 - INFO - TiktokaStudio GUI started
+2023-09-26 22:04:20,380 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:04:20,380 - INFO - TiktokaStudio GUI started
+2023-09-26 22:05:15,573 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:05:15,573 - INFO - TiktokaStudio GUI started
+2023-09-26 22:06:44,939 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:06:44,939 - INFO - TiktokaStudio GUI started
+2023-09-26 22:07:41,849 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:07:41,864 - INFO - TiktokaStudio GUI started
+2023-09-26 22:08:09,412 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:08:09,412 - INFO - TiktokaStudio GUI started
+2023-09-26 22:09:10,118 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:09:10,118 - INFO - TiktokaStudio GUI started
+2023-09-26 22:09:10,404 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:09:10,404 - INFO - TiktokaStudio GUI started
+2023-09-26 22:15:08,694 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:15:08,702 - INFO - TiktokaStudio GUI started
+2023-09-26 22:15:09,082 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:15:09,082 - INFO - TiktokaStudio GUI started
+2023-09-26 22:15:48,419 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:15:48,419 - INFO - TiktokaStudio GUI started
+2023-09-26 22:15:48,756 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:15:48,756 - INFO - TiktokaStudio GUI started
+2023-09-26 22:17:16,130 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:17:16,131 - INFO - TiktokaStudio GUI started
+2023-09-26 22:17:16,474 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:17:16,474 - INFO - TiktokaStudio GUI started
+2023-09-26 22:20:50,642 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:20:50,642 - INFO - TiktokaStudio GUI started
+2023-09-26 22:20:51,365 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:20:51,365 - INFO - TiktokaStudio GUI started
+2023-09-26 22:21:44,002 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:21:44,002 - INFO - TiktokaStudio GUI started
+2023-09-26 22:21:44,310 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:21:44,310 - INFO - TiktokaStudio GUI started
+2023-09-26 22:22:19,587 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:22:19,587 - INFO - TiktokaStudio GUI started
+2023-09-26 22:22:20,426 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:22:20,426 - INFO - TiktokaStudio GUI started
+2023-09-26 22:24:46,894 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:24:46,894 - INFO - TiktokaStudio GUI started
+2023-09-26 22:24:47,601 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:24:47,601 - INFO - TiktokaStudio GUI started
+2023-09-26 22:28:45,110 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:28:45,111 - INFO - TiktokaStudio GUI started
+2023-09-26 22:29:10,171 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:29:10,171 - INFO - TiktokaStudio GUI started
+2023-09-26 22:29:45,204 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:29:45,204 - INFO - TiktokaStudio GUI started
+2023-09-26 22:29:45,551 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:29:45,551 - INFO - TiktokaStudio GUI started
+2023-09-26 22:30:27,709 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:30:27,709 - INFO - TiktokaStudio GUI started
+2023-09-26 22:30:28,010 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:30:28,010 - INFO - TiktokaStudio GUI started
+2023-09-26 22:30:59,441 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:30:59,441 - INFO - TiktokaStudio GUI started
+2023-09-26 22:30:59,756 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:30:59,756 - INFO - TiktokaStudio GUI started
+2023-09-26 22:33:06,821 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:33:06,844 - INFO - TiktokaStudio GUI started
+2023-09-26 22:33:07,184 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:33:07,184 - INFO - TiktokaStudio GUI started
+2023-09-26 22:37:38,359 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:37:38,369 - INFO - TiktokaStudio GUI started
+2023-09-26 22:37:39,135 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:37:39,135 - INFO - TiktokaStudio GUI started
+2023-09-26 22:38:42,532 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:38:42,532 - INFO - TiktokaStudio GUI started
+2023-09-26 22:38:42,842 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:38:42,842 - INFO - TiktokaStudio GUI started
+2023-09-26 22:38:46,883 - INFO - query results of existing platforms is ['p']
+2023-09-26 22:42:40,146 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:42:40,160 - INFO - TiktokaStudio GUI started
+2023-09-26 22:42:40,836 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:42:40,836 - INFO - TiktokaStudio GUI started
+2023-09-26 22:42:44,998 - INFO - query results of existing platforms is   platform
+0  youtube
+2023-09-26 22:43:36,071 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:43:36,072 - INFO - TiktokaStudio GUI started
+2023-09-26 22:43:36,377 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:43:36,378 - INFO - TiktokaStudio GUI started
+2023-09-26 22:43:40,609 - INFO - query results of existing platforms is   platform
+0  youtube
+2023-09-26 22:43:44,242 - INFO - query results of existing platforms is   platform
+0  youtube
+2023-09-26 22:43:44,243 - ERROR - this query >>> seems went wrong:
+SELECT account_name FROM your_table WHERE platform = l,full error message:
+(sqlite3.OperationalError) no such table: your_table
+[SQL: SELECT account_name FROM your_table WHERE platform = l]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-26 22:44:30,065 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:44:30,066 - INFO - TiktokaStudio GUI started
+2023-09-26 22:44:30,383 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:44:30,383 - INFO - TiktokaStudio GUI started
+2023-09-26 22:44:56,874 - INFO - query results of existing platforms is   platform
+0  youtube
+2023-09-26 22:46:51,843 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:46:51,851 - INFO - TiktokaStudio GUI started
+2023-09-26 22:46:52,205 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:46:52,205 - INFO - TiktokaStudio GUI started
+2023-09-26 22:46:57,305 - INFO - query results of existing platforms is   platform
+0  youtube
+2023-09-26 22:47:24,544 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:47:24,552 - INFO - TiktokaStudio GUI started
+2023-09-26 22:47:25,216 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:47:25,216 - INFO - TiktokaStudio GUI started
+2023-09-26 22:47:28,295 - INFO - query results of existing platforms is   platform
+0  youtube
+2023-09-26 22:49:15,004 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:49:15,009 - INFO - TiktokaStudio GUI started
+2023-09-26 22:49:15,357 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:49:15,357 - INFO - TiktokaStudio GUI started
+2023-09-26 22:49:19,051 - INFO - query results of existing platforms is   platform
+0  youtube
+2023-09-26 22:49:21,836 - INFO - query results of existing platforms is   platform
+0  youtube
+2023-09-26 22:49:21,837 - ERROR - this query >>> seems went wrong:
+SELECT account_name FROM your_table WHERE platform = youtube,full error message:
+(sqlite3.OperationalError) no such table: your_table
+[SQL: SELECT account_name FROM your_table WHERE platform = youtube]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-26 22:50:07,600 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:50:07,600 - INFO - TiktokaStudio GUI started
+2023-09-26 22:50:07,951 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-09-26 22:50:07,951 - INFO - TiktokaStudio GUI started
+2023-09-26 22:50:11,043 - INFO - query results of existing platforms is   platform
+0  youtube
+2023-09-26 22:50:12,781 - INFO - query results of existing platforms is   platform
+0  youtube
+2023-09-26 22:50:12,782 - ERROR - this query >>> seems went wrong:
+SELECT account_name FROM your_table WHERE platform = youtube,full error message:
+(sqlite3.OperationalError) no such table: your_table
+[SQL: SELECT account_name FROM your_table WHERE platform = youtube]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2023-09-26 22:50:46,615 - INFO - query results of existing platforms is   platform
+0  youtube
+2023-09-26 22:50:49,023 - INFO - query results of existing platforms is   platform
+0  youtube
+2023-09-26 22:50:49,024 - ERROR - this query >>> seems went wrong:
+SELECT account_name FROM your_table WHERE platform = youtube,full error message:
+(sqlite3.OperationalError) no such table: your_table
+[SQL: SELECT account_name FROM your_table WHERE platform = youtube]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)

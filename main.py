@@ -428,6 +428,7 @@ class ConsoleUi:
 
 
         # Bind right-click event to show context menu
+        # https://stackoverflow.com/questions/30668425/tkinter-right-click-popup-unresponsive-on-osx
         MAC_OS = False
         if sys.platform == 'darwin':
             MAC_OS = True
@@ -439,7 +440,7 @@ class ConsoleUi:
         self.context_menu = tk.Menu(root, tearoff=0)
         self.context_menu.add_command(label="Clear All Text", command=self.clear_text)
             
-        self.scrolled_text.grid(row=row, column=column, sticky=(tk.N, tk.S, tk.W, tk.E))
+        self.scrolled_text.grid(row=row, column=column, columnspan=2,sticky='nswe')
         self.scrolled_text.configure(font='TkFixedFont')
         self.scrolled_text.tag_config('INFO', foreground='black')
         self.scrolled_text.tag_config('DEBUG', foreground='gray')
@@ -1408,6 +1409,7 @@ def chooseAccountsView(newWindow):
             engine=prod_engine
             platform_rows = query2df(engine,query,logger)
 
+            logger.info(f'query results of existing platforms is {platform_rows}')
 
             # Extract platform names and set them as options in the platform dropdown
             if platform_rows is None:
@@ -1416,22 +1418,27 @@ def chooseAccountsView(newWindow):
                 button1.grid(row=2, column=2, padx=10, pady=10, sticky=tk.W)
 
             else:
-                platform_names = [row[0] for row in platform_rows]
+                platform_names = [row.platform for row in platform_rows.itertuples()]
                 platform_combo["values"] = platform_names
 
                 # Execute a query to retrieve accounts based on the selected platform
                 query=f"SELECT account_name FROM your_table WHERE platform = {selected_platform}"
-                if selected_platform in platform_names:
+                if  len(platform_names)==0:
+                    platform_combo["values"]=[]
+                    button1 = ttk.Button(chooseAccountsWindow, text="try to add platforms first", command=lambda: (chooseAccountsWindow.withdraw(),newWindow.withdraw(),tab_control.select(1)))
+                    button1.grid(row=2, column=2, padx=10, pady=10, sticky=tk.W)
+                    
+                elif selected_platform in platform_names:
                     engine=prod_engine
                     account_rows = query2df(engine,query,logger)
                     # Extract account names and set them as options in the account dropdown
                     if account_rows is None:
                         langlist.delete(0,tk.END)
-                        button1 = ttk.Button(chooseAccountsWindow, text=f"try to add accounts for {selected_platform} first", command=lambda: (chooseAccountsWindow.withdraw(),tab_control.select(2)))
+                        button1 = ttk.Button(chooseAccountsWindow, text=f"try to add accounts for {selected_platform} first", command=lambda: (chooseAccountsWindow.withdraw(),newWindow.withdraw(),tab_control.select(1)))
                         button1.grid(row=2, column=2, padx=10, pady=10, sticky=tk.W)
 
                     else:                
-                        account_names = [row[0] for row in account_rows]
+                        account_names = [row.username for row in account_rows.itertuples()]
                         logger.info(f'we found {len(account_names)} record matching ')
 
                         langlist.delete(0,tk.END)
@@ -4984,8 +4991,9 @@ def scheduleView(left,right,lang):
 
 
 
-def logView(log_frame,root,lang):
+def logView(log_tab_frame,log_frame,root,lang):
 
+    
     debugLevel = tk.StringVar()
 
     debugLevel.set("Debug Level:")
@@ -4997,27 +5005,39 @@ def logView(log_frame,root,lang):
 
     debugLevel.trace('w', browserTypeCallBack)
 
-    debugLevelbox = ttk.Combobox(log_frame, textvariable=debugLevel)
+    debugLevelbox = ttk.Combobox(log_tab_frame, textvariable=debugLevel)
     debugLevelbox.config(values = ('DEBUG', 'INFO','ERROR'))
     debugLevelbox.grid(row = 0, column = 0,padx=14, pady=15, sticky='w')   
     log_filter=tk.StringVar()
-    e_log_filter = tk.Entry(log_frame,textvariable=log_filter)
+    e_log_filter = tk.Entry(log_tab_frame,textvariable=log_filter)
     log_filter.set('log filter')
     log_filter.trace('w', log_filterCallBack)
 
     e_log_filter.grid(row = 0, column = 1,padx=14, pady=15, sticky='nswe')   
 
-    st =ConsoleUi(log_frame,root,row=1,column=0)
+    st =ConsoleUi(log_tab_frame,root,row=1,column=0)
     logger.debug(f'Installation path is:{ROOT_DIR}')
 
     logger.info('TiktokaStudio GUI started')
+def hide_log_frame():
+    log_frame.grid_forget()
 
+def show_log_frame():
+    log_frame.pack()
+
+def on_tab_change(event):
+    selected_tab = tab_control.index(tab_control.select())
+    if selected_tab == 11:  # Assuming you want to hide the log frame when the first tab is selected
+        hide_log_frame()
+    # else:
+    #     show_log_frame()
 
 def render(root,window,log_frame,lang):
     global doc_frame,install_frame,thumb_frame,video_frame,proxy_frame,account_frame,upload_frame,meta_frame,tab_control
 
     tab_control = ttk.Notebook(window)
-    
+    tab_control.bind("<<NotebookTabChanged>>", on_tab_change)
+
     doc_frame = ttk.Frame(tab_control)
     doc_frame.grid_rowconfigure(0, weight=1)
     doc_frame.grid_columnconfigure(0, weight=1, uniform="group1")
@@ -5220,17 +5240,19 @@ def render(root,window,log_frame,lang):
 
     docView(doc_frame_left,doc_frame_right,lang)
     # tab_control.pack(expand=1, fill='both')
-    tab_control.grid(row=0,column=0)
+    tab_control.grid(row=0,column=0,sticky='nswe')
 
 
 
-    log_frame = ttk.Frame(tab_control)
-    # log_frame.grid_rowconfigure(0, weight=1)
-    # log_frame.grid_columnconfigure(0, weight=1 )
+    log_tab_frame = ttk.Frame(tab_control)
+    # log_frame.grid_rowconfigure((0,1), weight=1)
+    # log_frame.grid_columnconfigure((0,1), weight=1 )
+    log_tab_frame.grid_rowconfigure(1, weight=1)
+    
+    log_tab_frame.grid_columnconfigure(1, weight=1)
+    logView(log_tab_frame,log_frame,root,lang)
 
-    logView(log_frame,root,lang)
-
-    tab_control.add(log_frame, text=settings[lang]['logView'])
+    tab_control.add(log_tab_frame, text=settings[lang]['logView'],sticky='nswe')
 
 
 
