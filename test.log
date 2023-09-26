@@ -1255,3 +1255,209 @@ SELECT DISTINCT platform FROM accounts,full error message:
 2023-09-26 15:04:10,176 - INFO - TiktokaStudio GUI started
 2023-09-26 15:05:32,094 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
 2023-09-26 15:05:32,094 - INFO - TiktokaStudio GUI started
+2023-09-26 15:30:35,974 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:30:35,975 - INFO - TiktokaStudio GUI started
+2023-09-26 15:31:28,582 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:31:28,582 - INFO - TiktokaStudio GUI started
+2023-09-26 15:33:28,502 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:33:28,502 - INFO - TiktokaStudio GUI started
+2023-09-26 15:33:28,527 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:33:28,527 - INFO - TiktokaStudio GUI started
+2023-09-26 15:34:06,729 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:34:06,730 - INFO - TiktokaStudio GUI started
+2023-09-26 15:34:06,754 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:34:06,754 - INFO - TiktokaStudio GUI started
+2023-09-26 15:35:41,717 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:35:41,718 - INFO - TiktokaStudio GUI started
+2023-09-26 15:35:41,745 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:35:41,745 - INFO - TiktokaStudio GUI started
+2023-09-26 15:36:41,391 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:36:41,391 - INFO - TiktokaStudio GUI started
+2023-09-26 15:36:41,416 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:36:41,416 - INFO - TiktokaStudio GUI started
+2023-09-26 15:39:08,547 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:39:08,548 - INFO - TiktokaStudio GUI started
+2023-09-26 15:39:08,578 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:39:08,578 - INFO - TiktokaStudio GUI started
+2023-09-26 15:45:03,892 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:45:03,892 - INFO - TiktokaStudio GUI started
+2023-09-26 15:45:03,932 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:45:03,932 - INFO - TiktokaStudio GUI started
+2023-09-26 15:45:29,266 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:45:29,267 - INFO - TiktokaStudio GUI started
+2023-09-26 15:45:29,293 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:45:29,293 - INFO - TiktokaStudio GUI started
+2023-09-26 15:45:45,740 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:45:45,740 - INFO - TiktokaStudio GUI started
+2023-09-26 15:45:45,768 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:45:45,769 - INFO - TiktokaStudio GUI started
+2023-09-26 15:47:55,459 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:47:55,459 - INFO - TiktokaStudio GUI started
+2023-09-26 15:47:55,486 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:47:55,486 - INFO - TiktokaStudio GUI started
+2023-09-26 15:49:18,609 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:49:18,609 - INFO - TiktokaStudio GUI started
+2023-09-26 15:49:18,638 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:49:18,638 - INFO - TiktokaStudio GUI started
+2023-09-26 15:50:35,553 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:50:35,553 - INFO - TiktokaStudio GUI started
+2023-09-26 15:51:09,940 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:51:09,941 - INFO - TiktokaStudio GUI started
+2023-09-26 15:51:09,970 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:51:09,971 - INFO - TiktokaStudio GUI started
+2023-09-26 15:51:28,755 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:51:28,756 - INFO - TiktokaStudio GUI started
+2023-09-26 15:51:28,784 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:51:28,784 - INFO - TiktokaStudio GUI started
+2023-09-26 16:01:49,130 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 16:01:49,131 - INFO - TiktokaStudio GUI started
+2023-09-26 16:01:49,160 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 16:01:49,160 - INFO - TiktokaStudio GUI started
+2023-09-26 16:02:56,142 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 16:02:56,143 - INFO - TiktokaStudio GUI started
+2023-09-26 16:02:56,172 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 16:02:56,172 - INFO - TiktokaStudio GUI started
+2023-09-26 16:04:21,163 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 16:04:21,163 - INFO - TiktokaStudio GUI started
+2023-09-26 16:04:21,193 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 16:04:21,193 - INFO - TiktokaStudio GUI started
+2023-09-26 16:05:41,318 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 16:05:41,319 - INFO - TiktokaStudio GUI started
+2023-09-26 16:05:41,344 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 16:05:41,344 - INFO - TiktokaStudio GUI started
+2023-09-26 16:06:31,682 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 16:06:31,682 - INFO - TiktokaStudio GUI started
+2023-09-26 16:06:31,703 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 16:06:31,704 - INFO - TiktokaStudio GUI started
+2023-09-26 16:08:19,674 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 16:08:19,675 - INFO - TiktokaStudio GUI started
+2023-09-26 16:08:19,699 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 16:08:19,699 - INFO - TiktokaStudio GUI started
+2023-09-26 16:09:00,536 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 16:09:00,537 - INFO - TiktokaStudio GUI started
+2023-09-26 16:09:00,559 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 16:09:00,559 - INFO - TiktokaStudio GUI started
+2023-09-26 16:16:53,037 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 16:16:53,037 - INFO - TiktokaStudio GUI started
+2023-09-26 16:16:53,060 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 16:16:53,060 - INFO - TiktokaStudio GUI started
+2023-09-26 16:17:32,601 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 16:17:32,601 - INFO - TiktokaStudio GUI started
+2023-09-26 16:17:32,629 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 16:17:32,629 - INFO - TiktokaStudio GUI started
+2023-09-26 16:23:19,260 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 16:23:19,260 - INFO - TiktokaStudio GUI started
+2023-09-26 16:23:19,281 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 16:23:19,281 - INFO - TiktokaStudio GUI started
+2023-09-26 16:27:14,332 - INFO - load task metas to database .create upload task for each video
+2023-09-26 16:27:14,332 - ERROR - please provide a video meta json file
+2023-09-26 16:34:43,588 - INFO - detecting----------False
+2023-09-26 16:34:43,588 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-09-26 16:34:43,597 - INFO - start to check thumbFilePaths for video: 1
+2023-09-26 16:34:43,598 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.png
+2023-09-26 16:34:43,599 - INFO - intial thumbFilePaths for 1:
+
+2023-09-26 16:34:43,600 - INFO - update to 1 meta json
+2023-09-26 16:34:43,601 - INFO - start to check desFilePaths for video: 1
+2023-09-26 16:34:43,602 - INFO - update to 1 meta json
+2023-09-26 16:34:43,603 - INFO - start to check metaFilePaths for video: 1
+2023-09-26 16:34:43,604 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-09-26 16:34:43,604 - INFO - intial metaFilePaths for 1:
+
+2023-09-26 16:34:43,605 - INFO - update to 1 meta json
+2023-09-26 16:41:58,507 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 16:41:58,507 - INFO - TiktokaStudio GUI started
+2023-09-26 16:43:04,295 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 16:43:04,295 - INFO - TiktokaStudio GUI started
+2023-09-26 16:43:04,325 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 16:43:04,325 - INFO - TiktokaStudio GUI started
+2023-09-26 16:43:31,127 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 16:43:31,127 - INFO - TiktokaStudio GUI started
+2023-09-26 16:43:31,156 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 16:43:31,156 - INFO - TiktokaStudio GUI started
+2023-09-26 16:43:47,647 - INFO - please choose a folder first
+2023-09-26 17:00:16,461 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 17:00:16,461 - INFO - TiktokaStudio GUI started
+2023-09-26 17:00:16,492 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 17:00:16,492 - INFO - TiktokaStudio GUI started
+2023-09-26 17:01:38,876 - INFO - detecting----------False
+2023-09-26 17:01:38,876 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-09-26 17:01:38,882 - INFO - start to check thumbFilePaths for video: 1
+2023-09-26 17:01:38,884 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.png
+2023-09-26 17:01:38,884 - INFO - intial thumbFilePaths for 1:
+
+2023-09-26 17:01:38,885 - INFO - update to 1 meta json
+2023-09-26 17:01:38,886 - INFO - start to check desFilePaths for video: 1
+2023-09-26 17:01:38,887 - INFO - update to 1 meta json
+2023-09-26 17:01:38,888 - INFO - start to check metaFilePaths for video: 1
+2023-09-26 17:01:38,888 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-09-26 17:01:38,889 - INFO - intial metaFilePaths for 1:
+
+2023-09-26 17:01:38,890 - INFO - update to 1 meta json
+2023-09-26 17:03:29,813 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 17:03:29,814 - INFO - TiktokaStudio GUI started
+2023-09-26 17:03:29,840 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 17:03:29,841 - INFO - TiktokaStudio GUI started
+2023-09-26 17:08:55,035 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 17:08:55,035 - INFO - TiktokaStudio GUI started
+2023-09-26 17:09:20,105 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 17:09:20,105 - INFO - TiktokaStudio GUI started
+2023-09-26 17:09:20,135 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 17:09:20,136 - INFO - TiktokaStudio GUI started
+2023-09-26 17:09:58,945 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 17:09:58,945 - INFO - TiktokaStudio GUI started
+2023-09-26 17:09:58,978 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 17:09:58,979 - INFO - TiktokaStudio GUI started
+2023-09-26 17:12:09,476 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 17:12:09,476 - INFO - TiktokaStudio GUI started
+2023-09-26 17:12:09,509 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 17:12:09,509 - INFO - TiktokaStudio GUI started
+2023-09-26 17:12:19,884 - INFO - detecting----------False
+2023-09-26 17:12:19,885 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-09-26 17:12:19,891 - INFO - start to check thumbFilePaths for video: 1
+2023-09-26 17:12:19,892 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.png
+2023-09-26 17:12:19,892 - INFO - intial thumbFilePaths for 1:
+
+2023-09-26 17:12:19,894 - INFO - update to 1 meta json
+2023-09-26 17:12:19,895 - INFO - start to check desFilePaths for video: 1
+2023-09-26 17:12:19,896 - INFO - update to 1 meta json
+2023-09-26 17:12:19,897 - INFO - start to check metaFilePaths for video: 1
+2023-09-26 17:12:19,898 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-09-26 17:12:19,898 - INFO - intial metaFilePaths for 1:
+
+2023-09-26 17:12:19,899 - INFO - update to 1 meta json
+2023-09-26 17:14:29,993 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 17:14:29,993 - INFO - TiktokaStudio GUI started
+2023-09-26 17:17:00,006 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 17:17:00,007 - INFO - TiktokaStudio GUI started
+2023-09-26 17:17:00,037 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 17:17:00,037 - INFO - TiktokaStudio GUI started
+2023-09-26 17:17:28,231 - INFO - detecting----------False
+2023-09-26 17:17:28,231 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-09-26 17:17:28,238 - INFO - start to check thumbFilePaths for video: 1
+2023-09-26 17:17:28,239 - INFO - this  thumbFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.png
+2023-09-26 17:17:28,239 - INFO - intial thumbFilePaths for 1:
+
+2023-09-26 17:17:28,240 - INFO - update to 1 meta json
+2023-09-26 17:17:28,241 - INFO - start to check desFilePaths for video: 1
+2023-09-26 17:17:28,242 - INFO - update to 1 meta json
+2023-09-26 17:17:28,243 - INFO - start to check metaFilePaths for video: 1
+2023-09-26 17:17:28,244 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-09-26 17:17:28,244 - INFO - intial metaFilePaths for 1:
+
+2023-09-26 17:17:28,246 - INFO - update to 1 meta json
+2023-09-26 17:17:34,575 - INFO - detecting----------True
+2023-09-26 17:17:34,575 - INFO - we cached 6324643000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-09-26 17:17:34,577 - INFO - we found same filename diff ext video:1,please rename or remove
