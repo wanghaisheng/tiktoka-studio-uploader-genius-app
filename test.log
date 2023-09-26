@@ -1176,3 +1176,82 @@ SELECT DISTINCT platform FROM accounts,full error message:
 2023-09-26 11:33:09,638 - ERROR - this query >>> seems went wrong:
 SELECT DISTINCT platform FROM accounts,full error message:
 'OptionEngine' object has no attribute 'execute'
+2023-09-26 13:39:59,709 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 13:39:59,710 - INFO - TiktokaStudio GUI started
+2023-09-26 13:40:27,270 - ERROR - this query >>> seems went wrong:
+SELECT DISTINCT platform FROM accounts,full error message:
+'OptionEngine' object has no attribute 'execute'
+2023-09-26 14:11:19,311 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 14:11:19,311 - INFO - TiktokaStudio GUI started
+2023-09-26 14:12:42,894 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 14:12:42,894 - INFO - TiktokaStudio GUI started
+2023-09-26 14:13:38,390 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 14:13:38,390 - INFO - TiktokaStudio GUI started
+2023-09-26 14:14:28,810 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 14:14:28,811 - INFO - TiktokaStudio GUI started
+2023-09-26 14:15:34,210 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 14:15:34,210 - INFO - TiktokaStudio GUI started
+2023-09-26 14:16:23,669 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 14:16:23,670 - INFO - TiktokaStudio GUI started
+2023-09-26 14:17:08,887 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 14:17:08,887 - INFO - TiktokaStudio GUI started
+2023-09-26 14:17:57,067 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 14:17:57,068 - INFO - TiktokaStudio GUI started
+2023-09-26 14:22:03,323 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 14:22:03,324 - INFO - TiktokaStudio GUI started
+2023-09-26 14:22:28,410 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 14:22:28,410 - INFO - TiktokaStudio GUI started
+2023-09-26 14:25:50,465 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 14:25:50,465 - INFO - TiktokaStudio GUI started
+2023-09-26 14:27:06,208 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 14:27:06,208 - INFO - TiktokaStudio GUI started
+2023-09-26 14:31:44,086 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 14:31:44,087 - INFO - TiktokaStudio GUI started
+2023-09-26 14:33:06,292 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 14:33:06,292 - INFO - TiktokaStudio GUI started
+2023-09-26 14:33:59,868 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 14:33:59,869 - INFO - TiktokaStudio GUI started
+2023-09-26 14:36:33,927 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 14:36:33,928 - INFO - TiktokaStudio GUI started
+2023-09-26 14:37:43,088 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 14:37:43,089 - INFO - TiktokaStudio GUI started
+2023-09-26 14:38:09,690 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 14:38:09,691 - INFO - TiktokaStudio GUI started
+2023-09-26 14:40:05,399 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 14:40:05,400 - INFO - TiktokaStudio GUI started
+2023-09-26 14:41:59,228 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 14:41:59,228 - INFO - TiktokaStudio GUI started
+2023-09-26 14:43:29,535 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 14:43:29,535 - INFO - TiktokaStudio GUI started
+2023-09-26 14:44:39,768 - DEBUG - start to import prepared video metas in json format
+2023-09-26 14:44:43,024 - DEBUG - finished to import prepared video metas in json format
+2023-09-26 14:49:47,140 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 14:49:47,140 - INFO - TiktokaStudio GUI started
+2023-09-26 14:52:14,663 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 14:52:14,664 - INFO - TiktokaStudio GUI started
+2023-09-26 14:52:59,352 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 14:52:59,352 - INFO - TiktokaStudio GUI started
+2023-09-26 14:56:08,409 - ERROR - this query >>> seems went wrong:
+SELECT DISTINCT platform FROM accounts,full error message:
+'OptionEngine' object has no attribute 'execute'
+2023-09-26 14:57:47,625 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 14:57:47,625 - INFO - TiktokaStudio GUI started
+2023-09-26 14:57:51,717 - ERROR - this query >>> seems went wrong:
+SELECT DISTINCT platform FROM accounts,full error message:
+'OptionEngine' object has no attribute 'execute'
+2023-09-26 14:59:40,773 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 14:59:40,773 - INFO - TiktokaStudio GUI started
+2023-09-26 14:59:44,569 - ERROR - this query >>> seems went wrong:
+SELECT DISTINCT platform FROM accounts,full error message:
+'OptionEngine' object has no attribute 'execute'
+2023-09-26 15:03:09,146 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:03:09,147 - INFO - TiktokaStudio GUI started
+2023-09-26 15:03:38,244 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:03:38,245 - INFO - TiktokaStudio GUI started
+2023-09-26 15:03:41,266 - ERROR - this query >>> seems went wrong:
+SELECT DISTINCT platform FROM accounts,full error message:
+'OptionEngine' object has no attribute 'execute'
+2023-09-26 15:04:10,176 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:04:10,176 - INFO - TiktokaStudio GUI started
+2023-09-26 15:05:32,094 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-09-26 15:05:32,094 - INFO - TiktokaStudio GUI started

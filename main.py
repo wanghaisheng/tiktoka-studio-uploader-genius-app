@@ -1050,19 +1050,20 @@ def select_thumb_template_file(folder):
 
 
 
-def select_file(title,cached,variable,limited='all'):
+def select_file(title,cached,variable,limited='all',parent=None):
     file_path=''
     try:
         if limited=='json':
             file_path = filedialog.askopenfilenames(title=title, filetypes=[
-                ("Json", "*.json"), ("All Files", "*")])[0]
+                ("Json", "*.json"), ("All Files", "*")],parent=parent)[0]
         elif limited=='images':
             file_path = filedialog.askopenfilenames(title=title, filetypes=[
-                ("JPEG", "*.jpg"),("PNG", "*.png"),("JPG", "*.jpg"),("WebP", "*.webp"), ("All Files", "*")])[0]
+                ("JPEG", "*.jpg"),("PNG", "*.png"),("JPG", "*.jpg"),("WebP", "*.webp"), ("All Files", "*")],parent=parent)[0]
         else:
-            file_path = filedialog.askopenfilenames(title=title, filetypes=[ ("All Files", "*")])[0]
+            file_path = filedialog.askopenfilenames(title=title, filetypes=[ ("All Files", "*")],parent=parent)[0]
         variable.set(file_path)
-        cached=file_path
+        if cached is not None:
+            cached=file_path
     except:
         print('please select a valid  file')
 
@@ -1371,9 +1372,9 @@ def proxyaddView(newWindow):
 
 
 def chooseAccountsView(newWindow):
-    newWindow = tk.Toplevel(newWindow)
-    newWindow.geometry(window_size)
-
+    chooseAccountsWindow = tk.Toplevel(newWindow)
+    chooseAccountsWindow.geometry(window_size)
+    chooseAccountsWindow.title('which accounts in which platform you want upload')
     
     def on_platform_selected(event):
         selected_platform = platform_var.get()
@@ -1394,6 +1395,9 @@ def chooseAccountsView(newWindow):
             # Extract platform names and set them as options in the platform dropdown
             if platform_rows is None:
                 platform_combo["values"]=[]
+                button1 = ttk.Button(chooseAccountsWindow, text="try to add platforms first", command=lambda: (chooseAccountsWindow.withdraw(),newWindow.withdraw(),tab_control.select(1)))
+                button1.grid(row=2, column=2, padx=10, pady=10, sticky=tk.W)
+
             else:
                 platform_names = [row[0] for row in platform_rows]
                 platform_combo["values"] = platform_names
@@ -1404,8 +1408,11 @@ def chooseAccountsView(newWindow):
                     engine=prod_engine
                     account_rows = query2df(engine,query,logger)
                     # Extract account names and set them as options in the account dropdown
-                    if platform_rows is None:
+                    if account_rows is None:
                         langlist.delete(0,tk.END)
+                        button1 = ttk.Button(chooseAccountsWindow, text=f"try to add accounts for {selected_platform} first", command=lambda: (chooseAccountsWindow.withdraw(),tab_control.select(2)))
+                        button1.grid(row=2, column=2, padx=10, pady=10, sticky=tk.W)
+
                     else:                
                         account_names = [row[0] for row in account_rows]
                         logger.info(f'we found {len(account_names)} record matching ')
@@ -1419,20 +1426,20 @@ def chooseAccountsView(newWindow):
     account_var = tk.StringVar()
 
 
-    lbl16 = tk.Label(newWindow, text='select user')
+    lbl16 = tk.Label(chooseAccountsWindow, text='select user')
     lbl16.grid(row=1,column=0, sticky=tk.W)
-    txt16 = tk.Entry(newWindow,textvariable=account_var)
+    txt16 = tk.Entry(chooseAccountsWindow,textvariable=account_var)
     txt16.insert(0,'')
     txt16.grid(row=1,column=1, sticky=tk.W)
 
 
     # Create a label for the platform dropdown
-    platform_label = ttk.Label(newWindow, text="Select Platform:")
+    platform_label = ttk.Label(chooseAccountsWindow, text="Select Platform:")
     platform_label.grid(row=2, column=0, padx=10, pady=10, sticky=tk.W)
     # Create a Combobox for the platform selection
     platform_var = tk.StringVar()
     platform_var.set("choose one:")
-    platform_combo = ttk.Combobox(newWindow, textvariable=platform_var)
+    platform_combo = ttk.Combobox(chooseAccountsWindow, textvariable=platform_var)
     platform_combo.grid(row=2, column=1, padx=10, pady=10, sticky=tk.W)
 
     # Bind the platform selection event to the on_platform_selected function
@@ -1440,7 +1447,7 @@ def chooseAccountsView(newWindow):
 
 
     # Create a label for the account dropdown
-    account_label = ttk.Label(newWindow, text="Select Account(one or many):")
+    account_label = ttk.Label(chooseAccountsWindow, text="Select Account(one or many):")
     account_label.grid(row=3, column=0, padx=10, pady=10, sticky=tk.W)
 
 
@@ -1448,10 +1455,10 @@ def chooseAccountsView(newWindow):
     on_platform_selected(None)
     
 
-    btn6= tk.Button(newWindow, text="save selected", padx = 10, pady = 10,command = lambda: threading.Thread(target=setEntry(account_var.get(),choosedAccounts)).start())     
+    btn6= tk.Button(chooseAccountsWindow, text="save selected", padx = 10, pady = 10,command = lambda: threading.Thread(target=setEntry(account_var.get(),choosedAccounts)).start())     
     btn6.grid(row=5,column=1, sticky=tk.W)
     # Create a frame for the canvas with non-zero row&column weights
-    frame_canvas = tk.Frame(newWindow)
+    frame_canvas = tk.Frame(chooseAccountsWindow)
     frame_canvas.grid(row=4, column=0, pady=(5, 0), sticky='nw')
     frame_canvas.grid_rowconfigure(0, weight=1)
     frame_canvas.grid_columnconfigure(0, weight=1)
@@ -1483,19 +1490,19 @@ def chooseAccountsView(newWindow):
         print('previous selected accounts',account_var.get())
         print('update selected accounts',account_var.get())
         if len(list(selection))==0:
-            lbl15 = tk.Label(newWindow, text='you have not selected  accounts at all.choose one or more')
+            lbl15 = tk.Label(chooseAccountsWindow, text='you have not selected  accounts at all.choose one or more')
             lbl15.grid(row=6,column=0, sticky=tk.W)
             lbl15.after(5*1000,lbl15.destroy)        
         
         elif tmp==account_var.get():
-            lbl15 = tk.Label(newWindow, text='you have not selected new accounts at all')
+            lbl15 = tk.Label(chooseAccountsWindow, text='you have not selected new accounts at all')
             lbl15.grid(row=6,column=0, sticky=tk.W)
             lbl15.after(5*1000,lbl15.destroy)        
         
         else:
             for item in selection:
                 if item in list(account_var.get().split(',')):
-                    lbl15 = tk.Label(newWindow, text=f'this account {item} added before')
+                    lbl15 = tk.Label(chooseAccountsWindow, text=f'this account {item} added before')
                     lbl15.grid(row=6,column=0, sticky=tk.W)
                     lbl15.after(5*1000,lbl15.destroy)   
                 else:
@@ -1545,19 +1552,25 @@ def filterUserPlatform(engine=prod_engine,platform=None,username=None,newWindow=
             db_rows = query2df(engine,query,logger)
     except Exception as e:
         print(f'sql run exception :{e}')
-                        
+
+def getBool(var): # get rid of the event argument
+    print(var.get())
+    value=var.get()
+
 def createTaskMetas(left,right):
-    newWindow = tk.Toplevel(right)
-    newWindow.geometry(window_size)
+    creatTaskWindow = tk.Toplevel(right)
+    creatTaskWindow.geometry(window_size)
     username = tk.StringVar()
 
+    # creatTaskWindow.focus_force()
+    # creatTaskWindow.grab_set()
     
-    newWindow.title('create tasks from scratch')
+    creatTaskWindow.title('create tasks from scratch')
 
     if username=='':
         username='this user account'
 
-    label = tk.Label(newWindow,
+    label = tk.Label(creatTaskWindow,
                 text = f"If you are new,try to start from a folder with videos",
                 font = ("Times New Roman", 10),
                 padx = 10, pady = 10)
@@ -1566,106 +1579,141 @@ def createTaskMetas(left,right):
     
  
     
-    global city_user,country_user,uploadsettingid,proxyStatus_user,choosedAccounts
-    city_user = tk.StringVar()
+    global videometafile,country_user,uploadsettingid,proxyStatus_user,choosedAccounts
+    videometafile = tk.StringVar()
     uploadsettingid = tk.StringVar()
     choosedAccounts = tk.StringVar()
     global latest_proxy_conditions_user
     latest_proxy_conditions_user = tk.StringVar()
-    lbl15 = tk.Label(newWindow, text='load video metas from file')
+    lbl15 = tk.Label(creatTaskWindow, text='load video metas from file')
     lbl15.grid(row=1,column=0, sticky=tk.W)
 
-    txt15 = tk.Entry(newWindow,textvariable=city_user,width=int(0.01*width))
+    txt15 = tk.Entry(creatTaskWindow,textvariable=videometafile)
     txt15.insert(0,'')
-    b_thumbnail_template_file=tk.Button(newWindow,text="select",command=lambda: threading.Thread(target=select_file('select video meta  file','','','all')).start() )
+    b_thumbnail_template_file=tk.Button(creatTaskWindow,text="select",command=lambda: threading.Thread(target=select_file('select video meta  file','',videometafile,'all',creatTaskWindow)).start() )
     b_thumbnail_template_file.grid(row = 1, column = 2,  padx=14, pady=15,sticky='nswe')     
     # txt15.place(x=580, y=30, anchor=tk.NE)
     # txt15.pack(side='left')
     txt15.grid(row=1,column=1, sticky=tk.W)
 
-    button1 = ttk.Button(newWindow, text="Start from video folder", command=lambda: (newWindow.withdraw(),tab_control.select(4)))
+    button1 = ttk.Button(creatTaskWindow, text="Start from video folder", command=lambda: (creatTaskWindow.withdraw(),tab_control.select(5)))
     button1.grid(row=1,column=3, sticky=tk.W)
 
     uploadStrategy = tk.StringVar()
     uploadStrategy.set("start from template")
 
 
-    uploadStrategybox = ttk.Combobox(newWindow, textvariable=uploadStrategy)
-    uploadStrategybox.config(values = ('单帐号', '主副帐号平均发布','多帐号平均发布'))
-    uploadStrategybox.grid(row = 3, column = 2, padx=14, pady=15)    
+    # uploadStrategybox = ttk.Combobox(creatTaskWindow, textvariable=uploadStrategy)
+    # uploadStrategybox.config(values = ('平均分配','随机分配','智能元数据分配'))
+    # uploadStrategybox.grid(row = 3, column = 2, padx=14, pady=15)    
 
 
     
-    lb17 = tk.Label(newWindow, text='load upload setting')
-    lb17.grid(row=3,column=0, sticky=tk.W)
-    txt17 = tk.Entry(newWindow,textvariable=uploadsettingid)
-    txt17.insert(0,'')
-    txt17.grid(row=3,column=1, sticky=tk.W)
+    # lb17 = tk.Label(creatTaskWindow, text='load upload setting')
+    # lb17.grid(row=3,column=0, sticky=tk.W)
+    # txt17 = tk.Entry(creatTaskWindow,textvariable=uploadsettingid)
+    # txt17.insert(0,'')
+    # txt17.grid(row=3,column=1, sticky=tk.W)
 
 
 
 
 
     
-    lb17 = tk.Label(newWindow, text='choose accounts')
-    lb17.grid(row=5,column=0, sticky=tk.W)
-    txt17 = tk.Entry(newWindow,textvariable=choosedAccounts)
+    lb17 = tk.Label(creatTaskWindow, text='choose accounts')
+    lb17.grid(row=4,column=0, sticky=tk.W)
+    txt17 = tk.Entry(creatTaskWindow,textvariable=choosedAccounts)
     txt17.insert(0,'')
-    txt17.grid(row=5,column=1, sticky=tk.W)
+    txt17.grid(row=4,column=1, sticky=tk.W)
 
 
 
-    button1 = ttk.Button(newWindow, text="choose accounts", command=lambda:chooseAccountsView(newWindow))
-    button1.grid(row=5,column=4, sticky=tk.W)
+    button1 = ttk.Button(creatTaskWindow, text="choose accounts", command=lambda:chooseAccountsView(creatTaskWindow))
+    button1.grid(row=4,column=2, sticky=tk.W)
+
+
+    lb18 = tk.Label(creatTaskWindow, text='Runs on.')
+    lb18.grid(row=5,column=0, sticky=tk.W)
+
+
+    deviceType = tk.StringVar()
+
+
+    def deviceTypeCallBack(*args):
+        print(deviceType.get())
+        print(deviceTypebox.current())
+        if 'browser' in deviceType.get():
+            browserType = tk.StringVar()
+
+            browserType.set("Select From Browsers")
+            def browserTypeCallBack(*args):
+                print(browserType.get())
+                print(browserTypebox.current())
+            browserType.trace('w', browserTypeCallBack)
+
+            browserTypebox = ttk.Combobox(creatTaskWindow, textvariable=browserType)
+            browserTypebox.config(values = ('firefox', 'webkit','chrome'))
+            browserTypebox.grid(row = 5, column = 2,padx=14, pady=15, sticky='w')   
+
+
+    deviceType.set("Select From device")
+    deviceType.trace('w', deviceTypeCallBack)
+
+
+    deviceTypebox = ttk.Combobox(creatTaskWindow, textvariable=deviceType)
+    deviceTypebox.config(values = ('embed browser', 'adspower','phone emulator','iphone','android'))
+    deviceTypebox.grid(row = 5, column = 1, padx=14, pady=15, sticky='w')   
+
+    is_open_browser = tk.BooleanVar()
+    is_open_browser.set(True)
+    is_open_browser.trace('w', lambda *_: print("The value is_open_browser was changed"))    
+    l_is_open_browser = tk.Label(creatTaskWindow, text='是否打开浏览器')
+
+    l_is_open_browser.grid(row = 6, column = 0,  padx=14, pady=15,sticky='w') 
+    checkbutton = tk.Checkbutton(creatTaskWindow, text="是", variable=is_open_browser,command = lambda:getBool(is_open_browser))
+    checkbutton.grid(row=6, column=1, padx=14, pady=15, sticky='w')
+
+    is_debug = tk.BooleanVar()
+    is_debug.set(True)
+    l_is_debug = tk.Label(creatTaskWindow, text='是否调试')
+    is_debug.trace('w', lambda *_: print("The value is_debug was changed"))    
+
+    l_is_debug.grid(row = 9, column = 0,  padx=14, pady=15,sticky='w') 
+    checkbutton = tk.Checkbutton(creatTaskWindow, text="是", variable=is_debug,command =lambda: getBool(is_debug))
+    checkbutton.grid(row=9, column=1, padx=14, pady=15, sticky='w')
+
+    is_record_video = tk.BooleanVar()
+    is_record_video.set(True)
+    is_record_video.trace('w', lambda *_: print("The value is_record_video was changed"))    
+
+    l_is_record_video = tk.Label(creatTaskWindow, text='是否录制视频')
+    l_is_record_video.grid(row=7, column=0, padx=14, pady=15, sticky='w')
+
+
+    checkbutton = tk.Checkbutton(creatTaskWindow, text="是", variable=is_record_video,command = lambda:getBool(is_record_video))
+    checkbutton.grid(row=7, column=1, padx=14, pady=15, sticky='w')
+
+
+    wait_policy = tk.IntVar()
+    wait_policy.set(3)
+    l_wait_policy = tk.Label(creatTaskWindow, text='视频处理等待机制')
+    wait_policy.trace('w', lambda *_: print("The value wait_policy was changed"))    
+
+    l_wait_policy.grid(row = 8, column = 0, padx=14, pady=15,sticky='w') 
+    mode0=tk.Radiobutton(creatTaskWindow,text="after processing success",variable=wait_policy,value=1,command=lambda: getBool(wait_policy))
+    mode0.grid(row = 8, column = 1, padx=14, pady=15,sticky='w') 
+    mode1=tk.Radiobutton(creatTaskWindow,text="after uploading success",variable=wait_policy,value=2,command=lambda: getBool(wait_policy))
+    mode1.grid(row = 8, column = 2, padx=14, pady=15,sticky='w') 
+    mode1=tk.Radiobutton(creatTaskWindow,text="after copyright check success",variable=wait_policy,value=3,command=lambda: getBool(wait_policy))
+    mode1.grid(row = 8, column = 3, padx=14, pady=15,sticky='w') 
+
     def uploadStrategyCallBack(*args):
         print(uploadStrategy.get())
-        print(uploadStrategybox.current())
-        if uploadStrategybox.current()==0 or uploadStrategy.get()=='单帐号' :
+        # print(uploadStrategybox.current())
+        # if uploadStrategybox.current()==0 or uploadStrategy.get()=='单帐号' :
+        #     pass
 
 
-
-
-
-
-
-            # lbl16 = tk.Label(newWindow, text='proxy')
-            # lbl16.grid(row=6,column=0, sticky=tk.W)
-            # txt16 = tk.Entry(newWindow,textvariable=country_user,width=int(0.01*width))
-            # txt16.insert(0,'')
-            # txt16.grid(row=6,column=1, sticky=tk.W)
-
-
-            lb18 = tk.Label(newWindow, text='Runs on.')
-            lb18.grid(row=4,column=0, sticky=tk.W)
-
-
-            deviceType = tk.StringVar()
-
-
-            def deviceTypeCallBack(*args):
-                print(deviceType.get())
-                print(deviceTypebox.current())
-                if 'browser' in deviceType.get():
-                    browserType = tk.StringVar()
-
-                    browserType.set("Select From Browsers")
-                    def browserTypeCallBack(*args):
-                        print(browserType.get())
-                        print(browserTypebox.current())
-                    browserType.trace('w', browserTypeCallBack)
-
-                    browserTypebox = ttk.Combobox(newWindow, textvariable=browserType)
-                    browserTypebox.config(values = ('firefox', 'webkit','chrome'))
-                    browserTypebox.grid(row = 4, column = 2,padx=14, pady=15)    
-
-
-            deviceType.set("Select From device")
-            deviceType.trace('w', deviceTypeCallBack)
-
-
-            deviceTypebox = ttk.Combobox(newWindow, textvariable=deviceType)
-            deviceTypebox.config(values = ('embed browser', 'adspower','phone emulator','iphone','android'))
-            deviceTypebox.grid(row = 4, column = 1, padx=14, pady=15)    
 
 
 
@@ -1677,7 +1725,7 @@ def createTaskMetas(left,right):
     # uploadPlatform.set("choose target platform")
 
 
-    # uploadPlatformbox = ttk.Combobox(newWindow, textvariable=uploadPlatform)
+    # uploadPlatformbox = ttk.Combobox(creatTaskWindow, textvariable=uploadPlatform)
     # uploadPlatformbox.config(values = ('tiktok', 'youtube','xhs'))
     # uploadPlatformbox.grid(row = 3, column = 3, padx=14, pady=15)    
     # def uploadPlatformboxCallBack(*args):
