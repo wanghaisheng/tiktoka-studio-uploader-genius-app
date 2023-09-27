@@ -97,11 +97,12 @@ if platform.system()=='Windows':
     
     ultra = UltraDict(shared_lock=True,recurse=True)
     settings = UltraDict(shared_lock=True,recurse=True)
-
+    tmp = UltraDict(shared_lock=True,recurse=True)
 else:
     ultra = UltraDict(recurse=True)
     settings = UltraDict(recurse=True)
-
+    tmp = UltraDict(shared_lock=True,recurse=True)
+tmp['uploadaddaccounts']={}
 settings['zh']={
 		"title": "TiktokaStudio 视频批量上传助手测试版",
 		"select_musics_folder": "选择背景音樂文件夹",
@@ -643,16 +644,7 @@ def load_setting():
     setting = json.loads(setting_json)
     return setting
 
-def reset_gui():
 
-    load_setting()
-
-    # 清空表格
-    # 写入数据
-
-    prefertags.set(setting['prefertags'])
-    preferdessuffix.set(setting['preferdessuffix'])
-    preferdesprefix.set(setting['preferdesprefix'])
 
 def ordered(obj):
     if isinstance(obj, dict):
@@ -666,117 +658,6 @@ def ordered(obj):
 settingid=0
 # 保存配置
 
-def save_setting(dbm):
-    global settingid
-
-    try:
-        proxy_option_value = proxy_option.get()
-        # print(' proxy_option setting',proxy_option.get())
-    except NameError:
-        print('no  proxy_option,using existing setting',
-              setting['proxy_option'])
-        proxy_option_value = setting['proxy_option']
-    try:
-        firefox_profile_folder_path = firefox_profile_folder.get()
-        print('firefox_profile_folder is ',firefox_profile_folder_path)
-        setting['firefox_profile_folder'] = firefox_profile_folder_path
-
-    except NameError:
-        print('no new  firefox_profile_folder,using existing setting',
-              setting['firefox_profile_folder'])
-        setting['firefox_profile_folder'] = ''
-
-    try:
-        video_folder_path=video_folder.get()
-    except NameError:
-        print('no new  video_folder_path,using existing setting',
-              setting['video_folder'])
-        video_folder_path = setting['video_folder']
-        print(video_folder_path)
-    else:
-        if video_folder_path:
-            if os.path.exists(video_folder_path):
-                setting['video_folder'] = video_folder_path
-            else:
-                print('we can not find this video foler',video_folder_path)
-    try:
-        channel_cookie_path=channel_cookie.get()
-    except NameError:
-        print('no new  channel_cookie_path,using existing setting',
-              setting['channelcookiepath'])
-        channel_cookie_path = setting['channelcookiepath']
-        print(channel_cookie_path)
-    else:
-        if channel_cookie_path:
-            if os.path.exists(channel_cookie_path):
-                setting['channelcookiepath'] = channel_cookie_path
-            else:
-                print('we cannot find cookie file',channel_cookie_path)
-    try:
-        music_folder_path=music_folder.get()
-    except NameError:
-        # print('no new  music_folder,using existing setting',
-            #   setting['music_folder'])
-        music_folder = setting['music_folder']
-        # print(music_folder)
-    else:
-        if music_folder_path:
-            setting['music_folder'] = music_folder_path
-
-    setting['is_record_video'] = is_record_video.get()
-    setting['is_open_browser'] = is_open_browser.get()    
-    setting['ratio'] = ratio.get()
-    setting['debug'] = is_debug.get()
-
-    setting['dailycount'] = dailycount.get()
-    setting['channelname'] = channelname.get()
-    setting['start_publish_date'] = start_publish_date.get()
-
-    setting['preferdesprefix'] = preferdesprefix.get()
-    setting['preferdessuffix'] = preferdessuffix.get()
-    setting['proxy_option']=proxy_option_value
-    setting['prefertags'] = prefertags.get()
-    setting['publishpolicy']=publishpolicy.get()    
-    if setting['publishpolicy']=='': 
-        setting['publishpolicy']=1
-    if setting['start_publish_date']=='': 
-        setting['start_publish_date']='1'
-    if setting['channelname'] is None or setting['channelname']=='' :
-        print('before save setting,you need input channelname')
-    else:
-        if setting['video_folder'] is None or setting['video_folder']=='' :
-            print('before save setting,you need input video_folder')
-        else:
-            if os.path.exists(channel_cookie_path):
-
-                
-                newsetting=json.dumps(setting, indent=4, separators=(',', ': '))
-                if os.path.exists('./assets/config/'+setting['channelname']+".json"):
-                    with open('./assets/config/'+setting['channelname']+".json", 'r') as fr:
-                        exitingsetting=json.loads(fr.read())
-
-                        if ordered(setting)==ordered(exitingsetting):
-                            print('no change at all')
-                        else:
-                            print('new change will be saved')
-                        with open('./assets/config/'+setting['channelname']+".json", 'w') as f:
-                            f.write(json.dumps(setting, indent=4, separators=(',', ': ')))
-                        settingid=dbm.Add_New_UploadSetting_In_Db(setting)
-                        print("配置保存成功",settingid)
-                        with open('latest-used-setting.txt','w+') as fw:
-                            fw.write('./assets/config/'+setting['channelname']+".json")                        
-                else:
-                    with open('./assets/config/'+setting['channelname']+".json", 'w') as f:
- 
-                        f.write(json.dumps(setting, indent=4, separators=(',', ': ')))                                     
-                # print('当前使用的配置为：', setting)
-                
-                    settingid=dbm.Add_New_UploadSetting_In_Db(setting)
-                    print("配置保存成功",settingid)
-                    with open('latest-used-setting.txt','w+') as fw:
-                        fw.write('./assets/config/'+setting['channelname']+".json")
-            else:
-                print('请检查cookie文件是否存在 是否损坏',channel_cookie_path)
 
 def select_profile_folder():
     global firefox_profile_folder_path
@@ -957,95 +838,6 @@ def ValidateSetting():
 
 
 
-def create_setting_file():
-    ROOT_DIR = os.path.dirname(
-        os.path.abspath(__file__)
-    )
-
-    print('使用默认模版新建配置文件')
-    default_setting_path ="./assets/config/template.json"
-
-    global setting_file
-    if os.path.exists(ROOT_DIR+os.path.sep+default_setting_path):
-        print('default template exists')
-        fp = open(ROOT_DIR+os.path.sep+default_setting_path, 'r', encoding='utf-8')
-        setting_json = fp.read()
-        fp.close()        
-        setting = json.loads(setting_json)
-    else:
-        setting={}
-    firefox_profile_folder_path = setting['firefox_profile_folder']
-    firefox_profile_folder.set(firefox_profile_folder_path)
-
-    proxy_option.set(setting['proxy_option'])
-    # firefox_profile_folder.set(setting['firefox_profile_folder'])
-    channel_cookie.set(setting['channelcookiepath'])
-    video_folder.set(setting['video_folder'])
-
-    prefertags.set(setting['prefertags'])
-    preferdessuffix.set(setting['preferdessuffix'])
-    preferdesprefix.set(setting['preferdesprefix'])
-    
-    dailycount.set(setting['dailycount'])
-    channelname.set('hints-we use this as setting file name,you should change it')
-    music_folder_path= setting['music_folder']
-    publishpolicy.set(setting['publishpolicy'])
-    music_folder.set(music_folder_path)
-    ratio.set(setting['ratio'])    
-    with open(ROOT_DIR+os.path.sep+'./assets/config/'+channelname.get()+".json", 'w') as f:
-
-        f.write(json.dumps(setting, indent=4, separators=(',', ': ')))      
-
-    if os.path.exists(ROOT_DIR+os.path.sep+'./assets/config/'+channelname.get()+".json"):
-        print('setting file create done')
-
-
-def load_setting_file():
-    ROOT_DIR = os.path.dirname(
-        os.path.abspath(__file__)
-    )
-    default_setting_path=''
-    if os.path.exists('latest-used-setting.txt') :
-        try:
-            fp = open('latest-used-setting.txt', 'r', encoding='utf-8')
-            default_setting_path=fp.readlines()[0]
-            print('读取最近保存的配置文件',default_setting_path)
-
-
-        except:
-            print('读取配置文件失败 加载默认模版')
-            default_setting_path ="./assets/config/demo.json"
-
-    else:
-        print('读取配置文件失败 加载默认模版')
-        default_setting_path ="./assets/config/demo.json"
-
-
-
-    print('======',ROOT_DIR+os.path.sep+default_setting_path)
-
-    global setting_file
-    setting_file = filedialog.askopenfilenames(initialdir=ROOT_DIR,initialfile=ROOT_DIR+os.path.sep+default_setting_path,title="请选择该频道配置文件", filetypes=[
-        ("Json", "*.json"), ("All Files", "*")])[0]
-    load_setting()
-    firefox_profile_folder_path = setting['firefox_profile_folder']
-    firefox_profile_folder.set(firefox_profile_folder_path)
-
-    proxy_option.set(setting['proxy_option'])
-    # firefox_profile_folder.set(setting['firefox_profile_folder'])
-    channel_cookie.set(setting['channelcookiepath'])
-    video_folder.set(setting['video_folder'])
-
-    prefertags.set(setting['prefertags'])
-    preferdessuffix.set(setting['preferdessuffix'])
-    preferdesprefix.set(setting['preferdesprefix'])
-    
-    dailycount.set(setting['dailycount'])
-    channelname.set(setting['channelname'])
-    music_folder_path= setting['music_folder']
-    publishpolicy.set(setting['publishpolicy'])
-    music_folder.set(music_folder_path)
-    ratio.set(setting['ratio'])
 
 
 
@@ -1389,72 +1181,14 @@ def proxyaddView(newWindow):
     langlist.bind('<<ListboxSelect>>',CurSelet)    
 
 
-def chooseAccountsView(newWindow):
+def chooseAccountsView(newWindow,parentchooseaccounts):
     chooseAccountsWindow = tk.Toplevel(newWindow)
     chooseAccountsWindow.geometry(window_size)
     chooseAccountsWindow.title('which accounts in which platform you want upload')
-    
-    def on_platform_selected(event):
-        selected_platform = platform_var.get()
-
-        # Clear the current selection in the account dropdown
-        # account_var.set("")
-        # account_var.set("Select Accounts:")        
-
-        if selected_platform:
-            # Connect to the SQLite database
-
-            # Execute a query to retrieve the dynamic platform list
-            query="SELECT DISTINCT platform FROM accounts"
-            engine=prod_engine
-            platform_rows = query2df(engine,query,logger)
-
-            logger.info(f'query results of existing platforms is {platform_rows}')
-
-            # Extract platform names and set them as options in the platform dropdown
-            if platform_rows is None:
-                platform_combo["values"]=[]
-                button1 = ttk.Button(chooseAccountsWindow, text="try to add platforms first", command=lambda: (chooseAccountsWindow.withdraw(),newWindow.withdraw(),tab_control.select(1)))
-                button1.grid(row=2, column=2, padx=10, pady=10, sticky=tk.W)
-
-            else:
-                platform_names = [row.platform for row in platform_rows.itertuples()]
-                platform_combo["values"] = platform_names
-
-                # Execute a query to retrieve accounts based on the selected platform
-                query=f"SELECT account_name FROM your_table WHERE platform = {selected_platform}"
-                if  len(platform_names)==0:
-                    platform_combo["values"]=[]
-                    button1 = ttk.Button(chooseAccountsWindow, text="try to add platforms first", command=lambda: (chooseAccountsWindow.withdraw(),newWindow.withdraw(),tab_control.select(1)))
-                    button1.grid(row=2, column=2, padx=10, pady=10, sticky=tk.W)
-                    
-                elif selected_platform in platform_names:
-                    engine=prod_engine
-                    account_rows = query2df(engine,query,logger)
-                    # Extract account names and set them as options in the account dropdown
-                    if account_rows is None:
-                        langlist.delete(0,tk.END)
-                        button1 = ttk.Button(chooseAccountsWindow, text=f"try to add accounts for {selected_platform} first", command=lambda: (chooseAccountsWindow.withdraw(),newWindow.withdraw(),tab_control.select(1)))
-                        button1.grid(row=2, column=2, padx=10, pady=10, sticky=tk.W)
-
-                    else:                
-                        account_names = [row.username for row in account_rows.itertuples()]
-                        logger.info(f'we found {len(account_names)} record matching ')
-
-                        langlist.delete(0,tk.END)
-                        i=0
-                        for row in account_names:
-
-                            langlist.insert(tk.END, row)
-                            langlist.itemconfig(int(i), bg = "lime")                        
     account_var = tk.StringVar()
 
 
-    lbl16 = tk.Label(chooseAccountsWindow, text='select user')
-    lbl16.grid(row=1,column=0, sticky=tk.W)
-    txt16 = tk.Entry(chooseAccountsWindow,textvariable=account_var)
-    txt16.insert(0,'')
-    txt16.grid(row=1,column=1, sticky=tk.W)
+
 
 
     # Create a label for the platform dropdown
@@ -1466,21 +1200,6 @@ def chooseAccountsView(newWindow):
     platform_combo = ttk.Combobox(chooseAccountsWindow, textvariable=platform_var)
     platform_combo.grid(row=2, column=1, padx=10, pady=10, sticky=tk.W)
 
-    # Bind the platform selection event to the on_platform_selected function
-    platform_combo.bind("<<ComboboxSelected>>", on_platform_selected)
-
-
-    # Create a label for the account dropdown
-    account_label = ttk.Label(chooseAccountsWindow, text="Select Account(one or many):")
-    account_label.grid(row=3, column=0, padx=10, pady=10, sticky=tk.W)
-
-
-    # Initialize the platform dropdown by calling the event handler
-    on_platform_selected(None)
-    
-
-    btn6= tk.Button(chooseAccountsWindow, text="save selected", padx = 10, pady = 10,command = lambda: threading.Thread(target=setEntry(account_var.get(),choosedAccounts)).start())     
-    btn6.grid(row=5,column=1, sticky=tk.W)
     # Create a frame for the canvas with non-zero row&column weights
     frame_canvas = tk.Frame(chooseAccountsWindow)
     frame_canvas.grid(row=4, column=0, pady=(5, 0), sticky='nw')
@@ -1498,40 +1217,174 @@ def chooseAccountsView(newWindow):
     langlist.pack(padx = 10, pady = 10,
             expand = tk.YES, fill = "both")
 
+    btn6= tk.Button(chooseAccountsWindow, text="remove selected", padx = 10, pady = 10,command = lambda: threading.Thread(target=remove_selected_accounts).start())     
+    btn6.grid(row=5,column=1, sticky=tk.W)
+    lbl16 = tk.Label(chooseAccountsWindow, text='selected user')
+    lbl16.grid(row=6,column=0, sticky=tk.W)
+    txt16 = tk.Entry(chooseAccountsWindow,textvariable=account_var)
+    txt16.insert(0,'')
+    txt16.grid(row=6,column=2, 
+            #    width=width,
+               columnspan=8,
+            #    rowspan=3,
+               sticky='nswe')    
+    def on_platform_selected(event):
+        selected_platform = platform_var.get()
+        # Clear the current selection in the account dropdown
+        # account_var.set("")
+        # account_var.set("Select Accounts:")        
+
+        if selected_platform:
+            # Connect to the SQLite database
+            table_name='accounts'
+            # Execute a query to retrieve the dynamic platform list
+            query="SELECT DISTINCT platform FROM accounts"
+            engine=prod_engine
+            platform_rows = query2df(engine,query,logger)
+
+
+            # Extract platform names and set them as options in the platform dropdown
+            if platform_rows is None:
+                platform_combo["values"]=[]
+                button1 = ttk.Button(chooseAccountsWindow, text="try to add platforms first", command=lambda: (chooseAccountsWindow.withdraw(),newWindow.withdraw(),tab_control.select(1)))
+                button1.grid(row=2, column=2, padx=10, pady=10, sticky=tk.W)
+
+            else:
+                platform_names = [row.platform for row in platform_rows.itertuples()]
+                logger.info(f'query results of existing platforms is {platform_names}')
+
+
+                # Execute a query to retrieve accounts based on the selected platform
+                query=f"SELECT username FROM {table_name} WHERE platform = '{selected_platform}'"
+                if  len(platform_names)==0:
+                    platform_combo["values"]=[]
+                    button1 = ttk.Button(chooseAccountsWindow, text="try to add platforms first", command=lambda: (chooseAccountsWindow.withdraw(),newWindow.withdraw(),tab_control.select(1)))
+                    button1.grid(row=2, column=2, padx=10, pady=10, sticky=tk.W)
+                    
+                else:
+                    tmp_accounts=''
+                    platform_combo["values"]=platform_names
+                    for platform in platform_names:
+                        
+                        if tmp['uploadaddaccounts'].has_key(platform):
+                            logger.info(f'you have cached account for this platform {platform}')
+                        else:
+                            tmp['uploadaddaccounts'][platform]=[]
+                    
+                    print('all added accounts',tmp['uploadaddaccounts'])
+
+
+
+                    engine=prod_engine
+                    account_rows = query2df(engine,query,logger)
+                    # Extract account names and set them as options in the account dropdown
+
+                    if account_rows is None:
+                        langlist.delete(0,tk.END)
+                        button1 = ttk.Button(chooseAccountsWindow, text=f"try to add accounts for {selected_platform} first", command=lambda: (chooseAccountsWindow.withdraw(),newWindow.withdraw(),tab_control.select(1)))
+                        button1.grid(row=2, column=2, padx=10, pady=10, sticky=tk.W)
+
+                    else:                
+                        account_names = [row.username for row in account_rows.itertuples()]
+                        logger.info(f'we found {len(account_names)} record matching ')
+
+                        langlist.delete(0,tk.END)
+                        i=0
+                        for row in account_names:
+
+                            langlist.insert(tk.END, row)
+                            langlist.itemconfig(int(i), bg = "lime")                        
+
+    
+    # Bind the platform selection event to the on_platform_selected function
+    platform_combo.bind("<<ComboboxSelected>>", on_platform_selected)
+
+
+    # Create a label for the account dropdown
+    account_label = ttk.Label(chooseAccountsWindow, text="Select Account(one or many):")
+    account_label.grid(row=3, column=0, padx=10, pady=10, sticky=tk.W)
+
+
+    # Initialize the platform dropdown by calling the event handler
+    on_platform_selected(None)
+
+    def remove_selected_accounts():
+        selected_accounts=tmp['uploadaddaccounts']['selected']
+        print('you want to remove these selected accounts',selected_accounts)
+        # print('previous selected accounts',tmp['uploadaddaccounts'])
+        # print('update selected accounts',account_var.get())
+        if len(selected_accounts)==0:
+            lbl15 = tk.Label(chooseAccountsWindow, text='you have not selected  accounts at all.choose one or more')
+            lbl15.grid(row=4,column=2, sticky=tk.W)
+            lbl15.after(5*1000,lbl15.destroy)        
+        
+        # elif selected_accounts==tmp['uploadaddaccounts'][platform_var.get()]:
+        #     lbl15 = tk.Label(chooseAccountsWindow, text='you have not selected new accounts at all')
+        #     lbl15.grid(row=6,column=0, sticky=tk.W)
+        #     lbl15.after(5*1000,lbl15.destroy)        
+        
+        else:
+            for item in selected_accounts:
+                logger.info(f'you want to remove this selected account {item}')
+                if item in tmp['uploadaddaccounts'][platform_var.get()]:
+                    tmp['uploadaddaccounts'][platform_var.get()].remove(item)
+                    logger.info(f'this account {item} removed success')
+                    lbl15 = tk.Label(chooseAccountsWindow, text=f'this account {item} removed success')
+                    lbl15.grid(row=4,column=2, sticky=tk.W)
+                    lbl15.after(5*1000,lbl15.destroy)   
+                else:
+                    logger.info(f'you cannot remove this account {item}, not added before')
+                    lbl15 = tk.Label(chooseAccountsWindow, text=f'this account {item} not added before')
+                    lbl15.grid(row=4,column=2, sticky=tk.W)
+                    lbl15.after(5*1000,lbl15.destroy)   
+        show_str=str(tmp['uploadaddaccounts'])
+        if tmp['uploadaddaccounts'].has_key('selected'):
+            new=dict(tmp['uploadaddaccounts'])
+            new.pop('selected')
+            show_str=str(new)
+        account_var.set(show_str)
+        parentchooseaccounts.set(show_str)
 
     def add_selected_accounts(event):
         listbox = event.widget
-        # values = [listbox.get(idx) for idx in listbox.curselection()]
-        selection=listbox.curselection()
-        # picked = listbox.get(selection[1])
-        print(selection,list(selection),listbox.get(0))
-        tmp=''
-        for i in list(selection):
-            tmp=tmp+listbox.get(i)+';'
-
-
-        print('selected accounts',tmp)
-        print('previous selected accounts',account_var.get())
-        print('update selected accounts',account_var.get())
-        if len(list(selection))==0:
+        values = [listbox.get(idx) for idx in listbox.curselection()]
+        tmp['uploadaddaccounts']['selected']=values
+        # print('selected accounts',values)
+        # print('previous selected accounts',tmp['uploadaddaccounts'])
+        # print('update selected accounts',account_var.get())
+        if len(list(values))==0:
+            logger.info('you have not selected  accounts at all.choose one or more')
             lbl15 = tk.Label(chooseAccountsWindow, text='you have not selected  accounts at all.choose one or more')
-            lbl15.grid(row=6,column=0, sticky=tk.W)
+            lbl15.grid(row=4,column=2, sticky=tk.W)
             lbl15.after(5*1000,lbl15.destroy)        
         
-        elif tmp==account_var.get():
+        elif values==tmp['uploadaddaccounts'][platform_var.get()]:
+            logger.info('you have not selected new accounts at all')
             lbl15 = tk.Label(chooseAccountsWindow, text='you have not selected new accounts at all')
-            lbl15.grid(row=6,column=0, sticky=tk.W)
+            lbl15.grid(row=4,column=2, sticky=tk.W)
             lbl15.after(5*1000,lbl15.destroy)        
         
         else:
-            for item in selection:
-                if item in list(account_var.get().split(',')):
+            for item in values:
+                if item in tmp['uploadaddaccounts'][platform_var.get()]:
+                    logger.info(f'this account {item} added before')                    
                     lbl15 = tk.Label(chooseAccountsWindow, text=f'this account {item} added before')
-                    lbl15.grid(row=6,column=0, sticky=tk.W)
+                    lbl15.grid(row=4,column=2, sticky=tk.W)
                     lbl15.after(5*1000,lbl15.destroy)   
                 else:
-                    account_var.set(account_var.get()+','+item)
-
+                    tmp['uploadaddaccounts'][platform_var.get()].append(item)
+                    logger.info(f'this account {item} added successS')
+                    lbl15 = tk.Label(chooseAccountsWindow, text=f'this account {item} added successS')
+                    lbl15.grid(row=4,column=2, sticky=tk.W)
+                    lbl15.after(5*1000,lbl15.destroy)   
+            
+        show_str=str(tmp['uploadaddaccounts'])
+        if tmp['uploadaddaccounts'].has_key('selected'):
+            new=dict(tmp['uploadaddaccounts'])
+            new.pop('selected')
+            show_str=str(new)
+        account_var.set(show_str)
+        parentchooseaccounts.set(show_str)
     langlist.bind('<<ListboxSelect>>',add_selected_accounts)    
 
 
@@ -3444,7 +3297,9 @@ def bulkImportUsers(ttkframe):
     tree.column('#6', anchor = 'center', width = 80)
     tree.heading('#7', text = 'updated. Time')
     tree.column('#7', anchor = 'center', width = 80)
-def saveUser(engine,platform,username,password,proxy,cookies):
+def saveUser(engine,platform,username,password,proxy,cookies,if_exists=None):
+    if not if_exists in ['append','replace']:
+        if_exists='append'
     if platform is None:
         logger.info('please choose a platform')
     if username is None:
@@ -3467,7 +3322,7 @@ def saveUser(engine,platform,username,password,proxy,cookies):
         print('1000000000',account_df)
 
         account_df['updated_at']=None  
-        is_proxy_ok=pd2table(engine,'accounts',account_df,logger)
+        is_proxy_ok=pd2table(engine,'accounts',account_df,logger,if_exists=if_exists)
     
 def  queryAccounts(newWindow,tree,engine,logger,username,platform,latest_conditions_value):
 
@@ -3641,17 +3496,27 @@ def accountView(frame,ttkframe,lang):
     b_channel_cookie_gen=tk.Button(ttkframe,text="pull",command=auto_gen_cookie_file)
     # b_channel_cookie_gen.place(x=100, y=390)    
     b_channel_cookie_gen.grid(row = 6, column = 5, columnspan = 3, padx=14, pady=15)    
+    def if_existsOptionCallBack(*args):
+        print(if_exists.get())
+        print(if_exists_box.current())
+
+    if_exists = tk.StringVar()
+    if_exists.set("if the same account exists")
+    if_exists.trace('w', if_existsOptionCallBack)
 
 
+    if_exists_box = ttk.Combobox(ttkframe, textvariable=if_exists)
+    if_exists_box.config(values =('replace', 'append'))
+    if_exists_box.grid(row = 9, column = 5, columnspan = 3, padx=14, pady=15)    
     
-    b_save_user=tk.Button(ttkframe,text="save user",command=lambda: threading.Thread(target=saveUser(prod_engine,box.get(),username.get(),password.get(),proxy_option_account.get(),channel_cookie_user.get())).start() )
+    b_save_user=tk.Button(ttkframe,text="save user",command=lambda: threading.Thread(target=saveUser(prod_engine,socialplatform.get(),username.get(),password.get(),proxy_option_account.get(),channel_cookie_user.get(),if_exists=if_exists.get())).start() )
                          
     # b_save_user.place(x=10, y=420)        
-    b_save_user.grid(row = 8, column = 0, columnspan = 3, padx=14, pady=15)    
+    b_save_user.grid(row = 10, column = 0, columnspan = 3, padx=14, pady=15)    
 
     b_bulk_import_users=tk.Button(ttkframe,text="bulk import",command=lambda: threading.Thread(target=bulkImportUsers(ttkframe)).start() )
     # b_bulk_import_users.place(x=10, y=450)    
-    b_bulk_import_users.grid(row = 8, column = 4, columnspan = 3, padx=14, pady=15)    
+    b_bulk_import_users.grid(row = 10, column = 4, columnspan = 3, padx=14, pady=15)    
 
         
     
@@ -3821,8 +3686,7 @@ def createTaskMetas(left,right):
     txt17.grid(row=4,column=1, sticky=tk.W)
 
 
-
-    button1 = ttk.Button(creatTaskWindow, text="choose accounts", command=lambda:chooseAccountsView(creatTaskWindow))
+    button1 = ttk.Button(creatTaskWindow, text="ADD", command=lambda:chooseAccountsView(creatTaskWindow,choosedAccounts))
     button1.grid(row=4,column=2, sticky=tk.W)
 
 
@@ -5032,17 +4896,65 @@ def on_tab_change(event):
     else:
         show_log_frame()
 
+def addTab(tab_control):
+
+    # Create a ttk.Frame within the notebook
+    doc_frame = ttk.Frame(tab_control)
+    doc_frame.grid(row=0, column=0, sticky="nsew")
+
+    # Create left and right frames within doc_frame
+    doc_frame_left = tk.Frame(doc_frame)
+    doc_frame_left.grid(row=0, column=0, sticky="nsew")
+
+    doc_frame_right = tk.Frame(doc_frame)
+    doc_frame_right.grid(row=0, column=1, sticky="nsew")
+
+    # Add content to doc_frame_left and doc_frame_right
+    # You can add widgets and content here as needed
+
+    # Configure the notebook columns to take half of the available width
+    tab_control.grid_columnconfigure(0, weight=1)
+    tab_control.grid_columnconfigure(1, weight=1)
+
+    # Configure the doc_frame columns to take half of the available width initially
+    doc_frame.grid_columnconfigure(0, weight=1, uniform="group1")
+    doc_frame.grid_columnconfigure(1, weight=1, uniform="group1")
+
+    # Set the initial weight for the right column to be half of the left column
+    doc_frame.grid_columnconfigure(0, weight=1, minsize=400)  # Adjust minsize as needed
+    doc_frame.grid_columnconfigure(1, weight=2)
+    return doc_frame,doc_frame_left,doc_frame_right
+
 def render(root,window,log_frame,lang):
     global doc_frame,install_frame,thumb_frame,video_frame,proxy_frame,account_frame,upload_frame,meta_frame,tab_control
 
     tab_control = ttk.Notebook(window)
     tab_control.bind("<<NotebookTabChanged>>", on_tab_change)
+    tab_control.grid_columnconfigure(0, weight=1)
+    tab_control.grid_columnconfigure(1, weight=1)
+    # lefts=[]
+    # rights=[]
+    # for view in ['installView','accountView','proxyView','videosView','thumbView',
+                 
+    #              'tagsView','desView','scheduleView','metaView',
+    #              'uploadView','docView']:
 
+    #     subtab_frame,left,right=addTab(tab_control)
+    #     lefts.append(left)
+    #     rights.append(right)
+
+    #     tab_control.add(subtab_frame, 
+    #                     text=settings[lang][view])
     doc_frame = ttk.Frame(tab_control)
     doc_frame.grid_rowconfigure(0, weight=1)
     doc_frame.grid_columnconfigure(0, weight=1, uniform="group1")
     doc_frame.grid_columnconfigure(1, weight=1, uniform="group1")
-    doc_frame.columnconfigure((0,1), weight=1)
+    doc_frame.grid_columnconfigure(0, weight=1,
+                                      minsize=int(0.5*width)
+
+                                      )
+    doc_frame.grid_columnconfigure(1, weight=2)
+    doc_frame.grid(row=0, column=0, sticky="nsew")
     
     doc_frame_left = tk.Frame(doc_frame, height = height)
     doc_frame_left.grid(row=0,column=0,sticky="nsew")
@@ -5055,7 +4967,13 @@ def render(root,window,log_frame,lang):
     install_frame.grid_rowconfigure(0, weight=1)
     install_frame.grid_columnconfigure(0, weight=1, uniform="group1")
     install_frame.grid_columnconfigure(1, weight=1, uniform="group1")
-    install_frame.columnconfigure((0,1), weight=1)
+    install_frame.grid_columnconfigure(0, weight=1,
+                                      minsize=int(0.5*width)
+
+                                      )
+    install_frame.grid_columnconfigure(1, weight=2)
+    install_frame.grid(row=0, column=0, sticky="nsew")
+
     
     install_frame_left = tk.Frame(install_frame, height = height)
     install_frame_left.grid(row=0,column=0,sticky="nsew")
@@ -5067,10 +4985,20 @@ def render(root,window,log_frame,lang):
 
 
     thumb_frame = ttk.Frame(tab_control)
+    thumb_frame = ttk.Frame(tab_control)
     thumb_frame.grid_rowconfigure(0, weight=1)
     thumb_frame.grid_columnconfigure(0, weight=1, uniform="group1")
     thumb_frame.grid_columnconfigure(1, weight=1, uniform="group1")
-    thumb_frame.columnconfigure((0,1), weight=1)
+    thumb_frame.grid_columnconfigure(0, weight=1,
+                                      minsize=int(0.5*width)
+
+                                      )
+    thumb_frame.grid_columnconfigure(1, weight=2)
+    thumb_frame.grid(row=0, column=0, sticky="nsew")
+    thumb_frame_left = tk.Frame(thumb_frame)
+    thumb_frame_left.grid(row=0,column=0,sticky="nswe")
+    thumb_frame_right = tk.Frame(thumb_frame)
+    thumb_frame_right.grid(row=0,column=1,sticky="nswe") 
     
     thumb_frame_left = tk.Frame(thumb_frame, height = height)
     thumb_frame_left.grid(row=0,column=0,sticky="nsew")
@@ -5081,11 +5009,20 @@ def render(root,window,log_frame,lang):
 
 
     tags_frame = ttk.Frame(tab_control)
+    tags_frame = ttk.Frame(tab_control)
     tags_frame.grid_rowconfigure(0, weight=1)
     tags_frame.grid_columnconfigure(0, weight=1, uniform="group1")
     tags_frame.grid_columnconfigure(1, weight=1, uniform="group1")
-    tags_frame.columnconfigure((0,1), weight=1)
-    
+    tags_frame.grid_columnconfigure(0, weight=1,
+                                      minsize=int(0.5*width)
+
+                                      )
+    tags_frame.grid_columnconfigure(1, weight=2)
+    tags_frame.grid(row=0, column=0, sticky="nsew")
+    tags_frame_left = tk.Frame(tags_frame)
+    tags_frame_left.grid(row=0,column=0,sticky="nswe")
+    tags_frame_right = tk.Frame(tags_frame)
+    tags_frame_right.grid(row=0,column=1,sticky="nswe") 
     tags_frame_left = tk.Frame(tags_frame, height = height)
     tags_frame_left.grid(row=0,column=0,sticky="nsew")
     tags_frame_right = tk.Frame(tags_frame, height = height)
@@ -5094,10 +5031,20 @@ def render(root,window,log_frame,lang):
 
 
     des_frame = ttk.Frame(tab_control)
+    des_frame = ttk.Frame(tab_control)
     des_frame.grid_rowconfigure(0, weight=1)
     des_frame.grid_columnconfigure(0, weight=1, uniform="group1")
     des_frame.grid_columnconfigure(1, weight=1, uniform="group1")
-    des_frame.columnconfigure((0,1), weight=1)
+    des_frame.grid_columnconfigure(0, weight=1,
+                                      minsize=int(0.5*width)
+
+                                      )
+    des_frame.grid_columnconfigure(1, weight=2)
+    des_frame.grid(row=0, column=0, sticky="nsew")
+    des_frame_left = tk.Frame(des_frame)
+    des_frame_left.grid(row=0,column=0,sticky="nswe")
+    des_frame_right = tk.Frame(des_frame)
+    des_frame_right.grid(row=0,column=1,sticky="nswe") 
     
     des_frame_left = tk.Frame(des_frame, height = height)
     des_frame_left.grid(row=0,column=0,sticky="nsew")
@@ -5107,21 +5054,41 @@ def render(root,window,log_frame,lang):
 
 
     schedule_frame = ttk.Frame(tab_control)
+    schedule_frame = ttk.Frame(tab_control)
     schedule_frame.grid_rowconfigure(0, weight=1)
     schedule_frame.grid_columnconfigure(0, weight=1, uniform="group1")
     schedule_frame.grid_columnconfigure(1, weight=1, uniform="group1")
-    schedule_frame.columnconfigure((0,1), weight=1)
+    schedule_frame.grid_columnconfigure(0, weight=1,
+                                      minsize=int(0.5*width)
+
+                                      )
+    schedule_frame.grid_columnconfigure(1, weight=2)
+    schedule_frame.grid(row=0, column=0, sticky="nsew")
+    schedule_frame_left = tk.Frame(schedule_frame)
+    schedule_frame_left.grid(row=0,column=0,sticky="nswe")
+    schedule_frame_right = tk.Frame(schedule_frame)
+    schedule_frame_right.grid(row=0,column=1,sticky="nswe") 
     
     schedule_frame_left = tk.Frame(schedule_frame, height = height)
     schedule_frame_left.grid(row=0,column=0,sticky="nsew")
     schedule_frame_right = tk.Frame(schedule_frame, height = height)
     schedule_frame_right.grid(row=0,column=1,sticky="nsew") 
     video_frame = ttk.Frame(tab_control)
-
+    video_frame = ttk.Frame(tab_control)
     video_frame.grid_rowconfigure(0, weight=1)
     video_frame.grid_columnconfigure(0, weight=1, uniform="group1")
     video_frame.grid_columnconfigure(1, weight=1, uniform="group1")
-    video_frame.columnconfigure((0,1), weight=1)
+    video_frame.grid_columnconfigure(0, weight=1,
+                                      minsize=int(0.5*width)
+
+                                      )
+    video_frame.grid_columnconfigure(1, weight=2)
+    video_frame.grid(row=0, column=0, sticky="nsew")
+    video_frame_left = tk.Frame(video_frame)
+    video_frame_left.grid(row=0,column=0,sticky="nswe")
+    video_frame_right = tk.Frame(video_frame)
+    video_frame_right.grid(row=0,column=1,sticky="nswe") 
+
     
     video_frame_left = tk.Frame(video_frame, height = height)
     video_frame_left.grid(row=0,column=0,sticky="nsew")
@@ -5134,7 +5101,12 @@ def render(root,window,log_frame,lang):
     proxy_frame.grid_rowconfigure(0, weight=1)
     proxy_frame.grid_columnconfigure(0, weight=1, uniform="group1")
     proxy_frame.grid_columnconfigure(1, weight=1, uniform="group1")
-    proxy_frame.columnconfigure((0,1), weight=1)
+    proxy_frame.grid_columnconfigure(0, weight=1,
+                                      minsize=int(0.5*width)
+
+                                      )
+    proxy_frame.grid_columnconfigure(1, weight=2)
+    proxy_frame.grid(row=0, column=0, sticky="nsew")
     
     proxy_frame_left = tk.Frame(proxy_frame, height = height)
     proxy_frame_left.grid(row=0,column=0,sticky="nsew")
@@ -5146,7 +5118,12 @@ def render(root,window,log_frame,lang):
     account_frame.grid_rowconfigure(0, weight=1)
     account_frame.grid_columnconfigure(0, weight=1, uniform="group1")
     account_frame.grid_columnconfigure(1, weight=1, uniform="group1")
-    account_frame.columnconfigure((0,1), weight=1)
+    account_frame.grid_columnconfigure(0, weight=1,
+                                      minsize=int(0.5*width)
+
+                                      )
+    account_frame.grid_columnconfigure(1, weight=2)
+    account_frame.grid(row=0, column=0, sticky="nsew")
     
     account_frame_left = tk.Frame(account_frame, height = height)
     account_frame_left.grid(row=0,column=0,sticky="nsew")
@@ -5155,16 +5132,18 @@ def render(root,window,log_frame,lang):
 
     upload_frame = ttk.Frame(tab_control)
     upload_frame.grid_rowconfigure(0, weight=1)
-    # upload_frame.grid_columnconfigure(0, weight=1, uniform="group1")
-    # upload_frame.grid_columnconfigure(1, weight=2, uniform="group1")
-    upload_frame.grid_columnconfigure(0, weight=1 )
-    upload_frame.grid_columnconfigure(1, weight=3)
+    upload_frame.grid_columnconfigure(0, weight=1, uniform="group1")
+    upload_frame.grid_columnconfigure(1, weight=1, uniform="group1")
+    upload_frame.grid_columnconfigure(0, weight=1,
+                                      minsize=int(0.5*width)
 
-
-    upload_frame_left = tk.Frame(upload_frame, height = height)
-    upload_frame_left.grid(row=0,column=0,sticky="nsew")
-    upload_frame_right = tk.Frame(upload_frame, height = height)
-    upload_frame_right.grid(row=0,column=1,sticky="nse") 
+                                      )
+    upload_frame.grid_columnconfigure(1, weight=2)
+    upload_frame.grid(row=0, column=0, sticky="nsew")
+    upload_frame_left = tk.Frame(upload_frame)
+    upload_frame_left.grid(row=0,column=0,sticky="nswe")
+    upload_frame_right = tk.Frame(upload_frame)
+    upload_frame_right.grid(row=0,column=1,sticky="nswe") 
 
 
 
@@ -5172,12 +5151,16 @@ def render(root,window,log_frame,lang):
     meta_frame.grid_rowconfigure(0, weight=1)
     meta_frame.grid_columnconfigure(0, weight=1, uniform="group1")
     meta_frame.grid_columnconfigure(1, weight=1, uniform="group1")
-    meta_frame.columnconfigure((0,1), weight=1)
-    
-    meta_frame_left = tk.Frame(meta_frame, height = height)
-    meta_frame_left.grid(row=0,column=0,sticky="nsew")
-    meta_frame_right = tk.Frame(meta_frame, height = height)
-    meta_frame_right.grid(row=0,column=1,sticky="nsew") 
+    meta_frame.grid_columnconfigure(0, weight=1,
+                                      minsize=int(0.5*width)
+
+                                      )
+    meta_frame.grid_columnconfigure(1, weight=2)
+    meta_frame.grid(row=0, column=0, sticky="nsew")
+    meta_frame_left = tk.Frame(meta_frame)
+    meta_frame_left.grid(row=0,column=0,sticky="nswe")
+    meta_frame_right = tk.Frame(meta_frame)
+    meta_frame_right.grid(row=0,column=1,sticky="nswe") 
 
 
 
@@ -5332,6 +5315,7 @@ def start(lang,root=None):
 
     mainwindow.grid_rowconfigure(0, weight=1)
     mainwindow.grid_columnconfigure(0, weight=1)
+    mainwindow.grid_columnconfigure(1, weight=1)
 
 
     

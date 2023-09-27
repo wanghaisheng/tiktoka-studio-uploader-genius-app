@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm.session import sessionmaker
 from .UploadSession import *
 import os
@@ -67,7 +67,9 @@ def pd2table(engine,table_name,df,logger,if_exists='append',dtype=None):
 def  query2df(engine,query,logger):
 
     try:
-        df = pd.read_sql_query(query, engine)
+        # df = pd.read_sql_query(query, engine)
+        # https://stackoverflow.com/questions/75310173/attributeerror-optionengine-object-has-no-attribute-execute
+        df= pd.DataFrame(engine.connect().execute(text(query)))
         return df
     except Exception as e:
         logger.error(f"this query >>> seems went wrong:\n{query},full error message:\n{e}")
