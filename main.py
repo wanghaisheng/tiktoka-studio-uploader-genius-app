@@ -2239,7 +2239,7 @@ def render_des_gen(frame,isneed,folder):
 
         desmode = tk.IntVar()
         # thumbmode.set(1)
-
+        # desmode.trace('w',render_des_update_view(new_canvas,folder,desmode,frame))
         lab = tk.Label(new_canvas,text="请选择你的视频描述从何而来",bg="lightyellow",width=30)
         lab.grid(row = 1, column = 0,  padx=14, pady=15,sticky='nw') 
    
@@ -2297,39 +2297,46 @@ def render_des_update_view(frame,folder,thumbmode,previous_frame=None):
         b_return.grid(row = 0, column =1)   
 
 
-        lab = tk.Label(frame,text="Step2:是否使用统一前缀后缀",bg="lightyellow",width=30)
-        lab.grid(row = 4, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw')         
-        descriptionPrefix=tk.StringVar()
-        descriptionSuffix=tk.StringVar()
-
-        l_preferdesprefix = tk.Label(frame, text=i18labels("descriptionPrefix", locale=lang, module="g"))
-        l_preferdesprefix.grid(row = 0, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
-        e_preferdesprefix = tk.Entry(frame, width=55, textvariable=descriptionPrefix)
-        e_preferdesprefix.grid(row = 0, column = 5, columnspan = 3, padx=14, pady=15,sticky='nw') 
-
-
-        l_preferdessuffix = tk.Label(frame, text=i18labels("descriptionSuffix", locale=lang, module="g"))
-        l_preferdessuffix.grid(row = 1, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
-        e_preferdessuffix = tk.Entry(frame, width=55, textvariable=descriptionSuffix)
-        e_preferdessuffix.grid(row = 1, column = 5, columnspan = 3, padx=14, pady=15,sticky='nw') 
-
         mode = tk.StringVar()
         mode.set("4")
 
         lab = tk.Label(frame,text="Step1:请选择视频描述主体从何而来",bg="lightyellow",width=30)
-        lab.grid(row = 4, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        lab.grid(row = 0, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
         mode1=tk.Radiobutton(frame,text="视频文件名称",variable=mode,value="1",command='')
-        mode1.grid(row = 5, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
-        mode2=tk.Radiobutton(frame,text="视频字幕总结",variable=mode,value="2",command='')
-        mode2.grid(row = 6, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        mode1.grid(row = 1, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        mode2=tk.Radiobutton(frame,text="视频字幕文件总结",variable=mode,value="2",command='')
+        Tooltip(mode2, text='字幕文件须与视频文件同名' , wraplength=200)
+
+        mode2.grid(row = 1, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
         mode3=tk.Radiobutton(frame,text="视频音频总结",variable=mode,value="3",command='')
-        mode3.grid(row = 7, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        mode3.grid(row = 2, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
         mode4=tk.Radiobutton(frame,text="从视频描述文件中来",variable=mode,value="4",command='')
-        mode4.grid(row = 8, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        Tooltip(mode4, text='视频描述文件须与视频文件同名，后缀可以是.txt,.des' , wraplength=200)
+
+        mode4.grid(row = 2, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
         mode5=tk.Radiobutton(frame,text="从元数据中来",variable=mode,value="5",command='')
-        mode5.grid(row = 9, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        mode5.grid(row = 3, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        Tooltip(mode5, text='视频描述文可后续在元数据文件中手动编辑' , wraplength=200)
 
 
+
+        lab = tk.Label(frame,text="Step2:是否使用统一前缀后缀",bg="lightyellow",width=30)
+        lab.grid(row = 4, column = 0,  padx=14, pady=15,sticky='nw')         
+        Tooltip(mode5, text='可以通过设置前缀 后缀模板批量标准化频道的视频描述' , wraplength=200)
+
+        descriptionPrefix=tk.StringVar()
+        descriptionSuffix=tk.StringVar()
+
+        l_preferdesprefix = tk.Label(frame, text=i18labels("descriptionPrefix", locale=lang, module="g"))
+        l_preferdesprefix.grid(row = 5, column = 0,  padx=14, pady=15,sticky='nw') 
+        e_preferdesprefix = tk.Entry(frame, width=55, textvariable=descriptionPrefix)
+        e_preferdesprefix.grid(row = 5, column = 1,  padx=14, pady=15,sticky='nw') 
+
+
+        l_preferdessuffix = tk.Label(frame, text=i18labels("descriptionSuffix", locale=lang, module="g"))
+        l_preferdessuffix.grid(row = 6, column = 0,  padx=14, pady=15,sticky='nw') 
+        e_preferdessuffix = tk.Entry(frame, width=55, textvariable=descriptionSuffix)
+        e_preferdessuffix.grid(row = 6, column = 1,  padx=14, pady=15,sticky='nw') 
         
         lab = tk.Label(frame,text="Step3:请编辑视频元数据",bg="lightyellow",width=30)
         lab.grid(row = 7, column = 0,  padx=14, pady=15,sticky='nw')         
@@ -4789,7 +4796,7 @@ def desView(left,right,lang):
     def metafileformatCallBack(*args):
         print(metafileformat.get())
         print(metafileformatbox.current())
-        analyse_video_meta_pair(desView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=True)
+        analyse_video_meta_pair(desView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=False,isDesView=True,isTagsView=False,isScheduleView=False)
     print(f'right now metafileformatbox.get():{metafileformatbox.get()}')
     metafileformat.trace('w', metafileformatCallBack)
 
@@ -4797,7 +4804,7 @@ def desView(left,right,lang):
     b_download_meta_templates.grid(row = 1, column = 3, sticky='w', padx=14, pady=15)  
     Tooltip(b_download_meta_templates, text='run the check video assets will auto gen templates under folder if they dont' , wraplength=200)
 
-    b_video_folder_check=tk.Button(left,text="Step1:check video assets",command=lambda: threading.Thread(target=analyse_video_meta_pair(desView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=True)).start() )
+    b_video_folder_check=tk.Button(left,text="Step1:check video assets",command=lambda: threading.Thread(target=analyse_video_meta_pair(desView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=False,isDesView=True,isTagsView=False,isScheduleView=False)).start() )
     b_video_folder_check.grid(row = 2, column = 0,sticky='w', padx=14, pady=15)    
     Tooltip(b_video_folder_check, text='calculate video counts,thumb file count and others' , wraplength=200)
 
