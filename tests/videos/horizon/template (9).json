@@ -1,6 +1,6 @@
 {
 	"width": 1080,
-	"height": 1920,
+	"height": 720,
 	"texts": [{
 		"textType": "heading",
 		"fontFile": "",
@@ -12,14 +12,14 @@
 		"topRight": "(991, 291)",
 		"bottomLeft": "(270, 363)",
 		"bottomRight": "(991, 363)",
-		"fontSize": 48,
-		"isdrawborder": false,
+		"fontSize": 120,
+		"isdrawborder": true,
 		"bordersize": 4,
 		"bordercolor": "black",
-		"fontName": "simsun",
+		"fontName": "Unknown",
 		"gridSize": 10,
 		"nearestGridSerialNumber": 43,
-		"fontcolor": "red"
+		"fontcolor": "white"
 	}, {
 		"textType": "subheading",
 		"fontFile": "",
@@ -27,7 +27,7 @@
 		"y": 430,
 		"width": 722,
 		"height": 71,
-		"isdrawborder": true,
+		"isdrawborder": false,
 		"bordersize": 4,
 		"bordercolor": "black",
 		"topLeft": "(275, 430)",
@@ -50,13 +50,13 @@
 		"topRight": "(382, 43)",
 		"bottomLeft": "(104, 124)",
 		"bottomRight": "(382, 124)",
-		"fontSize": 20,
+		"fontSize": 60,
 		"fontName": "Unknown",
 		"gridSize": 10,
 		"isdrawborder": true,
 		"bordersize": 2,
-		"bordercolor": "white",
+		"bordercolor": "black",
 		"nearestGridSerialNumber": 1,
-		"fontcolor": "rgb(56, 66, 200)"
+		"fontcolor": "white"
 	}]
 }
