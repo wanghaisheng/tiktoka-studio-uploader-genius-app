@@ -1,7 +1,7 @@
 import pandas as pd
 import json
 from PIL import Image, ImageDraw, ImageFont,ImageColor,ImageFilter
-import os,re,itertools
+import os,re,itertools,logging
 import sys
 from eld import LanguageDetector
 
@@ -10,6 +10,7 @@ detector = LanguageDetector()
 def calculate_text_size(text, font):
     width, height = font.getsize(text)
     return width, height
+logger = logging.getLogger()         
 
 
 def spliteKeyWord(str):
@@ -48,26 +49,22 @@ def draw_multiline_text(draw, text, start_coord, font, max_width, font_size, fon
     print(f'lines cal:max_width is {max_width},{lines}')
 
     x, y = start_coord
-    #font = ImageFont.truetype(font, size=int(font_size))
     for line in lines:
-        draw.text((x, y), line, font=font, fill=font_color)
+
         if isdrawborder==True:
             # bordersize=2
             # bordercolor=(255, 255, 255)
-            draw.text((x+bordersize, y+bordersize), text, fill=bordercolor, font=font)
-            draw.text((x-bordersize, y+bordersize), text, fill=bordercolor, font=font)
-            draw.text((x+bordersize, y-bordersize), text, fill=bordercolor, font=font)
-            draw.text((x-bordersize, y-bordersize), text, fill=bordercolor,  font=font)
+            # https://stackoverflow.com/questions/41556771/is-there-a-way-to-outline-text-with-a-dark-line-in-pil
+            draw.text((x, y), line, font=font, fill=font_color,stroke_width=bordersize, stroke_fill=bordercolor)   
+            
+        else:
+            draw.text((x, y), line, font=font, fill=font_color)            
         if isdrawshadow==True:
             
             shadow = draw.filter(ImageFilter.BLUR)
             draw.paste(shadow, (x+shadowsize, y+shadowsize))
    
-# 添加一个3-5宽度的灰色阴影。
-            for i, j in itertools.product((-3, 0, -3), (-5, 0, 5)):
-                draw.text((x + i, y + j), text, font=font, fill="gray")
-        x, y = start_coord[0], y + font.getsize(line)[1]
-    # https://github.com/ultralytics/yolov5/issues/11838
+
 def clean_column_name(column_name):
     return column_name.replace(" ", "_")
 
@@ -114,7 +111,7 @@ def load_font(font_name,font_file, font_size, default_language):
         basedir=r"/usr/share/fonts/"
 
     installedFonts=os.listdir(basedir)
-    print('all fonts installed:',installedFonts)
+    logger.info(f'all fonts installed:{installedFonts}')
     try:
         index = [idx for idx, s in enumerate(installedFonts) if font_name.lower() in s][0]
         font_name=os.path.join(basedir,installedFonts[index])
@@ -136,12 +133,13 @@ def load_font(font_name,font_file, font_size, default_language):
         try:
             font = ImageFont.truetype(font_file, size=int(font_size))
             print(f'we use you specify fontfile due to fontname is not found {font_file}')
+            font_name=font_file
 
         except (OSError, FileNotFoundError):
             font = ImageFont.truetype(get_default_font(default_language), size=int(font_size))
             print(f'we use default fontname {get_default_font(default_language)}')
-
-    return font
+            font_name=get_default_font(default_language)
+    return font,font_name
 
 
 def validateSeting(setting):
@@ -276,8 +274,8 @@ def draw_text_on_image(row,thumb_gen_setting,result_image_width,result_image_hei
         # Load the font
         # lang=cld3.get_language(row[text_type]).language
         lang=detector.detect(row[text_type]).language
-        font = load_font(font_name,font_file, font_size, lang)
-        print(f'render text {row[text_type]}use font :{font}')
+        font,fontname = load_font(font_name,font_file, font_size, lang)
+        print(f'render text {row[text_type]}use font :{fontname}')
         if row[text_type]:
             if render_style== 'cord':
                 # Render using topLeft as the starting point

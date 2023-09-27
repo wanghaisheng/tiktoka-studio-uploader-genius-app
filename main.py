@@ -2023,7 +2023,7 @@ def thumbView(left,right,lang):
 
 
     def e_video_folderCallBack(*args):
-        thumbView_video_folder.set(ultra['thumbView_video_folder'])
+        print(f'we are dealing folder {thumbView_video_folder.get()}')
 
 
 
