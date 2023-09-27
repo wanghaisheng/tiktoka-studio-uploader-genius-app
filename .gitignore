@@ -18,6 +18,6 @@ Airline-Management-System
 test.log
 **/.DS_Store
 .DS_Store
-tests/videos/vertical/9-16/*
-tests/videos/vertical/16-9/*
+tests/videos/*/9-16/*
+tests/videos/*/16-9/*
 **/__pycache__/*
