@@ -4,6 +4,7 @@ pip install requirements.txt
 python main.py
 
 
+Roadmap
 
 ## 缩略图生成
 
@@ -93,7 +94,10 @@ https://jsoncrack.com/editor
 
 
 
-get json schema from online tool
+issue
 
-https://www.liquid-technologies.com/online-json-to-schema-converter
+
+1. thumb tab
+
+先选择format，再选择文件夹，不会触发自动生成元数据，需要手动点击check
 

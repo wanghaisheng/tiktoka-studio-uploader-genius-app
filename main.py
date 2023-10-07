@@ -1433,7 +1433,7 @@ def filterUserPlatform(engine=prod_engine,platform=None,username=None,newWindow=
 
 
 
-def isPairedMetas(r,videofilename,meta_exts_list,dict,meta_name):
+def isFilePairedMetas(r,videofilename,meta_exts_list,dict,meta_name):
     logger.info(f'start to check {meta_name} for video: {videofilename}')
     print(f'before check:\n{jsons.dump(dict[meta_name])}')
 
@@ -1466,24 +1466,236 @@ def isPairedMetas(r,videofilename,meta_exts_list,dict,meta_name):
             f.write(jsons.dumps(dict['videos'][videofilename]))
         
 def analyse_video_meta_pair(folder,frame,right_frame,selectedMetafileformat,isThumbView=True,isDesView=True,isTagsView=True,isScheduleView=True):
+    assetpath=os.path.join(folder,videoassetsfilename)    
+
+
     if folder=='':
         logger.info('please choose a folder first')
     else:
-        logger.info(f'detecting----------{ultra.has_key(folder)}')
+        logger.info(f'start to detecting video metas----------{ultra.has_key(folder)}')
+        old_df_metas=None
+        if os.path.exists(os.path.join(folder,'videos-meta.'+selectedMetafileformat)):
+            if selectedMetafileformat=='xlsx':
+                old_df_metas=pd.read_excel(os.path.join(folder,'videos-meta.xlsx'), index_col=[0])
+                old_df_metas.replace('nan', '')
+                old_df_metas=json.loads(old_df_metas.to_json(orient = 'index'))   
+            elif selectedMetafileformat=='json':
+                old_df_metas=pd.read_json(os.path.join(folder,'videos-meta.json'))  
+                old_df_metas.replace('nan', '')
+                old_df_metas=json.loads(old_df_metas.to_json())   
+
+            elif selectedMetafileformat=='csv':
+                old_df_metas=pd.read_csv(os.path.join(folder,'videos-meta.csv'), index_col=[0])
+                old_df_metas.replace('nan', '')
+                old_df_metas=json.loads(old_df_metas.to_json(orient = 'index'))   
+
+
+        thumbFileCounts=0
+        thumbMetaCounts=0
+
+        desFileCounts=0
+        desMetaCounts=0
+
+        tagFileCounts=0
+        tagMetaCounts=0
+        metaMetaCounts=0
+        scheduleFileCounts=0
+        scheduleMetaCounts=0
+        metaFileCounts=0
         if ultra.has_key(folder):
             print(pd.Timestamp.now().value-ultra[folder] ['updatedAt'])
             logger.info(f"we cached {pd.Timestamp.now().value-ultra[folder] ['updatedAt']} seconds before for  this folder {folder}")
-            
-            b_delete_folder_cache=tk.Button(frame,text="remove cache data to re-gen",command=lambda: threading.Thread(target=ultra[folder].unlink()).start() )
-            b_delete_folder_cache.grid(row = 6, column = 1,sticky='w', padx=14, pady=15)  
+
+
+            assetpath=os.path.join(folder,videoassetsfilename)
+            # print('-----------------\r',jsons.dumps(ultra[folder]))
+            # print('111',pd.read_json(jsons.dumps(ultra[folder]), orient = 'index'))
+            # print('222',pd.read_json(assetpath, orient = 'index'))
+            if pd.read_json(jsons.dumps(ultra[folder]), orient = 'index').equals(pd.read_json(assetpath, orient = 'index'))==False:
+                print('video assets json has updated compared to cache')
+
+                ultra[folder]=json.loads(open(assetpath).read())
+
+                print('load video assets json  to cache')
+            else:
+                print('video assets json keep the same as  compared to cache')
+
+            ultra[folder] ['filenames']=[]
+            ultra[folder] ['videoCounts']=0
+            ultra[folder] ['thumbFilePaths']=[]
+            ultra[folder] ['desFilePaths']=[]
+            ultra[folder] ['tagFilePaths']=[]
+            ultra[folder] ['scheduleFilePaths']=[]
+            oldvideos=dict(ultra[folder] ['videos'])
+            oldvideos=json.loads(jsons.dumps(ultra[folder] ['videos']))   
+            if ultra[folder].has_key('videos'):
+                print('-------------------',ultra[folder])
+                print('-------------------',ultra[folder]['videos'])
+
+                d=dict({})
+                d=UltraDict()
+
+                ultra[folder] ['videos']=d
+            else:
+                print('debug------------')
+            for r, d, f in os.walk(folder):
+                videos=[]        
+                with os.scandir(r) as i:
+    # how to deal sub-folder and fodler
+    # if folder has no video but got 1 subfolder has 1 video, where to put metafiles
+                    for entry in i:
+                        if entry.is_file():
+                            filename = os.path.splitext(entry.name)[0]
+
+                            ext = os.path.splitext(entry.name)[1]
+                            if ext in supported_video_exts:
+                                    
+                                if ultra[folder] ['filenames']!=[] and filename in ultra[folder] ['filenames']:
+                                    logger.info(f'we found same filename diff ext video:{filename},please rename or remove')
+                                else:
+                                    ultra[folder] ['filenames'].append(filename)
+
+
+                                    videopath = os.path.join(r, entry.name)
+                                    ultra[folder] ['videoFilePaths'].append(videopath)
+                                    print('this video is detected before',filename)
+
+                                    # default single video meta json
+                                    video={'video_local_path':videopath,
+                                        "video_filename":entry.name,
+                                        "video_title":'',
+                                            "heading":"",
+                                            "subheading":"",
+                                            "extraheading":"",
+                                        "video_description":"",
+                                            "thumbnail_bg_image_path": "",
+
+                                        "thumbnail_local_path":[],
+                                        "release_date":"",
+                                        "release_date_hour":"10:15",
+                                            "is_not_for_kid": True,
+                                            "categories": 3,
+                                            "comments_ratings_policy": 1,
+                                            "is_age_restriction": False,
+                                            "is_paid_promotion": False,
+                                            "is_automatic_chapters": True,
+                                            "is_featured_place": True,
+                                            "video_language": "",
+                                            "captions_certification": 0,
+                                            "video_film_date": "",
+                                            "video_film_location": "",
+                                            "license_type": 0,
+                                            "is_allow_embedding": True,
+                                            "is_publish_to_subscriptions_feed_notify": True,
+                                            "shorts_remixing_type": 0,
+                                            "is_show_howmany_likes": True,
+                                            "is_monetization_allowed": True,
+                                            "first_comment": "",
+                                            "subtitles": "",
+                                            "is_not_for_kid": True,
+                                            "categories": '',
+                                            "comments_ratings_policy": 1,
+                                        'tags':''}
+
+                                    if old_df_metas and old_df_metas[filename]:
+                                        print('this video is detected before',type(old_df_metas[filename]),old_df_metas[filename])
+                                        print('2',oldvideos[filename],type(oldvideos[filename]))
+                                        if oldvideos[filename]==old_df_metas[filename]:
+                                            print(f'the existing videos-meta.{selectedMetafileformat} content is the same as cached')
+                                        else:
+                                            print(f'the existing videos-meta.{selectedMetafileformat} content is not the  same as cached')
+
+                                        video=old_df_metas[filename]
+                                    ultra[folder] ['videos'][filename]=video
+                                    print('this video json',ultra[folder] ['videos'][filename])
+
+                                    videos.append(video)
+                                    ultra[folder] ['videos'][filename]['video_local_path']=videopath
+                                    ultra[folder] ['videos'][filename]['video_title']=filename
+                                    if ultra[folder] ['videos'][filename]['thumbnail_local_path']!=[]:
+                                        files=ultra[folder] ['videos'][filename]['thumbnail_local_path']
+                                        start=False
+                                        for i in files:
+                                            if os.path.exists(i):      
+                                                start=True
+                                        if start==True:                                  
+                                            thumbMetaCounts+=1
+
+                                    if ultra[folder] ['videos'][filename]['tags']!='':
+                                        tagMetaCounts+=1
+
+                                    if ultra[folder] ['videos'][filename]['video_description']!='':
+                                        desMetaCounts+=1
+
+                                    if ultra[folder] ['videos'][filename]['release_date']!='':
+                                        scheduleMetaCounts+=1
+
+                                    ultra[folder] ['videoCounts']+=1
+                                    print(videopath,'==',ext,'counts now:',ultra[folder] ['videoCounts'],type(ultra[folder] ['videoCounts'])) 
+
+                                    # if ultra[folder]['thumbFilePaths'].has_key(filename)==False:
+                                    #     ultra[folder]['thumbFilePaths'][filename]=[]
+                                    isFilePairedMetas(r,filename,supported_thumb_exts,ultra[folder],'thumbFilePaths')
+                                    isFilePairedMetas(r,filename,supported_des_exts,ultra[folder],'desFilePaths')
+                                    isFilePairedMetas(r,filename,supported_meta_exts,ultra[folder],'metaFilePaths')
+                                    isFilePairedMetas(r,filename,supported_des_exts,ultra[folder],'tagFilePaths')
+                                    isFilePairedMetas(r,filename,supported_des_exts,ultra[folder],'scheduleFilePaths')
+
+                        else:
+                            print('is folder',r,d,i)            
+
+
+
+            if ultra[folder] ['videoCounts']==0:
+                logger.info(f"we could not find any video, video counts is {ultra[folder] ['videoCounts']},supported ext includes:\n{'.'.join(supported_video_exts)}")
+            # 遍历每个视频文件，核对视频文件、缩略图等文件是否存在，核对元数据中对应字段是否存在
+            ultra[folder] ['thumbFileCounts']=len(ultra[folder] ['thumbFilePaths'])
+            ultra[folder] ['thumbMetaCounts']=thumbMetaCounts
+
+            ultra[folder] ['desFileCounts']=len(ultra[folder] ['desFilePaths'])
+            ultra[folder] ['desMetaCounts']=desMetaCounts
+
+            ultra[folder] ['metaFileCounts']=len(ultra[folder] ['metaFilePaths'])
+            ultra[folder] ['metaMetaCounts']=metaMetaCounts
+
+            ultra[folder] ['tagFileCounts']=len(ultra[folder] ['tagFilePaths'])
+
+            ultra[folder] ['tagMetaCounts']=tagMetaCounts
+            ultra[folder] ['scheduleFileCounts']=len(ultra[folder] ['scheduleFilePaths'])
+            ultra[folder] ['scheduleMetaCounts']=scheduleMetaCounts
+            ultra[folder]['updatedAt']=pd.Timestamp.now().value
+            # print('---------\n',type(ultra[folder]),type(jsons.dump(ultra[folder])),jsons.dump(ultra[folder]))
+
         else:
+            if os.path.exists(videoassetsfilename):
+                logger.info('remove old video assets files')
+                os.remove(videoassetsfilename)
+            if os.path.exists(os.path.join(folder,'videos-meta.'+selectedMetafileformat)):
+                logger.info('remove old video meta files')
+
+                os.remove(os.path.join(folder,'videos-meta.'+selectedMetafileformat))
             logger.info(f"create cached data for this folder:\n{folder}")
-            ultra[folder]={'videoCounts':0,'thumbCounts':0,'desCounts':0,
-                        'metaCounts':0,'updatedAt':pd.Timestamp.now().value,
+            ultra[folder]={'videoCounts':0,
+                           'thumbFileCounts':0,
+                           'thumbMetaCounts':0,
+
+                           'desFileCounts':0,
+                           'desMetaCounts':0,
+
+                           'tagFileCounts':0,
+                           'tagMetaCounts':0,
+                           
+                           'scheduleFileCounts':0,
+                           'scheduleMetaCounts':0,
+                        'metaFileCounts':0,
+                        'updatedAt':pd.Timestamp.now().value,
                         'filenames':[],
                         'videoFilePaths':[],
                             'thumbFilePaths':{},
                             'desFilePaths':{},
+                            'scheduleFilePaths':{},
+                            'tagFilePaths':{},
+
                             'metaFilePaths':{},  
                             "thumb_gen_setting":{
                             "mode":3,
@@ -1516,101 +1728,128 @@ def analyse_video_meta_pair(folder,frame,right_frame,selectedMetafileformat,isTh
 
                         } 
 
-            ultra[folder].dump()   
+            # ultra[folder].dump()   
 
-        for r, d, f in os.walk(folder):
-            videos=[]        
-            with os.scandir(r) as i:
-# how to deal sub-folder and fodler
-# if folder has no video but got 1 subfolder has 1 video, where to put metafiles
-                for entry in i:
-                    if entry.is_file():
-                        filename = os.path.splitext(entry.name)[0]
+            for r, d, f in os.walk(folder):
+                videos=[]        
+                with os.scandir(r) as i:
+    # how to deal sub-folder and fodler
+    # if folder has no video but got 1 subfolder has 1 video, where to put metafiles
+                    for entry in i:
+                        if entry.is_file():
+                            filename = os.path.splitext(entry.name)[0]
 
-                        ext = os.path.splitext(entry.name)[1]
-                        if ext in supported_video_exts:
-
-                            if ultra[folder] ['filenames']!=[] and filename in ultra[folder] ['filenames']:
-                                logger.info(f'we found same filename diff ext video:{filename},please rename or remove')
-                            else:
-                                ultra[folder] ['filenames'].append(filename)
-
-
-                                videopath = os.path.join(r, entry.name)
-                                ultra[folder] ['videoFilePaths'].append(videopath)
-                                # default single video meta json
-                                video={'video_local_path':videopath,
-                                    "video_filename":entry.name,
-                                    "video_title":'',
-                                        "heading":"",
-                                        "subheading":"",
-                                        "extraheading":"",
-                                    "video_description":"",
-                                        "thumbnail_bg_image_path": "",
-
-                                    "thumbnail_local_path":[],
-                                    "release_date":"",
-                                    "release_date_hour":"10:15",
-                                        "is_not_for_kid": True,
-                                        "categories": 3,
-                                        "comments_ratings_policy": 1,
-                                        "is_age_restriction": False,
-                                        "is_paid_promotion": False,
-                                        "is_automatic_chapters": True,
-                                        "is_featured_place": True,
-                                        "video_language": "",
-                                        "captions_certification": 0,
-                                        "video_film_date": "",
-                                        "video_film_location": "",
-                                        "license_type": 0,
-                                        "is_allow_embedding": True,
-                                        "is_publish_to_subscriptions_feed_notify": True,
-                                        "shorts_remixing_type": 0,
-                                        "is_show_howmany_likes": True,
-                                        "is_monetization_allowed": True,
-                                        "first_comment": "",
-                                        "subtitles": "",
-                                        "is_not_for_kid": True,
-                                        "categories": '',
-                                        "comments_ratings_policy": 1,
-                                    'tags':''}
-                                ultra[folder] ['videos'][filename]=video
-                                videos.append(video)
-                                ultra[folder] ['videos'][filename]['video_local_path']=videopath
-                                ultra[folder] ['videos'][filename]['video_title']=filename
-                                ultra[folder] ['videoCounts']+=1
-                                print(videopath,'==',ext,'counts now:',ultra[folder] ['videoCounts'],type(ultra[folder] ['videoCounts'])) 
-
-                                # if ultra[folder]['thumbFilePaths'].has_key(filename)==False:
-                                #     ultra[folder]['thumbFilePaths'][filename]=[]
-                                isPairedMetas(r,filename,supported_thumb_exts,ultra[folder],'thumbFilePaths')
-                                isPairedMetas(r,filename,supported_des_exts,ultra[folder],'desFilePaths')
-                                isPairedMetas(r,filename,supported_meta_exts,ultra[folder],'metaFilePaths')
-                    else:
-                        print('is folder',r,d,i)
+                            ext = os.path.splitext(entry.name)[1]
+                            if ext in supported_video_exts:
+                                    
+                                if ultra[folder] ['filenames']!=[] and filename in ultra[folder] ['filenames']:
+                                    logger.info(f'we found same filename diff ext video:{filename},please rename or remove')
+                                else:
+                                    ultra[folder] ['filenames'].append(filename)
 
 
-        if ultra[folder] ['videoCounts']==0:
-            logger.info(f"we could not find any video, video counts is {ultra[folder] ['videoCounts']},supported ext includes:\n{'.'.join(supported_video_exts)}")
-        ultra[folder] ['thumbCounts']=len(ultra[folder] ['thumbFilePaths'])
-        ultra[folder] ['desCounts']=len(ultra[folder] ['desFilePaths'])
-        ultra[folder] ['metaCounts']=len(ultra[folder] ['metaFilePaths'])
-        ultra[folder]['updatedAt']=pd.Timestamp.now().value
-        print('---------\n',type(ultra[folder]),type(jsons.dump(ultra[folder])),jsons.dump(ultra[folder]))
+                                    videopath = os.path.join(r, entry.name)
+                                    ultra[folder] ['videoFilePaths'].append(videopath)
+                                    # default single video meta json
+                                    video={'video_local_path':videopath,
+                                        "video_filename":entry.name,
+                                        "video_title":'',
+                                            "heading":"",
+                                            "subheading":"",
+                                            "extraheading":"",
+                                        "video_description":"",
+                                            "thumbnail_bg_image_path": "",
+
+                                        "thumbnail_local_path":[],
+                                        "release_date":"",
+                                        "release_date_hour":"10:15",
+                                            "is_not_for_kid": True,
+                                            "categories": 3,
+                                            "comments_ratings_policy": 1,
+                                            "is_age_restriction": False,
+                                            "is_paid_promotion": False,
+                                            "is_automatic_chapters": True,
+                                            "is_featured_place": True,
+                                            "video_language": "",
+                                            "captions_certification": 0,
+                                            "video_film_date": "",
+                                            "video_film_location": "",
+                                            "license_type": 0,
+                                            "is_allow_embedding": True,
+                                            "is_publish_to_subscriptions_feed_notify": True,
+                                            "shorts_remixing_type": 0,
+                                            "is_show_howmany_likes": True,
+                                            "is_monetization_allowed": True,
+                                            "first_comment": "",
+                                            "subtitles": "",
+                                            "is_not_for_kid": True,
+                                            "categories": '',
+                                            "comments_ratings_policy": 1,
+                                        'tags':''}
+                                    ultra[folder] ['videos'][filename]=video
+                                    videos.append(video)
+                                    ultra[folder] ['videos'][filename]['video_local_path']=videopath
+                                    ultra[folder] ['videos'][filename]['video_title']=filename
+                                    ultra[folder] ['videoCounts']+=1
+                                    print(videopath,'==',ext,'counts now:',ultra[folder] ['videoCounts'],type(ultra[folder] ['videoCounts'])) 
+
+                                    # if ultra[folder]['thumbFilePaths'].has_key(filename)==False:
+                                    #     ultra[folder]['thumbFilePaths'][filename]=[]
+                                    isFilePairedMetas(r,filename,supported_thumb_exts,ultra[folder],'thumbFilePaths')
+                                    isFilePairedMetas(r,filename,supported_des_exts,ultra[folder],'desFilePaths')
+                                    isFilePairedMetas(r,filename,supported_meta_exts,ultra[folder],'metaFilePaths')
+                                    if ultra[folder] ['videos'][filename]['thumbnail_local_path']!=[]:
+                                        files=ultra[folder] ['videos'][filename]['thumbnail_local_path']
+                                        start=False
+                                        for i in files:
+                                            if os.path.exists(i):      
+                                                start=True
+                                        if start==True:                                  
+                                            thumbMetaCounts+=1
+
+                                    if ultra[folder] ['videos'][filename]['tags']!='':
+                                        tagMetaCounts+=1
+
+                                    if ultra[folder] ['videos'][filename]['video_description']!='':
+                                        desMetaCounts+=1
+
+                                    if ultra[folder] ['videos'][filename]['release_date']!='':
+                                        scheduleMetaCounts+=1                           
+                        else:
+                            print('is folder',r,d,i)
+
+
+            if ultra[folder] ['videoCounts']==0:
+                logger.info(f"we could not find any video, video counts is {ultra[folder] ['videoCounts']},supported ext includes:\n{'.'.join(supported_video_exts)}")
+            ultra[folder] ['thumbFileCounts']=len(ultra[folder] ['thumbFilePaths'])
+            ultra[folder] ['thumbMetaCounts']=thumbMetaCounts
+
+            ultra[folder] ['desFileCounts']=len(ultra[folder] ['desFilePaths'])
+            ultra[folder] ['desMetaCounts']=desMetaCounts
+
+            ultra[folder] ['metaFileCounts']=len(ultra[folder] ['metaFilePaths'])
+            ultra[folder] ['metaMetaCounts']=metaMetaCounts
+
+            ultra[folder] ['tagFileCounts']=len(ultra[folder] ['tagFilePaths'])
+
+            ultra[folder] ['tagMetaCounts']=tagMetaCounts
+            ultra[folder] ['scheduleFileCounts']=len(ultra[folder] ['scheduleFilePaths'])
+            ultra[folder] ['scheduleMetaCounts']=scheduleMetaCounts
+
+
+            ultra[folder]['updatedAt']=pd.Timestamp.now().value
+            # print('---------\n',type(ultra[folder]),type(jsons.dump(ultra[folder])),jsons.dump(ultra[folder]))
         tmpjson=os.path.join(folder,videoassetsfilename)
-
-        if os.path.exists(tmpjson):
-            with open(tmpjson,'w') as f:
-                f.write(jsons.dumps(ultra[folder]))        
-        else:
-            with open(tmpjson,'a') as f:
-                f.write(jsons.dumps(ultra[folder]))        
+ 
 
         ultra[folder]['metafileformat']=selectedMetafileformat
+
+
         if selectedMetafileformat=='xlsx':
             df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'index')
 
             metaxls=os.path.join(folder,'videos-meta.xlsx')
+               
             df_metas.to_excel(metaxls)
         elif selectedMetafileformat=='csv':
             df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'index')
@@ -1626,7 +1865,13 @@ def analyse_video_meta_pair(folder,frame,right_frame,selectedMetafileformat,isTh
 
             df_metas.to_json(metajson)
 
-        
+
+        if os.path.exists(tmpjson):
+            with open(tmpjson,'w') as f:
+                f.write(jsons.dumps(ultra[folder]))        
+        else:
+            with open(tmpjson,'a') as f:
+                f.write(jsons.dumps(ultra[folder]))               
         render_video_folder_check_results(frame,right_frame,folder,isThumbView,isDesView,isTagsView,isScheduleView)
 
 
@@ -2058,7 +2303,7 @@ def thumbView(left,right,lang):
         analyse_video_meta_pair(thumbView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=True,isDesView=False,isTagsView=False,isScheduleView=False)
     print(f'right now metafileformatbox.get():{metafileformatbox.get()}')
     metafileformat.trace('w', metafileformatCallBack)
-
+    metafileformatbox.bind("<<ComboboxSelected>>", metafileformatCallBack)  
     b_download_meta_templates=tk.Button(left,text="check video meta files",command=lambda: threading.Thread(target=openLocal(thumbView_video_folder.get())).start() )
     b_download_meta_templates.grid(row = 1, column = 3, sticky='w', padx=14, pady=15)  
     Tooltip(b_download_meta_templates, text='run the check video assets will auto gen templates under folder if they dont' , wraplength=200)
@@ -2069,7 +2314,8 @@ def thumbView(left,right,lang):
                                        isThumbView=True,isDesView=False,isTagsView=False,isScheduleView=False)).start() )
     b_video_folder_check.grid(row = 2, column = 0,sticky='w', padx=14, pady=15)    
     Tooltip(b_video_folder_check, text='calculate video counts,thumb file count and others' , wraplength=200)
-
+    b_delete_folder_cache=tk.Button(left,text="remove cache data to re-gen",command=lambda: threading.Thread(target=ultra[thumbView_video_folder].unlink()).start() )
+    b_delete_folder_cache.grid(row = 2, column = 1,sticky='w', padx=14, pady=15)  
 
 
 def openXLSX(xlsxpath):
@@ -2083,7 +2329,46 @@ def openXLSX(xlsxpath):
         os.system("open -a 'Microsoft Excel' 'path/file.xlsx'") 
     else:
         os.system('start "excel" "C:\\path\\to\\myfile.xlsx"')
+def rendersubmeta(frame,right_frame,folder,pairlabel,missingfilevar,missingmetavar,func,rowno):
+    lb_video_submeta_pairs_counts = tk.Label(frame, text=pairlabel+" paired")
+    lb_video_submeta_pairs_counts.grid(row = rowno, column = 0,sticky='w',columnspan=1)     
+    Tooltip(lb_video_submeta_pairs_counts, text=f'if there is the same {pairlabel}filename  exist for video,we take it as paired' , wraplength=200)
 
+    video_submeta_pairs_counts =ultra[folder] [missingmetavar]
+
+    lb_video_submeta_pairs_counts_value = tk.Label(frame, text=str(video_submeta_pairs_counts))
+    lb_video_submeta_pairs_counts_value.grid(row = rowno, column = 0,sticky='e',padx=0)         
+
+
+    lb_video_submeta_missing_file_pairs_counts = tk.Label(frame, text='missing file')
+    lb_video_submeta_missing_file_pairs_counts.grid(row = rowno, column = 1,sticky='w',padx=50)             
+    Tooltip(lb_video_submeta_missing_file_pairs_counts, text=f'we detect whether there is  {pairlabel}  files with the same video filename in this folder' , wraplength=200)
+
+    missing_video_submeta_file_pairs_counts=ultra[folder] ['videoCounts']-ultra[folder] [missingfilevar]
+
+    lb_missing_video_submeta_file_pairs_counts = tk.Label(frame, text=str(missing_video_submeta_file_pairs_counts))
+    lb_missing_video_submeta_file_pairs_counts.grid(row = rowno, column = 1,sticky='e')            
+
+
+    lb_video_submeta_missing_meta_pairs_counts = tk.Label(frame, text='missing meta')
+    lb_video_submeta_missing_meta_pairs_counts.grid(row = rowno, column =2,sticky='w',padx=50)           
+    Tooltip(lb_video_submeta_missing_meta_pairs_counts, text=f'we detect whether {pairlabel}  filed is  filled already in the video metafile' , wraplength=200)
+
+    missing_video_submeta_meta_pairs_counts=ultra[folder] ['videoCounts']-ultra[folder] [missingmetavar]
+
+    lb_missing_video_submeta_meta_pairs_counts = tk.Label(frame, text=str(missing_video_submeta_meta_pairs_counts))
+    lb_missing_video_submeta_meta_pairs_counts.grid(row = rowno, column = 2,sticky='e')     
+
+
+    label_str='Gen'
+    if missing_video_submeta_file_pairs_counts>0:
+        label_str='Update'
+
+
+
+    b_gen_submeta=tk.Button(frame,text=label_str,command=lambda: threading.Thread(target=func(right_frame,True,folder)).start() )
+    b_gen_submeta.grid(row = rowno, column = 3)     
+    Tooltip(b_gen_submeta, text=f'Click  to create {pairlabel} meta files' , wraplength=200)
     
 def render_video_folder_check_results(frame,right_frame,folder,isThumbView=True,isDesView=True,isTagsView=True,isScheduleView=True):
     lb_video_counts = tk.Label(frame, text='video total counts')
@@ -2094,135 +2379,29 @@ def render_video_folder_check_results(frame,right_frame,folder,isThumbView=True,
     lb_video_counts_value.grid(row = 3, column = 1)    
 
 
+
+
     if isThumbView==True:
-        lb_video_thumb_pairs_counts = tk.Label(frame, text='video-thum paired')
-        lb_video_thumb_pairs_counts.grid(row = 4, column = 0,sticky='w')    
-        Tooltip(lb_video_thumb_pairs_counts, text='if there is the same filename image exist for video,we take it as paired' , wraplength=200)
+        rendersubmeta(frame,right_frame,folder,'thum','thumbFileCounts','thumbMetaCounts',render_thumb_gen,4)
 
-
-
-        lb_video_thumb_pairs_counts_value = tk.Label(frame, text=str(ultra[folder] ['thumbCounts']))
-        lb_video_thumb_pairs_counts_value.grid(row = 4, column = 1)      
-
-
-        lb_video_thumb_missing_file_pairs_counts = tk.Label(frame, text='missing file')
-        lb_video_thumb_missing_file_pairs_counts.grid(row = 4, column = 2)      
-
-        missing_video_thumb_file_pairs_counts=ultra[folder] ['videoCounts']-ultra[folder] ['thumbCounts']
-
-        lb_missing_video_thumb_file_pairs_counts = tk.Label(frame, text=str(missing_video_thumb_file_pairs_counts))
-        lb_missing_video_thumb_file_pairs_counts.grid(row = 4, column = 3)      
-    #  subtitles missing file
-
-
-        label_str='Gen'
-        if missing_video_thumb_file_pairs_counts>0:
-            label_str='Update'
-
-
-
-        b_gen_thumb=tk.Button(frame,text=label_str,command=lambda: threading.Thread(target=render_thumb_gen(right_frame,True,folder)).start() )
-        b_gen_thumb.grid(row = 4, column = 4)     
-        Tooltip(b_gen_thumb, text='Click below button to Learn more' , wraplength=200)
 
     if isDesView==True:
-        lb_video_des_pairs_counts = tk.Label(frame, text='video-des paired')
-        lb_video_des_pairs_counts.grid(row = 5, column = 0,sticky='w')    
-
-
-
-        lb_video_des_pairs_counts_value = tk.Label(frame, text=str(ultra[folder] ['desCounts']))
-        lb_video_des_pairs_counts_value.grid(row =5, column = 1)    
-
-
-        lb_video_des_missing_pairs_counts = tk.Label(frame, text='missing paired')
-        lb_video_des_missing_pairs_counts.grid(row = 5, column = 2)    
-
-        missing_video_des_missing_pairs_counts=ultra[folder] ['videoCounts']-ultra[folder] ['desCounts']
-
-        lb_video_des_missing_pairs_counts_value = tk.Label(frame, text=str(missing_video_des_missing_pairs_counts))
-        lb_video_des_missing_pairs_counts_value.grid(row = 5, column = 3)    
-        label_str='Gen'
-        if missing_video_des_missing_pairs_counts>0:
-            label_str='Update'
-
-        b_gen_des=tk.Button(frame,text=label_str,command=lambda: threading.Thread(target=render_des_gen(right_frame,True,folder)).start() )
-        b_gen_des.grid(row = 5, column = 4)    
+        rendersubmeta(frame,right_frame,folder,'des','desFileCounts','desMetaCounts',render_des_gen,5)
 
 
     if isScheduleView==True:
+        rendersubmeta(frame,right_frame,folder,'schedule','scheduleFileCounts','scheduleMetaCounts',render_update_schedule,6)
 
 
-        lb_video_schedule_pairs_counts = tk.Label(frame, text='video-schedule paired')
-        lb_video_schedule_pairs_counts.grid(row = 6, column = 0,sticky='w')    
-
-
-
-        lb_video_schedule_pairs_counts_value = tk.Label(frame, text=str(ultra[folder] ['metaCounts']))
-        lb_video_schedule_pairs_counts_value.grid(row = 6, column = 1)    
-
-
-        lb_video_schedule_missing_pairs_counts = tk.Label(frame, text='missing paired')
-        lb_video_schedule_missing_pairs_counts.grid(row = 6, column = 2)    
-
-        missing_video_schedule_missing_pairs_counts=ultra[folder] ['videoCounts']-ultra[folder] ['metaCounts']
-
-        lb_video_schedule_missing_pairs_counts_value = tk.Label(frame, text=str(missing_video_schedule_missing_pairs_counts))
-        lb_video_schedule_missing_pairs_counts_value.grid(row = 6, column = 3)    
-        label_str='Gen'
-        if missing_video_schedule_missing_pairs_counts>0:
-            label_str='Update'
-
-        b_gen_schedule=tk.Button(frame,text=label_str,command=lambda: threading.Thread(target=render_update_schedule(right_frame,True)).start() )
-        b_gen_schedule.grid(row = 6, column = 4,sticky='nesw')    
 
     if isTagsView:
-        lb_video_tags_pairs_counts = tk.Label(frame, text='video-tags paired')
-        lb_video_tags_pairs_counts.grid(row = 7, column = 0,sticky='w')    
+        rendersubmeta(frame,right_frame,folder,'tags','tagFileCounts','tagMetaCounts',render_update_tags,7)
 
-
-
-        lb_video_tags_pairs_counts_value = tk.Label(frame, text=str(ultra[folder] ['metaCounts']))
-        lb_video_tags_pairs_counts_value.grid(row = 7, column = 1)    
-
-
-        lb_video_tags_missing_pairs_counts = tk.Label(frame, text='missing paired')
-        lb_video_tags_missing_pairs_counts.grid(row = 7, column = 2)    
-
-        missing_video_tags_missing_pairs_counts=ultra[folder] ['videoCounts']-ultra[folder] ['metaCounts']
-
-        lb_video_tags_missing_pairs_counts_value = tk.Label(frame, text=str(missing_video_tags_missing_pairs_counts))
-        lb_video_tags_missing_pairs_counts_value.grid(row = 7, column = 3)    
-        label_str='Gen'
-        if missing_video_tags_missing_pairs_counts>0:
-            label_str='Update'
-        b_gen_thumb=tk.Button(frame,text=label_str,command=lambda: threading.Thread(target=render_update_tags(right_frame,True)).start() )
-        b_gen_thumb.grid(row = 7, column = 4,sticky='nesw')    
 
 
     if isDesView==True and isScheduleView==True and isTagsView==True and isThumbView==True:
-        lb_video_meta_pairs_counts = tk.Label(frame, text='video-meta paired')
-        lb_video_meta_pairs_counts.grid(row = 8, column = 0,sticky='w')    
+        rendersubmeta(frame,right_frame,folder,'meta','metaFileCounts','metaMetaCounts',render_update_meta,8)
 
-
-
-        lb_video_meta_pairs_counts_value = tk.Label(frame, text=str(ultra[folder] ['metaCounts']))
-        lb_video_meta_pairs_counts_value.grid(row = 8, column = 1)    
-
-
-        lb_video_meta_missing_pairs_counts = tk.Label(frame, text='missing paired')
-        lb_video_meta_missing_pairs_counts.grid(row = 8, column = 2)    
-
-        missing_video_meta_missing_pairs_counts=ultra[folder] ['videoCounts']-ultra[folder] ['metaCounts']
-
-        lb_video_meta_missing_pairs_counts_value = tk.Label(frame, text=str(missing_video_meta_missing_pairs_counts))
-        lb_video_meta_missing_pairs_counts_value.grid(row = 8, column = 3)    
-        label_str='Gen'
-        if missing_video_meta_missing_pairs_counts>0:
-            label_str='Update'
-
-        b_gen_meta=tk.Button(frame,text=label_str,command=lambda: threading.Thread(target=render_update_meta(right_frame,True)).start() )
-        b_gen_meta.grid(row = 8, column = 4,sticky='nesw')    
 def render_des_gen(frame,isneed,folder):
     if isneed==True:
         if len(frame.winfo_children())>0:
@@ -2320,9 +2499,9 @@ def render_des_update_view(frame,folder,thumbmode,previous_frame=None):
 
 
 
-        lab = tk.Label(frame,text="Step2:是否使用统一前缀后缀",bg="lightyellow",width=30)
-        lab.grid(row = 4, column = 0,  padx=14, pady=15,sticky='nw')         
-        Tooltip(mode5, text='可以通过设置前缀 后缀模板批量标准化频道的视频描述' , wraplength=200)
+        lab_step2 = tk.Label(frame,text="Step2:是否使用统一前缀后缀",bg="lightyellow")
+        lab_step2.grid(row = 4, column = 0,  padx=14, pady=15,sticky='nw')         
+        Tooltip(lab_step2, text='可以通过设置前缀 后缀模板批量标准化频道的视频描述' , wraplength=200)
 
         descriptionPrefix=tk.StringVar()
         descriptionSuffix=tk.StringVar()
@@ -2443,7 +2622,7 @@ def render_update_schedule(frame,isneed):
 
         b_import_thumb_metas_=tk.Button(frame,text="Step4:更新视频元数据文件",command=lambda: genThumbnailFromTemplate(videosView_video_folder.get(),thumbnail_template_file.get(),mode.get()))
         b_import_thumb_metas_.grid(row = 9, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
-def render_update_meta(frame,isneed):
+def render_update_meta(frame,isneed,folder):
     if isneed==True:
         lang='en'
         prefertags=tk.StringVar()
@@ -4688,7 +4867,8 @@ def metaView(left,right,lang):
     def metafileformatCallBack(*args):
         print(metafileformat.get())
         print(metafileformatbox.current())
-        ultra[metaView_video_folder]['metafileformat']=metafileformat.get()
+        # ultra[metaView_video_folder]['metafileformat']=metafileformat.get()
+        analyse_video_meta_pair(metaView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=True,isDesView=True,isTagsView=True,isScheduleView=True)        
     metafileformat.set("Select From format")
     metafileformat.trace('w', metafileformatCallBack)
 
@@ -4696,7 +4876,8 @@ def metaView(left,right,lang):
     metafileformatbox = ttk.Combobox(left, textvariable=metafileformat)
     metafileformatbox.config(values = ( 'json','xlsx', 'csv'))
     metafileformatbox.grid(row = 1, column = 1, sticky='w', padx=14, pady=15)      
-    
+    metafileformatbox.bind("<<ComboboxSelected>>", metafileformatCallBack)  
+
 
 
     b_download_meta_templates=tk.Button(left,text="check video meta files",command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
@@ -4808,7 +4989,9 @@ def desView(left,right,lang):
     b_video_folder_check.grid(row = 2, column = 0,sticky='w', padx=14, pady=15)    
     Tooltip(b_video_folder_check, text='calculate video counts,thumb file count and others' , wraplength=200)
 
-
+    Tooltip(b_video_folder_check, text='calculate video counts,thumb file count and others' , wraplength=200)
+    b_delete_folder_cache=tk.Button(left,text="remove cache data to re-gen",command=lambda: threading.Thread(target=ultra[thumbView_video_folder].unlink()).start() )
+    b_delete_folder_cache.grid(row = 2, column = 1,sticky='w', padx=14, pady=15)  
 
 def scheduleView(left,right,lang):
     scheduleView_video_folder = tk.StringVar()
@@ -5384,7 +5567,7 @@ def changeDisplayLang(lang):
     
     # root.quit()    
     
-    start(lang)
+    start(lang,root)
     logger.info(f'switch lang to locale:{lang}')
     
     root.mainloop()
