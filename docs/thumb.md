@@ -63,3 +63,10 @@ Image file formats you can upload to YouTube include JPG (or JPEG), GIF (non ani
 3.boundingbox画完以后弹出字体 大小 颜色确认框
 
 
+
+
+
+字体
+
+https://github.com/Lanly109/headimg_generator
+
