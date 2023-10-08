@@ -264,4 +264,43 @@ find -name 'seg-*-f9-v*' | sort -V | while read f; do cat $f >> video.ts; done
 ffmpeg -i video.ts -i audio.ts -map 0:v -map 1:a -c copy output.mp4
 ```
 
-## to be continued
+## to be continued.
+
+
+
+FFmpeg 安装
+如果您没有 FFmpeg，那么 FFBox 只能为您输出命令行，不能进行转码工作。您需要在 FFmpeg 下载页面 下载 FFmpeg 后，放到程序文件夹中，或者将其放到一个位置并添加环境变量，FFBox 即可进行转码工作。
+
+Windows
+从 此处 下载 FFmpeg。Version 可以选择最新，但如果使用硬件加速时遇到需要更新显卡驱动的问题，则需要使用旧一点的版本。Linking 请选择 static。 添加到环境变量的操作请查阅 这里 。
+
+Linux
+从 此处 下载 FFmpeg。请选择 static 的包。
+
+macOS
+从 此处 下载 FFmpeg。
+
+
+
+silence
+
+https://github.com/bradsec/desilence/blob/main/desilence.sh
+
+
+https://github.com/shadax1/yt_concat
+
+https://github.com/HeminWon/mediarchiver、
+
+
+https://github.com/cdgriffith/FastFlix
+
+
+https://github.com/wanghaisheng/reddit-video-creator
+
+
+
+
+https://github.com/freemocap/skelly_synchronize
+
+This package synchronizes a set of videos of the same event by cross-correlating their audio files. The videos will be synchronized so that they all start at the earliest shared time, and end at the latest shared time.
+
