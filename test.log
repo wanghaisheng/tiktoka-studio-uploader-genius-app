@@ -6919,3 +6919,1386 @@ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/video
 2023-10-07 14:58:39,600 - INFO - TiktokaStudio GUI started
 2023-10-07 14:58:39,635 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
 2023-10-07 14:58:39,635 - INFO - TiktokaStudio GUI started
+2023-10-08 09:43:13,343 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 09:43:13,343 - INFO - TiktokaStudio GUI started
+2023-10-08 09:43:13,401 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 09:43:13,401 - INFO - TiktokaStudio GUI started
+2023-10-08 09:43:47,915 - INFO - start to detecting video metas----------False
+2023-10-08 09:43:47,923 - INFO - remove old video meta files
+2023-10-08 09:43:47,923 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 09:43:47,931 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 09:43:47,933 - INFO - update to 1 meta json
+2023-10-08 09:43:47,934 - INFO - start to check desFilePaths for video: 1
+2023-10-08 09:43:47,935 - INFO - update to 1 meta json
+2023-10-08 09:43:47,936 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 09:43:47,937 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 09:43:47,937 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 09:43:47,939 - INFO - update to 1 meta json
+2023-10-08 09:43:47,950 - INFO - start to detecting video metas----------True
+2023-10-08 09:43:47,953 - INFO - we cached 12001000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 09:43:47,963 - WARNING - You are running on win32, potentially without locks. Consider setting shared_lock=True
+2023-10-08 09:43:47,967 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 09:43:47,968 - INFO - update to 1 meta json
+2023-10-08 09:43:47,969 - INFO - start to check desFilePaths for video: 1
+2023-10-08 09:43:47,970 - INFO - update to 1 meta json
+2023-10-08 09:43:47,971 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 09:43:47,972 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 09:43:47,973 - INFO - update to 1 meta json
+2023-10-08 09:43:47,974 - INFO - start to check tagFilePaths for video: 1
+2023-10-08 09:43:47,975 - INFO - update to 1 meta json
+2023-10-08 09:43:47,976 - INFO - start to check scheduleFilePaths for video: 1
+2023-10-08 09:43:47,977 - INFO - update to 1 meta json
+2023-10-08 09:45:41,050 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 09:45:41,050 - INFO - TiktokaStudio GUI started
+2023-10-08 09:45:41,091 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 09:45:41,091 - INFO - TiktokaStudio GUI started
+2023-10-08 09:45:46,799 - INFO - start to detecting video metas----------False
+2023-10-08 09:45:46,806 - INFO - remove old video meta files
+2023-10-08 09:45:46,807 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 09:45:46,815 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 09:45:46,817 - INFO - update to 1 meta json
+2023-10-08 09:45:46,818 - INFO - start to check desFilePaths for video: 1
+2023-10-08 09:45:46,819 - INFO - update to 1 meta json
+2023-10-08 09:45:46,820 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 09:45:46,821 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 09:45:46,821 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 09:45:46,823 - INFO - update to 1 meta json
+2023-10-08 09:45:46,834 - INFO - start to detecting video metas----------True
+2023-10-08 09:45:46,838 - INFO - we cached 13003000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 09:45:46,849 - WARNING - You are running on win32, potentially without locks. Consider setting shared_lock=True
+2023-10-08 09:45:46,853 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 09:45:46,855 - INFO - update to 1 meta json
+2023-10-08 09:45:46,856 - INFO - start to check desFilePaths for video: 1
+2023-10-08 09:45:46,857 - INFO - update to 1 meta json
+2023-10-08 09:45:46,858 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 09:45:46,859 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 09:45:46,860 - INFO - update to 1 meta json
+2023-10-08 09:45:46,861 - INFO - start to check tagFilePaths for video: 1
+2023-10-08 09:45:46,862 - INFO - update to 1 meta json
+2023-10-08 09:45:46,863 - INFO - start to check scheduleFilePaths for video: 1
+2023-10-08 09:45:46,864 - INFO - update to 1 meta json
+2023-10-08 09:48:49,335 - INFO - start to detecting video metas----------True
+2023-10-08 09:48:49,339 - INFO - we cached 182471576000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 09:48:49,347 - WARNING - You are running on win32, potentially without locks. Consider setting shared_lock=True
+2023-10-08 09:48:49,351 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 09:48:49,353 - INFO - update to 1 meta json
+2023-10-08 09:48:49,354 - INFO - start to check desFilePaths for video: 1
+2023-10-08 09:48:49,355 - INFO - update to 1 meta json
+2023-10-08 09:48:49,356 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 09:48:49,357 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 09:48:49,359 - INFO - update to 1 meta json
+2023-10-08 09:48:49,360 - INFO - start to check tagFilePaths for video: 1
+2023-10-08 09:48:49,361 - INFO - update to 1 meta json
+2023-10-08 09:48:49,362 - INFO - start to check scheduleFilePaths for video: 1
+2023-10-08 09:48:49,363 - INFO - update to 1 meta json
+2023-10-08 10:07:18,519 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 10:07:18,520 - INFO - TiktokaStudio GUI started
+2023-10-08 10:07:18,569 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 10:07:18,569 - INFO - TiktokaStudio GUI started
+2023-10-08 10:07:31,372 - INFO - start to detecting video metas----------False
+2023-10-08 10:07:31,378 - INFO - remove old video meta files
+2023-10-08 10:07:31,379 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 10:07:31,386 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 10:07:31,389 - INFO - update to 1 meta json
+2023-10-08 10:07:31,390 - INFO - start to check desFilePaths for video: 1
+2023-10-08 10:07:31,391 - INFO - update to 1 meta json
+2023-10-08 10:07:31,392 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 10:07:31,393 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 10:07:31,393 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 10:07:31,395 - INFO - update to 1 meta json
+2023-10-08 10:09:52,345 - INFO - start to detecting video metas----------True
+2023-10-08 10:09:52,349 - INFO - we cached 140951095000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 10:09:52,359 - WARNING - You are running on win32, potentially without locks. Consider setting shared_lock=True
+2023-10-08 10:09:52,363 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 10:09:52,365 - INFO - update to 1 meta json
+2023-10-08 10:09:52,366 - INFO - start to check desFilePaths for video: 1
+2023-10-08 10:09:52,367 - INFO - update to 1 meta json
+2023-10-08 10:09:52,368 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 10:09:52,369 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 10:09:52,371 - INFO - update to 1 meta json
+2023-10-08 10:09:52,372 - INFO - start to check tagFilePaths for video: 1
+2023-10-08 10:09:52,374 - INFO - update to 1 meta json
+2023-10-08 10:09:52,374 - INFO - start to check scheduleFilePaths for video: 1
+2023-10-08 10:09:52,376 - INFO - update to 1 meta json
+2023-10-08 10:09:52,388 - INFO - start to detecting video metas----------True
+2023-10-08 10:09:52,391 - INFO - we cached 13389000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 10:09:52,400 - WARNING - You are running on win32, potentially without locks. Consider setting shared_lock=True
+2023-10-08 10:09:52,404 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 10:09:52,405 - INFO - update to 1 meta json
+2023-10-08 10:09:52,406 - INFO - start to check desFilePaths for video: 1
+2023-10-08 10:09:52,408 - INFO - update to 1 meta json
+2023-10-08 10:09:52,409 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 10:09:52,409 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 10:09:52,411 - INFO - update to 1 meta json
+2023-10-08 10:09:52,412 - INFO - start to check tagFilePaths for video: 1
+2023-10-08 10:09:52,413 - INFO - update to 1 meta json
+2023-10-08 10:09:52,414 - INFO - start to check scheduleFilePaths for video: 1
+2023-10-08 10:09:52,416 - INFO - update to 1 meta json
+2023-10-08 10:14:25,384 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 10:14:25,385 - INFO - TiktokaStudio GUI started
+2023-10-08 10:14:25,425 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 10:14:25,425 - INFO - TiktokaStudio GUI started
+2023-10-08 10:15:04,501 - INFO - start to detecting video metas----------False
+2023-10-08 10:15:04,508 - INFO - remove old video meta files
+2023-10-08 10:15:04,509 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 10:15:04,519 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 10:15:04,521 - INFO - update to 1 meta json
+2023-10-08 10:15:04,523 - INFO - start to check desFilePaths for video: 1
+2023-10-08 10:15:04,525 - INFO - update to 1 meta json
+2023-10-08 10:15:04,527 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 10:15:04,528 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 10:15:04,529 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 10:15:04,531 - INFO - update to 1 meta json
+2023-10-08 10:16:20,486 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 10:16:20,486 - INFO - TiktokaStudio GUI started
+2023-10-08 10:16:20,527 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 10:16:20,527 - INFO - TiktokaStudio GUI started
+2023-10-08 10:16:26,528 - INFO - start to detecting video metas----------False
+2023-10-08 10:16:26,535 - INFO - remove old video meta files
+2023-10-08 10:16:26,536 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 10:16:26,544 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 10:16:26,546 - INFO - update to 1 meta json
+2023-10-08 10:16:26,547 - INFO - start to check desFilePaths for video: 1
+2023-10-08 10:16:26,549 - INFO - update to 1 meta json
+2023-10-08 10:16:26,549 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 10:16:26,550 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 10:16:26,551 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 10:16:26,551 - INFO - update to 1 meta json
+2023-10-08 10:23:54,998 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 10:23:54,999 - INFO - TiktokaStudio GUI started
+2023-10-08 10:23:55,035 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 10:23:55,036 - INFO - TiktokaStudio GUI started
+2023-10-08 10:24:05,379 - INFO - start to detecting video metas----------False
+2023-10-08 10:24:05,386 - INFO - remove old video meta files
+2023-10-08 10:24:05,386 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 10:24:05,394 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 10:24:05,396 - INFO - update to 1 meta json
+2023-10-08 10:24:05,397 - INFO - start to check desFilePaths for video: 1
+2023-10-08 10:24:05,398 - INFO - update to 1 meta json
+2023-10-08 10:24:05,399 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 10:24:05,399 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 10:24:05,399 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 10:24:05,401 - INFO - update to 1 meta json
+2023-10-08 10:33:10,541 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 10:33:10,541 - INFO - TiktokaStudio GUI started
+2023-10-08 10:33:10,582 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 10:33:10,582 - INFO - TiktokaStudio GUI started
+2023-10-08 10:33:16,480 - INFO - start to detecting video metas----------False
+2023-10-08 10:33:16,487 - INFO - remove old video meta files
+2023-10-08 10:33:16,487 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 10:33:16,496 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 10:33:16,498 - INFO - update to 1 meta json
+2023-10-08 10:33:16,499 - INFO - start to check desFilePaths for video: 1
+2023-10-08 10:33:16,500 - INFO - update to 1 meta json
+2023-10-08 10:33:16,500 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 10:33:16,501 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 10:33:16,501 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 10:33:16,503 - INFO - update to 1 meta json
+2023-10-08 10:33:16,515 - INFO - start to detecting video metas----------True
+2023-10-08 10:33:16,518 - INFO - we cached 12899000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 10:33:16,528 - WARNING - You are running on win32, potentially without locks. Consider setting shared_lock=True
+2023-10-08 10:33:16,532 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 10:33:16,533 - INFO - update to 1 meta json
+2023-10-08 10:33:16,534 - INFO - start to check desFilePaths for video: 1
+2023-10-08 10:33:16,535 - INFO - update to 1 meta json
+2023-10-08 10:33:16,536 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 10:33:16,537 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 10:33:16,538 - INFO - update to 1 meta json
+2023-10-08 10:33:16,539 - INFO - start to check tagFilePaths for video: 1
+2023-10-08 10:33:16,540 - INFO - update to 1 meta json
+2023-10-08 10:33:16,541 - INFO - start to check scheduleFilePaths for video: 1
+2023-10-08 10:33:16,543 - INFO - update to 1 meta json
+2023-10-08 10:35:31,148 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 10:35:31,148 - INFO - TiktokaStudio GUI started
+2023-10-08 10:35:31,190 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 10:35:31,190 - INFO - TiktokaStudio GUI started
+2023-10-08 10:36:43,482 - INFO - start to detecting video metas----------False
+2023-10-08 10:36:43,489 - INFO - remove old video meta files
+2023-10-08 10:36:43,489 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 10:36:43,496 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 10:36:43,498 - INFO - update to 1 meta json
+2023-10-08 10:36:43,499 - INFO - start to check desFilePaths for video: 1
+2023-10-08 10:36:43,501 - INFO - update to 1 meta json
+2023-10-08 10:36:43,502 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 10:36:43,503 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 10:36:43,503 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 10:36:43,504 - INFO - update to 1 meta json
+2023-10-08 10:48:00,856 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 10:48:00,857 - INFO - TiktokaStudio GUI started
+2023-10-08 10:48:00,896 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 10:48:00,896 - INFO - TiktokaStudio GUI started
+2023-10-08 10:48:44,261 - INFO - start to detecting video metas----------False
+2023-10-08 10:48:44,268 - INFO - remove old video meta files
+2023-10-08 10:48:44,269 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 10:48:44,277 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 10:48:44,279 - INFO - update to 1 meta json
+2023-10-08 10:48:44,280 - INFO - start to check desFilePaths for video: 1
+2023-10-08 10:48:44,281 - INFO - update to 1 meta json
+2023-10-08 10:48:44,282 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 10:48:44,282 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 10:48:44,283 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 10:48:44,284 - INFO - update to 1 meta json
+2023-10-08 10:48:44,296 - INFO - start to detecting video metas----------True
+2023-10-08 10:48:44,300 - INFO - we cached 13069000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 10:48:44,312 - WARNING - You are running on win32, potentially without locks. Consider setting shared_lock=True
+2023-10-08 10:48:44,316 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 10:48:44,317 - INFO - update to 1 meta json
+2023-10-08 10:48:44,318 - INFO - start to check desFilePaths for video: 1
+2023-10-08 10:48:44,319 - INFO - update to 1 meta json
+2023-10-08 10:48:44,320 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 10:48:44,320 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 10:48:44,322 - INFO - update to 1 meta json
+2023-10-08 10:48:44,323 - INFO - start to check tagFilePaths for video: 1
+2023-10-08 10:48:44,325 - INFO - update to 1 meta json
+2023-10-08 10:48:44,326 - INFO - start to check scheduleFilePaths for video: 1
+2023-10-08 10:48:44,327 - INFO - update to 1 meta json
+2023-10-08 10:49:34,207 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 10:49:34,207 - INFO - TiktokaStudio GUI started
+2023-10-08 10:49:34,242 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 10:49:34,242 - INFO - TiktokaStudio GUI started
+2023-10-08 10:53:29,162 - INFO - start to detecting video metas----------False
+2023-10-08 10:53:29,171 - INFO - remove old video meta files
+2023-10-08 10:53:29,171 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 10:53:29,179 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 10:53:29,181 - INFO - update to 1 meta json
+2023-10-08 10:53:29,182 - INFO - start to check desFilePaths for video: 1
+2023-10-08 10:53:29,184 - INFO - update to 1 meta json
+2023-10-08 10:53:29,185 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 10:53:29,186 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 10:53:29,186 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 10:53:29,187 - INFO - update to 1 meta json
+2023-10-08 10:53:29,198 - INFO - start to detecting video metas----------True
+2023-10-08 10:53:29,201 - INFO - we cached 12023000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 10:53:29,210 - WARNING - You are running on win32, potentially without locks. Consider setting shared_lock=True
+2023-10-08 10:53:29,215 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 10:53:29,217 - INFO - update to 1 meta json
+2023-10-08 10:53:29,218 - INFO - start to check desFilePaths for video: 1
+2023-10-08 10:53:29,219 - INFO - update to 1 meta json
+2023-10-08 10:53:29,220 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 10:53:29,221 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 10:53:29,222 - INFO - update to 1 meta json
+2023-10-08 10:53:29,223 - INFO - start to check tagFilePaths for video: 1
+2023-10-08 10:53:29,225 - INFO - update to 1 meta json
+2023-10-08 10:53:29,226 - INFO - start to check scheduleFilePaths for video: 1
+2023-10-08 10:53:29,227 - INFO - update to 1 meta json
+2023-10-08 10:55:59,353 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 10:55:59,354 - INFO - TiktokaStudio GUI started
+2023-10-08 10:55:59,441 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 10:55:59,441 - INFO - TiktokaStudio GUI started
+2023-10-08 10:56:06,048 - INFO - start to detecting video metas----------False
+2023-10-08 10:56:06,055 - INFO - remove old video meta files
+2023-10-08 10:56:06,055 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 10:56:06,063 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 10:56:06,065 - INFO - update to 1 meta json
+2023-10-08 10:56:06,066 - INFO - start to check desFilePaths for video: 1
+2023-10-08 10:56:06,068 - INFO - update to 1 meta json
+2023-10-08 10:56:06,070 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 10:56:06,070 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 10:56:06,070 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 10:56:06,071 - INFO - update to 1 meta json
+2023-10-08 10:56:06,083 - INFO - start to detecting video metas----------True
+2023-10-08 10:56:06,087 - INFO - we cached 12998000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 10:56:06,096 - WARNING - You are running on win32, potentially without locks. Consider setting shared_lock=True
+2023-10-08 10:56:06,100 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 10:56:06,102 - INFO - update to 1 meta json
+2023-10-08 10:56:06,103 - INFO - start to check desFilePaths for video: 1
+2023-10-08 10:56:06,104 - INFO - update to 1 meta json
+2023-10-08 10:56:06,105 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 10:56:06,106 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 10:56:06,107 - INFO - update to 1 meta json
+2023-10-08 10:56:06,108 - INFO - start to check tagFilePaths for video: 1
+2023-10-08 10:56:06,109 - INFO - update to 1 meta json
+2023-10-08 10:56:06,110 - INFO - start to check scheduleFilePaths for video: 1
+2023-10-08 10:56:06,112 - INFO - update to 1 meta json
+2023-10-08 10:56:44,824 - INFO - start to detecting video metas----------True
+2023-10-08 10:56:44,828 - INFO - we cached 38713060000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 10:56:44,838 - WARNING - You are running on win32, potentially without locks. Consider setting shared_lock=True
+2023-10-08 10:56:44,843 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 10:56:44,845 - INFO - update to 1 meta json
+2023-10-08 10:56:44,846 - INFO - start to check desFilePaths for video: 1
+2023-10-08 10:56:44,848 - INFO - update to 1 meta json
+2023-10-08 10:56:44,849 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 10:56:44,849 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 10:56:44,851 - INFO - update to 1 meta json
+2023-10-08 10:56:44,852 - INFO - start to check tagFilePaths for video: 1
+2023-10-08 10:56:44,853 - INFO - update to 1 meta json
+2023-10-08 10:56:44,854 - INFO - start to check scheduleFilePaths for video: 1
+2023-10-08 10:56:44,855 - INFO - update to 1 meta json
+2023-10-08 10:57:37,130 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 10:57:37,130 - INFO - TiktokaStudio GUI started
+2023-10-08 10:57:37,173 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 10:57:37,173 - INFO - TiktokaStudio GUI started
+2023-10-08 10:57:46,757 - INFO - start to detecting video metas----------False
+2023-10-08 10:57:46,763 - INFO - remove old video meta files
+2023-10-08 10:57:46,764 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 10:57:46,772 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 10:57:46,773 - INFO - update to 1 meta json
+2023-10-08 10:57:46,774 - INFO - start to check desFilePaths for video: 1
+2023-10-08 10:57:46,776 - INFO - update to 1 meta json
+2023-10-08 10:57:46,777 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 10:57:46,777 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 10:57:46,777 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 10:57:46,779 - INFO - update to 1 meta json
+2023-10-08 11:01:00,499 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:01:00,499 - INFO - TiktokaStudio GUI started
+2023-10-08 11:01:00,538 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:01:00,538 - INFO - TiktokaStudio GUI started
+2023-10-08 11:04:06,755 - INFO - start to detecting video metas----------False
+2023-10-08 11:04:06,761 - INFO - remove old video meta files
+2023-10-08 11:04:06,762 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 11:04:06,769 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 11:04:06,771 - INFO - update to 1 meta json
+2023-10-08 11:04:06,772 - INFO - start to check desFilePaths for video: 1
+2023-10-08 11:04:06,774 - INFO - update to 1 meta json
+2023-10-08 11:04:06,774 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 11:04:06,775 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 11:04:06,775 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 11:04:06,776 - INFO - update to 1 meta json
+2023-10-08 11:05:35,658 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:05:35,658 - INFO - TiktokaStudio GUI started
+2023-10-08 11:05:35,693 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:05:35,693 - INFO - TiktokaStudio GUI started
+2023-10-08 11:06:09,912 - INFO - start to detecting video metas----------False
+2023-10-08 11:06:09,919 - INFO - remove old video meta files
+2023-10-08 11:06:09,919 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 11:06:09,927 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 11:06:09,929 - INFO - update to 1 meta json
+2023-10-08 11:06:09,930 - INFO - start to check desFilePaths for video: 1
+2023-10-08 11:06:09,932 - INFO - update to 1 meta json
+2023-10-08 11:06:09,933 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 11:06:09,934 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 11:06:09,934 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 11:06:09,935 - INFO - update to 1 meta json
+2023-10-08 11:10:32,841 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:10:32,841 - INFO - TiktokaStudio GUI started
+2023-10-08 11:10:32,889 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:10:32,890 - INFO - TiktokaStudio GUI started
+2023-10-08 11:13:03,942 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:13:03,943 - INFO - TiktokaStudio GUI started
+2023-10-08 11:13:03,983 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:13:03,983 - INFO - TiktokaStudio GUI started
+2023-10-08 11:13:09,672 - INFO - start to detecting video metas----------False
+2023-10-08 11:13:09,679 - INFO - remove old video meta files
+2023-10-08 11:13:09,680 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 11:13:09,688 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 11:13:09,690 - INFO - update to 1 meta json
+2023-10-08 11:13:09,691 - INFO - start to check desFilePaths for video: 1
+2023-10-08 11:13:09,691 - INFO - update to 1 meta json
+2023-10-08 11:13:09,692 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 11:13:09,693 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 11:13:09,693 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 11:13:09,694 - INFO - update to 1 meta json
+2023-10-08 11:13:41,814 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:13:41,814 - INFO - TiktokaStudio GUI started
+2023-10-08 11:13:41,855 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:13:41,855 - INFO - TiktokaStudio GUI started
+2023-10-08 11:13:48,153 - INFO - start to detecting video metas----------False
+2023-10-08 11:13:48,160 - INFO - remove old video meta files
+2023-10-08 11:13:48,161 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 11:13:48,169 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 11:13:48,170 - INFO - update to 1 meta json
+2023-10-08 11:13:48,171 - INFO - start to check desFilePaths for video: 1
+2023-10-08 11:13:48,172 - INFO - update to 1 meta json
+2023-10-08 11:13:48,173 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 11:13:48,174 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 11:13:48,174 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 11:13:48,175 - INFO - update to 1 meta json
+2023-10-08 11:13:57,730 - INFO - you choose policy is 2
+2023-10-08 11:13:58,627 - INFO - you choose policy is 1
+2023-10-08 11:14:53,397 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:14:53,398 - INFO - TiktokaStudio GUI started
+2023-10-08 11:14:53,445 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:14:53,445 - INFO - TiktokaStudio GUI started
+2023-10-08 11:14:58,181 - INFO - start to detecting video metas----------False
+2023-10-08 11:14:58,188 - INFO - remove old video meta files
+2023-10-08 11:14:58,188 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 11:14:58,196 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 11:14:58,198 - INFO - update to 1 meta json
+2023-10-08 11:14:58,199 - INFO - start to check desFilePaths for video: 1
+2023-10-08 11:14:58,200 - INFO - update to 1 meta json
+2023-10-08 11:14:58,201 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 11:14:58,202 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 11:14:58,202 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 11:14:58,204 - INFO - update to 1 meta json
+2023-10-08 11:15:03,036 - INFO - you choose policy is 1
+2023-10-08 11:15:04,444 - INFO - you choose policy is 2
+2023-10-08 11:15:06,380 - INFO - you choose policy is 2
+2023-10-08 11:18:51,694 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:18:51,694 - INFO - TiktokaStudio GUI started
+2023-10-08 11:18:51,735 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:18:51,735 - INFO - TiktokaStudio GUI started
+2023-10-08 11:18:57,103 - INFO - start to detecting video metas----------False
+2023-10-08 11:18:57,109 - INFO - remove old video meta files
+2023-10-08 11:18:57,110 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 11:18:57,118 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 11:18:57,119 - INFO - update to 1 meta json
+2023-10-08 11:18:57,120 - INFO - start to check desFilePaths for video: 1
+2023-10-08 11:18:57,121 - INFO - update to 1 meta json
+2023-10-08 11:18:57,122 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 11:18:57,123 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 11:18:57,123 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 11:18:57,124 - INFO - update to 1 meta json
+2023-10-08 11:19:24,168 - INFO - you choose policy is 2
+2023-10-08 11:19:25,480 - INFO - you choose policy is 1
+2023-10-08 11:21:06,031 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:21:06,031 - INFO - TiktokaStudio GUI started
+2023-10-08 11:21:06,065 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:21:06,066 - INFO - TiktokaStudio GUI started
+2023-10-08 11:21:29,812 - INFO - start to detecting video metas----------False
+2023-10-08 11:21:29,819 - INFO - remove old video meta files
+2023-10-08 11:21:29,819 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 11:21:29,827 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 11:21:29,829 - INFO - update to 1 meta json
+2023-10-08 11:21:29,830 - INFO - start to check desFilePaths for video: 1
+2023-10-08 11:21:29,831 - INFO - update to 1 meta json
+2023-10-08 11:21:29,832 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 11:21:29,833 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 11:21:29,833 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 11:21:29,835 - INFO - update to 1 meta json
+2023-10-08 11:21:44,156 - INFO - you choose policy is 2
+2023-10-08 11:21:45,189 - INFO - you choose policy is 1
+2023-10-08 11:21:48,293 - INFO - you choose policy is 2
+2023-10-08 11:21:49,781 - INFO - you choose policy is 1
+2023-10-08 11:21:51,197 - INFO - you choose policy is 2
+2023-10-08 11:21:52,414 - INFO - you choose policy is 1
+2023-10-08 11:22:53,842 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:22:53,842 - INFO - TiktokaStudio GUI started
+2023-10-08 11:22:53,875 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:22:53,875 - INFO - TiktokaStudio GUI started
+2023-10-08 11:23:22,969 - INFO - start to detecting video metas----------False
+2023-10-08 11:23:22,975 - INFO - remove old video meta files
+2023-10-08 11:23:22,976 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 11:23:22,983 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 11:23:22,985 - INFO - update to 1 meta json
+2023-10-08 11:23:22,986 - INFO - start to check desFilePaths for video: 1
+2023-10-08 11:23:22,988 - INFO - update to 1 meta json
+2023-10-08 11:23:22,989 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 11:23:22,990 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 11:23:22,990 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 11:23:22,991 - INFO - update to 1 meta json
+2023-10-08 11:23:27,801 - INFO - you choose policy is 1
+2023-10-08 11:23:29,953 - INFO - you choose policy is 2
+2023-10-08 11:23:36,313 - INFO - you choose policy is 1
+2023-10-08 11:23:37,393 - INFO - you choose policy is 2
+2023-10-08 11:24:31,353 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:24:31,353 - INFO - TiktokaStudio GUI started
+2023-10-08 11:24:31,391 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:24:31,391 - INFO - TiktokaStudio GUI started
+2023-10-08 11:24:44,563 - INFO - start to detecting video metas----------False
+2023-10-08 11:24:44,572 - INFO - remove old video meta files
+2023-10-08 11:24:44,573 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 11:24:44,581 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 11:24:44,584 - INFO - update to 1 meta json
+2023-10-08 11:24:44,585 - INFO - start to check desFilePaths for video: 1
+2023-10-08 11:24:44,586 - INFO - update to 1 meta json
+2023-10-08 11:24:44,587 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 11:24:44,588 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 11:24:44,589 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 11:24:44,590 - INFO - update to 1 meta json
+2023-10-08 11:24:49,339 - INFO - you choose policy is 1
+2023-10-08 11:24:49,341 - INFO - you choose policy is 1
+2023-10-08 11:24:52,444 - INFO - you choose policy is 2
+2023-10-08 11:24:52,445 - INFO - you choose policy is 2
+2023-10-08 11:24:53,117 - INFO - you choose policy is 1
+2023-10-08 11:24:53,117 - INFO - you choose policy is 1
+2023-10-08 11:25:40,582 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:25:40,582 - INFO - TiktokaStudio GUI started
+2023-10-08 11:25:40,623 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:25:40,623 - INFO - TiktokaStudio GUI started
+2023-10-08 11:25:46,495 - INFO - start to detecting video metas----------False
+2023-10-08 11:25:46,502 - INFO - remove old video meta files
+2023-10-08 11:25:46,502 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 11:25:46,510 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 11:25:46,511 - INFO - update to 1 meta json
+2023-10-08 11:25:46,512 - INFO - start to check desFilePaths for video: 1
+2023-10-08 11:25:46,513 - INFO - update to 1 meta json
+2023-10-08 11:25:46,514 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 11:25:46,515 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 11:25:46,515 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 11:25:46,516 - INFO - update to 1 meta json
+2023-10-08 11:25:50,285 - INFO - you choose policy is 1
+2023-10-08 11:25:50,291 - INFO - you choose policy is 1
+2023-10-08 11:25:51,390 - INFO - you choose policy is 2
+2023-10-08 11:25:51,392 - INFO - you choose policy is 2
+2023-10-08 11:25:56,126 - INFO - you choose policy is 2
+2023-10-08 11:25:56,128 - INFO - you choose policy is 2
+2023-10-08 11:26:21,311 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:26:21,312 - INFO - TiktokaStudio GUI started
+2023-10-08 11:26:21,353 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:26:21,354 - INFO - TiktokaStudio GUI started
+2023-10-08 11:26:27,777 - INFO - start to detecting video metas----------False
+2023-10-08 11:26:27,784 - INFO - remove old video meta files
+2023-10-08 11:26:27,784 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 11:26:27,792 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 11:26:27,794 - INFO - update to 1 meta json
+2023-10-08 11:26:27,795 - INFO - start to check desFilePaths for video: 1
+2023-10-08 11:26:27,797 - INFO - update to 1 meta json
+2023-10-08 11:26:27,798 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 11:26:27,799 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 11:26:27,800 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 11:26:27,801 - INFO - update to 1 meta json
+2023-10-08 11:26:34,264 - INFO - you choose policy is 2
+2023-10-08 11:26:34,265 - INFO - you choose policy is 2
+2023-10-08 11:26:35,056 - INFO - you choose policy is 1
+2023-10-08 11:26:35,056 - INFO - you choose policy is 1
+2023-10-08 11:27:35,104 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:27:35,104 - INFO - TiktokaStudio GUI started
+2023-10-08 11:27:35,141 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:27:35,142 - INFO - TiktokaStudio GUI started
+2023-10-08 11:27:40,756 - INFO - start to detecting video metas----------False
+2023-10-08 11:27:40,763 - INFO - remove old video meta files
+2023-10-08 11:27:40,763 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 11:27:40,771 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 11:27:40,773 - INFO - update to 1 meta json
+2023-10-08 11:27:40,774 - INFO - start to check desFilePaths for video: 1
+2023-10-08 11:27:40,776 - INFO - update to 1 meta json
+2023-10-08 11:27:40,777 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 11:27:40,778 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 11:27:40,778 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 11:27:40,780 - INFO - update to 1 meta json
+2023-10-08 11:27:44,555 - INFO - you choose policy is 1
+2023-10-08 11:27:44,559 - INFO - you choose policy is 1
+2023-10-08 11:27:46,315 - INFO - you choose policy is 2
+2023-10-08 11:27:46,317 - INFO - you choose policy is 2
+2023-10-08 11:27:47,498 - INFO - you choose policy is 1
+2023-10-08 11:27:47,500 - INFO - you choose policy is 1
+2023-10-08 11:28:32,334 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:28:32,334 - INFO - TiktokaStudio GUI started
+2023-10-08 11:28:32,377 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:28:32,377 - INFO - TiktokaStudio GUI started
+2023-10-08 11:28:37,854 - INFO - start to detecting video metas----------False
+2023-10-08 11:28:37,861 - INFO - remove old video meta files
+2023-10-08 11:28:37,861 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 11:28:37,869 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 11:28:37,871 - INFO - update to 1 meta json
+2023-10-08 11:28:37,872 - INFO - start to check desFilePaths for video: 1
+2023-10-08 11:28:37,873 - INFO - update to 1 meta json
+2023-10-08 11:28:37,874 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 11:28:37,874 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 11:28:37,875 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 11:28:37,876 - INFO - update to 1 meta json
+2023-10-08 11:28:42,717 - INFO - you choose policy is 1
+2023-10-08 11:28:42,718 - INFO - you choose policy is 1
+2023-10-08 11:28:44,342 - INFO - you choose policy is 2
+2023-10-08 11:28:44,342 - INFO - you choose policy is 2
+2023-10-08 11:28:45,181 - INFO - you choose policy is 1
+2023-10-08 11:28:45,182 - INFO - you choose policy is 1
+2023-10-08 11:28:45,726 - INFO - you choose policy is 2
+2023-10-08 11:28:45,727 - INFO - you choose policy is 2
+2023-10-08 11:28:47,038 - INFO - you choose policy is 2
+2023-10-08 11:28:47,038 - INFO - you choose policy is 2
+2023-10-08 11:28:48,693 - INFO - you choose policy is 2
+2023-10-08 11:28:48,694 - INFO - you choose policy is 2
+2023-10-08 11:28:49,286 - INFO - you choose policy is 1
+2023-10-08 11:28:49,287 - INFO - you choose policy is 1
+2023-10-08 11:29:21,791 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:29:21,791 - INFO - TiktokaStudio GUI started
+2023-10-08 11:29:21,831 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:29:21,831 - INFO - TiktokaStudio GUI started
+2023-10-08 11:30:00,696 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:30:00,696 - INFO - TiktokaStudio GUI started
+2023-10-08 11:30:00,735 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:30:00,735 - INFO - TiktokaStudio GUI started
+2023-10-08 11:30:14,506 - INFO - start to detecting video metas----------False
+2023-10-08 11:30:14,513 - INFO - remove old video meta files
+2023-10-08 11:30:14,513 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 11:30:14,521 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 11:30:14,523 - INFO - update to 1 meta json
+2023-10-08 11:30:14,524 - INFO - start to check desFilePaths for video: 1
+2023-10-08 11:30:14,525 - INFO - update to 1 meta json
+2023-10-08 11:30:14,526 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 11:30:14,527 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 11:30:14,527 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 11:30:14,528 - INFO - update to 1 meta json
+2023-10-08 11:30:19,697 - INFO - you choose policy is 1
+2023-10-08 11:30:19,698 - INFO - you choose policy is 1
+2023-10-08 11:30:20,089 - INFO - you choose policy is 1
+2023-10-08 11:30:20,090 - INFO - you choose policy is 1
+2023-10-08 11:30:21,112 - INFO - you choose policy is 2
+2023-10-08 11:30:21,113 - INFO - you choose policy is 2
+2023-10-08 11:30:59,396 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:30:59,396 - INFO - TiktokaStudio GUI started
+2023-10-08 11:30:59,440 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:30:59,440 - INFO - TiktokaStudio GUI started
+2023-10-08 11:31:05,699 - INFO - start to detecting video metas----------False
+2023-10-08 11:31:05,706 - INFO - remove old video meta files
+2023-10-08 11:31:05,706 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 11:31:05,714 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 11:31:05,716 - INFO - update to 1 meta json
+2023-10-08 11:31:05,717 - INFO - start to check desFilePaths for video: 1
+2023-10-08 11:31:05,719 - INFO - update to 1 meta json
+2023-10-08 11:31:05,720 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 11:31:05,720 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 11:31:05,721 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 11:31:05,723 - INFO - update to 1 meta json
+2023-10-08 11:31:20,620 - INFO - you choose policy is 2
+2023-10-08 11:31:20,623 - INFO - you choose policy is 2
+2023-10-08 11:58:53,205 - INFO - you choose policy is 2
+2023-10-08 11:58:53,208 - INFO - you choose policy is 2
+2023-10-08 11:58:55,598 - INFO - you choose policy is 1
+2023-10-08 11:58:55,602 - INFO - you choose policy is 1
+2023-10-08 11:59:41,900 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:59:41,900 - INFO - TiktokaStudio GUI started
+2023-10-08 11:59:41,949 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 11:59:41,949 - INFO - TiktokaStudio GUI started
+2023-10-08 11:59:54,168 - INFO - start to detecting video metas----------False
+2023-10-08 11:59:54,175 - INFO - remove old video meta files
+2023-10-08 11:59:54,176 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 11:59:54,184 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 11:59:54,185 - INFO - update to 1 meta json
+2023-10-08 11:59:54,186 - INFO - start to check desFilePaths for video: 1
+2023-10-08 11:59:54,188 - INFO - update to 1 meta json
+2023-10-08 11:59:54,189 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 11:59:54,190 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 11:59:54,190 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 11:59:54,191 - INFO - update to 1 meta json
+2023-10-08 12:00:03,073 - INFO - you choose policy is 1
+2023-10-08 12:00:03,074 - INFO - you choose policy is 1
+2023-10-08 12:02:04,054 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 12:02:04,054 - INFO - TiktokaStudio GUI started
+2023-10-08 12:02:04,095 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 12:02:04,095 - INFO - TiktokaStudio GUI started
+2023-10-08 12:02:10,453 - INFO - start to detecting video metas----------False
+2023-10-08 12:02:10,460 - INFO - remove old video meta files
+2023-10-08 12:02:10,460 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 12:02:10,468 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 12:02:10,470 - INFO - update to 1 meta json
+2023-10-08 12:02:10,471 - INFO - start to check desFilePaths for video: 1
+2023-10-08 12:02:10,472 - INFO - update to 1 meta json
+2023-10-08 12:02:10,473 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 12:02:10,474 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 12:02:10,475 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 12:02:10,476 - INFO - update to 1 meta json
+2023-10-08 12:02:15,614 - INFO - you choose policy is 2
+2023-10-08 12:02:15,614 - INFO - you choose policy is 2
+2023-10-08 12:02:17,013 - INFO - you choose policy is 1
+2023-10-08 12:02:17,014 - INFO - you choose policy is 1
+2023-10-08 12:03:23,473 - INFO - you choose policy is 2
+2023-10-08 12:03:23,474 - INFO - you choose policy is 2
+2023-10-08 12:10:10,614 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 12:10:10,614 - INFO - TiktokaStudio GUI started
+2023-10-08 12:10:10,656 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 12:10:10,656 - INFO - TiktokaStudio GUI started
+2023-10-08 12:11:32,492 - INFO - start to detecting video metas----------False
+2023-10-08 12:11:32,500 - INFO - remove old video meta files
+2023-10-08 12:11:32,500 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 12:11:32,508 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 12:11:32,510 - INFO - update to 1 meta json
+2023-10-08 12:11:32,511 - INFO - start to check desFilePaths for video: 1
+2023-10-08 12:11:32,513 - INFO - update to 1 meta json
+2023-10-08 12:11:32,514 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 12:11:32,515 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 12:11:32,515 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 12:11:32,517 - INFO - update to 1 meta json
+2023-10-08 12:11:37,692 - INFO - you choose policy is 3
+2023-10-08 12:11:37,692 - INFO - you choose policy is 3
+2023-10-08 12:11:39,213 - INFO - you choose policy is 4
+2023-10-08 12:11:39,213 - INFO - you choose policy is 4
+2023-10-08 12:11:39,611 - INFO - you choose policy is 4
+2023-10-08 12:11:39,612 - INFO - you choose policy is 4
+2023-10-08 12:11:39,948 - INFO - you choose policy is 5
+2023-10-08 12:11:39,948 - INFO - you choose policy is 5
+2023-10-08 12:11:40,653 - INFO - you choose policy is 4
+2023-10-08 12:11:40,654 - INFO - you choose policy is 4
+2023-10-08 12:11:41,500 - INFO - you choose policy is 3
+2023-10-08 12:11:41,501 - INFO - you choose policy is 3
+2023-10-08 12:11:42,517 - INFO - you choose policy is 3
+2023-10-08 12:11:42,517 - INFO - you choose policy is 3
+2023-10-08 12:11:42,908 - INFO - you choose policy is 4
+2023-10-08 12:11:42,908 - INFO - you choose policy is 4
+2023-10-08 12:16:17,490 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 12:16:17,490 - INFO - TiktokaStudio GUI started
+2023-10-08 12:16:17,538 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 12:16:17,538 - INFO - TiktokaStudio GUI started
+2023-10-08 12:16:54,185 - INFO - start to detecting video metas----------False
+2023-10-08 12:16:54,192 - INFO - remove old video meta files
+2023-10-08 12:16:54,193 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 12:16:54,202 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 12:16:54,204 - INFO - update to 1 meta json
+2023-10-08 12:16:54,205 - INFO - start to check desFilePaths for video: 1
+2023-10-08 12:16:54,207 - INFO - update to 1 meta json
+2023-10-08 12:16:54,208 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 12:16:54,209 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 12:16:54,209 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 12:16:54,210 - INFO - update to 1 meta json
+2023-10-08 12:16:59,096 - INFO - show offset elements
+2023-10-08 12:16:59,097 - INFO - show offset elements
+2023-10-08 12:16:59,593 - INFO - hidden offset elements
+2023-10-08 12:16:59,593 - INFO - hidden offset elements
+2023-10-08 12:17:00,834 - INFO - hidden offset elements
+2023-10-08 12:17:00,834 - INFO - hidden offset elements
+2023-10-08 12:17:41,186 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 12:17:41,186 - INFO - TiktokaStudio GUI started
+2023-10-08 12:17:41,227 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 12:17:41,227 - INFO - TiktokaStudio GUI started
+2023-10-08 12:18:13,540 - INFO - start to detecting video metas----------False
+2023-10-08 12:18:13,547 - INFO - remove old video meta files
+2023-10-08 12:18:13,547 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 12:18:13,555 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 12:18:13,556 - INFO - update to 1 meta json
+2023-10-08 12:18:13,557 - INFO - start to check desFilePaths for video: 1
+2023-10-08 12:18:13,559 - INFO - update to 1 meta json
+2023-10-08 12:18:13,561 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 12:18:13,561 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 12:18:13,562 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 12:18:13,563 - INFO - update to 1 meta json
+2023-10-08 12:18:20,076 - INFO - hidden offset elements
+2023-10-08 12:18:20,708 - INFO - show offset elements
+2023-10-08 12:18:21,853 - INFO - hidden offset elements
+2023-10-08 12:18:22,445 - INFO - show offset elements
+2023-10-08 12:18:23,116 - INFO - show offset elements
+2023-10-08 12:18:23,708 - INFO - hidden offset elements
+2023-10-08 12:18:24,229 - INFO - hidden offset elements
+2023-10-08 12:21:02,539 - INFO - show offset elements
+2023-10-08 12:21:03,019 - INFO - hidden offset elements
+2023-10-08 12:21:04,434 - INFO - hidden offset elements
+2023-10-08 12:21:18,542 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 12:21:18,542 - INFO - TiktokaStudio GUI started
+2023-10-08 12:21:18,584 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 12:21:18,585 - INFO - TiktokaStudio GUI started
+2023-10-08 12:21:24,204 - INFO - start to detecting video metas----------False
+2023-10-08 12:21:24,211 - INFO - remove old video meta files
+2023-10-08 12:21:24,212 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 12:21:24,219 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 12:21:24,221 - INFO - update to 1 meta json
+2023-10-08 12:21:24,222 - INFO - start to check desFilePaths for video: 1
+2023-10-08 12:21:24,223 - INFO - update to 1 meta json
+2023-10-08 12:21:24,224 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 12:21:24,225 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 12:21:24,225 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 12:21:24,227 - INFO - update to 1 meta json
+2023-10-08 12:21:28,124 - INFO - hidden offset elements
+2023-10-08 12:21:28,987 - INFO - hidden offset elements
+2023-10-08 12:21:29,316 - INFO - show offset elements
+2023-10-08 12:21:29,907 - INFO - show offset elements
+2023-10-08 12:21:30,420 - INFO - hidden offset elements
+2023-10-08 12:21:50,669 - INFO - hidden offset elements
+2023-10-08 12:21:51,261 - INFO - show offset elements
+2023-10-08 12:21:51,724 - INFO - show offset elements
+2023-10-08 12:21:52,181 - INFO - hidden offset elements
+2023-10-08 12:21:52,949 - INFO - show offset elements
+2023-10-08 12:21:53,308 - INFO - show offset elements
+2023-10-08 12:21:53,636 - INFO - show offset elements
+2023-10-08 12:25:22,510 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 12:25:22,511 - INFO - TiktokaStudio GUI started
+2023-10-08 12:25:22,562 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 12:25:22,562 - INFO - TiktokaStudio GUI started
+2023-10-08 12:25:31,222 - INFO - start to detecting video metas----------False
+2023-10-08 12:25:31,229 - INFO - remove old video meta files
+2023-10-08 12:25:31,230 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 12:25:31,237 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 12:25:31,239 - INFO - update to 1 meta json
+2023-10-08 12:25:31,240 - INFO - start to check desFilePaths for video: 1
+2023-10-08 12:25:31,242 - INFO - update to 1 meta json
+2023-10-08 12:25:31,242 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 12:25:31,243 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 12:25:31,244 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 12:25:31,245 - INFO - update to 1 meta json
+2023-10-08 12:25:35,134 - INFO - hidden offset elements
+2023-10-08 12:26:06,868 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 12:26:06,868 - INFO - TiktokaStudio GUI started
+2023-10-08 12:26:06,912 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 12:26:06,912 - INFO - TiktokaStudio GUI started
+2023-10-08 12:26:47,849 - INFO - start to detecting video metas----------False
+2023-10-08 12:26:47,859 - INFO - remove old video meta files
+2023-10-08 12:26:47,860 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 12:26:47,877 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 12:26:47,879 - INFO - update to 1 meta json
+2023-10-08 12:26:47,880 - INFO - start to check desFilePaths for video: 1
+2023-10-08 12:26:47,882 - INFO - update to 1 meta json
+2023-10-08 12:26:47,883 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 12:26:47,883 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 12:26:47,883 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 12:26:47,884 - INFO - update to 1 meta json
+2023-10-08 12:26:53,305 - INFO - hidden offset elements
+2023-10-08 12:26:54,856 - INFO - show offset elements
+2023-10-08 12:26:56,161 - INFO - hidden offset elements
+2023-10-08 12:28:45,181 - INFO - show offset elements
+2023-10-08 12:28:45,740 - INFO - show offset elements
+2023-10-08 12:28:46,718 - INFO - hidden offset elements
+2023-10-08 12:28:47,966 - INFO - hidden offset elements
+2023-10-08 12:28:48,918 - INFO - show offset elements
+2023-10-08 12:28:49,285 - INFO - hidden offset elements
+2023-10-08 12:29:55,182 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 12:29:55,182 - INFO - TiktokaStudio GUI started
+2023-10-08 12:29:55,223 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 12:29:55,223 - INFO - TiktokaStudio GUI started
+2023-10-08 12:30:00,799 - INFO - start to detecting video metas----------False
+2023-10-08 12:30:00,806 - INFO - remove old video meta files
+2023-10-08 12:30:00,807 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 12:30:00,815 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 12:30:00,817 - INFO - update to 1 meta json
+2023-10-08 12:30:00,818 - INFO - start to check desFilePaths for video: 1
+2023-10-08 12:30:00,819 - INFO - update to 1 meta json
+2023-10-08 12:30:00,820 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 12:30:00,821 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 12:30:00,821 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 12:30:00,823 - INFO - update to 1 meta json
+2023-10-08 12:30:04,689 - INFO - show offset elements
+2023-10-08 12:30:05,689 - INFO - hidden offset elements
+2023-10-08 12:30:06,377 - INFO - hidden offset elements
+2023-10-08 12:30:06,921 - INFO - show offset elements
+2023-10-08 12:30:07,384 - INFO - show offset elements
+2023-10-08 12:30:07,880 - INFO - hidden offset elements
+2023-10-08 12:30:08,281 - INFO - hidden offset elements
+2023-10-08 12:30:09,145 - INFO - hidden offset elements
+2023-10-08 12:39:14,556 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 12:39:14,556 - INFO - TiktokaStudio GUI started
+2023-10-08 12:39:14,596 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 12:39:14,596 - INFO - TiktokaStudio GUI started
+2023-10-08 12:40:42,922 - INFO - start to detecting video metas----------False
+2023-10-08 12:40:42,929 - INFO - remove old video meta files
+2023-10-08 12:40:42,929 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 12:40:42,937 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 12:40:42,939 - INFO - update to 1 meta json
+2023-10-08 12:40:42,940 - INFO - start to check desFilePaths for video: 1
+2023-10-08 12:40:42,941 - INFO - update to 1 meta json
+2023-10-08 12:40:42,942 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 12:40:42,943 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 12:40:42,943 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 12:40:42,944 - INFO - update to 1 meta json
+2023-10-08 12:40:47,161 - INFO - show offset elements
+2023-10-08 12:40:48,225 - INFO - hidden offset elements
+2023-10-08 12:40:48,961 - INFO - hidden offset elements
+2023-10-08 12:45:33,388 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 12:45:33,388 - INFO - TiktokaStudio GUI started
+2023-10-08 12:45:33,430 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 12:45:33,430 - INFO - TiktokaStudio GUI started
+2023-10-08 12:45:38,340 - INFO - start to detecting video metas----------False
+2023-10-08 12:45:38,347 - INFO - remove old video meta files
+2023-10-08 12:45:38,348 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 12:45:38,356 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 12:45:38,358 - INFO - update to 1 meta json
+2023-10-08 12:45:38,360 - INFO - start to check desFilePaths for video: 1
+2023-10-08 12:45:38,361 - INFO - update to 1 meta json
+2023-10-08 12:45:38,363 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 12:45:38,364 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 12:45:38,364 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 12:45:38,365 - INFO - update to 1 meta json
+2023-10-08 12:45:42,590 - INFO - show offset elements
+2023-10-08 12:45:43,686 - INFO - show offset elements
+2023-10-08 12:45:44,341 - INFO - show offset elements
+2023-10-08 12:45:44,733 - INFO - show offset elements
+2023-10-08 12:45:45,301 - INFO - hidden offset elements
+2023-10-08 12:45:46,110 - INFO - hidden offset elements
+2023-10-08 12:46:00,278 - INFO - hidden offset elements
+2023-10-08 12:47:28,654 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 12:47:28,654 - INFO - TiktokaStudio GUI started
+2023-10-08 12:47:28,691 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 12:47:28,691 - INFO - TiktokaStudio GUI started
+2023-10-08 12:47:34,218 - INFO - start to detecting video metas----------False
+2023-10-08 12:47:34,225 - INFO - remove old video meta files
+2023-10-08 12:47:34,225 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 12:47:34,233 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 12:47:34,235 - INFO - update to 1 meta json
+2023-10-08 12:47:34,236 - INFO - start to check desFilePaths for video: 1
+2023-10-08 12:47:34,238 - INFO - update to 1 meta json
+2023-10-08 12:47:34,239 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 12:47:34,240 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 12:47:34,240 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 12:47:34,241 - INFO - update to 1 meta json
+2023-10-08 12:47:37,970 - INFO - hidden offset elements
+2023-10-08 12:47:39,282 - INFO - show offset elements
+2023-10-08 12:47:40,258 - INFO - hidden offset elements
+2023-10-08 12:47:41,123 - INFO - show offset elements
+2023-10-08 12:47:41,905 - INFO - show offset elements
+2023-10-08 12:47:42,857 - INFO - show offset elements
+2023-10-08 12:47:44,155 - INFO - hidden offset elements
+2023-10-08 12:47:45,458 - INFO - hidden offset elements
+2023-10-08 12:47:59,555 - INFO - show offset elements
+2023-10-08 12:48:00,186 - INFO - show offset elements
+2023-10-08 12:48:01,027 - INFO - hidden offset elements
+2023-10-08 12:48:01,979 - INFO - show offset elements
+2023-10-08 12:48:02,836 - INFO - hidden offset elements
+2023-10-08 12:48:26,203 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 12:48:26,203 - INFO - TiktokaStudio GUI started
+2023-10-08 12:48:26,238 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 12:48:26,238 - INFO - TiktokaStudio GUI started
+2023-10-08 12:48:32,429 - INFO - start to detecting video metas----------False
+2023-10-08 12:48:32,436 - INFO - remove old video meta files
+2023-10-08 12:48:32,436 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 12:48:32,444 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 12:48:32,446 - INFO - update to 1 meta json
+2023-10-08 12:48:32,447 - INFO - start to check desFilePaths for video: 1
+2023-10-08 12:48:32,448 - INFO - update to 1 meta json
+2023-10-08 12:48:32,449 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 12:48:32,450 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 12:48:32,451 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 12:48:32,452 - INFO - update to 1 meta json
+2023-10-08 12:48:35,933 - INFO - hidden offset elements
+2023-10-08 12:48:36,796 - INFO - show offset elements
+2023-10-08 12:48:37,981 - INFO - show offset elements
+2023-10-08 12:48:38,860 - INFO - show offset elements
+2023-10-08 12:48:40,189 - INFO - hidden offset elements
+2023-10-08 12:48:40,989 - INFO - hidden offset elements
+2023-10-08 13:10:15,753 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 13:10:15,753 - INFO - TiktokaStudio GUI started
+2023-10-08 13:10:15,804 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 13:10:15,804 - INFO - TiktokaStudio GUI started
+2023-10-08 13:10:21,559 - INFO - start to detecting video metas----------False
+2023-10-08 13:10:22,058 - INFO - remove old video meta files
+2023-10-08 13:10:22,058 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 13:10:22,069 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 13:10:22,071 - INFO - update to 1 meta json
+2023-10-08 13:10:22,072 - INFO - start to check desFilePaths for video: 1
+2023-10-08 13:10:22,074 - INFO - update to 1 meta json
+2023-10-08 13:10:22,075 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 13:10:22,076 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 13:10:22,077 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 13:10:22,078 - INFO - update to 1 meta json
+2023-10-08 13:10:23,495 - INFO - start to detecting video metas----------True
+2023-10-08 13:10:23,504 - INFO - we cached 1422445000 seconds before for  this folder D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 13:10:23,517 - WARNING - You are running on win32, potentially without locks. Consider setting shared_lock=True
+2023-10-08 13:10:23,522 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 13:10:23,525 - INFO - update to 1 meta json
+2023-10-08 13:10:23,526 - INFO - start to check desFilePaths for video: 1
+2023-10-08 13:10:23,528 - INFO - update to 1 meta json
+2023-10-08 13:10:23,529 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 13:10:23,530 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 13:10:23,531 - INFO - update to 1 meta json
+2023-10-08 13:10:23,533 - INFO - start to check tagFilePaths for video: 1
+2023-10-08 13:10:23,534 - INFO - update to 1 meta json
+2023-10-08 13:10:23,536 - INFO - start to check scheduleFilePaths for video: 1
+2023-10-08 13:10:23,537 - INFO - update to 1 meta json
+2023-10-08 13:10:29,087 - INFO - show offset elements
+2023-10-08 13:10:30,053 - INFO - hidden offset elements
+2023-10-08 13:10:31,172 - INFO - hidden offset elements
+2023-10-08 13:11:59,147 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 13:11:59,147 - INFO - TiktokaStudio GUI started
+2023-10-08 13:11:59,183 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 13:11:59,183 - INFO - TiktokaStudio GUI started
+2023-10-08 13:12:08,707 - INFO - start to detecting video metas----------False
+2023-10-08 13:12:08,714 - INFO - remove old video meta files
+2023-10-08 13:12:08,714 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 13:12:08,722 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 13:12:08,723 - INFO - update to 1 meta json
+2023-10-08 13:12:08,724 - INFO - start to check desFilePaths for video: 1
+2023-10-08 13:12:08,726 - INFO - update to 1 meta json
+2023-10-08 13:12:08,727 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 13:12:08,727 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 13:12:08,728 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 13:12:08,729 - INFO - update to 1 meta json
+2023-10-08 13:12:13,251 - INFO - show offset elements
+2023-10-08 13:12:14,535 - INFO - hidden offset elements
+2023-10-08 14:56:58,349 - INFO - show offset elements
+2023-10-08 14:56:58,770 - INFO - hidden offset elements
+2023-10-08 14:56:59,470 - INFO - show offset elements
+2023-10-08 14:57:00,374 - INFO - show offset elements
+2023-10-08 14:57:00,822 - INFO - show offset elements
+2023-10-08 14:57:01,673 - INFO - hidden offset elements
+2023-10-08 14:57:02,946 - INFO - hidden offset elements
+2023-10-08 15:05:36,100 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:05:36,100 - INFO - TiktokaStudio GUI started
+2023-10-08 15:05:36,134 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:05:36,134 - INFO - TiktokaStudio GUI started
+2023-10-08 15:06:03,012 - INFO - start to detecting video metas----------False
+2023-10-08 15:06:03,019 - INFO - remove old video meta files
+2023-10-08 15:06:03,020 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 15:06:03,027 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 15:06:03,030 - INFO - update to 1 meta json
+2023-10-08 15:06:03,030 - INFO - start to check desFilePaths for video: 1
+2023-10-08 15:06:03,032 - INFO - update to 1 meta json
+2023-10-08 15:06:03,033 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 15:06:03,033 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 15:06:03,033 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 15:06:03,035 - INFO - update to 1 meta json
+2023-10-08 15:06:09,533 - INFO - show offset elements
+2023-10-08 15:08:37,166 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:08:37,166 - INFO - TiktokaStudio GUI started
+2023-10-08 15:08:37,199 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:08:37,199 - INFO - TiktokaStudio GUI started
+2023-10-08 15:08:41,850 - INFO - start to detecting video metas----------False
+2023-10-08 15:08:41,857 - INFO - remove old video meta files
+2023-10-08 15:08:41,857 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 15:08:41,865 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 15:08:41,866 - INFO - update to 1 meta json
+2023-10-08 15:08:41,868 - INFO - start to check desFilePaths for video: 1
+2023-10-08 15:08:41,869 - INFO - update to 1 meta json
+2023-10-08 15:08:41,870 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 15:08:41,870 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 15:08:41,871 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 15:08:41,872 - INFO - update to 1 meta json
+2023-10-08 15:08:46,979 - INFO - show offset elements
+2023-10-08 15:13:54,351 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:13:54,352 - INFO - TiktokaStudio GUI started
+2023-10-08 15:13:54,387 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:13:54,387 - INFO - TiktokaStudio GUI started
+2023-10-08 15:14:00,150 - INFO - start to detecting video metas----------False
+2023-10-08 15:14:00,509 - INFO - remove old video meta files
+2023-10-08 15:14:00,509 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 15:14:00,517 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 15:14:00,519 - INFO - update to 1 meta json
+2023-10-08 15:14:00,520 - INFO - start to check desFilePaths for video: 1
+2023-10-08 15:14:00,521 - INFO - update to 1 meta json
+2023-10-08 15:14:00,522 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 15:14:00,523 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 15:14:00,523 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 15:14:00,525 - INFO - update to 1 meta json
+2023-10-08 15:14:06,184 - INFO - show offset elements
+2023-10-08 15:17:46,846 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:17:46,846 - INFO - TiktokaStudio GUI started
+2023-10-08 15:17:46,878 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:17:46,880 - INFO - TiktokaStudio GUI started
+2023-10-08 15:18:11,824 - INFO - start to detecting video metas----------False
+2023-10-08 15:18:11,832 - INFO - remove old video meta files
+2023-10-08 15:18:11,832 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 15:18:11,840 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 15:18:11,842 - INFO - update to 1 meta json
+2023-10-08 15:18:11,843 - INFO - start to check desFilePaths for video: 1
+2023-10-08 15:18:11,844 - INFO - update to 1 meta json
+2023-10-08 15:18:11,845 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 15:18:11,845 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 15:18:11,845 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 15:18:11,847 - INFO - update to 1 meta json
+2023-10-08 15:18:52,699 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:18:52,699 - INFO - TiktokaStudio GUI started
+2023-10-08 15:18:52,732 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:18:52,732 - INFO - TiktokaStudio GUI started
+2023-10-08 15:19:08,698 - INFO - start to detecting video metas----------False
+2023-10-08 15:19:08,706 - INFO - remove old video meta files
+2023-10-08 15:19:08,706 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 15:19:08,714 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 15:19:08,715 - INFO - update to 1 meta json
+2023-10-08 15:19:08,717 - INFO - start to check desFilePaths for video: 1
+2023-10-08 15:19:08,718 - INFO - update to 1 meta json
+2023-10-08 15:19:08,719 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 15:19:08,720 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 15:19:08,721 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 15:19:08,722 - INFO - update to 1 meta json
+2023-10-08 15:19:12,254 - INFO - show offset elements
+2023-10-08 15:21:10,836 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:21:10,836 - INFO - TiktokaStudio GUI started
+2023-10-08 15:21:10,870 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:21:10,870 - INFO - TiktokaStudio GUI started
+2023-10-08 15:21:47,082 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:21:47,082 - INFO - TiktokaStudio GUI started
+2023-10-08 15:21:47,120 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:21:47,120 - INFO - TiktokaStudio GUI started
+2023-10-08 15:21:52,298 - INFO - start to detecting video metas----------False
+2023-10-08 15:21:52,304 - INFO - remove old video meta files
+2023-10-08 15:21:52,305 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 15:21:52,312 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 15:21:52,314 - INFO - update to 1 meta json
+2023-10-08 15:21:52,315 - INFO - start to check desFilePaths for video: 1
+2023-10-08 15:21:52,317 - INFO - update to 1 meta json
+2023-10-08 15:21:52,318 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 15:21:52,319 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 15:21:52,319 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 15:21:52,320 - INFO - update to 1 meta json
+2023-10-08 15:21:56,538 - INFO - show offset elements
+2023-10-08 15:24:10,294 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:24:10,294 - INFO - TiktokaStudio GUI started
+2023-10-08 15:24:10,335 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:24:10,335 - INFO - TiktokaStudio GUI started
+2023-10-08 15:24:37,328 - INFO - start to detecting video metas----------False
+2023-10-08 15:24:37,335 - INFO - remove old video meta files
+2023-10-08 15:24:37,336 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 15:24:37,343 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 15:24:37,345 - INFO - update to 1 meta json
+2023-10-08 15:24:37,346 - INFO - start to check desFilePaths for video: 1
+2023-10-08 15:24:37,348 - INFO - update to 1 meta json
+2023-10-08 15:24:37,349 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 15:24:37,349 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 15:24:37,350 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 15:24:37,351 - INFO - update to 1 meta json
+2023-10-08 15:24:42,041 - INFO - show offset elements
+2023-10-08 15:27:17,436 - INFO - hidden offset elements
+2023-10-08 15:27:21,141 - INFO - hidden offset elements
+2023-10-08 15:31:50,490 - INFO - show offset elements
+2023-10-08 15:31:51,283 - INFO - show offset elements
+2023-10-08 15:31:52,175 - INFO - hidden offset elements
+2023-10-08 15:31:53,991 - INFO - hidden offset elements
+2023-10-08 15:33:19,065 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:33:19,065 - INFO - TiktokaStudio GUI started
+2023-10-08 15:33:19,101 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:33:19,101 - INFO - TiktokaStudio GUI started
+2023-10-08 15:33:25,293 - INFO - start to detecting video metas----------False
+2023-10-08 15:33:25,300 - INFO - remove old video meta files
+2023-10-08 15:33:25,300 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 15:33:25,308 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 15:33:25,310 - INFO - update to 1 meta json
+2023-10-08 15:33:25,311 - INFO - start to check desFilePaths for video: 1
+2023-10-08 15:33:25,312 - INFO - update to 1 meta json
+2023-10-08 15:33:25,313 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 15:33:25,314 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 15:33:25,314 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 15:33:25,316 - INFO - update to 1 meta json
+2023-10-08 15:33:29,838 - INFO - show offset elements
+2023-10-08 15:43:07,446 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:43:07,446 - INFO - TiktokaStudio GUI started
+2023-10-08 15:43:07,481 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:43:07,482 - INFO - TiktokaStudio GUI started
+2023-10-08 15:44:04,694 - INFO - start to detecting video metas----------False
+2023-10-08 15:44:04,701 - INFO - remove old video meta files
+2023-10-08 15:44:04,702 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 15:44:04,710 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 15:44:04,712 - INFO - update to 1 meta json
+2023-10-08 15:44:04,713 - INFO - start to check desFilePaths for video: 1
+2023-10-08 15:44:04,714 - INFO - update to 1 meta json
+2023-10-08 15:44:04,715 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 15:44:04,715 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 15:44:04,716 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 15:44:04,718 - INFO - update to 1 meta json
+2023-10-08 15:44:08,912 - INFO - show offset elements
+2023-10-08 15:45:33,792 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:45:33,793 - INFO - TiktokaStudio GUI started
+2023-10-08 15:45:33,828 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:45:33,828 - INFO - TiktokaStudio GUI started
+2023-10-08 15:45:38,834 - INFO - start to detecting video metas----------False
+2023-10-08 15:45:38,841 - INFO - remove old video meta files
+2023-10-08 15:45:38,841 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 15:45:38,849 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 15:45:38,851 - INFO - update to 1 meta json
+2023-10-08 15:45:38,852 - INFO - start to check desFilePaths for video: 1
+2023-10-08 15:45:38,854 - INFO - update to 1 meta json
+2023-10-08 15:45:38,855 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 15:45:38,855 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 15:45:38,856 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 15:45:38,857 - INFO - update to 1 meta json
+2023-10-08 15:45:42,452 - INFO - show offset elements
+2023-10-08 15:46:34,278 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:46:34,278 - INFO - TiktokaStudio GUI started
+2023-10-08 15:46:34,311 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:46:34,312 - INFO - TiktokaStudio GUI started
+2023-10-08 15:46:39,517 - INFO - start to detecting video metas----------False
+2023-10-08 15:46:39,524 - INFO - remove old video meta files
+2023-10-08 15:46:39,524 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 15:46:39,532 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 15:46:39,534 - INFO - update to 1 meta json
+2023-10-08 15:46:39,535 - INFO - start to check desFilePaths for video: 1
+2023-10-08 15:46:39,537 - INFO - update to 1 meta json
+2023-10-08 15:46:39,538 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 15:46:39,539 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 15:46:39,539 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 15:46:39,540 - INFO - update to 1 meta json
+2023-10-08 15:47:16,036 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:47:16,036 - INFO - TiktokaStudio GUI started
+2023-10-08 15:47:16,067 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:47:16,067 - INFO - TiktokaStudio GUI started
+2023-10-08 15:47:25,390 - INFO - start to detecting video metas----------False
+2023-10-08 15:47:25,397 - INFO - remove old video meta files
+2023-10-08 15:47:25,398 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 15:47:25,405 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 15:47:25,407 - INFO - update to 1 meta json
+2023-10-08 15:47:25,408 - INFO - start to check desFilePaths for video: 1
+2023-10-08 15:47:25,409 - INFO - update to 1 meta json
+2023-10-08 15:47:25,410 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 15:47:25,411 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 15:47:25,411 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 15:47:25,412 - INFO - update to 1 meta json
+2023-10-08 15:47:28,936 - INFO - show offset elements
+2023-10-08 15:50:50,199 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:50:50,200 - INFO - TiktokaStudio GUI started
+2023-10-08 15:50:50,233 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:50:50,233 - INFO - TiktokaStudio GUI started
+2023-10-08 15:50:56,015 - INFO - start to detecting video metas----------False
+2023-10-08 15:50:56,022 - INFO - remove old video meta files
+2023-10-08 15:50:56,022 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 15:50:56,031 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 15:50:56,032 - INFO - update to 1 meta json
+2023-10-08 15:50:56,033 - INFO - start to check desFilePaths for video: 1
+2023-10-08 15:50:56,034 - INFO - update to 1 meta json
+2023-10-08 15:50:56,035 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 15:50:56,036 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 15:50:56,036 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 15:50:56,037 - INFO - update to 1 meta json
+2023-10-08 15:50:59,407 - INFO - show offset elements
+2023-10-08 15:53:14,576 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:53:14,576 - INFO - TiktokaStudio GUI started
+2023-10-08 15:53:14,619 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:53:14,619 - INFO - TiktokaStudio GUI started
+2023-10-08 15:53:30,699 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:53:30,699 - INFO - TiktokaStudio GUI started
+2023-10-08 15:53:30,735 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-08 15:53:30,735 - INFO - TiktokaStudio GUI started
+2023-10-08 15:53:35,717 - INFO - start to detecting video metas----------False
+2023-10-08 15:53:35,723 - INFO - remove old video meta files
+2023-10-08 15:53:35,724 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-08 15:53:35,731 - INFO - start to check thumbFilePaths for video: 1
+2023-10-08 15:53:35,733 - INFO - update to 1 meta json
+2023-10-08 15:53:35,735 - INFO - start to check desFilePaths for video: 1
+2023-10-08 15:53:35,736 - INFO - update to 1 meta json
+2023-10-08 15:53:35,737 - INFO - start to check metaFilePaths for video: 1
+2023-10-08 15:53:35,738 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-08 15:53:35,738 - INFO - intial metaFilePaths for 1:
+
+2023-10-08 15:53:35,739 - INFO - update to 1 meta json
+2023-10-08 15:53:40,526 - INFO - show offset elements

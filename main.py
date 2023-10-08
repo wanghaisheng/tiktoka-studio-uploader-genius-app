@@ -1490,6 +1490,32 @@ def analyse_video_meta_pair(folder,frame,right_frame,selectedMetafileformat,isTh
                 old_df_metas=json.loads(old_df_metas.to_json(orient = 'index'))   
 
 
+            oldvideos=dict(ultra[folder] ['videos'])
+            oldvideos=json.loads(jsons.dumps(ultra[folder] ['videos']))  
+            newfilenameslist=[]
+            for filename,entry in old_df_metas:             
+                if ultra[folder] ['filenames']!=[] and filename in ultra[folder] ['filenames']:
+                    if oldvideos[filename]==old_df_metas[filename]:
+                        print(f'the existing videos-meta.{selectedMetafileformat} content is the same as cached')
+                    else:
+                        print(f'the existing videos-meta.{selectedMetafileformat} content is not the  same as cached')
+                        ultra[folder] ['videos'][filename]=old_df_metas[filename]
+                else:
+                    ultra[folder] ['filenames'].append(filename)
+                    ultra[folder] ['videos'][filename]=old_df_metas[filename]
+                newfilenameslist.append(filename)
+            # newfilenameslist==ultra[folder] ['filenames']
+            #找到不存在的filename 删除对应video
+
+            if old_df_metas and old_df_metas[filename]:
+                print('this video is detected before',type(old_df_metas[filename]),old_df_metas[filename])
+                print('2',oldvideos[filename],type(oldvideos[filename]))
+                if oldvideos[filename]==old_df_metas[filename]:
+                    print(f'the existing videos-meta.{selectedMetafileformat} content is the same as cached')
+                else:
+                    print(f'the existing videos-meta.{selectedMetafileformat} content is not the  same as cached')
+
+
         thumbFileCounts=0
         thumbMetaCounts=0
 
@@ -1798,6 +1824,8 @@ def analyse_video_meta_pair(folder,frame,right_frame,selectedMetafileformat,isTh
                                     isFilePairedMetas(r,filename,supported_thumb_exts,ultra[folder],'thumbFilePaths')
                                     isFilePairedMetas(r,filename,supported_des_exts,ultra[folder],'desFilePaths')
                                     isFilePairedMetas(r,filename,supported_meta_exts,ultra[folder],'metaFilePaths')
+                                    isFilePairedMetas(r,filename,supported_des_exts,ultra[folder],'tagFilePaths')
+                                    isFilePairedMetas(r,filename,supported_des_exts,ultra[folder],'scheduleFilePaths')
                                     if ultra[folder] ['videos'][filename]['thumbnail_local_path']!=[]:
                                         files=ultra[folder] ['videos'][filename]['thumbnail_local_path']
                                         start=False
@@ -1839,11 +1867,15 @@ def analyse_video_meta_pair(folder,frame,right_frame,selectedMetafileformat,isTh
 
             ultra[folder]['updatedAt']=pd.Timestamp.now().value
             # print('---------\n',type(ultra[folder]),type(jsons.dump(ultra[folder])),jsons.dump(ultra[folder]))
-        tmpjson=os.path.join(folder,videoassetsfilename)
  
 
         ultra[folder]['metafileformat']=selectedMetafileformat
+        dumpmetafiles(selectedMetafileformat,folder)
+          
+        render_video_folder_check_results(frame,right_frame,folder,isThumbView,isDesView,isTagsView,isScheduleView)
 
+
+def dumpmetafiles(selectedMetafileformat,folder):
 
         if selectedMetafileformat=='xlsx':
             df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'index')
@@ -1865,17 +1897,14 @@ def analyse_video_meta_pair(folder,frame,right_frame,selectedMetafileformat,isTh
 
             df_metas.to_json(metajson)
 
+        tmpjson=os.path.join(folder,videoassetsfilename)
 
         if os.path.exists(tmpjson):
             with open(tmpjson,'w') as f:
                 f.write(jsons.dumps(ultra[folder]))        
         else:
             with open(tmpjson,'a') as f:
-                f.write(jsons.dumps(ultra[folder]))               
-        render_video_folder_check_results(frame,right_frame,folder,isThumbView,isDesView,isTagsView,isScheduleView)
-
-
-
+                f.write(jsons.dumps(ultra[folder]))         
 
 
 
@@ -2453,13 +2482,14 @@ def render_des_update_view(frame,folder,thumbmode,previous_frame=None):
 
 
         b_check_metas_=tk.Button(frame,text="edit videometa with local editor",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
-        b_check_metas_.grid(row = 6, column = 0, padx=14, pady=15,sticky='nswe') 
+        b_check_metas_.grid(row = 5, column = 0, padx=14, pady=15,sticky='nswe') 
         Tooltip(b_check_metas_, text='fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field' , wraplength=200)
-
+        
         if ultra[folder]['metafileformat']=='json':
+
             b_edit_thumb_metas=tk.Button(frame,text="edit json with online editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
-            b_edit_thumb_metas.grid(row = 5, column = 0, padx=14, pady=15,sticky='nswe') 
-        Tooltip(b_edit_thumb_metas, text='fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field' , wraplength=200)
+            b_edit_thumb_metas.grid(row = 6, column = 0, padx=14, pady=15,sticky='nswe') 
+            Tooltip(b_check_metas_, text='For those who dont have json editor or have install issues' , wraplength=200)
         b_open_video_folder=tk.Button(frame,text="open local",command=lambda: threading.Thread(target=openLocal(folder)).start() )
         b_open_video_folder.grid(row = 4, column = 0, padx=14, pady=15,sticky='nswe')      
 
@@ -2550,7 +2580,7 @@ def render_des_update_view(frame,folder,thumbmode,previous_frame=None):
         b_check_metas_.grid(row = 12, column = 0, padx=14, pady=15,sticky='nswe') 
 
 
-def render_update_tags(frame,isneed):
+def render_update_tags(frame,isneed,folder):
     if isneed==True:
         lang='en'
         prefertags=tk.StringVar()
@@ -2576,52 +2606,251 @@ def render_update_tags(frame,isneed):
         b_import_thumb_metas_=tk.Button(frame,text="Step4:更新视频元数据文件",command=lambda: genThumbnailFromTemplate(videosView_video_folder.get(),thumbnail_template_file.get(),mode.get()))
         b_import_thumb_metas_.grid(row = 9, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
 
-def render_update_schedule(frame,isneed):
+def render_update_schedule(frame,isneed,folder):
     if isneed==True:
-        lang='en'
-        prefertags=tk.StringVar()
         if len(frame.winfo_children())>0:
             for widget in frame.winfo_children():
-                widget.destroy()
+                widget.destroy()        
+        global thumbnail_metas_file,thummbnail_bg_folder,thummbnail_bg_file,thumbnail_template_file
+        thumbnail_metas_file = tk.StringVar()        
+        thummbnail_bg_folder = tk.StringVar()        
+        thummbnail_bg_file = tk.StringVar()      
+
+        new_canvas = tk.Frame(frame)
+        new_canvas.grid(row=2, column=0, pady=(5, 0), sticky='nw')     
+
+
+        thumbmode = tk.IntVar()
+        # thumbmode.set(1)
+
+        lab = tk.Label(new_canvas,text="请选择你的发布时间从何而来",bg="lightyellow",width=30)
+        lab.grid(row = 1, column = 0,  padx=14, pady=15,sticky='nw') 
+   
+        thumbmode1=tk.Radiobutton(new_canvas,text="手动准备",variable=thumbmode,value=1,command=lambda:render_schedule_update_view(new_canvas,folder,thumbmode,frame))
+        thumbmode1.grid(row = 1, column = 1,  padx=14, pady=15,sticky='nw') 
+        thumbmode2=tk.Radiobutton(new_canvas,text=" 批量生成",variable=thumbmode,value=2,command=lambda:render_schedule_update_view(new_canvas,folder,thumbmode,frame))
+        thumbmode2.grid(row = 1, column = 2,  padx=14, pady=15,sticky='nw') 
+
+        # thumbmode.trace_add('write', render_thumb_update_view(new_canvas,folder,thumbmode))
+
+
+def render_schedule_update_view(frame,folder,thumbmode,previous_frame):
+    def policyOptionCallBack(*args):
+
+
+        # if mode.get() in [3,4,5]:
+
+        l_dailycount = tk.Label(frame, text='dailyVideoLimit')
+        l_dailycount.grid(row = 5, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
 
 
 
 
-        publishpolicy = tk.IntVar()
-        # publishpolicy.set(4)
-
-        lab = tk.Label(frame,text="请选择你的发布策略",bg="lightyellow",width=30)
-        lab.grid(row = 1, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
-        mode0=tk.Radiobutton(frame,text="私有",variable=publishpolicy,value=0,command='')
-        mode0.grid(row = 2, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
-        mode1=tk.Radiobutton(frame,text="公开",variable=publishpolicy,value=1,command='')
-        mode1.grid(row = 3, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
-        mode2=tk.Radiobutton(frame,text="定时",variable=publishpolicy,value=2,command='')
-        mode2.grid(row = 4, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
-        mode3=tk.Radiobutton(frame,text="unlisted",variable=publishpolicy,value=3,command='')
-        mode3.grid(row = 5, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
-
-        mode4=tk.Radiobutton(frame,text="public&premiere",variable=publishpolicy,value=4,command='')
-        mode4.grid(row = 6, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
-
-        dailycount=tk.StringVar()
-
-        l_dailycount = tk.Label(frame, text=i18labels("dailyVideoLimit", locale=lang, module="g"))
-        l_dailycount.grid(row = 7, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        l_releasehour = tk.Label(frame, text='release hour')
+        l_releasehour.grid(row = 6, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        Tooltip(l_releasehour, text=f'you can input like"10:15," more available can choose from {availableScheduleTimes}' , wraplength=200)
 
 
 
-        e_dailycount = tk.Entry(frame, width=55, textvariable=dailycount)
-        e_dailycount.grid(row = 7, column = 5, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        releasehour.set('10:15')
+
+        e_releasehour = tk.Entry(frame, width=55, textvariable=releasehour)
+        e_releasehour.grid(row = 6, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        Tooltip(e_releasehour, text=f'you can input more than one with comma separator,such as 10:15,12:00,if you want publish 10 video in serial you should put 10 time here,more available can choose from {availableScheduleTimes}' , wraplength=200)
+
+        start_publish_date.set(1)
+
+        l_start_publish_date=tk.Label(frame, text='offsetDays')
+        Tooltip(l_start_publish_date, text='we calculate publish date from today,  default +1 is tomorrow' , wraplength=200)
+
+        e_start_publish_date = tk.Entry(frame, width=55, textvariable=start_publish_date)
+
+        l_start_publish_date.grid(row = 4, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw')             
+        e_start_publish_date.grid(row = 4, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw')  
+
+        releasedatehourbox = ttk.Combobox(frame, textvariable=dailycount)
+
+
+        def display_selected_item_index(event): 
+            print('index of this item is: {}\n'.format(releasedatehourbox.current()))
+            randomNreleasehour=','.join(random.sample(availableScheduleTimes, int(dailycount.get())))
+            releasehour.set(randomNreleasehour)
+        def OptionCallBack(*args):
+            # print(variable.get())
+            # print(releasedatehourbox.current())
+
+            randomNreleasehour=','.join(random.sample(availableScheduleTimes, releasedatehourbox.current()))
+            releasehour.set(randomNreleasehour)
+
+        dailycount.set("Select From policy")
+        dailycount.trace('w', OptionCallBack)
+
+
+        releasedatehourbox.config(values =list(range(1,21)))
+        releasedatehourbox.grid(row=5, column=1, sticky='E', padx=10)
+        releasedatehourbox.bind("<<ComboboxSelected>>", display_selected_item_index)  
+
+
+        print(f'modeis {type(mode.get())} {mode.get()}')
+        if mode.get() in [3,4,5]:
+            logger.info(f'show offset elements')
+            l_dailycount.grid()
+            l_start_publish_date.grid()            
+            e_start_publish_date.grid()   
+            releasedatehourbox.grid()
+
+             
+        else:
+
+            # l_dailycount.grid_remove()
+            # e_dailycount.grid_remove()               
+            # l_start_publish_date.grid_remove()            
+            # e_start_publish_date.grid_remove()     
+            # l_dailycount.grid_forget()
+            # e_dailycount.grid_forget()               
+            # l_start_publish_date.grid_forget()            
+            # e_start_publish_date.grid_forget()   
+            try:
+                l_dailycount.destroy()      
+                print('visible',l_dailycount.winfo_ismapped() )
+                l_start_publish_date.destroy()      
+                e_start_publish_date.destroy() 
+                logger.info(f'hidden offset elements')
+
+            except:
+                pass     
+
+
+    if len(frame.winfo_children())>0:
+        for widget in frame.winfo_children():
+            widget.destroy()      
+   
+    if thumbmode.get() ==1:
+        lbl15 = tk.Label(frame, text='两种选择')
+        lbl15.grid(row=1,column=0,padx=14, pady=15,sticky='w') 
+        b_return=tk.Button(frame,text="Back to previous page",command=lambda: render_update_schedule(previous_frame,True,folder))
+        b_return.grid(row = 0, column =0,padx=14, pady=15,sticky='e') 
+
+        lbl15 = tk.Label(frame, text='1.手动准备发布时间文件，需放在视频所在文件夹下，且与视频文件同名,完成后再次检测即可',wraplength=600)
+        lbl15.grid(row=2,column=0, sticky='nswe')
+
+        lbl15 = tk.Label(frame, text='2.如果没有发布时间文件，需手动编辑视频元数据中发布时间字段,包括日期和时间段,编辑完成后可再次进行检测\r',wraplength=600)
+        lbl15.grid(row=3,column=0, sticky='nswe')
+
+
+
+
+        b_check_metas_=tk.Button(frame,text="edit videometa with local editor",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
+        b_check_metas_.grid(row = 5, column = 0, padx=14, pady=15,sticky='nswe') 
+        Tooltip(b_check_metas_, text='fill release date and hour fields in meta files' , wraplength=200)
+        
+        if ultra[folder]['metafileformat']=='json':
+
+            b_edit_thumb_metas=tk.Button(frame,text="edit json with online editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
+            b_edit_thumb_metas.grid(row = 6, column = 0, padx=14, pady=15,sticky='nswe') 
+            Tooltip(b_check_metas_, text='For those who dont have json editor or have install issues' , wraplength=200)
+
+        b_open_video_folder=tk.Button(frame,text="open local",command=lambda: threading.Thread(target=openLocal(folder)).start() )
+        b_open_video_folder.grid(row = 4, column = 0, padx=14, pady=15,sticky='nswe')      
+
+
+        b_update_metas_=tk.Button(frame,text="validate meta",command='validate thumbpath is there')
+        b_update_metas_.grid(row = 7, column = 0,  padx=14, pady=15,sticky='nswe') 
+
+
+
+    else:
+        mode = tk.IntVar()
+        mode.set(3)
+        releasehour=tk.StringVar()
+        dailycount = tk.IntVar(frame)
         start_publish_date=tk.StringVar()
 
-        l_start_publish_date=tk.Label(frame, text=i18labels("offsetDays", locale=lang, module="g"))
-        l_start_publish_date.grid(row = 8, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
-        e_start_publish_date = tk.Entry(frame, width=55, textvariable=start_publish_date)
-        e_start_publish_date.grid(row = 8, column = 5, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        mode.trace_add('write', policyOptionCallBack)
 
-        b_import_thumb_metas_=tk.Button(frame,text="Step4:更新视频元数据文件",command=lambda: genThumbnailFromTemplate(videosView_video_folder.get(),thumbnail_template_file.get(),mode.get()))
-        b_import_thumb_metas_.grid(row = 9, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
+        lab = tk.Label(frame,text="Step1:请选择你的发布时间生成策略",bg="lightyellow",width=30)
+        lab.grid(row = 1, column = 0,  padx=14, pady=15,sticky='nw')    
+        b_return=tk.Button(frame,text="Back to previous page",command=lambda: render_update_schedule(previous_frame,True,folder))
+        b_return.grid(row = 1, column = 2,  padx=14, pady=15,sticky='e')   
+
+
+        mode1=tk.Radiobutton(frame,text="私有",variable=mode,value=1,command='')
+        # Tooltip(mode1, text='you dont install this extension yet' , wraplength=200)
+
+        mode1.grid(row = 2, column = 0,  padx=14, pady=15,sticky='nw') 
+        mode2=tk.Radiobutton(frame,text="公开",variable=mode,value=2,command='')
+        # mode2.configure(state = tk.DISABLED)
+        # Tooltip(mode2, text='you dont install this extension yet' , wraplength=200)
+
+        mode2.grid(row = 2, column = 1,  padx=14, pady=15,sticky='nw') 
+        mode3=tk.Radiobutton(frame,text="定时",variable=mode,value=3,command='')
+        mode3.grid(row = 3, column = 0,  padx=14, pady=15,sticky='nw') 
+        Tooltip(mode3, text='please select the bg image folder ' , wraplength=200)
+
+        mode3=tk.Radiobutton(frame,text="unlisted",variable=mode,value=4,command='')
+        mode3.grid(row = 3, column = 1, padx=14, pady=15,sticky='ne') 
+
+        mode4=tk.Radiobutton(frame,text="public&premiere",variable=mode,value=5,command='')
+        mode4.grid(row = 3, column = 2,  padx=14, pady=15,sticky='ne')         
+
+
+
+        
+        # lab = tk.Label(frame,text="Step3:请编辑视频元数据",bg="lightyellow",width=30)
+        # lab.grid(row = 7, column = 0,  padx=14, pady=15,sticky='nw')         
+
+
+
+
+        # b_check_metas_=tk.Button(frame,text="edit videometa",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
+        # b_check_metas_.grid(row = 8, column = 0, padx=14, pady=15,sticky='nswe') 
+        # Tooltip(b_check_metas_, text='fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field' , wraplength=200)
+
+        # if ultra[folder]['metafileformat']=='json':
+
+        #     b_edit_thumb_metas=tk.Button(frame,text="edit json with online editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
+        #     b_edit_thumb_metas.grid(row = 8, column = 1, padx=14, pady=15,sticky='nswe') 
+        #     Tooltip(b_edit_thumb_metas, text='if you dont have json editor locally,try this' , wraplength=200)
+        # b_open_video_folder=tk.Button(frame,text="open local",command=lambda: threading.Thread(target=openLocal(folder)).start() )
+        # b_open_video_folder.grid(row = 8, column = 2, padx=14, pady=15,sticky='nswe')    
+        lab = tk.Label(frame,text="Step4:生成发布时间",bg="lightyellow",width=30)
+        lab.grid(row = 9, column = 0,  padx=14, pady=15,sticky='nw')         
+
+
+        # b_update_metas_=tk.Button(frame,text="validate meta",command=lambda: ValidateThumbnailGenMetas(folder,thumbnail_template_file.get(),mode.get(),thummbnail_bg_folder.get(),frame))
+        # b_update_metas_.grid(row = 10, column = 0,  padx=14, pady=15,sticky='nswe') 
+        
+
+
+
+        b_gen_thumb_=tk.Button(frame,text="gen schedules",command=lambda: genScheduleSLots(folder,mode.get(),start_publish_date.get(),dailycount.get(),releasehour.get(),frame))
+        b_gen_thumb_.grid(row = 11, column =0, padx=14, pady=15,sticky='nswe') 
+
+
+        b_check_metas_=tk.Button(frame,text="edit videometa",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
+        b_check_metas_.grid(row = 12, column = 0, padx=14, pady=15,sticky='nswe') 
+
+def genScheduleSLots(folder,mode_value,start_publish_date_value,dailycount_value,releasehour_value,frame):
+    logger.info('start to gen slots')
+    publish_policy=[1,2,3,4,5].indexof(mode_value)
+    # //0 -private 1-publish 2-schedule 3-Unlisted 4-public&premiere 
+    today = date.today()
+
+    date_to_publish = datetime(today.year, today.month, today.day)
+    default_hour_to_publish = "10:15"
+    # if you want more delay ,just change 1 to other numbers to start from other days instead of tomorrow
+    offsets=start_publish_date_value
+    video_data = ultra[folder]['videos']
+    counts=len(video_data)
+
+    for video_id, video_info in video_data.items():    
+        pass
+    date_to_publish += timedelta(days=offsets)
+
+    logger.info('sync slots to video metas')
+    logger.info('sync slots to video assets')
+    logger.info('sync slots to cache')
+
 def render_update_meta(frame,isneed,folder):
     if isneed==True:
         lang='en'
