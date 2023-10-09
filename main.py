@@ -136,8 +136,8 @@ settings['zh']={
 		"is_open_browser": "静默模式",
 		"is_record_video": "录像模式",
 		"debug": "开启日志",
-		"start-loading-setting": "开始读取最近保存的配置文件",
-		"loading-default-setting": "读取配置文件失败 加载默认模版",
+		"start_loading_setting": "开始读取最近保存的配置文件",
+		"loading_default_setting": "读取配置文件失败 加载默认模版",
 
 		"hiddenwatermark": "添加隐形水印",
 		
@@ -146,6 +146,7 @@ settings['zh']={
 		"mode1":"模式1",
 		"mode2":"模式2",
 		"mode3":"模式3",
+        "defualt_release_hour":'10:15',
 		
 		"save_setting": "保存配置",
 		"testsettingok": "测试配置",
@@ -2563,37 +2564,39 @@ def render_update_schedule(frame,isneed,folder,selectedMetafileformat):
 
 def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMetafileformat):
     def policyOptionCallBack(*args):
-
+        schframe = ttk.Frame(frame)
+        schframe.grid(row=7, column=0, sticky="nsew")
 
         # if mode.get() in [3,4,5]:
 
-        l_dailycount = tk.Label(frame, text='dailyVideoLimit')
+        l_dailycount = tk.Label(schframe, text='dailyVideoLimit')
+        Tooltip(l_dailycount, text='you want to release how many video in one day' , wraplength=200)
 
 
 
 
 
-        l_releasehour = tk.Label(frame, text='release hour')
+        l_releasehour = tk.Label(schframe, text='release hour')
         Tooltip(l_releasehour, text=f'you can input like"10:15," more available can choose from {availableScheduleTimes}' , wraplength=200)
 
 
 
         releasehour.set('10:15')
 
-        e_releasehour = tk.Entry(frame, width=55, textvariable=releasehour)
+        e_releasehour = tk.Entry(schframe, width=55, textvariable=releasehour)
 
         Tooltip(e_releasehour, text=f'you can input more than one with comma separator,such as 10:15,12:00,if you want publish 10 video in serial you should put 10 time here,more available can choose from {availableScheduleTimes}' , wraplength=200)
 
         start_publish_date.set(1)
 
-        l_start_publish_date=tk.Label(frame, text='offsetDays')
+        l_start_publish_date=tk.Label(schframe, text='offsetDays')
         Tooltip(l_start_publish_date, text='we calculate publish date from today,  default +1 is tomorrow' , wraplength=200)
 
-        e_start_publish_date = tk.Entry(frame, width=55, textvariable=start_publish_date)
+        e_start_publish_date = tk.Entry(schframe, width=55, textvariable=start_publish_date)
 
 
 
-        releasedatehourbox = ttk.Combobox(frame, textvariable=dailycount)
+        releasedatehourbox = ttk.Combobox(schframe, textvariable=dailycount)
 
 
         def display_selected_item_index(event): 
@@ -2602,7 +2605,9 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
             print('current dailycount ')
             if dailycount.get()=='Select From policy':
                 number=1
-            randomNreleasehour=','.join(random.sample(availableScheduleTimes, int(number)))
+                randomNreleasehour=settings['default_release_hour']
+            else:
+                randomNreleasehour=','.join(random.sample(availableScheduleTimes, int(number)))
             releasehour.set(randomNreleasehour)
         def OptionCallBack(*args):
             # print(variable.get())
@@ -2620,6 +2625,7 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
 
         releasedatehourbox.config(values =list(range(1,21)))
         releasedatehourbox.bind("<<ComboboxSelected>>", display_selected_item_index)  
+
 
 
 
@@ -2669,13 +2675,14 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
         elif mode.get() in [3,4,5]:
             logger.info(f'show offset elements')
 
-            l_dailycount.grid(row = 5, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
-            l_releasehour.grid(row = 6, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw')         
-            e_releasehour.grid(row = 6, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
+            l_dailycount.grid(row = 1, column = 0,  padx=14, pady=15,sticky='nswe') 
+            releasedatehourbox.grid(row=1, column=1, padx=10)
 
-            l_start_publish_date.grid(row = 4, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw')             
-            e_start_publish_date.grid(row = 4, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw')  
-            releasedatehourbox.grid(row=5, column=1, sticky='E', padx=10)
+            l_releasehour.grid(row = 2, column = 0,  padx=14, pady=15,sticky='nswe')         
+            e_releasehour.grid(row = 2, column = 1,  padx=14, pady=15,sticky='nswe') 
+
+            l_start_publish_date.grid(row = 0, column = 0, padx=14, pady=15,sticky='nswe')             
+            e_start_publish_date.grid(row = 0, column = 1, padx=14, pady=15,sticky='nswe')  
 
 
     if len(frame.winfo_children())>0:
@@ -2718,12 +2725,12 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
 
     else:
         mode = tk.IntVar()
-        mode.set(3)
+        mode.set(1)
         releasehour=tk.StringVar()
         dailycount = tk.StringVar(frame)
         start_publish_date=tk.StringVar()
 
-        # mode.trace_add('write', policyOptionCallBack)
+        mode.trace_add('write', policyOptionCallBack)
 
         lab = tk.Label(frame,text="Step1:请选择你的发布时间生成策略",bg="lightyellow",width=30)
         lab.grid(row = 1, column = 0,  padx=14, pady=15,sticky='nw')    
@@ -2739,37 +2746,17 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
         # mode2.configure(state = tk.DISABLED)
         # Tooltip(mode2, text='you dont install this extension yet' , wraplength=200)
 
-        mode2.grid(row = 2, column = 1,  padx=14, pady=15,sticky='nw') 
+        mode2.grid(row = 3, column = 0,  padx=14, pady=15,sticky='nw') 
         mode3=tk.Radiobutton(frame,text="定时",variable=mode,value=3,command=policyOptionCallBack)
-        mode3.grid(row = 3, column = 0,  padx=14, pady=15,sticky='nw') 
+        mode3.grid(row = 4, column = 0,  padx=14, pady=15,sticky='nw') 
         Tooltip(mode3, text='please select the bg image folder ' , wraplength=200)
 
         mode3=tk.Radiobutton(frame,text="unlisted",variable=mode,value=4,command=policyOptionCallBack)
-        mode3.grid(row = 3, column = 1, padx=14, pady=15,sticky='ne') 
+        mode3.grid(row = 5, column = 0, padx=14, pady=15,sticky='nw') 
 
         mode4=tk.Radiobutton(frame,text="public&premiere",variable=mode,value=5,command=policyOptionCallBack)
-        mode4.grid(row = 3, column = 2,  padx=14, pady=15,sticky='ne')         
-
-
-
-        
-        # lab = tk.Label(frame,text="Step3:请编辑视频元数据",bg="lightyellow",width=30)
-        # lab.grid(row = 7, column = 0,  padx=14, pady=15,sticky='nw')         
-
-
-
-
-        # b_check_metas_=tk.Button(frame,text="edit videometa",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
-        # b_check_metas_.grid(row = 8, column = 0, padx=14, pady=15,sticky='nswe') 
-        # Tooltip(b_check_metas_, text='fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field' , wraplength=200)
-
-        # if ultra[folder]['metafileformat']=='json':
-
-        #     b_edit_thumb_metas=tk.Button(frame,text="edit json with online editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
-        #     b_edit_thumb_metas.grid(row = 8, column = 1, padx=14, pady=15,sticky='nswe') 
-        #     Tooltip(b_edit_thumb_metas, text='if you dont have json editor locally,try this' , wraplength=200)
-        # b_open_video_folder=tk.Button(frame,text="open local",command=lambda: threading.Thread(target=openLocal(folder)).start() )
-        # b_open_video_folder.grid(row = 8, column = 2, padx=14, pady=15,sticky='nswe')    
+        mode4.grid(row = 6, column = 0,  padx=14, pady=15,sticky='nw')         
+ 
         lab = tk.Label(frame,text="Step4:生成发布时间",bg="lightyellow",width=30)
         lab.grid(row = 9, column = 0,  padx=14, pady=15,sticky='nw')         
 
