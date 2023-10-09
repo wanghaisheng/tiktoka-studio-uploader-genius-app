@@ -1483,20 +1483,21 @@ def syncVideometa2assetsjson(selectedMetafileformat,folder):
             changed_df_metas=json.loads(changed_df_metas.to_json(orient = 'index'))   
         # ultra[folder]['videos']=changed_df_metas
         # oldvideos=dict(ultra[folder]['videos'])
-        # oldvideos=changed_df_metas
+        tmpvideos=dict({})
         # oldvideos=json.loads(jsons.dumps(ultra[folder] ['videos'])) 
         newfilenameslist=[]
-
+        logger.debug('start to check video file existence in the new metafile ')
         for filename,video in changed_df_metas.items():
             print('video',video,type(video))
             if os.path.exists(video['video_local_path']):
                 logger.info('video file is ok')
                 newfilenameslist.append(filename)
+                tmpvideos[filename]=video
                 
             else:
-                logger.info('video file is broken or not found according to video metafile')
-                newfilenameslist.pop(filename)
-                changed_df_metas.pop(filename)        
+                logger.info(f"{video['video_local_path']} video file is broken or not found according to video metafile")
+                # newfilenameslist.pop(filename)
+                # changed_df_metas.pop(filename)        
         if ultra[folder].has_key('videos'):
             logger.info(f"=111==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
             
@@ -1507,23 +1508,24 @@ def syncVideometa2assetsjson(selectedMetafileformat,folder):
             if dict(ultra[folder]['videos'])==dict({}):
                 logger.info(f"=333==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
                 
-                for filename,video in changed_df_metas.items():
+                for filename,video in tmpvideos.items():
                     ultra[folder]['videos'][filename]= video
                 logger.info(f"=444==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
             else:
                 logger.info(f"=555==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
                 
                 ultra[folder]['videos']= dict({})        
-                for filename,video in changed_df_metas.items():
+                for filename,video in tmpvideos.items():
                     ultra[folder]['videos'][filename]= video
         else:
             logger.info(f"=555==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
         
             ultra[folder]['videos']= dict({})        
-            for filename,video in changed_df_metas.items():
+            for filename,video in tmpvideos.items():
                 ultra[folder]['videos'][filename]= video
         ultra[folder]['filenames']= newfilenameslist
         ultra[folder]['updatedAt']=pd.Timestamp.now().value        
+        logger.debug('end to check video file existence in the new metafile ')
 
             # if ultra[folder] ['filenames']!=[] and filename in ultra[folder] ['filenames']:
             #     if oldvideos[filename]==changed_df_metas[filename]:
@@ -1617,6 +1619,8 @@ def scanVideofiles(folder):
     scheduleFileCounts=0
     scheduleMetaCounts=0
     metaFileCounts=0
+    logger.debug(f'start to scan video file existence in the {folder} ')
+
     for r, d, f in os.walk(folder):
         videos=[]        
         with os.scandir(r) as i:
@@ -1741,7 +1745,9 @@ def scanVideofiles(folder):
     ultra[folder] ['tagMetaCounts']=tagMetaCounts
     ultra[folder] ['scheduleFileCounts']=len(ultra[folder] ['scheduleFilePaths'])
     ultra[folder] ['scheduleMetaCounts']=scheduleMetaCounts
-    ultra[folder]['updatedAt']=pd.Timestamp.now().value        
+    ultra[folder]['updatedAt']=pd.Timestamp.now().value     
+    logger.debug(f'end to scan video file existence in the {folder} ')
+
 def analyse_video_meta_pair(folder,frame,right_frame,selectedMetafileformat,isThumbView=True,isDesView=True,isTagsView=True,isScheduleView=True):
     assetpath=os.path.join(folder,videoassetsfilename)    
 
@@ -1788,35 +1794,39 @@ def analyse_video_meta_pair(folder,frame,right_frame,selectedMetafileformat,isTh
 
 
 def dumpMetafiles(selectedMetafileformat,folder):
+    logger.debug(f'start to dump video metas for {folder} ')
 
-        if selectedMetafileformat=='xlsx':
-            df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'index')
+    if selectedMetafileformat=='xlsx':
+        df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'index')
 
-            metaxls=os.path.join(folder,'videos-meta.xlsx')
-               
-            df_metas.to_excel(metaxls)
-        elif selectedMetafileformat=='csv':
-            df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'index')
+        metaxls=os.path.join(folder,'videos-meta.xlsx')
+            
+        df_metas.to_excel(metaxls)
+    elif selectedMetafileformat=='csv':
+        df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'index')
 
-            metacsv=os.path.join(folder,'videos-meta.csv')
+        metacsv=os.path.join(folder,'videos-meta.csv')
 
-            df_metas.to_csv(metacsv)
-        else:
-            df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'records')
+        df_metas.to_csv(metacsv)
+    else:
+        df_metas = pd.read_json(jsons.dumps(ultra[folder]['videos']), orient = 'records')
 
-            # json is the default ,there is always a videometa.json file after folder check
-            metajson=os.path.join(folder,'videos-meta.json')
+        # json is the default ,there is always a videometa.json file after folder check
+        metajson=os.path.join(folder,'videos-meta.json')
 
-            df_metas.to_json(metajson)
+        df_metas.to_json(metajson)
+    logger.debug(f'end to dump video metas for {folder} ')
+    logger.debug(f'start to dump video assets for {folder} ')
 
-        tmpjson=os.path.join(folder,videoassetsfilename)
+    tmpjson=os.path.join(folder,videoassetsfilename)
 
-        if os.path.exists(tmpjson):
-            with open(tmpjson,'w') as f:
-                f.write(jsons.dumps(ultra[folder]))        
-        else:
-            with open(tmpjson,'a') as f:
-                f.write(jsons.dumps(ultra[folder]))         
+    if os.path.exists(tmpjson):
+        with open(tmpjson,'w') as f:
+            f.write(jsons.dumps(ultra[folder]))        
+    else:
+        with open(tmpjson,'a') as f:
+            f.write(jsons.dumps(ultra[folder]))         
+    logger.debug(f'end to dump video assets for {folder} ')
 
 
 
@@ -2614,42 +2624,38 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
 
 
         print(f'modeis {type(mode.get())} {mode.get()}')
-        if mode.get() in [3,4,5]:
-            logger.info(f'show offset elements')
+        if mode.get() in [1,2]:
+            try:
+                logger.info(f'grid_remove hidden offset elements')
 
-            l_dailycount.grid(row = 5, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
-            l_releasehour.grid(row = 6, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw')         
-            e_releasehour.grid(row = 6, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
+                l_dailycount.grid_remove()
+                l_start_publish_date.grid_remove()            
+                e_start_publish_date.grid_remove()   
+                releasedatehourbox.grid_remove() 
+                l_releasehour.grid_remove()
+                e_releasehour.grid_remove()
 
-            l_start_publish_date.grid(row = 4, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw')             
-            e_start_publish_date.grid(row = 4, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw')  
-            releasedatehourbox.grid(row=5, column=1, sticky='E', padx=10)
+            except:
+                pass     
 
-        elif mode.get() in [1,2]:
+            try:
+                logger.info(f'grid_forget hidden offset elements')
 
-            # l_dailycount.grid_remove()
-            # l_start_publish_date.grid_remove()            
-            # e_start_publish_date.grid_remove()   
-            # releasedatehourbox.grid_remove() 
-            # l_releasehour.grid_remove()
-            # e_releasehour.grid_remove()
-            
-            l_dailycount.configure(state = tk.DISABLED)
-            l_start_publish_date.configure(state = tk.DISABLED)            
-            e_start_publish_date.configure(state = tk.DISABLED)   
-            releasedatehourbox.configure(state = tk.DISABLED) 
-            l_releasehour.configure(state = tk.DISABLED)
-            e_releasehour.configure(state = tk.DISABLED)    
-            l_dailycount.grid_forget()
-            l_start_publish_date.grid_forget()            
-            e_start_publish_date.grid_forget()   
-            releasedatehourbox.grid_forget() 
-            l_releasehour.grid_forget()
-            e_releasehour.grid_forget()     
-            logger.info(f'visible {l_dailycount.winfo_ismapped() }')
+                l_dailycount.grid_forget()
+                l_start_publish_date.grid_forget()            
+                e_start_publish_date.grid_forget()   
+                releasedatehourbox.grid_forget() 
+                l_releasehour.grid_forget()
+                e_releasehour.grid_forget()     
+                logger.info(f'visible {l_dailycount.winfo_ismapped() }')
+
+            except:
+                pass              
+ 
+
             
             try:
-                logger.info(f'hidden offset elements')
+                logger.info(f'destroy hidden offset elements')
 
                 l_dailycount.destroy()
                 l_start_publish_date.destroy()            
@@ -2660,6 +2666,16 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
 
             except:
                 pass     
+        elif mode.get() in [3,4,5]:
+            logger.info(f'show offset elements')
+
+            l_dailycount.grid(row = 5, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
+            l_releasehour.grid(row = 6, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw')         
+            e_releasehour.grid(row = 6, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
+
+            l_start_publish_date.grid(row = 4, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw')             
+            e_start_publish_date.grid(row = 4, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw')  
+            releasedatehourbox.grid(row=5, column=1, sticky='E', padx=10)
 
 
     if len(frame.winfo_children())>0:
