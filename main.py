@@ -1515,15 +1515,17 @@ def syncVideometa2assetsjson(selectedMetafileformat,folder):
             else:
                 logger.info(f"=555==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
                 
-                ultra[folder]['videos']= dict({})        
+                new=dict({})        
                 for filename,video in tmpvideos.items():
-                    ultra[folder]['videos'][filename]= video
+                    new[filename]= video
+                ultra[folder]['videos']=new                   
         else:
             logger.info(f"=555==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
         
-            ultra[folder]['videos']= dict({})        
+            new=dict({})        
             for filename,video in tmpvideos.items():
-                ultra[folder]['videos'][filename]= video
+                new[filename]= video
+            ultra[folder]['videos']=new   
         ultra[folder]['filenames']= newfilenameslist
         ultra[folder]['updatedAt']=pd.Timestamp.now().value        
         logger.debug('end to check video file existence in the new metafile ')
@@ -1643,6 +1645,7 @@ def scanVideofiles(folder):
                             videopath = os.path.join(r, entry.name)
                             ultra[folder] ['videoFilePaths'].append(videopath)
                             print('this video is detected before',filename)
+    #   //0 -private 1-publish 2-schedule 3-Unlisted 4-public&premiere 
 
                             # default single video meta json
                             video={'video_local_path':'',
@@ -1653,7 +1656,7 @@ def scanVideofiles(folder):
                                     "extraheading":"",
                                 "video_description":"",
                                     "thumbnail_bg_image_path": "",
-
+                                'publish_policy':2,
                                 "thumbnail_local_path":[],
                                 "release_date":"",
                                 "release_date_hour":"10:15",
@@ -2693,7 +2696,7 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
         lbl15 = tk.Label(frame, text='两种选择')
         lbl15.grid(row=1,column=0,padx=14, pady=15,sticky='w') 
         b_return=tk.Button(frame,text="Back to previous page",command=lambda: render_update_schedule(previous_frame,True,folder))
-        b_return.grid(row = 0, column =0,padx=14, pady=15,sticky='e') 
+        b_return.grid(row = 0, column =1,padx=14, pady=15,sticky='w') 
 
         lbl15 = tk.Label(frame, text='1.手动准备发布时间文件，需放在视频所在文件夹下，且与视频文件同名,完成后再次检测即可',wraplength=600)
         lbl15.grid(row=2,column=0, sticky='nswe')
@@ -2776,23 +2779,60 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
 
 def genScheduleSLots(folder,mode_value,start_publish_date_value,dailycount_value,releasehour_value,frame,selectedMetafileformat):
     logger.info('start to gen slots')
-    publish_policy=[1,2,3,4,5].indexof(mode_value)
+    publish_policy=[1,2,3,4,5].index(mode_value)
     # //0 -private 1-publish 2-schedule 3-Unlisted 4-public&premiere 
     today = date.today()
 
     date_to_publish = datetime(today.year, today.month, today.day)
-    default_hour_to_publish = "10:15"
+    default_hour_to_publish = settings['default_release_hour']
     # if you want more delay ,just change 1 to other numbers to start from other days instead of tomorrow
-    offsets=start_publish_date_value
-
-    syncVideometa2assetsjson(selectedMetafileformat,folder)
+    start_publish_date_value=int(start_publish_date_value)
+    dailycount_value=int(dailycount_value)    
+    if True:
+    # 检测缓存中的更新时间 和videometafile的修改时间进行比较，发生变化就同步
+        syncVideometa2assetsjson(selectedMetafileformat,folder)
     video_data = ultra[folder]['videos']
-    counts=len(video_data)    
+    counts=len(video_data)   
+    offsets=0
+    avalaibleslots=[]
+    releasehour_value=releasehour_value.replace(' ','').trim()
+    if ',' in releasehour_value:
+
+        avalaibleslots=releasehour_value.split(',')
+    else:
+        avalaibleslots.append(releasehour_value)   
+    if dailycount_value==len(avalaibleslots):
+        logger.info('your daily count and time slot matchs')
+    elif dailycount_value>len(avalaibleslots) and len(avalaibleslots)==1:
+        logger.info(f'your daily count is{dailycount_value} time slot is {avalaibleslots},it appears you want to publish them at the same time')
+        for i in len(dailycount_value)-1:
+            avalaibleslots.append(avalaibleslots[0])
+    elif dailycount_value>len(avalaibleslots) and len(avalaibleslots)>1:
+        logger.info(f'your daily count is{dailycount_value} time slot is {avalaibleslots},it appears you want to random choose { dailycount_value -len(avalaibleslots)} slots for the missing')
+        randomslots=random.sample(availableScheduleTimes,dailycount_value-len(avalaibleslots))
+        avalaibleslots+=randomslots
+    tmpslots=    avalaibleslots        
     for video_id, video_info in video_data.items():    
-        pass
-    date_to_publish += timedelta(days=offsets)
+        if offsets==dailycount_value:
+            offsets=0
+            tmpslots=avalaibleslots
+        if  video_info['publish_policy'] in  [0,1]:
+            logger.info(f'this video {video_id} is set to public or private without need to gen schedule')
+        else:
+            if  video_info['release_date']=="":
+                logger.info(f'start to assign this video {video_id} ')
+            
+                video_info['release_date']=date_to_publish + timedelta(days=start_publish_date_value+offsets)
+                offsets+=1
+                date_hour=random.choice(tmpslots)  
+                video_info['release_date_hour']=date_hour
+                tmpslots.pop(date_hour)
+            else:
+                logger.info(f'this video {video_id} is assigned release date ')
+
 
     logger.info('sync slots to video metas')
+    dumpMetafiles(folder)
     logger.info('sync slots to video assets')
     logger.info('sync slots to cache')
 

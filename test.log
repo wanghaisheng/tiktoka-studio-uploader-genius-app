@@ -1663,3 +1663,225 @@ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/video
 2023-10-09 14:59:58,592 - INFO - TiktokaStudio GUI started
 2023-10-09 14:59:58,627 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
 2023-10-09 14:59:58,627 - INFO - TiktokaStudio GUI started
+2023-10-09 16:28:15,532 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-09 16:28:15,532 - INFO - TiktokaStudio GUI started
+2023-10-09 16:28:15,575 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-09 16:28:15,575 - INFO - TiktokaStudio GUI started
+2023-10-09 16:28:22,370 - INFO - start to detecting video metas----------False
+2023-10-09 16:28:22,370 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-09 16:28:22,376 - INFO - sync videos-meta
+2023-10-09 16:28:22,383 - DEBUG - start to check video file existence in the new metafile 
+2023-10-09 16:28:22,384 - INFO - video file is ok
+2023-10-09 16:28:22,384 - INFO - =111== <class 'UltraDict.UltraDict.UltraDict'>{}
+2023-10-09 16:28:22,384 - INFO - =222== <class 'UltraDict.UltraDict.UltraDict'>{}
+2023-10-09 16:28:22,384 - INFO - =333== <class 'UltraDict.UltraDict.UltraDict'>{}
+2023-10-09 16:28:22,386 - INFO - =444== <class 'UltraDict.UltraDict.UltraDict'>{'1': {'captions_certification': 0, 'categories': '', 'comments_ratings_policy': 1, 'extraheading': '', 'first_comment': '', 'heading': '', 'is_age_restriction': False, 'is_allow_embedding': True, 'is_automatic_chapters': True, 'is_featured_place': True, 'is_monetization_allowed': True, 'is_not_for_kid': True, 'is_paid_promotion': False, 'is_publish_to_subscriptions_feed_notify': True, 'is_show_howmany_likes': True, 'license_type': 0, 'release_date': '', 'release_date_hour': '10:15', 'shorts_remixing_type': 0, 'subheading': '', 'subtitles': '', 'tags': '', 'thumbnail_bg_image_path': '', 'thumbnail_local_path': [], 'video_description': '', 'video_filename': '1', 'video_film_date': '', 'video_film_location': '', 'video_language': '', 'video_local_path': 'D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\\1.mp4', 'video_title': '1'}}
+2023-10-09 16:28:22,386 - DEBUG - end to check video file existence in the new metafile 
+2023-10-09 16:28:22,387 - DEBUG - start to scan video file existence in the D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical 
+2023-10-09 16:28:22,387 - INFO - you have prepared video metas for:1
+2023-10-09 16:28:22,387 - INFO - start to check thumbFilePaths for video: 1
+2023-10-09 16:28:22,389 - INFO - update to 1 meta json
+2023-10-09 16:28:22,390 - INFO - start to check desFilePaths for video: 1
+2023-10-09 16:28:22,391 - INFO - update to 1 meta json
+2023-10-09 16:28:22,392 - INFO - start to check metaFilePaths for video: 1
+2023-10-09 16:28:22,393 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-09 16:28:22,393 - INFO - intial metaFilePaths for 1:
+
+2023-10-09 16:28:22,394 - INFO - update to 1 meta json
+2023-10-09 16:28:22,395 - INFO - start to check tagFilePaths for video: 1
+2023-10-09 16:28:22,396 - INFO - update to 1 meta json
+2023-10-09 16:28:22,397 - INFO - start to check scheduleFilePaths for video: 1
+2023-10-09 16:28:22,398 - INFO - update to 1 meta json
+2023-10-09 16:28:22,400 - DEBUG - end to scan video file existence in the D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical 
+2023-10-09 16:28:22,400 - DEBUG - start to dump video metas for D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical 
+2023-10-09 16:28:22,403 - DEBUG - end to dump video metas for D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical 
+2023-10-09 16:28:22,403 - DEBUG - start to dump video assets for D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical 
+2023-10-09 16:28:22,405 - DEBUG - end to dump video assets for D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical 
+2023-10-09 16:28:27,172 - INFO - grid_remove hidden offset elements
+2023-10-09 16:28:27,172 - INFO - grid_forget hidden offset elements
+2023-10-09 16:28:27,172 - INFO - visible 0
+2023-10-09 16:28:27,172 - INFO - destroy hidden offset elements
+2023-10-09 16:28:27,176 - INFO - grid_remove hidden offset elements
+2023-10-09 16:28:27,176 - INFO - grid_forget hidden offset elements
+2023-10-09 16:28:27,176 - INFO - visible 0
+2023-10-09 16:28:27,176 - INFO - destroy hidden offset elements
+2023-10-09 16:28:28,397 - INFO - show offset elements
+2023-10-09 16:28:28,400 - INFO - show offset elements
+2023-10-09 16:30:43,941 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-09 16:30:43,942 - INFO - TiktokaStudio GUI started
+2023-10-09 16:30:43,977 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-09 16:30:43,977 - INFO - TiktokaStudio GUI started
+2023-10-09 16:30:55,800 - INFO - start to detecting video metas----------False
+2023-10-09 16:30:55,800 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-09 16:30:55,806 - INFO - sync videos-meta
+2023-10-09 16:30:55,813 - DEBUG - start to check video file existence in the new metafile 
+2023-10-09 16:30:55,814 - INFO - video file is ok
+2023-10-09 16:30:55,814 - INFO - =111== <class 'UltraDict.UltraDict.UltraDict'>{}
+2023-10-09 16:30:55,814 - INFO - =222== <class 'UltraDict.UltraDict.UltraDict'>{}
+2023-10-09 16:30:55,814 - INFO - =333== <class 'UltraDict.UltraDict.UltraDict'>{}
+2023-10-09 16:30:55,816 - INFO - =444== <class 'UltraDict.UltraDict.UltraDict'>{'1': {'captions_certification': 0, 'categories': '', 'comments_ratings_policy': 1, 'extraheading': '', 'first_comment': '', 'heading': '', 'is_age_restriction': False, 'is_allow_embedding': True, 'is_automatic_chapters': True, 'is_featured_place': True, 'is_monetization_allowed': True, 'is_not_for_kid': True, 'is_paid_promotion': False, 'is_publish_to_subscriptions_feed_notify': True, 'is_show_howmany_likes': True, 'license_type': 0, 'release_date': '', 'release_date_hour': '10:15', 'shorts_remixing_type': 0, 'subheading': '', 'subtitles': '', 'tags': '', 'thumbnail_bg_image_path': '', 'thumbnail_local_path': [], 'video_description': '', 'video_filename': '1', 'video_film_date': '', 'video_film_location': '', 'video_language': '', 'video_local_path': 'D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\\1.mp4', 'video_title': '1'}}
+2023-10-09 16:30:55,816 - DEBUG - end to check video file existence in the new metafile 
+2023-10-09 16:30:55,816 - DEBUG - start to scan video file existence in the D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical 
+2023-10-09 16:30:55,817 - INFO - you have prepared video metas for:1
+2023-10-09 16:30:55,817 - INFO - start to check thumbFilePaths for video: 1
+2023-10-09 16:30:55,818 - INFO - update to 1 meta json
+2023-10-09 16:30:55,819 - INFO - start to check desFilePaths for video: 1
+2023-10-09 16:30:55,821 - INFO - update to 1 meta json
+2023-10-09 16:30:55,821 - INFO - start to check metaFilePaths for video: 1
+2023-10-09 16:30:55,822 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-09 16:30:55,822 - INFO - intial metaFilePaths for 1:
+
+2023-10-09 16:30:55,824 - INFO - update to 1 meta json
+2023-10-09 16:30:55,825 - INFO - start to check tagFilePaths for video: 1
+2023-10-09 16:30:55,826 - INFO - update to 1 meta json
+2023-10-09 16:30:55,827 - INFO - start to check scheduleFilePaths for video: 1
+2023-10-09 16:30:55,828 - INFO - update to 1 meta json
+2023-10-09 16:30:55,830 - DEBUG - end to scan video file existence in the D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical 
+2023-10-09 16:30:55,830 - DEBUG - start to dump video metas for D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical 
+2023-10-09 16:30:55,833 - DEBUG - end to dump video metas for D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical 
+2023-10-09 16:30:55,833 - DEBUG - start to dump video assets for D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical 
+2023-10-09 16:30:55,835 - DEBUG - end to dump video assets for D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical 
+2023-10-09 16:30:59,266 - INFO - grid_remove hidden offset elements
+2023-10-09 16:30:59,267 - INFO - grid_forget hidden offset elements
+2023-10-09 16:30:59,267 - INFO - visible 0
+2023-10-09 16:30:59,267 - INFO - destroy hidden offset elements
+2023-10-09 16:30:59,271 - INFO - grid_remove hidden offset elements
+2023-10-09 16:30:59,271 - INFO - grid_forget hidden offset elements
+2023-10-09 16:30:59,271 - INFO - visible 0
+2023-10-09 16:30:59,271 - INFO - destroy hidden offset elements
+2023-10-09 16:30:59,721 - INFO - show offset elements
+2023-10-09 16:30:59,724 - INFO - show offset elements
+2023-10-09 16:31:03,227 - INFO - grid_remove hidden offset elements
+2023-10-09 16:31:03,227 - INFO - grid_forget hidden offset elements
+2023-10-09 16:31:03,227 - INFO - visible 0
+2023-10-09 16:31:03,227 - INFO - destroy hidden offset elements
+2023-10-09 16:31:03,232 - INFO - grid_remove hidden offset elements
+2023-10-09 16:31:03,232 - INFO - grid_forget hidden offset elements
+2023-10-09 16:31:03,232 - INFO - visible 0
+2023-10-09 16:31:03,232 - INFO - destroy hidden offset elements
+2023-10-09 16:31:04,099 - INFO - grid_remove hidden offset elements
+2023-10-09 16:31:04,099 - INFO - grid_forget hidden offset elements
+2023-10-09 16:31:04,099 - INFO - visible 0
+2023-10-09 16:31:04,099 - INFO - destroy hidden offset elements
+2023-10-09 16:31:04,106 - INFO - grid_remove hidden offset elements
+2023-10-09 16:31:04,106 - INFO - grid_forget hidden offset elements
+2023-10-09 16:31:04,106 - INFO - visible 0
+2023-10-09 16:31:04,106 - INFO - destroy hidden offset elements
+2023-10-09 16:31:05,100 - INFO - show offset elements
+2023-10-09 16:31:05,104 - INFO - show offset elements
+2023-10-09 16:31:07,565 - INFO - show offset elements
+2023-10-09 16:31:07,570 - INFO - show offset elements
+2023-10-09 16:31:08,629 - INFO - show offset elements
+2023-10-09 16:31:08,635 - INFO - show offset elements
+2023-10-09 16:31:23,649 - INFO - start to gen slots
+2023-10-09 16:35:12,495 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-09 16:35:12,495 - INFO - TiktokaStudio GUI started
+2023-10-09 16:35:12,526 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-09 16:35:12,526 - INFO - TiktokaStudio GUI started
+2023-10-09 16:35:26,323 - INFO - start to detecting video metas----------False
+2023-10-09 16:35:26,323 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-09 16:35:26,329 - INFO - sync videos-meta
+2023-10-09 16:35:26,335 - DEBUG - start to check video file existence in the new metafile 
+2023-10-09 16:35:26,338 - INFO - video file is ok
+2023-10-09 16:35:26,338 - INFO - =111== <class 'UltraDict.UltraDict.UltraDict'>{}
+2023-10-09 16:35:26,338 - INFO - =222== <class 'UltraDict.UltraDict.UltraDict'>{}
+2023-10-09 16:35:26,338 - INFO - =333== <class 'UltraDict.UltraDict.UltraDict'>{}
+2023-10-09 16:35:26,340 - INFO - =444== <class 'UltraDict.UltraDict.UltraDict'>{'1': {'captions_certification': 0, 'categories': '', 'comments_ratings_policy': 1, 'extraheading': '', 'first_comment': '', 'heading': '', 'is_age_restriction': False, 'is_allow_embedding': True, 'is_automatic_chapters': True, 'is_featured_place': True, 'is_monetization_allowed': True, 'is_not_for_kid': True, 'is_paid_promotion': False, 'is_publish_to_subscriptions_feed_notify': True, 'is_show_howmany_likes': True, 'license_type': 0, 'release_date': '', 'release_date_hour': '10:15', 'shorts_remixing_type': 0, 'subheading': '', 'subtitles': '', 'tags': '', 'thumbnail_bg_image_path': '', 'thumbnail_local_path': [], 'video_description': '', 'video_filename': '1', 'video_film_date': '', 'video_film_location': '', 'video_language': '', 'video_local_path': 'D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\\1.mp4', 'video_title': '1'}}
+2023-10-09 16:35:26,340 - DEBUG - end to check video file existence in the new metafile 
+2023-10-09 16:35:26,340 - DEBUG - start to scan video file existence in the D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical 
+2023-10-09 16:35:26,341 - INFO - you have prepared video metas for:1
+2023-10-09 16:35:26,341 - INFO - start to check thumbFilePaths for video: 1
+2023-10-09 16:35:26,343 - INFO - update to 1 meta json
+2023-10-09 16:35:26,343 - INFO - start to check desFilePaths for video: 1
+2023-10-09 16:35:26,345 - INFO - update to 1 meta json
+2023-10-09 16:35:26,345 - INFO - start to check metaFilePaths for video: 1
+2023-10-09 16:35:26,346 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-09 16:35:26,346 - INFO - intial metaFilePaths for 1:
+
+2023-10-09 16:35:26,347 - INFO - update to 1 meta json
+2023-10-09 16:35:26,348 - INFO - start to check tagFilePaths for video: 1
+2023-10-09 16:35:26,350 - INFO - update to 1 meta json
+2023-10-09 16:35:26,351 - INFO - start to check scheduleFilePaths for video: 1
+2023-10-09 16:35:26,352 - INFO - update to 1 meta json
+2023-10-09 16:35:26,354 - DEBUG - end to scan video file existence in the D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical 
+2023-10-09 16:35:26,354 - DEBUG - start to dump video metas for D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical 
+2023-10-09 16:35:26,357 - DEBUG - end to dump video metas for D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical 
+2023-10-09 16:35:26,357 - DEBUG - start to dump video assets for D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical 
+2023-10-09 16:35:26,359 - DEBUG - end to dump video assets for D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical 
+2023-10-09 16:35:30,612 - INFO - show offset elements
+2023-10-09 16:35:30,614 - INFO - show offset elements
+2023-10-09 16:35:32,077 - INFO - show offset elements
+2023-10-09 16:35:32,080 - INFO - show offset elements
+2023-10-09 16:35:32,734 - INFO - show offset elements
+2023-10-09 16:35:32,737 - INFO - show offset elements
+2023-10-09 16:35:33,783 - INFO - show offset elements
+2023-10-09 16:35:33,787 - INFO - show offset elements
+2023-10-09 16:35:34,647 - INFO - show offset elements
+2023-10-09 16:35:34,653 - INFO - show offset elements
+2023-10-09 16:35:38,688 - INFO - show offset elements
+2023-10-09 16:35:38,695 - INFO - show offset elements
+2023-10-09 16:35:39,243 - INFO - show offset elements
+2023-10-09 16:35:39,251 - INFO - show offset elements
+2023-10-09 16:35:40,156 - INFO - show offset elements
+2023-10-09 16:35:40,164 - INFO - show offset elements
+2023-10-09 16:35:40,556 - INFO - show offset elements
+2023-10-09 16:35:40,566 - INFO - show offset elements
+2023-10-09 16:35:40,960 - INFO - show offset elements
+2023-10-09 16:35:40,972 - INFO - show offset elements
+2023-10-09 16:35:43,739 - INFO - start to gen slots
+2023-10-09 16:35:43,742 - DEBUG - start to check video file existence in the new metafile 
+2023-10-09 16:35:43,744 - INFO - video file is ok
+2023-10-09 16:35:43,744 - INFO - =111== <class 'UltraDict.UltraDict.UltraDict'>{'1': {'captions_certification': 0, 'categories': '', 'comments_ratings_policy': 1, 'extraheading': '', 'first_comment': '', 'heading': '', 'is_age_restriction': False, 'is_allow_embedding': True, 'is_automatic_chapters': True, 'is_featured_place': True, 'is_monetization_allowed': True, 'is_not_for_kid': True, 'is_paid_promotion': False, 'is_publish_to_subscriptions_feed_notify': True, 'is_show_howmany_likes': True, 'license_type': 0, 'release_date': '', 'release_date_hour': '10:15', 'shorts_remixing_type': 0, 'subheading': '', 'subtitles': '', 'tags': '', 'thumbnail_bg_image_path': '', 'thumbnail_local_path': [], 'video_description': '', 'video_filename': '1', 'video_film_date': '', 'video_film_location': '', 'video_language': '', 'video_local_path': 'D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\\1.mp4', 'video_title': '1'}}
+2023-10-09 16:35:43,744 - INFO - =222== <class 'UltraDict.UltraDict.UltraDict'>{'1': {'captions_certification': 0, 'categories': '', 'comments_ratings_policy': 1, 'extraheading': '', 'first_comment': '', 'heading': '', 'is_age_restriction': False, 'is_allow_embedding': True, 'is_automatic_chapters': True, 'is_featured_place': True, 'is_monetization_allowed': True, 'is_not_for_kid': True, 'is_paid_promotion': False, 'is_publish_to_subscriptions_feed_notify': True, 'is_show_howmany_likes': True, 'license_type': 0, 'release_date': '', 'release_date_hour': '10:15', 'shorts_remixing_type': 0, 'subheading': '', 'subtitles': '', 'tags': '', 'thumbnail_bg_image_path': '', 'thumbnail_local_path': [], 'video_description': '', 'video_filename': '1', 'video_film_date': '', 'video_film_location': '', 'video_language': '', 'video_local_path': 'D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\\1.mp4', 'video_title': '1'}}
+2023-10-09 16:35:43,744 - INFO - =555== <class 'UltraDict.UltraDict.UltraDict'>{'1': {'captions_certification': 0, 'categories': '', 'comments_ratings_policy': 1, 'extraheading': '', 'first_comment': '', 'heading': '', 'is_age_restriction': False, 'is_allow_embedding': True, 'is_automatic_chapters': True, 'is_featured_place': True, 'is_monetization_allowed': True, 'is_not_for_kid': True, 'is_paid_promotion': False, 'is_publish_to_subscriptions_feed_notify': True, 'is_show_howmany_likes': True, 'license_type': 0, 'release_date': '', 'release_date_hour': '10:15', 'shorts_remixing_type': 0, 'subheading': '', 'subtitles': '', 'tags': '', 'thumbnail_bg_image_path': '', 'thumbnail_local_path': [], 'video_description': '', 'video_filename': '1', 'video_film_date': '', 'video_film_location': '', 'video_language': '', 'video_local_path': 'D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\\1.mp4', 'video_title': '1'}}
+2023-10-09 16:39:21,128 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-09 16:39:21,128 - INFO - TiktokaStudio GUI started
+2023-10-09 16:39:21,164 - DEBUG - Installation path is:D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius
+2023-10-09 16:39:21,164 - INFO - TiktokaStudio GUI started
+2023-10-09 16:39:26,268 - INFO - start to detecting video metas----------False
+2023-10-09 16:39:26,268 - INFO - create cached data for this folder:
+D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical
+2023-10-09 16:39:26,274 - INFO - sync videos-meta
+2023-10-09 16:39:26,280 - DEBUG - start to check video file existence in the new metafile 
+2023-10-09 16:39:26,282 - INFO - video file is ok
+2023-10-09 16:39:26,282 - INFO - =111== <class 'UltraDict.UltraDict.UltraDict'>{}
+2023-10-09 16:39:26,283 - INFO - =222== <class 'UltraDict.UltraDict.UltraDict'>{}
+2023-10-09 16:39:26,283 - INFO - =333== <class 'UltraDict.UltraDict.UltraDict'>{}
+2023-10-09 16:39:26,284 - INFO - =444== <class 'UltraDict.UltraDict.UltraDict'>{'1': {'captions_certification': 0, 'categories': '', 'comments_ratings_policy': 1, 'extraheading': '', 'first_comment': '', 'heading': '', 'is_age_restriction': False, 'is_allow_embedding': True, 'is_automatic_chapters': True, 'is_featured_place': True, 'is_monetization_allowed': True, 'is_not_for_kid': True, 'is_paid_promotion': False, 'is_publish_to_subscriptions_feed_notify': True, 'is_show_howmany_likes': True, 'license_type': 0, 'release_date': '', 'release_date_hour': '10:15', 'shorts_remixing_type': 0, 'subheading': '', 'subtitles': '', 'tags': '', 'thumbnail_bg_image_path': '', 'thumbnail_local_path': [], 'video_description': '', 'video_filename': '1', 'video_film_date': '', 'video_film_location': '', 'video_language': '', 'video_local_path': 'D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\\1.mp4', 'video_title': '1'}}
+2023-10-09 16:39:26,285 - DEBUG - end to check video file existence in the new metafile 
+2023-10-09 16:39:26,285 - DEBUG - start to scan video file existence in the D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical 
+2023-10-09 16:39:26,285 - INFO - you have prepared video metas for:1
+2023-10-09 16:39:26,285 - INFO - start to check thumbFilePaths for video: 1
+2023-10-09 16:39:26,287 - INFO - update to 1 meta json
+2023-10-09 16:39:26,288 - INFO - start to check desFilePaths for video: 1
+2023-10-09 16:39:26,290 - INFO - update to 1 meta json
+2023-10-09 16:39:26,291 - INFO - start to check metaFilePaths for video: 1
+2023-10-09 16:39:26,292 - INFO - this  metaFilePaths exist:
+ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\1.json
+2023-10-09 16:39:26,292 - INFO - intial metaFilePaths for 1:
+
+2023-10-09 16:39:26,294 - INFO - update to 1 meta json
+2023-10-09 16:39:26,295 - INFO - start to check tagFilePaths for video: 1
+2023-10-09 16:39:26,296 - INFO - update to 1 meta json
+2023-10-09 16:39:26,296 - INFO - start to check scheduleFilePaths for video: 1
+2023-10-09 16:39:26,298 - INFO - update to 1 meta json
+2023-10-09 16:39:26,300 - DEBUG - end to scan video file existence in the D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical 
+2023-10-09 16:39:26,300 - DEBUG - start to dump video metas for D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical 
+2023-10-09 16:39:26,303 - DEBUG - end to dump video metas for D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical 
+2023-10-09 16:39:26,303 - DEBUG - start to dump video assets for D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical 
+2023-10-09 16:39:26,305 - DEBUG - end to dump video assets for D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical 
+2023-10-09 16:39:30,302 - INFO - show offset elements
+2023-10-09 16:39:30,304 - INFO - show offset elements
+2023-10-09 16:39:33,948 - INFO - start to gen slots
+2023-10-09 16:39:33,951 - DEBUG - start to check video file existence in the new metafile 
+2023-10-09 16:39:33,953 - INFO - video file is ok
+2023-10-09 16:39:33,953 - INFO - =111== <class 'UltraDict.UltraDict.UltraDict'>{'1': {'captions_certification': 0, 'categories': '', 'comments_ratings_policy': 1, 'extraheading': '', 'first_comment': '', 'heading': '', 'is_age_restriction': False, 'is_allow_embedding': True, 'is_automatic_chapters': True, 'is_featured_place': True, 'is_monetization_allowed': True, 'is_not_for_kid': True, 'is_paid_promotion': False, 'is_publish_to_subscriptions_feed_notify': True, 'is_show_howmany_likes': True, 'license_type': 0, 'release_date': '', 'release_date_hour': '10:15', 'shorts_remixing_type': 0, 'subheading': '', 'subtitles': '', 'tags': '', 'thumbnail_bg_image_path': '', 'thumbnail_local_path': [], 'video_description': '', 'video_filename': '1', 'video_film_date': '', 'video_film_location': '', 'video_language': '', 'video_local_path': 'D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\\1.mp4', 'video_title': '1'}}
+2023-10-09 16:39:33,953 - INFO - =222== <class 'UltraDict.UltraDict.UltraDict'>{'1': {'captions_certification': 0, 'categories': '', 'comments_ratings_policy': 1, 'extraheading': '', 'first_comment': '', 'heading': '', 'is_age_restriction': False, 'is_allow_embedding': True, 'is_automatic_chapters': True, 'is_featured_place': True, 'is_monetization_allowed': True, 'is_not_for_kid': True, 'is_paid_promotion': False, 'is_publish_to_subscriptions_feed_notify': True, 'is_show_howmany_likes': True, 'license_type': 0, 'release_date': '', 'release_date_hour': '10:15', 'shorts_remixing_type': 0, 'subheading': '', 'subtitles': '', 'tags': '', 'thumbnail_bg_image_path': '', 'thumbnail_local_path': [], 'video_description': '', 'video_filename': '1', 'video_film_date': '', 'video_film_location': '', 'video_language': '', 'video_local_path': 'D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\\1.mp4', 'video_title': '1'}}
+2023-10-09 16:39:33,953 - INFO - =555== <class 'UltraDict.UltraDict.UltraDict'>{'1': {'captions_certification': 0, 'categories': '', 'comments_ratings_policy': 1, 'extraheading': '', 'first_comment': '', 'heading': '', 'is_age_restriction': False, 'is_allow_embedding': True, 'is_automatic_chapters': True, 'is_featured_place': True, 'is_monetization_allowed': True, 'is_not_for_kid': True, 'is_paid_promotion': False, 'is_publish_to_subscriptions_feed_notify': True, 'is_show_howmany_likes': True, 'license_type': 0, 'release_date': '', 'release_date_hour': '10:15', 'shorts_remixing_type': 0, 'subheading': '', 'subtitles': '', 'tags': '', 'thumbnail_bg_image_path': '', 'thumbnail_local_path': [], 'video_description': '', 'video_filename': '1', 'video_film_date': '', 'video_film_location': '', 'video_language': '', 'video_local_path': 'D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\\1.mp4', 'video_title': '1'}}
+2023-10-09 16:39:33,956 - DEBUG - end to check video file existence in the new metafile 
