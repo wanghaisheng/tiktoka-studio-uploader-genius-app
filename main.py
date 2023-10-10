@@ -2825,6 +2825,16 @@ def genScheduleSLots(folder,mode_value,start_publish_date_value,dailycount_value
     offsets=0
     avalaibleslots=[]
     releasehour_value=releasehour_value.strip()
+
+    text = "这是一个包含半角逗号,和全角逗号，的示例。"
+
+    # 使用正则表达式搜索半角或全角逗号
+    comma_pattern = re.compile(r'[,\uFF0C]')
+    match = comma_pattern.search(text)
+
+    if match:
+        print("字符串中包含半角或全角逗号。")    
+        releasehour_value = re.sub(r'[,\uFF0C]', ',', text)        
     if ',' in releasehour_value:
 
         avalaibleslots=releasehour_value.split(',')
