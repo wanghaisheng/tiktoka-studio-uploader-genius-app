@@ -453,7 +453,22 @@ def fix_size(old_image_path, new_image_path, canvas_width=1080, canvas_height=72
     if mode == 'RGBA':
         img = img.convert('RGB')
     img.save(new_image_path)
+def load_locales():
+    settingfile=os.path.join(ROOT_DIR,settingfilename)
+    failed=False
+    if os.path.exists(settingfile) :
+        try:
 
+            fp = open(settingfile, 'r', encoding='utf-8')
+            setting_json = fp.read()
+            fp.close()
+            settings = json.loads(setting_json)
+
+        except:
+            failed=True
+
+    else:
+        failed=True
 
 def load_setting():
     global settings
@@ -571,84 +586,86 @@ def load_setting():
                 "chooseCookie": "请选择该频道对应cookie文件",
                 "chooseChannelSetting": "请选择该频道配置文件"
             }
+        # json.loads(open(os.path.join(ROOT_DIR+os.sep+'locales','zh.json'), 'r', encoding='utf-8').read())
         settings['en']={
-                "title": "TiktokaStudio Video Bulk Upload GUI Demo",
-                "select_musics_folder''": "choose music folder",
-                "select_videos_folder": "choose video folder",
-                "setups": "setups",
-                "select_cookie_file": "choose cookie json",
-                "select_profile_folder": "choose profile folder",
-                "settings": "settings",
-                "createuploadsession": "create uploadsession",
-                "autothumb": "auto thumbnail",
-                "testupload": "test video upload ",
-                "videosMenu": "视频管理",
-                "docView": "Docs",		
-                "installView": "Setup",
-                "accountView": "Accounts",
-                "proxyView": "Proxies",
-                "thumbView": "Thumbnails",
-                "videosView": "Videos",
-                "metaView": "Metas",
-                "uploadView": "Upload",
-                "upload": "start upload",
-                "batchchangebgmusic": "batch replace audio",
-                "is_open_browser": "silent mode",
-                "is_record_video": "recording",
-                "genVideoMetas":"gen  video metas",
-                "helpcenter":"helpcenter",
-                "importVideoMetas":"import video metajson file",
-                "editVideoMetas":"edit video metajson file",
-                "username": "username",
-                "password": "password",
-                "save_setting": "save config",
-                "chooseLang": "Lang",
-                "contact":"contact",
-                "contact_str":"1.Email send to admin@tiktokastudio.com\\n",
-                "debug": "debug",
-                "loglevel": "loglevel",
-                "validateVideoMetas":"validate meta json",
-                "logView": "Logs",
-                "tagsView": "tags",
-                "desView": "des",
-                "scheduleView": "schedule",
-                "default_release_hour":'10:15',
+	"title": "TiktokaStudio Video Bulk Upload GUI Demo",
+	"select_musics_folder''": "choose music folder",
+	"select_videos_folder": "choose video folder",
+	"setups": "setups",
+	"select_cookie_file": "choose cookie json",
+	"select_profile_folder": "choose profile folder",
+	"settings": "settings",
+	"createuploadsession": "create uploadsession",
+	"autothumb": "auto thumbnail",
+	"testupload": "test video upload ",
+	"videosMenu": "视频管理",
+	"docView": "Docs",		
+	"installView": "Setup",
+	"accountView": "Accounts",
+	"proxyView": "Proxies",
+	"thumbView": "Thumbnails",
+	"videosView": "Videos",
+	"metaView": "Metas",
+	"uploadView": "Upload",
+	"upload": "start upload",
+	"batchchangebgmusic": "batch replace audio",
+	"is_open_browser": "silent mode",
+	"is_record_video": "recording",
+	"genVideoMetas":"gen  video metas",
+	"helpcenter":"helpcenter",
+	"importVideoMetas":"import video metajson file",
+	"editVideoMetas":"edit video metajson file",
+	"username": "username",
+	"password": "password",
+	"save_setting": "save config",
+	"chooseLang": "Lang",
+	"contact":"contact",
+	"contact_str":"1.Email send to admin@tiktokastudio.com\\n",
+	"debug": "debug",
+	"loglevel": "loglevel",
+	"validateVideoMetas":"validate meta json",
+	"logView": "Logs",
+	"tagsView": "tags",
+	"desView": "des",
+	"scheduleView": "schedule",
+	"default_release_hour":'10:15',
 
-                "start-loading-setting": "start loading latest used setting file",
-                "loading-default-setting": "loading failed,use default setting template",
-                "contact_str_group":"2.Join discussion group",
-                "contact_str_personal":"3.Pay $99 to add personal wechat",
-                "version":"version",
-                "version_str":"V0.1.16\\n1.source code for this GUI:https://github.com/wanghaisheng/tiktoka-studio-uploader-app \\n2.core lib for this GUI: https://github.com/wanghaisheng/tiktoka-studio-uploader",
-                "hiddenwatermark": "add hidden watermark",
-                "docs_str":"安装配置篇\\n1.安装\\n2.配置\\n导入默认配置后可以通过测试网络、测试安装、测试配置文件来知晓具体情况\\n1.从文件夹生成视频元数据规则\\n r1:尝试使用ffmpeg读取视频元数据,从其中获取视频标题、描述、制作日期、制作地点、字幕文件等信息。\\n r2:r1未命中则读取文件名称作为视频名称,如果视频名称超过20个字符,则将视频名称作为视频描述\\n r3:如果存在字幕文件,尝试从字幕总结出视频描述,如果不存在多语种字幕，尝试使用外部工具翻译多语种字幕\\n r4:如果存在同名的图片文件,则将其作为缩略图，如果没有则使用自动提取关键帧工具生成缩略图底图供后续封面图生成使用\\n r5:如果设置了每日发布的数量，则自动按照数量从次日起安排视频定时公开的日期\\n如果没有设置每日发布的数量，则根据发布策略的值来决定视频是立即公开还是私有发布。1.如果是多个账户,你需要为每个账号准备一个cookie,然后每个账户配置一个单独的配置文件\\n2.安装浏览器插件Cookie-Editor,登录youtube,导出cookie3.免版权的音乐可以在\\nhttps://icons8.com/music/\\n=====================\\n1.首次使用请选择对应的配置模板,比如默认private、public和schedule,文件路径为软件安装路径下的assets/config/setting-template.json,请按照自己的情况修改,修改完成后点击保存\\n文件和文件夹 你可以通过菜单里的浏览器配置、视频素材来点选,你也可以自行在文本框中填写\\n首选标签：这一批上传的视频我们想设置一些通用的标签,在这里设置,其他的标签请放在视频文件名中即可\\n视频描述前缀:一般而言频道的视频描述都会有个模板,类似作文里总分总结构\\n视频描述后缀:一般是一些免责声明之类\\n发布策略:0表示上传为私有,1表示上传后立马公开2表示定时公开 当你选了2,可配合每日发布数量来自动设置对应视频公开的日期,起始日期默认为上传日期+1\\n频道名称:只是用来保存配置文件\\ncookie json:请使用浏览器插件导出并保存\\n2.第二步需要检查素材,因为目前上传逻辑中只有支持视频和缩略图名字一样才能进行上传\\n背景音乐批量替换:请设置好免费音乐所在文件夹,可先对1个视频处理,调节背景音乐音量为最佳效果\\n 3.点击上传即可",
-                "testsettingok": "test config",
-                "testinstall": "test install",
-                "testnetwork": "test network",
-                "load_setting_file": "load setting",
-                "docs": "Read First",
-                "cookiejson": "cookie json",
-                "proxySetting": "proxy",
-                "profileFolder": "profile folder",
-                "videoFolder": "video folder",
-                "create_setting_file": "new setting file",
-                "downVideoMetas":"download metajson template",
-                "toolkits":"toolkits",
-                "mode1":"mode 1",
-                "mode2":"mode 2",
-                "mode3":"mode 3",
-                "channelName": "channel name",
-                "offsetDays": "days offset",
-                "dailyVideoLimit": "daily publish count",
-                "publishPolicy": "publish policy",
-                "bgMucisVolume": "music volumn",
-                "descriptionSuffix": "preferred des suffix",
-                "descriptionPrefix": "preferred des prefix",
-                "preferTags": "preferred tags",
-                "bgVideoFolder": "free music folder",
-                "chooseCookie": "select specific cookie file",
-                "chooseChannelSetting": "select channel setting file"
-            }
+	"start-loading-setting": "start loading latest used setting file",
+	"loading-default-setting": "loading failed,use default setting template",
+	"contact_str_group":"2.Join discussion group",
+	"contact_str_personal":"3.Pay $99 to add personal wechat",
+	"version":"version",
+	"version_str":"V0.1.16\\n1.source code for this GUI:https://github.com/wanghaisheng/tiktoka-studio-uploader-app \\n2.core lib for this GUI: https://github.com/wanghaisheng/tiktoka-studio-uploader",
+	"hiddenwatermark": "add hidden watermark",
+	"docs_str":"安装配置篇\\n1.安装\\n2.配置\\n导入默认配置后可以通过测试网络、测试安装、测试配置文件来知晓具体情况\\n1.从文件夹生成视频元数据规则\\n r1:尝试使用ffmpeg读取视频元数据,从其中获取视频标题、描述、制作日期、制作地点、字幕文件等信息。\\n r2:r1未命中则读取文件名称作为视频名称,如果视频名称超过20个字符,则将视频名称作为视频描述\\n r3:如果存在字幕文件,尝试从字幕总结出视频描述,如果不存在多语种字幕，尝试使用外部工具翻译多语种字幕\\n r4:如果存在同名的图片文件,则将其作为缩略图，如果没有则使用自动提取关键帧工具生成缩略图底图供后续封面图生成使用\\n r5:如果设置了每日发布的数量，则自动按照数量从次日起安排视频定时公开的日期\\n如果没有设置每日发布的数量，则根据发布策略的值来决定视频是立即公开还是私有发布。1.如果是多个账户,你需要为每个账号准备一个cookie,然后每个账户配置一个单独的配置文件\\n2.安装浏览器插件Cookie-Editor,登录youtube,导出cookie3.免版权的音乐可以在\\nhttps://icons8.com/music/\\n=====================\\n1.首次使用请选择对应的配置模板,比如默认private、public和schedule,文件路径为软件安装路径下的assets/config/setting-template.json,请按照自己的情况修改,修改完成后点击保存\\n文件和文件夹 你可以通过菜单里的浏览器配置、视频素材来点选,你也可以自行在文本框中填写\\n首选标签：这一批上传的视频我们想设置一些通用的标签,在这里设置,其他的标签请放在视频文件名中即可\\n视频描述前缀:一般而言频道的视频描述都会有个模板,类似作文里总分总结构\\n视频描述后缀:一般是一些免责声明之类\\n发布策略:0表示上传为私有,1表示上传后立马公开2表示定时公开 当你选了2,可配合每日发布数量来自动设置对应视频公开的日期,起始日期默认为上传日期+1\\n频道名称:只是用来保存配置文件\\ncookie json:请使用浏览器插件导出并保存\\n2.第二步需要检查素材,因为目前上传逻辑中只有支持视频和缩略图名字一样才能进行上传\\n背景音乐批量替换:请设置好免费音乐所在文件夹,可先对1个视频处理,调节背景音乐音量为最佳效果\\n 3.点击上传即可",
+	"testsettingok": "test config",
+	"testinstall": "test install",
+	"testnetwork": "test network",
+	"load_setting_file": "load setting",
+	"docs": "Read First",
+	"cookiejson": "cookie json",
+	"proxySetting": "proxy",
+	"profileFolder": "profile folder",
+	"videoFolder": "video folder",
+	"create_setting_file": "new setting file",
+	"downVideoMetas":"download metajson template",
+	"toolkits":"toolkits",
+	"mode1":"mode 1",
+	"mode2":"mode 2",
+	"mode3":"mode 3",
+	"channelName": "channel name",
+	"offsetDays": "days offset",
+	"dailyVideoLimit": "daily publish count",
+	"publishPolicy": "publish policy",
+	"bgMucisVolume": "music volumn",
+	"descriptionSuffix": "preferred des suffix",
+	"descriptionPrefix": "preferred des prefix",
+	"preferTags": "preferred tags",
+	"bgVideoFolder": "free music folder",
+	"chooseCookie": "select specific cookie file",
+	"chooseChannelSetting": "select channel setting file"
+    }
+        # json.loads(open(os.path.join(ROOT_DIR+os.sep+'locales','zh.json'), 'r', encoding='utf-8').read())
         logger.info('end to initialize settings with default')
     # print(settings)
 
@@ -1504,8 +1521,8 @@ def syncVideometa2assetsjson(selectedMetafileformat,folder):
                 
             else:
                 logger.info(f"{video['video_local_path']} video file is broken or not found according to video metafile")
-                # newfilenameslist.pop(filename)
-                # changed_df_metas.pop(filename)        
+                # newfilenameslist.remove(filename)
+                # changed_df_metas.remove(filename)        
         if ultra[folder].has_key('videos'):
             logger.info(f"=111==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
             
@@ -2634,7 +2651,6 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
         def display_selected_item_index(event): 
             print('index of this item is: {}\n'.format(releasedatehourbox.current()))
             number=dailycount.get()
-            print('current dailycount ')
             if dailycount.get()=='Select From policy':
                 number=1
                 randomNreleasehour=settings[locale]['default_release_hour']
@@ -2661,7 +2677,7 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
 
 
 
-        print(f'modeis {type(mode.get())} {mode.get()}')
+        # print(f'modeis {type(mode.get())} {mode.get()}')
         if mode.get() in [1,2]:
             try:
                 logger.info(f'grid_remove hidden offset elements')
@@ -2799,11 +2815,11 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
 
 
 
-        b_gen_thumb_=tk.Button(frame,text="gen schedules",command=lambda: genScheduleSLots(folder,mode.get(),start_publish_date.get(),dailycount.get(),releasehour.get(),frame,selectedMetafileformat))
+        b_gen_thumb_=tk.Button(frame,text="gen schedule time plan",command=lambda: genScheduleSLots(folder,mode.get(),start_publish_date.get(),dailycount.get(),releasehour.get(),frame,selectedMetafileformat))
         b_gen_thumb_.grid(row = 11, column =0, padx=14, pady=15,sticky='nswe') 
 
 
-        b_check_metas_=tk.Button(frame,text="edit videometa",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
+        b_check_metas_=tk.Button(frame,text="check videometa",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
         b_check_metas_.grid(row = 12, column = 0, padx=14, pady=15,sticky='nswe') 
 
 def genScheduleSLots(folder,mode_value,start_publish_date_value,dailycount_value,releasehour_value,frame,selectedMetafileformat):
@@ -2817,7 +2833,8 @@ def genScheduleSLots(folder,mode_value,start_publish_date_value,dailycount_value
     # if you want more delay ,just change 1 to other numbers to start from other days instead of tomorrow
     start_publish_date_value=int(start_publish_date_value)
     dailycount_value=int(dailycount_value)    
-    if True:
+    metafilechanges=False
+    if metafilechanges:
     # 检测缓存中的更新时间 和videometafile的修改时间进行比较，发生变化就同步
         syncVideometa2assetsjson(selectedMetafileformat,folder)
     video_data = ultra[folder]['videos']
@@ -2826,15 +2843,15 @@ def genScheduleSLots(folder,mode_value,start_publish_date_value,dailycount_value
     avalaibleslots=[]
     releasehour_value=releasehour_value.strip()
 
-    text = "这是一个包含半角逗号,和全角逗号，的示例。"
+    # text = "这是一个包含半角逗号,和全角逗号，的示例。"
 
     # 使用正则表达式搜索半角或全角逗号
     comma_pattern = re.compile(r'[,\uFF0C]')
-    match = comma_pattern.search(text)
+    match = comma_pattern.search(releasehour_value)
 
     if match:
         print("字符串中包含半角或全角逗号。")    
-        releasehour_value = re.sub(r'[,\uFF0C]', ',', text)        
+        releasehour_value = re.sub(r'[,\uFF0C]', ',', releasehour_value)        
     if ',' in releasehour_value:
 
         avalaibleslots=releasehour_value.split(',')
@@ -2863,22 +2880,25 @@ def genScheduleSLots(folder,mode_value,start_publish_date_value,dailycount_value
             logger.info(f'this video {video_id} is set to public or private without need to gen schedule')
         else:
             if  video_info['release_date']=="":
-                logger.info(f'start to assign this video {video_id} ')
             
                 video_info['release_date']=date_to_publish + timedelta(days=start_publish_date_value+offsets)
                 offsets+=1
                 date_hour=random.choice(tmpslots)  
                 video_info['release_date_hour']=date_hour
-                tmpslots.pop(date_hour)
+                logger.info(f"start to assign this video {video_id},{video_info['release_date']},{video_info['release_date_hour']} ")
+
+                tmpslots.remove(date_hour)
             else:
-                logger.info(f'this video {video_id} is assigned release date ')
+                logger.info(f"this video {video_id} is assigned release date{video_info['release_date']},{video_info['release_date_hour']} ")
 
 
     logger.info('sync slots to video metas')
-    dumpMetafiles(folder)
+    dumpMetafiles(selectedMetafileformat,folder)
     logger.info('sync slots to video assets')
     logger.info('sync slots to cache')
-
+    lab = tk.Label(frame,text="assign schedules finished,you can check videometa",bg="lightyellow")
+    lab.grid(row = 10, column = 0,  padx=14, pady=15,sticky='nw')     
+    lab.after(5000,lab.destroy)    
 def render_update_meta(frame,isneed,folder,selectedMetafileformat='json'):
     if isneed==True:
         lang='en'
@@ -4132,19 +4152,34 @@ def createTaskMetas(left,right):
     button1 = ttk.Button(creatTaskWindow, text="ADD", command=lambda:chooseAccountsView(creatTaskWindow,choosedAccounts))
     button1.grid(row=4,column=2, sticky=tk.W)
 
+    multiAccountsPolicy=tk.StringVar()
+
+
+    def multiAccountsPolicyCallBack(*args):
+        print(multiAccountsPolicy.get())
+        print(multiAccountsPolicybox.current())
+
+
+
+    multiAccountsPolicy.set("Select From policy")
+    multiAccountsPolicy.trace('w', multiAccountsPolicyCallBack)
+
+
+    multiAccountsPolicybox = ttk.Combobox(creatTaskWindow, textvariable=multiAccountsPolicy)
+    multiAccountsPolicybox.config(values = ('单账号', '主副账号','多账号随机发布','多账号平均发布'))
+    multiAccountsPolicybox.grid(row = 4, column = 3, padx=14, pady=15, sticky='w')   
 
     lb18 = tk.Label(creatTaskWindow, text='Runs on.')
     lb18.grid(row=5,column=0,  padx=14, pady=15, sticky=tk.W)
 
 
     deviceType = tk.StringVar()
-
+    browserType = tk.StringVar()
 
     def deviceTypeCallBack(*args):
         print(deviceType.get())
         print(deviceTypebox.current())
         if 'browser' in deviceType.get():
-            browserType = tk.StringVar()
 
             browserType.set("Select From Browsers")
             def browserTypeCallBack(*args):
@@ -4207,7 +4242,8 @@ def createTaskMetas(left,right):
     mode1.grid(row = 8, column = 2, padx=14, pady=15,sticky='w') 
     mode1=tk.Radiobutton(creatTaskWindow,text="after copyright check success",variable=wait_policy,value=3,command=lambda: getBool(wait_policy))
     mode1.grid(row = 8, column = 3, padx=14, pady=15,sticky='w') 
-    btn6= tk.Button(creatTaskWindow, text="gen task meta file", padx = 10, pady = 10,command = lambda: threading.Thread(target=setEntry(account_var.get(),choosedAccounts)).start())     
+    btn6= tk.Button(creatTaskWindow, text="gen task meta file", padx = 10, pady = 10,command = lambda: threading.Thread(
+        target=genUploadTaskMetas(videometafile.get(),choosedAccounts.get(),deviceType.get(),browserType.get(),is_open_browser.get(),wait_policy.get(),is_debug.get())).start())     
     btn6.grid(row=10,column=1, sticky=tk.W)
     def uploadStrategyCallBack(*args):
         print(uploadStrategy.get())
@@ -4237,27 +4273,45 @@ def createTaskMetas(left,right):
     # uploadPlatform.trace('w', uploadPlatformboxCallBack)
 
     
-def genVideoMetas():
-    dbm=DBM('prod')
-    save_setting(dbm)
-# 文件夹下是否有视频文件
+def genUploadTaskMetas(videometafilepath,choosedAccounts_value,deviceType_value,browserType_value,is_open_browser_value,wait_policy_value,is_debug_value):     
+    print('load video meta')
+    if videometafilepath !='' and videometafilepath is not None:
+        
+        logger.info(f'you select video metafile is {videometafilepath}')
+        if  os.path.exists(videometafilepath):
+            # check_video_thumb_pair(dbm,video_folder_path,True)
+            logger.info('start to load  and parse meta file')
+            filename = os.path.splitext(entry.name)[0]
 
-# 视频文件是否有同名的图片
+            ext = os.path.splitext(videometafilepath)[1]
+            if ext=='xlsx':
+                df=pd.read_excel(videometafilepath, index_col=[0])
+                df.replace('nan', '')
+                
+                dfdict=df.iterrows()
+            elif ext=='json':
+                df=pd.read_json(videometafilepath)  
+                df.replace('nan', '')
+                
+                dfdict=df.items()      
+            elif ext=='csv':
+                df=pd.read_csv(videometafilepath, index_col=[0])
+                df.replace('nan', '')
+                
+                dfdict=df.iterrows()
 
-    try:
-        video_folder_path = setting['video_folder']
+            # List of allowed field names
+            print('reading video meta\r',df)
+            
+            logger.info(f'start to check  defined in template')
 
-    except NameError:
-        print('not found fastlane folder  file')
-    else:
-        if video_folder_path:
-            if os.path.exists(video_folder_path):
-                check_video_thumb_pair(dbm,video_folder_path,False)
-            else:
-                print("there is no defined video dir.")
-        else:
-            print("pls choose file or folder")
-    print('save metas to json /csv excel format for later processing')
+            # Check the data dictionary for allowed fields and empty values in each entry
+            # for key, entry in dfdict:
+
+    print('validate video meta')
+    print('assign account')
+    print('write task meta')
+
 
 def validateMetafile(engine,ttkframe,metafile):
     logger.info('load task metas to database .create upload task for each video')
