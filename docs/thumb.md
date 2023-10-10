@@ -67,6 +67,18 @@ Image file formats you can upload to YouTube include JPG (or JPEG), GIF (non ani
 
 
 字体
+fonts resousces
+https://www.cufonfonts.com/
+
+
+https://vercel.com/docs/functions/edge-functions/og-image-generation
+
+https://metatags.io/
+
+https://www.1001freefonts.com/typewriter.font
+
+
+
 
 https://github.com/Lanly109/headimg_generator
 
