@@ -5808,7 +5808,7 @@ def changeDisplayLang(lang):
     
     
     # root.quit()    
-    
+    settings['lastuselang']=lang
     start(lang,root)
     logger.info(f'switch lang to locale:{lang}')
     
@@ -5838,8 +5838,7 @@ if __name__ == '__main__':
     tmp['uploadaddaccounts']={}    
     root = tk.Tk()
     load_setting()
-    print(settings[locale])
-    start(locale,root)
+    start(settings['lastuselang'],root)
     settings['folders']=tmp
     # root.protocol('WM_DELETE_WINDOW', withdraw_window)
     
