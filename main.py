@@ -1521,13 +1521,18 @@ def syncVideometa2assetsjson(selectedMetafileformat,folder):
                 logger.info(f"=444==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
             else:
                 logger.info(f"=555==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
-                
-                new=dict({})        
+                try:
+                    ultra[folder]['videos']=tmpvideos      
+                except Exception as e:
+                    logger.error(e)
+                logger.info(f"=5551==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
+
                 for filename,video in tmpvideos.items():
-                    new[filename]= video
-                ultra[folder]['videos']=new                   
+                    print('debug',filename,video)
+                    ultra[folder]['videos'][filename]= video
+                    # ultra[folder]['videos']=new                   
         else:
-            logger.info(f"=555==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
+            logger.info(f"=666==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
         
             new=dict({})        
             for filename,video in tmpvideos.items():
@@ -1842,7 +1847,7 @@ def dumpMetafiles(selectedMetafileformat,folder):
 def dumpSetting():    
     folder=ROOT_DIR
     logger.info(f'start to dump TiktokaStudio settings')
-    print(f'check settings before dump {settings}')
+    logger.debug(f'check settings before dump {settings}')
     tmpjson=os.path.join(folder,settingfilename)
 
     if os.path.exists(tmpjson):
@@ -2808,7 +2813,7 @@ def genScheduleSLots(folder,mode_value,start_publish_date_value,dailycount_value
     today = date.today()
 
     date_to_publish = datetime(today.year, today.month, today.day)
-    default_hour_to_publish = settings['defualt_release_hour']
+    default_hour_to_publish = settings[locale]['default_release_hour']
     # if you want more delay ,just change 1 to other numbers to start from other days instead of tomorrow
     start_publish_date_value=int(start_publish_date_value)
     dailycount_value=int(dailycount_value)    
@@ -2819,7 +2824,7 @@ def genScheduleSLots(folder,mode_value,start_publish_date_value,dailycount_value
     counts=len(video_data)   
     offsets=0
     avalaibleslots=[]
-    releasehour_value=releasehour_value.replace(' ','').trim()
+    releasehour_value=releasehour_value.strip()
     if ',' in releasehour_value:
 
         avalaibleslots=releasehour_value.split(',')
@@ -2835,6 +2840,10 @@ def genScheduleSLots(folder,mode_value,start_publish_date_value,dailycount_value
         logger.info(f'your daily count is{dailycount_value} time slot is {avalaibleslots},it appears you want to random choose { dailycount_value -len(avalaibleslots)} slots for the missing')
         randomslots=random.sample(availableScheduleTimes,dailycount_value-len(avalaibleslots))
         avalaibleslots+=randomslots
+    elif dailycount_value  < len(avalaibleslots):
+        logger.info(f'your daily count is{dailycount_value} time slot is {avalaibleslots},it appears you want to random choose { dailycount_value} slots from you specify: {avalaibleslots}  ')
+        randomslots=random.sample(avalaibleslots,dailycount_value)
+        avalaibleslots=randomslots
     tmpslots=    avalaibleslots        
     for video_id, video_info in video_data.items():    
         if offsets==dailycount_value:
@@ -5838,7 +5847,10 @@ if __name__ == '__main__':
     tmp['uploadaddaccounts']={}    
     root = tk.Tk()
     load_setting()
-    start(settings['lastuselang'],root)
+    print('---',settings['locale'])
+    locale=settings['lastuselang']
+    start(locale,root)
+
     settings['folders']=tmp
     # root.protocol('WM_DELETE_WINDOW', withdraw_window)
     
