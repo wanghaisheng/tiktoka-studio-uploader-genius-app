@@ -93,190 +93,25 @@ from pystray import MenuItem as item
 import pystray
 
 from UltraDict import UltraDict
-if platform.system()=='Windows':
-    
-    ultra = UltraDict(shared_lock=True,recurse=True)
-    settings = UltraDict(shared_lock=True,recurse=True)
-    tmp = UltraDict(shared_lock=True,recurse=True)
-else:
+ultra = UltraDict(shared_lock=True,recurse=True)
+tmp = UltraDict(shared_lock=True,recurse=True)
+
+if platform.system()!='Windows':
     ultra = UltraDict(recurse=True)
-    settings = UltraDict(recurse=True)
     tmp = UltraDict(recurse=True)
-tmp['uploadaddaccounts']={}
-settings['zh']={
-		"title": "TiktokaStudio 视频批量上传助手测试版",
-		"select_musics_folder": "选择背景音樂文件夹",
-		"select_videos_folder": "选择视频文件夹",
-		"setups": "安装配置",
-		"select_cookie_file": "选择cookie json",
-		"select_profile_folder": "选择profile文件夹",
-		"settings": "配置",
-		"createuploadsession": "创建上传任务",
-		"autothumb": "自动生成缩略图",
-		"testupload": "开始上传前測試",
-		"videosMenu": "视频管理",
-		"docView": "帮助",		
-		"installView": "安装配置",
-		"accountView": "账号",
-		"proxyView": "代理",
-		"thumbView": "缩略图",
-		"logView": "日志",
 
-		"videosView": "视频",
-		"metaView": "元数据",
-		"uploadView": "上传",
-		"tagsView": "标签",
-		"desView": "视频描述",
-		"scheduleView": "发布日期",
-
-		"loglevel": "loglevel",
-
-		"upload": "开始上传",
-		"batchchangebgmusic": "批量替换背景音乐",
-		"is_open_browser": "静默模式",
-		"is_record_video": "录像模式",
-		"debug": "开启日志",
-		"start_loading_setting": "开始读取最近保存的配置文件",
-		"loading_default_setting": "读取配置文件失败 加载默认模版",
-
-		"hiddenwatermark": "添加隐形水印",
-		
-		"downVideoMetas":"下载视频元信息json模板",
-		"toolkits":"工具箱",
-		"mode1":"模式1",
-		"mode2":"模式2",
-		"mode3":"模式3",
-        "defualt_release_hour":'10:15',
-		
-		"save_setting": "保存配置",
-		"testsettingok": "测试配置",
-		"testnetwork": "测试网络",
-		"version":"版本",
-		"version_str":"V0.1.16\\n1.source code for this GUI:https://github.com/wanghaisheng/tiktoka-studio-uploader-app \\n2.core lib for this GUI: https://github.com/wanghaisheng/tiktoka-studio-uploader",
-
-		"docs":"说明文档",
-		"docs_str":"安装配置篇\\n1.安装\\n2.配置\\n导入默认配置后可以通过测试网络、测试安装、测试配置文件来知晓具体情况\\n1.从文件夹生成视频元数据规则\\n r1:尝试使用ffmpeg读取视频元数据,从其中获取视频标题、描述、制作日期、制作地点、字幕文件等信息。\\n r2:r1未命中则读取文件名称作为视频名称,如果视频名称超过20个字符,则将视频名称作为视频描述\\n r3:如果存在字幕文件,尝试从字幕总结出视频描述,如果不存在多语种字幕，尝试使用外部工具翻译多语种字幕\\n r4:如果存在同名的图片文件,则将其作为缩略图，如果没有则使用自动提取关键帧工具生成缩略图底图供后续封面图生成使用\\n r5:如果设置了每日发布的数量，则自动按照数量从次日起安排视频定时公开的日期\\n如果没有设置每日发布的数量，则根据发布策略的值来决定视频是立即公开还是私有发布。1.如果是多个账户,你需要为每个账号准备一个cookie,然后每个账户配置一个单独的配置文件\\n2.安装浏览器插件Cookie-Editor,登录youtube,导出cookie3.免版权的音乐可以在\\nhttps://icons8.com/music/\\n=====================\\n1.首次使用请选择对应的配置模板,比如默认private、public和schedule,文件路径为软件安装路径下的assets/config/setting-template.json,请按照自己的情况修改,修改完成后点击保存\\n文件和文件夹 你可以通过菜单里的浏览器配置、视频素材来点选,你也可以自行在文本框中填写\\n首选标签：这一批上传的视频我们想设置一些通用的标签,在这里设置,其他的标签请放在视频文件名中即可\\n视频描述前缀:一般而言频道的视频描述都会有个模板,类似作文里总分总结构\\n视频描述后缀:一般是一些免责声明之类\\n发布策略:0表示上传为私有,1表示上传后立马公开2表示定时公开 当你选了2,可配合每日发布数量来自动设置对应视频公开的日期,起始日期默认为上传日期+1\\n频道名称:只是用来保存配置文件\\ncookie json:请使用浏览器插件导出并保存\\n2.第二步需要检查素材,因为目前上传逻辑中只有支持视频和缩略图名字一样才能进行上传\\n背景音乐批量替换:请设置好免费音乐所在文件夹,可先对1个视频处理,调节背景音乐音量为最佳效果\\n 3.点击上传即可",
-		"contact":"联系我",
-		"contact_str":"1.发送邮件到admin@tiktokastudio.com\\n",
-
-		"contact_str_group":"2.扫码加入讨论组参与讨论",
-		"contact_str_personal":"3.特殊情况,299元红包可添加私人微信",
-		"chooseLang": "语言:",
-		"genVideoMetas":"从视频文件夹生成视频元信息",
-		"helpcenter":"帮助中心",
-		"importVideoMetas":"导入视频元信息json文件",
-
-		"validateVideoMetas":"验证视频元信息json文件",
-		"editVideoMetas":"纯手动编辑视频元信息json文件",
-		"username": "账号名称",
-		"password": "账号密码",
-
-		"testinstall": "测试安装",
-		"load_setting_file": "加载配置文件",
-		"create_setting_file": "新建配置文件",
-
-		"cookiejson": "cookie json 文件",
-		"proxySetting": "代理配置",
-		"profileFolder": "profile文件夹",
-		"videoFolder": "视频文件夹",
-		"channelName": "频道名称",
-		"offsetDays": "起始发布日期-当日(天数)",
-		"dailyVideoLimit": "每日公开视频数量",
-		"publishPolicy": "发布策略",
-		"bgMucisVolume": "背景音乐音量",
-		"descriptionSuffix": "视频描述后缀",
-		"descriptionPrefix": "视频描述前缀",
-		"preferTags": "首选标签",
-		"bgVideoFolder": "背景音乐文件夹",
-		"chooseCookie": "请选择该频道对应cookie文件",
-		"chooseChannelSetting": "请选择该频道配置文件"
-	}
-settings['en']={
-		"title": "TiktokaStudio Video Bulk Upload GUI Demo",
-		"select_musics_folder''": "choose music folder",
-		"select_videos_folder": "choose video folder",
-		"setups": "setups",
-		"select_cookie_file": "choose cookie json",
-		"select_profile_folder": "choose profile folder",
-		"settings": "settings",
-		"createuploadsession": "create uploadsession",
-		"autothumb": "auto thumbnail",
-		"testupload": "test video upload ",
-		"videosMenu": "视频管理",
-		"docView": "Docs",		
-		"installView": "Setup",
-		"accountView": "Accounts",
-		"proxyView": "Proxies",
-		"thumbView": "Thumbnails",
-		"videosView": "Videos",
-		"metaView": "Metas",
-		"uploadView": "Upload",
-		"upload": "start upload",
-		"batchchangebgmusic": "batch replace audio",
-		"is_open_browser": "silent mode",
-		"is_record_video": "recording",
-		"genVideoMetas":"gen  video metas",
-		"helpcenter":"helpcenter",
-		"importVideoMetas":"import video metajson file",
-		"editVideoMetas":"edit video metajson file",
-		"username": "username",
-		"password": "password",
-		"save_setting": "save config",
-		"chooseLang": "Lang",
-		"contact":"contact",
-		"contact_str":"1.Email send to admin@tiktokastudio.com\\n",
-		"debug": "debug",
-		"loglevel": "loglevel",
-		"validateVideoMetas":"validate meta json",
-		"logView": "Logs",
-		"tagsView": "tags",
-		"desView": "des",
-		"scheduleView": "schedule",
-
-		"start-loading-setting": "start loading latest used setting file",
-		"loading-default-setting": "loading failed,use default setting template",
-		"contact_str_group":"2.Join discussion group",
-		"contact_str_personal":"3.Pay $99 to add personal wechat",
-		"version":"version",
-		"version_str":"V0.1.16\\n1.source code for this GUI:https://github.com/wanghaisheng/tiktoka-studio-uploader-app \\n2.core lib for this GUI: https://github.com/wanghaisheng/tiktoka-studio-uploader",
-		"hiddenwatermark": "add hidden watermark",
-		"docs_str":"安装配置篇\\n1.安装\\n2.配置\\n导入默认配置后可以通过测试网络、测试安装、测试配置文件来知晓具体情况\\n1.从文件夹生成视频元数据规则\\n r1:尝试使用ffmpeg读取视频元数据,从其中获取视频标题、描述、制作日期、制作地点、字幕文件等信息。\\n r2:r1未命中则读取文件名称作为视频名称,如果视频名称超过20个字符,则将视频名称作为视频描述\\n r3:如果存在字幕文件,尝试从字幕总结出视频描述,如果不存在多语种字幕，尝试使用外部工具翻译多语种字幕\\n r4:如果存在同名的图片文件,则将其作为缩略图，如果没有则使用自动提取关键帧工具生成缩略图底图供后续封面图生成使用\\n r5:如果设置了每日发布的数量，则自动按照数量从次日起安排视频定时公开的日期\\n如果没有设置每日发布的数量，则根据发布策略的值来决定视频是立即公开还是私有发布。1.如果是多个账户,你需要为每个账号准备一个cookie,然后每个账户配置一个单独的配置文件\\n2.安装浏览器插件Cookie-Editor,登录youtube,导出cookie3.免版权的音乐可以在\\nhttps://icons8.com/music/\\n=====================\\n1.首次使用请选择对应的配置模板,比如默认private、public和schedule,文件路径为软件安装路径下的assets/config/setting-template.json,请按照自己的情况修改,修改完成后点击保存\\n文件和文件夹 你可以通过菜单里的浏览器配置、视频素材来点选,你也可以自行在文本框中填写\\n首选标签：这一批上传的视频我们想设置一些通用的标签,在这里设置,其他的标签请放在视频文件名中即可\\n视频描述前缀:一般而言频道的视频描述都会有个模板,类似作文里总分总结构\\n视频描述后缀:一般是一些免责声明之类\\n发布策略:0表示上传为私有,1表示上传后立马公开2表示定时公开 当你选了2,可配合每日发布数量来自动设置对应视频公开的日期,起始日期默认为上传日期+1\\n频道名称:只是用来保存配置文件\\ncookie json:请使用浏览器插件导出并保存\\n2.第二步需要检查素材,因为目前上传逻辑中只有支持视频和缩略图名字一样才能进行上传\\n背景音乐批量替换:请设置好免费音乐所在文件夹,可先对1个视频处理,调节背景音乐音量为最佳效果\\n 3.点击上传即可",
-		"testsettingok": "test config",
-		"testinstall": "test install",
-		"testnetwork": "test network",
-		"load_setting_file": "load setting",
-		"docs": "Read First",
-		"cookiejson": "cookie json",
-		"proxySetting": "proxy",
-		"profileFolder": "profile folder",
-		"videoFolder": "video folder",
-		"create_setting_file": "new setting file",
-		"downVideoMetas":"download metajson template",
-		"toolkits":"toolkits",
-		"mode1":"mode 1",
-		"mode2":"mode 2",
-		"mode3":"mode 3",
-		"channelName": "channel name",
-		"offsetDays": "days offset",
-		"dailyVideoLimit": "daily publish count",
-		"publishPolicy": "publish policy",
-		"bgMucisVolume": "music volumn",
-		"descriptionSuffix": "preferred des suffix",
-		"descriptionPrefix": "preferred des prefix",
-		"preferTags": "preferred tags",
-		"bgVideoFolder": "free music folder",
-		"chooseCookie": "select specific cookie file",
-		"chooseChannelSetting": "select channel setting file"
-	}
-
+ROOT_DIR = os.path.dirname(
+    os.path.abspath(__file__)
+)
 
 config = {
     "load_path": "./locales", # 指定在 /locales 下找对应的翻译 json文件
     "default_module": "global", # 指定默认的全局模块，你可以为比如用户模块，订单模块单独设置翻译，如果不指定 module 则会去全局模块查找。
 }
 videoassetsfilename='videos-assets.json'
+settingfilename='settings.json'
 a_i18n = Ai18n(locales=["en", "zh"], config=config)
-
+locale='en'
 i18labels= a_i18n.translate
 window_size='1024x720'
 height=720
@@ -621,29 +456,201 @@ def fix_size(old_image_path, new_image_path, canvas_width=1080, canvas_height=72
 
 
 def load_setting():
-
-    global setting
-
-    if os.path.exists('latest-used-setting.txt') :
+    global settings
+    settingfile=os.path.join(ROOT_DIR,settingfilename)
+    failed=False
+    if os.path.exists(settingfile) :
         try:
-            fp = open('latest-used-setting.txt', 'r', encoding='utf-8')
-            settingfile=fp.readlines()[0]
 
             fp = open(settingfile, 'r', encoding='utf-8')
             setting_json = fp.read()
             fp.close()
+            settings = json.loads(setting_json)
+
         except:
-            print(i18labels("loading-default-setting", locale='en', module="g"))
-            fp = open("./assets/config/demo.json", 'r', encoding='utf-8')
-            setting_json = fp.read()
-            fp.close()
+            failed=True
+
     else:
-        print(i18labels("loading-default-setting", locale='en', module="g"))
-        fp = open("./assets/config/demo.json", 'r', encoding='utf-8')
-        setting_json = fp.read()
-        fp.close()        
-    setting = json.loads(setting_json)
-    return setting
+        failed=True
+    if failed==True:
+        logger.info('start initialize settings with default')
+        try:
+            settings
+        except:
+            settings = UltraDict(shared_lock=True,recurse=True)
+
+            if platform.system()!='Windows':
+                settings = UltraDict(recurse=True)
+
+        settings['lastuselang']='en'
+        settings['zh']={
+                "title": "TiktokaStudio 视频批量上传助手测试版",
+                "select_musics_folder": "选择背景音樂文件夹",
+                "select_videos_folder": "选择视频文件夹",
+                "setups": "安装配置",
+                "select_cookie_file": "选择cookie json",
+                "select_profile_folder": "选择profile文件夹",
+                "settings": "配置",
+                "createuploadsession": "创建上传任务",
+                "autothumb": "自动生成缩略图",
+                "testupload": "开始上传前測試",
+                "videosMenu": "视频管理",
+                "docView": "帮助",		
+                "installView": "安装配置",
+                "accountView": "账号",
+                "proxyView": "代理",
+                "thumbView": "缩略图",
+                "logView": "日志",
+
+                "videosView": "视频",
+                "metaView": "元数据",
+                "uploadView": "上传",
+                "tagsView": "标签",
+                "desView": "视频描述",
+                "scheduleView": "发布日期",
+
+                "loglevel": "loglevel",
+
+                "upload": "开始上传",
+                "batchchangebgmusic": "批量替换背景音乐",
+                "is_open_browser": "静默模式",
+                "is_record_video": "录像模式",
+                "debug": "开启日志",
+                "start_loading_setting": "开始读取最近保存的配置文件",
+                "loading_default_setting": "读取配置文件失败 加载默认模版",
+
+                "hiddenwatermark": "添加隐形水印",
+                
+                "downVideoMetas":"下载视频元信息json模板",
+                "toolkits":"工具箱",
+                "mode1":"模式1",
+                "mode2":"模式2",
+                "mode3":"模式3",
+                "default_release_hour":'10:15',
+                
+                "save_setting": "保存配置",
+                "testsettingok": "测试配置",
+                "testnetwork": "测试网络",
+                "version":"版本",
+                "version_str":"V0.1.16\\n1.source code for this GUI:https://github.com/wanghaisheng/tiktoka-studio-uploader-app \\n2.core lib for this GUI: https://github.com/wanghaisheng/tiktoka-studio-uploader",
+
+                "docs":"说明文档",
+                "docs_str":"安装配置篇\\n1.安装\\n2.配置\\n导入默认配置后可以通过测试网络、测试安装、测试配置文件来知晓具体情况\\n1.从文件夹生成视频元数据规则\\n r1:尝试使用ffmpeg读取视频元数据,从其中获取视频标题、描述、制作日期、制作地点、字幕文件等信息。\\n r2:r1未命中则读取文件名称作为视频名称,如果视频名称超过20个字符,则将视频名称作为视频描述\\n r3:如果存在字幕文件,尝试从字幕总结出视频描述,如果不存在多语种字幕，尝试使用外部工具翻译多语种字幕\\n r4:如果存在同名的图片文件,则将其作为缩略图，如果没有则使用自动提取关键帧工具生成缩略图底图供后续封面图生成使用\\n r5:如果设置了每日发布的数量，则自动按照数量从次日起安排视频定时公开的日期\\n如果没有设置每日发布的数量，则根据发布策略的值来决定视频是立即公开还是私有发布。1.如果是多个账户,你需要为每个账号准备一个cookie,然后每个账户配置一个单独的配置文件\\n2.安装浏览器插件Cookie-Editor,登录youtube,导出cookie3.免版权的音乐可以在\\nhttps://icons8.com/music/\\n=====================\\n1.首次使用请选择对应的配置模板,比如默认private、public和schedule,文件路径为软件安装路径下的assets/config/setting-template.json,请按照自己的情况修改,修改完成后点击保存\\n文件和文件夹 你可以通过菜单里的浏览器配置、视频素材来点选,你也可以自行在文本框中填写\\n首选标签：这一批上传的视频我们想设置一些通用的标签,在这里设置,其他的标签请放在视频文件名中即可\\n视频描述前缀:一般而言频道的视频描述都会有个模板,类似作文里总分总结构\\n视频描述后缀:一般是一些免责声明之类\\n发布策略:0表示上传为私有,1表示上传后立马公开2表示定时公开 当你选了2,可配合每日发布数量来自动设置对应视频公开的日期,起始日期默认为上传日期+1\\n频道名称:只是用来保存配置文件\\ncookie json:请使用浏览器插件导出并保存\\n2.第二步需要检查素材,因为目前上传逻辑中只有支持视频和缩略图名字一样才能进行上传\\n背景音乐批量替换:请设置好免费音乐所在文件夹,可先对1个视频处理,调节背景音乐音量为最佳效果\\n 3.点击上传即可",
+                "contact":"联系我",
+                "contact_str":"1.发送邮件到admin@tiktokastudio.com\\n",
+
+                "contact_str_group":"2.扫码加入讨论组参与讨论",
+                "contact_str_personal":"3.特殊情况,299元红包可添加私人微信",
+                "chooseLang": "语言:",
+                "genVideoMetas":"从视频文件夹生成视频元信息",
+                "helpcenter":"帮助中心",
+                "importVideoMetas":"导入视频元信息json文件",
+
+                "validateVideoMetas":"验证视频元信息json文件",
+                "editVideoMetas":"纯手动编辑视频元信息json文件",
+                "username": "账号名称",
+                "password": "账号密码",
+
+                "testinstall": "测试安装",
+                "load_setting_file": "加载配置文件",
+                "create_setting_file": "新建配置文件",
+
+                "cookiejson": "cookie json 文件",
+                "proxySetting": "代理配置",
+                "profileFolder": "profile文件夹",
+                "videoFolder": "视频文件夹",
+                "channelName": "频道名称",
+                "offsetDays": "起始发布日期-当日(天数)",
+                "dailyVideoLimit": "每日公开视频数量",
+                "publishPolicy": "发布策略",
+                "bgMucisVolume": "背景音乐音量",
+                "descriptionSuffix": "视频描述后缀",
+                "descriptionPrefix": "视频描述前缀",
+                "preferTags": "首选标签",
+                "bgVideoFolder": "背景音乐文件夹",
+                "chooseCookie": "请选择该频道对应cookie文件",
+                "chooseChannelSetting": "请选择该频道配置文件"
+            }
+        settings['en']={
+                "title": "TiktokaStudio Video Bulk Upload GUI Demo",
+                "select_musics_folder''": "choose music folder",
+                "select_videos_folder": "choose video folder",
+                "setups": "setups",
+                "select_cookie_file": "choose cookie json",
+                "select_profile_folder": "choose profile folder",
+                "settings": "settings",
+                "createuploadsession": "create uploadsession",
+                "autothumb": "auto thumbnail",
+                "testupload": "test video upload ",
+                "videosMenu": "视频管理",
+                "docView": "Docs",		
+                "installView": "Setup",
+                "accountView": "Accounts",
+                "proxyView": "Proxies",
+                "thumbView": "Thumbnails",
+                "videosView": "Videos",
+                "metaView": "Metas",
+                "uploadView": "Upload",
+                "upload": "start upload",
+                "batchchangebgmusic": "batch replace audio",
+                "is_open_browser": "silent mode",
+                "is_record_video": "recording",
+                "genVideoMetas":"gen  video metas",
+                "helpcenter":"helpcenter",
+                "importVideoMetas":"import video metajson file",
+                "editVideoMetas":"edit video metajson file",
+                "username": "username",
+                "password": "password",
+                "save_setting": "save config",
+                "chooseLang": "Lang",
+                "contact":"contact",
+                "contact_str":"1.Email send to admin@tiktokastudio.com\\n",
+                "debug": "debug",
+                "loglevel": "loglevel",
+                "validateVideoMetas":"validate meta json",
+                "logView": "Logs",
+                "tagsView": "tags",
+                "desView": "des",
+                "scheduleView": "schedule",
+                "default_release_hour":'10:15',
+
+                "start-loading-setting": "start loading latest used setting file",
+                "loading-default-setting": "loading failed,use default setting template",
+                "contact_str_group":"2.Join discussion group",
+                "contact_str_personal":"3.Pay $99 to add personal wechat",
+                "version":"version",
+                "version_str":"V0.1.16\\n1.source code for this GUI:https://github.com/wanghaisheng/tiktoka-studio-uploader-app \\n2.core lib for this GUI: https://github.com/wanghaisheng/tiktoka-studio-uploader",
+                "hiddenwatermark": "add hidden watermark",
+                "docs_str":"安装配置篇\\n1.安装\\n2.配置\\n导入默认配置后可以通过测试网络、测试安装、测试配置文件来知晓具体情况\\n1.从文件夹生成视频元数据规则\\n r1:尝试使用ffmpeg读取视频元数据,从其中获取视频标题、描述、制作日期、制作地点、字幕文件等信息。\\n r2:r1未命中则读取文件名称作为视频名称,如果视频名称超过20个字符,则将视频名称作为视频描述\\n r3:如果存在字幕文件,尝试从字幕总结出视频描述,如果不存在多语种字幕，尝试使用外部工具翻译多语种字幕\\n r4:如果存在同名的图片文件,则将其作为缩略图，如果没有则使用自动提取关键帧工具生成缩略图底图供后续封面图生成使用\\n r5:如果设置了每日发布的数量，则自动按照数量从次日起安排视频定时公开的日期\\n如果没有设置每日发布的数量，则根据发布策略的值来决定视频是立即公开还是私有发布。1.如果是多个账户,你需要为每个账号准备一个cookie,然后每个账户配置一个单独的配置文件\\n2.安装浏览器插件Cookie-Editor,登录youtube,导出cookie3.免版权的音乐可以在\\nhttps://icons8.com/music/\\n=====================\\n1.首次使用请选择对应的配置模板,比如默认private、public和schedule,文件路径为软件安装路径下的assets/config/setting-template.json,请按照自己的情况修改,修改完成后点击保存\\n文件和文件夹 你可以通过菜单里的浏览器配置、视频素材来点选,你也可以自行在文本框中填写\\n首选标签：这一批上传的视频我们想设置一些通用的标签,在这里设置,其他的标签请放在视频文件名中即可\\n视频描述前缀:一般而言频道的视频描述都会有个模板,类似作文里总分总结构\\n视频描述后缀:一般是一些免责声明之类\\n发布策略:0表示上传为私有,1表示上传后立马公开2表示定时公开 当你选了2,可配合每日发布数量来自动设置对应视频公开的日期,起始日期默认为上传日期+1\\n频道名称:只是用来保存配置文件\\ncookie json:请使用浏览器插件导出并保存\\n2.第二步需要检查素材,因为目前上传逻辑中只有支持视频和缩略图名字一样才能进行上传\\n背景音乐批量替换:请设置好免费音乐所在文件夹,可先对1个视频处理,调节背景音乐音量为最佳效果\\n 3.点击上传即可",
+                "testsettingok": "test config",
+                "testinstall": "test install",
+                "testnetwork": "test network",
+                "load_setting_file": "load setting",
+                "docs": "Read First",
+                "cookiejson": "cookie json",
+                "proxySetting": "proxy",
+                "profileFolder": "profile folder",
+                "videoFolder": "video folder",
+                "create_setting_file": "new setting file",
+                "downVideoMetas":"download metajson template",
+                "toolkits":"toolkits",
+                "mode1":"mode 1",
+                "mode2":"mode 2",
+                "mode3":"mode 3",
+                "channelName": "channel name",
+                "offsetDays": "days offset",
+                "dailyVideoLimit": "daily publish count",
+                "publishPolicy": "publish policy",
+                "bgMucisVolume": "music volumn",
+                "descriptionSuffix": "preferred des suffix",
+                "descriptionPrefix": "preferred des prefix",
+                "preferTags": "preferred tags",
+                "bgVideoFolder": "free music folder",
+                "chooseCookie": "select specific cookie file",
+                "chooseChannelSetting": "select channel setting file"
+            }
+        logger.info('end to initialize settings with default')
+    # print(settings)
 
 
 
@@ -683,11 +690,11 @@ def select_tabview_video_folder(folder_variable,cache_var):
         thumbView_video_folder_path = filedialog.askdirectory(
         parent=root, initialdir="/", title='Please select a directory')
         if os.path.exists(thumbView_video_folder_path):
-            print("You chose %s" % thumbView_video_folder_path)
             folder_variable.set(thumbView_video_folder_path)
             ultra[cache_var]=thumbView_video_folder_path         
-            print("You chose %s" % folder_variable.get())
-
+            print(f"You chose {folder_variable.get()} for {cache_var}")
+            tmp[cache_var]=folder_variable.get()
+            print('==',tmp)
         else:
             print('please choose a valid video folder')
 
@@ -1832,6 +1839,19 @@ def dumpMetafiles(selectedMetafileformat,folder):
             f.write(jsons.dumps(ultra[folder]))         
     logger.debug(f'end to dump video assets for {folder} ')
 
+def dumpSetting():    
+    folder=ROOT_DIR
+    logger.info(f'start to dump TiktokaStudio settings')
+    print(f'check settings before dump {settings}')
+    tmpjson=os.path.join(folder,settingfilename)
+
+    if os.path.exists(tmpjson):
+        with open(tmpjson,'w') as f:
+            f.write(jsons.dumps(settings))        
+    else:
+        with open(tmpjson,'a') as f:
+            f.write(jsons.dumps(settings))         
+    logger.info(f'end to dump TiktokaStudio settings')
 
 
 def check_video_thumb_pair(dbm,folder,session):
@@ -2153,6 +2173,7 @@ def installView(frame,ttkframe,lang):
         print('keep the default locale placeholder')
         # locale_tkstudio_box.set("Select From Langs")
         locale_tkstudio.set("Select From Langs")    
+        settings['locale']='en'
     def display_selected_item_index(event): 
         try:
             settings['locale']
@@ -2160,6 +2181,7 @@ def installView(frame,ttkframe,lang):
             locale_tkstudio.set(settings['locale'])
         except:
             print('keep the default locale')
+
             # locale_tkstudio_box.set("Select From Langs")
             locale_tkstudio.set("Select From Langs")
     def locale_tkstudioOptionCallBack(*args):
@@ -2168,6 +2190,7 @@ def installView(frame,ttkframe,lang):
         settings['locale']=locale_tkstudio.get()
         print(f"save locale to cache { settings['locale']}")        
         changeDisplayLang(locale_tkstudio.get())
+        locale=locale_tkstudio.get()
 
 
 
@@ -2224,6 +2247,7 @@ def thumbView(left,right,lang):
 
     def e_video_folderCallBack(*args):
         print(f'we are dealing folder {thumbView_video_folder.get()}')
+        tmp['thumbView_video_folder']=thumbView_video_folder.get()
 
 
 
@@ -2584,7 +2608,7 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
 
 
 
-        releasehour.set('10:15')
+        releasehour.set(settings[locale]['default_release_hour'])
 
         e_releasehour = tk.Entry(schframe, width=55, textvariable=releasehour)
 
@@ -2608,7 +2632,7 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
             print('current dailycount ')
             if dailycount.get()=='Select From policy':
                 number=1
-                randomNreleasehour=settings['default_release_hour']
+                randomNreleasehour=settings[locale]['default_release_hour']
             else:
                 randomNreleasehour=','.join(random.sample(availableScheduleTimes, int(number)))
             releasehour.set(randomNreleasehour)
@@ -2784,7 +2808,7 @@ def genScheduleSLots(folder,mode_value,start_publish_date_value,dailycount_value
     today = date.today()
 
     date_to_publish = datetime(today.year, today.month, today.day)
-    default_hour_to_publish = settings['default_release_hour']
+    default_hour_to_publish = settings['defualt_release_hour']
     # if you want more delay ,just change 1 to other numbers to start from other days instead of tomorrow
     start_publish_date_value=int(start_publish_date_value)
     dailycount_value=int(dailycount_value)    
@@ -5067,6 +5091,10 @@ def metaView(left,right,lang):
     b_video_folder=tk.Button(left,text="Select",command=lambda: threading.Thread(target=select_tabview_video_folder(metaView_video_folder,'metaView_video_folder')).start() )
     b_video_folder.grid(row = 0, column = 2, sticky='w', padx=14, pady=15)       
 
+    if metaView_video_folder.get()!='':
+
+        tmp['metaView_video_folder']=metaView_video_folder.get()
+
     b_open_video_folder=tk.Button(left,text="open local",command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
     b_open_video_folder.grid(row = 0, column = 3, sticky='w', padx=14, pady=15)    
     l_meta_format = tk.Label(left, text=i18labels("preferred meta file format", locale=lang, module="g"))
@@ -5116,7 +5144,9 @@ def tagsView(left,right,lang):
     e_video_folder.grid(row = 0, column = 1, sticky='w', padx=14, pady=15)     
     
     b_video_folder=tk.Button(left,text="Select",command=lambda: threading.Thread(target=select_tabview_video_folder(tagView_video_folder,'tagView_video_folder')).start() )
-    b_video_folder.grid(row = 0, column = 2, sticky='w', padx=14, pady=15)       
+    b_video_folder.grid(row = 0, column = 2, sticky='w', padx=14, pady=15)  
+    if tagView_video_folder.get()!='':
+        tmp['tagView_video_folder']=tagView_video_folder.get()
 
     b_open_video_folder=tk.Button(left,text="open local",command=lambda: threading.Thread(target=openLocal(tagView_video_folder.get())).start() )
     b_open_video_folder.grid(row = 0, column = 3, sticky='w', padx=14, pady=15)    
@@ -5167,8 +5197,10 @@ def desView(left,right,lang):
     e_video_folder.grid(row = 0, column = 1, sticky='w', padx=14, pady=15)     
     
     b_video_folder=tk.Button(left,text="Select",command=lambda: threading.Thread(target=select_tabview_video_folder(desView_video_folder,'desView_video_folder')).start() )
-    b_video_folder.grid(row = 0, column = 2, sticky='w', padx=14, pady=15)       
+    b_video_folder.grid(row = 0, column = 2, sticky='w', padx=14, pady=15)    
+    if desView_video_folder.get()!='':
 
+        tmp['desView_video_folder']=desView_video_folder.get()
     b_open_video_folder=tk.Button(left,text="open local",command=lambda: threading.Thread(target=openLocal(desView_video_folder.get())).start() )
     b_open_video_folder.grid(row = 0, column = 3, sticky='w', padx=14, pady=15)    
     Tooltip(b_open_video_folder, text='open video folder to find out files change' , wraplength=200)
@@ -5225,7 +5257,7 @@ def scheduleView(left,right,lang):
     b_open_video_folder=tk.Button(left,text="open local",command=lambda: threading.Thread(target=openLocal(scheduleView_video_folder.get())).start() )
     b_open_video_folder.grid(row = 0, column = 3, sticky='w', padx=14, pady=15)    
     Tooltip(b_open_video_folder, text='open video folder to find out files change' , wraplength=200)
-
+    print('save folder to tmp',tmp)
     l_meta_format = tk.Label(left, text=i18labels("preferred meta file format", locale=lang, module="g"))
     # l_platform.place(x=10, y=90)
     l_meta_format.grid(row = 1, column = 0, sticky='w', padx=14, pady=15)    
@@ -5690,11 +5722,7 @@ def render(root,window,log_frame,lang):
 
 def start(lang,root=None):
 
-    # load_setting()
-    global ROOT_DIR
-    ROOT_DIR = os.path.dirname(
-        os.path.abspath(__file__)
-    )
+
 
     global paned_window,log_frame,mainwindow,text_handler
 
@@ -5804,13 +5832,19 @@ def withdraw_window():
     icon = pystray.Icon("name", image, "title", menu)
     icon.run_detached()
 if __name__ == '__main__':
-    global root
-    root = tk.Tk()
-    start('en',root)
+    global root,settings
 
+
+    tmp['uploadaddaccounts']={}    
+    root = tk.Tk()
+    load_setting()
+    print(settings[locale])
+    start(locale,root)
+    settings['folders']=tmp
     # root.protocol('WM_DELETE_WINDOW', withdraw_window)
     
     root.mainloop()
+    dumpSetting()
 
 
         
