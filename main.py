@@ -4955,61 +4955,89 @@ def validateTaslMetafile(engine,ttkframe,metafile):
         lab.after(10*1000,lab.destroy)       
 
 def uploadView(frame,ttkframe,lang):
-
-    # treeview_flight
-    tree = ttk.Treeview(ttkframe, height = 20, column = 9)
-    tree["column"]=('#0','#1','#2','#3','#4','#5','#6','#7')
-    tree.grid(row = 3, column =3,columnspan=50,padx=14, pady=15,sticky='w')
-
-    tree.heading('#0', text = 'Task No.')
-    tree.column('#0', anchor = 'center', width = 70)
-    tree.heading('#1', text = 'Video title')
-    tree.column('#1', anchor = 'center', width = 60)
-    tree.heading('#2', text = 'Description')
-    tree.column('#2', anchor = 'center', width = 60)
-    tree.heading('#3', text = 'Status')
-    tree.column('#3', anchor = 'center', width = 80)
-    tree.heading('#4', text = 'release. Date')
-    tree.column('#4', anchor = 'center', width = 80)
-    tree.heading('#5', text = 'release. Time')
-    tree.column('#5', anchor = 'center', width = 80)
+    queryframe=tk.Frame(ttkframe)
+    queryframe.grid(row = 0, column = 0,sticky='w')
+    queryframe.grid_rowconfigure((0,1), weight=1)
     
-    tree.heading('#6', text = 'publish type')
-    tree.column('#6', anchor = 'center', width = 80)
-    tree.heading('#7', text = 'upload. Time')
-    tree.column('#7', anchor = 'center', width = 80)
-    tree.heading('#8', text = 'local path')
-    tree.column('#8', anchor = 'center', width = 80)
-
-
-    
-    
-        
+    queryframe.grid_columnconfigure(0, weight=1)
     global vid
     vid = tk.StringVar()
-    lbl15 = tk.Label(ttkframe, text='Enter vid.')
+    lbl15 = tk.Label(queryframe, text='Enter vid.')
     lbl15.grid(row = 0, column = 3,sticky='w')
-    txt15 = tk.Entry(ttkframe, textvariable=vid)
+    txt15 = tk.Entry(queryframe, textvariable=vid)
     txt15.insert(0,'input task id')
     txt15.grid(row = 1, column = 3,sticky='w',columnspan=2)
 
     channelname = tk.StringVar()
-    lbl16 = tk.Label(ttkframe, text='Enter channelname.')
+    lbl16 = tk.Label(queryframe, text='Enter channelname.')
     lbl16.grid(row = 0, column = 6,sticky='w')
-    txt16 = tk.Entry(ttkframe,textvariable=channelname)
+    txt16 = tk.Entry(queryframe,textvariable=channelname)
     txt16.insert(0,'input channelname')
     txt16.grid(row = 1, column = 6,sticky='w',columnspan=2)
 
     releasedata = tk.StringVar()
-    lbl17 = tk.Label(ttkframe, text='Enter releasedata.')
+    lbl17 = tk.Label(queryframe, text='Enter releasedata.')
     lbl17.grid(row = 0, column = 9,sticky='w')
-    txt17 = tk.Entry(ttkframe, textvariable=releasedata)
+    txt17 = tk.Entry(queryframe, textvariable=releasedata)
     txt17.insert(0,'input releasedata')
     txt17.grid(row = 1, column = 9,sticky='w',columnspan=2)
 
 
-    btn5= tk.Button(ttkframe, text="Get Info", command = lambda: threading.Thread(target=queryTasks(tree,prod_engine,logger,vid.get())).start())
+    btn5= tk.Button(queryframe, text="Get Info", command = lambda: threading.Thread(target=queryTasks(tree,prod_engine,logger,vid.get())).start())
     btn5.grid(row = 0, column = 12,  padx=14, pady=15)
+    # treeview_flight
+    tableframe=tk.Frame(ttkframe)
+    tableframe.grid(row = 1, column = 0,sticky='nswe')
+    
+    tableframe.grid_columnconfigure(0, weight=1)    
+    tree = ttk.Treeview(tableframe, height = 20, column = 9)
+    tree["column"]=('#0','#1','#2','#3','#4','#5','#6','#7')
+    tree.grid(row = 3, column =3,padx=14, pady=15,sticky='w')
+
+    # tree.heading('#0', text = 'Task No.')
+    # tree.column('#0', anchor = 'center', width = 70)
+    # tree.heading('#1', text = 'Video title')
+    # tree.column('#1', anchor = 'center', width = 60)
+    # tree.heading('#2', text = 'Description')
+    # tree.column('#2', anchor = 'center', width = 60)
+    # tree.heading('#3', text = 'Status')
+    # tree.column('#3', anchor = 'center', width = 80)
+    # tree.heading('#4', text = 'release. Date')
+    # tree.column('#4', anchor = 'center', width = 80)
+    # tree.heading('#5', text = 'release. Time')
+    # tree.column('#5', anchor = 'center', width = 80)
+    
+    # tree.heading('#6', text = 'publish type')
+    # tree.column('#6', anchor = 'center', width = 80)
+    # tree.heading('#7', text = 'upload. Time')
+    # tree.column('#7', anchor = 'center', width = 80)
+    # tree.heading('#8', text = 'local path')
+    # tree.column('#8', anchor = 'center', width = 80)
+
+
+    tree.heading('#0', text = 'Task No.')
+    tree.column('#0', anchor = 'center', width = 80)
+    tree.heading('#1', text = 'Video title')
+    tree.column('#1', anchor = 'center')
+    tree.heading('#2', text = 'Description')
+    tree.column('#2', anchor = 'center')
+    tree.heading('#3', text = 'Status')
+    tree.column('#3', anchor = 'center', width = 40)
+    tree.heading('#4', text = 'release. Date')
+    tree.column('#4', anchor = 'center')
+    tree.heading('#5', text = 'release. Time')
+    tree.column('#5', anchor = 'center')
+    
+    tree.heading('#6', text = 'publish type')
+    tree.column('#6', anchor = 'center', width = 40)
+    tree.heading('#7', text = 'upload. Time')
+    tree.column('#7', anchor = 'center')
+    tree.heading('#8', text = 'local path')
+    tree.column('#8', anchor = 'center')
+    
+    
+        
+
 
 
         
