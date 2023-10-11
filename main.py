@@ -93,13 +93,13 @@ from pystray import MenuItem as item
 import pystray
 
 from UltraDict import UltraDict
-ultra = UltraDict(shared_lock=True,recurse=True)
-tmp = UltraDict(shared_lock=True,recurse=True)
+ultra = UltraDict(recurse=True)
+tmp = UltraDict(recurse=True)
 
-if platform.system()!='Windows':
-    ultra = UltraDict(recurse=True)
-    tmp = UltraDict(recurse=True)
+if platform.system()=='Windows':
 
+    ultra = UltraDict(shared_lock=True,recurse=True)
+    tmp = UltraDict(shared_lock=True,recurse=True)
 ROOT_DIR = os.path.dirname(
     os.path.abspath(__file__)
 )
@@ -454,21 +454,20 @@ def fix_size(old_image_path, new_image_path, canvas_width=1080, canvas_height=72
         img = img.convert('RGB')
     img.save(new_image_path)
 def load_locales():
-    settingfile=os.path.join(ROOT_DIR,settingfilename)
-    failed=False
-    if os.path.exists(settingfile) :
-        try:
 
-            fp = open(settingfile, 'r', encoding='utf-8')
-            setting_json = fp.read()
-            fp.close()
-            settings = json.loads(setting_json)
+    folder_path = ROOT_DIR+os.sep+'locales'+os.sep
 
-        except:
-            failed=True
+    # Get a list of all files in the folder
+    file_list = os.listdir(folder_path)
 
-    else:
-        failed=True
+    # Filter the list to include only JSON files
+    json_files = [f for f in file_list if f.endswith('.json')]
+
+    # Loop through the JSON files and read their contents
+    for json_file in json_files:
+        file_path = os.path.join(folder_path, json_file)
+        with open(file_path, 'r') as file:
+            data = json.load(file)
 
 def load_setting():
     global settings
@@ -559,7 +558,9 @@ def load_setting():
                 "chooseLang": "语言:",
                 "genVideoMetas":"从视频文件夹生成视频元信息",
                 "helpcenter":"帮助中心",
-                "importVideoMetas":"导入视频元信息json文件",
+                "importVideoMetas":"导入视频元数据文件,支持json excel csv",
+                "importTaskMetas":"导入任务元数据文件,支持json excel csv",
+                "createTaskMetas":"新建任务元数据文件,支持json excel csv",
 
                 "validateVideoMetas":"验证视频元信息json文件",
                 "editVideoMetas":"纯手动编辑视频元信息json文件",
@@ -613,8 +614,7 @@ def load_setting():
 	"is_record_video": "recording",
 	"genVideoMetas":"gen  video metas",
 	"helpcenter":"helpcenter",
-	"importVideoMetas":"import video metajson file",
-	"editVideoMetas":"edit video metajson file",
+
 	"username": "username",
 	"password": "password",
 	"save_setting": "save config",
@@ -629,6 +629,17 @@ def load_setting():
 	"desView": "des",
 	"scheduleView": "schedule",
 	"default_release_hour":'10:15',
+    "importVideoMetas":"import video meta",
+
+    "importVideoMetasToolip":"import video meta  file,support json excel csv",
+    "importTaskMetas":"import task file",    
+    "importTaskMetasToolip":"import task file",    
+
+	"editTaskMetas":"edit task meta file",    
+	"editTaskMetasToolip":"edit task meta file,support json excel csv",    
+
+    "createTaskMetas":"New task file",
+    "createTaskMetasToolip":"新建任务元数据文件,支持json excel csv",
 
 	"start-loading-setting": "start loading latest used setting file",
 	"loading-default-setting": "loading failed,use default setting template",
@@ -1246,11 +1257,11 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
     btn6.grid(row=5,column=1, sticky=tk.W)
     lbl16 = tk.Label(chooseAccountsWindow, text='selected user')
     lbl16.grid(row=6,column=0, sticky=tk.W)
-    txt16 = tk.Entry(chooseAccountsWindow,textvariable=account_var)
+    txt16 = tk.Entry(chooseAccountsWindow,textvariable=account_var,width=int(int(window_size.split('x')[-1])/4))
     txt16.insert(0,'')
     txt16.grid(row=6,column=2, 
             #    width=width,
-               columnspan=8,
+               columnspan=4,
             #    rowspan=3,
                sticky='nswe')    
     def on_platform_selected(event):
@@ -1294,7 +1305,7 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
                         if tmp['uploadaddaccounts'].has_key(platform):
                             logger.info(f'you have cached account for this platform {platform}')
                         else:
-                            tmp['uploadaddaccounts'][platform]=[]
+                            tmp['uploadaddaccounts'][platform]=''
                     
                     print('all added accounts',tmp['uploadaddaccounts'])
 
@@ -1351,8 +1362,9 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
         else:
             for item in selected_accounts:
                 logger.info(f'you want to remove this selected account {item}')
-                if item in tmp['uploadaddaccounts'][platform_var.get()]:
-                    tmp['uploadaddaccounts'][platform_var.get()].remove(item)
+                existingaccounts=tmp['uploadaddaccounts'][platform_var.get()].split(',')
+                if item in existingaccounts:
+                    existingaccounts.remove(item)
                     logger.info(f'this account {item} removed success')
                     lbl15 = tk.Label(chooseAccountsWindow, text=f'this account {item} removed success')
                     lbl15.grid(row=4,column=2, sticky=tk.W)
@@ -1362,6 +1374,7 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
                     lbl15 = tk.Label(chooseAccountsWindow, text=f'this account {item} not added before')
                     lbl15.grid(row=4,column=2, sticky=tk.W)
                     lbl15.after(5*1000,lbl15.destroy)   
+            tmp['uploadaddaccounts'][platform_var.get()]= ','.join(item for item in existingaccounts if item is not None and item != "")
         show_str=str(tmp['uploadaddaccounts'])
         if tmp['uploadaddaccounts'].has_key('selected'):
             new=dict(tmp['uploadaddaccounts'])
@@ -1377,13 +1390,15 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
         # print('selected accounts',values)
         # print('previous selected accounts',tmp['uploadaddaccounts'])
         # print('update selected accounts',account_var.get())
+        existingaccounts=tmp['uploadaddaccounts'][platform_var.get()].split(',')
+
         if len(list(values))==0:
             logger.info('you have not selected  accounts at all.choose one or more')
             lbl15 = tk.Label(chooseAccountsWindow, text='you have not selected  accounts at all.choose one or more')
             lbl15.grid(row=4,column=2, sticky=tk.W)
             lbl15.after(5*1000,lbl15.destroy)        
         
-        elif values==tmp['uploadaddaccounts'][platform_var.get()]:
+        elif values==existingaccounts:
             logger.info('you have not selected new accounts at all')
             lbl15 = tk.Label(chooseAccountsWindow, text='you have not selected new accounts at all')
             lbl15.grid(row=4,column=2, sticky=tk.W)
@@ -1391,18 +1406,19 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
         
         else:
             for item in values:
-                if item in tmp['uploadaddaccounts'][platform_var.get()]:
+                if item in existingaccounts:
                     logger.info(f'this account {item} added before')                    
                     lbl15 = tk.Label(chooseAccountsWindow, text=f'this account {item} added before')
                     lbl15.grid(row=4,column=2, sticky=tk.W)
                     lbl15.after(5*1000,lbl15.destroy)   
                 else:
-                    tmp['uploadaddaccounts'][platform_var.get()].append(item)
+                    existingaccounts.append(item)
                     logger.info(f'this account {item} added successS')
                     lbl15 = tk.Label(chooseAccountsWindow, text=f'this account {item} added successS')
                     lbl15.grid(row=4,column=2, sticky=tk.W)
                     lbl15.after(5*1000,lbl15.destroy)   
-            
+            tmp['uploadaddaccounts'][platform_var.get()]= ','.join(item for item in existingaccounts if item is not None and item != "")
+
         show_str=str(tmp['uploadaddaccounts'])
         if tmp['uploadaddaccounts'].has_key('selected'):
             new=dict(tmp['uploadaddaccounts'])
@@ -1824,6 +1840,29 @@ def analyse_video_meta_pair(folder,frame,right_frame,selectedMetafileformat,isTh
         dumpMetafiles(selectedMetafileformat,folder)
           
         render_video_folder_check_results(frame,right_frame,folder,isThumbView,isDesView,isTagsView,isScheduleView,selectedMetafileformat)
+def dumpTaskMetafiles(selectedMetafileformat,folder):
+    logger.debug(f'start to dump video metas for {folder} ')
+
+    if selectedMetafileformat=='xlsx':
+        df_metas = pd.read_json(jsons.dumps(tmp['tasks']), orient = 'index')
+
+        metaxls=os.path.join(folder,'task-meta.xlsx')
+            
+        df_metas.to_excel(metaxls)
+    elif selectedMetafileformat=='csv':
+        df_metas = pd.read_json(jsons.dumps(tmp['tasks']), orient = 'index')
+
+        metacsv=os.path.join(folder,'task-meta.csv')
+
+        df_metas.to_csv(metacsv)
+    else:
+        df_metas = pd.read_json(jsons.dumps(tmp['tasks']), orient = 'records')
+
+        # json is the default ,there is always a videometa.json file after folder check
+        metajson=os.path.join(folder,'task-meta.json')
+
+        df_metas.to_json(metajson)
+    logger.debug(f'end to dump task metas for {folder} ')
 
 
 def dumpMetafiles(selectedMetafileformat,folder):
@@ -1861,7 +1900,7 @@ def dumpMetafiles(selectedMetafileformat,folder):
             f.write(jsons.dumps(ultra[folder]))         
     logger.debug(f'end to dump video assets for {folder} ')
 
-def dumpSetting():    
+def dumpSetting(settingfilename):    
     folder=ROOT_DIR
     logger.info(f'start to dump TiktokaStudio settings')
     logger.debug(f'check settings before dump {settings}')
@@ -4166,7 +4205,7 @@ def createTaskMetas(left,right):
 
 
     multiAccountsPolicybox = ttk.Combobox(creatTaskWindow, textvariable=multiAccountsPolicy)
-    multiAccountsPolicybox.config(values = ('单账号', '主副账号','多账号随机发布','多账号平均发布'))
+    multiAccountsPolicybox.config(values = ('单平台单账号', '单平台主副账号','单平台多账号随机发布','单平台多账号平均发布'))
     multiAccountsPolicybox.grid(row = 4, column = 3, padx=14, pady=15, sticky='w')   
 
     lb18 = tk.Label(creatTaskWindow, text='Runs on.')
@@ -4243,7 +4282,12 @@ def createTaskMetas(left,right):
     mode1=tk.Radiobutton(creatTaskWindow,text="after copyright check success",variable=wait_policy,value=3,command=lambda: getBool(wait_policy))
     mode1.grid(row = 8, column = 3, padx=14, pady=15,sticky='w') 
     btn6= tk.Button(creatTaskWindow, text="gen task meta file", padx = 10, pady = 10,command = lambda: threading.Thread(
-        target=genUploadTaskMetas(videometafile.get(),choosedAccounts.get(),deviceType.get(),browserType.get(),is_open_browser.get(),wait_policy.get(),is_debug.get())).start())     
+        target=genUploadTaskMetas(
+            videometafile.get(),
+            choosedAccounts.get(),
+            multiAccountsPolicy.get(),
+            deviceType.get(),browserType.get(),
+            is_open_browser.get(),wait_policy.get(),is_debug.get(),is_record_video.get(),creatTaskWindow)).start())     
     btn6.grid(row=10,column=1, sticky=tk.W)
     def uploadStrategyCallBack(*args):
         print(uploadStrategy.get())
@@ -4271,47 +4315,250 @@ def createTaskMetas(left,right):
     #     print(uploadPlatformbox.current())
 
     # uploadPlatform.trace('w', uploadPlatformboxCallBack)
+def has_more_than_one_one(lst):
+    # Check if there is more than one element equal to 1 and all others are 0
+    return lst.count(1) > 1 and all(x == 0 for x in lst)
 
-    
-def genUploadTaskMetas(videometafilepath,choosedAccounts_value,deviceType_value,browserType_value,is_open_browser_value,wait_policy_value,is_debug_value):     
+    # # Example usage:
+    # my_list = [0, 1, 0, 1, 0]  # Replace this with your list
+    # result = has_more_than_one_one(my_list)
+def has_one_large_value(lst):
+    # Check if there is exactly one element greater than 1 and all others are 0
+    return lst.count(0) == len(lst) - 1 and any(x > 1 for x in lst)
+
+    # # Example usage:
+    # my_list = [0, 2, 0, 0, 0]  # Replace this with your list
+    # result = has_one_large_value(my_list)
+def has_more_than_one_large_value(lst):
+    # Check if there is more than one element greater than 1 and all others are 0
+    return lst.count(0) == len(lst) - lst.count(0) - 1
+
+    # # Example usage:
+    # my_list = [0, 2, 0, 3, 0]  # Replace this with your list
+    # result = has_more_than_one_large_value(my_list)
+
+def has_one_and_zeros(lst):
+    # Check if there is exactly one 1 and all others are 0
+    return lst.count(1) == 1 and all(x == 0 for x in lst)
+
+    # # Example usage:
+    # my_list = [0, 0, 1, 0, 0]  # Replace this with your list
+    # result = has_one_and_zeros(my_list)
+def more_than_one_large_element(lst):
+    # Check if there are more than one elements greater than 1
+    return lst.count(x > 1 for x in lst) > 1
+
+    # # Example usage:
+    # my_list = [2, 3, 0, 0, 1]  # Replace this with your list
+    # result = more_than_one_large_element(my_list)
+def extends_accounts(accounts,videocount):
+    # Your lists
+    videos = [1, 2, 3, 4, 5]  # Replace with your list1
+    accounts = ['A', 'B', 'C']  # Replace with your list2
+
+    n = videocount
+    m = len(accounts)
+    ratio = n / m
+
+    extended_list2 = []
+
+    for _ in range(n):
+        if ratio.is_integer():
+            # If n/m is an integer, repeat elements from list2
+            extended_list2.append(accounts[_ % m])
+        else:
+            # If n/m is not an integer, choose a random element from list2
+            extended_list2.append(random.choice(accounts))    
+    return extended_list2
+def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPolicy_value,deviceType_value,browserType_value,is_open_browser_value,wait_policy_value,is_debug_value,is_record_video_value,frame):     
+    print('assign account',choosedAccounts_value)
+    if choosedAccounts_value=='':
+        logger.info('please choose which platform and account you want to upload ')
+        lab = tk.Label(frame,text="please choose which platform and account you want to upload ",bg="red")
+                                                        
+        lab.grid(row=10,column=2, sticky=tk.W)        
+        lab.after(5*1000,lab.destroy)              
+        return                 
+    else:
+        try:
+            choosedAccounts_value=eval(choosedAccounts_value)
+            print('convert str to dict',choosedAccounts_value)
+
+        except:
+            logger.info(f'please check {choosedAccounts_value} format')
+            lab = tk.Label(frame,text=f'please check {choosedAccounts_value} format',bg="red")
+                                                            
+            lab.grid(row=10,column=2, sticky=tk.W)        
+            lab.after(5*1000,lab.destroy)     
+            return 
+
+    account_counts=[]     
+    print('check multiAccountsPolicy',multiAccountsPolicy_value)
+    platform_counts=0
+    account_platform_pairs={}
+    for platform,accounts in choosedAccounts_value.items():
+        print(platform,accounts)
+        accounts=accounts.split(',')
+
+        if accounts==['']:
+            logger.info(f'you dont choose any account for this platform:{platform}')
+
+        else:
+            account_counts.append(len(accounts))
+            account_platform_pairs[platform]=accounts
+            platform_counts+=1
+
+    if account_counts==[0]*platform_counts:
+        logger.info('please choose at least one account for one platform  you want to upload ')
+        lab = tk.Label(frame,text="please choose at least one account for one platform  you want to upload ",bg="red")
+                                                        
+        lab.grid(row=10,column=2, sticky=tk.W)        
+        lab.after(5*1000,lab.destroy)              
+        return                 
+    elif has_one_and_zeros(account_counts) :
+        logger.info('detect  at least one account for one platform  you want to upload ')
+        multiAccountsPolicy_value==1
+        # 检测到单平台单账号
+        # 检测该账号是否存在主副账号情况
+        if multiAccountsPolicy_value!=1:
+            logger.info('we dont support this feature yet')
+            lab = tk.Label(frame,text="we dont support this feature yet",bg="red")
+                                                            
+            lab.grid(row=10,column=2, sticky=tk.W)        
+            lab.after(5*1000,lab.destroy)              
+            return
+        
+        logger.info(f'your accounts provide and policy is matching{multiAccountsPolicy_value}')
+
+    elif  has_one_large_value(account_counts):
+        multiAccountsPolicy_value==2
+        # 检测到单平台多账号        
+        # my_list = [0, 2, 0, 0, 0]  # Replace this with your list
+        logger.info('detect  more than one account for one platform  you want to upload ')
+        if multiAccountsPolicy_value!=2:
+            logger.info('we dont support this feature yet')
+            lab = tk.Label(frame,text="we dont support this feature yet",bg="red")
+                                                            
+            lab.grid(row=10,column=2, sticky=tk.W)        
+            lab.after(5*1000,lab.destroy)              
+            return
+        logger.info(f'your accounts provide and policy is matching{multiAccountsPolicy_value}')
+        # 视频平均分配
+    elif  has_more_than_one_one(account_counts):
+        multiAccountsPolicy_value==3
+        # 检测到多平台单账号        
+    # my_list = [0, 1, 0, 1, 0]  # Replace this with your list
+        logger.info('detect  more than one account for one platform  you want to upload ')
+        # 检测该账号是否存在主副账号情况
+
+        if multiAccountsPolicy_value!=3:
+            logger.info('we dont support this feature yet')
+            lab = tk.Label(frame,text="we dont support this feature yet",bg="red")
+                                                            
+            lab.grid(row=10,column=2, sticky=tk.W)        
+            lab.after(5*1000,lab.destroy)              
+            return
+        logger.info(f'your accounts provide and policy is matching{multiAccountsPolicy_value}')
+    elif  more_than_one_large_element(account_counts):
+        multiAccountsPolicy_value==4
+        # 检测到多平台多账号        
+        # my_list = [2, 3, 0, 0, 1]  # Replace this with your list
+        logger.info('detect  more than one account for one platform  you want to upload ')
+        if multiAccountsPolicy_value!=4:
+            logger.info('we dont support this feature yet')
+            lab = tk.Label(frame,text="we dont support this feature yet",bg="red")
+                                                            
+            lab.grid(row=10,column=2, sticky=tk.W)        
+            lab.after(5*1000,lab.destroy)              
+            return
+        logger.info(f'your accounts provide and policy is matching{multiAccountsPolicy_value}')
+        # 视频平均分配
+
+
+
+
+        
+
+        
+
     print('load video meta')
     if videometafilepath !='' and videometafilepath is not None:
-        
+        filename = os.path.splitext(videometafilepath)[0]
+        folder=os.path.dirname(videometafilepath)
+        ext = os.path.splitext(videometafilepath)[1].replace('.','')
         logger.info(f'you select video metafile is {videometafilepath}')
         if  os.path.exists(videometafilepath):
             # check_video_thumb_pair(dbm,video_folder_path,True)
             logger.info('start to load  and parse meta file')
-            filename = os.path.splitext(entry.name)[0]
 
-            ext = os.path.splitext(videometafilepath)[1]
+            tmpdict={}
             if ext=='xlsx':
                 df=pd.read_excel(videometafilepath, index_col=[0])
                 df.replace('nan', '')
-                
+                tmpdict=json.loads(df.to_json(orient = 'index'))   
+
                 dfdict=df.iterrows()
             elif ext=='json':
                 df=pd.read_json(videometafilepath)  
                 df.replace('nan', '')
-                
+                tmpdict=json.loads(df.to_json())   
+
                 dfdict=df.items()      
             elif ext=='csv':
                 df=pd.read_csv(videometafilepath, index_col=[0])
                 df.replace('nan', '')
-                
-                dfdict=df.iterrows()
+                tmpdict=json.loads(df.to_json(orient = 'index'))   
 
-            # List of allowed field names
-            print('reading video meta\r',df)
-            
-            logger.info(f'start to check  defined in template')
+                dfdict=df.iterrows()
+            tmp['tasks']={}
 
             # Check the data dictionary for allowed fields and empty values in each entry
-            # for key, entry in dfdict:
+            videocounts=len(tmpdict)
 
-    print('validate video meta')
-    print('assign account')
-    print('write task meta')
 
+            print('account_platform_pairs',account_platform_pairs)
+            for platform,accounts in account_platform_pairs.items():
+                tmpaccounts=[]  
+                  
+                if videocounts <len(accounts):
+                    tmpaccounts=[random.choice(accounts)]
+                else:
+                    tmpaccounts=  extends_accounts(accounts,videocounts)
+                i=0
+                for key, entry in tmpdict.items():
+                    print('key',key)
+                    print('entry',entry)
+                    key=key+'_'+platform
+                    tmp['tasks'][key]=entry
+                    tmp['tasks'][key]['timeout']=200
+                    tmp['tasks'][key]['is_open_browser']=is_open_browser_value
+                    tmp['tasks'][key]['debug']=is_debug_value
+                    tmp['tasks'][key]['platform']=platform
+                    tmp['tasks'][key]['wait_policy']=wait_policy_value
+                    tmp['tasks'][key]['is_record_video']=is_record_video_value
+                    tmp['tasks'][key]['browser_type']=browserType_value
+
+                    
+                    print('check whether 主副账号')
+                    account=tmpaccounts[i]
+                    tmp['tasks'][key]['username']=account
+                    logger.info(f'get credentials for this account {account}')
+
+                    tmp['tasks'][key]['password']=''
+                    tmp['tasks'][key]['proxy_option']=''
+                    tmp['tasks'][key]['channel_cookie_path']=''
+                    i=+1
+
+
+            dumpTaskMetafiles(ext,folder)
+            print('validate video meta')
+
+            print('write task meta')
+            logger.info(f'save task meta success')
+            lab = tk.Label(frame,text=f'save task meta success',bg="green")
+                                                            
+            lab.grid(row=10,column=2, sticky=tk.W)        
+            lab.after(5*1000,lab.destroy)    
 
 def validateMetafile(engine,ttkframe,metafile):
     logger.info('load task metas to database .create upload task for each video')
@@ -4734,20 +4981,22 @@ def uploadView(frame,ttkframe,lang):
 
         
     
-    b_down_video_metas_temp = tk.Button(frame, text=i18labels("createTaskMetas", locale=lang, module="g"),
+    b_down_video_metas_temp = tk.Button(frame, text=settings[lang]['createTaskMetas'],
                                          command=lambda: threading.Thread(target=createTaskMetas(frame,ttkframe)).start())
-    b_down_video_metas_temp.grid(row = 0, column = 0, padx=14, pady=15,sticky='w')
+    b_down_video_metas_temp.grid(row = 0, column = 0, columnspan=2,padx=14, pady=15,sticky='w')
     
 
-    b_editVideoMetas = tk.Button(frame, text=i18labels("editVideoMetas", locale=lang, module="g"), command=
+    b_editVideoMetas = tk.Button(frame, text=settings[lang]['editTaskMetas'], command=
                                 #  lambda: webbrowser.open_new("https://jsoncrack.com/editor")
                                  lambda: threading.Thread(target=webbrowser.open_new("https://jsoncrack.com/editor")).start())
     b_editVideoMetas.grid(row = 0, column = 1, padx=14, pady=15,sticky='w')
     
 
 
-    l_import_video_metas = tk.Label(frame, text=settings[lang]['importVideoMetas'], font=(' ', 14))
-    l_import_video_metas.grid(row = 2, column = 0, padx=14, pady=15,sticky='w')
+    l_import_task_metas = tk.Label(frame, text=settings[lang]['importTaskMetas'])
+    l_import_task_metas.grid(row = 2, column = 0, padx=14, pady=15,sticky='w')
+    Tooltip(l_import_task_metas, text='import task meta  file,support json excel csv' , wraplength=200)
+
     b_imported_video_metas_file=tk.Button(frame,text="Select",command=SelectVideoMetasfile)
     b_imported_video_metas_file.grid(row = 2, column = 2, padx=14, pady=15)
 
@@ -5911,7 +6160,7 @@ if __name__ == '__main__':
     tmp['uploadaddaccounts']={}    
     root = tk.Tk()
     load_setting()
-    print('---',settings['locale'])
+    # print('---',settings)
     locale=settings['lastuselang']
     start(locale,root)
 
@@ -5919,7 +6168,7 @@ if __name__ == '__main__':
     # root.protocol('WM_DELETE_WINDOW', withdraw_window)
     
     root.mainloop()
-    dumpSetting()
+    dumpSetting(settingfilename)
 
 
         
