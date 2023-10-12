@@ -1881,7 +1881,9 @@ def analyse_video_meta_pair(folder,frame,right_frame,selectedMetafileformat,isTh
 
         if ultra.has_key(folder):
             print(pd.Timestamp.now().value-ultra[folder] ['updatedAt'])
-            logger.info(f"we cached {pd.Timestamp.now().value-ultra[folder] ['updatedAt']} seconds before for  this folder {folder}")
+            duration_seconds = (pd.Timestamp.now().value-ultra[folder] ['updatedAt']) / 10**9  # Convert nanoseconds to seconds
+            
+            logger.info(f"we cached {duration_seconds} seconds before for  this folder {folder}")
 
 
         else:
