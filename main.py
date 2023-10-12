@@ -1484,6 +1484,9 @@ def isFilePairedMetas(r,videofilename,meta_exts_list,dict,meta_name):
     print(f'before check:\n{jsons.dump(dict[meta_name])}')
 
     for ext in meta_exts_list:
+        logger.debug(f'start to {ext}--{meta_name}')
+        print(f'start to {ext}')
+
         metapath = os.path.join(r, videofilename+ext)
         if  os.path.exists(metapath):     
             logger.info(f'this  {meta_name} exist:\n {metapath}')
@@ -1491,20 +1494,45 @@ def isFilePairedMetas(r,videofilename,meta_exts_list,dict,meta_name):
                 if dict[meta_name].has_key(videofilename)==False:
                     dict[meta_name][videofilename]=[]
                     logger.info(f'intial {meta_name} for {videofilename}:\n')
+                if not metapath in dict[meta_name][videofilename]:
 
-                dict[meta_name][videofilename].append(metapath)
+                    dict[meta_name][videofilename].append(metapath)
                 print(f'append result:\n{dict[meta_name][videofilename]}')
                 if meta_name=='thumbFilePaths':
-                    print('=====',type(dict['videos'][videofilename]['thumbnail_local_path']),dict['videos'][videofilename]['thumbnail_local_path'])
-                    if dict['videos'][videofilename]['thumbnail_local_path'] is None:
-                        dict['videos'][videofilename]['thumbnail_local_path']=[].append(metapath)
-                    else:                   
-                        dict['videos'][videofilename]['thumbnail_local_path']=eval(dict['videos'][videofilename]['thumbnail_local_path']).append(metapath)
+                    logger.info(f"found thumbfiles,start to set video metas {type(dict['videos'][videofilename]['thumbnail_local_path'])},{dict['videos'][videofilename]['thumbnail_local_path']}")
+
+                    if dict['videos'][videofilename]['thumbnail_local_path'] is None or dict['videos'][videofilename]['thumbnail_local_path']=='':
+                        print('video meta thumbnail is None')
+                        print(f'try to add {metapath}')
+                        print(dict['videos'][videofilename])
+                        emptyfiles=[]
+                        emptyfiles.append(metapath)
+                        print('empty',emptyfiles)
+                        dict['videos'][videofilename]['thumbnail_local_path']=str(emptyfiles)
+                        print(dict['videos'][videofilename])
+                        
+                        print('update video meta thumbnail',dict['videos'][videofilename]['thumbnail_local_path'])
+                        print(f"found thumbfiles,end to set video metas is None== {ext}== {type(dict['videos'][videofilename]['thumbnail_local_path'])},{dict['videos'][videofilename]['thumbnail_local_path']}")
+
+                    else:
+                        if type(dict['videos'][videofilename]['thumbnail_local_path'])==str:
+                            dict['videos'][videofilename]['thumbnail_local_path']=eval(dict['videos'][videofilename]['thumbnail_local_path']).append(metapath)
+
+                        else:                   
+                            if not metapath in dict['videos'][videofilename]['thumbnail_local_path']:
+                                dict['videos'][videofilename]['thumbnail_local_path'].append(metapath)
+                        print(f"found thumbfiles,end to set video metas {ext}== {type(dict['videos'][videofilename]['thumbnail_local_path'])},{dict['videos'][videofilename]['thumbnail_local_path']}")
+                                
+                    logger.info(f"found thumbfiles,end to set video metas {type(dict['videos'][videofilename]['thumbnail_local_path'])},{dict['videos'][videofilename]['thumbnail_local_path']}")
+                            
                 if meta_name=='desFilePaths':
                     with open(metapath,'r') as f:
                         contents=f.readlines()
-                        dict['videos'][videofilename]['video_description']=contents               
-    print(f'after check:\n{jsons.dump(dict[meta_name])}')
+                        dict['videos'][videofilename]['video_description']=contents     
+    print(f"after check:\n {jsons.dump(dict[meta_name])}:\n,{dict['videos'][videofilename]['thumbnail_local_path']}")
+                          
+    logger.info(f"after check:\n {jsons.dump(dict[meta_name])}:\n,{dict['videos'][videofilename]['thumbnail_local_path']}")
+    
     tmpjson=os.path.join(r, videofilename+'.json')
     if os.path.exists(tmpjson):
         logger.info(f'update to {videofilename} meta json')
@@ -1764,10 +1792,29 @@ def scanVideofiles(folder):
                             ultra[folder] ['videos'][filename]['video_title']=filename
                             ultra[folder] ['videos'][filename]['video_filename']=filename
                             ultra[folder] ['videos'][filename]['video_description']=filename
-                            ultra[folder]['videos'][filename]['thumbnail_local_path']
+
+                            for ext in supported_thumb_exts:
+                                filepath=os.path.join(r,filename+ext)
+                                if os.path.exists(filepath):
+                                    if filepath in ultra[folder]['videos'][filename]['thumbnail_local_path']:
+                                        pass
+                                    else:
+                                        ultra[folder]['videos'][filename]['thumbnail_local_path'].append(filepath)                                        
+                                        if type(ultra[folder]['videos'][filename]['thumbnail_local_path'])==str:
+                                            ultra[folder]['videos'][filename]['thumbnail_local_path']=eval(ultra[folder]['videos'][filename]['thumbnail_local_path'])
+                                            ultra[folder]['videos'][filename]['thumbnail_local_path'].append(filepath)
+                                        elif ultra[folder]['videos'][filename]['thumbnail_local_path'] is None or ultra[folder]['videos'][filename]['thumbnail_local_path'] in ['','[]'] or len(ultra[folder]['videos'][filename]['thumbnail_local_path'])==0:
+                                            empt=[].append(filepath)
+                                            ultra[folder]['videos'][filename]['thumbnail_local_path']=str(empt)
+                                        else:
+                                            ultra[folder]['videos'][filename]['thumbnail_local_path'].append(filepath)
                             
-                        if ultra[folder] ['videos'][filename]['thumbnail_local_path'] is not None and ultra[folder] ['videos'][filename]['thumbnail_local_path'] !='[]':
-                            files=eval(ultra[folder]['videos'][filename]['thumbnail_local_path'])
+                        if ultra[folder] ['videos'][filename]['thumbnail_local_path']:
+                            if type(ultra[folder] ['videos'][filename]['thumbnail_local_path'])==str:
+                                ultra[folder] ['videos'][filename]['thumbnail_local_path']=eval(ultra[folder] ['videos'][filename]['thumbnail_local_path'])
+
+                            
+                            files=ultra[folder] ['videos'][filename]['thumbnail_local_path']
                             if len(files)>0:
                                 start=False
                                 for i in files:
@@ -1851,15 +1898,20 @@ def analyse_video_meta_pair(folder,frame,right_frame,selectedMetafileformat,isTh
             
         if os.path.exists(os.path.join(folder,'videos-meta.'+selectedMetafileformat)):
             logger.info('sync videos-meta')
-
+            print('============sync videos-meta==============')
             # os.remove(os.path.join(folder,'videos-meta.'+selectedMetafileformat))
             syncVideometa2assetsjson(selectedMetafileformat,folder)
+            print('============end sync videos-meta==============')
+        print('============start scanVideofiles==============')
 
         scanVideofiles(folder)
+        print('============end scanVideofiles==============')
+        print('============start dumpMetafiles==============')
 
         ultra[folder]['metafileformat']=selectedMetafileformat
         dumpMetafiles(selectedMetafileformat,folder)
-          
+        print('============end dumpMetafiles==============')
+
         render_video_folder_check_results(frame,right_frame,folder,isThumbView,isDesView,isTagsView,isScheduleView,selectedMetafileformat)
 def dumpTaskMetafiles(selectedMetafileformat,folder):
     logger.debug(f'start to dump video metas for {folder} ')
@@ -2367,7 +2419,7 @@ def thumbView(left,right,lang):
     def metafileformatCallBack(*args):
         print(metafileformat.get())
         print(metafileformatbox.current())
-        analyse_video_meta_pair(thumbView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=True,isDesView=False,isTagsView=False,isScheduleView=False)
+        # analyse_video_meta_pair(thumbView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=True,isDesView=False,isTagsView=False,isScheduleView=False)
     print(f'right now metafileformatbox.get():{metafileformatbox.get()}')
     metafileformat.trace('w', metafileformatCallBack)
     metafileformatbox.bind("<<ComboboxSelected>>", metafileformatCallBack)  
@@ -3422,11 +3474,17 @@ def genThumbnailFromTemplate(folder,thumbnail_template_file_path,mode_value,thum
         # filename=video_id+"_"+str(result_image_width)+"x"+str(result_image_height)+ext
         outputpath=draw_text_on_image(video_info,thumb_gen_setting,result_image_width,result_image_height,render_style,output_folder,filename)
         logger.info('start to add new gen thum to video meta')
-        if video_data[video_id]['thumbnail_local_path'] is None:
-            video_data[video_id]['thumbnail_local_path']=[]
-        video_data[video_id]['thumbnail_local_path']=eval(video_data[video_id]['thumbnail_local_path'])
         print(f"before add thumb for video {video_id} is {video_data[video_id]['thumbnail_local_path']}")
-        video_data[video_id]['thumbnail_local_path'].append(outputpath)
+        print('test===',type(video_data[video_id]['thumbnail_local_path']),video_data[video_id]['thumbnail_local_path'])
+        if type(video_data[video_id]['thumbnail_local_path'])==str:
+            video_data[video_id]['thumbnail_local_path']=eval(video_data[video_id]['thumbnail_local_path'])
+            video_data[video_id]['thumbnail_local_path'].append(outputpath)
+        elif video_data[video_id]['thumbnail_local_path'] is None or video_data[video_id]['thumbnail_local_path'] in ['','[]'] or len(video_data[video_id]['thumbnail_local_path'])==0:
+            empt=[].append(outputpath)
+            video_data[video_id]['thumbnail_local_path']=str(empt)
+        else:
+            video_data[video_id]['thumbnail_local_path'].append(outputpath)
+
         print(f"after add thumb for video {video_id} is {video_data[video_id]['thumbnail_local_path']}")
         
         if result_image_width > result_image_height:
