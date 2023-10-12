@@ -4861,10 +4861,25 @@ def validateTaslMetafile(engine,ttkframe,metafile):
                         if video.get(key)==None:
                             logger.error(f"these {key} field is required,No target{key} in given video json data")
                             raise ValueError(f"these {key} field is required,No target{key} in given video json data")
-                        if key in['video_local_path','thumbnail_local_path']:
+                        if key in['video_local_path']:
                             if os.path.exists(video.get(key))==False:
                                 logger.error(f"these {key} field is required,and check whether local file exists")
                                 raise ValueError(f"these {key} field is required,and check whether local file exists")
+                        if key in['thumbnail_local_path']:
+                            if type(video.get(key)) ==list and len(video.get(key))>0:
+                                
+                                if os.path.exists(video.get(key)[0])==False:
+                                    logger.error(f"these {key} field is required,and check whether local file exists")
+                                    raise ValueError(f"these {key} field is required,and check whether local file exists")
+
+                            elif type(video.get(key)) ==str and len(video.get(key))>0:
+                                
+                                if os.path.exists(eval(video.get(key))[0])==False:
+                                    logger.error(f"these {key} field is required,and check whether local file exists")
+                                    raise ValueError(f"these {key} field is required,and check whether local file exists")
+                            else:
+                                logger.error(f"these {key} field is required,and check whether filed value is ok :{video.get(key)}")
+
                     for key in ['video_film_date','video_film_location','first_comment','subtitles']:
                         video[key]=None 
                         logger.info(f'now we have no rules about {key} validation ')
