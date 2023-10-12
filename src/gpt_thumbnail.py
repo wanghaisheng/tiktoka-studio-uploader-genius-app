@@ -273,7 +273,15 @@ def draw_text_on_image(row,thumb_gen_setting,result_image_width,result_image_hei
         bordercolor = template_element["bordercolor"]       
         # Load the font
         # lang=cld3.get_language(row[text_type]).language
+        logger.info(f'start to detect lang for {row[text_type]}')
+        if type(row[text_type])==str:
+            pass
+        else:
+            logger.info(f'{row[text_type]} is not a string type,convert first')
+            row[text_type]=str(row[text_type])
         lang=detector.detect(row[text_type]).language
+        if lang==None:
+            lang='en'
         font,fontname = load_font(font_name,font_file, font_size, lang)
         print(f'render text {row[text_type]}use font :{fontname}')
         if row[text_type]:

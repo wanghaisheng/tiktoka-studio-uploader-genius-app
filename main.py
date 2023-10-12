@@ -1572,6 +1572,11 @@ def syncVideometa2assetsjson(selectedMetafileformat,folder):
                 new[filename]= video
             ultra[folder]['videos']=new   
         ultra[folder]['filenames']= newfilenameslist
+        if len(ultra[folder] ['filenames'])==0:
+            logger.info(f"we could not find any video, video counts is {ultra[folder] ['videoCounts']},supported ext includes:\n{'.'.join(supported_video_exts)}")
+        # 遍历每个视频文件，核对视频文件、缩略图等文件是否存在，核对元数据中对应字段是否存在
+        ultra[folder] ['videoCounts']=len(ultra[folder] ['filenames'])    
+        
         ultra[folder]['updatedAt']=pd.Timestamp.now().value        
         logger.debug('end to check video file existence in the new metafile ')
 
@@ -1768,7 +1773,7 @@ def scanVideofiles(folder):
                         if ultra[folder] ['videos'][filename]['release_date']!='':
                             scheduleMetaCounts+=1
 
-                        ultra[folder] ['videoCounts']+=1
+   
 
                         # if ultra[folder]['thumbFilePaths'].has_key(filename)==False:
                         #     ultra[folder]['thumbFilePaths'][filename]=[]
@@ -1779,9 +1784,10 @@ def scanVideofiles(folder):
                         isFilePairedMetas(r,filename,supported_des_exts,ultra[folder],'scheduleFilePaths')
                 else:
                     print('is folder',r,d,i)      
-    if ultra[folder] ['videoCounts']==0:
+    if len(ultra[folder] ['filenames'])==0:
         logger.info(f"we could not find any video, video counts is {ultra[folder] ['videoCounts']},supported ext includes:\n{'.'.join(supported_video_exts)}")
     # 遍历每个视频文件，核对视频文件、缩略图等文件是否存在，核对元数据中对应字段是否存在
+    ultra[folder] ['videoCounts']=len(ultra[folder] ['filenames'])    
     ultra[folder] ['thumbFileCounts']=len(ultra[folder] ['thumbFilePaths'])
     ultra[folder] ['thumbMetaCounts']=thumbMetaCounts
 

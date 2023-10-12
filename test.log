@@ -4723,3 +4723,342 @@ D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/video
 2023-10-11 23:43:24,597 - INFO - TiktokaStudio GUI started
 2023-10-11 23:43:24,919 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
 2023-10-11 23:43:24,920 - INFO - TiktokaStudio GUI started
+2023-10-12 23:49:03,953 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-10-12 23:49:03,953 - INFO - TiktokaStudio GUI started
+2023-10-12 23:49:04,930 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-10-12 23:49:04,930 - INFO - TiktokaStudio GUI started
+2023-10-12 23:49:26,446 - INFO - start to detecting video metas----------False
+2023-10-12 23:49:26,447 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon
+2023-10-12 23:49:26,451 - DEBUG - start to scan video file existence in the /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:49:26,453 - INFO - start to check thumbFilePaths for video: OP
+2023-10-12 23:49:26,454 - INFO - create a fresh OP meta json
+2023-10-12 23:49:26,456 - INFO - start to check desFilePaths for video: OP
+2023-10-12 23:49:26,456 - INFO - update to OP meta json
+2023-10-12 23:49:26,458 - INFO - start to check metaFilePaths for video: OP
+2023-10-12 23:49:26,459 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.json
+2023-10-12 23:49:26,459 - INFO - intial metaFilePaths for OP:
+
+2023-10-12 23:49:26,462 - INFO - update to OP meta json
+2023-10-12 23:49:26,463 - INFO - start to check tagFilePaths for video: OP
+2023-10-12 23:49:26,463 - INFO - update to OP meta json
+2023-10-12 23:49:26,464 - INFO - start to check scheduleFilePaths for video: OP
+2023-10-12 23:49:26,465 - INFO - update to OP meta json
+2023-10-12 23:49:26,467 - DEBUG - end to scan video file existence in the /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:49:26,467 - DEBUG - start to dump video metas for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:49:26,781 - DEBUG - end to dump video metas for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:49:26,781 - DEBUG - start to dump video assets for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:49:26,783 - DEBUG - end to dump video assets for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:49:30,353 - INFO - show offset elements
+2023-10-12 23:49:30,357 - INFO - show offset elements
+2023-10-12 23:49:33,055 - INFO - start to gen slots
+2023-10-12 23:49:33,055 - INFO - your daily count and time slot matchs
+2023-10-12 23:49:33,056 - INFO - start to assign this video OP,2023-10-13 00:00:00,19:45 
+2023-10-12 23:49:33,056 - INFO - sync slots to video metas
+2023-10-12 23:49:33,056 - DEBUG - start to dump video metas for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:49:33,078 - WARNING - /Users/wenke/miniconda3/lib/python3.9/site-packages/jsons/_common_impl.py:43: UserWarning: The use of datetimes without timezone is dangerous and can lead to undesired results. Use suppress_warning(datetime-without-tz) or suppress_warnings(True) to turn off this message.
+  warnings.warn(msg_, *args, **kwargs)
+
+2023-10-12 23:49:33,109 - DEBUG - end to dump video metas for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:49:33,109 - DEBUG - start to dump video assets for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:49:33,111 - WARNING - /Users/wenke/miniconda3/lib/python3.9/site-packages/jsons/_common_impl.py:43: UserWarning: The use of datetimes without timezone is dangerous and can lead to undesired results. Use suppress_warning(datetime-without-tz) or suppress_warnings(True) to turn off this message.
+  warnings.warn(msg_, *args, **kwargs)
+
+2023-10-12 23:49:33,112 - DEBUG - end to dump video assets for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:49:33,112 - INFO - sync slots to video assets
+2023-10-12 23:49:33,112 - INFO - sync slots to cache
+2023-10-12 23:49:52,127 - INFO - start to detecting video metas----------True
+2023-10-12 23:49:52,137 - INFO - we cached 25670371000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon
+2023-10-12 23:49:52,137 - INFO - sync videos-meta
+2023-10-12 23:49:52,164 - DEBUG - start to check video file existence in the new metafile 
+2023-10-12 23:49:52,164 - INFO - video file is ok
+2023-10-12 23:49:52,164 - INFO - =111== <class 'UltraDict.UltraDict.UltraDict'>{'OP': {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.mp4', 'video_filename': 'OP', 'video_title': 'OP', 'heading': '', 'subheading': '', 'extraheading': '', 'video_description': 'OP', 'thumbnail_bg_image_path': '', 'publish_policy': 2, 'thumbnail_local_path': [], 'release_date': datetime.datetime(2023, 10, 13, 0, 0), 'release_date_hour': '19:45', 'is_not_for_kid': True, 'categories': '', 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': '', 'captions_certification': 0, 'video_film_date': '', 'video_film_location': '', 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': '', 'subtitles': '', 'tags': ''}}
+2023-10-12 23:49:52,164 - INFO - =222== <class 'UltraDict.UltraDict.UltraDict'>{'OP': {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.mp4', 'video_filename': 'OP', 'video_title': 'OP', 'heading': '', 'subheading': '', 'extraheading': '', 'video_description': 'OP', 'thumbnail_bg_image_path': '', 'publish_policy': 2, 'thumbnail_local_path': [], 'release_date': datetime.datetime(2023, 10, 13, 0, 0), 'release_date_hour': '19:45', 'is_not_for_kid': True, 'categories': '', 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': '', 'captions_certification': 0, 'video_film_date': '', 'video_film_location': '', 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': '', 'subtitles': '', 'tags': ''}}
+2023-10-12 23:49:52,164 - INFO - =555== <class 'UltraDict.UltraDict.UltraDict'>{'OP': {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.mp4', 'video_filename': 'OP', 'video_title': 'OP', 'heading': '', 'subheading': '', 'extraheading': '', 'video_description': 'OP', 'thumbnail_bg_image_path': '', 'publish_policy': 2, 'thumbnail_local_path': [], 'release_date': datetime.datetime(2023, 10, 13, 0, 0), 'release_date_hour': '19:45', 'is_not_for_kid': True, 'categories': '', 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': '', 'captions_certification': 0, 'video_film_date': '', 'video_film_location': '', 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': '', 'subtitles': '', 'tags': ''}}
+2023-10-12 23:49:52,166 - INFO - =5551== <class 'UltraDict.UltraDict.UltraDict'>{'OP': {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.mp4', 'video_filename': 'OP', 'video_title': 'OP', 'heading': None, 'subheading': None, 'extraheading': None, 'video_description': 'OP', 'thumbnail_bg_image_path': None, 'publish_policy': 2, 'thumbnail_local_path': '[]', 'release_date': '2023-10-13T00:00:00+00:00', 'release_date_hour': '19:45', 'is_not_for_kid': True, 'categories': None, 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': None, 'captions_certification': 0, 'video_film_date': None, 'video_film_location': None, 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': None, 'subtitles': None, 'tags': None}}
+2023-10-12 23:49:52,167 - DEBUG - end to check video file existence in the new metafile 
+2023-10-12 23:49:52,167 - DEBUG - start to scan video file existence in the /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:49:52,167 - INFO - you have prepared video metas for:OP
+2023-10-12 23:49:52,167 - INFO - start to check thumbFilePaths for video: OP
+2023-10-12 23:49:52,168 - INFO - update to OP meta json
+2023-10-12 23:49:52,169 - INFO - start to check desFilePaths for video: OP
+2023-10-12 23:49:52,169 - INFO - update to OP meta json
+2023-10-12 23:49:52,170 - INFO - start to check metaFilePaths for video: OP
+2023-10-12 23:49:52,170 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.json
+2023-10-12 23:49:52,171 - INFO - update to OP meta json
+2023-10-12 23:49:52,172 - INFO - start to check tagFilePaths for video: OP
+2023-10-12 23:49:52,173 - INFO - update to OP meta json
+2023-10-12 23:49:52,173 - INFO - start to check scheduleFilePaths for video: OP
+2023-10-12 23:49:52,174 - INFO - update to OP meta json
+2023-10-12 23:49:52,176 - DEBUG - end to scan video file existence in the /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:49:52,176 - DEBUG - start to dump video metas for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:49:52,206 - DEBUG - end to dump video metas for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:49:52,206 - DEBUG - start to dump video assets for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:49:52,207 - DEBUG - end to dump video assets for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:49:52,243 - INFO - start to detecting video metas----------True
+2023-10-12 23:49:52,243 - INFO - we cached 67768000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon
+2023-10-12 23:49:52,243 - INFO - sync videos-meta
+2023-10-12 23:49:52,260 - DEBUG - start to check video file existence in the new metafile 
+2023-10-12 23:49:52,260 - INFO - video file is ok
+2023-10-12 23:49:52,260 - INFO - =111== <class 'UltraDict.UltraDict.UltraDict'>{'OP': {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.mp4', 'video_filename': 'OP', 'video_title': 'OP', 'heading': None, 'subheading': None, 'extraheading': None, 'video_description': 'OP', 'thumbnail_bg_image_path': None, 'publish_policy': 2, 'thumbnail_local_path': '[]', 'release_date': '2023-10-13T00:00:00+00:00', 'release_date_hour': '19:45', 'is_not_for_kid': True, 'categories': None, 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': None, 'captions_certification': 0, 'video_film_date': None, 'video_film_location': None, 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': None, 'subtitles': None, 'tags': None}}
+2023-10-12 23:49:52,260 - INFO - =222== <class 'UltraDict.UltraDict.UltraDict'>{'OP': {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.mp4', 'video_filename': 'OP', 'video_title': 'OP', 'heading': None, 'subheading': None, 'extraheading': None, 'video_description': 'OP', 'thumbnail_bg_image_path': None, 'publish_policy': 2, 'thumbnail_local_path': '[]', 'release_date': '2023-10-13T00:00:00+00:00', 'release_date_hour': '19:45', 'is_not_for_kid': True, 'categories': None, 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': None, 'captions_certification': 0, 'video_film_date': None, 'video_film_location': None, 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': None, 'subtitles': None, 'tags': None}}
+2023-10-12 23:49:52,260 - INFO - =555== <class 'UltraDict.UltraDict.UltraDict'>{'OP': {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.mp4', 'video_filename': 'OP', 'video_title': 'OP', 'heading': None, 'subheading': None, 'extraheading': None, 'video_description': 'OP', 'thumbnail_bg_image_path': None, 'publish_policy': 2, 'thumbnail_local_path': '[]', 'release_date': '2023-10-13T00:00:00+00:00', 'release_date_hour': '19:45', 'is_not_for_kid': True, 'categories': None, 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': None, 'captions_certification': 0, 'video_film_date': None, 'video_film_location': None, 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': None, 'subtitles': None, 'tags': None}}
+2023-10-12 23:49:52,262 - INFO - =5551== <class 'UltraDict.UltraDict.UltraDict'>{'OP': {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.mp4', 'video_filename': 'OP', 'video_title': 'OP', 'heading': None, 'subheading': None, 'extraheading': None, 'video_description': 'OP', 'thumbnail_bg_image_path': None, 'publish_policy': 2, 'thumbnail_local_path': '[]', 'release_date': '2023-10-13T00:00:00+00:00', 'release_date_hour': '19:45', 'is_not_for_kid': True, 'categories': None, 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': None, 'captions_certification': 0, 'video_film_date': None, 'video_film_location': None, 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': None, 'subtitles': None, 'tags': None}}
+2023-10-12 23:49:52,263 - DEBUG - end to check video file existence in the new metafile 
+2023-10-12 23:49:52,263 - DEBUG - start to scan video file existence in the /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:49:52,264 - INFO - you have prepared video metas for:OP
+2023-10-12 23:49:52,264 - INFO - start to check thumbFilePaths for video: OP
+2023-10-12 23:49:52,264 - INFO - update to OP meta json
+2023-10-12 23:49:52,265 - INFO - start to check desFilePaths for video: OP
+2023-10-12 23:49:52,266 - INFO - update to OP meta json
+2023-10-12 23:49:52,267 - INFO - start to check metaFilePaths for video: OP
+2023-10-12 23:49:52,267 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.json
+2023-10-12 23:49:52,267 - INFO - update to OP meta json
+2023-10-12 23:49:52,268 - INFO - start to check tagFilePaths for video: OP
+2023-10-12 23:49:52,269 - INFO - update to OP meta json
+2023-10-12 23:49:52,270 - INFO - start to check scheduleFilePaths for video: OP
+2023-10-12 23:49:52,270 - INFO - update to OP meta json
+2023-10-12 23:49:52,273 - DEBUG - end to scan video file existence in the /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:49:52,273 - DEBUG - start to dump video metas for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:49:52,305 - DEBUG - end to dump video metas for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:49:52,305 - DEBUG - start to dump video assets for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:49:52,307 - DEBUG - end to dump video assets for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:54:11,029 - INFO - start to dump TiktokaStudio settings
+2023-10-12 23:54:11,030 - DEBUG - check settings before dump {'lastuselang': 'en', 'zh': {'title': 'TiktokaStudio 视频批量上传助手测试版', 'select_musics_folder': '选择背景音樂文件夹', 'select_videos_folder': '选择视频文件夹', 'setups': '安装配置', 'select_cookie_file': '选择cookie json', 'select_profile_folder': '选择profile文件夹', 'settings': '配置', 'createuploadsession': '创建上传任务', 'autothumb': '自动生成缩略图', 'testupload': '开始上传前測試', 'videosMenu': '视频管理', 'docView': '帮助', 'installView': '安装配置', 'accountView': '账号', 'proxyView': '代理', 'thumbView': '缩略图', 'logView': '日志', 'videosView': '视频', 'metaView': '元数据', 'uploadView': '上传', 'tagsView': '标签', 'desView': '视频描述', 'scheduleView': '发布日期', 'loglevel': 'loglevel', 'upload': '开始上传', 'batchchangebgmusic': '批量替换背景音乐', 'is_open_browser': '静默模式', 'is_record_video': '录像模式', 'debug': '开启日志', 'start_loading_setting': '开始读取最近保存的配置文件', 'loading_default_setting': '读取配置文件失败 加载默认模版', 'hiddenwatermark': '添加隐形水印', 'downVideoMetas': '下载视频元信息json模板', 'toolkits': '工具箱', 'mode1': '模式1', 'mode2': '模式2', 'mode3': '模式3', 'default_release_hour': '10:15', 'save_setting': '保存配置', 'testsettingok': '测试配置', 'testnetwork': '测试网络', 'version': '版本', 'version_str': 'V0.1.16\\n1.source code for this GUI:https://github.com/wanghaisheng/tiktoka-studio-uploader-app \\n2.core lib for this GUI: https://github.com/wanghaisheng/tiktoka-studio-uploader', 'docs': '说明文档', 'docs_str': '安装配置篇\\n1.安装\\n2.配置\\n导入默认配置后可以通过测试网络、测试安装、测试配置文件来知晓具体情况\\n1.从文件夹生成视频元数据规则\\n r1:尝试使用ffmpeg读取视频元数据,从其中获取视频标题、描述、制作日期、制作地点、字幕文件等信息。\\n r2:r1未命中则读取文件名称作为视频名称,如果视频名称超过20个字符,则将视频名称作为视频描述\\n r3:如果存在字幕文件,尝试从字幕总结出视频描述,如果不存在多语种字幕，尝试使用外部工具翻译多语种字幕\\n r4:如果存在同名的图片文件,则将其作为缩略图，如果没有则使用自动提取关键帧工具生成缩略图底图供后续封面图生成使用\\n r5:如果设置了每日发布的数量，则自动按照数量从次日起安排视频定时公开的日期\\n如果没有设置每日发布的数量，则根据发布策略的值来决定视频是立即公开还是私有发布。1.如果是多个账户,你需要为每个账号准备一个cookie,然后每个账户配置一个单独的配置文件\\n2.安装浏览器插件Cookie-Editor,登录youtube,导出cookie3.免版权的音乐可以在\\nhttps://icons8.com/music/\\n=====================\\n1.首次使用请选择对应的配置模板,比如默认private、public和schedule,文件路径为软件安装路径下的assets/config/setting-template.json,请按照自己的情况修改,修改完成后点击保存\\n文件和文件夹 你可以通过菜单里的浏览器配置、视频素材来点选,你也可以自行在文本框中填写\\n首选标签：这一批上传的视频我们想设置一些通用的标签,在这里设置,其他的标签请放在视频文件名中即可\\n视频描述前缀:一般而言频道的视频描述都会有个模板,类似作文里总分总结构\\n视频描述后缀:一般是一些免责声明之类\\n发布策略:0表示上传为私有,1表示上传后立马公开2表示定时公开 当你选了2,可配合每日发布数量来自动设置对应视频公开的日期,起始日期默认为上传日期+1\\n频道名称:只是用来保存配置文件\\ncookie json:请使用浏览器插件导出并保存\\n2.第二步需要检查素材,因为目前上传逻辑中只有支持视频和缩略图名字一样才能进行上传\\n背景音乐批量替换:请设置好免费音乐所在文件夹,可先对1个视频处理,调节背景音乐音量为最佳效果\\n 3.点击上传即可', 'contact': '联系我', 'contact_str': '1.发送邮件到admin@tiktokastudio.com\\n', 'contact_str_group': '2.扫码加入讨论组参与讨论', 'contact_str_personal': '3.特殊情况,299元红包可添加私人微信', 'chooseLang': '语言:', 'genVideoMetas': '从视频文件夹生成视频元信息', 'helpcenter': '帮助中心', 'importVideoMetas': '导入视频元数据文件,支持json excel csv', 'importTaskMetas': '导入任务元数据文件,支持json excel csv', 'createTaskMetas': '新建任务元数据文件,支持json excel csv', 'validateVideoMetas': '验证视频元信息json文件', 'editVideoMetas': '纯手动编辑视频元信息json文件', 'username': '账号名称', 'password': '账号密码', 'testinstall': '测试安装', 'load_setting_file': '加载配置文件', 'create_setting_file': '新建配置文件', 'cookiejson': 'cookie json 文件', 'proxySetting': '代理配置', 'profileFolder': 'profile文件夹', 'videoFolder': '视频文件夹', 'channelName': '频道名称', 'offsetDays': '起始发布日期-当日(天数)', 'dailyVideoLimit': '每日公开视频数量', 'publishPolicy': '发布策略', 'bgMucisVolume': '背景音乐音量', 'descriptionSuffix': '视频描述后缀', 'descriptionPrefix': '视频描述前缀', 'preferTags': '首选标签', 'bgVideoFolder': '背景音乐文件夹', 'chooseCookie': '请选择该频道对应cookie文件', 'chooseChannelSetting': '请选择该频道配置文件'}, 'en': {'title': 'TiktokaStudio Video Bulk Upload GUI Demo', "select_musics_folder''": 'choose music folder', 'select_videos_folder': 'choose video folder', 'setups': 'setups', 'select_cookie_file': 'choose cookie json', 'select_profile_folder': 'choose profile folder', 'settings': 'settings', 'createuploadsession': 'create uploadsession', 'autothumb': 'auto thumbnail', 'testupload': 'test video upload ', 'videosMenu': '视频管理', 'docView': 'Docs', 'installView': 'Setup', 'accountView': 'Accounts', 'proxyView': 'Proxies', 'thumbView': 'Thumbnails', 'videosView': 'Videos', 'metaView': 'Metas', 'uploadView': 'Upload', 'upload': 'start upload', 'batchchangebgmusic': 'batch replace audio', 'is_open_browser': 'silent mode', 'is_record_video': 'recording', 'genVideoMetas': 'gen  video metas', 'helpcenter': 'helpcenter', 'username': 'username', 'password': 'password', 'save_setting': 'save config', 'chooseLang': 'Lang', 'contact': 'contact', 'contact_str': '1.Email send to admin@tiktokastudio.com\\n', 'debug': 'debug', 'loglevel': 'loglevel', 'validateVideoMetas': 'validate meta json', 'logView': 'Logs', 'tagsView': 'tags', 'desView': 'des', 'scheduleView': 'schedule', 'default_release_hour': '10:15', 'importVideoMetas': 'import video meta', 'importVideoMetasToolip': 'import video meta  file,support json excel csv', 'importTaskMetas': 'import task file', 'importTaskMetasToolip': 'import task file', 'editTaskMetas': 'edit task meta file', 'editTaskMetasToolip': 'edit task meta file,support json excel csv', 'createTaskMetas': 'New task file', 'createTaskMetasToolip': '新建任务元数据文件,支持json excel csv', 'start-loading-setting': 'start loading latest used setting file', 'loading-default-setting': 'loading failed,use default setting template', 'contact_str_group': '2.Join discussion group', 'contact_str_personal': '3.Pay $99 to add personal wechat', 'version': 'version', 'version_str': 'V0.1.16\\n1.source code for this GUI:https://github.com/wanghaisheng/tiktoka-studio-uploader-app \\n2.core lib for this GUI: https://github.com/wanghaisheng/tiktoka-studio-uploader', 'hiddenwatermark': 'add hidden watermark', 'docs_str': '安装配置篇\\n1.安装\\n2.配置\\n导入默认配置后可以通过测试网络、测试安装、测试配置文件来知晓具体情况\\n1.从文件夹生成视频元数据规则\\n r1:尝试使用ffmpeg读取视频元数据,从其中获取视频标题、描述、制作日期、制作地点、字幕文件等信息。\\n r2:r1未命中则读取文件名称作为视频名称,如果视频名称超过20个字符,则将视频名称作为视频描述\\n r3:如果存在字幕文件,尝试从字幕总结出视频描述,如果不存在多语种字幕，尝试使用外部工具翻译多语种字幕\\n r4:如果存在同名的图片文件,则将其作为缩略图，如果没有则使用自动提取关键帧工具生成缩略图底图供后续封面图生成使用\\n r5:如果设置了每日发布的数量，则自动按照数量从次日起安排视频定时公开的日期\\n如果没有设置每日发布的数量，则根据发布策略的值来决定视频是立即公开还是私有发布。1.如果是多个账户,你需要为每个账号准备一个cookie,然后每个账户配置一个单独的配置文件\\n2.安装浏览器插件Cookie-Editor,登录youtube,导出cookie3.免版权的音乐可以在\\nhttps://icons8.com/music/\\n=====================\\n1.首次使用请选择对应的配置模板,比如默认private、public和schedule,文件路径为软件安装路径下的assets/config/setting-template.json,请按照自己的情况修改,修改完成后点击保存\\n文件和文件夹 你可以通过菜单里的浏览器配置、视频素材来点选,你也可以自行在文本框中填写\\n首选标签：这一批上传的视频我们想设置一些通用的标签,在这里设置,其他的标签请放在视频文件名中即可\\n视频描述前缀:一般而言频道的视频描述都会有个模板,类似作文里总分总结构\\n视频描述后缀:一般是一些免责声明之类\\n发布策略:0表示上传为私有,1表示上传后立马公开2表示定时公开 当你选了2,可配合每日发布数量来自动设置对应视频公开的日期,起始日期默认为上传日期+1\\n频道名称:只是用来保存配置文件\\ncookie json:请使用浏览器插件导出并保存\\n2.第二步需要检查素材,因为目前上传逻辑中只有支持视频和缩略图名字一样才能进行上传\\n背景音乐批量替换:请设置好免费音乐所在文件夹,可先对1个视频处理,调节背景音乐音量为最佳效果\\n 3.点击上传即可', 'testsettingok': 'test config', 'testinstall': 'test install', 'testnetwork': 'test network', 'load_setting_file': 'load setting', 'docs': 'Read First', 'cookiejson': 'cookie json', 'proxySetting': 'proxy', 'profileFolder': 'profile folder', 'videoFolder': 'video folder', 'create_setting_file': 'new setting file', 'downVideoMetas': 'download metajson template', 'toolkits': 'toolkits', 'mode1': 'mode 1', 'mode2': 'mode 2', 'mode3': 'mode 3', 'channelName': 'channel name', 'offsetDays': 'days offset', 'dailyVideoLimit': 'daily publish count', 'publishPolicy': 'publish policy', 'bgMucisVolume': 'music volumn', 'descriptionSuffix': 'preferred des suffix', 'descriptionPrefix': 'preferred des prefix', 'preferTags': 'preferred tags', 'bgVideoFolder': 'free music folder', 'chooseCookie': 'select specific cookie file', 'chooseChannelSetting': 'select channel setting file'}, 'locale': 'en', 'folders': {'uploadaddaccounts': {}, 'scheduleView_video_folder': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon', 'thumbView_video_folder': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon'}}
+2023-10-12 23:54:11,034 - INFO - end to dump TiktokaStudio settings
+2023-10-12 23:54:45,987 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-10-12 23:54:45,987 - INFO - TiktokaStudio GUI started
+2023-10-12 23:54:46,324 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-10-12 23:54:46,324 - INFO - TiktokaStudio GUI started
+2023-10-12 23:54:58,731 - INFO - start to detecting video metas----------False
+2023-10-12 23:54:58,731 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon
+2023-10-12 23:54:58,737 - DEBUG - start to scan video file existence in the /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:54:58,738 - INFO - start to check thumbFilePaths for video: OP
+2023-10-12 23:54:58,738 - INFO - create a fresh OP meta json
+2023-10-12 23:54:58,739 - INFO - start to check desFilePaths for video: OP
+2023-10-12 23:54:58,740 - INFO - update to OP meta json
+2023-10-12 23:54:58,740 - INFO - start to check metaFilePaths for video: OP
+2023-10-12 23:54:58,741 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.json
+2023-10-12 23:54:58,741 - INFO - intial metaFilePaths for OP:
+
+2023-10-12 23:54:58,741 - INFO - update to OP meta json
+2023-10-12 23:54:58,742 - INFO - start to check tagFilePaths for video: OP
+2023-10-12 23:54:58,742 - INFO - update to OP meta json
+2023-10-12 23:54:58,743 - INFO - start to check scheduleFilePaths for video: OP
+2023-10-12 23:54:58,743 - INFO - update to OP meta json
+2023-10-12 23:54:58,745 - DEBUG - end to scan video file existence in the /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:54:58,746 - DEBUG - start to dump video metas for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:54:59,013 - DEBUG - end to dump video metas for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:54:59,014 - DEBUG - start to dump video assets for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:54:59,015 - DEBUG - end to dump video assets for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:54:59,056 - INFO - start to detecting video metas----------True
+2023-10-12 23:54:59,057 - INFO - we cached 311433000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon
+2023-10-12 23:54:59,057 - INFO - sync videos-meta
+2023-10-12 23:54:59,076 - DEBUG - start to check video file existence in the new metafile 
+2023-10-12 23:54:59,076 - INFO - video file is ok
+2023-10-12 23:54:59,076 - INFO - =111== <class 'UltraDict.UltraDict.UltraDict'>{'OP': {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.mp4', 'video_filename': 'OP', 'video_title': 'OP', 'heading': '', 'subheading': '', 'extraheading': '', 'video_description': 'OP', 'thumbnail_bg_image_path': '', 'publish_policy': 2, 'thumbnail_local_path': [], 'release_date': '', 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': '', 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': '', 'captions_certification': 0, 'video_film_date': '', 'video_film_location': '', 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': '', 'subtitles': '', 'tags': ''}}
+2023-10-12 23:54:59,076 - INFO - =222== <class 'UltraDict.UltraDict.UltraDict'>{'OP': {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.mp4', 'video_filename': 'OP', 'video_title': 'OP', 'heading': '', 'subheading': '', 'extraheading': '', 'video_description': 'OP', 'thumbnail_bg_image_path': '', 'publish_policy': 2, 'thumbnail_local_path': [], 'release_date': '', 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': '', 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': '', 'captions_certification': 0, 'video_film_date': '', 'video_film_location': '', 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': '', 'subtitles': '', 'tags': ''}}
+2023-10-12 23:54:59,076 - INFO - =555== <class 'UltraDict.UltraDict.UltraDict'>{'OP': {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.mp4', 'video_filename': 'OP', 'video_title': 'OP', 'heading': '', 'subheading': '', 'extraheading': '', 'video_description': 'OP', 'thumbnail_bg_image_path': '', 'publish_policy': 2, 'thumbnail_local_path': [], 'release_date': '', 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': '', 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': '', 'captions_certification': 0, 'video_film_date': '', 'video_film_location': '', 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': '', 'subtitles': '', 'tags': ''}}
+2023-10-12 23:54:59,078 - INFO - =5551== <class 'UltraDict.UltraDict.UltraDict'>{'OP': {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.mp4', 'video_filename': 'OP', 'video_title': 'OP', 'heading': None, 'subheading': None, 'extraheading': None, 'video_description': 'OP', 'thumbnail_bg_image_path': None, 'publish_policy': 2, 'thumbnail_local_path': '[]', 'release_date': None, 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': None, 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': None, 'captions_certification': 0, 'video_film_date': None, 'video_film_location': None, 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': None, 'subtitles': None, 'tags': None}}
+2023-10-12 23:54:59,079 - DEBUG - end to check video file existence in the new metafile 
+2023-10-12 23:54:59,079 - DEBUG - start to scan video file existence in the /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:54:59,079 - INFO - you have prepared video metas for:OP
+2023-10-12 23:54:59,079 - INFO - start to check thumbFilePaths for video: OP
+2023-10-12 23:54:59,079 - INFO - update to OP meta json
+2023-10-12 23:54:59,080 - INFO - start to check desFilePaths for video: OP
+2023-10-12 23:54:59,081 - INFO - update to OP meta json
+2023-10-12 23:54:59,082 - INFO - start to check metaFilePaths for video: OP
+2023-10-12 23:54:59,082 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.json
+2023-10-12 23:54:59,083 - INFO - update to OP meta json
+2023-10-12 23:54:59,084 - INFO - start to check tagFilePaths for video: OP
+2023-10-12 23:54:59,085 - INFO - update to OP meta json
+2023-10-12 23:54:59,086 - INFO - start to check scheduleFilePaths for video: OP
+2023-10-12 23:54:59,086 - INFO - update to OP meta json
+2023-10-12 23:54:59,088 - DEBUG - end to scan video file existence in the /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:54:59,088 - DEBUG - start to dump video metas for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:54:59,121 - DEBUG - end to dump video metas for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:54:59,122 - DEBUG - start to dump video assets for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:54:59,123 - DEBUG - end to dump video assets for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-12 23:56:27,236 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-10-12 23:56:27,384 - INFO - start to validate template
+2023-10-12 23:56:27,400 - INFO - validate thumbnail gen template passed
+2023-10-12 23:56:27,400 - INFO - start to validate metadata for thumbgen setting
+2023-10-12 23:56:27,480 - INFO - start to check ['heading', 'subheading', 'extraheading'] defined in template
+2023-10-12 23:56:27,481 - INFO - heading value is op-test in entry OP.
+2023-10-12 23:56:27,482 - INFO - subheading value is whohaah in entry OP.
+2023-10-12 23:56:27,482 - ERROR - extraheading value is empty in entry OP.
+2023-10-12 23:56:27,482 - ERROR - validate metadata for thumbgen setting failed
+2023-10-12 23:56:27,482 - INFO - start to validate bg folder
+2023-10-12 23:56:27,483 - INFO - bg folder image list :['/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/1920x1080/bg1.jpg', '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/1920x1080/bg2.jpg']
+2023-10-12 23:56:27,483 - INFO - Random assign bg:/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/1920x1080/bg1.jpg to  video:OP
+2023-10-12 23:56:27,484 - INFO - validate bg folder passed
+2023-10-12 23:56:59,060 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-10-12 23:56:59,061 - INFO - start to validate template
+2023-10-12 23:56:59,066 - INFO - validate thumbnail gen template passed
+2023-10-12 23:56:59,067 - INFO - start to validate metadata for thumbgen setting
+2023-10-12 23:56:59,121 - INFO - start to check ['heading', 'subheading', 'extraheading'] defined in template
+2023-10-12 23:56:59,122 - INFO - heading value is op-test in entry OP.
+2023-10-12 23:56:59,122 - INFO - subheading value is whohaah in entry OP.
+2023-10-12 23:56:59,122 - INFO - extraheading value is 4444 in entry OP.
+2023-10-12 23:56:59,122 - INFO - validate metadata for thumbgen setting passed
+2023-10-12 23:56:59,122 - INFO - start to update user submited metafile to video assets
+2023-10-12 23:56:59,123 - INFO - update user submited metafile to video assets passed
+2023-10-12 23:56:59,124 - INFO - start to validate bg folder
+2023-10-12 23:56:59,124 - INFO - bg folder image list :['/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/1920x1080/bg1.jpg', '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/1920x1080/bg2.jpg']
+2023-10-12 23:56:59,124 - INFO - Random assign bg:/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/1920x1080/bg1.jpg to  video:OP
+2023-10-12 23:56:59,124 - INFO - validate bg folder passed
+2023-10-12 23:57:02,204 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-10-12 23:57:02,205 - INFO - start to validate template
+2023-10-12 23:57:02,209 - INFO - validate thumbnail gen template passed
+2023-10-12 23:57:02,210 - INFO - start to validate metadata for thumbgen setting
+2023-10-12 23:57:02,260 - INFO - start to check ['heading', 'subheading', 'extraheading'] defined in template
+2023-10-12 23:57:02,260 - INFO - heading value is op-test in entry OP.
+2023-10-12 23:57:02,260 - INFO - subheading value is whohaah in entry OP.
+2023-10-12 23:57:02,260 - INFO - extraheading value is 4444 in entry OP.
+2023-10-12 23:57:02,260 - INFO - validate metadata for thumbgen setting passed
+2023-10-12 23:57:02,261 - INFO - start to update user submited metafile to video assets
+2023-10-12 23:57:02,261 - INFO - update user submited metafile to video assets passed
+2023-10-12 23:57:02,262 - INFO - start to validate bg folder
+2023-10-12 23:57:02,262 - INFO - bg folder image list :['/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/1920x1080/bg1.jpg', '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/1920x1080/bg2.jpg']
+2023-10-12 23:57:02,262 - INFO - Random assign bg:/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/1920x1080/bg2.jpg to  video:OP
+2023-10-12 23:57:02,262 - INFO - validate bg folder passed
+2023-10-12 23:57:02,392 - INFO - all fonts installed:['SimHei.ttf', 'Arial Unicode.ttf', '.uuid']
+2023-10-12 23:57:02,450 - INFO - all fonts installed:['SimHei.ttf', 'Arial Unicode.ttf', '.uuid']
+2023-10-13 00:06:53,610 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-10-13 00:06:53,629 - INFO - start to validate template
+2023-10-13 00:06:53,633 - INFO - validate thumbnail gen template passed
+2023-10-13 00:06:53,634 - INFO - start to validate metadata for thumbgen setting
+2023-10-13 00:06:53,688 - INFO - start to check ['heading', 'subheading', 'extraheading'] defined in template
+2023-10-13 00:06:53,689 - INFO - heading value is op-test in entry OP.
+2023-10-13 00:06:53,689 - INFO - subheading value is who is there in entry OP.
+2023-10-13 00:06:53,689 - INFO - extraheading value is 4444 in entry OP.
+2023-10-13 00:06:53,689 - INFO - validate metadata for thumbgen setting passed
+2023-10-13 00:06:53,690 - INFO - start to update user submited metafile to video assets
+2023-10-13 00:06:53,691 - INFO - update user submited metafile to video assets passed
+2023-10-13 00:06:53,691 - INFO - start to validate bg folder
+2023-10-13 00:06:53,691 - INFO - bg folder image list :['/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/1920x1080/bg1.jpg', '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/1920x1080/bg2.jpg']
+2023-10-13 00:06:53,691 - INFO - Random assign bg:/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/1920x1080/bg2.jpg to  video:OP
+2023-10-13 00:06:53,692 - INFO - validate bg folder passed
+2023-10-13 00:06:59,431 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-10-13 00:06:59,431 - INFO - start to validate template
+2023-10-13 00:06:59,436 - INFO - validate thumbnail gen template passed
+2023-10-13 00:06:59,436 - INFO - start to validate metadata for thumbgen setting
+2023-10-13 00:06:59,491 - INFO - start to check ['heading', 'subheading', 'extraheading'] defined in template
+2023-10-13 00:06:59,492 - INFO - heading value is op-test in entry OP.
+2023-10-13 00:06:59,492 - INFO - subheading value is who is there in entry OP.
+2023-10-13 00:06:59,492 - INFO - extraheading value is 4444 in entry OP.
+2023-10-13 00:06:59,492 - INFO - validate metadata for thumbgen setting passed
+2023-10-13 00:06:59,492 - INFO - start to update user submited metafile to video assets
+2023-10-13 00:06:59,493 - INFO - update user submited metafile to video assets passed
+2023-10-13 00:06:59,493 - INFO - start to validate bg folder
+2023-10-13 00:06:59,494 - INFO - bg folder image list :['/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/1920x1080/bg1.jpg', '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/1920x1080/bg2.jpg']
+2023-10-13 00:06:59,494 - INFO - Random assign bg:/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/1920x1080/bg2.jpg to  video:OP
+2023-10-13 00:06:59,494 - INFO - validate bg folder passed
+2023-10-13 00:06:59,611 - INFO - all fonts installed:['SimHei.ttf', 'Arial Unicode.ttf', '.uuid']
+2023-10-13 00:06:59,626 - INFO - all fonts installed:['SimHei.ttf', 'Arial Unicode.ttf', '.uuid']
+2023-10-13 00:08:41,517 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-10-13 00:08:41,518 - INFO - TiktokaStudio GUI started
+2023-10-13 00:08:41,914 - DEBUG - Installation path is:/Users/wenke/github/tiktoka-studio-uploader-app
+2023-10-13 00:08:41,914 - INFO - TiktokaStudio GUI started
+2023-10-13 00:09:22,969 - INFO - start to detecting video metas----------False
+2023-10-13 00:09:22,984 - INFO - create cached data for this folder:
+/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon
+2023-10-13 00:09:22,988 - INFO - sync videos-meta
+2023-10-13 00:09:23,297 - DEBUG - start to check video file existence in the new metafile 
+2023-10-13 00:09:23,297 - INFO - video file is ok
+2023-10-13 00:09:23,297 - INFO - =111== <class 'UltraDict.UltraDict.UltraDict'>{}
+2023-10-13 00:09:23,298 - INFO - =222== <class 'UltraDict.UltraDict.UltraDict'>{}
+2023-10-13 00:09:23,298 - INFO - =333== <class 'UltraDict.UltraDict.UltraDict'>{}
+2023-10-13 00:09:23,299 - INFO - =444== <class 'UltraDict.UltraDict.UltraDict'>{'OP': {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.mp4', 'video_filename': 'OP', 'video_title': 'OP', 'heading': 'op-test', 'subheading': 'who is there', 'extraheading': 4444, 'video_description': 'OP', 'thumbnail_bg_image_path': None, 'publish_policy': 2, 'thumbnail_local_path': '[]', 'release_date': '2023-10-13T00:00:00+00:00', 'release_date_hour': '19:45', 'is_not_for_kid': True, 'categories': None, 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': None, 'captions_certification': 0, 'video_film_date': None, 'video_film_location': None, 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': None, 'subtitles': None, 'tags': None}}
+2023-10-13 00:09:23,299 - DEBUG - end to check video file existence in the new metafile 
+2023-10-13 00:09:23,300 - DEBUG - start to scan video file existence in the /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-13 00:09:23,300 - INFO - you have prepared video metas for:OP
+2023-10-13 00:09:23,300 - INFO - start to check thumbFilePaths for video: OP
+2023-10-13 00:09:23,301 - INFO - update to OP meta json
+2023-10-13 00:09:23,302 - INFO - start to check desFilePaths for video: OP
+2023-10-13 00:09:23,303 - INFO - update to OP meta json
+2023-10-13 00:09:23,303 - INFO - start to check metaFilePaths for video: OP
+2023-10-13 00:09:23,304 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.json
+2023-10-13 00:09:23,304 - INFO - intial metaFilePaths for OP:
+
+2023-10-13 00:09:23,304 - INFO - update to OP meta json
+2023-10-13 00:09:23,305 - INFO - start to check tagFilePaths for video: OP
+2023-10-13 00:09:23,305 - INFO - update to OP meta json
+2023-10-13 00:09:23,306 - INFO - start to check scheduleFilePaths for video: OP
+2023-10-13 00:09:23,306 - INFO - update to OP meta json
+2023-10-13 00:09:23,310 - DEBUG - end to scan video file existence in the /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-13 00:09:23,310 - DEBUG - start to dump video metas for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-13 00:09:23,358 - DEBUG - end to dump video metas for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-13 00:09:23,359 - DEBUG - start to dump video assets for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-13 00:09:23,360 - DEBUG - end to dump video assets for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-13 00:09:23,394 - INFO - start to detecting video metas----------True
+2023-10-13 00:09:23,395 - INFO - we cached 85146000 seconds before for  this folder /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon
+2023-10-13 00:09:23,395 - INFO - sync videos-meta
+2023-10-13 00:09:23,410 - DEBUG - start to check video file existence in the new metafile 
+2023-10-13 00:09:23,411 - INFO - video file is ok
+2023-10-13 00:09:23,411 - INFO - =111== <class 'UltraDict.UltraDict.UltraDict'>{'OP': {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.mp4', 'video_filename': 'OP', 'video_title': 'OP', 'heading': 'op-test', 'subheading': 'who is there', 'extraheading': 4444, 'video_description': 'OP', 'thumbnail_bg_image_path': None, 'publish_policy': 2, 'thumbnail_local_path': '[]', 'release_date': '2023-10-13T00:00:00+00:00', 'release_date_hour': '19:45', 'is_not_for_kid': True, 'categories': None, 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': None, 'captions_certification': 0, 'video_film_date': None, 'video_film_location': None, 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': None, 'subtitles': None, 'tags': None}}
+2023-10-13 00:09:23,411 - INFO - =222== <class 'UltraDict.UltraDict.UltraDict'>{'OP': {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.mp4', 'video_filename': 'OP', 'video_title': 'OP', 'heading': 'op-test', 'subheading': 'who is there', 'extraheading': 4444, 'video_description': 'OP', 'thumbnail_bg_image_path': None, 'publish_policy': 2, 'thumbnail_local_path': '[]', 'release_date': '2023-10-13T00:00:00+00:00', 'release_date_hour': '19:45', 'is_not_for_kid': True, 'categories': None, 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': None, 'captions_certification': 0, 'video_film_date': None, 'video_film_location': None, 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': None, 'subtitles': None, 'tags': None}}
+2023-10-13 00:09:23,411 - INFO - =555== <class 'UltraDict.UltraDict.UltraDict'>{'OP': {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.mp4', 'video_filename': 'OP', 'video_title': 'OP', 'heading': 'op-test', 'subheading': 'who is there', 'extraheading': 4444, 'video_description': 'OP', 'thumbnail_bg_image_path': None, 'publish_policy': 2, 'thumbnail_local_path': '[]', 'release_date': '2023-10-13T00:00:00+00:00', 'release_date_hour': '19:45', 'is_not_for_kid': True, 'categories': None, 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': None, 'captions_certification': 0, 'video_film_date': None, 'video_film_location': None, 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': None, 'subtitles': None, 'tags': None}}
+2023-10-13 00:09:23,414 - INFO - =5551== <class 'UltraDict.UltraDict.UltraDict'>{'OP': {'video_local_path': '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.mp4', 'video_filename': 'OP', 'video_title': 'OP', 'heading': 'op-test', 'subheading': 'who is there', 'extraheading': 4444, 'video_description': 'OP', 'thumbnail_bg_image_path': None, 'publish_policy': 2, 'thumbnail_local_path': '[]', 'release_date': '2023-10-13T00:00:00+00:00', 'release_date_hour': '19:45', 'is_not_for_kid': True, 'categories': None, 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': None, 'captions_certification': 0, 'video_film_date': None, 'video_film_location': None, 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': None, 'subtitles': None, 'tags': None}}
+2023-10-13 00:09:23,416 - DEBUG - end to check video file existence in the new metafile 
+2023-10-13 00:09:23,416 - DEBUG - start to scan video file existence in the /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-13 00:09:23,416 - INFO - you have prepared video metas for:OP
+2023-10-13 00:09:23,417 - INFO - start to check thumbFilePaths for video: OP
+2023-10-13 00:09:23,417 - INFO - update to OP meta json
+2023-10-13 00:09:23,418 - INFO - start to check desFilePaths for video: OP
+2023-10-13 00:09:23,419 - INFO - update to OP meta json
+2023-10-13 00:09:23,420 - INFO - start to check metaFilePaths for video: OP
+2023-10-13 00:09:23,420 - INFO - this  metaFilePaths exist:
+ /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/OP.json
+2023-10-13 00:09:23,420 - INFO - update to OP meta json
+2023-10-13 00:09:23,421 - INFO - start to check tagFilePaths for video: OP
+2023-10-13 00:09:23,421 - INFO - update to OP meta json
+2023-10-13 00:09:23,422 - INFO - start to check scheduleFilePaths for video: OP
+2023-10-13 00:09:23,423 - INFO - update to OP meta json
+2023-10-13 00:09:23,425 - DEBUG - end to scan video file existence in the /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-13 00:09:23,425 - DEBUG - start to dump video metas for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-13 00:09:23,458 - DEBUG - end to dump video metas for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-13 00:09:23,458 - DEBUG - start to dump video assets for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-13 00:09:23,459 - DEBUG - end to dump video assets for /Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon 
+2023-10-13 00:09:41,129 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-10-13 00:09:41,130 - INFO - start to validate template
+2023-10-13 00:09:41,140 - INFO - validate thumbnail gen template passed
+2023-10-13 00:09:41,141 - INFO - start to validate metadata for thumbgen setting
+2023-10-13 00:09:41,196 - INFO - start to check ['heading', 'subheading', 'extraheading'] defined in template
+2023-10-13 00:09:41,196 - INFO - heading value is op-test in entry OP.
+2023-10-13 00:09:41,196 - INFO - subheading value is who is there in entry OP.
+2023-10-13 00:09:41,196 - INFO - extraheading value is 4444 in entry OP.
+2023-10-13 00:09:41,196 - INFO - validate metadata for thumbgen setting passed
+2023-10-13 00:09:41,197 - INFO - start to update user submited metafile to video assets
+2023-10-13 00:09:41,198 - INFO - update user submited metafile to video assets passed
+2023-10-13 00:09:41,198 - INFO - start to validate bg folder
+2023-10-13 00:09:41,199 - INFO - bg folder image list :['/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/1920x1080/bg1.jpg', '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/1920x1080/bg2.jpg']
+2023-10-13 00:09:41,199 - INFO - Random assign bg:/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/1920x1080/bg2.jpg to  video:OP
+2023-10-13 00:09:41,199 - INFO - validate bg folder passed
+2023-10-13 00:09:51,529 - INFO - start to load thumbnail gen setting json from::/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/vertical/template (9).json
+2023-10-13 00:09:51,529 - INFO - start to validate template
+2023-10-13 00:09:51,536 - INFO - validate thumbnail gen template passed
+2023-10-13 00:09:51,536 - INFO - start to validate metadata for thumbgen setting
+2023-10-13 00:09:51,588 - INFO - start to check ['heading', 'subheading', 'extraheading'] defined in template
+2023-10-13 00:09:51,589 - INFO - heading value is op-test in entry OP.
+2023-10-13 00:09:51,589 - INFO - subheading value is who is there in entry OP.
+2023-10-13 00:09:51,589 - INFO - extraheading value is 4444 in entry OP.
+2023-10-13 00:09:51,589 - INFO - validate metadata for thumbgen setting passed
+2023-10-13 00:09:51,589 - INFO - start to update user submited metafile to video assets
+2023-10-13 00:09:51,590 - INFO - update user submited metafile to video assets passed
+2023-10-13 00:09:51,590 - INFO - start to validate bg folder
+2023-10-13 00:09:51,591 - INFO - bg folder image list :['/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/1920x1080/bg1.jpg', '/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/1920x1080/bg2.jpg']
+2023-10-13 00:09:51,591 - INFO - Random assign bg:/Users/wenke/github/tiktoka-studio-uploader-app/tests/videos/horizon/1920x1080/bg1.jpg to  video:OP
+2023-10-13 00:09:51,592 - INFO - validate bg folder passed
+2023-10-13 00:09:51,714 - INFO - start to detect lang for op-test
+2023-10-13 00:09:51,717 - INFO - all fonts installed:['SimHei.ttf', 'Arial Unicode.ttf', '.uuid']
+2023-10-13 00:09:51,736 - INFO - start to detect lang for who is there
+2023-10-13 00:09:51,736 - INFO - all fonts installed:['SimHei.ttf', 'Arial Unicode.ttf', '.uuid']
+2023-10-13 00:09:51,755 - INFO - start to detect lang for 4444
