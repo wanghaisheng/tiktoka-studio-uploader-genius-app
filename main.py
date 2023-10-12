@@ -119,6 +119,7 @@ width=1024
 supported_video_exts=['.flv', '.mp4', '.avi']
 supported_thumb_exts=['.jpeg', '.png', '.jpg','webp']
 supported_des_exts=['.des', '.txt']
+supported_tag_exts=['.tag', '.txt']
 supported_meta_exts=['.json', '.xls','.xlsx','.csv']      
 
 # Logging configuration
@@ -1808,6 +1809,10 @@ def scanVideofiles(folder):
                                             ultra[folder]['videos'][filename]['thumbnail_local_path']=str(empt)
                                         else:
                                             ultra[folder]['videos'][filename]['thumbnail_local_path'].append(filepath)
+                                            
+                            # to-do 
+                            # supported_des_exts
+                            # supported_tag_exts
                             
                         if ultra[folder] ['videos'][filename]['thumbnail_local_path']:
                             if type(ultra[folder] ['videos'][filename]['thumbnail_local_path'])==str:
