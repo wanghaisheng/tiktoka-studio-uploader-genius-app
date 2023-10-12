@@ -722,6 +722,11 @@ def select_tabview_video_folder(folder_variable,cache_var):
             ultra[cache_var]=thumbView_video_folder_path         
             print(f"You chose {folder_variable.get()} for {cache_var}")
             tmp[cache_var]=folder_variable.get()
+            otherfolders=['thumbView_video_folder','tagView_video_folder','scheduleView_video_folder','desView_video_folder','metaView_video_folder']
+            for i in otherfolders.remove(folder_variable):
+                if i =='' or i is None:
+                    tmp[i]=folder_variable.get()
+            tmp['lastfodler']=folder_variable.get()
             print('==',tmp)
         else:
             print('please choose a valid video folder')
@@ -1490,7 +1495,11 @@ def isFilePairedMetas(r,videofilename,meta_exts_list,dict,meta_name):
                 dict[meta_name][videofilename].append(metapath)
                 print(f'append result:\n{dict[meta_name][videofilename]}')
                 if meta_name=='thumbFilePaths':
-                    dict['videos'][videofilename]['thumbnail_local_path'].append(metapath)
+                    print('=====',type(dict['videos'][videofilename]['thumbnail_local_path']),dict['videos'][videofilename]['thumbnail_local_path'])
+                    if dict['videos'][videofilename]['thumbnail_local_path'] is None:
+                        dict['videos'][videofilename]['thumbnail_local_path']=[].append(metapath)
+                    else:                   
+                        dict['videos'][videofilename]['thumbnail_local_path']=eval(dict['videos'][videofilename]['thumbnail_local_path']).append(metapath)
                 if meta_name=='desFilePaths':
                     with open(metapath,'r') as f:
                         contents=f.readlines()
@@ -1576,7 +1585,8 @@ def syncVideometa2assetsjson(selectedMetafileformat,folder):
             logger.info(f"we could not find any video, video counts is {ultra[folder] ['videoCounts']},supported ext includes:\n{'.'.join(supported_video_exts)}")
         # 遍历每个视频文件，核对视频文件、缩略图等文件是否存在，核对元数据中对应字段是否存在
         ultra[folder] ['videoCounts']=len(ultra[folder] ['filenames'])    
-        
+        print(f"during sync ,detected video counts {len(ultra[folder] ['filenames'])  }")
+
         ultra[folder]['updatedAt']=pd.Timestamp.now().value        
         logger.debug('end to check video file existence in the new metafile ')
 
@@ -1707,7 +1717,7 @@ def scanVideofiles(folder):
                                 "video_description":"",
                                     "thumbnail_bg_image_path": "",
                                 'publish_policy':2,
-                                "thumbnail_local_path":[],
+                                "thumbnail_local_path":'[]',
                                 "release_date":"",
                                 "release_date_hour":"10:15",
                                     "is_not_for_kid": True,
@@ -1754,15 +1764,17 @@ def scanVideofiles(folder):
                             ultra[folder] ['videos'][filename]['video_title']=filename
                             ultra[folder] ['videos'][filename]['video_filename']=filename
                             ultra[folder] ['videos'][filename]['video_description']=filename
+                            ultra[folder]['videos'][filename]['thumbnail_local_path']
                             
-                        if ultra[folder] ['videos'][filename]['thumbnail_local_path']!=[]:
-                            files=ultra[folder] ['videos'][filename]['thumbnail_local_path']
-                            start=False
-                            for i in files:
-                                if os.path.exists(i):      
-                                    start=True
-                            if start==True:                                  
-                                thumbMetaCounts+=1
+                        if ultra[folder] ['videos'][filename]['thumbnail_local_path'] is not None and ultra[folder] ['videos'][filename]['thumbnail_local_path'] !='[]':
+                            files=eval(ultra[folder]['videos'][filename]['thumbnail_local_path'])
+                            if len(files)>0:
+                                start=False
+                                for i in files:
+                                    if os.path.exists(i):      
+                                        start=True
+                                if start==True:                                  
+                                    thumbMetaCounts+=1
 
                         if ultra[folder] ['videos'][filename]['tags']!='':
                             tagMetaCounts+=1
@@ -1788,6 +1800,7 @@ def scanVideofiles(folder):
         logger.info(f"we could not find any video, video counts is {ultra[folder] ['videoCounts']},supported ext includes:\n{'.'.join(supported_video_exts)}")
     # 遍历每个视频文件，核对视频文件、缩略图等文件是否存在，核对元数据中对应字段是否存在
     ultra[folder] ['videoCounts']=len(ultra[folder] ['filenames'])    
+    print(f"detected video counts {len(ultra[folder] ['filenames']) }")
     ultra[folder] ['thumbFileCounts']=len(ultra[folder] ['thumbFilePaths'])
     ultra[folder] ['thumbMetaCounts']=thumbMetaCounts
 
@@ -2301,7 +2314,7 @@ def videosView(frame,ttkframe,lang):
     b_hiddenwatermark.place(x=500,y=int(height-250))
 
 def thumbView(left,right,lang):
-    # global thumbView_video_folder
+    global thumbView_video_folder
     thumbView_video_folder = tk.StringVar()
 
 
@@ -2312,7 +2325,13 @@ def thumbView(left,right,lang):
 
     e_video_folder = tk.Entry(left,textvariable=thumbView_video_folder)
     e_video_folder.grid(row = 0, column = 1, sticky='w', padx=14, pady=15)     
-
+    if thumbView_video_folder.get()!='':
+        if tmp['lastfolder'] is None or tmp['lastfolder']=='':
+            pass
+        else:            
+            if tmp['thumbView_video_folder'] is None:
+                thumbView_video_folder.set(tmp['lastfolder'])        
+            thumbView_video_folder.set(tmp['thumbView_video_folder'])    
 
     def e_video_folderCallBack(*args):
         print(f'we are dealing folder {thumbView_video_folder.get()}')
@@ -3295,6 +3314,10 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
 
                         for filename in  ultra[folder]['filenames']:
                             bgpath=random.choice(bg_images)
+                            if ultra[folder]['videos'][filename]['thumbnail_local_path'] is None:
+                                ultra[folder]['videos'][filename]['thumbnail_local_path']=[]
+                            
+                            
                             if  ultra[folder]['videos'][filename]['thumbnail_local_path'] in [[],'[]']:
                                 ultra[folder]['videos'][filename]['thumbnail_bg_image_path']=bgpath
                                 logger.info(f"Random assign bg:{bgpath} to  video:{filename}")
@@ -3398,7 +3421,14 @@ def genThumbnailFromTemplate(folder,thumbnail_template_file_path,mode_value,thum
         filename=video_id+ext
         # filename=video_id+"_"+str(result_image_width)+"x"+str(result_image_height)+ext
         outputpath=draw_text_on_image(video_info,thumb_gen_setting,result_image_width,result_image_height,render_style,output_folder,filename)
+        logger.info('start to add new gen thum to video meta')
+        if video_data[video_id]['thumbnail_local_path'] is None:
+            video_data[video_id]['thumbnail_local_path']=[]
+        video_data[video_id]['thumbnail_local_path']=eval(video_data[video_id]['thumbnail_local_path'])
+        print(f"before add thumb for video {video_id} is {video_data[video_id]['thumbnail_local_path']}")
         video_data[video_id]['thumbnail_local_path'].append(outputpath)
+        print(f"after add thumb for video {video_id} is {video_data[video_id]['thumbnail_local_path']}")
+        
         if result_image_width > result_image_height:
             basedir=output_folder+os.sep+'16-9'
             os.makedirs(basedir, exist_ok=True)
@@ -3416,7 +3446,7 @@ def genThumbnailFromTemplate(folder,thumbnail_template_file_path,mode_value,thum
                 result_image_height=int(result_image_height)
 
 
-                draw_text_on_image(video_info,thumb_gen_setting,result_image_width,result_image_height,render_style,output_folder,filename)
+                filepath=draw_text_on_image(video_info,thumb_gen_setting,result_image_width,result_image_height,render_style,output_folder,filename)
         else:
             # 9:16 aspect ratio    
             basedir=output_folder+os.sep+'9-16'
@@ -3433,9 +3463,17 @@ def genThumbnailFromTemplate(folder,thumbnail_template_file_path,mode_value,thum
                 result_image_width=int(result_image_width)
                 result_image_height=int(result_image_height)
 
-                draw_text_on_image(video_info,thumb_gen_setting,result_image_width,result_image_height,render_style,output_folder,filename)
+                filepath=draw_text_on_image(video_info,thumb_gen_setting,result_image_width,result_image_height,render_style,output_folder,filename)
+    logger.info('end to gen thumbnail')
+    logger.info('start to sync thumbnail meta to video meta file')
 
+    dumpMetafiles(ultra[folder]['metafileformat'],folder)
+    logger.info('end to sync gen thumbnail meta to video meta file')
 
+    logger.info('start to sync gen thumbnail meta to video assets file')
+    
+    syncVideometa2assetsjson(ultra[folder]['metafileformat'],folder)
+    logger.info('end to sync gen thumbnail meta to video assets file')
 
 def render_thumb_gen(frame,isneed,folder,selectedMetafileformat='json'):
     if isneed==True:
@@ -5479,7 +5517,13 @@ def metaView(left,right,lang):
 
     e_video_folder = tk.Entry(left,textvariable=metaView_video_folder)
     e_video_folder.grid(row = 0, column = 1, sticky='w', padx=14, pady=15)     
-    
+    if metaView_video_folder.get()!='':
+        if tmp['lastfolder'] is None or tmp['lastfolder']=='':
+            pass
+        else:            
+            if tmp['metaView_video_folder'] is None:
+                metaView_video_folder.set(tmp['lastfolder'])        
+            metaView_video_folder.set(tmp['metaView_video_folder'])   
     b_video_folder=tk.Button(left,text="Select",command=lambda: threading.Thread(target=select_tabview_video_folder(metaView_video_folder,'metaView_video_folder')).start() )
     b_video_folder.grid(row = 0, column = 2, sticky='w', padx=14, pady=15)       
 
@@ -5538,8 +5582,12 @@ def tagsView(left,right,lang):
     b_video_folder=tk.Button(left,text="Select",command=lambda: threading.Thread(target=select_tabview_video_folder(tagView_video_folder,'tagView_video_folder')).start() )
     b_video_folder.grid(row = 0, column = 2, sticky='w', padx=14, pady=15)  
     if tagView_video_folder.get()!='':
-        tmp['tagView_video_folder']=tagView_video_folder.get()
-
+        if tmp['lastfolder'] is None or tmp['lastfolder']=='':
+            pass
+        else:            
+            if tmp['tagView_video_folder'] is None:
+                tagView_video_folder.set(tmp['lastfolder'])        
+            tagView_video_folder.set(tmp['tagView_video_folder'])    
     b_open_video_folder=tk.Button(left,text="open local",command=lambda: threading.Thread(target=openLocal(tagView_video_folder.get())).start() )
     b_open_video_folder.grid(row = 0, column = 3, sticky='w', padx=14, pady=15)    
     Tooltip(b_open_video_folder, text='open video folder to find out files change' , wraplength=200)
@@ -5591,8 +5639,12 @@ def desView(left,right,lang):
     b_video_folder=tk.Button(left,text="Select",command=lambda: threading.Thread(target=select_tabview_video_folder(desView_video_folder,'desView_video_folder')).start() )
     b_video_folder.grid(row = 0, column = 2, sticky='w', padx=14, pady=15)    
     if desView_video_folder.get()!='':
-
-        tmp['desView_video_folder']=desView_video_folder.get()
+        if tmp['lastfolder'] is None or tmp['lastfolder']=='':
+            pass
+        else:            
+            if tmp['desView_video_folder'] is None:
+                desView_video_folder.set(tmp['lastfolder'])        
+            desView_video_folder.set(tmp['desView_video_folder'])   
     b_open_video_folder=tk.Button(left,text="open local",command=lambda: threading.Thread(target=openLocal(desView_video_folder.get())).start() )
     b_open_video_folder.grid(row = 0, column = 3, sticky='w', padx=14, pady=15)    
     Tooltip(b_open_video_folder, text='open video folder to find out files change' , wraplength=200)
@@ -5642,6 +5694,15 @@ def scheduleView(left,right,lang):
 
     e_video_folder = tk.Entry(left,textvariable=scheduleView_video_folder)
     e_video_folder.grid(row = 0, column = 1, sticky='w', padx=14, pady=15)     
+    print('===',type(scheduleView_video_folder.get()),scheduleView_video_folder.get())
+    if scheduleView_video_folder.get()=='':
+        print('herte===')
+        if tmp.has_key('lastfolder') and  tmp['lastfolder']=='':
+            if tmp['scheduleView_video_folder'] is None:
+                scheduleView_video_folder.set(tmp['lastfolder'])    
+        else:
+            if tmp.has_key('scheduleView_video_folder') and  tmp['scheduleView_video_folder']=='':
+                scheduleView_video_folder.set(tmp['scheduleView_video_folder'])  
     
     b_video_folder=tk.Button(left,text="Select",command=lambda: threading.Thread(target=select_tabview_video_folder(scheduleView_video_folder,'scheduleView_video_folder')).start() )
     b_video_folder.grid(row = 0, column = 2, sticky='w', padx=14, pady=15)       
@@ -5760,6 +5821,22 @@ def render(root,window,log_frame,lang):
     tab_control.bind("<<NotebookTabChanged>>", on_tab_change)
     tab_control.grid_columnconfigure(0, weight=1)
     tab_control.grid_columnconfigure(1, weight=1)
+
+    def refresh_video_folder(event):
+        if tab_control.index(tab_control.select()) == 4:
+            if thumbView_video_folder.get()!='':
+                if tmp['lastfolder'] is None or tmp['lastfolder']=='':
+                    pass
+                else:            
+                    if tmp['thumbView_video_folder'] is None:
+                        thumbView_video_folder.set(tmp['lastfolder'])        
+                    thumbView_video_folder.set(tmp['thumbView_video_folder'])  
+            
+        elif tab_control.index(tab_control.select()) == 5:
+            # scheduleView_video_folder.set('')  # Reset the value to an empty string
+            pass
+    tab_control.bind("<<NotebookTabChanged>>", refresh_video_folder)
+    
     # lefts=[]
     # rights=[]
     # for view in ['installView','accountView','proxyView','videosView','thumbView',
