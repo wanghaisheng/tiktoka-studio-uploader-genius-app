@@ -480,22 +480,15 @@ def docs(frame,lang):
     newWindow = tk.Toplevel(frame)
     newWindow.geometry(window_size)
     print('open docmentations')
-    label_helptext_setting = tk.Label(newWindow, text = i18labels("docs_str", locale='en', module="g").replace('\\n','\n'),justify='left', wraplength=450)
+    label_helptext_setting = tk.Label(newWindow, text = settings[locale]['docs_str'].replace('\\n','\n'),justify='left', wraplength=450)
     label_helptext_setting.pack()
     
 def version(frame,lang):
     newWindow = tk.Toplevel(frame)
     newWindow.geometry(window_size)
-    # print(type(i18labels("version_str", locale='en', module="g")))
-    # print(str(i18labels("version_str", locale='en', module="g")))
-    # if '\\n' in i18labels("version_str", locale='en', module="g"):
-    print('111111111111')
-    # print(type("First line\n and this is the second"))
-    # print("First line\n and this is the second")
-    # if '\n' in "First line\n and this is the second":
-    #     print('22222222222')    
+
     label_helptext_setting = tk.Label(newWindow, 
-                                      text = i18labels("version_str", locale='en', module="g").replace('\\n','\n'),
+                                      text = settings[locale]['version_str'].replace('\\n','\n'),
                                     #   text = "First line\n and this is the second",
                                       justify='left')
     label_helptext_setting.pack()
@@ -505,10 +498,10 @@ def contact(frame,lang):
     newWindow = tk.Toplevel(frame)
     newWindow.geometry(window_size)
     # due to \n in json string should in \\n, so read it from json  need to convert to original 
-    label_helptext_setting = tk.Label(newWindow, text = i18labels("contact_str", locale=lang, module="g").replace('\\n','\n'),anchor='e',justify='left', wraplength=450)
+    label_helptext_setting = tk.Label(newWindow, text =settings[locale]['contact_str'].replace('\\n','\n'),anchor='e',justify='left', wraplength=450)
     label_helptext_setting.pack()
 
-    group = tk.Label(newWindow, text =i18labels("contact_str_group", locale=lang, module="g"),anchor='e',justify='left')
+    group = tk.Label(newWindow, text =settings[locale]['contact_str_group'],anchor='e',justify='left')
     group.pack()
     path_group = './assets/feishu-chatgroup.jpg'
     img_group = Image.open(path_group)
@@ -517,7 +510,7 @@ def contact(frame,lang):
     label_group = tk.Label(newWindow,image=photo_group,height=400, width=256)
     label_group.pack()
 
-    personal = tk.Label(newWindow, text = i18labels("contact_str_personal", locale=lang, module="g").replace('\\n','\n'),anchor='e',justify='left')
+    personal = tk.Label(newWindow, text = settings[locale]['contact_str_personal'].replace('\\n','\n'),anchor='e',justify='left')
     personal.pack()
     path_personal = './assets/wechat.jpg'
     img_personal = Image.open(path_personal)
@@ -4930,21 +4923,22 @@ def uploadView(frame,ttkframe,lang):
 
         
     
-    b_down_video_metas_temp = tk.Button(frame, text=settings[lang]['createTaskMetas'],
+    b_create_task_metas = tk.Button(frame, text=settings[lang]['b_createTaskMetas'],
                                          command=lambda: threading.Thread(target=createTaskMetas(frame,ttkframe)).start())
-    b_down_video_metas_temp.grid(row = 0, column = 0, columnspan=2,padx=14, pady=15,sticky='w')
-    
+    b_create_task_metas.grid(row = 0, column = 0, columnspan=2,padx=14, pady=15,sticky='w')
+    Tooltip(b_create_task_metas, text=settings[lang]['t_createTaskMetas'], wraplength=200)
 
-    b_editVideoMetas = tk.Button(frame, text=settings[lang]['editTaskMetas'], command=
+
+    b_down_video_metas_temp = tk.Button(frame, text=settings[lang]['b_editTaskMetas'], command=
                                 #  lambda: webbrowser.open_new("https://jsoncrack.com/editor")
                                  lambda: threading.Thread(target=webbrowser.open_new("https://jsoncrack.com/editor")).start())
-    b_editVideoMetas.grid(row = 0, column = 1, padx=14, pady=15,sticky='w')
+    b_down_video_metas_temp.grid(row = 0, column = 1, padx=14, pady=15,sticky='w')
     
 
 
-    l_import_task_metas = tk.Label(frame, text=settings[lang]['importTaskMetas'])
+    l_import_task_metas = tk.Label(frame, text=settings[lang]['l_importTaskMetas'])
     l_import_task_metas.grid(row = 2, column = 0, padx=14, pady=15,sticky='w')
-    Tooltip(l_import_task_metas, text='import task meta  file,support json excel csv' , wraplength=200)
+    Tooltip(l_import_task_metas, text=settings[lang]['t_importTaskMetas'] , wraplength=200)
 
     b_imported_video_metas_file=tk.Button(frame,text="Select",command=lambda:SelectMetafile('taskmetafilepath',imported_task_metas_file))
     b_imported_video_metas_file.grid(row = 2, column = 2, padx=14, pady=15)

@@ -26,6 +26,11 @@
 	"helpcenter":"helpcenter",
 	"l_platform":"platform",
 	"l_metafileformat":"fileformat",
+	"b_editTaskMetas":"edit task file",
+	"l_importTaskMetas":"import task file",
+	"t_importTaskMetas":"import task file,json excel csv",
+	"b_createTaskMetas":"New task",
+	"t_createTaskMetas":"New task from video file or folder",
 
 	"username": "username",
 	"password": "password",
