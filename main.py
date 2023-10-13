@@ -123,14 +123,14 @@ supported_tag_exts=['.tags']
 supported_schedule_exts=['.schedule']
 supported_meta_exts=['.json', '.xls','.xlsx','.csv']      
 
-# Logging configuration
-logging.basicConfig(filename='test.log',
-    level=logging.DEBUG, 
-    format='%(asctime)s - %(levelname)s - %(message)s')        
+
 
 # Add the handler to logger
+logging.basicConfig(filename='test.log',
+    level=logging.DEBUG, 
+    format='%(asctime)s - %(levelname)s - %(message)s')   
+logger = logging.getLogger()    
 
-logger = logging.getLogger()         
 checkvideopaircounts=0
 checkvideocounts=0
 test_engine=createEngine('test')
@@ -250,6 +250,7 @@ class QueueHandler(logging.Handler):
         self.log_queue = log_queue
 
     def emit(self, record):
+
         self.log_queue.put(record)
         
 
@@ -292,6 +293,33 @@ class ConsoleUi:
         formatter = logging.Formatter('%(asctime)s: %(message)s')
         self.queue_handler.setFormatter(formatter)
         logger.addHandler(self.queue_handler)
+        # level='debug'
+        # level=level.lower()
+        # if level=='debug':
+        #     # Logging configuration
+        #     logging.basicConfig(filename='test.log',
+        #         level=logging.DEBUG, 
+        #         format='%(asctime)s - %(levelname)s - %(message)s')    
+        # elif level=='info':
+        #     # Logging configuration
+        #     logging.basicConfig(filename='test.log',
+        #         level=logging.INFO, 
+        #         format='%(asctime)s - %(levelname)s - %(message)s')              
+        # elif level=='WARNING':
+        #     # Logging configuration
+        #     logging.basicConfig(filename='test.log',
+        #         level=logging.WARNING, 
+        #         format='%(asctime)s - %(levelname)s - %(message)s')   
+        # elif level=='ERROR':
+        #     # Logging configuration
+        #     logging.basicConfig(filename='test.log',
+        #         level=logging.ERROR, 
+        #         format='%(asctime)s - %(levelname)s - %(message)s')   
+        # elif level=='CRITICAL':
+        #     # Logging configuration
+        #     logging.basicConfig(filename='test.log',
+        #         level=logging.CRITICAL, 
+        #         format='%(asctime)s - %(levelname)s - %(message)s')   
         # Start polling messages from the queue
         self.frame.after(100, self.poll_log_queue)
     def clear_text(self):
@@ -5078,7 +5106,7 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
                                                             
             lab.grid(row=10,column=2, sticky=tk.W)        
             lab.after(5*1000,lab.destroy)    
-def validateTaslMetafile(engine,ttkframe,metafile):
+def validateTaskMetafile(engine,ttkframe,metafile):
     logger.info('load task metas to database .create upload task for each video')
     print('load task meta')
 
@@ -5579,9 +5607,9 @@ def uploadView(frame,ttkframe,lang):
     e_imported_video_metas_file.grid(row = 2, column = 1, padx=14, pady=15)
 
   
-    b_validate_video_metas = tk.Button(frame, text=i18labels("validateVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=validateTaslMetafile(test_engine,ttkframe,imported_task_metas_file.get())).start())
+    b_validate_video_metas = tk.Button(frame, text=i18labels("validateVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=validateTaskMetafile(test_engine,ttkframe,imported_task_metas_file.get())).start())
     b_validate_video_metas.grid(row = 4, column = 0, padx=14, pady=15)
-    b_createuploadsession = tk.Button(frame, text=i18labels("createuploadsession", locale=lang, module="g"), command=lambda: threading.Thread(target=validateTaslMetafile(prod_engine,ttkframe,imported_task_metas_file.get())).start())
+    b_createuploadsession = tk.Button(frame, text=i18labels("createuploadsession", locale=lang, module="g"), command=lambda: threading.Thread(target=validateTaskMetafile(prod_engine,ttkframe,imported_task_metas_file.get())).start())
     b_createuploadsession.grid(row = 5, column = 0, padx=14, pady=15)
 
     # test upload  跳转到一个单独页面，录入一个视频的上传信息，点击上传进行测试。
@@ -6212,13 +6240,16 @@ def logView(log_tab_frame,log_frame,root,lang):
     debugLevel = tk.StringVar()
 
     debugLevel.set("Debug Level:")
-    def browserTypeCallBack(*args):
+    def debugLevelCallBack(*args):
         print(debugLevel.get())
         print(debugLevelbox.current())
+        st =ConsoleUi(log_tab_frame,root,row=1,column=0)
+
     def log_filterCallBack(*args):
         print(log_filter.get())
+        st =ConsoleUi(log_tab_frame,root,row=1,column=0)
 
-    debugLevel.trace('w', browserTypeCallBack)
+    debugLevel.trace('w', debugLevelCallBack)
 
     debugLevelbox = ttk.Combobox(log_tab_frame, textvariable=debugLevel)
     debugLevelbox.config(values = ('DEBUG', 'INFO','ERROR'))
@@ -6717,24 +6748,12 @@ def all_children (window) :
 
     return _list
 def changeDisplayLang(lang):
-    # widget_list = all_children(mainwindow)
-    # for item in widget_list:
-    #     print('233,',item)
-    #     item.pack_forget()     
+  
     mainwindow.destroy()
-    # del text_handler   
 
-    # widget_list = all_children(log_frame)
-    # for item in widget_list:
-    #     print('234,',item)
-    #     item.pack_forget()    
-    # log_frame= None
     log_frame.destroy()
     
-    # widget_list = all_children(paned_window)
-    # for item in widget_list:
-    #     print('235,',item)
-    #     item.pack_forget()        
+       
     paned_window.destroy()
     
     

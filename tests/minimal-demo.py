@@ -304,8 +304,9 @@ def withdraw_window():
 def changeDisplayLang(lang):
 
     mainwindow.destroy()
-    # st.destroy()
-    del st
+    # try:
+        # st.destroy()
+    # del st
     log_frame.destroy()
     paned_window.destroy()
     # root.quit()    
