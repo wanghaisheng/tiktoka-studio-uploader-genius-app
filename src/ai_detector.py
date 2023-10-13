@@ -1,4 +1,4 @@
-from  import VideoManager, SceneManager, StatsManager
+from scenedetect import VideoManager, SceneManager, StatsManager
 from scenedetect.detectors import ContentDetector
 from scenedetect.scene_manager import save_images, write_scene_list_html
 import os
