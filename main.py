@@ -1,51 +1,7 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 import threading
-from moviepy.video.io.VideoFileClip import VideoFileClip
-from moviepy.video.VideoClip import ImageClip
-from moviepy.video.compositing.CompositeVideoClip import CompositeVideoClip
-from moviepy.audio.io.AudioFileClip import AudioFileClip
-from moviepy.audio.AudioClip import AudioClip
-from moviepy.editor import concatenate_videoclips,concatenate_audioclips,TextClip,CompositeVideoClip
-from moviepy.video.fx.accel_decel import accel_decel
-from moviepy.video.fx.blackwhite import blackwhite
-from moviepy.video.fx.blink import blink
-from moviepy.video.fx.colorx import colorx
-from moviepy.video.fx.crop import crop
-from moviepy.video.fx.even_size import even_size
-from moviepy.video.fx.fadein import fadein
-from moviepy.video.fx.fadeout import fadeout
-from moviepy.video.fx.freeze import freeze
-from moviepy.video.fx.freeze_region import freeze_region
-from moviepy.video.fx.gamma_corr import gamma_corr
-from moviepy.video.fx.headblur import headblur
-from moviepy.video.fx.invert_colors import invert_colors
-from moviepy.video.fx.loop import loop
-from moviepy.video.fx.lum_contrast import lum_contrast
-from moviepy.video.fx.make_loopable import make_loopable
-from moviepy.video.fx.margin import margin
-from moviepy.video.fx.mask_and import mask_and
-from moviepy.video.fx.mask_color import mask_color
-from moviepy.video.fx.mask_or import mask_or
-from moviepy.video.fx.mirror_x import mirror_x
-from moviepy.video.fx.mirror_y import mirror_y
-from moviepy.video.fx.painting import painting
-from moviepy.video.fx.resize import resize
-from moviepy.video.fx.rotate import rotate
-from moviepy.video.fx.scroll import scroll
-from moviepy.video.fx.speedx import speedx
-from moviepy.video.fx.supersample import supersample
-from moviepy.video.fx.time_mirror import time_mirror
-from moviepy.video.fx.time_symmetrize import time_symmetrize
 
-from moviepy.audio.fx.audio_fadein import audio_fadein
-from moviepy.audio.fx.audio_fadeout import audio_fadeout
-from moviepy.audio.fx.audio_left_right import audio_left_right
-from moviepy.audio.fx.audio_loop import audio_loop
-from moviepy.audio.fx.audio_normalize import audio_normalize
-from moviepy.audio.fx.volumex import volumex
-import moviepy.audio.fx.all  as afx
-import moviepy.video.fx.all as vfx
 # here put the import lib
 from jsonschema import validate
 from jsonschema import ValidationError
@@ -67,6 +23,7 @@ import concurrent
 from glob import glob
 from src.dbmanipulation import *
 from src.UploadSession import *
+from src.bg_music import using_free_music
 from PIL import Image,ImageTk
 import multiprocessing as mp
 from src.upload import *
@@ -93,26 +50,22 @@ from pystray import MenuItem as item
 import pystray
 
 from UltraDict import UltraDict
-ultra = UltraDict(recurse=True)
-tmp = UltraDict(recurse=True)
+
 
 if platform.system()=='Windows':
 
     ultra = UltraDict(shared_lock=True,recurse=True)
     tmp = UltraDict(shared_lock=True,recurse=True)
+else:
+    ultra = UltraDict(recurse=True)
+    tmp = UltraDict(recurse=True)    
 ROOT_DIR = os.path.dirname(
     os.path.abspath(__file__)
 )
 
-config = {
-    "load_path": "./locales", # 指定在 /locales 下找对应的翻译 json文件
-    "default_module": "global", # 指定默认的全局模块，你可以为比如用户模块，订单模块单独设置翻译，如果不指定 module 则会去全局模块查找。
-}
 videoassetsfilename='videos-assets.json'
 settingfilename='settings.json'
-a_i18n = Ai18n(locales=["en", "zh"], config=config)
 locale='en'
-i18labels= a_i18n.translate
 window_size='1024x720'
 height=720
 width=1024
@@ -131,113 +84,11 @@ logging.basicConfig(filename='test.log',
     format='%(asctime)s - %(levelname)s - %(message)s')   
 logger = logging.getLogger()    
 
-checkvideopaircounts=0
-checkvideocounts=0
 test_engine=createEngine('test')
 prod_engine=createEngine('prod')
 window=None
-# after import or define a_i18n and t
-# add translation dictionary manually.
-# dbname = "reddit_popular"
-# Open the database and make sure there is a table with appopriate indices
-availableScheduleTimes = [
-"0:00",
-"0:15",
-"0:30",
-"0:45",
-"1:00",
-"1:15",
-"1:30",
-"1:45",
-"2:00",
-"2:15",
-"2:30",
-"2:45",
-"3:00",
-"3:15",
-"3:30",
-"3:45",
-"4:00",
-"4:15",
-"4:30",
-"4:45",
-"5:00",
-"5:15",
-"5:30",
-"5:45",
-"6:00",
-"6:15",
-"6:30",
-"6:45",
-"7:00",
-"7:15",
-"7:30",
-"7:45",
-"8:00",
-"8:15",
-"8:30",
-"8:45",
-"9:00",
-"9:15",
-"9:30",
-"9:45",
-"10:00",
-"10:15",
-"10:30",
-"10:45",
-"11:00",
-"11:15",
-"11:30",
-"11:45",
-"12:00",
-"12:15",
-"12:30",
-"12:45",
-"13:00",
-"13:15",
-"13:30",
-"13:45",
-"14:00",
-"14:15",
-"14:30",
-"14:45",
-"15:00",
-"15:15",
-"15:30",
-"15:45",
-"16:00",
-"16:15",
-"16:30",
-"16:45",
-"17:00",
-"17:15",
-"17:30",
-"17:45",
-"18:00",
-"18:15",
-"18:30",
-"18:45",
-"19:00",
-"19:15",
-"19:30",
-"19:45",
-"20:00",
-"20:15",
-"20:30",
-"20:45",
-"21:00",
-"21:15",
-"21:30",
-"21:45",
-"22:00",
-"22:15",
-"22:30",
-"22:45",
-"23:00",
-"23:15",
-"23:30",
-"23:45"] 
 
+availableScheduleTimes =[]
 
 class QueueHandler(logging.Handler):
     """Class to send logging records to a queue
@@ -527,186 +378,8 @@ def load_setting():
                 settings = UltraDict(recurse=True)
 
         settings['lastuselang']='en'
-        settings['zh']={
-                "title": "TiktokaStudio 视频批量上传助手测试版",
-                "select_musics_folder": "选择背景音樂文件夹",
-                "select_videos_folder": "选择视频文件夹",
-                "setups": "安装配置",
-                "select_cookie_file": "选择cookie json",
-                "select_profile_folder": "选择profile文件夹",
-                "settings": "配置",
-                "createuploadsession": "创建上传任务",
-                "autothumb": "自动生成缩略图",
-                "testupload": "开始上传前測試",
-                "videosMenu": "视频管理",
-                "docView": "帮助",		
-                "installView": "安装配置",
-                "accountView": "账号",
-                "proxyView": "代理",
-                "thumbView": "缩略图",
-                "logView": "日志",
-
-                "videosView": "视频",
-                "metaView": "元数据",
-                "uploadView": "上传",
-                "tagsView": "标签",
-                "desView": "视频描述",
-                "scheduleView": "发布日期",
-
-                "loglevel": "loglevel",
-
-                "upload": "开始上传",
-                "batchchangebgmusic": "批量替换背景音乐",
-                "is_open_browser": "静默模式",
-                "is_record_video": "录像模式",
-                "debug": "开启日志",
-                "start_loading_setting": "开始读取最近保存的配置文件",
-                "loading_default_setting": "读取配置文件失败 加载默认模版",
-
-                "hiddenwatermark": "添加隐形水印",
-                
-                "downVideoMetas":"下载视频元信息json模板",
-                "toolkits":"工具箱",
-                "mode1":"模式1",
-                "mode2":"模式2",
-                "mode3":"模式3",
-                "default_release_hour":'10:15',
-                
-                "save_setting": "保存配置",
-                "testsettingok": "测试配置",
-                "testnetwork": "测试网络",
-                "version":"版本",
-                "version_str":"V0.1.16\\n1.source code for this GUI:https://github.com/wanghaisheng/tiktoka-studio-uploader-app \\n2.core lib for this GUI: https://github.com/wanghaisheng/tiktoka-studio-uploader",
-
-                "docs":"说明文档",
-                "docs_str":"安装配置篇\\n1.安装\\n2.配置\\n导入默认配置后可以通过测试网络、测试安装、测试配置文件来知晓具体情况\\n1.从文件夹生成视频元数据规则\\n r1:尝试使用ffmpeg读取视频元数据,从其中获取视频标题、描述、制作日期、制作地点、字幕文件等信息。\\n r2:r1未命中则读取文件名称作为视频名称,如果视频名称超过20个字符,则将视频名称作为视频描述\\n r3:如果存在字幕文件,尝试从字幕总结出视频描述,如果不存在多语种字幕，尝试使用外部工具翻译多语种字幕\\n r4:如果存在同名的图片文件,则将其作为缩略图，如果没有则使用自动提取关键帧工具生成缩略图底图供后续封面图生成使用\\n r5:如果设置了每日发布的数量，则自动按照数量从次日起安排视频定时公开的日期\\n如果没有设置每日发布的数量，则根据发布策略的值来决定视频是立即公开还是私有发布。1.如果是多个账户,你需要为每个账号准备一个cookie,然后每个账户配置一个单独的配置文件\\n2.安装浏览器插件Cookie-Editor,登录youtube,导出cookie3.免版权的音乐可以在\\nhttps://icons8.com/music/\\n=====================\\n1.首次使用请选择对应的配置模板,比如默认private、public和schedule,文件路径为软件安装路径下的assets/config/setting-template.json,请按照自己的情况修改,修改完成后点击保存\\n文件和文件夹 你可以通过菜单里的浏览器配置、视频素材来点选,你也可以自行在文本框中填写\\n首选标签：这一批上传的视频我们想设置一些通用的标签,在这里设置,其他的标签请放在视频文件名中即可\\n视频描述前缀:一般而言频道的视频描述都会有个模板,类似作文里总分总结构\\n视频描述后缀:一般是一些免责声明之类\\n发布策略:0表示上传为私有,1表示上传后立马公开2表示定时公开 当你选了2,可配合每日发布数量来自动设置对应视频公开的日期,起始日期默认为上传日期+1\\n频道名称:只是用来保存配置文件\\ncookie json:请使用浏览器插件导出并保存\\n2.第二步需要检查素材,因为目前上传逻辑中只有支持视频和缩略图名字一样才能进行上传\\n背景音乐批量替换:请设置好免费音乐所在文件夹,可先对1个视频处理,调节背景音乐音量为最佳效果\\n 3.点击上传即可",
-                "contact":"联系我",
-                "contact_str":"1.发送邮件到admin@tiktokastudio.com\\n",
-
-                "contact_str_group":"2.扫码加入讨论组参与讨论",
-                "contact_str_personal":"3.特殊情况,299元红包可添加私人微信",
-                "chooseLang": "语言:",
-                "genVideoMetas":"从视频文件夹生成视频元信息",
-                "helpcenter":"帮助中心",
-                "importVideoMetas":"导入视频元数据文件,支持json excel csv",
-                "importTaskMetas":"导入任务元数据文件,支持json excel csv",
-                "createTaskMetas":"新建任务元数据文件,支持json excel csv",
-
-                "validateVideoMetas":"验证视频元信息json文件",
-                "editVideoMetas":"纯手动编辑视频元信息json文件",
-                "username": "账号名称",
-                "password": "账号密码",
-
-                "testinstall": "测试安装",
-                "load_setting_file": "加载配置文件",
-                "create_setting_file": "新建配置文件",
-
-                "cookiejson": "cookie json 文件",
-                "proxySetting": "代理配置",
-                "profileFolder": "profile文件夹",
-                "videoFolder": "视频文件夹",
-                "channelName": "频道名称",
-                "offsetDays": "起始发布日期-当日(天数)",
-                "dailyVideoLimit": "每日公开视频数量",
-                "publishPolicy": "发布策略",
-                "bgMucisVolume": "背景音乐音量",
-                "descriptionSuffix": "视频描述后缀",
-                "descriptionPrefix": "视频描述前缀",
-                "preferTags": "首选标签",
-                "bgVideoFolder": "背景音乐文件夹",
-                "chooseCookie": "请选择该频道对应cookie文件",
-                "chooseChannelSetting": "请选择该频道配置文件"
-            }
-        # json.loads(open(os.path.join(ROOT_DIR+os.sep+'locales','zh.json'), 'r', encoding='utf-8').read())
-        settings['en']={
-	"title": "TiktokaStudio Video Bulk Upload GUI Demo",
-	"select_musics_folder''": "choose music folder",
-	"select_videos_folder": "choose video folder",
-	"setups": "setups",
-	"select_cookie_file": "choose cookie json",
-	"select_profile_folder": "choose profile folder",
-	"settings": "settings",
-	"createuploadsession": "create uploadsession",
-	"autothumb": "auto thumbnail",
-	"testupload": "test video upload ",
-	"videosMenu": "视频管理",
-	"docView": "Docs",		
-	"installView": "Setup",
-	"accountView": "Accounts",
-	"proxyView": "Proxies",
-	"thumbView": "Thumbnails",
-	"videosView": "Videos",
-	"metaView": "Metas",
-	"uploadView": "Upload",
-	"upload": "start upload",
-	"batchchangebgmusic": "batch replace audio",
-	"is_open_browser": "silent mode",
-	"is_record_video": "recording",
-	"genVideoMetas":"gen  video metas",
-	"helpcenter":"helpcenter",
-
-	"username": "username",
-	"password": "password",
-	"save_setting": "save config",
-	"chooseLang": "Lang",
-	"contact":"contact",
-	"contact_str":"1.Email send to admin@tiktokastudio.com\\n",
-	"debug": "debug",
-	"loglevel": "loglevel",
-	"validateVideoMetas":"validate meta json",
-	"logView": "Logs",
-	"tagsView": "tags",
-	"desView": "des",
-	"scheduleView": "schedule",
-	"default_release_hour":'10:15',
-    "importVideoMetas":"import video meta",
-
-    "importVideoMetasToolip":"import video meta  file,support json excel csv",
-    "importTaskMetas":"import task file",    
-    "importTaskMetasToolip":"import task file",    
-
-	"editTaskMetas":"edit task meta file",    
-	"editTaskMetasToolip":"edit task meta file,support json excel csv",    
-
-    "createTaskMetas":"New task file",
-    "createTaskMetasToolip":"新建任务元数据文件,支持json excel csv",
-
-	"start-loading-setting": "start loading latest used setting file",
-	"loading-default-setting": "loading failed,use default setting template",
-	"contact_str_group":"2.Join discussion group",
-	"contact_str_personal":"3.Pay $99 to add personal wechat",
-	"version":"version",
-	"version_str":"V0.1.16\\n1.source code for this GUI:https://github.com/wanghaisheng/tiktoka-studio-uploader-app \\n2.core lib for this GUI: https://github.com/wanghaisheng/tiktoka-studio-uploader",
-	"hiddenwatermark": "add hidden watermark",
-	"docs_str":"安装配置篇\\n1.安装\\n2.配置\\n导入默认配置后可以通过测试网络、测试安装、测试配置文件来知晓具体情况\\n1.从文件夹生成视频元数据规则\\n r1:尝试使用ffmpeg读取视频元数据,从其中获取视频标题、描述、制作日期、制作地点、字幕文件等信息。\\n r2:r1未命中则读取文件名称作为视频名称,如果视频名称超过20个字符,则将视频名称作为视频描述\\n r3:如果存在字幕文件,尝试从字幕总结出视频描述,如果不存在多语种字幕，尝试使用外部工具翻译多语种字幕\\n r4:如果存在同名的图片文件,则将其作为缩略图，如果没有则使用自动提取关键帧工具生成缩略图底图供后续封面图生成使用\\n r5:如果设置了每日发布的数量，则自动按照数量从次日起安排视频定时公开的日期\\n如果没有设置每日发布的数量，则根据发布策略的值来决定视频是立即公开还是私有发布。1.如果是多个账户,你需要为每个账号准备一个cookie,然后每个账户配置一个单独的配置文件\\n2.安装浏览器插件Cookie-Editor,登录youtube,导出cookie3.免版权的音乐可以在\\nhttps://icons8.com/music/\\n=====================\\n1.首次使用请选择对应的配置模板,比如默认private、public和schedule,文件路径为软件安装路径下的assets/config/setting-template.json,请按照自己的情况修改,修改完成后点击保存\\n文件和文件夹 你可以通过菜单里的浏览器配置、视频素材来点选,你也可以自行在文本框中填写\\n首选标签：这一批上传的视频我们想设置一些通用的标签,在这里设置,其他的标签请放在视频文件名中即可\\n视频描述前缀:一般而言频道的视频描述都会有个模板,类似作文里总分总结构\\n视频描述后缀:一般是一些免责声明之类\\n发布策略:0表示上传为私有,1表示上传后立马公开2表示定时公开 当你选了2,可配合每日发布数量来自动设置对应视频公开的日期,起始日期默认为上传日期+1\\n频道名称:只是用来保存配置文件\\ncookie json:请使用浏览器插件导出并保存\\n2.第二步需要检查素材,因为目前上传逻辑中只有支持视频和缩略图名字一样才能进行上传\\n背景音乐批量替换:请设置好免费音乐所在文件夹,可先对1个视频处理,调节背景音乐音量为最佳效果\\n 3.点击上传即可",
-	"testsettingok": "test config",
-	"testinstall": "test install",
-	"testnetwork": "test network",
-	"load_setting_file": "load setting",
-	"docs": "Read First",
-	"cookiejson": "cookie json",
-	"proxySetting": "proxy",
-	"profileFolder": "profile folder",
-	"videoFolder": "video folder",
-	"create_setting_file": "new setting file",
-	"downVideoMetas":"download metajson template",
-	"toolkits":"toolkits",
-	"mode1":"mode 1",
-	"mode2":"mode 2",
-	"mode3":"mode 3",
-	"channelName": "channel name",
-	"offsetDays": "days offset",
-	"dailyVideoLimit": "daily publish count",
-	"publishPolicy": "publish policy",
-	"bgMucisVolume": "music volumn",
-	"descriptionSuffix": "preferred des suffix",
-	"descriptionPrefix": "preferred des prefix",
-	"preferTags": "preferred tags",
-	"bgVideoFolder": "free music folder",
-	"chooseCookie": "select specific cookie file",
-	"chooseChannelSetting": "select channel setting file"
-    }
-        # json.loads(open(os.path.join(ROOT_DIR+os.sep+'locales','zh.json'), 'r', encoding='utf-8').read())
+        settings['zh']=json.loads(open(os.path.join(ROOT_DIR+os.sep+'locales','zh.json'), 'r', encoding='utf-8').read())
+        settings['en']=json.loads(open(os.path.join(ROOT_DIR+os.sep+'locales','en.json'), 'r', encoding='utf-8').read())
         logger.info('end to initialize settings with default')
     # print(settings)
 
@@ -725,22 +398,7 @@ settingid=0
 # 保存配置
 
 
-def select_profile_folder():
-    global firefox_profile_folder_path
-    try:
-        firefox_profile_folder_path = filedialog.askdirectory(
-        parent=root, initialdir="/", title='Please select a directory')
 
-        if os.path.exists(firefox_profile_folder_path):
-            firefox_profile_folder_path = str(firefox_profile_folder_path)
-            print("You chose %s" % firefox_profile_folder_path)
-            firefox_profile_folder.set(firefox_profile_folder_path)
-        else:
-            print('please choose a valid profile folder')
-
-            # setting['firefox_profile_folder'] = firefox_profile_folder
-    except:
-        print('please choose a valid profile folder')
 
 def select_tabview_video_folder(folder_variable,cache_var):
     global thumbView_video_folder_path
@@ -796,8 +454,6 @@ def select_videos_folder():
         parent=root, initialdir="/", title='Please select a directory')
         if os.path.exists(video_folder_path):
             print("You chose %s" % video_folder_path)
-            video_folder.set(video_folder_path)
-            setting['video_folder'] = video_folder_path
         else:
             print('please choose a valid video folder')
 
@@ -872,10 +528,7 @@ def contact(frame,lang):
 
     newWindow.mainloop()
 
-def get_record_video():
-    is_record_video=record_video.get()
-def get_is_open_browser():
-    is_open_browser=open_browser.get()
+
 
 def install():
     # subprocess.check_call([sys.executable, "-m", "playwright ", "install"])
@@ -949,17 +602,7 @@ def select_file(title,cached,variable,limited='all',parent=None):
         print('please select a valid  file')
 
 
-def select_cookie_file(channel_cookie_user):
 
-    global channel_cookie_path
-    try:
-        channel_cookie_path = filedialog.askopenfilenames(title="请选择该频道对应cookie文件", filetypes=[
-            ("Json", "*.json"), ("All Files", "*")])[0]
-
-        channel_cookie_user.set(channel_cookie_path)
-        setting['channelcookiepath'] = channel_cookie_path
-    except:
-        print('please select a valid cookie json file')
 
 
 # 清理残留文件
@@ -968,78 +611,7 @@ def threadusing_free_musichelper(numbers):
 
     using_free_music(numbers[0],numbers[1])
 
-def using_free_music(setting,inputmp4):
 
-    if os.path.exists(inputmp4):
-
-        print('video exists', inputmp4)
-    else:
-        print('video not found')
-    try:
-        music_folder =setting['music_folder']
-    except:
-        music_folder='assets/freemusic'
-
-    else:
-
-        music_folder = setting['music_folder']
-    if os.path.exists(music_folder):
-        print('there are free music folder',music_folder)
-    else:
-        print('choose valid free music folder',music_folder)
-
-    freemusic = []
-
-    for ext in ('*.mp3', '*.wav','*.wma','*.ogg','*.aac'):
-        freemusic.extend(glob(os.path.join(music_folder, ext)))
-        
-    if len(freemusic) > 0:    
-        soundeffect = random.choice(freemusic)
-        print('randomly choose a background music',soundeffect)
-        ext = os.path.splitext(soundeffect)[1]
-        videoext= os.path.splitext(inputmp4)[1]
-        videofilename= os.path.splitext(inputmp4)[0]
-
-        print('videoext',videoext)
-        print('videofilename',videofilename)
-        oldvideofiles=[]
-
-        audioclip = AudioFileClip(soundeffect)
-        if not os.path.exists(videofilename+'-old'+videoext):
-            os.rename(inputmp4, videofilename+'-old'+videoext)
-        videoclip = VideoFileClip(videofilename+'-old'+videoext)
-        if audioclip.duration>videoclip.duration:
-            audioclip =audioclip.subclip(0,videoclip.duration)
-        else:
-            audioclip = vfx.loop( audioclip, duration=videoclip.duration)
-        if setting['ratio']:
-            pass
-        else:
-            setting['ratio']=1
-        # audioclip = audioclip.fx( afx.volumex, float(setting['ratio']))
-        # audioclip.write_audiofile(videofilename+'.mp3')
-
-        # audioclip = volumex(audioclip,setting['ratio'])          
-        videoclip = videoclip.set_audio(audioclip)
-
-        videoclip.write_videofile(videofilename+'.mp4', threads=0, audio=True)
-        if not videoclip == None:
-            print('force close clip')
-            audioclip.close()
-
-            videoclip.close()
-
-            del audioclip 
-            del videoclip 
- 
-            import gc 
-            gc.collect()
-
-           
-        # time.sleep(2) 
-        print('start cleaning old video file')
-        if os.path.exists(videofilename+'-old'+videoext):
-            os.remove(videofilename+'-old'+videoext)
 def init_worker(mps, fps, cut):
     global memorizedPaths, filepaths, cutoff
     global DG
@@ -1075,84 +647,6 @@ def changeLoglevel(level,window,log_frame):
 
 def hiddenwatermark():
     print('add hiddenwatermark to each video for  copyright theft')
-def batchchangebgmusic():
-
-    # use all available CPUs
-    # p = mp.Pool(initializer=init_worker, initargs=(memorizedPaths,
-    #                                                filepaths,
-    #                                                cutoff))
-    folder =setting['video_folder']    
-    oldvideofiles=[]
-    videofiles = []
-
-    if os.path.isdir(folder):
-        print('this is a directory',folder)
-
-        for ext in ('*.flv', '*.mp4', '*.avi'):
-            videofiles.extend(glob(os.path.join(folder, ext)))
-        print('detecting videos in folder',folder,videofiles)
-        if len(videofiles) > 0:
-            arguments=[]
-            for i,f in enumerate(videofiles):
-                videofilename= os.path.splitext(f)[0]
-                videoext= os.path.splitext(f)[1]
-                if not videofilename.endswith('-old'):
-                    using_free_music(setting,f)
-                    # arguments.append((setting,f)) 
-
-            print('awaiting convert files',videofiles)                                                   
-            # degreelist = range(100000) ##
-    #         for _ in p.imap_unordered(threadusing_free_musichelper, arguments, chunksize=500):
-    #             pass
-    # p.close()
-    # p.join()
-
-
-    # print('start cleaning old video files')
-    # oldvideofiles=[]
-
-    # if os.path.isdir(folder):
-
-    #     for ext in ('*.flv', '*.mp4', '*.avi'):
-    #         oldvideofiles.extend(glob(os.path.join(folder, ext)))
-    #     # print('this is a directory',folder)
-  
-    # for f in oldvideofiles:   
-    #     videofilename= os.path.splitext(f)[0]
-
-    #     if  videofilename.endswith('-old'):
-    #         print('start cleaning old video file',f)
-    #         if os.path.exists(f.replace('-old','')):
-    #             os.remove( f)
-    print('finish cleaning old video files')
-def changebgmusic():
-    folder =setting['video_folder']    
-    if os.path.isdir(folder):
-        print('this is a directory',folder)
-
-        videofiles = []
-        for ext in ('*.flv', '*.mp4', '*.avi'):
-            videofiles.extend(glob(os.path.join(folder, ext)))
-        print('detecting videos in folder',folder,videofiles)
-        if len(videofiles) > 0:
-            # for i,f in enumerate(videofiles):
-
-            #     videofiles.append(f)    
-            print('awaiting convert files',videofiles)
-            start = time.time()
-            with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
-                # while True:
-                tasks = [using_free_music(x) for x in videofiles]
-                for task, future in [(i, executor.submit(i)) for i in tasks]:
-                    try:
-                        # print(future.result(timeout=1))
-                        print('ok')
-                    except concurrent.futures.TimeoutError:
-                        print("this took too long...")
-            #             # task.interrupt()
-            end = time.time()
-            print("批量替换took {} seconds\n".format(end-start))
-
 
 
 def b64e(s):
@@ -1161,13 +655,12 @@ def b64e(s):
 
 def autothumb():
 
-    save_setting()
 # 文件夹下是否有视频文件
 
 # 视频文件是否有同名的图片
 
     try:
-        video_folder_path = setting['video_folder']
+        video_folder_path = tmp['video_folder']
 
     except NameError:
         print('not found fastlane folder  file')
@@ -1175,7 +668,7 @@ def autothumb():
         if video_folder_path:
             print("sure, it was defined dir.",video_folder_path)
 
-            check_video_thumb_pair(video_folder_path,False)
+            # check_video_thumb_pair(video_folder_path,False)
         else:
             print("pls choose file or folder")
 def editVideoMetas():
@@ -1302,8 +795,6 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
     def on_platform_selected(event):
         selected_platform = platform_var.get()
         # Clear the current selection in the account dropdown
-        # account_var.set("")
-        # account_var.set("Select Accounts:")        
 
         if selected_platform:
             # Connect to the SQLite database
@@ -1389,11 +880,6 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
             lbl15.grid(row=4,column=2, sticky=tk.W)
             lbl15.after(5*1000,lbl15.destroy)        
         
-        # elif selected_accounts==tmp['uploadaddaccounts'][platform_var.get()]:
-        #     lbl15 = tk.Label(chooseAccountsWindow, text='you have not selected new accounts at all')
-        #     lbl15.grid(row=6,column=0, sticky=tk.W)
-        #     lbl15.after(5*1000,lbl15.destroy)        
-        
         else:
             for item in selected_accounts:
                 logger.info(f'you want to remove this selected account {item}')
@@ -1422,9 +908,6 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
         listbox = event.widget
         values = [listbox.get(idx) for idx in listbox.curselection()]
         tmp['uploadaddaccounts']['selected']=values
-        # print('selected accounts',values)
-        # print('previous selected accounts',tmp['uploadaddaccounts'])
-        # print('update selected accounts',account_var.get())
         existingaccounts=tmp['uploadaddaccounts'][platform_var.get()].split(',')
 
         if len(list(values))==0:
@@ -1666,25 +1149,6 @@ def syncVideometa2assetsjson(selectedMetafileformat,folder):
         ultra[folder]['updatedAt']=pd.Timestamp.now().value        
         logger.debug('end to check video file existence in the new metafile ')
 
-            # if ultra[folder] ['filenames']!=[] and filename in ultra[folder] ['filenames']:
-            #     if oldvideos[filename]==changed_df_metas[filename]:
-            #         print(f'the existing videos-meta.{selectedMetafileformat} content is the same as cached')
-            #     else:
-            #         print(f'the existing videos-meta.{selectedMetafileformat} content is not the  same as cached')
-            #         ultra[folder] ['videos'][filename]=changed_df_metas[filename]
-            # else:
-            #     ultra[folder] ['filenames'].append(filename)
-            #     ultra[folder] ['videos'][filename]=changed_df_metas[filename]
-        # newfilenameslist==ultra[folder] ['filenames']
-        #找到不存在的filename 删除对应video
-
-        # if changed_df_metas and changed_df_metas[filename]:
-        #     print('this video is detected before',type(changed_df_metas[filename]),changed_df_metas[filename])
-        #     print('2',oldvideos[filename],type(oldvideos[filename]))
-        #     if oldvideos[filename]==changed_df_metas[filename]:
-        #         print(f'the existing videos-meta.{selectedMetafileformat} content is the same as cached')
-        #     else:
-        #         print(f'the existing videos-meta.{selectedMetafileformat} content is not the  same as cached')
 
 def creatNewfoldercache(folder):
     if ultra.has_key(folder)==False:
@@ -1738,7 +1202,6 @@ def creatNewfoldercache(folder):
                                 },
                     
                         'videos':{},
-                        'videosmeta':{}
 
                     }     
     else:
@@ -2043,130 +1506,7 @@ def dumpSetting(settingfilename):
     logger.info(f'end to dump TiktokaStudio settings')
 
 
-def check_video_thumb_pair(dbm,folder,session):
-    # print(f'detecting----------{folder}')
 
-    for r, d, f in os.walk(folder):
-        with os.scandir(r) as i:
-            print('detecting----------',r)
-            videopair=0
-
-            for entry in i:
-                if entry.is_file():
-                    filename = os.path.splitext(entry.name)[0]
-                    ext = os.path.splitext(entry.name)[1]
-                    # print(filename,'==',ext) 
-
-                    start_index=1
-                    if ext in ('.flv', '.mp4', '.avi'):
-                        videopath = os.path.join(r, entry.name)
-                        count=0
-                        exist_image_ext=''
-                        for image_ext in ['.jpeg', '.png', '.jpg','webp']:
-                            thumbpath = os.path.join(r, filename+image_ext)
-
-                            if not os.path.exists(thumbpath):     
-                                count+=1
-                            else:
-                                exist_image_ext=image_ext  
-                        if count==len(['.jpeg', '.png', '.jpg']):
-                            no=random.choice(['001','002','003'])
-                            if not os.path.exists(os.path.join(r, filename+'-'+no+'.jpg')):   
-                                generator = AiThumbnailGenerator(videopath)
-
-                                thumbpath=os.path.join(r, filename+'-'+no+'.jpg')                                
-                                print('generated thumbnail is',thumbpath)
-                        else:
-                            thubmpath=os.path.join(r,filename+exist_image_ext)
-                            print('thumbnail is there.if you need create,pls delete the old one')
-                        if session:
-                            print( videopath,thumbpath,filename,start_index,setting['channelname'],settingid)
-
-                            prepareuploadsession( dbm,videopath,thumbpath,filename,start_index,setting['channelname'],settingid)
-                            print('all video added to task list,you should start uploading next ')
-                        else:
-                            print('save video meta json to local disk')
-                        start_index=start_index+1
-                        videopair+=1
-
-                if videopair==0:
-                    print('we could not find any video,prefer format mp4,mkv,flv,mov')
-
-
-
-def prepareuploadsession(dbm,videopath,thumbpath,filename,start_index,channelname,settingid):
-    global uploadsessionid
-    isadded,isuploaded=dbm.Query_video_status_in_channel(videopath,channelname,settingid)
-              
-    # filename = os.path.splitext(f)[0]
-    if isadded:
-
-        if isuploaded:
-            print('task completed', isuploaded, videopath)
-        else:
-
-            print('task added but not uploaded')
-
-    else:
-        print('task not added before')
-        
-        tags = setting['prefertags']
-        
-        
-        preferdesprefix = setting['preferdesprefix']
-        preferdessuffix = setting['preferdessuffix']
-        filename=filename.split(os.sep)[-1]
-        des =filename
-        if preferdesprefix:
-
-            des=preferdesprefix+'========\n'+des
-        if preferdessuffix:
-            des=des+'=========\n'+preferdessuffix
-        des=des[:4900]
-        title = isfilenamevalid(filename)
-        if len(filename) > 100:
-            title = filename[:90]
-        nowtime = time.time()
-        videoid = b64e(filename)
-
-        olddata = UploadSession()
-        olddata.uploadSettingid=settingid
-        olddata.videoid = videoid
-        olddata.channelname=setting['channelname']
-        publishpolicy=setting['publishpolicy']
-        start_publish_date=setting['start_publish_date']
-        olddata.publishpolicy=publishpolicy
-        today = date.today()
-        publish_date =datetime(today.year, today.month, today.day, 20, 15)
-
-        if publishpolicy == 0:
-            olddata.publish_date = publish_date
-        elif publishpolicy == 1:
-            olddata.publish_date = publish_date
-        else:
-            # Oct 19, 2021
-            start_index = int(start_publish_date)+start_index
-            maxdays=calendar._monthlen(today.year, today.month)
-
-            monthoffset=int(int(start_index)/maxdays)
-            startingday=today.day
-            dayoffset=int(int(start_index)/int(setting['dailycount']))
-            if today.day+1>maxdays:
-                monthoffset=1
-                startingday=today.day+1-maxdays
-            publish_date =datetime(today.year, today.month+monthoffset, startingday+1+dayoffset, 20, 15)
-
-
-
-            olddata.publish_date = publish_date
-        olddata.thumbpath = thumbpath
-        olddata.title= title
-        olddata.des= des
-        olddata.videopath = videopath
-        olddata.tags= tags
-        olddata.status = False
-        uploadsessionid=dbm.Add_New_UploadSession_In_Db(olddata)
-        print('add 1 new videos ',filename,'for upload session',uploadsessionid)
 
 
 
@@ -2180,16 +1520,15 @@ def importundonefromcsv(dbm):
 
 
 def testupload(dbm,ttkframe):
-    print('we got setting proxy ,',setting['proxy_option'])
-    try:
-        uploadsessionid
-        if uploadsessionid is None:
-            print('weir error',uploadsessionid)
-            createuploadsession(dbm,ttkframe)
-    except:
+    # try:
+    #     uploadsessionid
+    #     if uploadsessionid is None:
+    #         print('weir error',uploadsessionid)
+    #         createuploadsession(dbm,ttkframe)
+    # except:
 
-        print('before upload,you need create upload session first')
-        createuploadsession(dbm,ttkframe)
+    #     print('before upload,you need create upload session first')
+    #     createuploadsession(dbm,ttkframe)
 
     videos=dbm.Query_undone_videos_in_channel()
     print('there is ',len(videos),' video need to uploading for task ')
@@ -2198,29 +1537,31 @@ def testupload(dbm,ttkframe):
         publicvideos=[]
         privatevideos=[]
         othervideos=[]
+        is_open_browser=videos[0]['is_open_browser']
+        proxy_option=videos[0]['proxy_option']
+
         if url_ok('http://www.google.com'):
             print('network is fine,there is no need for proxy ')
-            setting['proxy_option']=""
             print('start browser in headless mode',is_open_browser)
 
         else:
             print('google can not be access ')
 
-            print('we need for proxy ',setting['proxy_option'])   
-            print('start browser in headless mode',is_open_browser,setting['proxy_option'])
+            print('we need for proxy ',proxy_option)   
+            print('start browser in headless mode',is_open_browser,proxy_option)
         upload =  YoutubeUpload(
-                root_profile_directory=setting['firefox_profile_folder'],
-                proxy_option=setting['proxy_option'],
+                root_profile_directory='',
+                proxy_option=proxy_option,
                 is_open_browser=is_open_browser,
                 debug=True,
                 use_stealth_js=False,
                 # if you want to silent background running, set watcheveryuploadstep false
-                channel_cookie_path=setting['channelcookiepath'],
-                username=setting['username'],
+                channel_cookie_path=videos[0]['channelcookiepath'],
+                username=videos[0]['username'],
                 browser_type='firefox',
                 wait_policy="go next after copyright check success",
-                password=setting['password'],
-                is_record_video=setting['is_record_video']
+                password=videos[0]['password'],
+                is_record_video=videos[0]['is_record_video']
 
                 # for test purpose we need to check the video step by step ,
             )
@@ -2327,31 +1668,35 @@ def upload(mode='prod'):
             asyncio.run(bulk_scheduletopublish_specific_date(videos=othervideos,upload=upload))
 
 def docView(frame,ttkframe,lang):
-    b_view_readme=tk.Button(frame,text=i18labels("docs", locale=lang, module="g"),command=lambda: threading.Thread(target=docs(frame,lang)).start() )
+    b_view_readme=tk.Button(frame,text=settings[locale]['docs'],command=lambda: threading.Thread(target=docs(frame,lang)).start() )
     b_view_readme.place(x=50, y=100)    
 
-    b_view_contact=tk.Button(frame,text=i18labels("contact", locale=lang, module="g"),command=lambda: threading.Thread(target=contact(frame,lang)).start() )
+    b_view_contact=tk.Button(frame,text=settings[locale]['contact'],command=lambda: threading.Thread(target=contact(frame,lang)).start() )
     b_view_contact.place(x=50, y=200)    
     
 
-    b_view_version=tk.Button(frame,text=i18labels("version", locale=lang, module="g"),command=lambda: threading.Thread(target=version(frame,lang)).start() )
+    b_view_version=tk.Button(frame,text=settings[locale]['version']
+                             ,command=lambda: threading.Thread(target=version(frame,lang)).start() )
     b_view_version.place(x=50, y=300)   
 
 def installView(frame,ttkframe,lang):
-    b_view_readme=tk.Button(frame,text=i18labels("testinstall", locale=lang, module="g"),command=lambda: threading.Thread(target=testInstallRequirements).start() )
+    b_view_readme=tk.Button(frame,text=settings[locale]['testinstall']
+                            ,command=lambda: threading.Thread(target=testInstallRequirements).start() )
     b_view_readme.grid(row = 0, column = 1, sticky='w', padx=14, pady=15)      
 
-    b_view_contact=tk.Button(frame,text=i18labels("testnetwork", locale=lang, module="g"),command=lambda: threading.Thread(target=testNetwork).start() )
+    b_view_contact=tk.Button(frame,text=settings[locale]['testnetwork']
+                             ,command=lambda: threading.Thread(target=testNetwork).start() )
     b_view_contact.grid(row = 1, column = 1, sticky='w', padx=14, pady=15)      
     
 
-    b_view_version=tk.Button(frame,text=i18labels("testsettingok", locale=lang, module="g"),command=lambda: threading.Thread(target=ValidateSetting).start() )
+    b_view_version=tk.Button(frame,text=settings[locale]['testsettingok']
+                             ,command=lambda: threading.Thread(target=ValidateSetting).start() )
     b_view_version.grid(row = 2, column = 1, sticky='w', padx=14, pady=15)      
     
     locale_tkstudio = tk.StringVar()
 
 
-    l_lang = tk.Label(ttkframe, text=i18labels("chooseLang", locale=lang, module="g"))
+    l_lang = tk.Label(ttkframe, text=settings[locale]['chooseLang'])
     # l_lang.place(x=10, y=90)
     l_lang.grid(row = 3, column = 0, columnspan = 3, padx=14, pady=15)    
     try:
@@ -2400,24 +1745,29 @@ def videosView(frame,ttkframe,lang):
 
     # videosView_video_folder.set(setting['video_folder'])
 
-    l_video_folder = tk.Label(frame, text=i18labels("videoFolder", locale=lang, module="g"))
+    l_video_folder = tk.Label(frame, text=settings[locale]['videoFolder']
+                              )
     l_video_folder.place(x=10, y=20)
     e_video_folder = tk.Entry(frame, width=45, textvariable=videosView_video_folder)
     e_video_folder.place(x=150, y=20)
     b_video_folder=tk.Button(frame,text="Select",command=lambda: threading.Thread(target=select_videosView_video_folder).start() )
     b_video_folder.place(x=580, y=20)    
 
-    l_mode_1 = tk.Label(frame, text=i18labels("toolkits", locale=lang, module="g"))
+    l_mode_1 = tk.Label(frame, text=settings[locale]['toolkits']
+                        )
     l_mode_1.place(x=10, y=int(height-250))
     
     
-    b_autothumb = tk.Button(frame, text=i18labels("autothumb", locale=lang, module="g"), command=lambda: threading.Thread(target=autothumb).start())
+    b_autothumb = tk.Button(frame, text=settings[locale]['autothumb']
+                            , command=lambda: threading.Thread(target=autothumb).start())
     b_autothumb.place(x=150, y=int(height-250))
-    b_batchchangebgmusic = tk.Button(frame, text=i18labels("batchchangebgmusic", locale=lang, module="g"), command=lambda: threading.Thread(target=batchchangebgmusic).start())
+    b_batchchangebgmusic = tk.Button(frame, text=settings[locale]['batchchangebgmusic']
+                                     , command=lambda: threading.Thread(target=batchchangebgmusic).start())
     b_batchchangebgmusic.place(x=350,y=int(height-250))
     
     
-    b_hiddenwatermark = tk.Button(frame, text=i18labels("hiddenwatermark", locale=lang, module="g"), command=lambda: threading.Thread(target=hiddenwatermark))
+    b_hiddenwatermark = tk.Button(frame, text=settings[locale]['hiddenwatermark']
+                                  , command=lambda: threading.Thread(target=hiddenwatermark))
     b_hiddenwatermark.place(x=500,y=int(height-250))
 
 def thumbView(left,right,lang):
@@ -2425,7 +1775,7 @@ def thumbView(left,right,lang):
     thumbView_video_folder = tk.StringVar()
 
 
-    l_video_folder = tk.Label(left, text=i18labels("videoFolder", locale=lang, module="g"))
+    l_video_folder = tk.Label(left, text=settings[locale]['videoFolder'])
     l_video_folder.grid(row = 0, column = 0, sticky='w', padx=14, pady=15)    
     Tooltip(l_video_folder, text='Start from where your video lives' , wraplength=200)
 
@@ -2456,7 +1806,7 @@ def thumbView(left,right,lang):
     b_open_video_folder.grid(row = 0, column = 3, sticky='w', padx=14, pady=15)    
     Tooltip(b_open_video_folder, text='open video folder to find out files change' , wraplength=200)
 
-    l_meta_format = tk.Label(left, text=i18labels("preferred meta file format", locale=lang, module="g"))
+    l_meta_format = tk.Label(left, text=settings[locale]['l_metafileformat'])
     # l_platform.place(x=10, y=90)
     l_meta_format.grid(row = 1, column = 0, sticky='w', padx=14, pady=15)    
     Tooltip(l_meta_format, text='Choose the one you like to edit metadata' , wraplength=200)
@@ -2924,14 +2274,16 @@ def render_des_update_view(frame,folder,desmode,previous_frame=None):
         descriptionPrefix=tk.StringVar()
         descriptionSuffix=tk.StringVar()
 
-        l_preferdesprefix = tk.Label(frame, text=i18labels("descriptionPrefix", locale=lang, module="g"))
+        l_preferdesprefix = tk.Label(frame, text=settings[locale]['descriptionPrefix']
+                                     )
         l_preferdesprefix.grid(row = 5, column = 0,  padx=14, pady=15,sticky='nw') 
         e_preferdesprefix = tk.Entry(frame, width=55, textvariable=descriptionPrefix)
         e_preferdesprefix.grid(row = 5, column = 1,  padx=14, pady=15,sticky='nw') 
         Tooltip(l_preferdesprefix, text='add \r if you want line breaks' , wraplength=200)
 
 
-        l_preferdessuffix = tk.Label(frame, text=i18labels("descriptionSuffix", locale=lang, module="g"))
+        l_preferdessuffix = tk.Label(frame, text=settings[locale]['descriptionSuffix']
+                                     )
         l_preferdessuffix.grid(row = 6, column = 0,  padx=14, pady=15,sticky='nw') 
         e_preferdessuffix = tk.Entry(frame, width=55, textvariable=descriptionSuffix)
         e_preferdessuffix.grid(row = 6, column = 1,  padx=14, pady=15,sticky='nw') 
@@ -3161,7 +2513,7 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
 
 
         l_releasehour = tk.Label(schframe, text='release hour')
-        Tooltip(l_releasehour, text=f'you can input like"10:15," more available can choose from {availableScheduleTimes}' , wraplength=200)
+        Tooltip(l_releasehour, text=f"you can input like '10:15,' more available can choose from {settings[locale]['availableScheduleTimes']}" , wraplength=200)
 
 
 
@@ -3169,7 +2521,7 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
 
         e_releasehour = tk.Entry(schframe, width=55, textvariable=releasehour)
 
-        Tooltip(e_releasehour, text=f'you can input more than one with comma separator,such as 10:15,12:00,if you want publish 10 video in serial you should put 10 time here,more available can choose from {availableScheduleTimes}' , wraplength=200)
+        Tooltip(e_releasehour, text=f"you can input more than one with comma separator,such as 10:15,12:00,if you want publish 10 video in serial you should put 10 time here,more available can choose from {settings[locale]['availableScheduleTimes']}" , wraplength=200)
 
         start_publish_date.set(1)
 
@@ -3190,7 +2542,7 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
                 number=1
                 randomNreleasehour=settings[locale]['default_release_hour']
             else:
-                randomNreleasehour=','.join(random.sample(availableScheduleTimes, int(number)))
+                randomNreleasehour=','.join(random.sample(settings[locale]['availableScheduleTimes'], int(number)))
             releasehour.set(randomNreleasehour)
         def OptionCallBack(*args):
             # print(variable.get())
@@ -3199,7 +2551,7 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
             print('current dailycount ')
             if dailycount.get()=='Select From policy':
                 number=1
-            randomNreleasehour=','.join(random.sample(availableScheduleTimes, int(number)))
+            randomNreleasehour=','.join(random.sample(settings[locale]['availableScheduleTimes'], int(number)))
             releasehour.set(randomNreleasehour)
 
         dailycount.set("Select From policy")
@@ -3402,7 +2754,7 @@ def genScheduleSLots(folder,mode_value,start_publish_date_value,dailycount_value
             avalaibleslots.append(avalaibleslots[0])
     elif dailycount_value>len(avalaibleslots) and len(avalaibleslots)>1:
         logger.info(f'your daily count is{dailycount_value} time slot is {avalaibleslots},it appears you want to random choose { dailycount_value -len(avalaibleslots)} slots for the missing')
-        randomslots=random.sample(availableScheduleTimes,dailycount_value-len(avalaibleslots))
+        randomslots=random.sample(settings[locale]['availableScheduleTimes'],dailycount_value-len(avalaibleslots))
         avalaibleslots+=randomslots
     elif dailycount_value  < len(avalaibleslots):
         logger.info(f'your daily count is{dailycount_value} time slot is {avalaibleslots},it appears you want to random choose { dailycount_value} slots from you specify: {avalaibleslots}  ')
@@ -3446,14 +2798,16 @@ def render_update_meta(frame,isneed,folder,selectedMetafileformat='json'):
         
         lab = tk.Label(frame,text="batch modify video metas",bg="lightyellow",width=30)
         # dropdown platform   so they can have diff fields
-        l_prefertags = tk.Label(frame, text=i18labels("is_not_for_kid", locale=lang, module="g"))
+        l_prefertags = tk.Label(frame, text=settings[locale]['is_not_for_kid']
+                                )
         l_prefertags.grid(row = 0, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
         el_prefertags = tk.Entry(frame, width=55, textvariable=prefertags)
         el_prefertags.grid(row = 0, column = 5, columnspan = 3, padx=14, pady=15,sticky='nw') 
 
         categories=tk.StringVar()
 
-        l_categories = tk.Label(frame, text=i18labels("categories", locale=lang, module="g"))
+        l_categories = tk.Label(frame, text=settings[locale]['categories']
+                                )
         l_categories.grid(row = 1, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
         el_categories = tk.Entry(frame, width=55, textvariable=categories)
         el_categories.grid(row = 1, column = 5, columnspan = 3, padx=14, pady=15,sticky='nw') 
@@ -4436,7 +3790,8 @@ def accountView(frame,ttkframe,lang):
     password = tk.StringVar()
 
 
-    l_platform = tk.Label(ttkframe, text=i18labels("platform", locale=lang, module="g"))
+    l_platform = tk.Label(ttkframe, text=settings[locale]['l_platform']
+                          )
     # l_platform.place(x=10, y=90)
     l_platform.grid(row = 0, column = 0, columnspan = 3, padx=14, pady=15)    
 
@@ -4471,7 +3826,8 @@ def accountView(frame,ttkframe,lang):
 
 
 
-    l_username = tk.Label(ttkframe, text=i18labels("username", locale=lang, module="g"))
+    l_username = tk.Label(ttkframe, text=settings[locale]['username']
+                          )
     # l_username.place(x=10, y=150)
     l_username.grid(row = 2, column = 0, columnspan = 3, padx=14, pady=15)    
 
@@ -4479,7 +3835,8 @@ def accountView(frame,ttkframe,lang):
     # e_username.place(x=10, y=180)
     e_username.grid(row = 2, column = 5, columnspan = 3, padx=14, pady=15)    
 
-    l_password = tk.Label(ttkframe, text=i18labels("password", locale=lang, module="g"))
+    l_password = tk.Label(ttkframe, text=settings[locale]['password']
+                          )
     # l_password.place(x=10, y=210)
     e_password = tk.Entry(ttkframe, width=int(width*0.01), textvariable=password)
     # e_password.place(x=10, y=240)
@@ -4488,7 +3845,8 @@ def accountView(frame,ttkframe,lang):
     e_password.grid(row = 3, column = 5, columnspan = 3, padx=14, pady=15)    
 
 
-    l_proxy_option = tk.Label(ttkframe, text=i18labels("proxySetting", locale=lang, module="g"))
+    l_proxy_option = tk.Label(ttkframe, text=settings[locale]['proxySetting']
+                              )
     # l_proxy_option.place(x=10, y=270)
     
     l_proxy_option.grid(row = 4, column = 0, columnspan = 3, padx=14, pady=15)    
@@ -4505,7 +3863,7 @@ def accountView(frame,ttkframe,lang):
 
 
 
-    l_channel_cookie = tk.Label(ttkframe, text=i18labels("cookiejson", locale=lang, module="g"))
+    l_channel_cookie = tk.Label(ttkframe, text=settings[locale]['proxySetting'])
     # l_channel_cookie.place(x=10, y=330)
     l_channel_cookie.grid(row = 6, column = 0, columnspan = 3, padx=14, pady=15)    
 
@@ -4513,7 +3871,7 @@ def accountView(frame,ttkframe,lang):
     # e_channel_cookie.place(x=10, y=360)
     e_channel_cookie.grid(row = 7, column = 3, columnspan = 3, padx=14, pady=15)    
 
-    b_channel_cookie=tk.Button(ttkframe,text="Select",command=lambda: threading.Thread(target=select_cookie_file(channel_cookie_user)).start() )
+    b_channel_cookie=tk.Button(ttkframe,text="Select",command=lambda: threading.Thread(target=select_file(channel_cookie_user)).start() )
     # b_channel_cookie.place(x=10, y=390)    
     b_channel_cookie.grid(row = 6, column = 3, columnspan = 2, padx=14, pady=15)    
 
@@ -4826,18 +4184,7 @@ def createTaskMetas(left,right):
 
     uploadStrategy.trace('w', uploadStrategyCallBack)
 
-    # uploadPlatform = tk.StringVar()
-    # uploadPlatform.set("choose target platform")
 
-
-    # uploadPlatformbox = ttk.Combobox(creatTaskWindow, textvariable=uploadPlatform)
-    # uploadPlatformbox.config(values = ('tiktok', 'youtube','xhs'))
-    # uploadPlatformbox.grid(row = 3, column = 3, padx=14, pady=15)    
-    # def uploadPlatformboxCallBack(*args):
-    #     print(uploadPlatform.get())
-    #     print(uploadPlatformbox.current())
-
-    # uploadPlatform.trace('w', uploadPlatformboxCallBack)
 def has_more_than_one_one(lst):
     # Check if there is more than one element equal to 1 and all others are 0
     return lst.count(1) > 1 and all(x == 0 for x in lst)
@@ -5042,13 +4389,17 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
 
         
 
-    print('load task meta')
+    print('load video meta')
+    logger.info('start to load video meta')
+
     if videometafilepath !='' and videometafilepath is not None:
         filename = os.path.splitext(videometafilepath)[0]
         folder=os.path.dirname(videometafilepath)    
         ext = os.path.splitext(videometafilepath)[1].replace('.','')
         
         if load_meta_file(videometafilepath):
+            logger.info('video meta file is ok')
+
             tmpdict=load_meta_file(videometafilepath)
 
             tmp['tasks']={}
@@ -5090,24 +4441,23 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
                     tmp['tasks'][key]['channel_cookie_path']='xxxx'
                     i=+1
 
+            logger.info(f'start to save task meta success')
 
             dumpTaskMetafiles(ext,folder)
-            print('validate video meta')
 
-            print('write task meta')
-            logger.info(f'save task meta success')
+            logger.info(f'end to save task meta success')
             lab = tk.Label(frame,text=f'save task meta success',bg="green")
                                                             
             lab.grid(row=10,column=2, sticky=tk.W)        
             lab.after(5*1000,lab.destroy)    
         else:
-            logger.info(f'load task meta failed')
-            lab = tk.Label(frame,text=f'load task meta failed',bg="red")
+            logger.info(f'load video meta failed')
+            lab = tk.Label(frame,text=f'load video meta failed',bg="red")
                                                             
             lab.grid(row=10,column=2, sticky=tk.W)        
             lab.after(5*1000,lab.destroy)    
 def validateTaskMetafile(engine,ttkframe,metafile):
-    logger.info('load task metas to database .create upload task for each video')
+    logger.info('load task metas to database ')
     print('load task meta')
 
 
@@ -5130,8 +4480,44 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                 
                 for idx,video in videos.items():
                     logger.info(f'video json is ,{type(video)},{video}')
+                    logger.info(f'start to process uploadsetting related filed\n:{video} ')
+
                     if video.get('uploadsettingid')==None:
                         logger.info(f" this field uploadsettingid is optional in given video json data")
+                    else:
+                        logger.info(f" if uploadsettingid is given,we can auto fill if  the other field is null ")
+
+                # query = 'SELECT * FROM uploadvideo'
+                # # Display the results
+                # df=query2df(engine,query,logger)
+                # print(df.columns)
+                # print(df.head(3))
+
+        # prepareuploadsession( dbm,videopath,thumbpath,filename,start_index,video['channelname'],videoid)
+
+                    # logger.info(f'length of settingidsdict is {len(settingidsdict)}')
+                    # df_video=pd.json_normalize(video)                        
+                    # if len(settingidsdict)>1:       
+                    #     if video.get('uploadSettingid')==None:
+
+                    #         logger.error('we need explicitly specify  uploadSettingid in each video ')
+                    #     else:
+
+                    #         if  settingidsdict[video.get('uploadSettingid')]:
+                    #             df_video['upload_setting_id']=settingidsdict[video.get('uploadSettingid')]
+                    #         else:       
+                    #             logger.error(f'please check {video.get("uploadSettingid")} is saved sucess in db')
+                    # elif len(settingidsdict)==1:       
+                    #     logger.info(f'there is only one setting:{list(settingidsdict.items())}')
+                    #     # there is two case, 
+                    #     # 1.user input a setting id,we gen a new as value in the dict,key is the old
+                    #     # 2. user give no id, we gen a new as key and value in the dict
+                    #     df_video['upload_setting_id']= list(settingidsdict.keys())[0]
+                        
+                    # else:
+
+                    #     logger.error('we need at least 1 uploadsetting saved sucess in db')
+
 
                     for key in ['proxy_option','channel_cookie_path']:
                         if video.get(key)==None:
@@ -5217,57 +4603,11 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                             logger.error(f'is_record_video is {video.get("is_record_video")} of {type(video.get("is_record_video"))},it should be bool, true or false')
 
 
-                    df_video=    pd.json_normalize(video)
-                    videoidsdict={}
-                    newid=pd.Timestamp.now().value  
-                    if video.get('id')==None:
-                        df_video['id']=newid  
-                        logger.info(f"you dont specify id field,we generate a new {newid} for this video")
-                        
-                        videoidsdict[newid]=newid   
-                        logger.info(f"video old id and new ids mapping dicts is {videoidsdict}")
 
-                    else:
-                        if type(video['id'])==str:
-                            try:
-                                video['id']=int(video['id'])
-                                
-                            except Exception as e:
-                                logger.error(f'video["id"] should be a int value')
-                        videoidsdict[video['id']]=newid                               
-                        logger.info(f"you  specify id field,we add a mapping to {video['id']}  of {type({video['id']} )}a new {newid} for this video")
-                        df_video['id']=newid  
 
-                        logger.info(f"video old id and new ids mapping dicts is {videoidsdict}")
-
-                    df_video['inserted_at']=datetime.now()           
-
-                    logger.info('start to check whether video duplicate or save as new')
-
-                    table_name = "uploadvideo"
+                    logger.info(f'start to process video related fields\n:{video} ')
                     
-                    is_video_ok=pd2table(engine,table_name,df_video,logger,if_exists='replace')
-
-                # query = 'SELECT * FROM uploadvideo'
-                # # Display the results
-                # df=query2df(engine,query,logger)
-                # print(df.columns)
-                # print(df.head(3))
-
-        # prepareuploadsession( dbm,videopath,thumbpath,filename,start_index,video['channelname'],videoid)
-
-
-
-                    logger.info(f'start to process {str(idx)}th\n:{video} ')
                     
-                    # if check_fields_and_empty_values(eval(video.values()[0])['video_local_path','video_title','video_description','thumbnail_local_path','publish_policy','tags']):
-                    #     # if key in['video_local_path','thumbnail_local_path']:
-                    #     #     if os.path.exists(video.get(key))==False:
-                    #     #         logger.error(f"these {key} field is required,and check whether local file exists")
-                    #     #         raise ValueError(f"these {key} field is required,and check whether local file exists")
-                    #     print('========')
-                    # else:
-                    #     return                         
                     
                     for key in ['video_local_path','video_title','video_description','thumbnail_local_path','publish_policy','tags']:
                         if video.get(key)==None:
@@ -5305,7 +4645,7 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                             video[key]=True 
                             logger.info(f"This field {key} is optional in given video json data,we can use default true")
                         else:
-                            if video.get(key) not in ['true','false']:
+                            if video.get(key) not in ['true','false',True,False]:
                                 logger.error(f'{key} should be bool, true or false') 
 
 
@@ -5315,10 +4655,10 @@ def validateTaskMetafile(engine,ttkframe,metafile):
 
                             logger.info(f"This field {key} is optional in given video json data,we can use default false")
                         else:
-                            if video.get(key) not in ['true','false']:
+                            if video.get(key) not in  ['true','false',True,False]:
                                 logger.error(f'{key} should be bool, true or false') 
 
-                    if video.get('categories')==None:
+                    if video.get('categories')==None or video.get('categories')=='':
                         video['categories']=None      
                         logger.info('we use categories =none')
                     else:
@@ -5328,7 +4668,7 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                             if not video.get('categories') in range(0,15):
                                 logger.error('categories should be one of 0,1,2,3..........,14')
 
-                    if video.get('license_type')==None:
+                    if video.get('license_type')==None or video.get('license_type')=='':
                         video['license_type']=0       
                         logger.info('we use license_type =0')
                     else:
@@ -5367,7 +4707,7 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                         else:
                             if not video.get('captions_certification') in range(0,6):
                                 logger.error('captions_certification should be one of 0,1,2,3,4,5')
-                    if video.get('video_language')==None:
+                    if video.get('video_language')==None or video.get('video_language')=='':
                         video['video_language']=None       
                         logger.info('we use video_language =none')
                     else:
@@ -5395,8 +4735,8 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                                     else:
                                         if video.get('release_date_hour')==None:     
                                             logger.info('we use default release_date_hour 10:15')    
-                                        elif video.get('release_date_hour') not in availableScheduleTimes:
-                                            logger.error(f'we use choose one from {availableScheduleTimes}') 
+                                        elif video.get('release_date_hour') not in settings[locale]['availableScheduleTimes']:
+                                            logger.error(f"we use choose one from {settings[locale]['availableScheduleTimes']}") 
                     if video.get('release_date')==None:
                         nowdate=datetime.now() 
                         video['release_date']=nowdate      
@@ -5405,13 +4745,13 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                         if video.get('release_date_hour')==None:    
                             video['release_date_hour']="10:15"   
                             logger.info('we use default release_date_hour 10:15')    
-                        elif video.get('release_date_hour') not in availableScheduleTimes:
-                            logger.error(f'we use choose one from {availableScheduleTimes}')    
+                        elif video.get('release_date_hour') not in settings[locale]['availableScheduleTimes']:
+                            logger.error(f"we use choose one from {settings[locale]['availableScheduleTimes']}")    
                     if video.get('release_date_hour')==None:     
                         video['release_date_hour']="10:15"   
                         logger.info('we use default release_date_hour 10:15')    
-                    elif video.get('release_date_hour') not in availableScheduleTimes:
-                        logger.error(f'we use choose one from {availableScheduleTimes}')  
+                    elif video.get('release_date_hour') not in settings[locale]['availableScheduleTimes']:
+                        logger.error(f"we use choose one from {settings[locale]['availableScheduleTimes']}")  
                     if video.get('tags')==None:
                         video['tags']=None      
                         logger.info('we use tags =[]')
@@ -5422,31 +4762,32 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                         else:
                             logger.error('tags should be a list of keywords such as "one,two" ')
 
-                    # logger.info(f'length of settingidsdict is {len(settingidsdict)}')
-                    # df_video=pd.json_normalize(video)                        
-                    # if len(settingidsdict)>1:       
-                    #     if video.get('uploadSettingid')==None:
-
-                    #         logger.error('we need explicitly specify  uploadSettingid in each video ')
-                    #     else:
-
-                    #         if  settingidsdict[video.get('uploadSettingid')]:
-                    #             df_video['upload_setting_id']=settingidsdict[video.get('uploadSettingid')]
-                    #         else:       
-                    #             logger.error(f'please check {video.get("uploadSettingid")} is saved sucess in db')
-                    # elif len(settingidsdict)==1:       
-                    #     logger.info(f'there is only one setting:{list(settingidsdict.items())}')
-                    #     # there is two case, 
-                    #     # 1.user input a setting id,we gen a new as value in the dict,key is the old
-                    #     # 2. user give no id, we gen a new as key and value in the dict
-                    #     df_video['upload_setting_id']= list(settingidsdict.keys())[0]
-                        
-                    # else:
-
-                    #     logger.error('we need at least 1 uploadsetting saved sucess in db')
-
+                    df_video=    pd.json_normalize(video)
+                    videoidsdict={}
                     newid=pd.Timestamp.now().value  
-                    df_video['id']=newid
+                    if video.get('id')==None:
+                        df_video['id']=newid  
+                        logger.info(f"you dont specify id field,we generate a new {newid} for this video")
+                        
+                        videoidsdict[newid]=newid   
+                        logger.info(f"video old id and new ids mapping dicts is {videoidsdict}")
+
+                    else:
+                        if type(video['id'])==str:
+                            try:
+                                video['id']=int(video['id'])
+                                
+                            except Exception as e:
+                                logger.error(f'video["id"] should be a int value')
+                        videoidsdict[video['id']]=newid                               
+                        logger.info(f"you  specify id field,we add a mapping to {video['id']}  of {type({video['id']} )}a new {newid} for this video")
+                        df_video['id']=newid  
+
+                        logger.info(f"video old id and new ids mapping dicts is {videoidsdict}")
+
+
+
+
                     df_video['youtube_video_id']=None
                     df_video['inserted_at']=datetime.now()           
                     df_video['updated_at']=None           
@@ -5454,37 +4795,50 @@ def validateTaskMetafile(engine,ttkframe,metafile):
     
                     df_video['status']=False         
                     # print('videos',videos)   
-                    logger.info(f'start to check {str(idx)}th video whether  duplicate or save as new')
+
+
+                    logger.info(f'start to check {str(idx)}  video whether  duplicate or save as new')
 
                     table_name = "uploadtasks"
-                    
+                    logger.info('check whether table exists')
+                    tableexist_query_sqlite=f"SELECT name FROM sqlite_master WHERE type='table' AND name='{table_name}'"
+
+                    tableexist=query2df(engine,tableexist_query_sqlite,logger)
+                    if  tableexist is None:
+                        logger.info(f'check whether table :{table_name} does not exists')  
+                    else:
+                        logger.info(f'check whether table :{table_name} exists')  
 
                     is_video_ok=pd2table(engine,table_name,df_video,logger,if_exists='append')
                     if is_video_ok:
-                        logger.info(f'save {str(idx)}th video ok:{df_video["video_title"]}')
-                        
+                        logger.info(f'save {str(idx)} video ok:{df_video["video_title"]}')
+                        lab = tk.Label(ttkframe,text=f"insert task {df_video} ok",bg="green",width=40)
+                        lab.place(x=10, y=220)       
+                        lab.after(5*1000,lab.destroy)     
+                    else:
+                        lab = tk.Label(ttkframe,text=f"insert task {df_video} failed",bg="red",width=40)
+                        lab.place(x=10, y=220)       
+                        lab.after(5*1000,lab.destroy)                             
                 query = 'SELECT * FROM uploadtasks'
                 # Display the results
                 df=query2df(engine,query,logger)
 
                 logger.info(f'there is {len(df.index)} records in table {table_name}')      
-                lab = tk.Label(ttkframe,text="validation pass,try to create upload task next",bg="green",width=40)
-                lab.place(x=10, y=220)       
-                lab.after(5*1000,lab.destroy)                                        
+                                   
                                                 
             except Exception as e:
-                logger.error(f'there is no videos in  your metajson.check metajson docs for reference:{e}')                
+                logger.error(f'there is no videos in  your task meta file.check  docs for reference:{e}')                
             
 
 
         else:
-            logger.error("you choosed video meta json file is missing or broken.")
-            lab = tk.Label(ttkframe,text="please choose a valid json file",bg="lightyellow",width=40)
+            logger.error("you choosed task meta  file is missing or broken.")
+            lab = tk.Label(ttkframe,text="please choose a valid task file",bg="lightyellow",width=40)
             lab.place(x=10, y=220)       
             lab.after(10*1000,lab.destroy)
     else:
-        logger.error('please provide a video meta json file')
-        lab = tk.Label(ttkframe,text="please choose a  json file",bg="lightyellow",width=40)
+        logger.error('please provide a task meta  file')
+        lab = tk.Label(ttkframe,text="please choose a  task file",bg="lightyellow",width=40)
         lab.place(x=10, y=220)       
         lab.after(10*1000,lab.destroy)       
 
@@ -5607,16 +4961,20 @@ def uploadView(frame,ttkframe,lang):
     e_imported_video_metas_file.grid(row = 2, column = 1, padx=14, pady=15)
 
   
-    b_validate_video_metas = tk.Button(frame, text=i18labels("validateVideoMetas", locale=lang, module="g"), command=lambda: threading.Thread(target=validateTaskMetafile(test_engine,ttkframe,imported_task_metas_file.get())).start())
+    b_validate_video_metas = tk.Button(frame, text=settings[locale]['validateVideoMetas']
+                                       , command=lambda: threading.Thread(target=validateTaskMetafile(test_engine,ttkframe,imported_task_metas_file.get())).start())
     b_validate_video_metas.grid(row = 4, column = 0, padx=14, pady=15)
-    b_createuploadsession = tk.Button(frame, text=i18labels("createuploadsession", locale=lang, module="g"), command=lambda: threading.Thread(target=validateTaskMetafile(prod_engine,ttkframe,imported_task_metas_file.get())).start())
+    b_createuploadsession = tk.Button(frame, text=settings[locale]['createuploadsession']
+                                      , command=lambda: threading.Thread(target=validateTaskMetafile(prod_engine,ttkframe,imported_task_metas_file.get())).start())
     b_createuploadsession.grid(row = 5, column = 0, padx=14, pady=15)
 
     # test upload  跳转到一个单独页面，录入一个视频的上传信息，点击上传进行测试。
-    b_upload = tk.Button(frame, text=i18labels("testupload", locale=lang, module="g"), command=lambda: threading.Thread(target=testupload(DBM('test'),ttkframe)).start())
+    b_upload = tk.Button(frame, text=settings[locale]['testupload']
+                         , command=lambda: threading.Thread(target=testupload(DBM('test'),ttkframe)).start())
     b_upload.grid(row = 4, column = 1, padx=14, pady=15)
 
-    b_upload = tk.Button(frame, text=i18labels("upload", locale=lang, module="g"), command=lambda: threading.Thread(target=upload).start())
+    b_upload = tk.Button(frame, text=settings[locale]['upload']
+                         , command=lambda: threading.Thread(target=upload).start())
     b_upload.grid(row = 5, column = 1, padx=14, pady=15)
 
     lb_youtube_counts = tk.Label(frame, text='youtube', font=(' ', 15))
@@ -5640,7 +4998,7 @@ def uploadView(frame,ttkframe,lang):
     lb_video_failure_counts = tk.Label(frame, text='failure', font=(' ', 15))
     lb_video_failure_counts.grid(row = 7, column = 4)
 
-
+    checkvideocounts=0
     lb_youtube_success_counts_value = tk.Label(frame, text=str(checkvideocounts), font=(' ', 18))
     lb_youtube_success_counts_value.grid(row = 8, column = 1)
 
@@ -5904,7 +5262,7 @@ def proxyView(frame,ttkframe,lang):
     b_clear_texts=tk.Button(frame,text="clear all texts",command=lambda: threading.Thread(target=proxy_textfield.delete(1.0,tk.END)).start() )
     b_clear_texts.grid(row=4,column=1, sticky=tk.W)
     
-    b_choose_proxy=tk.Button(frame,text="load  from file",command=lambda: threading.Thread(target=select_cookie_file).start() )
+    b_choose_proxy=tk.Button(frame,text="load  from file",command=lambda: threading.Thread(target=select_file).start() )
     b_choose_proxy.grid(row=4,column=0, sticky=tk.W)
 
 
@@ -6001,7 +5359,7 @@ def metaView(left,right,lang):
     metaView_video_folder = tk.StringVar()
 
 
-    l_video_folder = tk.Label(left, text=i18labels("videoFolder", locale=lang, module="g"))
+    l_video_folder = tk.Label(left, text=settings[locale]['videoFolder'])
     l_video_folder.grid(row = 0, column = 0, sticky='w', padx=14, pady=15)    
 
 
@@ -6023,7 +5381,8 @@ def metaView(left,right,lang):
 
     b_open_video_folder=tk.Button(left,text="open local",command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
     b_open_video_folder.grid(row = 0, column = 3, sticky='w', padx=14, pady=15)    
-    l_meta_format = tk.Label(left, text=i18labels("preferred meta file format", locale=lang, module="g"))
+    l_meta_format = tk.Label(left, text=settings[locale]['l_metafileformat']
+                             )
     # l_platform.place(x=10, y=90)
     l_meta_format.grid(row = 1, column = 0, sticky='w', padx=14, pady=15)    
     global metafileformat
@@ -6061,7 +5420,7 @@ def tagsView(left,right,lang):
     tagView_video_folder = tk.StringVar()
 
 
-    l_video_folder = tk.Label(left, text=i18labels("videoFolder", locale=lang, module="g"))
+    l_video_folder = tk.Label(left, text=settings[locale]['videoFolder'])
     l_video_folder.grid(row = 0, column = 0, sticky='w', padx=14, pady=15)    
     Tooltip(l_video_folder, text='Start from where your video lives' , wraplength=200)
 
@@ -6082,7 +5441,8 @@ def tagsView(left,right,lang):
     b_open_video_folder.grid(row = 0, column = 3, sticky='w', padx=14, pady=15)    
     Tooltip(b_open_video_folder, text='open video folder to find out files change' , wraplength=200)
 
-    l_meta_format = tk.Label(left, text=i18labels("preferred meta file format", locale=lang, module="g"))
+    l_meta_format = tk.Label(left, text=settings[locale]['l_metafileformat']
+                             )
     # l_platform.place(x=10, y=90)
     l_meta_format.grid(row = 1, column = 0, sticky='w', padx=14, pady=15)    
     Tooltip(l_meta_format, text='Choose the one you like to edit metadata' , wraplength=200)
@@ -6118,7 +5478,7 @@ def desView(left,right,lang):
     desView_video_folder = tk.StringVar()
 
 
-    l_video_folder = tk.Label(left, text=i18labels("videoFolder", locale=lang, module="g"))
+    l_video_folder = tk.Label(left, text=settings[locale]['videoFolder'])
     l_video_folder.grid(row = 0, column = 0, sticky='w', padx=14, pady=15)    
     Tooltip(l_video_folder, text='Start from where your video lives' , wraplength=200)
 
@@ -6139,7 +5499,7 @@ def desView(left,right,lang):
     b_open_video_folder.grid(row = 0, column = 3, sticky='w', padx=14, pady=15)    
     Tooltip(b_open_video_folder, text='open video folder to find out files change' , wraplength=200)
 
-    l_meta_format = tk.Label(left, text=i18labels("preferred meta file format", locale=lang, module="g"))
+    l_meta_format = tk.Label(left, text=settings[locale]['l_metafileformat'])
     # l_platform.place(x=10, y=90)
     l_meta_format.grid(row = 1, column = 0, sticky='w', padx=14, pady=15)    
     Tooltip(l_meta_format, text='Choose the one you like to edit metadata' , wraplength=200)
@@ -6177,7 +5537,7 @@ def scheduleView(left,right,lang):
     scheduleView_video_folder = tk.StringVar()
 
 
-    l_video_folder = tk.Label(left, text=i18labels("videoFolder", locale=lang, module="g"))
+    l_video_folder = tk.Label(left, text=settings[locale]['videoFolder'])
     l_video_folder.grid(row = 0, column = 0, sticky='w', padx=14, pady=15)    
     Tooltip(l_video_folder, text='Start from where your video lives' , wraplength=200)
 
@@ -6201,7 +5561,7 @@ def scheduleView(left,right,lang):
     b_open_video_folder.grid(row = 0, column = 3, sticky='w', padx=14, pady=15)    
     Tooltip(b_open_video_folder, text='open video folder to find out files change' , wraplength=200)
     print('save folder to tmp',tmp)
-    l_meta_format = tk.Label(left, text=i18labels("preferred meta file format", locale=lang, module="g"))
+    l_meta_format = tk.Label(left, text=settings[locale]['l_metafileformat'])
     # l_platform.place(x=10, y=90)
     l_meta_format.grid(row = 1, column = 0, sticky='w', padx=14, pady=15)    
     Tooltip(l_meta_format, text='Choose the one you like to edit metadata' , wraplength=200)
@@ -6654,7 +6014,8 @@ def render(root,window,log_frame,lang):
      # definition of the menu one level up...
     Cascade_button.menu.choices.add_command(label='zh',command=lambda:changeDisplayLang('zh'))
     Cascade_button.menu.choices.add_command(label='en',command=lambda:changeDisplayLang('en'))
-    Cascade_button.menu.add_cascade(label= i18labels("chooseLang", locale=lang, module="g"),
+    Cascade_button.menu.add_cascade(label= settings[locale]['chooseLang']
+                                    ,
                                     
                                      menu=Cascade_button.menu.choices)    
     
@@ -6669,13 +6030,15 @@ def render(root,window,log_frame,lang):
     Cascade_button.menu.loglevel.add_command(label='CRITICAL',command=lambda:changeLoglevel('CRITICAL',window,log_frame))
 
     
-    Cascade_button.menu.add_cascade(label= i18labels("loglevel", locale=lang, module="g"),
+    Cascade_button.menu.add_cascade(label=settings[locale]['loglevel']
+                                    ,
                                     
                                      menu=Cascade_button.menu.loglevel)    
 
     menubar = tk.Menu(window)
 
-    menubar.add_cascade(label=i18labels("settings", locale=lang, module="g"), menu=Cascade_button.menu)    
+    menubar.add_cascade(label=settings[locale]['settings']
+                        , menu=Cascade_button.menu)    
 
 
 
