@@ -118,8 +118,9 @@ height=720
 width=1024
 supported_video_exts=['.flv', '.mp4', '.avi']
 supported_thumb_exts=['.jpeg', '.png', '.jpg','webp']
-supported_des_exts=['.des', '.txt']
-supported_tag_exts=['.tag', '.txt']
+supported_des_exts=['.des']
+supported_tag_exts=['.tags']
+supported_schedule_exts=['.schedule']
 supported_meta_exts=['.json', '.xls','.xlsx','.csv']      
 
 # Logging configuration
@@ -1490,7 +1491,7 @@ def isFilePairedMetas(r,videofilename,meta_exts_list,dict,meta_name):
 
         metapath = os.path.join(r, videofilename+ext)
         if  os.path.exists(metapath):     
-            logger.info(f'this  {meta_name} exist:\n {metapath}')
+            logger.info(f'meta filed  {meta_name} for {videofilename} is  exist:\n {metapath}')
             if dict[meta_name] is not None and metapath not in dict[meta_name]:
                 if dict[meta_name].has_key(videofilename)==False:
                     dict[meta_name][videofilename]=[]
@@ -1526,10 +1527,28 @@ def isFilePairedMetas(r,videofilename,meta_exts_list,dict,meta_name):
                                 
                     logger.info(f"found thumbfiles,end to set video metas {type(dict['videos'][videofilename]['thumbnail_local_path'])},{dict['videos'][videofilename]['thumbnail_local_path']}")
                             
-                if meta_name=='desFilePaths':
-                    with open(metapath,'r') as f:
-                        contents=f.readlines()
-                        dict['videos'][videofilename]['video_description']=contents     
+                elif meta_name=='desFilePaths':
+                    logger.info(f"found des files,start to set video metas {type(dict['videos'][videofilename]['video_description'])},{dict['videos'][videofilename]['video_description']}")
+
+                    with open(metapath,'r',encoding='utf-8') as f:
+                        lines=f.readlines()
+                        
+                        contents = '\r'.join(lines)
+                        contents = contents.replace('\n','')
+                        dict['videos'][videofilename]['video_description']=contents 
+                    logger.info(f"found des files,end to set video metas {type(dict['videos'][videofilename]['video_description'])},{dict['videos'][videofilename]['video_description']}")
+
+                elif meta_name=='tagFilePaths':
+                    logger.info(f"found tag files,start to set video metas {type(dict['videos'][videofilename]['tags'])},{dict['videos'][videofilename]['tags']}")
+
+                    with open(metapath,'r',encoding='utf-8') as f:
+                        lines=f.readlines()
+                        
+                        contents = '\r'.join(lines)
+                        contents = contents.replace('\n','')
+                        dict['videos'][videofilename]['tags']=contents       
+                    logger.info(f"found tag files,end to set video metas {type(dict['videos'][videofilename]['tags'])},{dict['videos'][videofilename]['tags']}")
+                                             
     print(f"after check:\n {jsons.dump(dict[meta_name])}:\n,{dict['videos'][videofilename]['thumbnail_local_path']}")
                           
     logger.info(f"after check:\n {jsons.dump(dict[meta_name])}:\n,{dict['videos'][videofilename]['thumbnail_local_path']}")
@@ -1800,7 +1819,6 @@ def scanVideofiles(folder):
                                     if filepath in ultra[folder]['videos'][filename]['thumbnail_local_path']:
                                         pass
                                     else:
-                                        ultra[folder]['videos'][filename]['thumbnail_local_path'].append(filepath)                                        
                                         if type(ultra[folder]['videos'][filename]['thumbnail_local_path'])==str:
                                             ultra[folder]['videos'][filename]['thumbnail_local_path']=eval(ultra[folder]['videos'][filename]['thumbnail_local_path'])
                                             ultra[folder]['videos'][filename]['thumbnail_local_path'].append(filepath)
@@ -1820,14 +1838,16 @@ def scanVideofiles(folder):
 
                             
                             files=ultra[folder] ['videos'][filename]['thumbnail_local_path']
-                            if len(files)>0:
-                                start=False
-                                for i in files:
-                                    if os.path.exists(i):      
-                                        start=True
-                                if start==True:                                  
-                                    thumbMetaCounts+=1
-
+                            if files is not None:
+                                if len(files)>0:
+                                    start=False
+                                    for i in files:
+                                        if os.path.exists(i):      
+                                            start=True
+                                    if start==True:                                  
+                                        thumbMetaCounts+=1
+                            else:
+                                print(f"detect no thumb files for video {filename}==={files}")
                         if ultra[folder] ['videos'][filename]['tags']!='':
                             tagMetaCounts+=1
 
@@ -1844,8 +1864,8 @@ def scanVideofiles(folder):
                         isFilePairedMetas(r,filename,supported_thumb_exts,ultra[folder],'thumbFilePaths')
                         isFilePairedMetas(r,filename,supported_des_exts,ultra[folder],'desFilePaths')
                         isFilePairedMetas(r,filename,supported_meta_exts,ultra[folder],'metaFilePaths')
-                        isFilePairedMetas(r,filename,supported_des_exts,ultra[folder],'tagFilePaths')
-                        isFilePairedMetas(r,filename,supported_des_exts,ultra[folder],'scheduleFilePaths')
+                        isFilePairedMetas(r,filename,supported_tag_exts,ultra[folder],'tagFilePaths')
+                        isFilePairedMetas(r,filename,supported_schedule_exts,ultra[folder],'scheduleFilePaths')
                 else:
                     print('is folder',r,d,i)      
     if len(ultra[folder] ['filenames'])==0:
@@ -2518,21 +2538,255 @@ def render_video_folder_check_results(frame,right_frame,folder,isThumbView=True,
 
     if isScheduleView==True:
         rendersubmeta(frame,right_frame,folder,'schedule','scheduleFileCounts','scheduleMetaCounts',
-                      render_update_schedule,6,selectedMetafileformat)
+                      render_schedule_gen,6,selectedMetafileformat)
 
 
 
 
     if isTagsView:
-        rendersubmeta(frame,right_frame,folder,'tags','tagFileCounts','tagMetaCounts',render_update_tags,7,selectedMetafileformat)
+        rendersubmeta(frame,right_frame,folder,'tags','tagFileCounts','tagMetaCounts',render_tag_gen,7,selectedMetafileformat)
 
 
 
 
-    if isDesView==True and isScheduleView==True and isTagsView==True and isThumbView==True:
-        rendersubmeta(frame,right_frame,folder,'meta','metaFileCounts','metaMetaCounts',render_update_meta,8,selectedMetafileformat)
+    # if isDesView==True and isScheduleView==True and isTagsView==True and isThumbView==True:
+    #     rendersubmeta(frame,right_frame,folder,'meta','metaFileCounts','metaMetaCounts',render_update_meta,8,selectedMetafileformat)
+
+def ValidateTagGenMetas(folder,mode_value,preferred_value,frame=None):
+    passed=True
+    print(f'start to validate tag gen metas,mode is {mode_value},{type(mode_value)}')
+    logger.info(f'start to validate tag gen metas')
+
+    if mode_value and mode_value is not None:
+        logger.info(f'start to process mode : {mode_value},{type(mode_value)}')
+
+        ultra[folder]['tag_gen_setting']['mode']=mode_value
+        ultra[folder]['tag_gen_setting']['preferred']=preferred_value
+
+        if mode_value==1:
+            logger.info('in default we fill video tags with video filename')
+        elif mode_value==2:
+            logger.info('summarize description from subtitles of video,this extension is not supported yet')
+
+        elif mode_value==3:
+            logger.info('summarize description from audio of video,this extension is not supported yet')
+        elif mode_value==4:
+            logger.info('read description from .des .txt with same filename of video')
+        elif mode_value==5:
+            logger.info('it seems you want fill description of video by hands')
+
+        else: 
+
+            logger.error(f'no valid mode:{mode_value}')
+    else:
+        logger.info('mode value is none')
+        passed=False
+    print(f'passed is {passed}')
+
+    if passed==True:
+        logger.info(f'tag gen validation passed is {passed}')
 
 
+        
+        lab = tk.Label(frame,text="validation passed, go to gen tag",bg="lightyellow")
+        lab.grid(row = 10, column = 1,  padx=14, pady=15,sticky='nw')     
+        lab.after(5000,lab.destroy)    
+        print(f'sync total video assets with tag gen video meta {ultra[folder]["videos"]}')
+
+        totaljson=os.path.join(folder,videoassetsfilename)
+
+        if os.path.exists(totaljson):
+            with open(totaljson,'w') as f:
+                f.write(jsons.dumps(ultra[folder]))        
+        else:
+            with open(totaljson,'a') as f:
+                f.write(jsons.dumps(ultra[folder]))    
+    else:
+        logger.debug(f'tag gen validation failed')
+    return passed
+def genTag(folder,mode_value,prefer_tags,frame=None):
+    passed=ValidateTagGenMetas(folder,mode_value,prefer_tags,frame=None)
+
+
+    print('read video meta')
+
+ 
+    print('read tag gen settings')
+
+    template_data=ultra[folder]['tag_gen_setting'] 
+    video_data = ultra[folder]['videos']
+   
+    for video_id, video_info in video_data.items():
+        print(f'tag gen -process video-start tag body {video_id}')
+
+        logger.info(f'tag gen -process video-start tag body {video_id}')
+
+
+        if mode_value==1:
+            logger.info(f'tag gen -process video-extract from video filename with # {video_id}')
+
+            ultra[folder]['videos'][video_id]['tags']=','.join(ultra[folder]['videos'][video_id]['video_filename'].split('#').pop(0))
+        elif mode_value==2:
+            logger.info(f'tag gen -process video-gen from  rapidtags not supported yet {video_id}')
+        elif mode_value==3:
+            logger.info(f'tag gen -process video-auto gen from category and video description, not supported yet {video_id}')
+
+        elif mode_value==4:
+            logger.info(f'tag gen -process video-read from .tag file with  same video filename {video_id}')
+            print(f'tag gen -process video-read from .tag file with  same video filename {video_id}')
+
+            # ultra[folder]['videos'][video_id]['tags']=''
+            for ext in supported_tag_exts:
+                tagfilepath=os.path.join(folder,video_id+ext)
+                if os.path.exists(tagfilepath):
+                    with open(tagfilepath,'r',encoding='utf-8') as f:
+                        lines=f.readlines()
+                        
+                        contents = '\r'.join(lines)
+                        contents = contents.replace('\n','')
+                        ultra[folder]['videos'][video_id]['tags']=contents 
+                    logger.info(f'tag gen -set file content  to tag field:\r{tagfilepath}')
+
+                else:
+                    logger.debug(f'tag gen file broken {tagfilepath}')
+                    print(f'tag gen file broken {tagfilepath}')
+
+                ultra[folder]['videos'][video_id]['tags']
+        logger.info(f'tag gen -process video-end tag body {video_id}')
+        print(f'tag gen -process video-end tag body {video_id}')
+
+
+        logger.info(f'tag gen -process video  start with prefer_tags {video_id}')
+        if prefer_tags and prefer_tags !='':
+            ultra[folder]['videos'][video_id]['tags']=prefer_tags+','+ultra[folder]['videos'][video_id]['tags']
+        logger.info(f'tag gen -process video  end with prefer_tags {video_id}')
+
+    
+    lab = tk.Label(frame,text="end to gen tagcription,run check video assets again to see what happens",bg="lightyellow")
+    lab.grid(row = 10, column = 1,  padx=14, pady=15,sticky='nw')     
+    lab.after(5000,lab.destroy)    
+    print(f'sync total video assets with tag gen video meta {ultra[folder]["videos"]}')
+
+    logger.info('end to gen tagcription')
+    logger.info('start to sync tagcription meta to video meta file')
+
+    dumpMetafiles(ultra[folder]['metafileformat'],folder)
+    logger.info('end to sync gen tagcription meta to video meta file')
+
+    logger.info('start to sync gen tagcription meta to video assets file')
+    
+    syncVideometa2assetsjson(ultra[folder]['metafileformat'],folder)
+    logger.info('end to sync gen tagcription meta to video assets file')
+
+def ValidateDesGenMetas(folder,descriptionPrefix_value,mode_value,descriptionSuffix_value,frame=None):
+    passed=True
+    print(f'start to validate des gen metas,mode is {mode_value},{type(mode_value)}')
+    logger.info(f'start to validate des gen metas')
+
+    if mode_value and mode_value is not None:
+        logger.info(f'start to process mode : {mode_value},{type(mode_value)}')
+
+        ultra[folder]['des_gen_setting']['mode']=mode_value
+        ultra[folder]['des_gen_setting']['descriptionPrefix']=descriptionPrefix_value
+        ultra[folder]['des_gen_setting']['descriptionSuffix']=descriptionSuffix_value
+
+        if mode_value==1:
+            logger.info('in default we fill video description with video filename')
+        elif mode_value==2:
+            logger.info('summarize description from subtitles of video,this extension is not supported yet')
+
+        elif mode_value==3:
+            logger.info('summarize description from audio of video,this extension is not supported yet')
+        elif mode_value==4:
+            logger.info('read description from .des .txt with same filename of video')
+        elif mode_value==5:
+            logger.info('it seems you want fill description of video by hands')
+
+        else: 
+
+            logger.error(f'no valid mode:{mode_value}')
+    else:
+        logger.info('mode value is none')
+        passed=False
+    print(f'passed is {passed}')
+
+    if passed==True:
+        logger.info(f'des gen validation passed is {passed}')
+
+
+        
+        lab = tk.Label(frame,text="validation passed, go to gen des",bg="lightyellow")
+        lab.grid(row = 10, column = 1,  padx=14, pady=15,sticky='nw')     
+        lab.after(5000,lab.destroy)    
+        print(f'sync total video assets with des gen video meta {ultra[folder]["videos"]}')
+
+        totaljson=os.path.join(folder,videoassetsfilename)
+
+        if os.path.exists(totaljson):
+            with open(totaljson,'w') as f:
+                f.write(jsons.dumps(ultra[folder]))        
+        else:
+            with open(totaljson,'a') as f:
+                f.write(jsons.dumps(ultra[folder]))    
+    else:
+        logger.debug(f'des gen validation failed')
+    return passed
+
+def genDes(folder,descriptionPrefix_value,mode_value,descriptionSuffix_value,frame=None):
+    passed=ValidateDesGenMetas(folder,descriptionPrefix_value,mode_value,descriptionSuffix_value,frame=None)
+
+
+    print('read video meta')
+
+ 
+    print('read des gen settings')
+
+    template_data=ultra[folder]['des_gen_setting'] 
+    video_data = ultra[folder]['videos']
+   
+    for video_id, video_info in video_data.items():
+        logger.info(f'des gen -process video-start des body {video_id}')
+
+        if mode_value==4:
+            ultra[folder]['videos'][video_id]['video_description']=''
+            for ext in supported_des_exts:
+                desfilepath=os.path.join(folder,video_id+ext)
+                if os.path.exists(desfilepath):
+                    with open(desfilepath,'r',encoding='utf-8') as f:
+                        lines=f.readlines()
+                        
+                        contents = '\r'.join(lines)
+                        contents = contents.replace('\n','')
+                        ultra[folder]['videos'][video_id]['video_description']=contents 
+                    logger.info(f'des gen -set file content  to video_description field:\r{desfilepath}')
+
+                else:
+                    logger.debug(f'des gen file broken {desfilepath}')
+
+                ultra[folder]['videos'][video_id]['video_description']
+        logger.info(f'des gen -process video-end des body {video_id}')
+
+
+        logger.info(f'des gen -process video  start with suffix and prefix {video_id}')
+        ultra[folder]['videos'][video_id]['video_description']=descriptionPrefix_value+ultra[folder]['videos'][video_id]['video_description']+descriptionSuffix_value
+        logger.info(f'des gen -process video  end with suffix and prefix {video_id}')
+
+    
+    lab = tk.Label(frame,text="end to gen description,run check video assets again to see what happens",bg="lightyellow")
+    lab.grid(row = 10, column = 1,  padx=14, pady=15,sticky='nw')     
+    lab.after(5000,lab.destroy)    
+    print(f'sync total video assets with des gen video meta {ultra[folder]["videos"]}')
+
+    logger.info('end to gen description')
+    logger.info('start to sync description meta to video meta file')
+
+    dumpMetafiles(ultra[folder]['metafileformat'],folder)
+    logger.info('end to sync gen description meta to video meta file')
+
+    logger.info('start to sync gen description meta to video assets file')
+    
+    syncVideometa2assetsjson(ultra[folder]['metafileformat'],folder)
+    logger.info('end to sync gen description meta to video assets file')
 def render_des_gen(frame,isneed,folder,selectedMetafileformat='json'):
     if isneed==True:
         if len(frame.winfo_children())>0:
@@ -2553,25 +2807,25 @@ def render_des_gen(frame,isneed,folder,selectedMetafileformat='json'):
         lab = tk.Label(new_canvas,text="请选择你的视频描述从何而来",bg="lightyellow",width=30)
         lab.grid(row = 1, column = 0,  padx=14, pady=15,sticky='nw') 
    
-        thumbmode1=tk.Radiobutton(new_canvas,text="手动准备",variable=desmode,value=1,command=lambda:render_des_update_view(new_canvas,folder,desmode,frame))
-        thumbmode1.grid(row = 1, column = 1,  padx=14, pady=15,sticky='nw') 
-        thumbmode2=tk.Radiobutton(new_canvas,text=" 批量生成",variable=desmode,value=2,command=lambda:render_des_update_view(new_canvas,folder,desmode,frame))
-        thumbmode2.grid(row = 1, column = 2,  padx=14, pady=15,sticky='nw') 
+        desmode1=tk.Radiobutton(new_canvas,text="手动准备",variable=desmode,value=1,command=lambda:render_des_update_view(new_canvas,folder,desmode,frame))
+        desmode1.grid(row = 1, column = 1,  padx=14, pady=15,sticky='nw') 
+        desmode2=tk.Radiobutton(new_canvas,text=" 批量生成",variable=desmode,value=2,command=lambda:render_des_update_view(new_canvas,folder,desmode,frame))
+        desmode2.grid(row = 1, column = 2,  padx=14, pady=15,sticky='nw') 
 
         # thumbmode.trace_add('write', render_thumb_update_view(new_canvas,folder,thumbmode))
 
 
 
 
-def render_des_update_view(frame,folder,thumbmode,previous_frame=None):
-    print('thumbmode',type(thumbmode.get()),thumbmode.get())    
+def render_des_update_view(frame,folder,desmode,previous_frame=None):
+    print('desmode',type(desmode.get()),desmode.get())    
     lang='en'
 
     if len(frame.winfo_children())>0:
         for widget in frame.winfo_children():
             widget.destroy()      
    
-    if thumbmode.get() ==1:
+    if desmode.get() ==1:
         lbl15 = tk.Label(frame, text='两种选择')
         lbl15.grid(row=0,column=0,padx=14, pady=15,sticky='w') 
        
@@ -2596,8 +2850,8 @@ def render_des_update_view(frame,folder,thumbmode,previous_frame=None):
         b_open_video_folder.grid(row = 4, column = 0, padx=14, pady=15,sticky='nswe')      
 
 
-        b_update_metas_=tk.Button(frame,text="validate meta",command=lambda: ValidateThumbnailGenMetas(folder,thumbnail_template_file.get(),mode.get(),thummbnail_bg_file.get(),thummbnail_bg_folder.get()))
-        b_update_metas_.grid(row = 7, column = 0,  padx=14, pady=15,sticky='nswe') 
+        b_check_metas_=tk.Button(frame,text="edit videometa",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
+        b_check_metas_.grid(row = 7, column = 0, padx=14, pady=15,sticky='nswe') 
 
         b_return=tk.Button(frame,text="Back to previous page",command=lambda: render_des_gen(previous_frame,True,folder))
         b_return.grid(row = 8, column =0)   
@@ -2608,24 +2862,28 @@ def render_des_update_view(frame,folder,thumbmode,previous_frame=None):
         b_return.grid(row = 0, column =1)   
 
 
-        mode = tk.StringVar()
-        mode.set("4")
+        mode = tk.IntVar()
+        mode.set(1)
 
         lab = tk.Label(frame,text="Step1:请选择视频描述主体从何而来",bg="lightyellow",width=30)
         lab.grid(row = 0, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
-        mode1=tk.Radiobutton(frame,text="视频文件名称",variable=mode,value="1",command='')
+        mode1=tk.Radiobutton(frame,text="视频文件名称",variable=mode,value=1,command='')
+        Tooltip(mode1, text='视频描述使用视频文件名称' , wraplength=200)
+
         mode1.grid(row = 1, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
-        mode2=tk.Radiobutton(frame,text="视频字幕文件总结",variable=mode,value="2",command='')
-        Tooltip(mode2, text='字幕文件须与视频文件同名' , wraplength=200)
+        mode2=tk.Radiobutton(frame,text="视频字幕文件总结",variable=mode,value=2,command='')
+        Tooltip(mode2, text='利用字幕文件总结视频描述，字幕文件须与视频文件同名' , wraplength=200)
 
         mode2.grid(row = 1, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
-        mode3=tk.Radiobutton(frame,text="视频音频总结",variable=mode,value="3",command='')
+        mode3=tk.Radiobutton(frame,text="视频音频总结",variable=mode,value=3,command='')
+        Tooltip(mode2, text='利用视频音频部分总结视频描述' , wraplength=200)
+
         mode3.grid(row = 2, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
-        mode4=tk.Radiobutton(frame,text="从视频描述文件中来",variable=mode,value="4",command='')
-        Tooltip(mode4, text='视频描述文件须与视频文件同名，后缀可以是.txt,.des' , wraplength=200)
+        mode4=tk.Radiobutton(frame,text="从视频描述文件中来",variable=mode,value=4,command='')
+        Tooltip(mode4, text='视频描述文件须与视频文件同名，后缀可以是.des' , wraplength=200)
 
         mode4.grid(row = 2, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
-        mode5=tk.Radiobutton(frame,text="从元数据中来",variable=mode,value="5",command='')
+        mode5=tk.Radiobutton(frame,text="从元数据中来",variable=mode,value=5,command='')
         mode5.grid(row = 3, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
         Tooltip(mode5, text='视频描述文可后续在元数据文件中手动编辑' , wraplength=200)
 
@@ -2642,12 +2900,14 @@ def render_des_update_view(frame,folder,thumbmode,previous_frame=None):
         l_preferdesprefix.grid(row = 5, column = 0,  padx=14, pady=15,sticky='nw') 
         e_preferdesprefix = tk.Entry(frame, width=55, textvariable=descriptionPrefix)
         e_preferdesprefix.grid(row = 5, column = 1,  padx=14, pady=15,sticky='nw') 
+        Tooltip(l_preferdesprefix, text='add \r if you want line breaks' , wraplength=200)
 
 
         l_preferdessuffix = tk.Label(frame, text=i18labels("descriptionSuffix", locale=lang, module="g"))
         l_preferdessuffix.grid(row = 6, column = 0,  padx=14, pady=15,sticky='nw') 
         e_preferdessuffix = tk.Entry(frame, width=55, textvariable=descriptionSuffix)
         e_preferdessuffix.grid(row = 6, column = 1,  padx=14, pady=15,sticky='nw') 
+        Tooltip(l_preferdessuffix, text='add \r if you want line breaks' , wraplength=200)
         
         lab = tk.Label(frame,text="Step3:请编辑视频元数据",bg="lightyellow",width=30)
         lab.grid(row = 7, column = 0,  padx=14, pady=15,sticky='nw')         
@@ -2668,13 +2928,160 @@ def render_des_update_view(frame,folder,thumbmode,previous_frame=None):
         lab.grid(row = 9, column = 0,  padx=14, pady=15,sticky='nw')         
 
 
-        b_update_metas_=tk.Button(frame,text="validate meta",command=lambda: ValidateThumbnailGenMetas(folder,thumbnail_template_file.get(),mode.get(),thummbnail_bg_file.get(),thummbnail_bg_folder.get()))
+        b_update_metas_=tk.Button(frame,text="validate meta",command=lambda: ValidateDesGenMetas(folder,descriptionPrefix.get(),mode.get(),descriptionSuffix.get(),frame))
         b_update_metas_.grid(row = 10, column = 0,  padx=14, pady=15,sticky='nswe') 
         
 
 
 
-        b_gen_thumb_=tk.Button(frame,text="gen thumb",command=lambda: genThumbnailFromTemplate(folder,thumbnail_template_file.get(),mode))
+        b_gen_thumb_=tk.Button(frame,text="gen descriptions",command=lambda: genDes(folder,descriptionPrefix.get(),mode.get(),descriptionSuffix.get(),frame))
+        b_gen_thumb_.grid(row = 11, column =0, padx=14, pady=15,sticky='nswe') 
+
+
+        b_check_metas_=tk.Button(frame,text="check metajson",command=lambda: threading.Thread(target=openLocal(folder)).start() )
+        b_check_metas_.grid(row = 12, column = 0, padx=14, pady=15,sticky='nswe') 
+
+def render_tag_gen(frame,isneed,folder,selectedMetafileformat='json'):
+    if isneed==True:
+        if len(frame.winfo_children())>0:
+            for widget in frame.winfo_children():
+                widget.destroy()        
+        global thumbnail_metas_file,thummbnail_bg_folder,thummbnail_bg_file,thumbnail_template_file
+        thumbnail_metas_file = tk.StringVar()        
+        thummbnail_bg_folder = tk.StringVar()        
+        thummbnail_bg_file = tk.StringVar()      
+
+        new_canvas = tk.Frame(frame)
+        new_canvas.grid(row=2, column=0, pady=(5, 0), sticky='nw')     
+
+
+        desmode = tk.IntVar()
+        # thumbmode.set(1)
+        # desmode.trace('w',render_des_update_view(new_canvas,folder,desmode,frame))
+        lab = tk.Label(new_canvas,text="请选择你的视频标签从何而来",bg="lightyellow",width=30)
+        lab.grid(row = 1, column = 0,  padx=14, pady=15,sticky='nw') 
+   
+        desmode1=tk.Radiobutton(new_canvas,text="手动准备",variable=desmode,value=1,command=lambda:render_tag_update_view(new_canvas,folder,desmode,frame))
+        desmode1.grid(row = 1, column = 1,  padx=14, pady=15,sticky='nw') 
+        desmode2=tk.Radiobutton(new_canvas,text=" 批量生成",variable=desmode,value=2,command=lambda:render_tag_update_view(new_canvas,folder,desmode,frame))
+        desmode2.grid(row = 1, column = 2,  padx=14, pady=15,sticky='nw') 
+
+        # thumbmode.trace_add('write', render_thumb_update_view(new_canvas,folder,thumbmode))
+
+
+
+
+def render_tag_update_view(frame,folder,desmode,previous_frame=None):
+    print('tagmode',type(desmode.get()),desmode.get())    
+
+    if len(frame.winfo_children())>0:
+        for widget in frame.winfo_children():
+            widget.destroy()      
+   
+    if desmode.get() ==1:
+        lbl15 = tk.Label(frame, text='两种选择')
+        lbl15.grid(row=0,column=0,padx=14, pady=15,sticky='w') 
+       
+        lbl15 = tk.Label(frame, text='1.手动准备视频标签，填充到元数据对应字段即可，元数据格式支持xlsx json csv',wraplength=600)
+        lbl15.grid(row=1,column=0, sticky='w')
+
+        lbl15 = tk.Label(frame, text='2.\r',wraplength=600)
+        lbl15.grid(row=2,column=0, sticky='w')
+
+
+
+        b_check_metas_=tk.Button(frame,text="edit videometa with local editor",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
+        b_check_metas_.grid(row = 5, column = 0, padx=14, pady=15,sticky='nswe') 
+        Tooltip(b_check_metas_, text='fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field' , wraplength=200)
+        
+        if ultra[folder]['metafileformat']=='json':
+
+            b_edit_thumb_metas=tk.Button(frame,text="edit json with online editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
+            b_edit_thumb_metas.grid(row = 6, column = 0, padx=14, pady=15,sticky='nswe') 
+            Tooltip(b_check_metas_, text='For those who dont have json editor or have install issues' , wraplength=200)
+        b_open_video_folder=tk.Button(frame,text="open local",command=lambda: threading.Thread(target=openLocal(folder)).start() )
+        b_open_video_folder.grid(row = 4, column = 0, padx=14, pady=15,sticky='nswe')      
+
+
+        b_check_metas_=tk.Button(frame,text="edit videometa",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
+        b_check_metas_.grid(row = 7, column = 0, padx=14, pady=15,sticky='nswe') 
+
+        b_return=tk.Button(frame,text="Back to previous page",command=lambda: render_tag_gen(previous_frame,True,folder))
+        b_return.grid(row = 8, column =0)   
+
+    else:
+
+        b_return=tk.Button(frame,text="Back to previous page",command=lambda: render_tag_gen(previous_frame,True,folder))
+        b_return.grid(row = 0, column =1)   
+
+
+        mode = tk.IntVar()
+        mode.set(1)
+
+        lab = tk.Label(frame,text="Step1:请选择视频标签从何而来",bg="lightyellow",width=30)
+        lab.grid(row = 0, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        mode1=tk.Radiobutton(frame,text="视频文件名称中#",variable=mode,value=1,command='')
+        Tooltip(mode1, text='视频标签使用视频文件名称带#的部分,比如文件名为xxxxxxxxxx#t1#t2#t3.mp4' , wraplength=200)
+
+        mode1.grid(row = 1, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        mode2=tk.Radiobutton(frame,text="rapidtags",variable=mode,value=2,command='')
+        Tooltip(mode2, text='利用rapidtags获取' , wraplength=200)
+
+        mode2.grid(row = 1, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        mode3=tk.Radiobutton(frame,text="自动",variable=mode,value=3,command='')
+        Tooltip(mode2, text='利用视频分类和视频内容总结,推荐最佳的视频标签' , wraplength=200)
+
+        mode3.grid(row = 2, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        mode4=tk.Radiobutton(frame,text="从视频标签文件中来",variable=mode,value=4,command='')
+        Tooltip(mode4, text='视频描述文件须与视频文件同名，后缀必须是.tag,新建txt文件填写内容，修改后缀为tag' , wraplength=200)
+
+        mode4.grid(row = 2, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        mode5=tk.Radiobutton(frame,text="从元数据中来",variable=mode,value=5,command='')
+        mode5.grid(row = 3, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
+        Tooltip(mode5, text='视频标签可后续在元数据文件中手动编辑' , wraplength=200)
+
+
+
+        lab_step2 = tk.Label(frame,text="Step2:是否使用优先标签",bg="lightyellow")
+        lab_step2.grid(row = 4, column = 0,  padx=14, pady=15,sticky='nw')         
+        Tooltip(lab_step2, text='可以通过设置优先标签批量标准化频道的视频标签' , wraplength=200)
+
+        preferTags=tk.StringVar()
+
+        l_preferredTags = tk.Label(frame, text=settings[locale]['preferTags'])
+        l_preferredTags.grid(row = 5, column = 0,  padx=14, pady=15,sticky='nw') 
+        e_preferredTags = tk.Entry(frame, width=55, textvariable=preferTags)
+        e_preferredTags.grid(row = 5, column = 1,  padx=14, pady=15,sticky='nw') 
+        Tooltip(l_preferredTags, text='add \r if you want line breaks' , wraplength=200)
+
+
+        
+        lab = tk.Label(frame,text="Step3:请编辑视频元数据",bg="lightyellow",width=30)
+        lab.grid(row = 7, column = 0,  padx=14, pady=15,sticky='nw')         
+
+
+
+
+        b_check_metas_=tk.Button(frame,text="edit videometa",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
+        b_check_metas_.grid(row = 8, column = 0, padx=14, pady=15,sticky='nswe') 
+        if ultra[folder]['metafileformat']=='json':
+
+            b_edit_thumb_metas=tk.Button(frame,text="edit json with online editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
+            b_edit_thumb_metas.grid(row = 8, column = 1, padx=14, pady=15,sticky='nswe') 
+        Tooltip(b_edit_thumb_metas, text='fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field' , wraplength=200)
+        b_open_video_folder=tk.Button(frame,text="open local",command=lambda: threading.Thread(target=openLocal(folder)).start() )
+        b_open_video_folder.grid(row = 8, column = 2, padx=14, pady=15,sticky='nswe')    
+        lab = tk.Label(frame,text="Step4:生成视频标签",bg="lightyellow",width=30)
+        lab.grid(row = 9, column = 0,  padx=14, pady=15,sticky='nw')         
+
+
+        b_update_metas_=tk.Button(frame,text="validate meta",command=lambda: ValidateTagGenMetas(folder,mode.get(),preferTags.get(),frame))
+        b_update_metas_.grid(row = 10, column = 0,  padx=14, pady=15,sticky='nswe') 
+        
+
+
+
+        b_gen_thumb_=tk.Button(frame,text="gen descriptions",command=lambda: genTag(folder,mode.get(),preferTags.get(),frame))
         b_gen_thumb_.grid(row = 11, column =0, padx=14, pady=15,sticky='nswe') 
 
 
@@ -2682,33 +3089,8 @@ def render_des_update_view(frame,folder,thumbmode,previous_frame=None):
         b_check_metas_.grid(row = 12, column = 0, padx=14, pady=15,sticky='nswe') 
 
 
-def render_update_tags(frame,isneed,folder,selectedMetafileformat):
-    if isneed==True:
-        lang='en'
-        prefertags=tk.StringVar()
-        if len(frame.winfo_children())>0:
-            for widget in frame.winfo_children():
-                widget.destroy()
-        l_prefertags = tk.Label(frame, text=i18labels("preferTags", locale=lang, module="g"))
-        l_prefertags.grid(row = 0, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
-        el_prefertags = tk.Entry(frame, width=55, textvariable=prefertags)
-        el_prefertags.grid(row = 0, column = 5, columnspan = 3, padx=14, pady=15,sticky='nw') 
 
-
-
-        publishpolicy = tk.IntVar()
-        # publishpolicy.set(4)
-
-        lab = tk.Label(frame,text="where to auto gen tags",bg="lightyellow",width=30)
-        lab.grid(row = 1, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
-        mode0=tk.Radiobutton(frame,text="rapidtags",variable=publishpolicy,value=0,command='')
-        mode0.grid(row = 2, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
-        mode1=tk.Radiobutton(frame,text="openai",variable=publishpolicy,value=1,command='')
-
-        b_import_thumb_metas_=tk.Button(frame,text="Step4:更新视频元数据文件",command=lambda: genThumbnailFromTemplate(videosView_video_folder.get(),thumbnail_template_file.get(),mode.get()))
-        b_import_thumb_metas_.grid(row = 9, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
-
-def render_update_schedule(frame,isneed,folder,selectedMetafileformat):
+def render_schedule_gen(frame,isneed,folder,selectedMetafileformat):
     if isneed==True:
         if len(frame.winfo_children())>0:
             for widget in frame.winfo_children():
@@ -2865,7 +3247,7 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
     if thumbmode.get() ==1:
         lbl15 = tk.Label(frame, text='两种选择')
         lbl15.grid(row=1,column=0,padx=14, pady=15,sticky='w') 
-        b_return=tk.Button(frame,text="Back to previous page",command=lambda: render_update_schedule(previous_frame,True,folder))
+        b_return=tk.Button(frame,text="Back to previous page",command=lambda: render_schedule_gen(previous_frame,True,folder))
         b_return.grid(row = 0, column =1,padx=14, pady=15,sticky='w') 
 
         lbl15 = tk.Label(frame, text='1.手动准备发布时间文件，需放在视频所在文件夹下，且与视频文件同名,完成后再次检测即可',wraplength=600)
@@ -2907,7 +3289,7 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
 
         lab = tk.Label(frame,text="Step1:请选择你的发布时间生成策略",bg="lightyellow",width=30)
         lab.grid(row = 1, column = 0,  padx=14, pady=15,sticky='nw')    
-        b_return=tk.Button(frame,text="Back to previous page",command=lambda: render_update_schedule(previous_frame,True,folder))
+        b_return=tk.Button(frame,text="Back to previous page",command=lambda: render_schedule_gen(previous_frame,True,folder))
         b_return.grid(row = 1, column = 2,  padx=14, pady=15,sticky='e')   
 
 
