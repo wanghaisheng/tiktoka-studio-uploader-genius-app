@@ -4,7 +4,7 @@ from .UploadSession import *
 import os
 import pandas as pd
 
-
+# https://github.com/coleifer/peewee
 import bcrypt
 
 # Define a base for declarative class definitions
@@ -13,6 +13,36 @@ Base = declarative_base()
 # Define a User table
 class User(Base):
     __tablename__ = 'users'
+    id = Column(Integer, primary_key=True)
+    username = Column(String(50), unique=True, nullable=False)
+    password_hash = Column(String(64), nullable=False)
+class Task(Base):
+    __tablename__ = 'tasks'
+    id = Column(Integer, primary_key=True)
+    username = Column(String(50), unique=True, nullable=False)
+    password_hash = Column(String(64), nullable=False)
+class TaskSetting(Base):
+    __tablename__ = 'tasksetting'
+    id = Column(Integer, primary_key=True)
+    username = Column(String(50), unique=True, nullable=False)
+    password_hash = Column(String(64), nullable=False)
+class Proxy(Base):
+    __tablename__ = 'proxies'
+    id = Column(Integer, primary_key=True)
+    username = Column(String(50), unique=True, nullable=False)
+    password_hash = Column(String(64), nullable=False)
+class Account(Base):
+    __tablename__ = 'accounts'
+    id = Column(Integer, primary_key=True)
+    username = Column(String(50), unique=True, nullable=False)
+    password_hash = Column(String(64), nullable=False)
+class TiktokVideo(Base):
+    __tablename__ = 'tkvideos'
+    id = Column(Integer, primary_key=True)
+    username = Column(String(50), unique=True, nullable=False)
+    password_hash = Column(String(64), nullable=False)
+class YoutubeVideo(Base):
+    __tablename__ = 'ytvideos'
     id = Column(Integer, primary_key=True)
     username = Column(String(50), unique=True, nullable=False)
     password_hash = Column(String(64), nullable=False)
