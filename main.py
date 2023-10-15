@@ -18,6 +18,7 @@ import sys
 import random
 import os
 import time
+from  src.models.create_tables import *
 from src.models.proxy_model import *
 # import multiprocessing.dummy as mp
 import concurrent
@@ -5161,7 +5162,6 @@ def split_proxy(proxy_string):
         return None
 
 def saveproxies(engine,proxies_list_raw,logger):
-    dbm=dbsession_test
     proxies_list=[]
     if 'proxy list should be one proxy oneline,and each proxy in such format' in proxies_list_raw:
         proxies_list_raw=proxies_list_raw.replace('proxy list should be one proxy oneline,and each proxy in such format:','')
@@ -5211,7 +5211,7 @@ def saveproxies(engine,proxies_list_raw,logger):
                     'proxy_validate_server': None,
                     'proxy_validate_results': None,
                 }
-                result=dbm.add_proxy(proxy_data)
+                result=ProxyModel.add_proxy(proxy_data)
                 print(f'save proxy {ele} :{result}')
                 if result==False:
                     logger.error(f'add proxy failure :{ele}')                
