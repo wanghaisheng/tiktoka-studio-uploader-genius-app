@@ -5108,12 +5108,12 @@ def  queryProxies(tree,engine,logger,city,country,tags,status,latest_conditions_
     country=country.lower()
     tags=tags.lower()
     now_conditions='city:'+city+';country:'+country+';tags:'+tags+';status:'+str(status)
-    if status=='Select From Status':
-        status=2
-    elif status=='valid':
+    if status=='valid':
         status=1
+    elif status=='invalid':
+        status=0
     else:
-        status=0        
+        status=2        
     if city=='':
         city=None
     if country=='':
@@ -5128,7 +5128,7 @@ def  queryProxies(tree,engine,logger,city,country,tags,status,latest_conditions_
             tree.delete(element) 
         for row in db_rows:
             tree.insert(
-                "", 0, text=row.id, values=(row.url,row.status,row.city,row.country,row.tags, row.proxy_validate_network_type,row.inserted_at)
+                "", 0, text=row.id, values=(row.proxy_host,row.status,row.city,row.country,row.tags, row.proxy_validate_network_type,row.inserted_at)
             )
 
         latest_conditions.set(now_conditions)

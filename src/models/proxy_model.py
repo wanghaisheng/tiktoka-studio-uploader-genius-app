@@ -124,7 +124,7 @@ class ProxyModel(BaseModel):
             proxy = ProxyModel(**proxy_data)
             proxy.insert_date = int(time.time())  # Update insert_date
             proxy.unique_hash=unique_hash
-            proxy.id = CustomID().to_bin()
+            # proxy.id = CustomID().to_bin()
 
             proxy.save()
 
@@ -182,7 +182,10 @@ class ProxyModel(BaseModel):
     def filter_proxies(country=None, state=None, city=None, tags=None, status=None, network_type=None):
         query = ProxyModel.select()
         print('===',country,state,city,tags,status,network_type)
-        
+
+        for person in ProxyModel.select():
+            print(person)
+
         if country is not None:
             query = query.where(ProxyModel.country == country)
 
@@ -201,7 +204,7 @@ class ProxyModel(BaseModel):
         if network_type is not None:
             query = query.where(ProxyModel.proxy_validate_network_type == network_type)
         try:
-            result = query.get()
+            result = list(query)
             
         except ProxyModel.DoesNotExist:
             result = None  # Set a default value or perform any other action

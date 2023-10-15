@@ -130,7 +130,7 @@ class ProxyModel(Model):
         if network_type is not None:
             query = query.where(ProxyModel.proxy_validate_network_type == network_type)
         try:
-            result = query.get()
+            result = list(query)
             
         except ProxyModel.DoesNotExist:
             result = None  # Set a default value or perform any other action
@@ -167,6 +167,5 @@ t3 = ProxyModel.create(id= 5,proxy_protocol='socks5',proxy_host='127.0.0.3', pro
 for person in ProxyModel.select():
     print(person.proxy_host,person.proxy_port,person.status)
 # give 3 result
-person=ProxyModel.filter_proxies(status=2)
-print(person.proxy_host,person.proxy_port,person.status)
-# only 1
+for person in ProxyModel.filter_proxies(status=2):
+    print(person.proxy_host,person.proxy_port,person.status)
