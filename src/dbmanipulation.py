@@ -2,8 +2,40 @@ from .database import dbsession_test,dbsession_pro
 from .UploadSession import UploadSession, UploadSetting
 import json
 import sqlalchemy
+import time
+
+from src.models.proxy_model import ProxyModel
 """ This file will have all function that make any direct query or manipulation in the database. So we can use this funtions as interface of the database. With this we have a single place to edit when some database code should change. 
 """
+
+import hashlib
+import binascii
+from src.customid import  CustomID
+
+class SQLSerialGenerator:
+    def __init__(self, val=b''):
+        if isinstance(val, str):
+            val = binascii.unhexlify(val)
+        self.val = val
+
+    def to_bin(self):
+        return self.val
+# 被数据库所使用的两个ID，短ID与长ID
+POST_ID_GENERATOR = SQLSerialGenerator  # 代表SQL自动生成
+LONG_ID_GENERATOR = CustomID    
+def generate_unique_hash(data):
+    if type(data)==dict:
+        data=json.dumps(data)
+        return hashlib.sha256(data.encode('utf-8')).hexdigest()
+def append_id(values):
+    """
+    若有ID生成器，那么向values中添加生成出的值，若生成器为SQL Serial，则什么都不做
+    :param values:
+    :return:
+    """
+    if LONG_ID_GENERATOR != SQLSerialGenerator:
+        values['id'] = CustomID().to_bin()
+
 class DBM:
     #例如empCount就是类变量
     def __init__(self, mode):
@@ -93,7 +125,7 @@ class DBM:
             return True,status
         else:
             return False,False
-    def Query_subdomain_In_db(url) -> list:
+    def Query_subdomain_In_db(self,url) -> list:
         data = self.dbsession.query(UploadSession).filter(UploadSession.domain == url).first()
         if data:
             subdomains=data.subdomains 
@@ -166,3 +198,87 @@ class DBM:
             self.dbsession.commit()
         except sqlalchemy.exc.SQLAlchemyError  as e:
             self.dbsession.rollback()
+
+    def add_proxy(self,proxy_data)-> None:
+        unique_hash = generate_unique_hash(proxy_data)
+        existing_proxy = ProxyModel.query.filter(ProxyModel.unique_hash == unique_hash).first()
+
+        if existing_proxy is None:
+            proxy = ProxyModel(
+                id=CustomID().to_bin(),
+                inserted_at=int(time.time()),
+                **proxy_data,
+                unique_hash=unique_hash
+            )
+            self.dbsession.add(proxy)
+            self.dbsession.commit()
+            return True
+        else:
+            return False
+
+    def get_proxy_by_id(proxy_id):
+        return ProxyModel.query.get(proxy_id)
+
+    def update_proxy(self,proxy_id, **kwargs):
+        proxy = ProxyModel.query.get(proxy_id)
+
+        if proxy:
+            for key, value in kwargs.items():
+                setattr(proxy, key, value)
+            self.dbsession.commit()
+            return proxy
+        else:
+            return None
+
+    def delete_proxy(self,proxy_id):
+        proxy = ProxyModel.query.get(proxy_id)
+
+        if proxy:
+            proxy.is_deleted = True
+            self.dbsession.commit()
+            return True
+        else:
+            return False
+
+    def bulk_add_proxies(self,proxy_list):
+        inserted_proxies = []
+
+        for proxy_data in proxy_list:
+            unique_hash = generate_unique_hash(proxy_data)
+            existing_proxy = ProxyModel.query.filter(ProxyModel.unique_hash == unique_hash).first()
+
+            if existing_proxy is None:
+                proxy = ProxyModel(
+                    id=CustomID().to_bin(),
+                    inserted_at=int(time.time()),
+                    **proxy_data,
+                    unique_hash=unique_hash
+                )
+                self.dbsession.add(proxy)
+                inserted_proxies.append(proxy)
+
+        self.dbsession.commit()
+        return inserted_proxies
+
+    def filter_proxies(self,country=None, state=None, city=None, tags=None, status=None, network_type=None):
+        query = ProxyModel.query
+
+        if country is not None:
+            query = query.filter(ProxyModel.country == country)
+
+        if state is not None:
+            query = query.filter(ProxyModel.state == state)
+
+        if city is not None:
+            query = query.filter(ProxyModel.city == city)
+
+        if tags is not None:
+            query = query.filter(ProxyModel.tags == tags)
+
+        if status is not None:
+            query = query.filter(ProxyModel.status == status)
+
+        if network_type is not None:
+            query = query.filter(ProxyModel.proxy_validate_network_type == network_type)
+
+        return query.all()

@@ -1,56 +1,56 @@
 import time
-
-from . import redis
-from slim.utils import async_run
-import config
-
-# asyncpg 配置
-# https://github.com/fy0/Icarus
-import asyncpg
-
-# TODO: 连接池
-asyncpg_conn = None
-
-
-def asyncpg_init(db_uri):
-    async def create_conn():
-        global asyncpg_conn
-        # : asyncpg.connection.Connection
-        asyncpg_conn = await asyncpg.connect(db_uri)
-
-    async_run(create_conn)
-
-
-# asyncpg_init(config.DATABASE_URI)
+import hashlib
+import binascii
 
 # peewee 配置
 
-import peewee
-from playhouse.db_url import connect
+from peewee import *
 from playhouse.shortcuts import model_to_dict
+# asyncpg 配置
+# https://github.com/fy0/Icarus
+
+# TODO: 连接池
+asyncpg_conn = None
+mode='debug'
+
+DATABASE_URI=f'{mode}.sqlite3'
+# DATABASE_URI = f'sqlite:///{mode}.sqlite3'
+
+def connect(db_uri):
+
+    db = SqliteDatabase(db_uri
+                        # , 
+        #                 pragmas={
+        # 'journal_mode': 'wal',  # WAL-mode.
+        # 'cache_size': -64 * 1000,  # 64MB cache.
+        # 'synchronous': 0}
+                        )  # Let the OS manage syncing.
+    return db
 
 
-db = connect(config.DATABASE_URI)
 
 
-class CITextField(peewee.TextField):
+db = connect(DATABASE_URI)
+
+
+class CITextField(TextField):
     field_type = 'CITEXT'
 
 
-class SerialField(peewee.IntegerField):
+class SerialField(IntegerField):
     field_type = 'SERIAL'
 
 
-class INETField(peewee.TextField):
+class INETField(TextField):
     # 临时解决方案，peewee 的 custom field 有点问题
     field_type = 'inet'
 
 
-class MyTimestampField(peewee.BigIntegerField):
+class MyTimestampField(BigIntegerField):
     pass
 
 
-class BaseModel(peewee.Model):
+class BaseModel(Model):
     class Meta:
         database = db
 
@@ -74,12 +74,12 @@ def get_time():
 
 
 class StdModel(BaseModel):
-    id = peewee.BlobField(primary_key=True)
-    time = peewee.BigIntegerField(index=True, default=get_time)
-    deleted_at = peewee.BigIntegerField(null=True, index=True)
+    id = BlobField(primary_key=True)
+    time = BigIntegerField(index=True, default=get_time)
+    deleted_at = BigIntegerField(null=True, index=True)
 
-    is_for_tests = peewee.BooleanField(default=False, help_text='单元测试专属账号，单元测试结束后删除')
+    is_for_tests = BooleanField(default=False, help_text='单元测试专属账号，单元测试结束后删除')
 
 
 class StdUserModel(StdModel):
-    user_id = peewee.BlobField(index=True, null=True, help_text='创建者用户ID')
+    user_id =BlobField(index=True, null=True, help_text='创建者用户ID')

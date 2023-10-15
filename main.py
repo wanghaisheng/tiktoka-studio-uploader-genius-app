@@ -18,6 +18,7 @@ import sys
 import random
 import os
 import time
+from src.models.proxy_model import *
 # import multiprocessing.dummy as mp
 import concurrent
 from glob import glob
@@ -4573,15 +4574,7 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                             logger.error(f'debug is {video.get("debug")} of {type(video.get("debug"))},it should be bool, true or false')
 
             
-                    if video.get('wait_policy')==None:
-                        video['wait_policy']=2        
-                        logger.info("you dont specify wait_policy field,we use default 2")
-                    else:
-                        if type(video.get('wait_policy'))!=int:
-                            logger.error('wait_policy should be one of 0,1,2,3,4')
-                        else:
-                            if not video.get('wait_policy') in [0,1,2,3,4]:
-                                logger.error('wait_policy should be one of 0,1,2,3,4')
+
 
                     if video.get('is_record_video')==None:
                         video['is_record_video']=True        
@@ -4600,7 +4593,17 @@ def validateTaskMetafile(engine,ttkframe,metafile):
 
                     logger.info(f'start to process video related fields\n:{video} ')
                     
+                    # if platform==youtube  tiktok use diff model
                     
+                    if video.get('wait_policy')==None:
+                        video['wait_policy']=2        
+                        logger.info("you dont specify wait_policy field,we use default 2")
+                    else:
+                        if type(video.get('wait_policy'))!=int:
+                            logger.error('wait_policy should be one of 0,1,2,3,4')
+                        else:
+                            if not video.get('wait_policy') in [0,1,2,3,4]:
+                                logger.error('wait_policy should be one of 0,1,2,3,4')
                     
                     for key in ['video_local_path','video_title','video_description','thumbnail_local_path','publish_policy','tags']:
                         if video.get(key)==None:
@@ -5103,107 +5106,120 @@ def  queryProxies(tree,engine,logger,city,country,tags,status,latest_conditions_
     city=city.lower()
     country=country.lower()
     tags=tags.lower()
-    status=1 if status=='valid' else 0
     now_conditions='city:'+city+';country:'+country+';tags:'+tags+';status:'+str(status)
+    if status=='Select From Status':
+        status=2
+    elif status=='valid':
+        status=1
+    else:
+        status=0        
+    if city=='':
+        city=None
+    if country=='':
+        country=None  
+    if tags=='':
+        tags=None      
+    db_rows=  ProxyModel.filter_proxies(city=city,country=country,tags=tags,status=status)
+    print('===',db_rows)
+    if db_rows is not None:
+        records = tree.get_children()
+        for element in records:
+            tree.delete(element) 
+        for row in db_rows:
+            tree.insert(
+                "", 0, text=row.id, values=(row.url,row.status,row.city,row.country,row.tags, row.proxy_validate_network_type,row.inserted_at)
+            )
 
-    
-    if set(list(latest_conditions_value))==set(now_conditions):
-        logger.info('you proxy filter conditions without any change,keep the same')
+        latest_conditions.set(now_conditions)
+        logger.info(f'search and display finished:\n')
+    else:
+        logger.info(f'there is no matching records for query:\n')
 
-    else:    
-        if city is not None and city !='' or country is not None and country !='' or tags is not None and tags !='':
-            query = f"SELECT * FROM proxies where"
-            clause=[]
-            if city is not None and city !='':
-                clause.append(f" city regexp '{city}'")
-            if country is not None and country !='':
-                clause.append(f" country regexp '{country}'")
-            if tags is not None and tags !='':
-                clause.append(f" tags regexp '{tags}'")
-            if status is not None:
-                clause.append(f" status regexp '{status}'")
-
-            query=query+' AND '.join(clause)+" ORDER by inserted_at DESC"
-
-        else:
-            query = f"SELECT * FROM proxies ORDER by inserted_at DESC"
-
-
-        try:
-            logger.info(f'start a new query:\n {query}')
-
-            db_rows = query2df(engine,query,logger)
-            if db_rows is not None:
-                records = tree.get_children()
-                for element in records:
-                    tree.delete(element) 
-                for row in db_rows.itertuples():
-                    tree.insert(
-                        "", 0, text=row.id, values=(row.url,row.status,row.city,row.country,row.tags, row.inserted_at,row.updated_at)
-                    )
-                latest_conditions.set(now_conditions)
-                logger.info(f'search and display finished:\n{query}')
-            else:
-                logger.info(f'there is no matching records for query:\n{query}')
-        except Exception as e:
-            logger.error(f'search failed error:{e}')
 def updateproxies(engine,proxies_list_raw,logger):
     
     print('check proxy whether valid and its city country')
+
+
+
+def split_proxy(proxy_string):
+    # Remove the protocol (e.g., "socks5://")
+    if proxy_string.startswith('socks5://') or proxy_string.startswith('http://') or proxy_string.startswith('https://'):
+
+        # Split the components using ":"
+        components = proxy_string.split(':')
+
+        # Extract the components
+        proxy_protocol_type = components[0]
+        host = components[1]
+        port = components[2]
+        user = components[3] if len(components) > 3 else None
+        password = components[4] if len(components) > 4 and user is not None else None
+
+        return proxy_protocol_type, host, port, user, password
+
+    else:
+        return None
+
 def saveproxies(engine,proxies_list_raw,logger):
+    dbm=dbsession_test
     proxies_list=[]
-    if proxies_list_raw and not 'proxy list should be one proxy oneline,and each proxy in such format' in proxies_list_raw:
+    if 'proxy list should be one proxy oneline,and each proxy in such format' in proxies_list_raw:
+        proxies_list_raw=proxies_list_raw.replace('proxy list should be one proxy oneline,and each proxy in such format:','')
+    if proxies_list_raw  :
         proxies_list=proxies_list_raw.split('\n')
         proxies_list=list(set(proxies_list))
         proxies_list=list(filter(None, proxies_list))
         logger.info(f'detected {len(proxies_list) } records to be added')
         
         
-        tags=[]
+        tags=None
         servers=[]
         for idx,ele in enumerate(proxies_list):
             logger.info(f'start to pre-process {str(idx)} record: {type(ele)}')
+            logger.info(f'start to detect whether tag exist:{ele}')
+
             if ";" in ele:
-                logger.info(f'split into url:\n{ele.split(";")[0]}\ntags:\n{ele.split(";")[-1]}')
+                logger.info(f'there is tags in this record:{ele}')
 
                 url=ele.split(";")[0]
-                tag=ele.split(";")[-1]
-
-                if url:
-                    logger.info(f'check url format {url}')    
-                    servers.append(url)  
-                    logger.info(f'check tag format {tag}')    
-
-                    tags.append(tag)          
+                tags=ele.split(";")[-1]
             else:
+                logger.info(f'there is no tags in this record:{ele}')
 
-                if url:
-                    print('check url format ',url)    
-                    servers.append(url)  
-                    tags.append(None)          
+                url=ele
+            logger.info(f'end to detect whether tag exist:{ele}')
+                
+            if url:    
+                logger.info(f'split into url:\n{ele.split(";")[0]}\ntags:\n{ele.split(";")[-1]}')
+                                
+                proxy_protocol_type, host, port, user, password=split_proxy(url)
+                proxydata={
+                    
+                }
+                proxy_data = {
+                    'proxy_protocol': proxy_protocol_type,
+                    'proxy_provider_type': 0,
+                    'proxy_host': host,
+                    'proxy_port': port,
+                    'proxy_username': user,
+                    'proxy_password': password,
+                    'ip_address': '127.0.0.1',
+                    'country': 'US',
+                    'tags': tags,
+                    'status': 2,
+                    'proxy_validate_network_type': None,
+                    'proxy_validate_server': None,
+                    'proxy_validate_results': None,
+                }
+                result=dbm.add_proxy(proxy_data)
+                print(f'save proxy {ele} :{result}')
+                if result==False:
+                    logger.error(f'add proxy failure :{ele}')                
+
+            else:
+                logger.error(f'there is no valid proxy in this record :{ele}')                
             logger.info(f'end to validate {str(idx)} record: {type(url)}')
 
-
-
-        ids=[]
-        status=[]
-        cities=[]
-        countries=[]
-        inserted_ats=[]
-        for i in range(0,len(servers)):
-            newid=pd.Timestamp.now().value  
-            ids.append(newid)
-            status.append('1')
-            cities.append(None)
-            countries.append(None)
-            inserted_ats.append(datetime.now() )     
-            
-        proxies_df= pd.DataFrame({'url':servers,'id':ids,'status':status,'city':cities,"country":countries,'inserted_at':inserted_ats,'tags':tags})
-            
-
-        proxies_df['updated_at']=None  
-        print(proxies_df)         
-        is_proxy_ok=pd2table(engine,'proxies',proxies_df,logger)
     else:
         logger.info('you should input valid proxy list and try again')
 def returnProxy_textfield(event):
@@ -5339,12 +5355,11 @@ def proxyView(frame,ttkframe,lang):
     tree.column('#4', anchor = 'center', width = 80)
     tree.heading('#5', text = 'tags')
     tree.column('#5', anchor = 'center', width = 80)
-    tree.heading('#6', text = 'create. Time')
+    tree.heading('#6', text = 'network_type')
     tree.column('#6', anchor = 'center', width = 80)
     tree.heading('#7', text = 'updated. Time')
     tree.column('#7', anchor = 'center', width = 80)
-    # tree.heading('#8', text = 'local path')
-    # tree.column('#8', anchor = 'center', width = 80)    
+  
     
     # viewing_records()
 

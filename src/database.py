@@ -16,36 +16,8 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     username = Column(String(50), unique=True, nullable=False)
     password_hash = Column(String(64), nullable=False)
-class Task(Base):
-    __tablename__ = 'tasks'
-    id = Column(Integer, primary_key=True)
-    username = Column(String(50), unique=True, nullable=False)
-    password_hash = Column(String(64), nullable=False)
-class TaskSetting(Base):
-    __tablename__ = 'tasksetting'
-    id = Column(Integer, primary_key=True)
-    username = Column(String(50), unique=True, nullable=False)
-    password_hash = Column(String(64), nullable=False)
-class Proxy(Base):
-    __tablename__ = 'proxies'
-    id = Column(Integer, primary_key=True)
-    username = Column(String(50), unique=True, nullable=False)
-    password_hash = Column(String(64), nullable=False)
-class Account(Base):
-    __tablename__ = 'accounts'
-    id = Column(Integer, primary_key=True)
-    username = Column(String(50), unique=True, nullable=False)
-    password_hash = Column(String(64), nullable=False)
-class TiktokVideo(Base):
-    __tablename__ = 'tkvideos'
-    id = Column(Integer, primary_key=True)
-    username = Column(String(50), unique=True, nullable=False)
-    password_hash = Column(String(64), nullable=False)
-class YoutubeVideo(Base):
-    __tablename__ = 'ytvideos'
-    id = Column(Integer, primary_key=True)
-    username = Column(String(50), unique=True, nullable=False)
-    password_hash = Column(String(64), nullable=False)
+
+
 def rmEngine(name):
     if os.path.exists(os.getcwd()+os.sep+f"{name}.sqlite3"):
         os.remove(os.getcwd()+os.sep+f"{name}.sqlite3")    

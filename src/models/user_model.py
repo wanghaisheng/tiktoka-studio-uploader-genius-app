@@ -4,6 +4,7 @@ import os
 import time
 import traceback
 from typing import Union, Optional
+from src.models import BaseModel,db
 
 import peewee
 from peewee import *
@@ -41,7 +42,7 @@ class USER_GROUP(StateObject):
 MAIN_ROLE_ORDER = ['admin', 'superuser', 'user', 'inactive_user', 'banned_user', None]
 
 
-class UserModel(PostModel, BaseUser):
+class UserModel(BaseModel):
     email = TextField(index=True, unique=True, null=True, default=None)
     phone = TextField(index=True, unique=True, null=True, default=None)  # 大陆地区
     nickname = CITextField(index=True, unique=True, null=True, help_text='用户昵称')  # CITextField
@@ -80,7 +81,7 @@ class UserModel(PostModel, BaseUser):
     reset_key = BlobField(index=True, null=True, default=None, help_text='重置密码所用key')  # 重置密码所用key
 
     class Meta:
-        db_table = 'user'
+        db_table = db
 
     #object_type = OBJECT_TYPES.USER
 
