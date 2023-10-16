@@ -34,6 +34,8 @@ vpn：虚拟网络；proxy：代理；tor：Tor（一种代理类型）；relay�
 
 ref
 
+https://github.com/berstend/puppeteer-extra/issues/254
+
 https://help.adspower.net/docs/pdB11b
 
 
@@ -42,3 +44,20 @@ https://zhuanlan.zhihu.com/p/657546441
 
 
 https://whoer.net/blog/how-to-hide-your-dns/
+
+
+https://github.com/berstend/puppeteer-extra/issues/454
+
+
+
+1. access bot detection companies url
+
+know the details
+
+
+2. access their client website to know yes or no
+
+PerimeterX: https://www.usa-people-search.com/names/a_1_150_0
+
+https://www.westernunion.com/us/en/web/send-money/start?ReceiveCountry=MX&SendAmount=100
+@berstend These sites (well, most of them) are clients of bot detection companies. If you visit them with, say, window.callPhantom exposed, you will get redirected to a page that will make you do a captcha.

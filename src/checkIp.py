@@ -3,6 +3,7 @@
 import requests
 import socks
 import socket
+import subprocess
 
 # Set the SOCKS proxy settings
 proxy_host = 'your_proxy_host'
@@ -748,7 +749,25 @@ class CheckIP:
             return ip
         except:
             print("we can not parse ip from http://ip-api.com/json")
+    def get_IP_db_ip_com(self,ip):
+        target_url="https://db-ip.com/api/"
+        session = requests.Session()
 
+        session.proxies = self.httpx_proxy
+        data={}
+        
+        try:
+            response = session.get(target_url)
+            if response.status_code == 200:
+                    data = response.json()
+            else:
+                    print('Failed to retrieve the public IP address get_ip_ipinfo_io.')
+        except:
+            print('Failed to retrieve the public IP address get_ip_ipinfo_io.')
+
+            # Close the session
+        session.close()
+        return data        
     def check_ip_api_com(self, ip):
         session = requests.Session()
 
@@ -1017,3 +1036,26 @@ class CheckIP:
                 return data['countryCode']
         except:
             pass
+    def set_windows_timezon():
+        # {"ipAddress": "123.45.67.89","continentCode": "NA","continentName": "North America","countryCode": "US","countryName": "United States","isEuMember": false,"currencyCode": "USD","currencyName": "Dollar","phonePrefix": "1","languages": ["en-US","es-US","haw","fr"],"stateProvCode": "CA","stateProv": "California","district": "Santa Clara County","city": "Mountain View","geonameId": 5375480,"zipCode": "94043","latitude": 37.3861,"longitude": -122.084,"gmtOffset": -7,"timeZone": "America\/Los_Angeles",}
+        time_server = "time.windows.com"
+
+        # Define the timezone
+        timezone = "Pacific Standard Time"
+
+        # Configure the time service to use a specific time server
+        cmd_configure = f'w32tm /config /manualpeerlist:{time_server} /syncfromflags:manual /reliable:YES /reliable:YES /update'
+        subprocess.run(cmd_configure, shell=True)
+
+        # Restart the Windows Time service
+        cmd_restart = 'net stop w32time && net start w32time'
+        subprocess.run(cmd_restart, shell=True)
+
+        # Set the system timezone
+        cmd_timezone = f'tzutil /s "{timezone}"'
+        subprocess.run(cmd_timezone, shell=True)
+
+        # Force synchronization with the time server
+        cmd_sync = 'w32tm /resync'
+        subprocess.run(cmd_sync, shell=True)
+    all_urls = ["https://abrahamjuliot.github.io/creepjs/", "https://arh.antoinevastel.com/bots/", "https://antoinevastel.com/bots/datadome", "https://datadome.co/bot-tester/", "https://bot.sannysoft.com/", "https://bot.incolumitas.com/", "https://www.whatismybrowser.com/detect/client-hints/", "https://nopecha.com/demo/recaptcha#v3", "https://iphey.com/", "https://www.browserscan.net/", "https://pixelscan.net", "https://fingerprint.com/products/bot-detection/", "https://nowsecure.nl"]
