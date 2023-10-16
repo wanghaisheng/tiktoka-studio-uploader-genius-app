@@ -13,5 +13,5 @@ eld
 pystray
 bcrypt
 peewee 
-asyncpg
-slim==0.5.2
+pysocks
+dnspython

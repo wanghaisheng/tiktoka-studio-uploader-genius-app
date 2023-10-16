@@ -9,7 +9,8 @@ import json
 import jsons
 import tkinter as tk
 import webbrowser
-from tkinter import OptionMenu, filedialog,ttk
+from tkinter import OptionMenu, filedialog,ttk,Message,Toplevel
+
 import pandas as pd
 import os,queue
 import base64
@@ -40,6 +41,7 @@ from tsup.utils.webdriver.setupPL import checkRequirments
 import logging
 from src.database import createEngine,pd2table,query2df,rmEngine
 from src.gpt_thumbnail import draw_text_on_image,validateSeting
+from src.checkIp import CheckIP
 try:
     import tkinter.scrolledtext as ScrolledText
 except ImportError:
@@ -534,21 +536,17 @@ def testInstallRequirements():
     checkRequirments()
 def testNetwork():
     print('start to test network and proxy setting')
-    if proxy_option.get() is None:
-        url_ok('www.youtube.com')
-        print('you can access google without proxy setting')
-    else:
-        # print('please check your proxy setting\nsocks5://127.0.0.1:1080\nhttp://proxy.example.com:8080\n222.165.235.2:80\n')
-    
-        print('your proxy setting is ',proxy_option.get())
-        if  proxy_option.get()=='':
 
-            print('you should provide valid your proxy setting,format as follows \nsocks5://127.0.0.1:1080\nhttp://proxy.example.com:8080\n222.165.235.2:80\n')
-        else:
-            if url_ok('www.youtube.com',proxy_option=proxy_option.get()):        
-                print('your  proxy is running ok')
-            else:
-                print('you should provide valid your proxy setting,format as follows \nsocks5://127.0.0.1:1080\nhttp://proxy.example.com:8080\n222.165.235.2:80\n')
+    fnull = open(os.devnull, 'w')
+    return1 = subprocess.call('ping www.whoer.net', shell = True, stdout = fnull, stderr = fnull)
+    if return1:
+        print('network not ready')
+        #change_proxy()
+        testNetwork()
+        
+    else:
+        fnull.close()
+        return True
     print('netwrork and proxy test is done')
 def ValidateSetting():
     print('start to validate your upload settings')
@@ -5103,11 +5101,62 @@ def  filterProxiesLocations(newWindow,langlist,engine,logger,city,country,tags,s
         except Exception as e:
             logger.error(f'search failed error:{e}') 
 
-def  queryProxies(tree,engine,logger,city,country,tags,status,latest_conditions_value):
+def center_window(window):
+    window.update_idletasks()
+    width = window.winfo_width()
+    height = window.winfo_height()
+    x = (window.winfo_screenwidth() // 2) - (width // 2)
+    y = (window.winfo_screenheight() // 2) - (height // 2)
+    window.geometry('{}x{}+{}+{}'.format(width, height, x, y))
+
+# 信息消息框
+def showinfomsg(message,title='hints',DURATION = 2000):
+    # msg1 = messagebox.showinfo(title="消息提示", message=message)
+    # messagebox.after(2000,msg1.destroy)
+
+    top = Toplevel()
+    top.title(title)
+    center_window(top)    
+    # Update the Toplevel window's width to adapt to the message width
+
+    message_widget=Message(top, text=message, padx=120, pady=120)
+    message_widget.pack()
+    message_widget.update_idletasks()
+    window_width = message_widget.winfo_reqwidth() + 40  # Add padding      
+    top.geometry(f"{window_width}x200")  # You can adjust the height as needed      
+    top.after(DURATION, top.destroy)
+
+
+# 疑问消息框
+
+# def askquestionmsg(message):
+#     msg4 = messagebox.askquestion(title="询问确认", message=message)
+#     print(msg4)
+
+
+# def askokcancelmsg(message):
+#     msg5 = messagebox.askokcancel(title="确定或取消", message=message)
+#     print(msg5)
+
+
+# def askretrycancelmsg(message):
+#     msg6 = messagebox.askretrycancel(title="重试或取消", message=message)
+#     print(msg6)
+
+
+# def askyesonmsg(message):
+#     msg7 = messagebox.askyesno(title="是或否", message="是否开启团战")
+#     print(msg7)
+
+
+# def askyesnocancelmsg(message):
+#     msg8 = messagebox.askyesnocancel(title="是或否或取消", message="是否打大龙", default=messagebox.CANCEL)
+#     print(msg8)
+
+def  queryProxies(tree,logger,city=None,state=None,country=None,tags=None,network_type=None,status=None,frame=None):
     city=city.lower()
     country=country.lower()
     tags=tags.lower()
-    now_conditions='city:'+city+';country:'+country+';tags:'+tags+';status:'+str(status)
     if status=='valid':
         status=1
     elif status=='invalid':
@@ -5120,38 +5169,58 @@ def  queryProxies(tree,engine,logger,city,country,tags,status,latest_conditions_
         country=None  
     if tags=='':
         tags=None      
-    db_rows=  ProxyModel.filter_proxies(city=city,country=country,tags=tags,status=status)
-    print('===',db_rows)
+    if state=='':
+        state=None
+    if network_type=='':
+        network_type=None 
+    db_rows=  ProxyModel.filter_proxies(city=city,country=country,tags=tags,status=status,state=state,network_type=network_type)
+    hints=None
     if db_rows is not None:
         records = tree.get_children()
         for element in records:
             tree.delete(element) 
         for row in db_rows:
             tree.insert(
-                "", 0, text=row.id, values=(row.proxy_host,row.status,row.city,row.country,row.tags, row.proxy_validate_network_type,row.inserted_at)
+                "", 0, text=row.id, values=(row.proxy_host,row.proxy_port,row.status,row.city,row.country,row.tags, row.proxy_validate_network_type,row.inserted_at)
             )
-
-        latest_conditions.set(now_conditions)
+        hints=f'there is {len(db_rows)} matching records found for query'
         logger.info(f'search and display finished:\n')
     else:
         logger.info(f'there is no matching records for query:\n')
-
+        hints=f'there is {len(db_rows)} matching records found for query'
+        
+    showinfomsg(hints)
+    # lbl15 = tk.Label(frame,bg="lightyellow", text=hints)
+    # lbl15.grid(row=5,column=1, sticky=tk.W)
+    # lbl15.after(2000,lbl15.destroy)
 def updateproxies(engine,proxies_list_raw,logger):
     
     print('check proxy whether valid and its city country')
+    results=ProxyModel.filter(status=2)
+    if len(results)>0:
+        showinfomsg(f'there are {len(results)} proxy to be validated')
+        for proxy in results:
+            proxy_string=(
+                        f"{proxy.proxy_username}:{proxy.proxy_password}@{proxy.proxy_host}:{proxy.proxy_port}"
+                        if proxy.proxy_username
+                        else f"{proxy.proxy_host}:{proxy.proxy_port}"
+                    )
+            http_proxy=f"http://{proxy_string}"
+            https_proxy=f"http://{proxy_string}"
 
-
-
+            check=CheckIP(http_proxy=http_proxy,https_proxy=https_proxy)
+            ip=check.check_api64ipify()
+            print('check_api64ipify',ip)
 def split_proxy(proxy_string):
     # Remove the protocol (e.g., "socks5://")
     if proxy_string.startswith('socks5://') or proxy_string.startswith('http://') or proxy_string.startswith('https://'):
-
+        # proxy_string=proxy_string.replace('socks5://','').replace('http://','').replace('https://','')
         # Split the components using ":"
         components = proxy_string.split(':')
 
         # Extract the components
         proxy_protocol_type = components[0]
-        host = components[1]
+        host = components[1].replace('//','')
         port = components[2]
         user = components[3] if len(components) > 3 else None
         password = components[4] if len(components) > 4 and user is not None else None
@@ -5214,10 +5283,15 @@ def saveproxies(engine,proxies_list_raw,logger):
                 result=ProxyModel.add_proxy(proxy_data)
                 print(f'save proxy {ele} :{result}')
                 if result==False:
-                    logger.error(f'add proxy failure :{ele}')                
+                    logger.error(f'add proxy failure :{ele}')   
+                    showinfomsg(f'we can not add the same proxy twice :{ele}') 
+                else:
+
+                    showinfomsg(f'add proxy ok :{ele}') 
 
             else:
-                logger.error(f'there is no valid proxy in this record :{ele}')                
+                logger.error(f'there is no valid proxy in this record :{ele}')         
+                showinfomsg(f'there is no valid proxy in this record :{ele}')       
             logger.info(f'end to validate {str(idx)} record: {type(url)}')
 
     else:
@@ -5283,6 +5357,8 @@ def proxyView(frame,ttkframe,lang):
         
     global city,country,proxyTags,proxyStatus
     city = tk.StringVar()
+    state = tk.StringVar()
+    network_type = tk.StringVar()
     country = tk.StringVar()
     proxyTags = tk.StringVar()
 
@@ -5292,26 +5368,40 @@ def proxyView(frame,ttkframe,lang):
 
     lbl15.grid(row=0,column=0, sticky=tk.W)
 
-    txt15 = tk.Entry(ttkframe,textvariable=city,width=int(0.01*width))
+    txt15 = tk.Entry(ttkframe,textvariable=city)
     txt15.insert(0,'Los')
     # txt15.place(x=580, y=30, anchor=tk.NE)
     # txt15.pack(side='left')
     txt15.grid(row=1,column=0, sticky=tk.W)
 
+
+    l_state= tk.Label(ttkframe, text='by state.')
+    l_state.grid(row=0,column=1, sticky=tk.W)
+    e_state = tk.Entry(ttkframe,textvariable=state)
+    e_state.insert(0,'LA')
+    e_state.grid(row=1,column=1, sticky=tk.W)
+
+
     lbl16 = tk.Label(ttkframe, text='by country.')
-    lbl16.grid(row=0,column=1, sticky=tk.W)
-    txt16 = tk.Entry(ttkframe,textvariable=country,width=int(0.01*width))
+    lbl16.grid(row=0,column=2, sticky=tk.W)
+    txt16 = tk.Entry(ttkframe,textvariable=country)
     txt16.insert(0,'USA')
-    txt16.grid(row=1,column=1, sticky=tk.W)
+    txt16.grid(row=1,column=2, sticky=tk.W)
     
     lb17 = tk.Label(ttkframe, text='by tags.')
-    lb17.grid(row=0,column=2, sticky=tk.W)
-    txt17 = tk.Entry(ttkframe,textvariable=proxyTags,width=int(0.01*width))
+    lb17.grid(row=0,column=3, sticky=tk.W)
+    txt17 = tk.Entry(ttkframe,textvariable=proxyTags)
     txt17.insert(0,'youtube')
-    txt17.grid(row=1,column=2, sticky=tk.W)
+    txt17.grid(row=1,column=3, sticky=tk.W)
+
+    l_networktype = tk.Label(ttkframe, text='by networktype.')
+    l_networktype.grid(row=2,column=0, sticky=tk.W)
+    e_networktype = tk.Entry(ttkframe,textvariable=network_type)
+    e_networktype.insert(0,'resident')
+    e_networktype.grid(row=3,column=0, sticky=tk.W)
 
     lb18 = tk.Label(ttkframe, text='by status.')
-    lb18.grid(row=0,column=3, sticky=tk.W)
+    lb18.grid(row=2,column=1, sticky=tk.W)
 
 
     proxyStatus = tk.StringVar()
@@ -5326,39 +5416,45 @@ def proxyView(frame,ttkframe,lang):
 
 
     proxyStatusbox = ttk.Combobox(ttkframe, textvariable=proxyStatus)
-    proxyStatusbox.config(values = ('valid', 'invalid'))
-    proxyStatusbox.grid(row = 1, column = 3, columnspan = 3, padx=14, pady=15)    
+    proxyStatusbox.config(values = ('valid', 'invalid','unchecked'))
+    proxyStatusbox.grid(row = 3, column = 1, padx=14, pady=15)    
 
 
 
 
 
-    btn5= tk.Button(ttkframe, text="Get proxy list", padx = 0, pady = 0,command = lambda: threading.Thread(target=queryProxies(tree,prod_engine,logger,city.get(),country.get(),proxyTags.get(),proxyStatusbox.get(),latest_conditions.get())).start())
-    btn5.grid(row=2,column=0, sticky=tk.W)    
+    btn5= tk.Button(ttkframe, text="Get proxy list", padx = 0, pady = 0,command = lambda: threading.Thread(target=queryProxies(tree,logger,city.get(),state.get(),country.get(),proxyTags.get(),network_type.get(),proxyStatus.get(),ttkframe)).start())
+    btn5.grid(row=4,column=0, sticky=tk.W)    
     
-    
+    btn5= tk.Button(ttkframe, text="Reset", padx = 0, pady = 0,command = lambda:(proxyStatus.set(""),country.set(""),state.set(""),city.set(""),proxyTags.set(""),proxyStatus.set("Select From Status"),network_type.set("")))
+    btn5.grid(row=4,column=1, sticky=tk.W)    
     
     # treeview_flight
-    tree = ttk.Treeview(ttkframe, height = 20, column = 8)
-    tree["column"]=('#0','#1','#2','#3','#4','#5','#6','#7')
-    tree.grid(row = 3, column = 0, columnspan = 20, padx=14, pady=15)
+    tree = ttk.Treeview(ttkframe, height = 20, column = 10)
+    tree["column"]=('#0','#1','#2','#3','#4','#5','#6','#7','#8','#9','#10')
+    tree.grid(row = 5, column = 0, columnspan = 20, padx=14, pady=15)
 
     tree.heading('#0', text = 'proxy No.')
-    tree.column('#0', anchor = 'center', width = 70)
-    tree.heading('#1', text = 'URL')
+    tree.column('#0', anchor = 'center', width = 30)
+    tree.heading('#1', text = 'host')
     tree.column('#1', anchor = 'center', width = 60)
-    tree.heading('#2', text = 'Status')
-    tree.column('#2', anchor = 'center', width = 60)
-    tree.heading('#3', text = 'City')
-    tree.column('#3', anchor = 'center', width = 80)
-    tree.heading('#4', text = 'Country')
-    tree.column('#4', anchor = 'center', width = 80)
-    tree.heading('#5', text = 'tags')
-    tree.column('#5', anchor = 'center', width = 80)
-    tree.heading('#6', text = 'network_type')
-    tree.column('#6', anchor = 'center', width = 80)
-    tree.heading('#7', text = 'updated. Time')
+    tree.heading('#2', text = 'port')
+    tree.column('#2', anchor = 'center', width = 60)    
+    tree.heading('#3', text = 'Status')
+    tree.column('#3', anchor = 'center', width = 50)
+    tree.heading('#4', text = 'City')
+    tree.column('#4', anchor = 'center', width = 40)
+    tree.heading('#5', text = 'State')
+    tree.column('#5', anchor = 'center', width = 40)
+
+    tree.heading('#6', text = 'Country')
+    tree.column('#6', anchor = 'center', width = 40)
+    tree.heading('#7', text = 'tags')
     tree.column('#7', anchor = 'center', width = 80)
+    tree.heading('#8', text = 'network_type')
+    tree.column('#8', anchor = 'center', width = 80)
+    tree.heading('#9', text = 'validate_results')
+    tree.column('#9', anchor = 'center', width = 120)
   
     
     # viewing_records()
