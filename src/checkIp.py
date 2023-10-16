@@ -18,7 +18,7 @@ ipoptions = [
         ]
 ipfullinfooptions = [
             "https://ipapi.co/json/",
-            "https://db-ip.com/23.80.5.90",
+            "https://db-ip.com/",
             "http://ip-api.com/json/",
         ]
 ipchecklist = [
@@ -693,6 +693,45 @@ class CheckIP:
                 proxies=self.httpx_proxy if self.httpx_proxy else None,
             )
 
+            # Lookup IP Address or AS Number
+            # {
+            # "ipAddress": "111.18.153.195",
+            # "continentCode": "AS",
+            # "continentName": "Asia",
+            # "countryCode": "CN",
+            # "countryName": "中国",
+            # "isEuMember": false,
+            # "currencyCode": "CNY",
+            # "currencyName": "Yuan Renminbi",
+            # "phonePrefix": "86",
+            # "languages": [
+            #     "zh-CN",
+            #     "yue",
+            #     "wuu",
+            #     "dta",
+            #     "ug",
+            #     "za"
+            # ],
+            # "stateProvCode": "GD",
+            # "stateProv": "广东",
+            # "district": "深圳",
+            # "city": "深圳",
+            # "geonameId": 1795565,
+            # "latitude": 22.5431,
+            # "longitude": 114.058,
+            # "gmtOffset": 8,
+            # "timeZone": "Asia/Shanghai",
+            # "weatherCode": "CHXX3469",
+            # "asNumber": 9808,
+            # "asName": "CHINAMOBILE-CN",
+            # "isp": "China Mobile communications corporation",
+            # "linkType": "wireless",
+            # "usageType": "consumer",
+            # "organization": "China Mobile",
+            # "isCrawler": false,
+            # "isProxy": false,
+            # "threatLevel": "low"
+            # }
             soup = BeautifulSoup(response.text, "html.parser")
             # print("===========", soup)
 
@@ -768,34 +807,37 @@ class CheckIP:
             # Close the session
         session.close()
         return data        
+    def getIpstackIP(self, ip):
+        url = 'http://api.ipstack.com/{}?access_key=19e7f2b6fe27deb566140aae134dec6b'
+        response = requests.get(url.format(ip), headers=self.headers)
+        data = response.json()
+        continent_name = data.get('continent_name')
+        country_name = data.get('country_name')
+        region_name = data.get('region_name')
+        city = data.get('city')
+        latitude = data.get('latitude')
+        longitude = data.get('longitude')
+        result = '-' * 50 + '\n' + \
+        '''[ipstack.com查询结果-IP]: %s\n经纬度: (%s, %s)\n板块: %s\n国家: %s\n地区: %s\n城市: %s\n''' % (ip, longitude, latitude, continent_name, country_name, region_name, city) \
+        + '-' * 50
+        return result    
     def check_ip_api_com(self, ip):
         session = requests.Session()
 
         session.proxies = self.httpx_proxy
         data={}
+        # print('==check_ip_api_com==',session.proxies)
         target_url=f"http://ip-api.com/json/{ip}"
+
         try:
             response = session.get(target_url)
 
 
             data = response.json()
+            print('==check_ip_api_com==',data)
+# {"status":"success","country":"China","countryCode":"CN","region":"SN","regionName":"Shaanxi","city":"Xi'an","zip":"","lat":34.3287,"lon":109.0337,"timezone":"Asia/Shanghai","isp":"China Mobile communications corporation","org":"China Mobile","as":"AS9808 China Mobile Communications Group Co., Ltd.","query":"111.18.153.195"}
 
-            # print("====1====", ip_request.content)
-            # print("====2====", ip_request.text)
-            # {"status":"success",
-            # "country":"United States",
-            # "countryCode":"US",
-            # "region":"CA",
-            # "regionName":"California",
-            # "city":"San Jose",
-            # "zip":"95113",
-            # "lat":37.3342,
-            # "lon":-121.892,
-            # "timezone":"America/Los_Angeles",
-            # "isp":"PEG TECH INC",
-            # "org":"PEG TECH INC",
-            # "as":"AS54600 PEG TECH INC",
-            # "query":"38.26.191.97"}
+
             self.country = data.get("country")
             self.country_code = data.get("countryCode")
             self.region = data.get("regionName")
@@ -804,18 +846,16 @@ class CheckIP:
             self.latitude = data.get("lat")
             self.longitude = data.get("lon")
             self.timezone = data.get("timezone")
-            print(f"finish to get full info of ip:{data}")
+            print(f"check_ip_api_com finish to get full info of ip:{data}")
             if not self.country:
                 return (
                     False,
                     "Could not get GeoInformation from proxy (Proxy is Invalid/Failed Check)",
                 )
             return True, "placeholder"
-        except:
-            return (
-                False,
-                "Could not access http://ip-api.com/json to get GeoInformation from proxy (Proxy is Invalid/Failed Check)",
-            )
+        except Exception as e:
+            print( f"Could not access http://ip-api.com/json to get GeoInformation from proxy (Proxy is Invalid/Failed Check):{e}")
+            return False
 
     def check_ip_api_co(self, ip):
         try:
@@ -862,7 +902,7 @@ class CheckIP:
             self.latitude = data.get("latitude")
             self.longitude = data.get("longitude")
             self.timezone = data.get("timezone")
-            print(f"finish to get full info of ip:{data}")
+            print(f"check_ip_api_co finish to get full info of ip:{data}")
             if not self.country:
                 return (
                     False,
@@ -886,6 +926,16 @@ class CheckIP:
             response = session.get(target_url)
             if response.status_code == 200:
                     data = response.json()
+#                     {
+#   "ip": "111.18.153.195",
+#   "city": "Zhanjiang",
+#   "region": "Guangdong",
+#   "country": "CN",
+#   "loc": "21.2339,110.3875",
+#   "org": "AS9808 China Mobile Communications Group Co., Ltd.",
+#   "timezone": "Asia/Shanghai",
+#   "readme": "https://ipinfo.io/missingauth"
+# }
             else:
                     print('Failed to retrieve the public IP address get_ip_ipinfo_io.')
         except:
@@ -899,9 +949,13 @@ class CheckIP:
     # Create a session with SOCKS proxy
 
 
-    def get_location_data_ipinfo_io(ip_address):
-        url = f"https://ipinfo.io/{ip_address}/json"
-        response = requests.get(url)
+    def get_location_data_ipinfo_io(self,ip_address):
+    # Set the target URL for IP detection
+        target_url = f"https://ipinfo.io/{ip_address}/json"
+        session = requests.Session()
+
+        session.proxies = self.httpx_proxy        
+        response = requests.get(target_url)
         data = response.json()
         return data
     def check_api64ipify(self):
@@ -1019,10 +1073,12 @@ class CheckIP:
 # {"continent":{"name":"Asia","region_name_1":"Asia","region_name_2":"Asia","name_translations":{"de":"Asien","en":"Asia","es":"Asia","fa":" \u0622\u0633\u06cc\u0627","fr":"Asie","ja":"\u30a2\u30b8\u30a2\u5927\u9678","ko":"\uc544\uc2dc\uc544","pt-BR":"\u00c1sia","ru":"\u0410\u0437\u0438\u044f","zh-CN":"\u4e9a\u6d32"}},"country":{"isoCode":"CN","name":"China","name_translations":{"de":"China, Volksrepublik","en":"China","es":"China","fa":"\u0686\u06cc\u0646","fr":"Chine","ja":"\u4e2d\u56fd","ko":"\uc911\uad6d","pt-BR":"China","ru":"\u041a\u0438\u0442\u0430\u0439","zh-CN":"\u4e2d\u56fd"},"flagUrls":{"16":"https:\/\/ipcalc.co\/img\/flags\/16\/cn.png","24":"https:\/\/ipcalc.co\/img\/flags\/24\/cn.png"}},"city":{"name":"Jinrongjie (Xicheng District)","name_translations":{"en":"Jinrongjie (Xicheng District)"}},"postal_code":null,"location":{"latitude":39.8919,"longitude":116.377},"isp":{"asn":4837,"asn_organization":"CHINA UNICOM China169 Backbone","name":"CNC Group CHINA169 Shanxi Province Network","organization":null,"connection_type":"Corporate"}}
     def check_asn_type(self):
         data=self.get_ip_ipinfo_io()   
-        print('-',data)     
+        print('check_asn_type',data)     
     def check_ip_coutry(self,ip):
         try:
             data=self.check_whoer(ip)
+            print('==check_ip_coutry===',data)
+            
             if 'country_code' in data:
                 return data['country_code']
         except:
@@ -1032,6 +1088,7 @@ class CheckIP:
         #  60.215.138.245 China 
         try:
             data=self.check_ip_api_com(ip)
+            print('==check_dns_country===',data)
             if 'countryCode' in data:
                 return data['countryCode']
         except:
