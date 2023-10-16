@@ -750,13 +750,16 @@ class CheckIP:
             print("we can not parse ip from http://ip-api.com/json")
 
     def check_ip_api_com(self, ip):
-        try:
-            ip_request = requests.get(
-                f"http://ip-api.com/json/{ip}",
-                proxies=self.httpx_proxy if self.httpx_proxy else None,
-            )
+        session = requests.Session()
 
-            data = ip_request.json()
+        session.proxies = self.httpx_proxy
+        data={}
+        target_url=f"http://ip-api.com/json/{ip}"
+        try:
+            response = session.get(target_url)
+
+
+            data = response.json()
 
             # print("====1====", ip_request.content)
             # print("====2====", ip_request.text)
@@ -853,10 +856,26 @@ class CheckIP:
                 "Could not access http://ip-api.com/json to get GeoInformation from proxy (Proxy is Invalid/Failed Check)",
             )
 
-    def get_ip_ipinfo_io():
-        response = requests.get("https://ipinfo.io/json")
-        data = response.json()
-        return data["ip"]
+    def get_ip_ipinfo_io(self):
+        target_url="https://ipinfo.io/json"
+        session = requests.Session()
+
+        session.proxies = self.httpx_proxy
+        data={}
+        
+        try:
+            response = session.get(target_url)
+            if response.status_code == 200:
+                    data = response.json()
+            else:
+                    print('Failed to retrieve the public IP address get_ip_ipinfo_io.')
+        except:
+            print('Failed to retrieve the public IP address get_ip_ipinfo_io.')
+
+            # Close the session
+        session.close()
+        return data
+
     # Ipapi、Ip2location、Whoer、Ipinfo
     # Create a session with SOCKS proxy
 
@@ -959,13 +978,14 @@ class CheckIP:
 # Blacklist黑名单：表示检测到代理IP在这个检测网站数据库中被列为黑名单。比如发垃圾邮件，非法行为的ip。
     def check_ipinfo():
         data={}
+        
         return data
 # ASN：自治系统，实现IP到ASN的映射和ASN查找；
 # company：拥有这个ip的公司或组织，通常分为ISP、企业或托管；
 # private：检测用于掩盖用户真实IP地址的各种方法；
 # vpn：虚拟网络；proxy：代理；tor：Tor（一种代理类型）；relay：中继使用；service：服务
 # Abuse：滥用IP地址的联系信息，帮助研究追踪反击滥用者或盗用者的行为
-    def check_iptype():
+    def check_iptype(self,ip):
         # 原生IP：是指能看到DNS和IP地址是一个国家的，基本可以认为是原生的，但也有特殊情况就是，如东南亚、欧洲一些国家，DNS会被解析到附近国家。像我使用的IPFoxy家的代理IP，ISP代理测下来基本是纯原生的，在业务层面基本上用起来没有遇到过问题。
         # 双ISP：常提及的双ISP就是指里面查询到的Asn和Company的type属性。有的所谓住宅IP其中的ASN是属于运营商的所以是ISP，但是company不是，这种就是单ISP，而真正的住宅IP无论是ASN还是运营的公司都应该是当地的运营商，像我检测的IPFoxy的这条IP就是双ISP，理论上这样的IP更加稳定。
         data={}
@@ -978,6 +998,9 @@ class CheckIP:
 
 # https://ipdb.ipcalc.co/ipdata
 # {"continent":{"name":"Asia","region_name_1":"Asia","region_name_2":"Asia","name_translations":{"de":"Asien","en":"Asia","es":"Asia","fa":" \u0622\u0633\u06cc\u0627","fr":"Asie","ja":"\u30a2\u30b8\u30a2\u5927\u9678","ko":"\uc544\uc2dc\uc544","pt-BR":"\u00c1sia","ru":"\u0410\u0437\u0438\u044f","zh-CN":"\u4e9a\u6d32"}},"country":{"isoCode":"CN","name":"China","name_translations":{"de":"China, Volksrepublik","en":"China","es":"China","fa":"\u0686\u06cc\u0646","fr":"Chine","ja":"\u4e2d\u56fd","ko":"\uc911\uad6d","pt-BR":"China","ru":"\u041a\u0438\u0442\u0430\u0439","zh-CN":"\u4e2d\u56fd"},"flagUrls":{"16":"https:\/\/ipcalc.co\/img\/flags\/16\/cn.png","24":"https:\/\/ipcalc.co\/img\/flags\/24\/cn.png"}},"city":{"name":"Jinrongjie (Xicheng District)","name_translations":{"en":"Jinrongjie (Xicheng District)"}},"postal_code":null,"location":{"latitude":39.8919,"longitude":116.377},"isp":{"asn":4837,"asn_organization":"CHINA UNICOM China169 Backbone","name":"CNC Group CHINA169 Shanxi Province Network","organization":null,"connection_type":"Corporate"}}
+    def check_asn_type(self):
+        data=self.get_ip_ipinfo_io()   
+        print('-',data)     
     def check_ip_coutry(self,ip):
         try:
             data=self.check_whoer(ip)

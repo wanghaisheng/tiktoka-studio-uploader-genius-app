@@ -5205,12 +5205,20 @@ def updateproxies(engine,proxies_list_raw,logger):
                         if proxy.proxy_username
                         else f"{proxy.proxy_host}:{proxy.proxy_port}"
                     )
-            http_proxy=f"http://{proxy_string}"
-            https_proxy=f"http://{proxy_string}"
+            http_proxy=f"socks5://{proxy_string}"
+            https_proxy=f"socks5://{proxy_string}"
 
             check=CheckIP(http_proxy=http_proxy,https_proxy=https_proxy)
             ip=check.check_api64ipify()
             print('check_api64ipify',ip)
+            asp=check.check_asn_type()
+            print('asp',asp)
+            dnscountry=check.check_dns_country(ip)
+            print('dnscountry',dnscountry)
+
+            ipcountry=check.check_ip_coutry(ip)
+            print('ipcountry',ipcountry)
+
 def split_proxy(proxy_string):
     # Remove the protocol (e.g., "socks5://")
     if proxy_string.startswith('socks5://') or proxy_string.startswith('http://') or proxy_string.startswith('https://'):
