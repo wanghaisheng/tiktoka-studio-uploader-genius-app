@@ -6,6 +6,8 @@ from fastapi.responses import FileResponse
 
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from src.api.account import router
+  # Assuming filter_accounts is the function defined in api.py
 
 # Initialize FastAPI
 app = FastAPI()
@@ -6364,6 +6366,7 @@ def start_fastapi_server_cmd():
 
 # Mount the static files directory containing your HTML file
 app.mount("/static", StaticFiles(directory="static"), name="static")
+app.include_router(router)
 
 async def  start_tkinter_app():
     global root,settings

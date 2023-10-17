@@ -1,7 +1,10 @@
-from fastapi import HTTPException
 from src.models.account_model import AccountModel
+from fastapi import APIRouter, HTTPException
+
+router = APIRouter()
+
 # Create Account
-@app.post("/accounts/")
+@router.post("/accounts/")
 def create_account(account_data: dict):
     account = AccountModel.add_account(account_data)
     if account:
@@ -10,7 +13,7 @@ def create_account(account_data: dict):
         raise HTTPException(status_code=400, detail="Account with same unique hash already exists")
 
 # Get Account by ID
-@app.get("/accounts/{account_id}")
+@router.get("/accounts/{account_id}")
 def get_account(account_id: int):
     account = AccountModel.get_account_by_id(account_id)
     if account:
@@ -19,7 +22,7 @@ def get_account(account_id: int):
         raise HTTPException(status_code=404, detail="Account not found")
 
 # Update Account
-@app.put("/accounts/{account_id}")
+@router.put("/accounts/{account_id}")
 def update_account(account_id: int, update_data: dict):
     updated_account = AccountModel.update_account(account_id, **update_data)
     if updated_account:
@@ -28,7 +31,7 @@ def update_account(account_id: int, update_data: dict):
         raise HTTPException(status_code=404, detail="Account not found")
 
 # Delete Account
-@app.delete("/accounts/{account_id}")
+@router.delete("/accounts/{account_id}")
 def delete_account(account_id: int):
     success = AccountModel.delete_account(account_id)
     if success:
@@ -36,9 +39,9 @@ def delete_account(account_id: int):
     else:
         raise HTTPException(status_code=404, detail="Account not found")
     
-# Assuming you've already imported the necessary modules and created the FastAPI app
+# Assuming you've already imported the necessary modules and created the FastAPI router
 
-@app.post("/accounts/filter")
+@router.post("/accounts/filter")
 def filter_accounts(filter_data: dict):
     # Your filtering logic goes here
     # Make sure to return a response (e.g., a list of filtered accounts)

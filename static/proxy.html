@@ -336,7 +336,7 @@
     // ...                
                 addAccount: function() {
                     // Make API request to add new account
-                    fetch('localhost:8000/api/add_account', {
+                    fetch('http://localhost:8000/add_account', {
                         method: 'POST',
                         body: JSON.stringify(this.newAccount),
                         headers: {
@@ -359,7 +359,7 @@
                 },
                 editAccount: function() {
                 // Make API request to edit an account
-                fetch(`localhost:8000/api/edit_account/${this.editAccountData.accountId}`, {
+                fetch(`http://localhost:8000/edit_account/${this.editAccountData.accountId}`, {
                     method: 'PUT',
                     body: JSON.stringify(this.editAccountData.updatedFields),
                     headers: {
@@ -393,7 +393,7 @@
             },
                 deleteAccount: function(accountId) {
                     // Make API request to delete account
-                    fetch(`localhost:8000/api/delete_account/${accountId}`, {
+                    fetch(`http://localhost:8000/delete_account/${accountId}`, {
                         method: 'DELETE'
                     })
                     .then(response => {
@@ -414,7 +414,7 @@
     };
 
     // Make a fetch request to the API
-    fetch('http://0.0.0.0:8000/accounts/filter', {
+    fetch('http://localhost:8000/accounts/filter', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
