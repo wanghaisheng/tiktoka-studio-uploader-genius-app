@@ -1,7 +1,8 @@
-from peewee import Model, CharField, IntegerField,TextField,BooleanField,BlobField
+from peewee import Model, CharField, IntegerField,TextField,BooleanField,BlobField,ForeignKeyField
 import time
 import config
 from src.models import BaseModel,db
+from src.models.account_model import AccountModel
 from src.customid import CustomID
 
 class PROXY_STATUS:

@@ -1,19 +1,86 @@
-from peewee import Model, CharField, TextField,IntegerField,ForeignKeyField,BlobField
+from peewee import Model, BooleanField, TextField,IntegerField,ForeignKeyField,BlobField
 from src.models import BaseModel,db
-
-class AccountModel(Model):
+import config
+import time
+class AccountModel(BaseModel):
     id = BlobField(primary_key=True)    
     platform = TextField()
     username = TextField()
-    
-    password = TextField()  # Assuming passwords might be long, use TextField
-    cookies = TextField()   # Same for cookies
+    password = TextField()  
+    cookies = TextField()   
     proxy = TextField()
     inserted_at = IntegerField(null=True)
+    is_deleted = BooleanField(default=False)  # Flag if the account is deleted
+    unique_hash = TextField(index=True, unique=True, null=True, default=None)  # Unique hash for the account
 
+    # class Meta:
+    #     db_table = db
 
-    class Meta:
-        db_table = db
+    @classmethod
+    def add_account(cls,account_data):
+        unique_hash = config.generate_unique_hash(
+
+        account_data
+            )
+
+        # Check if an account with the same unique hash already exists
+        existing_account = cls.get_or_none(cls.unique_hash == unique_hash)
+
+        if existing_account is None:
+            account = AccountModel(**account_data)
+            account.insert_date = int(time.time())  # Update insert_date
+            account.unique_hash=unique_hash
+            # proxy.id = CustomID().to_bin()
+
+            account.save()
+            return True
+            
+        else:
+            return False
+
+    @classmethod
+    def get_account_by_id(cls, account_id):
+        return cls.get_or_none(cls.id == account_id)
+
+    @classmethod
+    def update_account(cls, account_id, **kwargs):
+        try:
+            account = cls.get(cls.id == account_id)
+            for key, value in kwargs.items():
+                setattr(account, key, value)
+            account.save()
+            return account
+        except cls.DoesNotExist:
+            return None
+
+    @classmethod
+    def delete_account(cls, account_id):
+        try:
+            account = cls.get(cls.id == account_id)
+            account.delete_instance()
+            return True
+        except cls.DoesNotExist:
+            return False
+
+    @classmethod
+    def filter_accounts(cls, platform=None, username=None, proxy=None):
+        query = cls.select()
+
+        if platform is not None:
+            query = query.where(cls.platform == platform)
+
+        if username is not None:
+            query = query.where(cls.username == username)
+
+        if proxy is not None:
+            query = query.where(cls.proxy == proxy)
+            # # Assuming 'proxy_id' is the ID of the proxy you want to work with
+
+            # proxy = ProxyModel.get(ProxyModel.id == proxy_id)
+            # associated_account = proxy.account  # This will fetch the associated Account
+
+        return list(query)
+
 
 class AccountRelationship(Model):
     account = ForeignKeyField(AccountModel, backref='backup_relationships')
