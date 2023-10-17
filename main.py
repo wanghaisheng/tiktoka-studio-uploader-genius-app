@@ -6353,31 +6353,21 @@ def withdraw_window():
     icon = pystray.Icon("name", image, "title", menu)
     icon.run_detached()
 
-def start_fastapi_server():
-    import asyncio
+def start_fastapi_server(loop):
     import uvicorn
-
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
+    config = uvicorn.Config(app, loop=loop, host='0.0.0.0', port=8000)
+    server = uvicorn.Server(config)
+    loop.run_until_complete(server.serve())
     
-    # Run the FastAPI server
-    uvicorn.run(app, host="0.0.0.0", port=8000)
 def start_fastapi_server_cmd():
     subprocess.run(["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"])
 
 # Mount the static files directory containing your HTML file
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-@app.get("/")
-def read_root():
-    return FileResponse("static/proxy.html")  # Replace with the actual path to your HTML file
-
-if __name__ == '__main__':
+async def  start_tkinter_app():
     global root,settings
-
-
-    # Start FastAPI server in a separate thread
-    # fastapi_thread = threading.Thread(target=start_fastapi_server).start()
+    
     tmp['uploadaddaccounts']={}    
     root = tk.Tk()
     load_setting()
@@ -6389,11 +6379,24 @@ if __name__ == '__main__':
     # root.protocol('WM_DELETE_WINDOW', withdraw_window)
 
     # asyncio.run(start_fastapi_server())
-    start_fastapi_server_cmd()
 
     root.mainloop()
     
     dumpSetting(settingfilename)
 
+@app.get("/")
+def read_root():
+    return FileResponse("static/proxy.html")  # Replace with the actual path to your HTML file
 
-        
+if __name__ == '__main__':
+    loop = asyncio.new_event_loop()
+
+    asyncio.set_event_loop(loop)
+
+    # Start FastAPI server in a separate thread
+    # fastapi_thread = threading.Thread(target=start_fastapi_server).start()
+
+    loop.create_task(start_tkinter_app())
+    start_fastapi_server(loop)
+
+
