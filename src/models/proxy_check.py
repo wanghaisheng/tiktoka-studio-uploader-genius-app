@@ -1,10 +1,11 @@
-from peewee import Model, CharField, IntegerField,TextField,BooleanField,BlobField,FloatField,DateTimeField,TimeField,DecimalField,JSONField
+from peewee import BaseModel, CharField, IntegerField,TextField,BooleanField,BlobField,ForeignKeyField,DateTimeField,TimeField,DecimalField,JSONField
 import time
 import config
 from src.models import BaseModel,db
+from src.models.proxy_model import ProxyModel
 from src.customid import CustomID
 # https://whoer.net
-class IPAddress(Model):
+class IPAddress(BaseModel):
     hostname = CharField(null=True)
     reversed = CharField(null=True)
     mail_server = CharField(null=True)
@@ -27,7 +28,7 @@ IPAddress.create(
 
 
 
-class Navigator(Model):
+class Navigator(BaseModel):
     vendor_sub = CharField()
     product_sub = CharField()
     vendor = CharField()
@@ -65,7 +66,7 @@ Navigator.create(
     device_memory=8
 )
 
-class Plugin(Model):
+class Plugin(BaseModel):
     pdf_viewer = CharField()
     chrome_pdf_viewer = CharField()
     chromium_pdf_viewer = CharField()
@@ -81,7 +82,7 @@ Plugin.create(
 )
 
 
-class TimeInfo(Model):
+class TimeInfo(BaseModel):
     timezone = CharField()
     local_time = DateTimeField()
     system_time = DateTimeField()
@@ -104,7 +105,7 @@ TimeInfo.create(
     sunset_time="18:44:48"
 )
 
-class Location(Model):
+class Location(BaseModel):
     country = CharField()
     country_code=CharField()
     continent = CharField()
@@ -133,7 +134,7 @@ Location.create(
     longitude=113.1371,
     map_url="https://example.com/map"
 )
-class ScriptInfo(Model):
+class ScriptInfo(BaseModel):
     javascript = CharField()
     flash = CharField()
     java = CharField()
@@ -152,7 +153,7 @@ ScriptInfo.create(
     adblock="disabled"
 )
 
-class InteractiveDetection(Model):
+class InteractiveDetection(BaseModel):
     INTERACTIVE_DETECTION = CharField()
     RUN_TESTS = CharField()
     IP_ADDRESS = CharField()
@@ -166,7 +167,7 @@ class InteractiveDetection(Model):
     BROWSER = CharField()
     
     # https://pixelscan.net/ip
-class ProxyResults(Model):
+class ProxyResults(BaseModel):
     Proxy_detection = BooleanField()
     Rotating_proxy_detection = BooleanField()
     MTU_fingerprint_NMAP = IntegerField()
@@ -177,7 +178,7 @@ data = [
 "DSL(1452"}
     # Add more data as needed...
 ]
-class OSDetection(Model):
+class OSDetection(BaseModel):
     OS = CharField()
     Detected_OS = CharField()
     TCP_IP_OS_NMAP = CharField()
@@ -188,8 +189,8 @@ data = [
 ]
 
 # https://www.astrill.com/vpn-leak-test
-# Define the model
-class astrillDNSServer(Model):
+# Define the basemodel
+class astrillDNSServer(BaseModel):
     IP = CharField()
     ISP = CharField()
     COUNTRY = CharField()
@@ -205,8 +206,8 @@ data = [
     # Add more data as needed...
 ]
     
-# Define the model
-class astrillLeakDetection(Model):
+# Define the basemodel
+class astrillLeakDetection(BaseModel):
     IPv6_leaked = CharField()
     Java_status = CharField()
     Flash_status = CharField()
@@ -223,8 +224,8 @@ data = [
     # Add more data as needed...
 ]
 
-# Define the model
-class WhoerResult(Model):
+# Define the basemodel
+class WhoerResult(BaseModel):
     ISP = CharField()
     Hostname = CharField()
     OS = CharField()
@@ -269,8 +270,8 @@ data = [
     # Add more data as needed...
 ]
 
-# Define the model
-class PixelResult(Model):
+# Define the basemodel
+class PixelResult(BaseModel):
     Hostname = CharField()
     ISP = CharField()
     Static_IP_Score = DecimalField(max_digits=5, decimal_places=2)
@@ -317,8 +318,8 @@ data = [
 # https://browserleaks.com/ip
 
 
-# Define the model
-class browserleakscomIPInformation(Model):
+# Define the basemodel
+class browserleakscomIPInformation(BaseModel):
     IP_address = CharField()
     Hostname = CharField()
     Country = CharField()
@@ -359,7 +360,7 @@ class browserleakscomIPInformation(Model):
     Remarks = TextField()
 
 
-class browserleakscomWebRTCLeakTest(Model):
+class browserleakscomWebRTCLeakTest(BaseModel):
     # ... (previous fields)
     WebRTC_RTCPeerConnection = BooleanField()
     WebRTC_RTCDataChannel = BooleanField()
@@ -385,7 +386,7 @@ class browserleakscomWebRTCLeakTest(Model):
 
 # 140.238.28.22
 
-class IPInfoResults(Model):
+class IPInfoResults(BaseModel):
     # ... (previous fields)
     Ip = CharField()
     
@@ -448,8 +449,23 @@ data = [
     }
     # Add more data as needed...
 ]
+class WhoerCity():
+    id = IntegerField(primary_key=True)    
+    proxy = ForeignKeyField(ProxyModel, backref='backup_relationships')
+    data=JSONField(null=True)
 
-class AntiDetectResult(Model):
+# data={"city_name":null,"continent_code":"NA","continent_name":"North America","country_code":"US","country_name":"United States","european_union":0,"geoname":6252001,"latitude":37.751,"longitude":-97.822,"metro_code":null,"network":"198.2.192.0\/19","postal_code":null,"register_country_code":null,"register_country_name":null,"represent_country_code":null,"represent_country_name":null,"subdivision1_code":null,"subdivision1_name":null,"subdivision2_code":null,"subdivision2_name":null,"time_zone":"America\/Chicago"}{"city_name":null,"continent_code":"NA","continent_name":"North America","country_code":"US","country_name":"United States","european_union":0,"geoname":6252001,"latitude":37.751,"longitude":-97.822,"metro_code":null,"network":"198.2.192.0\/19","postal_code":null,"register_country_code":null,"register_country_name":null,"represent_country_code":null,"represent_country_name":null,"subdivision1_code":null,"subdivision1_name":null,"subdivision2_code":null,"subdivision2_name":null,"time_zone":"America\/Chicago"}
+class WhoerIsp():
+    id = IntegerField(primary_key=True)    
+    proxy = ForeignKeyField(ProxyModel, backref='backup_relationships')
+    data=JSONField(null=True)
+
+# {"as_number":21887,"as_organization":"FIBER-LOGIC","isp":"Fiber-logic","network":"64.64.224.0\/19","organization":"Fiber-logic"}
+
+
+# https://whoer.net/v2/geoip2-isp
+
+class AntiDetectResult(BaseModel):
 
 # IPV4地址泄露
 #住宅 vs服务器 黑名单
