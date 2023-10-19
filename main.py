@@ -398,11 +398,12 @@ def load_setting():
         try:
             settings
         except:
-            settings = UltraDict(shared_lock=True,recurse=True)
 
             if platform.system()!='Windows':
                 settings = UltraDict(recurse=True)
-
+            else:
+                settings = UltraDict(shared_lock=True,recurse=True)
+                
         settings['lastuselang']='en'
         settings['zh']=json.loads(open(os.path.join(ROOT_DIR+os.sep+'locales','zh.json'), 'r', encoding='utf-8').read())
         settings['en']=json.loads(open(os.path.join(ROOT_DIR+os.sep+'locales','en.json'), 'r', encoding='utf-8').read())
@@ -759,7 +760,7 @@ def proxyaddView(newWindow):
 
     langlist.bind('<<ListboxSelect>>',CurSelet)    
 
-
+    
 def chooseAccountsView(newWindow,parentchooseaccounts):
     chooseAccountsWindow = tk.Toplevel(newWindow)
     chooseAccountsWindow.geometry(window_size)
@@ -769,16 +770,24 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
 
 
 
-
     # Create a label for the platform dropdown
     platform_label = ttk.Label(chooseAccountsWindow, text="Select Platform:")
     platform_label.grid(row=2, column=0, padx=10, pady=10, sticky=tk.W)
     # Create a Combobox for the platform selection
     platform_var = tk.StringVar()
-    platform_var.set("choose one:")
+    platform_var.set("choose one:")    
+
+    def db_values():
+        platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
+        platform_combo['values'] = platform_rows
+    def db_refresh(event):
+        platform_combo['values'] = db_values()
     platform_combo = ttk.Combobox(chooseAccountsWindow, textvariable=platform_var)
     platform_combo.grid(row=2, column=1, padx=10, pady=10, sticky=tk.W)
+    platform_combo.bind('<FocusIn>', lambda event: db_refresh(event))
+    platform_combo['values'] = db_values()
 
+    # platform_combo.configure(values=platform_rows)
     # Create a frame for the canvas with non-zero row&column weights
     frame_canvas = tk.Frame(chooseAccountsWindow)
     frame_canvas.grid(row=4, column=0, pady=(5, 0), sticky='nw')
@@ -810,15 +819,13 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
     def on_platform_selected(event):
         selected_platform = platform_var.get()
         # Clear the current selection in the account dropdown
+        from src.models.platform_model import PlatformModel
 
         if selected_platform:
-            # Connect to the SQLite database
-            table_name='accounts'
-            # Execute a query to retrieve the dynamic platform list
-            query="SELECT DISTINCT platform FROM accounts"
-            engine=prod_engine
-            platform_rows = query2df(engine,query,logger)
 
+
+            
+            platform_rows=PlatformModel.filter_platforms()
 
             # Extract platform names and set them as options in the platform dropdown
             if platform_rows is None:
@@ -827,35 +834,31 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
                 button1.grid(row=2, column=2, padx=10, pady=10, sticky=tk.W)
 
             else:
-                platform_names = [row.platform for row in platform_rows.itertuples()]
+                platform_names = platform_rows
                 logger.info(f'query results of existing platforms is {platform_names}')
 
-
-                # Execute a query to retrieve accounts based on the selected platform
-                query=f"SELECT username FROM {table_name} WHERE platform = '{selected_platform}'"
                 if  len(platform_names)==0:
                     platform_combo["values"]=[]
                     button1 = ttk.Button(chooseAccountsWindow, text="try to add platforms first", command=lambda: (chooseAccountsWindow.withdraw(),newWindow.withdraw(),tab_control.select(1)))
                     button1.grid(row=2, column=2, padx=10, pady=10, sticky=tk.W)
                     
                 else:
-                    tmp_accounts=''
+
+                    # Execute a query to retrieve accounts based on the selected platform
                     platform_combo["values"]=platform_names
-                    for platform in platform_names:
+
+                    # for platform in platform_names:
                         
-                        if tmp['uploadaddaccounts'].has_key(platform):
-                            logger.info(f'you have cached account for this platform {platform}')
-                        else:
-                            tmp['uploadaddaccounts'][platform]=''
+                    #     if tmp['uploadaddaccounts'].has_key(platform):
+                    #         logger.info(f'you have cached account for this platform {platform}')
+                    #     else:
+                    #         tmp['uploadaddaccounts'][platform]=''
                     
-                    print('all added accounts',tmp['uploadaddaccounts'])
+                    # print('all added accounts',tmp['uploadaddaccounts'])
 
 
-
-                    engine=prod_engine
-                    account_rows = query2df(engine,query,logger)
+                    account_rows=AccountModel.filter_accounts(platform=selected_platform)
                     # Extract account names and set them as options in the account dropdown
-
                     if account_rows is None:
                         langlist.delete(0,tk.END)
                         button1 = ttk.Button(chooseAccountsWindow, text=f"try to add accounts for {selected_platform} first", command=lambda: (chooseAccountsWindow.withdraw(),newWindow.withdraw(),tab_control.select(1)))
@@ -872,7 +875,6 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
                             langlist.insert(tk.END, row)
                             langlist.itemconfig(int(i), bg = "lime")                        
 
-    
     # Bind the platform selection event to the on_platform_selected function
     platform_combo.bind("<<ComboboxSelected>>", on_platform_selected)
 
@@ -3907,7 +3909,13 @@ def accountView(frame,ttkframe,lang):
 
     e_username = tk.Entry(ttkframe, width=int(width*0.01), textvariable=username)
     # e_username.place(x=10, y=180)
-    e_username.grid(row = 2, column = 5, columnspan = 3, padx=14, pady=15)    
+    e_username.grid(row = 2, column = 5, columnspan = 3, padx=14, pady=15,sticky='w')    
+    linkAccounts=tk.StringVar()
+    b_choose_account=tk.Button(ttkframe,text="Link",command=lambda: threading.Thread(target=lambda:chooseAccountsView(ttkframe,linkAccounts)).start() )
+    
+    b_choose_account.grid(row = 2, column = 9, columnspan = 2, padx=14, pady=15)    
+
+
 
     l_password = tk.Label(ttkframe, text=settings[locale]['password']
                           )
@@ -3916,55 +3924,54 @@ def accountView(frame,ttkframe,lang):
     # e_password.place(x=10, y=240)
 
     l_password.grid(row = 3, column = 0, columnspan = 3, padx=14, pady=15)    
-    e_password.grid(row = 3, column = 5, columnspan = 3, padx=14, pady=15)    
+    e_password.grid(row = 3, column = 5, columnspan = 3, padx=14, pady=15,sticky='w')    
 
 
     l_proxy_option = tk.Label(ttkframe, text=settings[locale]['proxySetting']
                               )
-    # l_proxy_option.place(x=10, y=270)
     
     l_proxy_option.grid(row = 4, column = 0, columnspan = 3, padx=14, pady=15)    
 
     e_proxy_option = tk.Entry(ttkframe, textvariable=proxy_option_account)
-    # e_proxy_option.place(x=10, y=300)
-    e_proxy_option.grid(row = 5, column = 3, columnspan = 3, padx=14, pady=15)    
+    e_proxy_option.grid(row = 4, column = 5, columnspan = 3, padx=14, pady=15,sticky='w')    
 
-    b_choose_proxy=tk.Button(ttkframe,text="choose",command=lambda: threading.Thread(target=chooseProxies(ttkframe,username.get(),proxy_option_account)).start() )
+    b_choose_proxy=tk.Button(ttkframe,text="Link",command=lambda: threading.Thread(target=chooseProxies(ttkframe,username.get(),proxy_option_account)).start() )
     
-    # b_choose_proxy.place(x=50, y=270)    
-    b_choose_proxy.grid(row = 4, column = 3, columnspan = 2, padx=14, pady=15)    
+    b_choose_proxy.grid(row = 4, column = 9, columnspan = 2, padx=14, pady=15)    
 
 
 
 
-    l_channel_cookie = tk.Label(ttkframe, text=settings[locale]['proxySetting'])
+    l_channel_cookie = tk.Label(ttkframe, text='cookies' 
+                                # settings[locale]['select_cookie_file']
+                                )
     # l_channel_cookie.place(x=10, y=330)
     l_channel_cookie.grid(row = 6, column = 0, columnspan = 3, padx=14, pady=15)    
 
     e_channel_cookie = tk.Entry(ttkframe, textvariable=channel_cookie_user)
     # e_channel_cookie.place(x=10, y=360)
-    e_channel_cookie.grid(row = 7, column = 3, columnspan = 3, padx=14, pady=15)    
+    e_channel_cookie.grid(row = 6, column = 5, columnspan = 3, padx=14, pady=15,sticky='w')    
 
     b_channel_cookie=tk.Button(ttkframe,text="Select",command=lambda: threading.Thread(target=select_file(channel_cookie_user)).start() )
     # b_channel_cookie.place(x=10, y=390)    
-    b_channel_cookie.grid(row = 6, column = 3, columnspan = 2, padx=14, pady=15)    
+    b_channel_cookie.grid(row = 6, column = 9, columnspan = 2, padx=14, pady=15)    
 
     
     b_channel_cookie_gen=tk.Button(ttkframe,text="pull",command=auto_gen_cookie_file)
     # b_channel_cookie_gen.place(x=100, y=390)    
-    b_channel_cookie_gen.grid(row = 6, column = 5, columnspan = 3, padx=14, pady=15)    
-    def if_existsOptionCallBack(*args):
-        print(if_exists.get())
-        print(if_exists_box.current())
+    b_channel_cookie_gen.grid(row = 6, column = 12, columnspan = 2, padx=14, pady=15)    
+    # def if_existsOptionCallBack(*args):
+    #     print(if_exists.get())
+    #     print(if_exists_box.current())
 
-    if_exists = tk.StringVar()
-    if_exists.set("if the same account exists")
-    if_exists.trace('w', if_existsOptionCallBack)
+    # if_exists = tk.StringVar()
+    # if_exists.set("if the same account exists")
+    # if_exists.trace('w', if_existsOptionCallBack)
 
 
-    if_exists_box = ttk.Combobox(ttkframe, textvariable=if_exists)
-    if_exists_box.config(values =('replace', 'append'))
-    if_exists_box.grid(row = 9, column = 5, columnspan = 3, padx=14, pady=15)    
+    # if_exists_box = ttk.Combobox(ttkframe, textvariable=if_exists)
+    # if_exists_box.config(values =('replace', 'append'))
+    # if_exists_box.grid(row = 9, column = 5, columnspan = 3, padx=14, pady=15)    
     
     b_save_user=tk.Button(ttkframe,text="save user",command=lambda: threading.Thread(target=saveUser(prod_engine,socialplatform.get(),username.get(),password.get(),proxy_option_account.get(),channel_cookie_user.get(),if_exists=if_exists.get())).start() )
                          
@@ -5301,9 +5308,7 @@ def saveproxies(engine,proxies_list_raw,logger):
                 logger.info(f'split into url:\n{ele.split(";")[0]}\ntags:\n{ele.split(";")[-1]}')
                                 
                 proxy_protocol_type, host, port, user, password=split_proxy(url)
-                proxydata={
-                    
-                }
+
                 proxy_data = {
                     'proxy_protocol': proxy_protocol_type,
                     'proxy_provider_type': 0,

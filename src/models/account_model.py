@@ -2,9 +2,11 @@ from peewee import Model, BooleanField, TextField,IntegerField,ForeignKeyField,B
 from src.models import BaseModel,db
 import config
 import time
+from src.customid import CustomID
+
 class AccountModel(BaseModel):
     id = BlobField(primary_key=True)    
-    platform = TextField()
+    platform = IntegerField()
     username = TextField()
     password = TextField()  
     cookies = TextField()   
@@ -79,7 +81,14 @@ class AccountModel(BaseModel):
             # proxy = ProxyModel.get(ProxyModel.id == proxy_id)
             # associated_account = proxy.account  # This will fetch the associated Account
 
-        return list(query)
+        try:
+            result = list(query)
+            
+        except AccountModel.DoesNotExist:
+            result = None  # Set a default value or perform any other action
+
+        return result
+
 
 
 class AccountRelationship(Model):

@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+    <!-- https://stackoverflow.com/questions/71654563/how-to-upload-a-folder-in-reactjs -->
+
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -143,6 +146,7 @@
     <div id="app">
             <!-- Section 1: Heading -->
             <h1>Account Management</h1>
+            <input type="file" id='input' webkitdirectory mozdirectory @change="handleFileUpload" multiple  />
 
         <input type="file" id="folderInput" webkitdirectory directory multiple v-on:change="getFiles">
         <ul>
@@ -246,6 +250,15 @@
             
     </div>
     <script>
+
+// const input = document.getElementById("input")
+
+// input.onchange = (e) => {
+//   for (const file of e.target.files) {
+//     console.log(file.webkitRelativePath)
+//   }
+// }
+
         new Vue({
             el: '#app',
             data: {
@@ -282,6 +295,11 @@
                 }
             },
             methods: {
+                handleFileUpload(e) {
+      for (const file of e.target.files) {
+        console.log(file.webkitRelativePath)
+      }
+    },                
                 importFromFile() {
             const file = this.$refs.fileInput.files[0];
             if (file) {
