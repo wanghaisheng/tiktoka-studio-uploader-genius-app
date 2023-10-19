@@ -41,7 +41,7 @@ import time
 from  src.models.create_tables import *
 from src.models.proxy_model import *
 from src.models.account_model import *
-
+from src.comboxToolip import ComboboxTip
 
 # import multiprocessing.dummy as mp
 import concurrent
@@ -3476,14 +3476,26 @@ def setEntry(str,var):
     var.set(str) 
 
 
-def chooseProxies(ttkframe,username):
+def chooseProxies(ttkframe,username,parentchooseProxies):
     newWindow = tk.Toplevel(ttkframe)
     newWindow.geometry(window_size)
     
     
     newWindow.title('proxy selection')
+
+    if username=='':
+        username='this user account'
+
+    label = tk.Label(newWindow,
+                text = f"Select the proxies for {username} below : ",
+                font = ("Times New Roman", 10),
+                padx = 10, pady = 10)
+    # label.pack()
+    label.grid(row=0,column=0, sticky=tk.W)
+    
     ttkframe=newWindow
-    global city,country,proxyTags,proxyStatus
+    
+    global city_user,country_user,proxyTags_user,proxyStatus_user,proxy_str
     city = tk.StringVar()
     state = tk.StringVar()
     network_type = tk.StringVar()
@@ -3516,11 +3528,7 @@ def chooseProxies(ttkframe,username):
     txt16.insert(0,'USA')
     txt16.grid(row=1,column=2, sticky=tk.W)
     
-    lb17 = tk.Label(ttkframe, text='by tags.')
-    lb17.grid(row=0,column=3, sticky=tk.W)
-    txt17 = tk.Entry(ttkframe,textvariable=proxyTags)
-    txt17.insert(0,'youtube')
-    txt17.grid(row=1,column=3, sticky=tk.W)
+
 
     l_networktype = tk.Label(ttkframe, text='by networktype.')
     l_networktype.grid(row=2,column=0, sticky=tk.W)
@@ -3530,9 +3538,14 @@ def chooseProxies(ttkframe,username):
 
     lb18 = tk.Label(ttkframe, text='by status.')
     lb18.grid(row=2,column=1, sticky=tk.W)
-
+    lb17 = tk.Label(ttkframe, text='by tags.')
+    lb17.grid(row=2,column=2, sticky=tk.W)
+    txt17 = tk.Entry(ttkframe,textvariable=proxyTags)
+    txt17.insert(0,'youtube')
+    txt17.grid(row=3,column=2, sticky=tk.W)
 
     proxyStatus = tk.StringVar()
+    proxy_str = tk.StringVar()
 
 
     def proxyStatusCallBack(*args):
@@ -3548,124 +3561,12 @@ def chooseProxies(ttkframe,username):
     proxyStatusbox.grid(row = 3, column = 1, padx=14, pady=15)    
 
 
-
-
-
-    btn5= tk.Button(ttkframe, text="Get proxy list", padx = 0, pady = 0,command = lambda: threading.Thread(target=queryProxies(logger,city.get(),state.get(),country.get(),proxyTags.get(),network_type.get(),proxyStatus.get(),ttkframe,tree=tree,button='add')).start())
-    btn5.grid(row=4,column=0, sticky=tk.W)    
-    
-    btn5= tk.Button(ttkframe, text="Reset", padx = 0, pady = 0,command = lambda:(proxyStatus.set(""),country.set(""),state.set(""),city.set(""),proxyTags.set(""),proxyStatus.set("Select From Status"),network_type.set("")))
-    btn5.grid(row=4,column=1, sticky=tk.W)    
-    
-    # treeview_flight
-    tree = ttk.Treeview(ttkframe, height = 20, column = 10)
-    tree["column"]=('#0','#1','#2','#3','#4','#5','#6','#7','#8','#9','#10')
-    tree.grid(row = 5, column = 0, columnspan = 20, padx=14, pady=15)
-
-    tree.heading('#0', text = 'proxy No.')
-    tree.column('#0', anchor = 'center', width = 30)
-    tree.heading('#1', text = 'host')
-    tree.column('#1', anchor = 'center', width = 60)
-    tree.heading('#2', text = 'port')
-    tree.column('#2', anchor = 'center', width = 60)    
-    tree.heading('#3', text = 'Status')
-    tree.column('#3', anchor = 'center', width = 50)
-    tree.heading('#4', text = 'City')
-    tree.column('#4', anchor = 'center', width = 40)
-    tree.heading('#5', text = 'State')
-    tree.column('#5', anchor = 'center', width = 40)
-
-    tree.heading('#6', text = 'Country')
-    tree.column('#6', anchor = 'center', width = 40)
-    tree.heading('#7', text = 'tags')
-    tree.column('#7', anchor = 'center', width = 80)
-    tree.heading('#8', text = 'network_type')
-    tree.column('#8', anchor = 'center', width = 80)
-    tree.heading('#9', text = 'validate_results')
-    tree.column('#9', anchor = 'center', width = 120)
-    # Create the Treeview column
-    tree.heading('#10', text='Operation')
-    tree.column('#10', anchor='center', width=80)
-def chooseProxies1(ttkframe,username):
-    newWindow = tk.Toplevel(ttkframe)
-    newWindow.geometry(window_size)
-    
-    
-    newWindow.title('proxy selection')
-
-    if username=='':
-        username='this user account'
-
-    label = tk.Label(newWindow,
-                text = f"Select the proxies for {username} below : ",
-                font = ("Times New Roman", 10),
-                padx = 10, pady = 10)
-    # label.pack()
-    label.grid(row=0,column=0, sticky=tk.W)
-    
- 
-    
-    global city_user,country_user,proxyTags_user,proxyStatus_user,proxy_str
-    city_user = tk.StringVar()
-    country_user = tk.StringVar()
-    proxyTags_user = tk.StringVar()
-    proxyStatus_user = tk.BooleanVar()
-    global latest_proxy_conditions_user
-    latest_proxy_conditions_user = tk.StringVar()
-    lbl15 = tk.Label(newWindow, text='by city.')
-    # lbl15.place(x=430, y=30, anchor=tk.NE)
-    # lbl15.pack(side='left')
-    proxy_str = tk.StringVar()
-
-    lbl15.grid(row=1,column=0, sticky=tk.W,  padx=14, pady=15)    
-
-    txt15 = tk.Entry(newWindow,textvariable=city_user)
-    txt15.insert(0,'')
-    # txt15.place(x=580, y=30, anchor=tk.NE)
-    # txt15.pack(side='left')
-    txt15.grid(row=1,column=1, sticky=tk.W,  padx=14, pady=15)    
-
-    lbl16 = tk.Label(newWindow, text='by country.')
-    lbl16.grid(row=2,column=0, sticky=tk.W,  padx=14, pady=15)    
-    txt16 = tk.Entry(newWindow,textvariable=country_user)
-    txt16.insert(0,'')
-    txt16.grid(row=2,column=1, sticky=tk.W,  padx=14, pady=15)    
-    
-    lb17 = tk.Label(newWindow, text='by tags.')
-    lb17.grid(row=3,column=0, sticky=tk.W,  padx=14, pady=15)    
-    txt17 = tk.Entry(newWindow,textvariable=proxyTags_user)
-    txt17.insert(0,'')
-    txt17.grid(row=3,column=1, sticky=tk.W,  padx=14, pady=15)    
-
-    lb18 = tk.Label(newWindow, text='by status.')
-    lb18.grid(row=4,column=0, sticky=tk.W,  padx=14, pady=15)    
-
-
-    proxyStatus = tk.StringVar()
-
-
-    def proxyStatusCallBack(*args):
-        print(proxyStatus.get())
-        print(proxyStatusbox.current())
-
-    proxyStatus.set("Select From Status")
-    proxyStatus.trace('w', proxyStatusCallBack)
-
-
-    proxyStatusbox = ttk.Combobox(newWindow, textvariable=proxyStatus)
-    proxyStatusbox.config(values = ('valid', 'invalid'))
-    proxyStatusbox.grid(row = 4, column = 1,  padx=14, pady=15)    
-
-
-
-    
-
      
      
 
     # Create a frame for the canvas with non-zero row&column weights
     frame_canvas = tk.Frame(newWindow)
-    frame_canvas.grid(row=6, column=1,columnspan=2,  sticky='nw',  padx=14, pady=15)    
+    frame_canvas.grid(row=10, column=0,sticky='nw',  padx=14, pady=15)    
     frame_canvas.grid_rowconfigure(0, weight=1)
     frame_canvas.grid_columnconfigure(0, weight=1)
     # Set grid_propagate to False to allow 5-by-5 buttons resizing later
@@ -3680,42 +3581,100 @@ def chooseProxies1(ttkframe,username):
                 yscrollcommand = yscrollbar.set)
     langlist.pack(padx = 10, pady = 10,
             expand = tk.YES, fill = "both")
+    btn5= tk.Button(ttkframe, text="Get proxy list", padx = 0, pady = 0,command = lambda: threading.Thread(
+        target=queryProxies(logger,city.get(),state.get(),country.get(),proxyTags.get(),network_type.get(),
+                            proxyStatus.get(),ttkframe,tree=None,langlist=langlist)).start())
+    btn5.grid(row=4,column=0, sticky=tk.W)    
+    
+    btn5= tk.Button(ttkframe, text="Reset", padx = 0, pady = 0,command = lambda:(proxyStatus.set(""),country.set(""),state.set(""),city.set(""),proxyTags.set(""),proxyStatus.set("Select From Status"),network_type.set("")))
+    btn5.grid(row=4,column=1, sticky=tk.W)    
+    
+    btn6= tk.Button(newWindow, text="remove selected", padx = 10, pady = 10,command = lambda: threading.Thread(target=remove_selected_accounts).start())     
+    btn6.grid(row=10,column=1, sticky=tk.W)
+    lbl16 = tk.Label(newWindow, text='selected proxies')
+    lbl16.grid(row=8,column=0, sticky=tk.W)
+    txt16 = tk.Entry(newWindow,textvariable=proxy_str
+                    #  ,width=int(int(window_size.split('x')[-1])/4)
+                     )
+    txt16.insert(0,'')
+    txt16.grid(row=8,column=1, 
+            #    width=width,
+               columnspan=4,
+            #    rowspan=3,
+               sticky='nswe')    
 
-    def CurSelet(event):
-        listbox = event.widget
-        # values = [listbox.get(idx) for idx in listbox.curselection()]
-        selection=listbox.curselection()
-        # picked = listbox.get(selection[1])
-        print(selection,list(selection),listbox.get(0))
-        tmp=''
-        for i in list(selection):
-            tmp=tmp+listbox.get(i)+';'
-        proxy_str.set(tmp)
-        print('000000',proxy_str.get())
-        if len(list(selection))==3:
-            lbl15 = tk.Label(newWindow, text='you have reached 3 proxy limit for one account.dont select anymore')
-            lbl15.grid(row=6,column=2, sticky=tk.W)
+
+
+    tmp['accountaddproxies']={}
+    
+    def remove_selected_accounts():
+        selected_accounts=tmp['accountaddproxies']
+        show_str=proxy_str.get()
+
+        print('you want to remove these selected proxy',selected_accounts)
+        if len(selected_accounts)==0:
+            lbl15 = tk.Label(newWindow, text='you have not selected  proxy at all.choose one or more')
+            lbl15.grid(row=4,column=2, sticky=tk.W)
             lbl15.after(5*1000,lbl15.destroy)        
         
-        elif len(list(selection))>3:
-            print('you should choose no more than 3 proxy for one account')
-            lbl15 = tk.Label(newWindow, text='you should choose no more than 3 proxy for one account.please remove')
-            lbl15.grid(row=6,column=2, sticky=tk.W)
-            lbl15.after(3*1000,lbl15.destroy)
         else:
-            lbl15 = tk.Label(newWindow, text='you can add at least 1 and max 3 proxy for one account.')
-            lbl15.grid(row=6,column=2, sticky=tk.W)
-            lbl15.after(500,lbl15.destroy)
+            existingaccounts=proxy_str.get().split(',')
+            logger.info(f'you want to remove this selected proxy {selected_accounts} from existing: {existingaccounts}')
 
-    langlist.bind('<<ListboxSelect>>',CurSelet)
-    btn5= tk.Button(newWindow, text="Get proxy list", padx = 0, 
-                    pady = 0,command = lambda: threading.Thread(target=queryProxies(logger,city.get(),state.get(),country.get(),proxyTags.get(),network_type.get(),proxyStatus.get(),newWindow,tree=tree)).start())
-                                                                
-    btn5.grid(row=5,column=2, sticky=tk.W)    
-    btn6= tk.Button(newWindow, text="add selected", padx = 10, pady = 10,command = lambda: threading.Thread(target=setEntry(proxy_str.get())).start())
-    # btn5.place(x=800, y=30, anchor=tk.NE)    
-    # btn6.pack(side='left')          
-    btn6.grid(row=7,column=2, sticky=tk.W)
+            for item in selected_accounts:
+
+                if item in existingaccounts:
+                    existingaccounts.remove(item)
+
+
+                    logger.info(f'this proxy {item} removed success')
+                    showinfomsg(message=f'this proxy {item} removed success')
+                else:
+                    logger.info(f'you cannot remove this proxy {item}, not added before')
+                    showinfomsg(message=f'this proxy {item} not added before')
+            logger.info(f'end to remove,reset proxystr {existingaccounts}')
+            show_str= ','.join(item for item in existingaccounts if item is not None and item != "")
+
+        proxy_str.set(show_str)
+        parentchooseProxies.set(show_str)
+
+    def add_selected_accounts(event):
+        listbox = event.widget
+        values = [listbox.get(idx).split(':')[0] for idx in listbox.curselection()]
+
+        tmp['accountaddproxies']=values
+        existingaccounts=proxy_str.get().split(',')
+        show_str=proxy_str.get()
+        if len(list(values))==0:
+            logger.info('you have not selected  proxiess at all.choose one or more')
+            showinfomsg(message='you have not selected  proxiess at all.choose one or more')
+        
+        elif values==existingaccounts:
+            logger.info('you have not selected new proxiess at all')
+            showinfomsg(message='you have not selected new proxiess at all')
+        
+        else:
+            for item in values:
+                if item in existingaccounts:
+                    logger.info(f'this proxy {item} added before')                   
+                    showinfomsg(message=f'this proxiess {item} added before') 
+
+                else:
+                    existingaccounts.append(item)
+                    logger.info(f'this proxy {item} added successS')
+                    showinfomsg(message=f'this proxy {item} added successS')
+
+                    if show_str=='':
+                        show_str=item
+                    else:
+                        show_str= show_str+','+item
+
+        proxy_str.set(show_str)
+        parentchooseProxies.set(show_str)
+    langlist.bind('<<ListboxSelect>>',add_selected_accounts)   
+
+
+
 
 def bulkImportUsers(ttkframe):
     newWindow = tk.Toplevel(ttkframe)
@@ -3970,7 +3929,7 @@ def accountView(frame,ttkframe,lang):
     # e_proxy_option.place(x=10, y=300)
     e_proxy_option.grid(row = 5, column = 3, columnspan = 3, padx=14, pady=15)    
 
-    b_choose_proxy=tk.Button(ttkframe,text="choose",command=lambda: threading.Thread(target=chooseProxies(ttkframe,username.get())).start() )
+    b_choose_proxy=tk.Button(ttkframe,text="choose",command=lambda: threading.Thread(target=chooseProxies(ttkframe,username.get(),proxy_option_account)).start() )
     
     # b_choose_proxy.place(x=50, y=270)    
     b_choose_proxy.grid(row = 4, column = 3, columnspan = 2, padx=14, pady=15)    
@@ -5203,7 +5162,7 @@ def showinfomsg(message,title='hints',DURATION = 2000):
 #     msg8 = messagebox.askyesnocancel(title="是或否或取消", message="是否打大龙", default=messagebox.CANCEL)
 #     print(msg8)
 
-def  queryProxies(logger,city=None,state=None,country=None,tags=None,network_type=None,status=None,frame=None,tree=None,button='delete'):
+def  queryProxies(logger,city=None,state=None,country=None,tags=None,network_type=None,status=None,frame=None,tree=None,langlist=None):
     city=city.lower()
     country=country.lower()
     tags=tags.lower()
@@ -5225,58 +5184,34 @@ def  queryProxies(logger,city=None,state=None,country=None,tags=None,network_typ
         network_type=None 
     db_rows=  ProxyModel.filter_proxies(city=city,country=country,tags=tags,status=status,state=state,network_type=network_type)
     hints=None
-    checkbox_vars = {}
-    selected_proxies = tk.StringVar()
-    # Function to delete the selected proxy record
-    def delete_proxy(proxy_id):
-        # Implement your code to delete the proxy record with id proxy_id
-        # ...
-        # After deletion, remove the item from the Treeview
-        tree.delete(proxy_id)
-            
 
-    # Function to update the selected proxies string
-    def update_selected_proxies(proxy_id, checked):
-        current_selected = selected_proxies.get().split(',')
-        if checked:
-            current_selected.append(str(proxy_id))
-        else:
-            current_selected.remove(str(proxy_id))
-        selected_proxies.set(','.join(current_selected))   
-    # Function to handle checkbox state changes
-    def on_checkbox_change(proxy_id):
-        checked = checkbox_vars[proxy_id].get()
-        update_selected_proxies(proxy_id, checked)    
-    if db_rows is not None:
-        records = tree.get_children()
-        for element in records:
-            tree.delete(element) 
-        for row in db_rows:
 
-            proxy_id = row.id
-            checkbox_vars[proxy_id] = tk.BooleanVar()
-            print('!!!!!!!!!!',button)
-            tree.tag_configure('checkbox', background='lightblue')  # Customize background for checkboxes
-            tree.tag_configure('delete', background='lightcoral')   # Customize background for delete buttons
-            if button == 'new':
-                checkbox = ttk.Checkbutton(tree, variable=checkbox_vars[proxy_id], command=lambda proxy_id=proxy_id: on_checkbox_change(proxy_id))
-                tree.insert(
-                    "", 0, text=proxy_id,
-                    values=(row.proxy_host, row.proxy_port, row.status, row.city, row.country, row.tags, row.proxy_validate_network_type, row.inserted_at),
-                    tags=('checkbox',)  # Add a tag to the item
-                )
-                checkbox_vars[proxy_id].set(False)  # Initialize checkbox state
-
-            elif button == 'delete':
-                delete_button = ttk.Button(tree, text='Delete', command=lambda proxy_id=proxy_id: delete_proxy(proxy_id))
-
-                delete_button = ttk.Button(tree, text='Delete', command=lambda proxy_id=proxy_id: delete_proxy(proxy_id), style='Delete.TButton')
  
+    if db_rows is not None:
+        if tree != None:
+            records = tree.get_children()
+            for element in records:
+                tree.delete(element) 
+            for row in db_rows:
+
+                proxy_id = row.id
+                tree.tag_configure('checkbox', background='lightblue')  # Customize background for checkboxes
+                tree.tag_configure('delete', background='lightcoral')   # Customize background for delete buttons
+
                 tree.insert(
-                    "", 0, text=proxy_id,
-                    values=(row.proxy_host, row.proxy_port, row.status, row.city, row.country, row.tags, row.proxy_validate_network_type, row.inserted_at),
-                    tags=('delete',)  # Add a tag to the item
-                )
+                        "", 0, text=proxy_id,
+                        values=(row.proxy_host, row.proxy_port, row.status, row.city, row.country, row.tags, row.proxy_validate_network_type, row.inserted_at)# Add a tag to the item
+                    )
+        if langlist !=None:
+            langlist.delete(0,tk.END)
+            logger.info(f'we found {len(db_rows)} record matching ')
+            i=0
+            for row in db_rows:
+                proxy_id = str(row.id)
+                host=str(row.proxy_host)
+                port=str(row.proxy_port)
+                langlist.insert(tk.END, proxy_id+':'+host+'-'+port)
+                langlist.itemconfig(int(i), bg = "lime")
 
 
         hints=f'there is {len(db_rows)} matching records found for query'
@@ -5524,7 +5459,9 @@ def proxyView(frame,ttkframe,lang):
 
 
 
-    btn5= tk.Button(ttkframe, text="Get proxy list", padx = 0, pady = 0,command = lambda: threading.Thread(target=queryProxies(logger,city.get(),state.get(),country.get(),proxyTags.get(),network_type.get(),proxyStatus.get(),ttkframe,tree=tree,button='delete')).start())
+    btn5= tk.Button(ttkframe, text="Get proxy list", padx = 0, pady = 0,command = lambda: threading.Thread(
+        target=queryProxies(logger,city.get(),state.get(),country.get(),proxyTags.get(),network_type.get(),
+                            proxyStatus.get(),ttkframe,tree=tree,langlist=None)).start())
     btn5.grid(row=4,column=0, sticky=tk.W)    
     
     btn5= tk.Button(ttkframe, text="Reset", padx = 0, pady = 0,command = lambda:(proxyStatus.set(""),country.set(""),state.set(""),city.set(""),proxyTags.set(""),proxyStatus.set("Select From Status"),network_type.set("")))
@@ -6368,7 +6305,9 @@ def start_fastapi_server_cmd():
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.include_router(router)
 
-async def  start_tkinter_app():
+async def asynctk():
+    start_tkinter_app()
+def  start_tkinter_app():
     global root,settings
     
     tmp['uploadaddaccounts']={}    
@@ -6381,7 +6320,6 @@ async def  start_tkinter_app():
     settings['folders']=tmp
     # root.protocol('WM_DELETE_WINDOW', withdraw_window)
 
-    # asyncio.run(start_fastapi_server())
 
     root.mainloop()
     
@@ -6399,7 +6337,7 @@ if __name__ == '__main__':
     # Start FastAPI server in a separate thread
     # fastapi_thread = threading.Thread(target=start_fastapi_server).start()
 
-    loop.create_task(start_tkinter_app())
-    start_fastapi_server(loop)
+    # loop.create_task(asynctk())
+    # start_fastapi_server(loop)
 
-
+    start_tkinter_app()
