@@ -364,77 +364,88 @@ class YoutubeVideoModel(BaseModel):
     is_deleted = BooleanField(default=False)  # Add a field to flag if video is deleted
 
 
+    @classmethod
 
-# Assuming you have defined VideoModel as shown earlier
-def create_video(video_data):
-    try:
-        unique_hash = generate_unique_hash(video_data)
-        video_data['unique_hash'] = unique_hash
-        existing_video = YoutubeVideoModel.select().where(YoutubeVideoModel.unique_hash == unique_hash).first()
-        if existing_video is None:
-            video = YoutubeVideoModel(**video_data)
-            video.insert_date = int(time.time())  # Update insert_date
-            video.id=CustomID().to_bin()
-            video.save()
-            return video.id
-        else:
-            return existing_video.id
-    except Exception as e:
-        logger.error(f'create video failure due to error:{e}')
-        return None
-# Assuming you have defined VideoModel as shown earlier
-def bulk_add_videos(video_data_list):
-    inserted_videos = []
-    for video_data in video_data_list:    
+    # Assuming you have defined VideoModel as shown earlier
+    def create_video(video_data):
         try:
             unique_hash = generate_unique_hash(video_data)
             video_data['unique_hash'] = unique_hash
-            
-            video = YoutubeVideoModel(**video_data)
-            video.insert_date = int(time.time())  # Update insert_date
-            
-            video.save()
-            inserted_videos.append(video)
-            
-            return video
+            existing_video = YoutubeVideoModel.select().where(YoutubeVideoModel.unique_hash == unique_hash).first()
+            if existing_video is None:
+                video = YoutubeVideoModel(**video_data)
+                video.insert_date = int(time.time())  # Update insert_date
+                video.id=CustomID().to_bin()
+                video.save(force_insert=True) 
+                return video.id
+            else:
+                return existing_video.id
         except Exception as e:
-            return str(e)
+            logger.error(f'create video failure due to error:{e}')
+            return None
+    @classmethod
+        
+    # Assuming you have defined VideoModel as shown earlier
+    def bulk_add_videos(video_data_list):
+        inserted_videos = []
+        for video_data in video_data_list:    
+            try:
+                unique_hash = generate_unique_hash(video_data)
+                video_data['unique_hash'] = unique_hash
+                
+                video = YoutubeVideoModel(**video_data)
+                video.insert_date = int(time.time())  # Update insert_date
+                
+                video.save(force_insert=True) 
+                inserted_videos.append(video)
+                
+                return video
+            except Exception as e:
+                return str(e)
 
-    return inserted_videos        
-def update_video(video_id, video_data):
-    try:
-        video = YoutubeVideoModel.objects.get(id=video_id)
-        unique_hash = generate_unique_hash(video_data)
-        video_data['unique_hash'] = unique_hash
-        video.insert_date = int(time.time())  # Update insert_date
-        for key, value in video_data.items():
-            setattr(video, key, value)
-        video.save()
-        return video
-    except YoutubeVideoModel.DoesNotExist:
-        return None
+        return inserted_videos        
+    @classmethod
 
-# Read
-def get_video_by_id(video_id):
-    try:
-        return YoutubeVideoModel.get(YoutubeVideoModel.id == video_id)
-    except DoesNotExist:
-        return None
-# Read
-def get_video_by_hash(hash):
-    try:
-        return YoutubeVideoModel.get(YoutubeVideoModel.unique_hash == hash).id
-    except DoesNotExist:
-        return None
-def get_all_videos():
-    return YoutubeVideoModel.select()
+    def update_video(video_id, video_data):
+        try:
+            video = YoutubeVideoModel.objects.get(id=video_id)
+            unique_hash = generate_unique_hash(video_data)
+            video_data['unique_hash'] = unique_hash
+            video.insert_date = int(time.time())  # Update insert_date
+            for key, value in video_data.items():
+                setattr(video, key, value)
+            video.save(force_insert=True) 
+            return video
+        except YoutubeVideoModel.DoesNotExist:
+            return None
+    @classmethod
 
-def delete_video(video_id):
-    try:
-        video = YoutubeVideoModel.objects.get(id=video_id)
-        video.is_deleted = True
-        video.insert_date = int(time.time())  # Update insert_date
-        video.save()
-        return video
-    except YoutubeVideoModel.DoesNotExist:
-        return None
+    # Read
+    def get_video_by_id(video_id):
+        try:
+            return YoutubeVideoModel.get(YoutubeVideoModel.id == video_id)
+        except DoesNotExist:
+            return None
+    @classmethod
+
+    # Read
+    def get_video_by_hash(hash):
+        try:
+            return YoutubeVideoModel.get(YoutubeVideoModel.unique_hash == hash).id
+        except DoesNotExist:
+            return None
+    @classmethod
+        
+    def get_all_videos():
+        return YoutubeVideoModel.select()
+    @classmethod
+
+    def delete_video(video_id):
+        try:
+            video = YoutubeVideoModel.objects.get(id=video_id)
+            video.is_deleted = True
+            video.insert_date = int(time.time())  # Update insert_date
+            video.save(force_insert=True) 
+            return video
+        except YoutubeVideoModel.DoesNotExist:
+            return None

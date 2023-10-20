@@ -27,6 +27,7 @@ class TaskModel(BaseModel):
 
     inserted_at = IntegerField()
     uploaded_at = IntegerField(null=True)
+    @classmethod
 
     def add_task(cls,task_data):
 
@@ -36,25 +37,28 @@ class TaskModel(BaseModel):
         # task.id = CustomID().to_bin()
         task.id = CustomID().to_bin()
 
-        task.save()
+        task.save(force_insert=True) 
         print('task add ok',task.id)
         
             # for user in TaskModel.select():
             #     print(user.name)
             # return True
+    @classmethod
 
     def get_task_by_id(cls, task_id):
         return cls.get_or_none(cls.id == task_id)
+    @classmethod
 
     def update_task(cls, task_id, **kwargs):
         try:
             task = cls.get(cls.id == task_id)
             for key, value in kwargs.items():
                 setattr(task, key, value)
-            task.save()
+            task.save(force_insert=True) 
             return task
         except cls.DoesNotExist:
             return None
+    @classmethod
 
     def delete_task( cls,task_id):
         try:
@@ -63,6 +67,7 @@ class TaskModel(BaseModel):
             return True
         except cls.DoesNotExist:
             return False
+    @classmethod
 
     def filter_tasks(cls, status=None, type=None,uploaded_at=None, videoid=None,inserted_at=None):
         query = cls.select()
@@ -88,7 +93,7 @@ class TaskModel(BaseModel):
         try:
             result = list(query)
             
-        except TaskModel.DoesNotExist:
+        except cls.DoesNotExist:
             result = None  # Set a default value or perform any other action
 
         return result

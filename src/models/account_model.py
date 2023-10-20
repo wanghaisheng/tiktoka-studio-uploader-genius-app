@@ -17,6 +17,7 @@ class AccountModel(BaseModel):
 
     # class Meta:
     #     db_table = db
+    @classmethod
 
     def add_account(cls,account_data):
         unique_hash = config.generate_unique_hash(
@@ -33,11 +34,12 @@ class AccountModel(BaseModel):
             account.unique_hash=unique_hash
             account.id = CustomID().to_bin()
 
-            account.save()
+            account.save(force_insert=True) 
             return account.id
             
         else:
             return None
+    @classmethod
 
     def get_account_by_id(cls, account_id):
         return cls.get_or_none(cls.id == account_id)
@@ -47,7 +49,7 @@ class AccountModel(BaseModel):
             account = cls.get(cls.id == account_id)
             for key, value in kwargs.items():
                 setattr(account, key, value)
-            account.save()
+            account.save(force_insert=True) 
             return account
         except cls.DoesNotExist:
             return None
@@ -59,6 +61,7 @@ class AccountModel(BaseModel):
             return True
         except cls.DoesNotExist:
             return False
+    @classmethod
 
     def filter_accounts(cls, platform=None, username=None, proxy=None):
         query = cls.select()
@@ -90,6 +93,7 @@ class AccountRelationship(Model):
     account = ForeignKeyField(AccountModel, backref='backup_relationships')
     backup_account = ForeignKeyField(AccountModel, backref='main_account_relationships')
 
+    @classmethod
 
     def add_AccountRelationship(cls,main_id,otherid):
         new=AccountRelationship()
@@ -100,5 +104,9 @@ class AccountRelationship(Model):
         elif cls.get_by_id(otherid)==None:
             return False
         else:
-            new.save()
+            new.save(force_insert=True) 
             return True
+    @classmethod
+
+    def get_AccountRelationship(cls, account_id):
+        return cls.get_or_none(cls.id == account_id)

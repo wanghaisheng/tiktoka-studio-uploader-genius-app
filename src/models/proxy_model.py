@@ -112,27 +112,29 @@ class ProxyModel(BaseModel):
     #     db_table = db
 
 
-    # Create (Insert) Proxy
-    def add_proxy(proxy_data):
+    @classmethod
+    def add_proxy(cls,proxy_data):
 
         
         unique_hash = config.generate_unique_hash(proxy_data)
 
         # Check if a proxy with the same unique hash already exists
-        existing_proxy = ProxyModel.select().where(ProxyModel.unique_hash == unique_hash).first()
+        existing_proxy = cls.select().where(cls.unique_hash == unique_hash).first()
 
         if existing_proxy is None:    
-            proxy = ProxyModel(**proxy_data)
+            proxy = cls(**proxy_data)
             proxy.insert_date = int(time.time())  # Update insert_date
             proxy.unique_hash=unique_hash
             proxy.id = CustomID().to_bin()
 
-            proxy.save()
+            proxy.save(force_insert=True) 
 
             return True
         else:
             return False
     # Read (Select) Proxy by ID
+    @classmethod
+
     def get_proxy_by_id(proxy_id):
         try:
             proxy = ProxyModel.get(ProxyModel.id == proxy_id)
@@ -141,25 +143,30 @@ class ProxyModel(BaseModel):
             return None
 
     # Update Proxy by ID
+    @classmethod
+
     def update_proxy(proxy_id, **kwargs):
         try:
             proxy = ProxyModel.get(ProxyModel.id == proxy_id)
             for key, value in kwargs.items():
                 setattr(proxy, key, value)
-            proxy.save()
+            proxy.save(force_insert=True) 
             return proxy
         except ProxyModel.DoesNotExist:
             return None
+    @classmethod
 
     # Delete (Soft Delete) Proxy by ID
     def delete_proxy(proxy_id):
         try:
             proxy = ProxyModel.get(ProxyModel.id == proxy_id)
             proxy.is_deleted = True
-            proxy.save()
+            proxy.save(force_insert=True) 
             return True
         except ProxyModel.DoesNotExist:
             return False
+    @classmethod
+     
     # Assuming you have a list of proxy data named proxy_list
     def bulk_add_proxies(proxy_list):
         inserted_proxies = []
@@ -174,40 +181,41 @@ class ProxyModel(BaseModel):
                 # Create a new proxy
                 proxy = ProxyModel(**proxy_data, unique_hash=unique_hash)
                 proxy.inserted_at = int(time.time())
-                proxy.save()
+                proxy.save(force_insert=True) 
                 inserted_proxies.append(proxy)
 
         return inserted_proxies
 
+    @classmethod
 
-    def filter_proxies(country=None, state=None, city=None, tags=None, status=None, network_type=None):
-        query = ProxyModel.select()
+    def filter_proxies(cls,country=None, state=None, city=None, tags=None, status=None, network_type=None):
+        query = cls.select()
         print('===',country,state,city,tags,status,network_type)
 
-        for person in ProxyModel.select():
+        for person in cls.select():
             print(person)
 
         if country is not None:
-            query = query.where(ProxyModel.country == country)
+            query = query.where(cls.country == country)
 
         if state is not None:
-            query = query.where(ProxyModel.state == state)
+            query = query.where(cls.state == state)
 
         if city is not None:
-            query = query.where(ProxyModel.city == city)
+            query = query.where(cls.city == city)
 
         if tags is not None:
-            query = query.where(ProxyModel.tags == tags)
+            query = query.where(cls.tags == tags)
 
         if status is not None:
-            query = query.where(ProxyModel.status == status)
+            query = query.where(cls.status == status)
 
         if network_type is not None:
-            query = query.where(ProxyModel.proxy_validate_network_type == network_type)
+            query = query.where(cls.proxy_validate_network_type == network_type)
         try:
             result = list(query)
             
-        except ProxyModel.DoesNotExist:
+        except cls.DoesNotExist:
             result = None  # Set a default value or perform any other action
 
         return result

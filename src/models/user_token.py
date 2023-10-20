@@ -71,10 +71,10 @@ class UserToken(StdUserModel):
         self.first_meet_time = int(time.time())
         self.ip_first_meet = await view.get_ip()
         self.ua_first_meet = view.headers.get('User-Agent', None)
-        self.save()
+        self.save(force_insert=True) 
 
     async def access_save(self, view: 'AbstractSQLView'):
         self.last_access_time = int(time.time())
         self.ip_latest = await view.get_ip()
         self.ua_latest = view.headers.get('User-Agent', None)
-        self.save()
+        self.save(force_insert=True) 

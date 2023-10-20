@@ -42,6 +42,7 @@ class UploadSettingModel(BaseModel):
     is_record_video = BooleanField(default=True)
 
     wait_policy=IntegerField(default=WAIT_POLICY_TYPE.check)
+    @classmethod
 
     def add_uploadsetting(cls,setting_data):
 
@@ -50,26 +51,29 @@ class UploadSettingModel(BaseModel):
         setting.insert_date = int(time.time())  # Update insert_date
         setting.id = CustomID().to_bin()
 
-        setting.save()
+        setting.save(force_insert=True) 
         print('setting add ok',setting.id)
         
             # for user in SettingModel.select():
             #     print(user.name)
             # return True
 
+    @classmethod
 
     def get_uploadsetting_by_id(cls, uploadsetting_id):
         return cls.get_or_none(cls.id == uploadsetting_id)
 
+    @classmethod
     def update_uploadsetting(cls, uploadsetting_id, **kwargs):
         try:
             uploadsetting = cls.get(cls.id == uploadsetting_id)
             for key, value in kwargs.items():
                 setattr(uploadsetting, key, value)
-            uploadsetting.save()
+            uploadsetting.save(force_insert=True) 
             return uploadsetting
         except cls.DoesNotExist:
             return None
+    @classmethod
 
     def delete_uploadsetting(cls, uploadsetting_id):
         try:
@@ -78,6 +82,7 @@ class UploadSettingModel(BaseModel):
             return True
         except cls.DoesNotExist:
             return False
+    @classmethod
 
     def filter_uploadsettings(cls, platform=None, browser_type=None, timeout=None):
         query = cls.select()

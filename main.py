@@ -173,9 +173,9 @@ class ConsoleUi:
         formatter = logging.Formatter('%(asctime)s: %(message)s')
         self.queue_handler.setFormatter(formatter)
         logger.addHandler(self.queue_handler)
-        # level='debug'
+        # level='is_debug'
         # level=level.lower()
-        # if level=='debug':
+        # if level=='is_debug':
         #     # Logging configuration
         #     logging.basicConfig(filename='test.log',
         #         level=logging.DEBUG, 
@@ -783,7 +783,7 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
     platform_var.set("choose one:")    
 
     def db_values():
-        platform_rows=PlatformModel.filter_platforms(PlatformModel,name=None, ptype=None, server=None)
+        platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
         platform_names = [PLATFORM_TYPE.PLATFORM_TYPE_TEXT[x.type][1] for x in platform_rows]
 
         platform_combo['values'] = platform_names
@@ -832,8 +832,7 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
         if selected_platform:
 
 
-            
-            platform_rows=PlatformModel.filter_platforms(PlatformModel)
+            platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
             platform_names = [PLATFORM_TYPE.PLATFORM_TYPE_TEXT[x.type][1] for x in platform_rows]
             print('platforms options are',platform_names)
 
@@ -862,7 +861,7 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
                         else:
                             tmp['accountlinkaccount'][platform]=''
                     
-                    account_rows=AccountModel.filter_accounts(AccountModel,platform=getattr(PLATFORM_TYPE, selected_platform.upper()))
+                    account_rows=AccountModel.filter_accounts(platform=getattr(PLATFORM_TYPE, selected_platform.upper()))
                     print(f'query accounts for {selected_platform} {getattr(PLATFORM_TYPE, selected_platform.upper())} ')
                     # Extract account names and set them as options in the account dropdown
                     if account_rows is None or len(account_rows)==0:
@@ -1105,7 +1104,7 @@ def syncVideometa2assetsjson(selectedMetafileformat,folder):
                 logger.info(f"=5551==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
 
                 for filename,video in tmpvideos.items():
-                    print('debug',filename,video)
+                    print('is_debug',filename,video)
                     ultra[folder]['videos'][filename]= video
                     # ultra[folder]['videos']=new                   
         else:
@@ -3750,7 +3749,7 @@ def saveUser(platform,username,password,proxy,cookies,linkaccounts=None):
             'proxy': proxy_ids_json
         }
         # Create the user and associate the proxy IDs
-        userid = AccountModel.add_account(AccountModel,user_data)
+        userid = AccountModel.add_account(user_data)
 
         if userid:
 
@@ -3775,7 +3774,7 @@ def  queryAccounts(newWindow,tree,logger,username,platform):
         platform=getattr(PLATFORM_TYPE, platform.upper())
         print(f'query accounts for {platform} {getattr(PLATFORM_TYPE, platform.upper())} ')
 
-    account_rows=AccountModel.filter_accounts(AccountModel,username=username,platform=platform) 
+    account_rows=AccountModel.filter_accounts(username=username,platform=platform) 
 
     logger.info(f'we found {len(account_rows)} record matching ')
 
@@ -3812,6 +3811,20 @@ def accountView(frame,ttkframe,lang):
     # l_platform.place(x=10, y=90)
     l_platform.grid(row = 0, column = 0, columnspan = 3, padx=14, pady=15)    
 
+    socialplatform = tk.StringVar()
+    socialplatform_box = ttk.Combobox(ttkframe, textvariable=socialplatform)
+
+
+    def db_values():
+        platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
+        platform_names = [PLATFORM_TYPE.PLATFORM_TYPE_TEXT[x.type][1] for x in platform_rows]
+
+        socialplatform_box['values'] = platform_names
+
+    def db_refresh(event):
+        socialplatform_box['values'] = db_values()
+
+    socialplatform_box['values'] = db_values()
 
 
 
@@ -3819,15 +3832,12 @@ def accountView(frame,ttkframe,lang):
         print(socialplatform.get())
         print(socialplatform_box.current())
 
-    socialplatform = tk.StringVar()
     socialplatform.set("Select From Platforms")
     socialplatform.trace('w', socialplatformOptionCallBack)
+    socialplatform_box.bind('<FocusIn>', lambda event: db_refresh(event))
 
 
-    socialplatform_box = ttk.Combobox(ttkframe, textvariable=socialplatform)
-    platform_rows=PlatformModel.filter_platforms(PlatformModel)
-    platform_names = [PLATFORM_TYPE.PLATFORM_TYPE_TEXT[x.type][1] for x in platform_rows]
-    socialplatform_box.config(values =platform_names)
+    # socialplatform_box.config(values =platform_names)
     socialplatform_box.grid(row = 0, column = 5, columnspan = 3, padx=14, pady=15)    
 
 
@@ -3952,7 +3962,7 @@ def accountView(frame,ttkframe,lang):
 
 
     q_platform_accountbox = ttk.Combobox(frame, textvariable=q_platform)
-    q_platform_accountbox.config(values =platform_names)
+    q_platform_accountbox.bind('<FocusIn>', lambda event: db_refresh(event))    
     q_platform_accountbox.grid(row = 1, column = 2, columnspan = 3, padx=14, pady=15)    
 
 
@@ -4052,7 +4062,7 @@ def createTaskMetas(left,right):
 
     txt15 = tk.Entry(creatTaskWindow,textvariable=videometafile)
     txt15.insert(0,'')
-    b_thumbnail_template_file=tk.Button(creatTaskWindow,text="select",command=lambda: threading.Thread(target=select_file('select video meta  file','',videometafile,'all',creatTaskWindow)).start() )
+    b_thumbnail_template_file=tk.Button(creatTaskWindow,text="select",command=lambda: threading.Thread(target=select_file('select video meta  file',videometafile,'','all',creatTaskWindow)).start() )
     b_thumbnail_template_file.grid(row = 1, column = 2,  padx=14, pady=15,sticky='nswe')     
     # txt15.place(x=580, y=30, anchor=tk.NE)
     # txt15.pack(side='left')
@@ -4241,13 +4251,15 @@ def more_than_one_large_element(lst):
     # # Example usage:
     # my_list = [2, 3, 0, 0, 1]  # Replace this with your list
     # result = more_than_one_large_element(my_list)
-def extends_accounts(accounts,videocount):
+def extends_accounts(accounts,videocount,mode='equal'):
     # Your lists
     videos = [1, 2, 3, 4, 5]  # Replace with your list1
     accounts = ['A', 'B', 'C']  # Replace with your list2
 
     n = videocount
     m = len(accounts)
+
+    
     ratio = n / m
 
     extended_list2 = []
@@ -4259,7 +4271,12 @@ def extends_accounts(accounts,videocount):
         else:
             # If n/m is not an integer, choose a random element from list2
             extended_list2.append(random.choice(accounts))    
-    return extended_list2
+    if mode=='equal':
+        return extended_list2
+    elif mode=='random':
+        return [random.choice(accounts)  for x in range(0,m)]    
+    else:
+        print(f'mode:{mode} not supported yet') 
 def load_meta_file(filepath):
     videometafilepath=filepath
     if videometafilepath !='' and videometafilepath is not None:
@@ -4300,12 +4317,9 @@ def load_meta_file(filepath):
         return None
 def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPolicy_value,deviceType_value,browserType_value,is_open_browser_value,wait_policy_value,is_debug_value,is_record_video_value,frame):     
     print('assign account',choosedAccounts_value)
-    if choosedAccounts_value=='':
+    if choosedAccounts_value=='' or choosedAccounts_value is None:
         logger.info('please choose which platform and account you want to upload ')
-        lab = tk.Label(frame,text="please choose which platform and account you want to upload ",bg="red")
-                                                        
-        lab.grid(row=10,column=2, sticky=tk.W)        
-        lab.after(5*1000,lab.destroy)              
+        showinfomsg(message="please choose which platform and account you want to upload ")    
         return                 
     else:
         try:
@@ -4314,100 +4328,8 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
 
         except:
             logger.info(f'please check {choosedAccounts_value} format')
-            lab = tk.Label(frame,text=f'please check {choosedAccounts_value} format',bg="red")
-                                                            
-            lab.grid(row=10,column=2, sticky=tk.W)        
-            lab.after(5*1000,lab.destroy)     
+            showinfomsg(message=f'please check {choosedAccounts_value} format')
             return 
-
-    account_counts=[]     
-    print('check multiAccountsPolicy',multiAccountsPolicy_value)
-    platform_counts=0
-    account_platform_pairs={}
-    for platform,accounts in choosedAccounts_value.items():
-        print(platform,accounts)
-        accounts=accounts.split(',')
-
-        if accounts==['']:
-            logger.info(f'you dont choose any account for this platform:{platform}')
-
-        else:
-            account_counts.append(len(accounts))
-            account_platform_pairs[platform]=accounts
-            platform_counts+=1
-
-    if account_counts==[0]*platform_counts:
-        logger.info('please choose at least one account for one platform  you want to upload ')
-        lab = tk.Label(frame,text="please choose at least one account for one platform  you want to upload ",bg="red")
-                                                        
-        lab.grid(row=10,column=2, sticky=tk.W)        
-        lab.after(5*1000,lab.destroy)              
-        return                 
-    elif has_one_and_zeros(account_counts) :
-        logger.info('detect  at least one account for one platform  you want to upload ')
-        multiAccountsPolicy_value==1
-        # 检测到单平台单账号
-        # 检测该账号是否存在主副账号情况
-        if multiAccountsPolicy_value!=1:
-            logger.info('we dont support this feature yet')
-            lab = tk.Label(frame,text="we dont support this feature yet",bg="red")
-                                                            
-            lab.grid(row=10,column=2, sticky=tk.W)        
-            lab.after(5*1000,lab.destroy)              
-            return
-        
-        logger.info(f'your accounts provide and policy is matching{multiAccountsPolicy_value}')
-
-    elif  has_one_large_value(account_counts):
-        multiAccountsPolicy_value==2
-        # 检测到单平台多账号        
-        # my_list = [0, 2, 0, 0, 0]  # Replace this with your list
-        logger.info('detect  more than one account for one platform  you want to upload ')
-        if multiAccountsPolicy_value!=2:
-            logger.info('we dont support this feature yet')
-            lab = tk.Label(frame,text="we dont support this feature yet",bg="red")
-                                                            
-            lab.grid(row=10,column=2, sticky=tk.W)        
-            lab.after(5*1000,lab.destroy)              
-            return
-        logger.info(f'your accounts provide and policy is matching{multiAccountsPolicy_value}')
-        # 视频平均分配
-    elif  has_more_than_one_one(account_counts):
-        multiAccountsPolicy_value==3
-        # 检测到多平台单账号        
-    # my_list = [0, 1, 0, 1, 0]  # Replace this with your list
-        logger.info('detect  more than one account for one platform  you want to upload ')
-        # 检测该账号是否存在主副账号情况
-
-        if multiAccountsPolicy_value!=3:
-            logger.info('we dont support this feature yet')
-            lab = tk.Label(frame,text="we dont support this feature yet",bg="red")
-                                                            
-            lab.grid(row=10,column=2, sticky=tk.W)        
-            lab.after(5*1000,lab.destroy)              
-            return
-        logger.info(f'your accounts provide and policy is matching{multiAccountsPolicy_value}')
-    elif  more_than_one_large_element(account_counts):
-        multiAccountsPolicy_value==4
-        # 检测到多平台多账号        
-        # my_list = [2, 3, 0, 0, 1]  # Replace this with your list
-        logger.info('detect  more than one account for one platform  you want to upload ')
-        if multiAccountsPolicy_value!=4:
-            logger.info('we dont support this feature yet')
-            lab = tk.Label(frame,text="we dont support this feature yet",bg="red")
-                                                            
-            lab.grid(row=10,column=2, sticky=tk.W)        
-            lab.after(5*1000,lab.destroy)              
-            return
-        logger.info(f'your accounts provide and policy is matching{multiAccountsPolicy_value}')
-        # 视频平均分配
-
-
-
-
-        
-
-        
 
     print('load video meta')
     logger.info('start to load video meta')
@@ -4426,17 +4348,65 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
 
             # Check the data dictionary for allowed fields and empty values in each entry
             videocounts=len(tmpdict)
-
-
-            print('account_platform_pairs',account_platform_pairs)
-            for platform,accounts in account_platform_pairs.items():
+            # multiAccountsPolicy_value  根据它来分配视频，
+            print('check multiAccountsPolicy',multiAccountsPolicy_value)
+            for platform,accounts in choosedAccounts_value.items():
+                print(platform,accounts)
+                accounts=accounts.split(',')
+                # 直接检测某平台下的账号数量，=1，默认情况 >1,看看策略
                 tmpaccounts=[]  
-                  
-                if videocounts <len(accounts):
-                    tmpaccounts=[random.choice(accounts)]
+
+                if len(accounts)==0:
+                    logger.info(f'you dont choose any account for this platform:{platform}')
+                elif len(accounts)==1:
+                    if  multiAccountsPolicy_value==0:
+
+                        tmpaccounts=  extends_accounts(accounts,videocounts)           
+                    elif multiAccountsPolicy_value==1:
+                        print('遍历账号检查是否有副号，计算任务数量，分配视频')
+                        video={'1.mp4'}
+                        accounts={'y1'} {'y1','y11'}
+                        
+
                 else:
-                    tmpaccounts=  extends_accounts(accounts,videocounts)
-                i=0
+                    # ('单平台单账号', '单平台主副账号','单平台多账号随机发布','单平台多账号平均发布')
+                    # 如果存在主副账号，这个逻辑没想好，主副的区别是啥 副号的作用是啥 意味着两个账号发一模一样的视频，当然可以只是缩略图不同，随机进行测试
+                    #那也就是说，针对平台下每一个账号进行检测，发现副号则自动新建一个视频任务
+                    
+                    # 多账号的意味着视频分摊到每个账号进行发布，发布的视频各不一样
+                    #多账号下的账号意味着不管它存不存在副号，提交的账号独立对待。           
+                    
+                    accounts={'y1','y2','y3'} 
+                    相当于5个账号
+                    {'y1','y11'} {'y2'} {'y3','y31'}
+                    
+                    if multiAccountsPolicy_value==0:
+                        print('provided more than 1 account conflict with 单账号')
+                        
+                    elif multiAccountsPolicy_value==1:
+                        print('遍历每个账号检查是否有副号，分配视频')
+                        for id in accounts:
+                            r=AccountRelationship.get_account_by_id(account_id=id)
+                            if r is not None:
+                                r.a
+                            
+                    elif multiAccountsPolicy_value==2:
+                        print('遍历账号，生成视频数量对应大小的账号数组，随机分配')
+                        if videocounts <len(accounts):
+                            tmpaccounts=[random.choice(accounts)]
+                        else:
+                            tmpaccounts=  extends_accounts(accounts,videocounts,mode='random')                            
+                    elif multiAccountsPolicy_value==3:
+                        print('遍历账号，生成视频数量对应大小的账号数组，平均分配')
+                        if videocounts <len(accounts):
+                            tmpaccounts=[random.choice(accounts)]
+                        else:
+                            tmpaccounts=  extends_accounts(accounts,videocounts,mode='equal')                            
+                    else:
+                        print('coming soon ')
+
+                
+
                 for key, entry in tmpdict.items():
                     print('key',key)
                     print('entry',entry)
@@ -4444,14 +4414,14 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
                     tmp['tasks'][key]=entry
                     tmp['tasks'][key]['timeout']=200
                     tmp['tasks'][key]['is_open_browser']=is_open_browser_value
-                    tmp['tasks'][key]['debug']=is_debug_value
+                    tmp['tasks'][key]['is_debug']=is_debug_value
                     tmp['tasks'][key]['platform']=platform
                     tmp['tasks'][key]['wait_policy']=wait_policy_value
                     tmp['tasks'][key]['is_record_video']=is_record_video_value
                     tmp['tasks'][key]['browser_type']=browserType_value
 
                     
-                    print('check whether 主副账号')
+
                     account=tmpaccounts[i]
                     tmp['tasks'][key]['username']=account
                     logger.info(f'get credentials for this account {account}')
@@ -4508,9 +4478,10 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                             logger.error(f" this field {key} is required in given video json data")
                             raise ValueError(f"this field {key} is required  in given data")
                             
-                    for key in ['timeout','timeout','debug','wait_policy','is_record_video','username','password']:
+                    for key in ['timeout','timeout','is_debug','wait_policy','is_record_video','username','password']:
                         if video.get(key)==None:
                             logger.info(f"no {key} filed provide in given video json data,we can use default value")
+                    logger.info(f"start to validate browser_type:{video.get('browser_type')}")
 
                     if video.get('browser_type')==None:
                         video['browser_type']='firefox'        
@@ -4518,6 +4489,7 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                         logger.info('we use browser_type =firefox')
                     elif type(video.get('browser_type'))==str:
                         video['browser_type']=getattr(BROWSER_TYPE,video.get('browser_type').upper())
+                        print('*****',video['browser_type'])
                         if video['browser_type']==None:
                             logger.error('browser_type should be one of "chromium", "firefox", "webkit"')
                     elif type(video.get('browser_type'))==int:
@@ -4530,9 +4502,9 @@ def validateTaskMetafile(engine,ttkframe,metafile):
 
                     
                     logger.info(f"start to validate platform:{video.get('platform')}")
-                    supported_platform=PlatformModel.filter_platforms(PlatformModel,name=None, ptype=None, server=None)
+                    supported_platform=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
                     supported_platform_names = [PLATFORM_TYPE.PLATFORM_TYPE_TEXT[x.type][1] for x in supported_platform]
-                    supported_platform_types=[x.tpye for x in supported_platform]
+                    supported_platform_types=[x.type for x in supported_platform]
                     if len(supported_platform)==0:
                         logger.error('please initialize supported_platform first')
                     if video.get('platform')==None:
@@ -4540,14 +4512,14 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                         video['platform']=0   
                         logger.info('you dont specify platform field,we use default youtube')
                     elif   type(video.get('platform'))==str:     
-                        platform_rows=PlatformModel.filter_platforms(PlatformModel,name=video.get('platform'), ptype=None, server=None)
+                        platform_rows=PlatformModel.filter_platforms(name=video.get('platform'), ptype=None, server=None)
                         if len(platform_rows)>0:
                             video['platform']=platform_rows[0].type
                         else:
                             logger.error(f'platform should be one of {supported_platform_names} or {supported_platform_types} ')
 
                     elif   type(video.get('platform'))==int:     
-                        platform_rows=PlatformModel.filter_platforms(PlatformModel,name=None, ptype=video.get('platform'), server=None)
+                        platform_rows=PlatformModel.filter_platforms(name=None, ptype=video.get('platform'), server=None)
                         video['platform']=platform_rows[0].type
                         if len(platform_rows)>0:
                             video['platform']=platform_rows[0].type
@@ -4577,20 +4549,20 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                         elif type(video.get('is_open_browser'))==str and video.get('is_open_browser').lower() not in ['true','false']:
 
                             logger.error(f'is_open_browser is {video.get("is_open_browser")} of {type(video.get("is_open_browser"))},it should be bool, true or false')
-                    logger.info(f"start to validate debug:{video.get('debug')}")
+                    logger.info(f"start to validate debug:{video.get('is_debug')}")
 
-                    if video.get('debug')==None:
-                        video['debug']=True
+                    if video.get('is_debug')==None:
+                        video['is_debug']=True
                         logger.info("you dont specify debug field,we use default True")
                         
                     else:
                         
-                        if type(video.get('debug'))==bool:
-                            pass
-                        elif type(video.get('debug'))==str and video.get('debug').lower() not in ['true','false']:
+                        if type(video.get('is_debug'))==bool:
+                            video['is_debug']=video.get('is_debug')
+                        elif type(video.get('is_debug'))==str and video.get('is_debug').lower() not in ['true','false']:
 
-                            logger.error(f'debug is {video.get("debug")} of {type(video.get("debug"))},it should be bool, true or false')
-
+                            logger.error(f"debug is {video.get('is_debug')} of {type(video.get('is_debug'))},it should be bool, true or false")
+                            video['is_debug']=video.get('is_debug')
             
 
 
@@ -4616,7 +4588,7 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                         else:
                             if not video.get('wait_policy') in [0,1,2,3,4]:
                                 logger.error('wait_policy should be one of 0,1,2,3,4')
-                    account_id=AccountModel.filter_accounts(AccountModel,
+                    account_id=AccountModel.filter_accounts(
                                                             username= video.get('username'),
                                                             platform=video.get('platform')
                                                             )
@@ -4629,7 +4601,7 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                             'proxy': video.get('proxy'),
                             'wait_policy':video.get('wait_policy')
                         }                        
-                        account_id=AccountModel.add_account(AccountModel,account_data=user_data)
+                        account_id=AccountModel.add_account(account_data=user_data)
                     settingdata={
                             "timeout":video.get('timeout'),
                             "is_open_browser":video.get('is_open_browser'),
@@ -4642,22 +4614,22 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                             "account_id":account_id
 
                         }                
-                
+                    logger.info(f'start to process uploadsetting data {settingdata}')
                 
                     if video.get('uploadsettingid')==None:
                         logger.info(f" this field uploadsettingid is optional in given video json data")
 
                         print('add to upload setting and return id for reuse')
 
-                        settingid=UploadSettingModel.add_uploadsetting(UploadSettingModel,settingdata)
+                        settingid=UploadSettingModel.add_uploadsetting(settingdata)
 
 
                     else:
                         logger.info(f" if uploadsettingid is given,we can auto fill if  the other field is null ")
-                        settingid=UploadSettingModel.get_uploadsetting_by_id(UploadSettingModel,id=video.get('uploadsettingid'))
+                        settingid=UploadSettingModel.get_uploadsetting_by_id(id=video.get('uploadsettingid'))
                         print('query id to pull setting, if not exist,create a new one')
                         if settingid==None:
-                            settingid=UploadSettingModel.add_uploadsetting(UploadSettingModel,settingdata)
+                            settingid=UploadSettingModel.add_uploadsetting(settingdata)
                     logger.info(f'start to process video related fields\n:{video} ')
 
 

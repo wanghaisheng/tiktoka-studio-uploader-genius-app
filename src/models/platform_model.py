@@ -1,6 +1,5 @@
 from peewee import Model, CharField, TextField,IntegerField,BlobField
 from src.models import BaseModel,db
-import config
 import time
 from src.customid import CustomID
 
@@ -21,26 +20,30 @@ class PlatformModel(BaseModel):
     id = BlobField(primary_key=True)    
     name = IntegerField(null=True)
     type= IntegerField(default=PLATFORM_TYPE.YOUTUBE)
-    server = TextField(null=True)
-    inserted_at = IntegerField(null=True)
-
+    server = TextField(null = True)
+    inserted_at = IntegerField(null=False)
+    @classmethod
     def add_platform(cls,platform_data):
 
-        # Check if an platform with the same unique hash already exists
         existing_platform = cls.get_or_none(cls.type == platform_data['type'])
 
         if existing_platform is None:
             platform = PlatformModel(**platform_data)
-            platform.insert_date = int(time.time())  # Update insert_date
+            platform.inserted_at = int(time.time())  # Update insert_date
             platform.id = CustomID().to_bin()
+            
+            
+            r=platform.save(force_insert=True) 
 
-            platform.save()
-            print('plafrom add ok',platform.id,platform.type,platform.name)
-            
-            # for user in PlatformModel.select():
-            #     print(user.name)
-            # return True
-            
+
+            print('plaform add ok',r,platform.id,platform.type,platform.name,platform.server,platform.inserted_at)
+            print('start check all records')
+            for user in PlatformModel.select():
+                print('!!!!!',user)
+            print('end check all records')
+                
+            return True
+
         else:
             return False
 
@@ -52,7 +55,7 @@ class PlatformModel(BaseModel):
             platform = cls.get(cls.id == platform_id)
             for key, value in kwargs.items():
                 setattr(platform, key, value)
-            platform.save()
+            platform.save(force_insert=True) 
             return platform
         except cls.DoesNotExist:
             return None
@@ -64,7 +67,7 @@ class PlatformModel(BaseModel):
             return True
         except cls.DoesNotExist:
             return False
-
+    @classmethod
     def filter_platforms(cls, name=None, ptype=None, server=None):
         query = cls.select()
         print('all platfroms are ',list(query))

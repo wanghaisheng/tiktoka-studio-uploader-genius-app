@@ -118,7 +118,7 @@ class UserModel(BaseModel):
                 uchanged = True
 
             if uchanged:
-                u.save()
+                u.save(force_insert=True) 
 
             return u
         except peewee.IntegrityError:
@@ -290,11 +290,11 @@ class UserModel(BaseModel):
         info = self.gen_password_and_salt(new_password)
         self.salt = info['salt']
         self.password = info['password']
-        self.save()
+        self.save(force_insert=True) 
 
     def update_access_time(self):
         self.access_time = int(time.time())
-        self.save()
+        self.save(force_insert=True) 
         return self.access_time
 
     def check_in(self):
@@ -310,14 +310,14 @@ class UserModel(BaseModel):
                 self.check_in_his += 1
             else:
                 self.check_in_his = 1
-            self.save()
+            self.save(force_insert=True) 
 
             # 签到加分
             credit = self.credit
             exp = self.exp
             self.credit += 5
             self.exp += 5
-            self.save()
+            self.save(force_insert=True) 
 
             ManageLogModel.add_by_credit_changed_sys(get_bytes_from_blob(self.id), credit, self.credit, note='每日签到')
             ManageLogModel.add_by_exp_changed_sys(get_bytes_from_blob(self.id), exp, self.exp, note='每日签到')
@@ -337,7 +337,7 @@ class UserModel(BaseModel):
         if old_time < get_today_start_timestamp():
             exp = self.exp
             self.exp += 5
-            self.save()
+            self.save(force_insert=True) 
             ManageLogModel.add_by_exp_changed_sys(get_bytes_from_blob(self.id), exp, self.exp, note='每日登录')
             return {'exp': 5}
 

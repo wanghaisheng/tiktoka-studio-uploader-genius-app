@@ -12,29 +12,29 @@ db.connect()
 # db.create_tables([ProxyModel, PlatformModel], safe=True)
 db.create_tables([ProxyModel,AccountModel,PlatformModel,UploadSettingModel,TaskModel])
 print('inital supported platforms')
-PlatformModel.add_platform(PlatformModel,platform_data={
+PlatformModel.add_platform(platform_data={
     "name":"youtube",
     "type":0,
-    "server":None
+    "server":'www.youtube.com'
     
 }
 
 )
-PlatformModel.add_platform(PlatformModel,platform_data=
+PlatformModel.add_platform(platform_data=
     {
     "name":"tiktok",
     "type":1,
     "server":None
 }
 )
-PlatformModel.add_platform(PlatformModel,platform_data=
+PlatformModel.add_platform(platform_data=
     {
     "name":"instagram",
     "type":2,
     "server":None
 }
 )
-PlatformModel.add_platform(PlatformModel,platform_data=
+PlatformModel.add_platform(platform_data=
     {
     "name":"twitter",
     "type":3,
@@ -67,7 +67,7 @@ test_users=[{
 ]
 for u in test_users:
     AccountModel.add_account(
-            AccountModel,account_data=u
+            account_data=u
                     
 
     )
