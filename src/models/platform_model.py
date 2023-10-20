@@ -5,10 +5,10 @@ import time
 from src.customid import CustomID
 
 class PLATFORM_TYPE:
-    YOUTUBE = 1
-    TIKTOK = 2
-    INSTAGRAM=3
-    TWITTER=4
+    YOUTUBE = 0
+    TIKTOK = 1
+    INSTAGRAM=2
+    TWITTER=3
     PLATFORM_TYPE_TEXT = [
         (YOUTUBE, "youtube"),
         (TIKTOK, "tiktok"),
@@ -35,11 +35,11 @@ class PlatformModel(BaseModel):
             # platform.id = CustomID().to_bin()
 
             platform.save()
-            print('plafrom add ok',platform.id)
+            print('plafrom add ok',platform.id,platform.type,platform.name)
             
-            for user in PlatformModel.select():
-                print(user.name)
-            return True
+            # for user in PlatformModel.select():
+            #     print(user.name)
+            # return True
             
         else:
             return False

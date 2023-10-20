@@ -31,6 +31,7 @@
 	"t_importTaskMetas":"import task file,json excel csv",
 	"b_createTaskMetas":"New task",
 	"t_createTaskMetas":"New task from video file or folder",
+	"linkAccounts": "linkAccounts",
 
 	"username": "username",
 	"password": "password",

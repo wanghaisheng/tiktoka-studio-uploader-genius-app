@@ -42,7 +42,7 @@ from  src.models.create_tables import *
 from src.models.proxy_model import *
 from src.models.account_model import *
 from src.comboxToolip import ComboboxTip
-
+from src.models.platform_model import *
 # import multiprocessing.dummy as mp
 import concurrent
 from glob import glob
@@ -395,6 +395,8 @@ def load_setting():
         failed=True
     if failed==True:
         logger.info('start initialize settings with default')
+        print('start initialize settings with default')
+
         try:
             settings
         except:
@@ -600,7 +602,7 @@ def select_thumb_template_file(folder):
 
 
 
-def select_file(title,cached,variable,limited='all',parent=None):
+def select_file(title,variable,cached=None,limited='all',parent=None):
     file_path=''
     try:
         if limited=='json':
@@ -764,7 +766,7 @@ def proxyaddView(newWindow):
 def chooseAccountsView(newWindow,parentchooseaccounts):
     chooseAccountsWindow = tk.Toplevel(newWindow)
     chooseAccountsWindow.geometry(window_size)
-    chooseAccountsWindow.title('which accounts in which platform you want upload')
+    chooseAccountsWindow.title('Choose associated accounts in which platform')
     account_var = tk.StringVar()
 
 
@@ -778,8 +780,11 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
     platform_var.set("choose one:")    
 
     def db_values():
-        platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
-        platform_combo['values'] = platform_rows
+        platform_rows=PlatformModel.filter_platforms(PlatformModel,name=None, ptype=None, server=None)
+        platform_names = [PLATFORM_TYPE.PLATFORM_TYPE_TEXT[x.type][1] for x in platform_rows]
+
+        platform_combo['values'] = platform_names
+
     def db_refresh(event):
         platform_combo['values'] = db_values()
     platform_combo = ttk.Combobox(chooseAccountsWindow, textvariable=platform_var)
@@ -806,12 +811,13 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
             expand = tk.YES, fill = "both")
 
     btn6= tk.Button(chooseAccountsWindow, text="remove selected", padx = 10, pady = 10,command = lambda: threading.Thread(target=remove_selected_accounts).start())     
-    btn6.grid(row=5,column=1, sticky=tk.W)
+    btn6.grid(row=4,column=1, sticky=tk.W)
+    Tooltip(btn6, text='if you want remove any from selected user' , wraplength=200)
     lbl16 = tk.Label(chooseAccountsWindow, text='selected user')
-    lbl16.grid(row=6,column=0, sticky=tk.W)
-    txt16 = tk.Entry(chooseAccountsWindow,textvariable=account_var,width=int(int(window_size.split('x')[-1])/4))
+    lbl16.grid(row=8,column=0, sticky=tk.W)
+    txt16 = tk.Entry(chooseAccountsWindow,textvariable=account_var,width=int(int(window_size.split('x')[-1])/5))
     txt16.insert(0,'')
-    txt16.grid(row=6,column=2, 
+    txt16.grid(row=8,column=1, 
             #    width=width,
                columnspan=4,
             #    rowspan=3,
@@ -819,13 +825,14 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
     def on_platform_selected(event):
         selected_platform = platform_var.get()
         # Clear the current selection in the account dropdown
-        from src.models.platform_model import PlatformModel
 
         if selected_platform:
 
 
             
-            platform_rows=PlatformModel.filter_platforms()
+            platform_rows=PlatformModel.filter_platforms(PlatformModel)
+            platform_names = [PLATFORM_TYPE.PLATFORM_TYPE_TEXT[x.type][1] for x in platform_rows]
+            print('platforms options are',platform_names)
 
             # Extract platform names and set them as options in the platform dropdown
             if platform_rows is None:
@@ -834,7 +841,6 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
                 button1.grid(row=2, column=2, padx=10, pady=10, sticky=tk.W)
 
             else:
-                platform_names = platform_rows
                 logger.info(f'query results of existing platforms is {platform_names}')
 
                 if  len(platform_names)==0:
@@ -846,26 +852,22 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
 
                     # Execute a query to retrieve accounts based on the selected platform
                     platform_combo["values"]=platform_names
-
-                    # for platform in platform_names:
+                    for platform in platform_names:
                         
-                    #     if tmp['uploadaddaccounts'].has_key(platform):
-                    #         logger.info(f'you have cached account for this platform {platform}')
-                    #     else:
-                    #         tmp['uploadaddaccounts'][platform]=''
+                        if tmp['accountlinkaccount'].has_key(platform):
+                            logger.info(f'you have cached  this platform {platform}')
+                        else:
+                            tmp['accountlinkaccount'][platform]=''
                     
-                    # print('all added accounts',tmp['uploadaddaccounts'])
-
-
-                    account_rows=AccountModel.filter_accounts(platform=selected_platform)
+                    account_rows=AccountModel.filter_accounts(AccountModel,platform=getattr(PLATFORM_TYPE, selected_platform.upper()))
+                    print(f'query accounts for {selected_platform} {getattr(PLATFORM_TYPE, selected_platform.upper())} ')
                     # Extract account names and set them as options in the account dropdown
-                    if account_rows is None:
+                    if account_rows is None or len(account_rows)==0:
                         langlist.delete(0,tk.END)
-                        button1 = ttk.Button(chooseAccountsWindow, text=f"try to add accounts for {selected_platform} first", command=lambda: (chooseAccountsWindow.withdraw(),newWindow.withdraw(),tab_control.select(1)))
-                        button1.grid(row=2, column=2, padx=10, pady=10, sticky=tk.W)
+                        showinfomsg(message=f"try to add accounts for {selected_platform} first")
 
                     else:                
-                        account_names = [row.username for row in account_rows.itertuples()]
+                        account_names = [row.username for row in account_rows]
                         logger.info(f'we found {len(account_names)} record matching ')
 
                         langlist.delete(0,tk.END)
@@ -885,37 +887,38 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
 
 
     # Initialize the platform dropdown by calling the event handler
-    on_platform_selected(None)
+    # on_platform_selected(None)
 
+    
     def remove_selected_accounts():
-        selected_accounts=tmp['uploadaddaccounts']['selected']
-        print('you want to remove these selected accounts',selected_accounts)
-        # print('previous selected accounts',tmp['uploadaddaccounts'])
-        # print('update selected accounts',account_var.get())
+        selected_accounts=tmp['accountlinkaccount']['selected']
+        show_str=account_var.get()
+
+        print('you want to remove these selected proxy',selected_accounts)
         if len(selected_accounts)==0:
-            lbl15 = tk.Label(chooseAccountsWindow, text='you have not selected  accounts at all.choose one or more')
-            lbl15.grid(row=4,column=2, sticky=tk.W)
-            lbl15.after(5*1000,lbl15.destroy)        
+
+            showinfomsg(message='you have not selected  proxy at all.choose one or more')  
         
         else:
+            existingaccounts=tmp['accountlinkaccount'][platform_var.get()].split(',')            
+            logger.info(f'you want to remove this selected proxy {selected_accounts} from existing: {existingaccounts}')
+
             for item in selected_accounts:
-                logger.info(f'you want to remove this selected account {item}')
-                existingaccounts=tmp['uploadaddaccounts'][platform_var.get()].split(',')
+
                 if item in existingaccounts:
                     existingaccounts.remove(item)
-                    logger.info(f'this account {item} removed success')
-                    lbl15 = tk.Label(chooseAccountsWindow, text=f'this account {item} removed success')
-                    lbl15.grid(row=4,column=2, sticky=tk.W)
-                    lbl15.after(5*1000,lbl15.destroy)   
+
+
+                    logger.info(f'this proxy {item} removed success')
+                    showinfomsg(message=f'this proxy {item} removed success')
                 else:
-                    logger.info(f'you cannot remove this account {item}, not added before')
-                    lbl15 = tk.Label(chooseAccountsWindow, text=f'this account {item} not added before')
-                    lbl15.grid(row=4,column=2, sticky=tk.W)
-                    lbl15.after(5*1000,lbl15.destroy)   
-            tmp['uploadaddaccounts'][platform_var.get()]= ','.join(item for item in existingaccounts if item is not None and item != "")
-        show_str=str(tmp['uploadaddaccounts'])
-        if tmp['uploadaddaccounts'].has_key('selected'):
-            new=dict(tmp['uploadaddaccounts'])
+                    logger.info(f'you cannot remove this proxy {item}, not added before')
+                    showinfomsg(message=f'this proxy {item} not added before')
+            logger.info(f'end to remove,reset proxystr {existingaccounts}')
+            tmp['accountlinkaccount'][platform_var.get()]= ','.join(item for item in existingaccounts if item is not None and item != "")
+        show_str=str(tmp['accountlinkaccount'])
+        if tmp['accountlinkaccount'].has_key('selected'):
+            new=dict(tmp['accountlinkaccount'])
             new.pop('selected')
             show_str=str(new)
         account_var.set(show_str)
@@ -923,89 +926,42 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
 
     def add_selected_accounts(event):
         listbox = event.widget
-        values = [listbox.get(idx) for idx in listbox.curselection()]
-        tmp['uploadaddaccounts']['selected']=values
-        existingaccounts=tmp['uploadaddaccounts'][platform_var.get()].split(',')
-
+        values = [listbox.get(idx).split(':')[0] for idx in listbox.curselection()]
+        selected_platform = platform_var.get()
+        print('----------',type(tmp['accountlinkaccount']),type(values))
+        tmp['accountlinkaccount']['selected']=values
+        existingaccounts=tmp['accountlinkaccount'][platform_var.get()].split(',')
+        # (youtube:y1,y2),(tiktok:t1:t2)
+        show_str=account_var.get()
         if len(list(values))==0:
-            logger.info('you have not selected  accounts at all.choose one or more')
-            lbl15 = tk.Label(chooseAccountsWindow, text='you have not selected  accounts at all.choose one or more')
-            lbl15.grid(row=4,column=2, sticky=tk.W)
-            lbl15.after(5*1000,lbl15.destroy)        
+            logger.info('you have not selected  proxiess at all.choose one or more')
+            showinfomsg(message='you have not selected  proxiess at all.choose one or more')
         
         elif values==existingaccounts:
-            logger.info('you have not selected new accounts at all')
-            lbl15 = tk.Label(chooseAccountsWindow, text='you have not selected new accounts at all')
-            lbl15.grid(row=4,column=2, sticky=tk.W)
-            lbl15.after(5*1000,lbl15.destroy)        
+            logger.info('you have not selected new proxiess at all')
+            showinfomsg(message='you have not selected new proxiess at all')
         
         else:
             for item in values:
                 if item in existingaccounts:
-                    logger.info(f'this account {item} added before')                    
-                    lbl15 = tk.Label(chooseAccountsWindow, text=f'this account {item} added before')
-                    lbl15.grid(row=4,column=2, sticky=tk.W)
-                    lbl15.after(5*1000,lbl15.destroy)   
+                    logger.info(f'this proxy {item} added before')                   
+                    showinfomsg(message=f'this proxiess {item} added before') 
+
                 else:
                     existingaccounts.append(item)
-                    logger.info(f'this account {item} added successS')
-                    lbl15 = tk.Label(chooseAccountsWindow, text=f'this account {item} added successS')
-                    lbl15.grid(row=4,column=2, sticky=tk.W)
-                    lbl15.after(5*1000,lbl15.destroy)   
-            tmp['uploadaddaccounts'][platform_var.get()]= ','.join(item for item in existingaccounts if item is not None and item != "")
+                    logger.info(f'this proxy {item} added successS')
+                    showinfomsg(message=f'this proxy {item} added successS')
+            tmp['accountlinkaccount'][platform_var.get()]= ','.join(item for item in existingaccounts if item is not None and item != "")
 
-        show_str=str(tmp['uploadaddaccounts'])
-        if tmp['uploadaddaccounts'].has_key('selected'):
-            new=dict(tmp['uploadaddaccounts'])
+        show_str=str(tmp['accountlinkaccount'])
+        if tmp['accountlinkaccount'].has_key('selected'):
+            new=dict(tmp['accountlinkaccount'])
             new.pop('selected')
             show_str=str(new)
+
         account_var.set(show_str)
         parentchooseaccounts.set(show_str)
-    langlist.bind('<<ListboxSelect>>',add_selected_accounts)    
-
-
-def filterUserPlatform(engine=prod_engine,platform=None,username=None,newWindow=None):
-
-    availableProxies=[]
-    now_conditions='platform:'+platform+';username:'+username
-
-
-    if username is not None and username !='' and 'input' not in username:
-    # or platform is not None and platform !='' :
-        query = f"SELECT * FROM accounts where"
-        clause=[]
-        if username is not None and username !='':
-            clause.append(f" username regexp '{username}'")
-        if platform is not None and platform !='':
-            clause.append(f" platform regexp '{platform}'")
-
-
-        query=query+' AND '.join(clause)+" ORDER by inserted_at DESC"
-
-    else:
-        query = f"SELECT * FROM accounts ORDER by inserted_at DESC"
-
-
-    try:
-        logger.info(f'start a new query:\n {query}')
-        
-        table_name='accounts'
-        tableexist_query_sqlite=f"SELECT name FROM sqlite_master WHERE type='table' AND name='{table_name}'"
-
-        tableexist=query2df(engine,tableexist_query_sqlite,logger)
-        if  tableexist is None and newWindow is not None:
-            hints='there is no  records for query.add accounts before then try again'
-                
-            lbl15 = tk.Label(newWindow,bg="lightyellow", text=hints)
-            lbl15.grid(row=6,column=2, sticky=tk.W)
-            lbl15.after(2000,lbl15.destroy)                
-        else:
-            platform_rows_query=f"SELECT DISTINCT platform FROM {table_name}"
-            platform_rows=query2df(engine,platform_rows_query,logger)
-            platform_names = [row[0] for row in platform_rows]
-            db_rows = query2df(engine,query,logger)
-    except Exception as e:
-        print(f'sql run exception :{e}')
+    langlist.bind('<<ListboxSelect>>',add_selected_accounts)   
 
 
 
@@ -3488,12 +3444,12 @@ def chooseProxies(ttkframe,username,parentchooseProxies):
     if username=='':
         username='this user account'
 
-    label = tk.Label(newWindow,
-                text = f"Select the proxies for {username} below : ",
-                font = ("Times New Roman", 10),
-                padx = 10, pady = 10)
-    # label.pack()
-    label.grid(row=0,column=0, sticky=tk.W)
+    # label = tk.Label(newWindow,
+    #             text = f"Select the proxies for {username} below : ",
+    #             font = ("Times New Roman", 10),
+    #             padx = 10, pady = 10)
+    # # label.pack()
+    # label.grid(row=0,column=0, sticky=tk.W)
     
     ttkframe=newWindow
     
@@ -3568,7 +3524,7 @@ def chooseProxies(ttkframe,username,parentchooseProxies):
 
     # Create a frame for the canvas with non-zero row&column weights
     frame_canvas = tk.Frame(newWindow)
-    frame_canvas.grid(row=10, column=0,sticky='nw',  padx=14, pady=15)    
+    frame_canvas.grid(row=7, column=0,sticky='nw',  padx=14, pady=15)    
     frame_canvas.grid_rowconfigure(0, weight=1)
     frame_canvas.grid_columnconfigure(0, weight=1)
     # Set grid_propagate to False to allow 5-by-5 buttons resizing later
@@ -3586,13 +3542,13 @@ def chooseProxies(ttkframe,username,parentchooseProxies):
     btn5= tk.Button(ttkframe, text="Get proxy list", padx = 0, pady = 0,command = lambda: threading.Thread(
         target=queryProxies(logger,city.get(),state.get(),country.get(),proxyTags.get(),network_type.get(),
                             proxyStatus.get(),ttkframe,tree=None,langlist=langlist)).start())
-    btn5.grid(row=4,column=0, sticky=tk.W)    
-    
-    btn5= tk.Button(ttkframe, text="Reset", padx = 0, pady = 0,command = lambda:(proxyStatus.set(""),country.set(""),state.set(""),city.set(""),proxyTags.set(""),proxyStatus.set("Select From Status"),network_type.set("")))
     btn5.grid(row=4,column=1, sticky=tk.W)    
     
+    btn5= tk.Button(ttkframe, text="Reset", padx = 0, pady = 0,command = lambda:(proxyStatus.set(""),country.set(""),state.set(""),city.set(""),proxyTags.set(""),proxyStatus.set("Select From Status"),network_type.set("")))
+    btn5.grid(row=4,column=2, sticky=tk.W)    
+    
     btn6= tk.Button(newWindow, text="remove selected", padx = 10, pady = 10,command = lambda: threading.Thread(target=remove_selected_accounts).start())     
-    btn6.grid(row=10,column=1, sticky=tk.W)
+    btn6.grid(row=7,column=1, sticky=tk.W)
     lbl16 = tk.Label(newWindow, text='selected proxies')
     lbl16.grid(row=8,column=0, sticky=tk.W)
     txt16 = tk.Entry(newWindow,textvariable=proxy_str
@@ -3615,9 +3571,7 @@ def chooseProxies(ttkframe,username,parentchooseProxies):
 
         print('you want to remove these selected proxy',selected_accounts)
         if len(selected_accounts)==0:
-            lbl15 = tk.Label(newWindow, text='you have not selected  proxy at all.choose one or more')
-            lbl15.grid(row=4,column=2, sticky=tk.W)
-            lbl15.after(5*1000,lbl15.destroy)        
+            showinfomsg(message='you have not selected  proxy at all.choose one or more') 
         
         else:
             existingaccounts=proxy_str.get().split(',')
@@ -3763,18 +3717,22 @@ def bulkImportUsers(ttkframe):
     tree.column('#6', anchor = 'center', width = 80)
     tree.heading('#7', text = 'updated. Time')
     tree.column('#7', anchor = 'center', width = 80)
-def saveUser(engine,platform,username,password,proxy,cookies,if_exists=None):
-    if not if_exists in ['append','replace']:
-        if_exists='append'
+def saveUser(platform,username,password,proxy,cookies,linkaccounts=None):
+
     if platform is None:
-        logger.info('please choose a platform')
+        logger.error('please choose a platform')
+        showinfomsg(message='please choose a platform first')
     if username is None:
         logger.error('please provide  a username')
+        showinfomsg(message='please provide  a username')
+
     else:    
         if password is None:
             logger.info('you dont provide password')        
             if cookies is None:
-                logger.error('please provide a cookie file without  password')        
+                logger.error('please provide a cookie file without  password')     
+                showinfomsg(message='please provide a cookie file without  password')
+
         # Define a list of proxy IDs associated with the account
         proxy_ids = proxy
         # [1, 2, 3]  # Replace with the actual IDs of the proxies
@@ -3789,89 +3747,56 @@ def saveUser(engine,platform,username,password,proxy,cookies,if_exists=None):
             'proxy': proxy_ids_json
         }
         # Create the user and associate the proxy IDs
-        user_with_proxies = AccountModel.add_account(
-)
-    
-def  queryAccounts(newWindow,tree,engine,logger,username,platform,latest_conditions_value):
+        userid = AccountModel.add_account(AccountModel,user_data)
 
+        if userid:
 
-
-    availableProxies=[]
-    now_conditions='platform:'+platform+';username:'+username
-
-    
-    if set(list(latest_conditions_value))==set(now_conditions):
-        logger.info('you account filter conditions without any change,keep the same')
-
-    else:    
-        if username is not None and username !='' and 'input' not in username:
-        # or platform is not None and platform !='' :
-            query = f"SELECT * FROM accounts where"
-            clause=[]
-            if username is not None and username !='':
-                clause.append(f" username regexp '{username}'")
-            if platform is not None and platform !='':
-                clause.append(f" platform regexp '{platform}'")
-
-
-            query=query+' AND '.join(clause)+" ORDER by inserted_at DESC"
-
+            if linkaccounts !=None:
+                accounts=eval(linkaccounts)
+                for key,value in enumerate(accounts):
+                    if len(value.split(','))!=0:
+                        for id in  value.split(','):
+                            AccountRelationship(AccountRelationship,userid,id)            
+            showinfomsg(message='this account added ok')
         else:
-            query = f"SELECT * FROM accounts ORDER by inserted_at DESC"
 
+            showinfomsg(message='this account added failed')
 
-        try:
-            logger.info(f'start a new query:\n {query}')
+    
+def  queryAccounts(newWindow,tree,logger,username,platform):
+    if username=='':
+        username=None
+    if platform=='':
+        platform=None        
+    else:
+        platform=getattr(PLATFORM_TYPE, platform.upper())
+        print(f'query accounts for {platform} {getattr(PLATFORM_TYPE, platform.upper())} ')
+
+    account_rows=AccountModel.filter_accounts(AccountModel,username=username,platform=platform) 
+
+    logger.info(f'we found {len(account_rows)} record matching ')
+
+    if len(account_rows)==0:
+        showinfomsg(message=f'we found {len(account_rows)} record matching ')
+    else:                
+        records = tree.get_children()                
+        if records is not None:
+            for element in records:
+                tree.delete(element) 
+        for row in account_rows:
+            tree.insert(
+                "", 0, text=row.id, values=(row.username,row.password,row.platform,row.proxy, row.cookies, row.inserted_at)
+            )                    
             
-            table_name='accounts'
-            tableexist_query=f"SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME= '{table_name}'"
-            tableexist_query_sqlite=f"SELECT name FROM sqlite_master WHERE type='table' AND name='{table_name}'"
 
-            tableexist=query2df(engine,tableexist_query_sqlite,logger)
-            if  tableexist is None:
-                hints='there is no  records for query.add proxy before then try again'
-                    
-                lbl15 = tk.Label(newWindow,bg="lightyellow", text=hints)
-                lbl15.grid(row=6,column=2, sticky=tk.W)
-                lbl15.after(2000,lbl15.destroy)                
-            else:
                 
-                db_rows = query2df(engine,query,logger)
-                
-                records = tree.get_children()                
-                if db_rows is not None:
-                    logger.info(f'we found {len(db_rows)} record matching ')
-                    i=0
-                    for element in records:
-                        tree.delete(element) 
-                    for row in db_rows.itertuples():
-                        tree.insert(
-                            "", 0, text=row.id, values=(row.username,row.password,row.platform,row.proxy, row.cookies, row.inserted_at, row.updated_at)
-                        )                    
-                        
+            
+        logger.info(f'Account search and display finished')
 
-                        
-                    
-                    latest_proxy_conditions_user.set(now_conditions)
-                    logger.info(f'search and display finished:\n{query}')
-                else:
-                    logger.info(f'there is no matching records for query:\n{query}')
-                    hints=''
-                    query = f"SELECT * FROM accounts"
-                    if query2df(engine,query,logger) is not None and len( query2df(engine,query,logger))>0:
-                        hints='there is no matching records for query. try to set another condition'
-                    else:
-                        hints='there is no  records for query.add proxy before then try again'
-                        
-                    lbl15 = tk.Label(newWindow,bg="lightyellow", text=hints)
-                    lbl15.grid(row=6,column=2, sticky=tk.W)
-                    lbl15.after(2000,lbl15.destroy)
-        except Exception as e:
-            logger.error(f'search failed error:{e}') 
 
 def accountView(frame,ttkframe,lang):
 
-    global proxy_option_account
+    global proxy_option_account,channel_cookie_user
 
     channel_cookie_user= tk.StringVar()
     username = tk.StringVar()
@@ -3897,7 +3822,9 @@ def accountView(frame,ttkframe,lang):
 
 
     socialplatform_box = ttk.Combobox(ttkframe, textvariable=socialplatform)
-    socialplatform_box.config(values =('youtube', 'tiktok', 'douyin'))
+    platform_rows=PlatformModel.filter_platforms(PlatformModel)
+    platform_names = [PLATFORM_TYPE.PLATFORM_TYPE_TEXT[x.type][1] for x in platform_rows]
+    socialplatform_box.config(values =platform_names)
     socialplatform_box.grid(row = 0, column = 5, columnspan = 3, padx=14, pady=15)    
 
 
@@ -3910,34 +3837,42 @@ def accountView(frame,ttkframe,lang):
     e_username = tk.Entry(ttkframe, width=int(width*0.01), textvariable=username)
     # e_username.place(x=10, y=180)
     e_username.grid(row = 2, column = 5, columnspan = 3, padx=14, pady=15,sticky='w')    
-    linkAccounts=tk.StringVar()
-    b_choose_account=tk.Button(ttkframe,text="Link",command=lambda: threading.Thread(target=lambda:chooseAccountsView(ttkframe,linkAccounts)).start() )
-    
-    b_choose_account.grid(row = 2, column = 9, columnspan = 2, padx=14, pady=15)    
+
 
 
 
     l_password = tk.Label(ttkframe, text=settings[locale]['password']
                           )
-    # l_password.place(x=10, y=210)
     e_password = tk.Entry(ttkframe, width=int(width*0.01), textvariable=password)
-    # e_password.place(x=10, y=240)
 
     l_password.grid(row = 3, column = 0, columnspan = 3, padx=14, pady=15)    
     e_password.grid(row = 3, column = 5, columnspan = 3, padx=14, pady=15,sticky='w')    
 
+    linkAccounts=tk.StringVar()
 
+
+    l_linkAccounts = tk.Label(ttkframe, text=settings[locale]['linkAccounts']
+                          )
+    e_linkAccounts = tk.Entry(ttkframe, width=int(width*0.01), textvariable=linkAccounts)
+
+    l_linkAccounts.grid(row = 4, column = 0, columnspan = 3, padx=14, pady=15)    
+    e_linkAccounts.grid(row = 4, column = 5, columnspan = 3, padx=14, pady=15,sticky='w')   
+
+    b_choose_account=tk.Button(ttkframe,text="Link",command=lambda: threading.Thread(target=lambda:chooseAccountsView(ttkframe,linkAccounts)).start() )
+    Tooltip(b_choose_account, text='if you want to associate any account as the backup accounts' , wraplength=200)
+
+    b_choose_account.grid(row = 4, column = 9, columnspan = 2, padx=14, pady=15)    
     l_proxy_option = tk.Label(ttkframe, text=settings[locale]['proxySetting']
                               )
     
-    l_proxy_option.grid(row = 4, column = 0, columnspan = 3, padx=14, pady=15)    
+    l_proxy_option.grid(row = 5, column = 0, columnspan = 3, padx=14, pady=15)    
 
     e_proxy_option = tk.Entry(ttkframe, textvariable=proxy_option_account)
-    e_proxy_option.grid(row = 4, column = 5, columnspan = 3, padx=14, pady=15,sticky='w')    
+    e_proxy_option.grid(row = 5, column = 5, columnspan = 3, padx=14, pady=15,sticky='w')    
 
     b_choose_proxy=tk.Button(ttkframe,text="Link",command=lambda: threading.Thread(target=chooseProxies(ttkframe,username.get(),proxy_option_account)).start() )
     
-    b_choose_proxy.grid(row = 4, column = 9, columnspan = 2, padx=14, pady=15)    
+    b_choose_proxy.grid(row = 5, column = 9, columnspan = 2, padx=14, pady=15)    
 
 
 
@@ -3952,7 +3887,7 @@ def accountView(frame,ttkframe,lang):
     # e_channel_cookie.place(x=10, y=360)
     e_channel_cookie.grid(row = 6, column = 5, columnspan = 3, padx=14, pady=15,sticky='w')    
 
-    b_channel_cookie=tk.Button(ttkframe,text="Select",command=lambda: threading.Thread(target=select_file(channel_cookie_user)).start() )
+    b_channel_cookie=tk.Button(ttkframe,text="Select",command=lambda: threading.Thread(target=select_file('select cookie file for account',channel_cookie_user,cached=None)).start() )
     # b_channel_cookie.place(x=10, y=390)    
     b_channel_cookie.grid(row = 6, column = 9, columnspan = 2, padx=14, pady=15)    
 
@@ -3973,7 +3908,7 @@ def accountView(frame,ttkframe,lang):
     # if_exists_box.config(values =('replace', 'append'))
     # if_exists_box.grid(row = 9, column = 5, columnspan = 3, padx=14, pady=15)    
     
-    b_save_user=tk.Button(ttkframe,text="save user",command=lambda: threading.Thread(target=saveUser(prod_engine,socialplatform.get(),username.get(),password.get(),proxy_option_account.get(),channel_cookie_user.get(),if_exists=if_exists.get())).start() )
+    b_save_user=tk.Button(ttkframe,text="save user",command=lambda: threading.Thread(target=saveUser(socialplatform.get(),username.get(),password.get(),proxy_option_account.get(),channel_cookie_user.get(),linkAccounts.get())).start() )
                          
     # b_save_user.place(x=10, y=420)        
     b_save_user.grid(row = 10, column = 0, columnspan = 3, padx=14, pady=15)    
@@ -3994,7 +3929,7 @@ def accountView(frame,ttkframe,lang):
     # lbl15.place(x=430, y=15, anchor=tk.NE)
     lbl15.grid(row = 0, column = 0, columnspan = 3, padx=14, pady=15)    
     txt15 = tk.Entry(frame, width=11,textvariable=q_platform_account)
-    txt15.insert(0,'input username')
+    txt15.insert(0,'')
     txt15.grid(row = 1, column = 0, columnspan = 3, padx=14, pady=15)    
 
 
@@ -4014,7 +3949,7 @@ def accountView(frame,ttkframe,lang):
 
 
     q_platform_accountbox = ttk.Combobox(frame, textvariable=q_platform)
-    q_platform_accountbox.config(values =('youtube', 'tiktok', 'douyin'))
+    q_platform_accountbox.config(values =platform_names)
     q_platform_accountbox.grid(row = 1, column = 2, columnspan = 3, padx=14, pady=15)    
 
 
@@ -4022,13 +3957,14 @@ def accountView(frame,ttkframe,lang):
 
     
     # txt15.place(x=580, y=15, anchor=tk.NE)
-    btn5= tk.Button(frame, text="Get Info", command = lambda: threading.Thread(target=queryAccounts(ttkframe,tree,prod_engine,logger,q_platform_account.get(),q_platform_account.get(),latest_user_conditions_user.get())).start())
+    btn5= tk.Button(frame, text="Get Info", command = lambda: threading.Thread(target=queryAccounts(ttkframe,tree,logger,q_platform_account.get(),q_platform.get())).start())
     # btn5.place(x=800, y=15, anchor=tk.NE)    
 
     btn5.grid(row = 0, column =3, columnspan = 5, padx=14, pady=15)    
 
 
-
+    btn5= tk.Button(frame, text="Reset", padx = 0, pady = 0,command = lambda:(q_platform.set(''),q_platform_account.set('')))
+    btn5.grid(row=1,column=5, sticky=tk.W)    
 
     # treeview_flight
     tree = ttk.Treeview(frame, height = 20,column = 8)
@@ -4964,26 +4900,6 @@ def uploadView(frame,ttkframe,lang):
     tree = ttk.Treeview(tableframe, height = 20, column = 9)
     tree["column"]=('#0','#1','#2','#3','#4','#5','#6','#7')
     tree.grid(row = 3, column =3,padx=14, pady=15,sticky='w')
-
-    # tree.heading('#0', text = 'Task No.')
-    # tree.column('#0', anchor = 'center', width = 70)
-    # tree.heading('#1', text = 'Video title')
-    # tree.column('#1', anchor = 'center', width = 60)
-    # tree.heading('#2', text = 'Description')
-    # tree.column('#2', anchor = 'center', width = 60)
-    # tree.heading('#3', text = 'Status')
-    # tree.column('#3', anchor = 'center', width = 80)
-    # tree.heading('#4', text = 'release. Date')
-    # tree.column('#4', anchor = 'center', width = 80)
-    # tree.heading('#5', text = 'release. Time')
-    # tree.column('#5', anchor = 'center', width = 80)
-    
-    # tree.heading('#6', text = 'publish type')
-    # tree.column('#6', anchor = 'center', width = 80)
-    # tree.heading('#7', text = 'upload. Time')
-    # tree.column('#7', anchor = 'center', width = 80)
-    # tree.heading('#8', text = 'local path')
-    # tree.column('#8', anchor = 'center', width = 80)
 
 
     tree.heading('#0', text = 'Task No.')
@@ -6314,8 +6230,7 @@ async def asynctk():
     start_tkinter_app()
 def  start_tkinter_app():
     global root,settings
-    
-    tmp['uploadaddaccounts']={}    
+    tmp['accountlinkaccount']={}    
     root = tk.Tk()
     load_setting()
     # print('---',settings)

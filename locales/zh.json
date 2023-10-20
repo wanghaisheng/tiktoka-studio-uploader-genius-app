@@ -43,7 +43,8 @@
 	"mode2":"模式2",
 	"mode3":"模式3",
 	"default_release_hour":"10:15",
-	
+	"linkAccounts": "关联账号",
+
 	"save_setting": "保存配置",
 	"testsettingok": "测试配置",
 	"testnetwork": "测试网络",

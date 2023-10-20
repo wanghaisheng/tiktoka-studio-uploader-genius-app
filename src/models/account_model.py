@@ -5,12 +5,12 @@ import time
 from src.customid import CustomID
 
 class AccountModel(BaseModel):
-    id = BlobField(primary_key=True)    
+    id = IntegerField(primary_key=True)    
     platform = IntegerField()
     username = TextField()
-    password = TextField()  
-    cookies = TextField()   
-    proxy = TextField()
+    password = TextField(null=True)  
+    cookies = TextField(null=True)   
+    proxy = TextField(null=True)
     inserted_at = IntegerField(null=True)
     is_deleted = BooleanField(default=False)  # Flag if the account is deleted
     unique_hash = TextField(index=True, unique=True, null=True, default=None)  # Unique hash for the account
@@ -18,7 +18,6 @@ class AccountModel(BaseModel):
     # class Meta:
     #     db_table = db
 
-    @classmethod
     def add_account(cls,account_data):
         unique_hash = config.generate_unique_hash(
 
@@ -35,16 +34,14 @@ class AccountModel(BaseModel):
             # proxy.id = CustomID().to_bin()
 
             account.save()
-            return True
+            return account.id
             
         else:
-            return False
+            return None
 
-    @classmethod
     def get_account_by_id(cls, account_id):
         return cls.get_or_none(cls.id == account_id)
 
-    @classmethod
     def update_account(cls, account_id, **kwargs):
         try:
             account = cls.get(cls.id == account_id)
@@ -55,7 +52,6 @@ class AccountModel(BaseModel):
         except cls.DoesNotExist:
             return None
 
-    @classmethod
     def delete_account(cls, account_id):
         try:
             account = cls.get(cls.id == account_id)
@@ -64,7 +60,6 @@ class AccountModel(BaseModel):
         except cls.DoesNotExist:
             return False
 
-    @classmethod
     def filter_accounts(cls, platform=None, username=None, proxy=None):
         query = cls.select()
 
@@ -95,15 +90,15 @@ class AccountRelationship(Model):
     account = ForeignKeyField(AccountModel, backref='backup_relationships')
     backup_account = ForeignKeyField(AccountModel, backref='main_account_relationships')
 
-    class Meta:
-        db_table = db
-# # Assuming you have a database connection already set up
-# # db = your_database_connection
 
-# # Connect the model to your database
-# Account.bind(db)
-
-# # Create the tables if they don't exist
-# Account.create_table()
-
-
+    def add_AccountRelationship(cls,main_id,otherid):
+        new=AccountRelationship()
+        new.account=cls.get_by_id(main_id)
+        new.backup_account=cls.get_by_id(otherid)
+        if cls.get_by_id(main_id)==None:
+            return False
+        elif cls.get_by_id(otherid)==None:
+            return False
+        else:
+            new.save()
+            return True
