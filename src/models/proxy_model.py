@@ -63,7 +63,7 @@ class PROXY_PROVIDER_TYPE:
 
 
 class ProxyModel(BaseModel):
-    id = IntegerField(primary_key=True)    
+    id = BlobField(primary_key=True)    
     inserted_at = IntegerField(null=True)    
     # Proxy Protocol (HTTP/HTTPS/SOCKS5)
     proxy_protocol = IntegerField(choices=PROXY_PROTOCOL)
@@ -125,7 +125,7 @@ class ProxyModel(BaseModel):
             proxy = ProxyModel(**proxy_data)
             proxy.insert_date = int(time.time())  # Update insert_date
             proxy.unique_hash=unique_hash
-            # proxy.id = CustomID().to_bin()
+            proxy.id = CustomID().to_bin()
 
             proxy.save()
 

@@ -4,10 +4,13 @@ from src.models import db
 from src.models.proxy_model import ProxyModel
 from src.models.platform_model import PlatformModel
 from src.models.account_model import AccountModel
+from src.models.upload_setting_model import UploadSettingModel
+
+from src.models.task_model import TaskModel
 
 db.connect()
 # db.create_tables([ProxyModel, PlatformModel], safe=True)
-db.create_tables([ProxyModel,AccountModel,PlatformModel])
+db.create_tables([ProxyModel,AccountModel,PlatformModel,UploadSettingModel,TaskModel])
 print('inital supported platforms')
 PlatformModel.add_platform(PlatformModel,platform_data={
     "name":"youtube",

@@ -450,13 +450,13 @@ data = [
     # Add more data as needed...
 ]
 class WhoerCity():
-    id = IntegerField(primary_key=True)    
+    id = BlobField(primary_key=True)    
     proxy = ForeignKeyField(ProxyModel, backref='backup_relationships')
     data=JSONField(null=True)
 
 # data={"city_name":null,"continent_code":"NA","continent_name":"North America","country_code":"US","country_name":"United States","european_union":0,"geoname":6252001,"latitude":37.751,"longitude":-97.822,"metro_code":null,"network":"198.2.192.0\/19","postal_code":null,"register_country_code":null,"register_country_name":null,"represent_country_code":null,"represent_country_name":null,"subdivision1_code":null,"subdivision1_name":null,"subdivision2_code":null,"subdivision2_name":null,"time_zone":"America\/Chicago"}{"city_name":null,"continent_code":"NA","continent_name":"North America","country_code":"US","country_name":"United States","european_union":0,"geoname":6252001,"latitude":37.751,"longitude":-97.822,"metro_code":null,"network":"198.2.192.0\/19","postal_code":null,"register_country_code":null,"register_country_name":null,"represent_country_code":null,"represent_country_name":null,"subdivision1_code":null,"subdivision1_name":null,"subdivision2_code":null,"subdivision2_name":null,"time_zone":"America\/Chicago"}
 class WhoerIsp():
-    id = IntegerField(primary_key=True)    
+    id = BlobField(primary_key=True)    
     proxy = ForeignKeyField(ProxyModel, backref='backup_relationships')
     data=JSONField(null=True)
 

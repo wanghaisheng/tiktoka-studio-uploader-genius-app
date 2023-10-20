@@ -1,9 +1,17 @@
 import time
 import peewee
 from peewee import *
-from models import generate_unique_hash
+from config import generate_unique_hash
 from src.models import BaseModel,db
+from src.customid import CustomID
+import logging
 
+
+# Add the handler to logger
+logging.basicConfig(filename='test.log',
+    level=logging.DEBUG, 
+    format='%(asctime)s - %(levelname)s - %(message)s')   
+logger = logging.getLogger()    
 class VIDEO_SETTINGS:
     # Wait Policy options
     GO_NEXT_UPLOAD_SUCCESS = 0
@@ -305,7 +313,7 @@ class VIDEO_SETTINGS:
         "Travel & Events": 14
     }
 
-    VIDEO_LANGUAGE_TEXT = {v: k for k, v in VIDEO_LANGUAGE_OPTIONS.items()}
+    # VIDEO_LANGUAGE_TEXT = {v: k for k, v in VIDEO_LANGUAGE_OPTIONS.items()}
     VIDEO_CATEGORIES_TEXT = {v: k for k, v in VIDEO_CATEGORIES_OPTIONS.items()}
     
 
@@ -355,8 +363,6 @@ class YoutubeVideoModel(BaseModel):
     unique_hash = TextField(index=True, unique=True, null=True, default=None)  # Add this line
     is_deleted = BooleanField(default=False)  # Add a field to flag if video is deleted
 
-    class Meta:
-        db_table = db
 
 
 # Assuming you have defined VideoModel as shown earlier
@@ -364,14 +370,18 @@ def create_video(video_data):
     try:
         unique_hash = generate_unique_hash(video_data)
         video_data['unique_hash'] = unique_hash
-        
-        video = VideoModel(**video_data)
-        video.insert_date = int(time.time())  # Update insert_date
-        
-        video.save()
-        return video
+        existing_video = YoutubeVideoModel.select().where(YoutubeVideoModel.unique_hash == unique_hash).first()
+        if existing_video is None:
+            video = YoutubeVideoModel(**video_data)
+            video.insert_date = int(time.time())  # Update insert_date
+            video.id=CustomID().to_bin()
+            video.save()
+            return video.id
+        else:
+            return existing_video.id
     except Exception as e:
-        return str(e)
+        logger.error(f'create video failure due to error:{e}')
+        return None
 # Assuming you have defined VideoModel as shown earlier
 def bulk_add_videos(video_data_list):
     inserted_videos = []
@@ -380,7 +390,7 @@ def bulk_add_videos(video_data_list):
             unique_hash = generate_unique_hash(video_data)
             video_data['unique_hash'] = unique_hash
             
-            video = VideoModel(**video_data)
+            video = YoutubeVideoModel(**video_data)
             video.insert_date = int(time.time())  # Update insert_date
             
             video.save()
@@ -393,7 +403,7 @@ def bulk_add_videos(video_data_list):
     return inserted_videos        
 def update_video(video_id, video_data):
     try:
-        video = VideoModel.objects.get(id=video_id)
+        video = YoutubeVideoModel.objects.get(id=video_id)
         unique_hash = generate_unique_hash(video_data)
         video_data['unique_hash'] = unique_hash
         video.insert_date = int(time.time())  # Update insert_date
@@ -401,30 +411,30 @@ def update_video(video_id, video_data):
             setattr(video, key, value)
         video.save()
         return video
-    except VideoModel.DoesNotExist:
+    except YoutubeVideoModel.DoesNotExist:
         return None
 
 # Read
 def get_video_by_id(video_id):
     try:
-        return VideoModel.get(VideoModel.id == video_id)
+        return YoutubeVideoModel.get(YoutubeVideoModel.id == video_id)
     except DoesNotExist:
         return None
 # Read
 def get_video_by_hash(hash):
     try:
-        return VideoModel.get(VideoModel.unique_hash == hash).id
+        return YoutubeVideoModel.get(YoutubeVideoModel.unique_hash == hash).id
     except DoesNotExist:
         return None
 def get_all_videos():
-    return VideoModel.select()
+    return YoutubeVideoModel.select()
 
 def delete_video(video_id):
     try:
-        video = VideoModel.objects.get(id=video_id)
+        video = YoutubeVideoModel.objects.get(id=video_id)
         video.is_deleted = True
         video.insert_date = int(time.time())  # Update insert_date
         video.save()
         return video
-    except VideoModel.DoesNotExist:
+    except YoutubeVideoModel.DoesNotExist:
         return None

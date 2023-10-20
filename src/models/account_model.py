@@ -5,7 +5,7 @@ import time
 from src.customid import CustomID
 
 class AccountModel(BaseModel):
-    id = IntegerField(primary_key=True)    
+    id = BlobField(primary_key=True)    
     platform = IntegerField()
     username = TextField()
     password = TextField(null=True)  
@@ -31,7 +31,7 @@ class AccountModel(BaseModel):
             account = AccountModel(**account_data)
             account.insert_date = int(time.time())  # Update insert_date
             account.unique_hash=unique_hash
-            # proxy.id = CustomID().to_bin()
+            account.id = CustomID().to_bin()
 
             account.save()
             return account.id

@@ -43,6 +43,9 @@ from src.models.proxy_model import *
 from src.models.account_model import *
 from src.comboxToolip import ComboboxTip
 from src.models.platform_model import *
+from src.models.upload_setting_model import *
+from src.models.task_model import *
+from src.models.youtube_video_model import *
 # import multiprocessing.dummy as mp
 import concurrent
 from glob import glob
@@ -4498,43 +4501,7 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                 for idx,video in videos.items():
                     logger.info(f'video json is ,{type(video)},{video}')
                     logger.info(f'start to process uploadsetting related filed\n:{video} ')
-
-                    if video.get('uploadsettingid')==None:
-                        logger.info(f" this field uploadsettingid is optional in given video json data")
-                    else:
-                        logger.info(f" if uploadsettingid is given,we can auto fill if  the other field is null ")
-
-                # query = 'SELECT * FROM uploadvideo'
-                # # Display the results
-                # df=query2df(engine,query,logger)
-                # print(df.columns)
-                # print(df.head(3))
-
-        # prepareuploadsession( dbm,videopath,thumbpath,filename,start_index,video['channelname'],videoid)
-
-                    # logger.info(f'length of settingidsdict is {len(settingidsdict)}')
-                    # df_video=pd.json_normalize(video)                        
-                    # if len(settingidsdict)>1:       
-                    #     if video.get('uploadSettingid')==None:
-
-                    #         logger.error('we need explicitly specify  uploadSettingid in each video ')
-                    #     else:
-
-                    #         if  settingidsdict[video.get('uploadSettingid')]:
-                    #             df_video['upload_setting_id']=settingidsdict[video.get('uploadSettingid')]
-                    #         else:       
-                    #             logger.error(f'please check {video.get("uploadSettingid")} is saved sucess in db')
-                    # elif len(settingidsdict)==1:       
-                    #     logger.info(f'there is only one setting:{list(settingidsdict.items())}')
-                    #     # there is two case, 
-                    #     # 1.user input a setting id,we gen a new as value in the dict,key is the old
-                    #     # 2. user give no id, we gen a new as key and value in the dict
-                    #     df_video['upload_setting_id']= list(settingidsdict.keys())[0]
-                        
-                    # else:
-
-                    #     logger.error('we need at least 1 uploadsetting saved sucess in db')
-
+                    settingid=None
 
                     for key in ['proxy_option','channel_cookie_path']:
                         if video.get(key)==None:
@@ -4547,24 +4514,49 @@ def validateTaskMetafile(engine,ttkframe,metafile):
 
                     if video.get('browser_type')==None:
                         video['browser_type']='firefox'        
+                        video['browser_type']=1
                         logger.info('we use browser_type =firefox')
-                    else:
-                        if type(video.get('browser_type'))!=str:
+                    elif type(video.get('browser_type'))==str:
+                        video['browser_type']=getattr(BROWSER_TYPE,video.get('browser_type').upper())
+                        if video['browser_type']==None:
                             logger.error('browser_type should be one of "chromium", "firefox", "webkit"')
+                    elif type(video.get('browser_type'))==int:
+                        if video.get('browser_type') in range(0,len(BROWSER_TYPE.BROWSER_TYPE_TEXT)):
+                            pass
                         else:
-                            if not video.get('browser_type') in ["chromium", "firefox", "webkit"]:
-                                logger.error('browser_type should be one of"chromium", "firefox", "webkit"')
-
-                    if video.get('platform')==None:
-                        video['platform']='youtube'        
-                        logger.info('you dont specify platform field,we use default youtube')
+                            logger.error(f"browser_type should be one of {range(0,len(BROWSER_TYPE.BROWSER_TYPE_TEXT))}")
                     else:
-                        if type(video.get('platform'))!=str:
-                            logger.error('platform should be one of "youtube", "tiktok", "douyin"')
-                        else:
-                            if not video.get('platform') in ["youtube", "tiktok", "douyin"]:
-                                logger.error('platform should be one of "youtube", "tiktok", "douyin"')
+                        logger.error('browser_type should be one of"chromium", "firefox", "webkit"')
 
+                    
+                    logger.info(f"start to validate platform:{video.get('platform')}")
+                    supported_platform=PlatformModel.filter_platforms(PlatformModel,name=None, ptype=None, server=None)
+                    supported_platform_names = [PLATFORM_TYPE.PLATFORM_TYPE_TEXT[x.type][1] for x in supported_platform]
+                    supported_platform_types=[x.tpye for x in supported_platform]
+                    if len(supported_platform)==0:
+                        logger.error('please initialize supported_platform first')
+                    if video.get('platform')==None:
+                        video['platform']='youtube'     
+                        video['platform']=0   
+                        logger.info('you dont specify platform field,we use default youtube')
+                    elif   type(video.get('platform'))==str:     
+                        platform_rows=PlatformModel.filter_platforms(PlatformModel,name=video.get('platform'), ptype=None, server=None)
+                        if len(platform_rows)>0:
+                            video['platform']=platform_rows[0].type
+                        else:
+                            logger.error(f'platform should be one of {supported_platform_names} or {supported_platform_types} ')
+
+                    elif   type(video.get('platform'))==int:     
+                        platform_rows=PlatformModel.filter_platforms(PlatformModel,name=None, ptype=video.get('platform'), server=None)
+                        video['platform']=platform_rows[0].type
+                        if len(platform_rows)>0:
+                            video['platform']=platform_rows[0].type
+                        else:
+                            logger.error('platform should be one of {platform_names} or {platform_types} ')
+
+                    else:
+                            logger.error('platform should be one of {platform_names} or {platform_types} ')
+                    logger.info('start to validate timeout')
 
                     if video.get('timeout')==None:
                         video['timeout']=200000
@@ -4572,6 +4564,8 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                     else:
                         if type(video.get('timeout'))!=int:
                             logger.error('timeout should be integer,such as 20*1000=20000, 20 seconds')
+                    logger.info('start to validate is_open_browser')
+
                     if video.get('is_open_browser')==None:
                         video['is_open_browser']=True
                         logger.info("you dont specify is_open_browser field,we use default True")
@@ -4583,6 +4577,7 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                         elif type(video.get('is_open_browser'))==str and video.get('is_open_browser').lower() not in ['true','false']:
 
                             logger.error(f'is_open_browser is {video.get("is_open_browser")} of {type(video.get("is_open_browser"))},it should be bool, true or false')
+                    logger.info(f"start to validate debug:{video.get('debug')}")
 
                     if video.get('debug')==None:
                         video['debug']=True
@@ -4610,24 +4605,62 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                         elif type(video.get('is_record_video'))==str and video.get('is_record_video').lower() not in ['true','false']:
 
                             logger.error(f'is_record_video is {video.get("is_record_video")} of {type(video.get("is_record_video"))},it should be bool, true or false')
-
-
-
-
-                    logger.info(f'start to process video related fields\n:{video} ')
-                    
-                    # if platform==youtube  tiktok use diff model
-                    
                     if video.get('wait_policy')==None:
                         video['wait_policy']=2        
                         logger.info("you dont specify wait_policy field,we use default 2")
                     else:
                         if type(video.get('wait_policy'))!=int:
                             logger.error('wait_policy should be one of 0,1,2,3,4')
+                            video['wait_policy']=WAIT_POLICY_TYPE.WAIT_POLICY_TYPE_TEXT[video.get('wait_policy')][1] 
+
                         else:
                             if not video.get('wait_policy') in [0,1,2,3,4]:
                                 logger.error('wait_policy should be one of 0,1,2,3,4')
-                    
+                    account_id=AccountModel.filter_accounts(AccountModel,
+                                                            username= video.get('username'),
+                                                            platform=video.get('platform')
+                                                            )
+                    if account_id is None:
+                        user_data=           {
+                            'platform': video['platform'],
+                            'username': video.get('username'),
+                            'password': video.get('password'),
+                            'cookies': video.get('cookies'),
+                            'proxy': video.get('proxy'),
+                            'wait_policy':video.get('wait_policy')
+                        }                        
+                        account_id=AccountModel.add_account(AccountModel,account_data=user_data)
+                    settingdata={
+                            "timeout":video.get('timeout'),
+                            "is_open_browser":video.get('is_open_browser'),
+                            "is_debug":video.get('is_debug'),
+                            "platform":video['platform'],
+                            "browser_type":video.get('browser_type'),
+                            "is_record_video":video.get('is_record_video'),
+                            'wait_policy':video.get('wait_policy'),
+
+                            "account_id":account_id
+
+                        }                
+                
+                
+                    if video.get('uploadsettingid')==None:
+                        logger.info(f" this field uploadsettingid is optional in given video json data")
+
+                        print('add to upload setting and return id for reuse')
+
+                        settingid=UploadSettingModel.add_uploadsetting(UploadSettingModel,settingdata)
+
+
+                    else:
+                        logger.info(f" if uploadsettingid is given,we can auto fill if  the other field is null ")
+                        settingid=UploadSettingModel.get_uploadsetting_by_id(UploadSettingModel,id=video.get('uploadsettingid'))
+                        print('query id to pull setting, if not exist,create a new one')
+                        if settingid==None:
+                            settingid=UploadSettingModel.add_uploadsetting(UploadSettingModel,settingdata)
+                    logger.info(f'start to process video related fields\n:{video} ')
+
+
                     for key in ['video_local_path','video_title','video_description','thumbnail_local_path','publish_policy','tags']:
                         if video.get(key)==None:
                             logger.error(f"these {key} field is required,No target{key} in given video json data")
@@ -4780,70 +4813,25 @@ def validateTaskMetafile(engine,ttkframe,metafile):
 
                         else:
                             logger.error('tags should be a list of keywords such as "one,two" ')
+                    if video.get('platform')=='youtube':
+                        videodata={
 
-                    df_video=    pd.json_normalize(video)
-                    videoidsdict={}
-                    newid=pd.Timestamp.now().value  
-                    if video.get('id')==None:
-                        df_video['id']=newid  
-                        logger.info(f"you dont specify id field,we generate a new {newid} for this video")
-                        
-                        videoidsdict[newid]=newid   
-                        logger.info(f"video old id and new ids mapping dicts is {videoidsdict}")
+                        }
+
+                        videoid=YoutubeVideoModel.create_video(videodata)
+                    taskdata={
+                        "type":video['platform'],
+                        "status":0,
+                        "videoid":videoid,
+                        "settingid":settingid
+                    }
+                    taskid=TaskModel.add_task(TaskModel,taskdata)
+                    if taskid==None:
+                        print(f'add task failure:{idx},{video}')
 
                     else:
-                        if type(video['id'])==str:
-                            try:
-                                video['id']=int(video['id'])
-                                
-                            except Exception as e:
-                                logger.error(f'video["id"] should be a int value')
-                        videoidsdict[video['id']]=newid                               
-                        logger.info(f"you  specify id field,we add a mapping to {video['id']}  of {type({video['id']} )}a new {newid} for this video")
-                        df_video['id']=newid  
+                        print(f'add task success:{idx},{video}')
 
-                        logger.info(f"video old id and new ids mapping dicts is {videoidsdict}")
-
-
-
-
-                    df_video['youtube_video_id']=None
-                    df_video['inserted_at']=datetime.now()           
-                    df_video['updated_at']=None           
-                    df_video['uploaded_at']=None    
-    
-                    df_video['status']=False         
-                    # print('videos',videos)   
-
-
-                    logger.info(f'start to check {str(idx)}  video whether  duplicate or save as new')
-
-                    table_name = "uploadtasks"
-                    logger.info('check whether table exists')
-                    tableexist_query_sqlite=f"SELECT name FROM sqlite_master WHERE type='table' AND name='{table_name}'"
-
-                    tableexist=query2df(engine,tableexist_query_sqlite,logger)
-                    if  tableexist is None:
-                        logger.info(f'check whether table :{table_name} does not exists')  
-                    else:
-                        logger.info(f'check whether table :{table_name} exists')  
-
-                    is_video_ok=pd2table(engine,table_name,df_video,logger,if_exists='append')
-                    if is_video_ok:
-                        logger.info(f'save {str(idx)} video ok:{df_video["video_title"]}')
-                        lab = tk.Label(ttkframe,text=f"insert task {df_video} ok",bg="green",width=40)
-                        lab.place(x=10, y=220)       
-                        lab.after(5*1000,lab.destroy)     
-                    else:
-                        lab = tk.Label(ttkframe,text=f"insert task {df_video} failed",bg="red",width=40)
-                        lab.place(x=10, y=220)       
-                        lab.after(5*1000,lab.destroy)                             
-                query = 'SELECT * FROM uploadtasks'
-                # Display the results
-                df=query2df(engine,query,logger)
-
-                logger.info(f'there is {len(df.index)} records in table {table_name}')      
-                                   
                                                 
             except Exception as e:
                 logger.error(f'there is no videos in  your task meta file.check  docs for reference:{e}')                
@@ -4851,15 +4839,12 @@ def validateTaskMetafile(engine,ttkframe,metafile):
 
 
         else:
+            showinfomsg(message="please choose a valid task file")
             logger.error("you choosed task meta  file is missing or broken.")
-            lab = tk.Label(ttkframe,text="please choose a valid task file",bg="lightyellow",width=40)
-            lab.place(x=10, y=220)       
-            lab.after(10*1000,lab.destroy)
+
     else:
-        logger.error('please provide a task meta  file')
-        lab = tk.Label(ttkframe,text="please choose a  task file",bg="lightyellow",width=40)
-        lab.place(x=10, y=220)       
-        lab.after(10*1000,lab.destroy)       
+        showinfomsg(message="please choose a valid task file")
+        logger.error("you choosed task meta  file is missing or broken.")       
 
 def uploadView(frame,ttkframe,lang):
     queryframe=tk.Frame(ttkframe)

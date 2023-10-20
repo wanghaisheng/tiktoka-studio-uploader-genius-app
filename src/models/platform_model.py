@@ -18,7 +18,7 @@ class PLATFORM_TYPE:
     ]
 
 class PlatformModel(BaseModel):
-    id = IntegerField(primary_key=True)    
+    id = BlobField(primary_key=True)    
     name = IntegerField(null=True)
     type= IntegerField(default=PLATFORM_TYPE.YOUTUBE)
     server = TextField(null=True)
@@ -32,7 +32,7 @@ class PlatformModel(BaseModel):
         if existing_platform is None:
             platform = PlatformModel(**platform_data)
             platform.insert_date = int(time.time())  # Update insert_date
-            # platform.id = CustomID().to_bin()
+            platform.id = CustomID().to_bin()
 
             platform.save()
             print('plafrom add ok',platform.id,platform.type,platform.name)
@@ -69,7 +69,7 @@ class PlatformModel(BaseModel):
         query = cls.select()
         print('all platfroms are ',list(query))
         if name is not None:
-            query = query.where(cls.platform == name)
+            query = query.where(cls.name == name)
 
         if server is not None:
             query = query.where(cls.server == server)
