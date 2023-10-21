@@ -30,7 +30,7 @@ class AccountModel(BaseModel):
 
         if existing_account is None:
             account = AccountModel(**account_data)
-            account.insert_date = int(time.time())  # Update insert_date
+            account.inserted_at = int(time.time())  # Update insert_date
             account.unique_hash=unique_hash
             account.id = CustomID().to_bin()
 
@@ -43,7 +43,12 @@ class AccountModel(BaseModel):
 
     def get_account_by_id(cls, account_id):
         return cls.get_or_none(cls.id == account_id)
+    @classmethod
 
+    def get_account_by_username(cls, username):
+        return cls.get_or_none(cls.username == username)
+    @classmethod
+    
     def update_account(cls, account_id, **kwargs):
         try:
             account = cls.get(cls.id == account_id)
@@ -89,24 +94,54 @@ class AccountModel(BaseModel):
 
 
 
-class AccountRelationship(Model):
+class AccountRelationship(BaseModel):
     account = ForeignKeyField(AccountModel, backref='backup_relationships')
     backup_account = ForeignKeyField(AccountModel, backref='main_account_relationships')
 
     @classmethod
 
-    def add_AccountRelationship(cls,main_id,otherid):
+    def add_AccountRelationship_by_id(cls,main_id,otherid):
         new=AccountRelationship()
-        new.account=cls.get_by_id(main_id)
-        new.backup_account=cls.get_by_id(otherid)
-        if cls.get_by_id(main_id)==None:
+
+        if AccountModel.get_by_id(main_id)==None:
             return False
-        elif cls.get_by_id(otherid)==None:
+        elif AccountModel.get_by_id(otherid)==None:
             return False
         else:
+            if AccountModel.get_by_id(main_id):
+                new.account=AccountModel.get_by_id(main_id)
+            if AccountModel.get_by_id(otherid):
+                new.backup_account=AccountModel.get_by_id(otherid)            
             new.save(force_insert=True) 
             return True
     @classmethod
 
-    def get_AccountRelationship(cls, account_id):
-        return cls.get_or_none(cls.id == account_id)
+    def add_AccountRelationship_by_username(cls,main_username,otherusername):
+        new=AccountRelationship()
+
+        if AccountModel.get_account_by_username(main_username)==None:
+            return False
+        elif AccountModel.get_account_by_username(otherusername)==None:
+            return False
+        else:
+            id=None
+            otherid=None
+            if AccountModel.get_account_by_username(otherusername):
+                id=AccountModel.get_account_by_username(otherusername).id
+            if AccountModel.get_account_by_username(otherusername):
+                otherid=AccountModel.get_by_id(otherusername).id
+                   
+            cls.add_AccountRelationship_by_id(id=id,otherid=otherid)
+            return True        
+    @classmethod
+
+    def get_AccountRelationship_by_id(cls, account_id):
+        if AccountModel.get_by_id(account_id):
+            
+            return cls.get_or_none(cls.account == AccountModel.get_by_id(account_id))
+    @classmethod
+    
+    def get_AccountRelationship_by_username(cls, username):
+        if AccountModel.get_account_by_username(username):
+            
+            return cls.get_or_none(cls.account == AccountModel.get_account_by_username(username))

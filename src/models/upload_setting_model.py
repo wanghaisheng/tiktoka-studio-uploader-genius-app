@@ -38,17 +38,19 @@ class UploadSettingModel(BaseModel):
     inserted_at = IntegerField()
 
     browser_type = IntegerField(default=BROWSER_TYPE.FIREFOX)
-    account_id = ForeignKeyField(AccountModel, backref='account_id',to_field="id")
+    account = ForeignKeyField(AccountModel, backref='account_id')
     is_record_video = BooleanField(default=True)
 
     wait_policy=IntegerField(default=WAIT_POLICY_TYPE.check)
     @classmethod
 
-    def add_uploadsetting(cls,setting_data):
+    def add_uploadsetting(cls,setting_data,account):
 
-
+        
         setting = UploadSettingModel(**setting_data)
-        setting.insert_date = int(time.time())  # Update insert_date
+        
+        setting.inserted_at = int(time.time())  # Update insert_date
+        setting.account=account
         setting.id = CustomID().to_bin()
 
         setting.save(force_insert=True) 
@@ -57,6 +59,7 @@ class UploadSettingModel(BaseModel):
             # for user in SettingModel.select():
             #     print(user.name)
             # return True
+        return setting
 
     @classmethod
 

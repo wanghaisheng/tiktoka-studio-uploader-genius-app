@@ -6,6 +6,7 @@ from src.customid import CustomID
 from src.models.youtube_video_model import YoutubeVideoModel
 from src.models.platform_model import PLATFORM_TYPE
 from src.models.upload_setting_model import UploadSettingModel
+from src.models.account_model import AccountModel
 class TASK_STATUS:
     PENDING = 0
     FAILURE = 1
@@ -21,23 +22,25 @@ class TaskModel(BaseModel):
     id = BlobField(primary_key=True)    
     type= IntegerField(default=PLATFORM_TYPE.YOUTUBE)
     status = IntegerField(default=TASK_STATUS.PENDING)
-    videoid = ForeignKeyField(YoutubeVideoModel, backref='video_id',to_field="id")
+    video = ForeignKeyField(YoutubeVideoModel, backref='tasks')
     
-    settingid = ForeignKeyField(UploadSettingModel, backref='setting_id',to_field="id")
+    setting = ForeignKeyField(UploadSettingModel, backref='tasks')
 
     inserted_at = IntegerField()
     uploaded_at = IntegerField(null=True)
     @classmethod
 
-    def add_task(cls,task_data):
+    def add_task(cls,task_data,taskvideo,tasksetting):
 
 
         task = TaskModel(**task_data)
-        task.insert_date = int(time.time())  # Update insert_date
+        task.inserted_at = int(time.time())  # Update insert_date
         # task.id = CustomID().to_bin()
         task.id = CustomID().to_bin()
-
+        task.video=taskvideo
+        task.setting=tasksetting
         task.save(force_insert=True) 
+        
         print('task add ok',task.id)
         
             # for user in TaskModel.select():
@@ -69,20 +72,33 @@ class TaskModel(BaseModel):
             return False
     @classmethod
 
-    def filter_tasks(cls, status=None, type=None,uploaded_at=None, videoid=None,inserted_at=None):
+    def filter_tasks(cls, status=None, type=None,uploaded_at=None,setting=None,inserted_at=None,video_title=None,username=None):
+        # 如果存在video 相关的查询参数，先找到对应的video id集合
+        if video_title is not None:
+            query = query.join(YoutubeVideoModel).where(YoutubeVideoModel.video_title == video_title)
+
+        # if type=='youtube' or type==0:
+        #     query = query.join(YoutubeVideoModel).where(YoutubeVideoModel.video_title == video_title)
+        # 如果存在account 相关的查询参数，先找到对应的 setting id集合
+        if username is not None:
+            query = query.join(UploadSettingModel).join(AccountModel).where(AccountModel.username == username)
+        
         query = cls.select()
         print('all platfroms are ',list(query))
-        if videoid is not None:
-            query = query.where(cls.videoid == videoid)
+        # if video_title is not None:
+        #     query = query.where(cls.video.v == video)
 
         
+        if setting is not None:
+            query = query.where(cls.setting == setting)
+        
         if status is not None:
-            query = query.where(cls.task == status)
+            query = query.where(cls.status == status)
 
         if inserted_at is not None:
-            query = query.where(cls.server == inserted_at)
+            query = query.where(cls.inserted_at == inserted_at)
         if uploaded_at is not None:
-            query = query.where(cls.server == uploaded_at)
+            query = query.where(cls.uploaded_at == uploaded_at)
         if type is not None:
             query = query.where(cls.type == type)
             # # Assuming 'proxy_id' is the ID of the proxy you want to work with

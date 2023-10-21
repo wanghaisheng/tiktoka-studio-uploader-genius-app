@@ -123,7 +123,7 @@ class ProxyModel(BaseModel):
 
         if existing_proxy is None:    
             proxy = cls(**proxy_data)
-            proxy.insert_date = int(time.time())  # Update insert_date
+            proxy.inserted_at = int(time.time())  # Update insert_date
             proxy.unique_hash=unique_hash
             proxy.id = CustomID().to_bin()
 

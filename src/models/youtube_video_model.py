@@ -330,35 +330,35 @@ class VIDEO_SETTINGS:
 class YoutubeVideoModel(BaseModel):
     id = BlobField(primary_key=True)    
     
-    video_local_path = TextField(default=None)
-    video_title = TextField(default=None)
-    video_description = TextField(default=None)
-    thumbnail_local_path = TextField(default=None)
+    video_local_path = TextField(null=True,default=None)
+    video_title = TextField(null=True,default=None)
+    video_description = TextField(null=True,default=None)
+    thumbnail_local_path = TextField(null=True,default=None)
     publish_policy = IntegerField(default=0)
     is_age_restriction = BooleanField(default=True)
     is_paid_promotion = BooleanField(default=True)
     is_automatic_chapters = BooleanField(default=True)
     is_featured_place = BooleanField(default=True)
-    video_language = TextField(default=None)
+    video_language = TextField(null=True,default=None)
     captions_certification = IntegerField(default=0)
-    video_film_date = TextField(default=None)
-    video_film_location = TextField(default=None)
+    video_film_date = TextField(null=True,default=None)
+    video_film_location = TextField(null=True,default=None)
     license_type = IntegerField(default=0)
     is_allow_embedding = BooleanField(default=True)
     is_publish_to_subscriptions_feed_notify = BooleanField(default=True)
     shorts_remixing_type = IntegerField(default=0)
     is_show_howmany_likes = BooleanField(default=True)
     is_monetization_allowed = BooleanField(default=True)
-    first_comment = TextField(default=None)
-    subtitles = TextField(default=None)
+    first_comment = TextField(null=True,default=None)
+    subtitles = TextField(null=True,default=None)
     is_not_for_kid = BooleanField(default=True)
     categories = IntegerField(default=10)
     comments_ratings_policy = IntegerField(default=1)
-    tags = TextField(default=None)
-    release_date = TextField(default=None)
-    release_date_hour = TextField(default=None)
+    tags = TextField(null=True,default=None)
+    release_date = TextField(null=True,default=None)
+    release_date_hour = TextField(null=True,default=None)
     
-    insert_date = IntegerField(null=True)  # Updated field definition
+    inserted_at = IntegerField(null=True)  # Updated field definition
     
     unique_hash = TextField(index=True, unique=True, null=True, default=None)  # Add this line
     is_deleted = BooleanField(default=False)  # Add a field to flag if video is deleted
@@ -367,19 +367,19 @@ class YoutubeVideoModel(BaseModel):
     @classmethod
 
     # Assuming you have defined VideoModel as shown earlier
-    def create_video(video_data):
+    def create_video(cls,video_data):
         try:
             unique_hash = generate_unique_hash(video_data)
             video_data['unique_hash'] = unique_hash
-            existing_video = YoutubeVideoModel.select().where(YoutubeVideoModel.unique_hash == unique_hash).first()
+            existing_video = cls.select().where(cls.unique_hash == unique_hash).first()
             if existing_video is None:
-                video = YoutubeVideoModel(**video_data)
-                video.insert_date = int(time.time())  # Update insert_date
+                video = cls(**video_data)
+                video.inserted_at = int(time.time())  # Update insert_date
                 video.id=CustomID().to_bin()
                 video.save(force_insert=True) 
-                return video.id
+                return video
             else:
-                return existing_video.id
+                return existing_video
         except Exception as e:
             logger.error(f'create video failure due to error:{e}')
             return None
@@ -394,7 +394,7 @@ class YoutubeVideoModel(BaseModel):
                 video_data['unique_hash'] = unique_hash
                 
                 video = YoutubeVideoModel(**video_data)
-                video.insert_date = int(time.time())  # Update insert_date
+                video.inserted_at = int(time.time())  # Update insert_date
                 
                 video.save(force_insert=True) 
                 inserted_videos.append(video)
@@ -411,7 +411,7 @@ class YoutubeVideoModel(BaseModel):
             video = YoutubeVideoModel.objects.get(id=video_id)
             unique_hash = generate_unique_hash(video_data)
             video_data['unique_hash'] = unique_hash
-            video.insert_date = int(time.time())  # Update insert_date
+            video.inserted_at = int(time.time())  # Update insert_date
             for key, value in video_data.items():
                 setattr(video, key, value)
             video.save(force_insert=True) 
@@ -444,7 +444,7 @@ class YoutubeVideoModel(BaseModel):
         try:
             video = YoutubeVideoModel.objects.get(id=video_id)
             video.is_deleted = True
-            video.insert_date = int(time.time())  # Update insert_date
+            video.inserted_at = int(time.time())  # Update insert_date
             video.save(force_insert=True) 
             return video
         except YoutubeVideoModel.DoesNotExist:

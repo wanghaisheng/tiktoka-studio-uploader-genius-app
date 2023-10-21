@@ -866,7 +866,7 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
                     # Extract account names and set them as options in the account dropdown
                     if account_rows is None or len(account_rows)==0:
                         langlist.delete(0,tk.END)
-                        showinfomsg(message=f"try to add accounts for {selected_platform} first")
+                        showinfomsg(message=f"try to add accounts for {selected_platform} first",parent=chooseAccountsWindow)    
 
                     else:                
                         account_names = [row.username for row in account_rows]
@@ -899,7 +899,7 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
         print('you want to remove these selected proxy',selected_accounts)
         if len(selected_accounts)==0:
 
-            showinfomsg(message='you have not selected  proxy at all.choose one or more')  
+            showinfomsg(message='you have not selected  proxy at all.choose one or more',parent=chooseAccountsWindow)      
         
         else:
             existingaccounts=tmp['accountlinkaccount'][platform_var.get()].split(',')            
@@ -912,10 +912,10 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
 
 
                     logger.info(f'this proxy {item} removed success')
-                    showinfomsg(message=f'this proxy {item} removed success')
+                    showinfomsg(message=f'this proxy {item} removed success',parent=chooseAccountsWindow)    
                 else:
                     logger.info(f'you cannot remove this proxy {item}, not added before')
-                    showinfomsg(message=f'this proxy {item} not added before')
+                    showinfomsg(message=f'this proxy {item} not added before',parent=chooseAccountsWindow)    
             logger.info(f'end to remove,reset proxystr {existingaccounts}')
             tmp['accountlinkaccount'][platform_var.get()]= ','.join(item for item in existingaccounts if item is not None and item != "")
         show_str=str(tmp['accountlinkaccount'])
@@ -937,22 +937,22 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
         show_str=account_var.get()
         if len(list(values))==0:
             logger.info('you have not selected  proxiess at all.choose one or more')
-            showinfomsg(message='you have not selected  proxiess at all.choose one or more')
+            showinfomsg(message='you have not selected  proxiess at all.choose one or more',parent=chooseAccountsWindow)    
         
         elif values==existingaccounts:
             logger.info('you have not selected new proxiess at all')
-            showinfomsg(message='you have not selected new proxiess at all')
+            showinfomsg(message='you have not selected new proxiess at all',parent=chooseAccountsWindow)    
         
         else:
             for item in values:
                 if item in existingaccounts:
                     logger.info(f'this proxy {item} added before')                   
-                    showinfomsg(message=f'this proxiess {item} added before') 
+                    showinfomsg(message=f'this proxiess {item} added before',parent=chooseAccountsWindow)    
 
                 else:
                     existingaccounts.append(item)
                     logger.info(f'this proxy {item} added successS')
-                    showinfomsg(message=f'this proxy {item} added successS')
+                    showinfomsg(message=f'this proxy {item} added success',parent=chooseAccountsWindow)    
             tmp['accountlinkaccount'][platform_var.get()]= ','.join(item for item in existingaccounts if item is not None and item != "")
 
         show_str=str(tmp['accountlinkaccount'])
@@ -1407,20 +1407,24 @@ def analyse_video_meta_pair(folder,frame,right_frame,selectedMetafileformat,isTh
 
         render_video_folder_check_results(frame,right_frame,folder,isThumbView,isDesView,isTagsView,isScheduleView,selectedMetafileformat)
 def dumpTaskMetafiles(selectedMetafileformat,folder):
-    logger.debug(f'start to dump video metas for {folder} ')
-
+    logger.debug(f'start to dump task metas for {folder} ')
+    print(f"task to be dump :{tmp['tasks']}")
     if selectedMetafileformat=='xlsx':
         df_metas = pd.read_json(jsons.dumps(tmp['tasks']), orient = 'index')
 
         metaxls=os.path.join(folder,'task-meta.xlsx')
             
         df_metas.to_excel(metaxls)
+        logger.debug(f'end to dump task metas for {folder} to {metaxls}')
+        
     elif selectedMetafileformat=='csv':
         df_metas = pd.read_json(jsons.dumps(tmp['tasks']), orient = 'index')
 
         metacsv=os.path.join(folder,'task-meta.csv')
 
         df_metas.to_csv(metacsv)
+        logger.debug(f'end to dump task metas for {folder} to {metacsv} ')
+        
     else:
         df_metas = pd.read_json(jsons.dumps(tmp['tasks']), orient = 'records')
 
@@ -1428,7 +1432,7 @@ def dumpTaskMetafiles(selectedMetafileformat,folder):
         metajson=os.path.join(folder,'task-meta.json')
 
         df_metas.to_json(metajson)
-    logger.debug(f'end to dump task metas for {folder} ')
+        logger.debug(f'end to dump task metas for {folder} to {metajson} ')
 
 
 def dumpMetafiles(selectedMetafileformat,folder):
@@ -3388,7 +3392,7 @@ def render_thumb_update_view(frame,folder,thumbmode,previous_frame=None):
         thumbnail_template_file = tk.StringVar()        
 
 
-        b_thumbnail_template_file=tk.Button(frame,text="select",command=lambda: threading.Thread(target=select_file('select thumb template json file',ultra[folder]['thumb_gen_setting']['template_path'],thumbnail_template_file,'json')).start() )
+        b_thumbnail_template_file=tk.Button(frame,text="select",command=lambda: threading.Thread(target=select_file('select thumb template json file',thumbnail_template_file,ultra[folder]['thumb_gen_setting']['template_path'],'json')).start() )
         b_thumbnail_template_file.grid(row = 6, column = 2,  padx=14, pady=15,sticky='nswe') 
         e_thumbnail_template_file = tk.Entry(frame, textvariable=thumbnail_template_file)
         e_thumbnail_template_file.grid(row = 6, column = 1, padx=14, pady=15,sticky='nswe') 
@@ -3526,7 +3530,7 @@ def chooseProxies(ttkframe,username,parentchooseProxies):
 
     # Create a frame for the canvas with non-zero row&column weights
     frame_canvas = tk.Frame(newWindow)
-    frame_canvas.grid(row=7, column=0,sticky='nw',  padx=14, pady=15)    
+    frame_canvas.grid(row=7, column=0,columnspan=20,sticky='nw',  padx=14, pady=15)    
     frame_canvas.grid_rowconfigure(0, weight=1)
     frame_canvas.grid_columnconfigure(0, weight=1)
     # Set grid_propagate to False to allow 5-by-5 buttons resizing later
@@ -3550,7 +3554,7 @@ def chooseProxies(ttkframe,username,parentchooseProxies):
     btn5.grid(row=4,column=2, sticky=tk.W)    
     
     btn6= tk.Button(newWindow, text="remove selected", padx = 10, pady = 10,command = lambda: threading.Thread(target=remove_selected_accounts).start())     
-    btn6.grid(row=7,column=1, sticky=tk.W)
+    btn6.grid(row=8,column=6, sticky=tk.W)
     lbl16 = tk.Label(newWindow, text='selected proxies')
     lbl16.grid(row=8,column=0, sticky=tk.W)
     txt16 = tk.Entry(newWindow,textvariable=proxy_str
@@ -3598,7 +3602,7 @@ def chooseProxies(ttkframe,username,parentchooseProxies):
 
     def add_selected_accounts(event):
         listbox = event.widget
-        values = [listbox.get(idx).split(':')[0] for idx in listbox.curselection()]
+        values = [listbox.get(idx).split(':')[1] for idx in listbox.curselection()]
 
         tmp['accountaddproxies']=values
         existingaccounts=proxy_str.get().split(',')
@@ -3740,13 +3744,13 @@ def saveUser(platform,username,password,proxy,cookies,linkaccounts=None):
         # [1, 2, 3]  # Replace with the actual IDs of the proxies
 
         # Serialize the list of proxy IDs to JSON
-        proxy_ids_json = json.dumps(proxy_ids)
+        # proxy_ids_json = json.dumps(proxy_ids)
         user_data=           {
             'platform': platform,
             'username': username,
             'password': password,
             'cookies': cookies,
-            'proxy': proxy_ids_json
+            'proxy': proxy_ids
         }
         # Create the user and associate the proxy IDs
         userid = AccountModel.add_account(user_data)
@@ -3758,7 +3762,9 @@ def saveUser(platform,username,password,proxy,cookies,linkaccounts=None):
                 for key,value in enumerate(accounts):
                     if len(value.split(','))!=0:
                         for id in  value.split(','):
-                            AccountRelationship(AccountRelationship,userid,id)            
+                            r=AccountRelationship.add_AccountRelationship_by_username(main_username=userid,otherusername=id)
+                            if r:
+                                print(f'bind {id} to {username} as side account')
             showinfomsg(message='this account added ok')
         else:
 
@@ -3786,8 +3792,10 @@ def  queryAccounts(newWindow,tree,logger,username,platform):
             for element in records:
                 tree.delete(element) 
         for row in account_rows:
+            id=CustomID(custom_id=row.id).to_hex()
+
             tree.insert(
-                "", 0, text=row.id, values=(row.username,row.password,row.platform,row.proxy, row.cookies, row.inserted_at)
+                "", 0, text=id, values=(row.username,row.password,row.platform,row.proxy, row.cookies, row.inserted_at)
             )                    
             
 
@@ -4004,25 +4012,44 @@ def accountView(frame,ttkframe,lang):
 
     
     
-def  queryTasks(tree,engine,logger,vid):
+def  queryTasks(tree,logger,status,platform,username,video_title):
 
 
+    if status==''or 'input' in status:
+        status=None
+    if platform=='' or 'input' in platform:
+        platform=None        
+    else:
+        platform=getattr(PLATFORM_TYPE, platform.upper())
+        print(f'query tasks for {platform} {getattr(PLATFORM_TYPE, platform.upper())} ')
 
-    query = "SELECT * FROM uploadtasks ORDER by inserted_at DESC"
-    print('vid',vid,type(vid))
-    if vid is not None and vid !='' and  not "input" in vid:
-        query=f"SELECT * FROM uploadtasks  where id={vid}"
-    try:
-        db_rows = query2df(engine,query,logger)
-        records = tree.get_children()
-        for element in records:
-            tree.delete(element) 
-        for row in db_rows.itertuples():
+    task_rows=TaskModel.filter_tasks(status=status,type=platform) 
+
+    logger.info(f'we found {len(task_rows)} record matching ')
+
+    if len(task_rows)==0:
+        showinfomsg(message=f'we found {len(task_rows)} record matching ')
+    else:                
+        records = tree.get_children()                
+        if records is not None:
+            for element in records:
+                tree.delete(element) 
+        for row in task_rows:
+            id=CustomID(custom_id=row.id).to_hex()
+            video=row.video
+            setting=row.setting
+            account=setting.account
+            print('======',video,account,setting)
+            platform=PLATFORM_TYPE.PLATFORM_TYPE_TEXT[row.type][1]
+            status=TASK_STATUS.PLATFORM_TYPE_TEXT[row.status][1]
             tree.insert(
-                "", 0, text=row.id, values=(row.video_title,row.video_description,row.status,row.release_date, row.release_date_hour, row.publish_policy, row.uploaded_at, row.video_local_path)
-            )
-    except:
-        print('keep the same')    
+                "", 0, text=id, values=(status,platform)
+            )                    
+            
+
+                
+            
+        logger.info(f'Account search and display finished')  
 
 
 def getBool(var): # get rid of the event argument
@@ -4253,8 +4280,8 @@ def more_than_one_large_element(lst):
     # result = more_than_one_large_element(my_list)
 def extends_accounts(accounts,videocount,mode='equal'):
     # Your lists
-    videos = [1, 2, 3, 4, 5]  # Replace with your list1
-    accounts = ['A', 'B', 'C']  # Replace with your list2
+    # videos = [1, 2, 3, 4, 5]  # Replace with your list1
+    # accounts = ['A', 'B', 'C']  # Replace with your list2
 
     n = videocount
     m = len(accounts)
@@ -4316,10 +4343,20 @@ def load_meta_file(filepath):
         logger.error(f'{filepath}is not provide' )  
         return None
 def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPolicy_value,deviceType_value,browserType_value,is_open_browser_value,wait_policy_value,is_debug_value,is_record_video_value,frame):     
+    
+    if multiAccountsPolicy_value=='单平台单账号':
+        # ('单平台单账号', '单平台主副账号','单平台多账号随机发布','单平台多账号平均发布')
+        multiAccountsPolicy_value=0
+    elif multiAccountsPolicy_value=='单平台主副账号':
+        multiAccountsPolicy_value=1
+    elif multiAccountsPolicy_value=='单平台多账号随机发布':
+        multiAccountsPolicy_value=2
+    elif multiAccountsPolicy_value=='单平台多账号平均发布':
+        multiAccountsPolicy_value=3    
     print('assign account',choosedAccounts_value)
     if choosedAccounts_value=='' or choosedAccounts_value is None:
         logger.info('please choose which platform and account you want to upload ')
-        showinfomsg(message="please choose which platform and account you want to upload ")    
+        showinfomsg(message="please choose which platform and account you want to upload ",parent=frame)    
         return                 
     else:
         try:
@@ -4328,7 +4365,7 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
 
         except:
             logger.info(f'please check {choosedAccounts_value} format')
-            showinfomsg(message=f'please check {choosedAccounts_value} format')
+            showinfomsg(message=f'please check {choosedAccounts_value} format',parent=frame)    
             return 
 
     print('load video meta')
@@ -4349,103 +4386,209 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
             # Check the data dictionary for allowed fields and empty values in each entry
             videocounts=len(tmpdict)
             # multiAccountsPolicy_value  根据它来分配视频，
-            print('check multiAccountsPolicy',multiAccountsPolicy_value)
             for platform,accounts in choosedAccounts_value.items():
-                print(platform,accounts)
-                accounts=accounts.split(',')
+                if accounts=='':
+                    accounts=[]
+                else:
+                    accounts=accounts.split(',')
                 # 直接检测某平台下的账号数量，=1，默认情况 >1,看看策略
                 tmpaccounts=[]  
-
+                # ('单平台单账号', '单平台主副账号','单平台多账号随机发布','单平台多账号平均发布')
+                # 如果存在主副账号，这个逻辑没想好，主副的区别是啥 副号的作用是啥 意味着两个账号发一模一样的视频，当然可以只是缩略图不同，随机进行测试
+                #那也就是说，针对平台下每一个账号进行检测，发现副号则自动新建一个视频任务
+                
+                # 多账号的意味着视频分摊到每个账号进行发布，发布的视频各不一样
+                #多账号下的账号意味着不管它存不存在副号，提交的账号独立对待。           
+                
+                # accounts={'y1','y2','y3'} 
+                # 相当于5个账号
+                # {'y1','y11'} {'y2'} {'y3','y31'}
+            
+                print(f"start to process platform {platform}, accounts are:{accounts},{multiAccountsPolicy_value}")
+                
                 if len(accounts)==0:
                     logger.info(f'you dont choose any account for this platform:{platform}')
-                elif len(accounts)==1:
+                else:
                     if  multiAccountsPolicy_value==0:
+                        if len(accounts)==0:
+                            logger.info(f'you dont choose any account for this platform:{platform}')
+                        tmpaccounts=  extends_accounts(accounts,videocounts)     
+                        print('==单账号=',tmpaccounts)
+                        for key, entry in tmpdict.items():
+                            print('key',key)
+                            print('entry',entry)
+                            key=key+'_'+platform
+                            tmp['tasks'][key]=entry
+                            tmp['tasks'][key]['timeout']=200
+                            tmp['tasks'][key]['is_open_browser']=is_open_browser_value
+                            tmp['tasks'][key]['is_debug']=is_debug_value
+                            tmp['tasks'][key]['platform']=platform
+                            tmp['tasks'][key]['wait_policy']=wait_policy_value
+                            tmp['tasks'][key]['is_record_video']=is_record_video_value
+                            tmp['tasks'][key]['browser_type']=browserType_value
 
-                        tmpaccounts=  extends_accounts(accounts,videocounts)           
+                            
+
+
+                            data=(AccountModel.filter_accounts(username=accounts[0]))[0]
+                            # print('data====',data[0],data[0].username)
+                            tmp['tasks'][key]['username']=data.username
+                            logger.info(f'get credentials for this account {accounts[0]}')
+
+                            tmp['tasks'][key]['password']=data.password
+                            tmp['tasks'][key]['proxy_option']=data.proxy
+                            tmp['tasks'][key]['channel_cookie_path']=data.cookies
+                        
+                        
+                                
                     elif multiAccountsPolicy_value==1:
                         print('遍历账号检查是否有副号，计算任务数量，分配视频')
-                        video={'1.mp4'}
-                        accounts={'y1'} {'y1','y11'}
-                        
-
-                else:
-                    # ('单平台单账号', '单平台主副账号','单平台多账号随机发布','单平台多账号平均发布')
-                    # 如果存在主副账号，这个逻辑没想好，主副的区别是啥 副号的作用是啥 意味着两个账号发一模一样的视频，当然可以只是缩略图不同，随机进行测试
-                    #那也就是说，针对平台下每一个账号进行检测，发现副号则自动新建一个视频任务
-                    
-                    # 多账号的意味着视频分摊到每个账号进行发布，发布的视频各不一样
-                    #多账号下的账号意味着不管它存不存在副号，提交的账号独立对待。           
-                    
-                    accounts={'y1','y2','y3'} 
-                    相当于5个账号
-                    {'y1','y11'} {'y2'} {'y3','y31'}
-                    
-                    if multiAccountsPolicy_value==0:
-                        print('provided more than 1 account conflict with 单账号')
-                        
-                    elif multiAccountsPolicy_value==1:
-                        print('遍历每个账号检查是否有副号，分配视频')
-                        for id in accounts:
-                            r=AccountRelationship.get_account_by_id(account_id=id)
+                        # video={'1.mp4'}
+                        # accounts={'y1'} {'y1','y11'}
+                        taskno=0
+                        for username in accounts:
+                            r=AccountRelationship.get_AccountRelationship_by_username(username=username)
                             if r is not None:
-                                r.a
+                                r.backup_account.id
+                                # tmpaccounts.append([r.backup_account.id  for x in range(0,videocounts)]   )
+                                # print('===',tmpaccounts)
+                                for key, entry in tmpdict.items():
+                                    print('key',key)
+                                    print('entry',entry)
+                                    print('taskno',taskno)
+
+                                    key=key+'_'+platform+'-'+str(taskno)
+                                    tmp['tasks'][key]=entry
+                                    tmp['tasks'][key]['timeout']=200
+                                    tmp['tasks'][key]['is_open_browser']=is_open_browser_value
+                                    tmp['tasks'][key]['is_debug']=is_debug_value
+                                    tmp['tasks'][key]['platform']=platform
+                                    tmp['tasks'][key]['wait_policy']=wait_policy_value
+                                    tmp['tasks'][key]['is_record_video']=is_record_video_value
+                                    tmp['tasks'][key]['browser_type']=browserType_value
+
+                                    
+
+                                    # account=r.backup_account.id
+                                    # data=(AccountModel.filter_accounts(username=r.backup_account.username))[0]
+                                    # print('data====',data[0],data[0].username)
+                                    tmp['tasks'][key]['account_id']=CustomID(custom_id=r.backup_account.id).to_hex()
+
+
+                                    tmp['tasks'][key]['username']=r.backup_account.username
+                                    logger.info(f'get credentials for this account {r.backup_account.username}')
+
+                                    tmp['tasks'][key]['password']=r.backup_account.password
+                                    tmp['tasks'][key]['proxy_option']=r.backup_account.proxy
+                                    tmp['tasks'][key]['channel_cookie_path']=r.backup_account.cookies
+                                    taskno=+1                                
+                            
+                            for key, entry in tmpdict.items():
+                                print('key',key)
+                                print('entry',entry)
+                                print('taskno',taskno)
+                                
+                                key=key+'_'+platform+'-'+str(taskno)
+                                tmp['tasks'][key]=entry
+                                tmp['tasks'][key]['timeout']=200
+                                tmp['tasks'][key]['is_open_browser']=is_open_browser_value
+                                tmp['tasks'][key]['is_debug']=is_debug_value
+                                tmp['tasks'][key]['platform']=platform
+                                tmp['tasks'][key]['wait_policy']=wait_policy_value
+                                tmp['tasks'][key]['is_record_video']=is_record_video_value
+                                tmp['tasks'][key]['browser_type']=browserType_value
+
+                                
+
+                                data=(AccountModel.filter_accounts(username=username))[0]
+                                # print('data====',data[0],data[0].username)
+                                tmp['tasks'][key]['username']=data.username
+                                logger.info(f'get credentials for this account {data.username}')
+
+                                tmp['tasks'][key]['password']=data.password
+                                tmp['tasks'][key]['proxy_option']=data.proxy
+                                tmp['tasks'][key]['channel_cookie_path']=data.cookies
+                                taskno=+1    
                             
                     elif multiAccountsPolicy_value==2:
                         print('遍历账号，生成视频数量对应大小的账号数组，随机分配')
                         if videocounts <len(accounts):
                             tmpaccounts=[random.choice(accounts)]
                         else:
-                            tmpaccounts=  extends_accounts(accounts,videocounts,mode='random')                            
+                            tmpaccounts=  extends_accounts(accounts,videocounts,mode='random')  
+                        taskno=0
+                        for key, entry in tmpdict.items():
+                            print('key',key)
+                            print('entry',entry)
+                            key=key+'_'+platform+'-'+str(taskno)
+                            tmp['tasks'][key]=entry
+                            tmp['tasks'][key]['timeout']=200
+                            tmp['tasks'][key]['is_open_browser']=is_open_browser_value
+                            tmp['tasks'][key]['is_debug']=is_debug_value
+                            tmp['tasks'][key]['platform']=platform
+                            tmp['tasks'][key]['wait_policy']=wait_policy_value
+                            tmp['tasks'][key]['is_record_video']=is_record_video_value
+                            tmp['tasks'][key]['browser_type']=browserType_value
+
+                            
+
+                            account=tmpaccounts[taskno]
+                            data=(AccountModel.filter_accounts(username=account.username))[0]
+                            # print('data====',data[0],data[0].username)
+                            tmp['tasks'][key]['username']=data.username
+                            logger.info(f'get credentials for this account {account}')
+
+                            tmp['tasks'][key]['password']=data.password
+                            tmp['tasks'][key]['proxy_option']=data.proxy
+                            tmp['tasks'][key]['channel_cookie_path']=data.cookies
+                            taskno=+1    
+                                                
                     elif multiAccountsPolicy_value==3:
                         print('遍历账号，生成视频数量对应大小的账号数组，平均分配')
                         if videocounts <len(accounts):
                             tmpaccounts=[random.choice(accounts)]
                         else:
-                            tmpaccounts=  extends_accounts(accounts,videocounts,mode='equal')                            
+                            tmpaccounts=  extends_accounts(accounts,videocounts,mode='equal')      
+                        taskno=0
+                        for key, entry in tmpdict.items():
+                            print('key',key)
+                            print('entry',entry)
+                            key=key+'_'+platform+'-'+str(taskno)
+                            tmp['tasks'][key]=entry
+                            tmp['tasks'][key]['timeout']=200
+                            tmp['tasks'][key]['is_open_browser']=is_open_browser_value
+                            tmp['tasks'][key]['is_debug']=is_debug_value
+                            tmp['tasks'][key]['platform']=platform
+                            tmp['tasks'][key]['wait_policy']=wait_policy_value
+                            tmp['tasks'][key]['is_record_video']=is_record_video_value
+                            tmp['tasks'][key]['browser_type']=browserType_value
+
+                            
+
+                            account=tmpaccounts[taskno]
+                            data=(AccountModel.filter_accounts(username=account.username))[0]
+                            # print('data====',data[0],data[0].username)
+                            tmp['tasks'][key]['username']=data.username
+                            logger.info(f'get credentials for this account {account}')
+
+                            tmp['tasks'][key]['password']=data.password
+                            tmp['tasks'][key]['proxy_option']=data.proxy
+                            tmp['tasks'][key]['channel_cookie_path']=data.cookies
+                            taskno=+1                                                  
                     else:
                         print('coming soon ')
 
                 
 
-                for key, entry in tmpdict.items():
-                    print('key',key)
-                    print('entry',entry)
-                    key=key+'_'+platform
-                    tmp['tasks'][key]=entry
-                    tmp['tasks'][key]['timeout']=200
-                    tmp['tasks'][key]['is_open_browser']=is_open_browser_value
-                    tmp['tasks'][key]['is_debug']=is_debug_value
-                    tmp['tasks'][key]['platform']=platform
-                    tmp['tasks'][key]['wait_policy']=wait_policy_value
-                    tmp['tasks'][key]['is_record_video']=is_record_video_value
-                    tmp['tasks'][key]['browser_type']=browserType_value
-
-                    
-
-                    account=tmpaccounts[i]
-                    tmp['tasks'][key]['username']=account
-                    logger.info(f'get credentials for this account {account}')
-
-                    tmp['tasks'][key]['password']='p1'
-                    tmp['tasks'][key]['proxy_option']='socks5'
-                    tmp['tasks'][key]['channel_cookie_path']='xxxx'
-                    i=+1
-
+            
             logger.info(f'start to save task meta success')
+            print(f"task json:{tmp['tasks']}")
 
             dumpTaskMetafiles(ext,folder)
 
-            logger.info(f'end to save task meta success')
-            lab = tk.Label(frame,text=f'save task meta success',bg="green")
-                                                            
-            lab.grid(row=10,column=2, sticky=tk.W)        
-            lab.after(5*1000,lab.destroy)    
+            showinfomsg(message=f'save task meta success',parent=frame)    
         else:
-            logger.info(f'load video meta failed')
-            lab = tk.Label(frame,text=f'load video meta failed',bg="red")
-                                                            
-            lab.grid(row=10,column=2, sticky=tk.W)        
-            lab.after(5*1000,lab.destroy)    
+            showinfomsg(message=f'load video meta failed',parent=frame)    
 def validateTaskMetafile(engine,ttkframe,metafile):
     logger.info('load task metas to database ')
     print('load task meta')
@@ -4476,7 +4619,7 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                     for key in ['proxy_option','channel_cookie_path']:
                         if video.get(key)==None:
                             logger.error(f" this field {key} is required in given video json data")
-                            raise ValueError(f"this field {key} is required  in given data")
+                            # raise ValueError(f"this field {key} is required  in given data")
                             
                     for key in ['timeout','timeout','is_debug','wait_policy','is_record_video','username','password']:
                         if video.get(key)==None:
@@ -4588,11 +4731,8 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                         else:
                             if not video.get('wait_policy') in [0,1,2,3,4]:
                                 logger.error('wait_policy should be one of 0,1,2,3,4')
-                    account_id=AccountModel.filter_accounts(
-                                                            username= video.get('username'),
-                                                            platform=video.get('platform')
-                                                            )
-                    if account_id is None:
+                    task_account=None
+                    if video.get('account_id') is None:
                         user_data=           {
                             'platform': video['platform'],
                             'username': video.get('username'),
@@ -4600,8 +4740,33 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                             'cookies': video.get('cookies'),
                             'proxy': video.get('proxy'),
                             'wait_policy':video.get('wait_policy')
-                        }                        
-                        account_id=AccountModel.add_account(account_data=user_data)
+                        }                       
+                        
+                        task_account=AccountModel.add_account(account_data=user_data)
+                    else:
+                        
+                        account_id=CustomID(custom_id=video.get('account_id')).to_bin()
+
+                        task_account=AccountModel.get_account_by_id(account_id)
+                        if task_account==None:
+                            task_account=AccountModel.filter_accounts(
+                                                                    username= video.get('username'),
+                                                                    platform=video.get('platform')
+                                                                    )
+                            task_account=task_account[0]
+                            if task_account==None:
+                                user_data= {
+                                        'platform': video['platform'],
+                                        'username': video.get('username'),
+                                        'password': video.get('password'),
+                                        'cookies': video.get('cookies'),
+                                        'proxy': video.get('proxy'),
+                                        'wait_policy':video.get('wait_policy')
+                                    }                       
+                        
+                                task_account=AccountModel.add_account(account_data=user_data)
+                                video['account_id']=task_account.id
+
                     settingdata={
                             "timeout":video.get('timeout'),
                             "is_open_browser":video.get('is_open_browser'),
@@ -4611,25 +4776,29 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                             "is_record_video":video.get('is_record_video'),
                             'wait_policy':video.get('wait_policy'),
 
-                            "account_id":account_id
-
                         }                
                     logger.info(f'start to process uploadsetting data {settingdata}')
-                
+                    tasksetting=None
                     if video.get('uploadsettingid')==None:
                         logger.info(f" this field uploadsettingid is optional in given video json data")
 
                         print('add to upload setting and return id for reuse')
 
-                        settingid=UploadSettingModel.add_uploadsetting(settingdata)
+                        tasksetting=UploadSettingModel.add_uploadsetting(settingdata,task_account)
 
 
                     else:
                         logger.info(f" if uploadsettingid is given,we can auto fill if  the other field is null ")
-                        settingid=UploadSettingModel.get_uploadsetting_by_id(id=video.get('uploadsettingid'))
+                        setting_id=CustomID(custom_id=video.get('uploadsettingid')).to_bin()
+
+                        tasksetting=UploadSettingModel.get_uploadsetting_by_id(id=setting_id)
                         print('query id to pull setting, if not exist,create a new one')
-                        if settingid==None:
-                            settingid=UploadSettingModel.add_uploadsetting(settingdata)
+                        if tasksetting==None:
+                            tasksetting=UploadSettingModel.add_uploadsetting(settingdata,task_account)
+                            
+                    logger.info(f'end to process uploadsetting data')
+                            
+                            
                     logger.info(f'start to process video related fields\n:{video} ')
 
 
@@ -4785,24 +4954,37 @@ def validateTaskMetafile(engine,ttkframe,metafile):
 
                         else:
                             logger.error('tags should be a list of keywords such as "one,two" ')
-                    if video.get('platform')=='youtube':
-                        videodata={
+                    taskvideo=None
+                    logger.info(f'start to process video data')
+                    print(f"this is need to use which video model:{video.get('platform')}")
+                    if video.get('platform')=='youtube' or video.get('platform')==0:
+                        videodata=    {
+                                "video_local_path": video['video_local_path'],
+                                "video_title": video['video_title'],
+                                "video_description": video['video_description'],
+                                "thumbnail_local_path": video['thumbnail_local_path'],
+                                "publish_policy": 0,
+                                "tags": 
+                                    video['tags'],
+                                
+                                }
+                        logger.info(f'start to save ytb video data {settingdata} to db')
 
-                        }
-
-                        videoid=YoutubeVideoModel.create_video(videodata)
+                        taskvideo=YoutubeVideoModel.create_video(videodata)
                     taskdata={
                         "type":video['platform'],
-                        "status":0,
-                        "videoid":videoid,
-                        "settingid":settingid
+                        "status":0
                     }
-                    taskid=TaskModel.add_task(TaskModel,taskdata)
+                    logger.info(f'end to process video data')
+                    logger.info(f'start to process task data')
+
+                    taskid=TaskModel.add_task(taskdata,taskvideo,tasksetting)
                     if taskid==None:
                         print(f'add task failure:{idx},{video}')
 
                     else:
                         print(f'add task success:{idx},{video}')
+                    logger.info(f'end to process task data')
 
                                                 
             except Exception as e:
@@ -4824,31 +5006,58 @@ def uploadView(frame,ttkframe,lang):
     queryframe.grid_rowconfigure((0,1), weight=1)
     
     queryframe.grid_columnconfigure(0, weight=1)
+    
+    
+    
     global vid
-    vid = tk.StringVar()
-    lbl15 = tk.Label(queryframe, text='Enter vid.')
+    
+    taskstatus = tk.StringVar()
+    lbl15 = tk.Label(queryframe, text='Enter status.')
     lbl15.grid(row = 0, column = 3,sticky='w')
+    txt15 = tk.Entry(queryframe, textvariable=taskstatus)
+    txt15.insert(0,'input status')
+    txt15.grid(row = 1, column = 3,sticky='w',columnspan=2)
+
+    platformname = tk.StringVar()
+    lbl16 = tk.Label(queryframe, text='Enter platform.')
+    lbl16.grid(row = 0, column = 6,sticky='w')
+    txt16 = tk.Entry(queryframe,textvariable=platformname)
+    txt16.insert(0,'input platformname')
+    txt16.grid(row = 1, column = 6,sticky='w',columnspan=2)
+
+
+    
+    
+    vid = tk.StringVar()
+    lbl15 = tk.Label(queryframe, text='Enter video title.')
+    lbl15.grid(row = 2, column = 3,sticky='w')
     txt15 = tk.Entry(queryframe, textvariable=vid)
     txt15.insert(0,'input task id')
-    txt15.grid(row = 1, column = 3,sticky='w',columnspan=2)
+    txt15.grid(row = 3, column = 3,sticky='w',columnspan=2)
 
     channelname = tk.StringVar()
     lbl16 = tk.Label(queryframe, text='Enter channelname.')
-    lbl16.grid(row = 0, column = 6,sticky='w')
+    lbl16.grid(row = 2, column = 6,sticky='w')
     txt16 = tk.Entry(queryframe,textvariable=channelname)
     txt16.insert(0,'input channelname')
-    txt16.grid(row = 1, column = 6,sticky='w',columnspan=2)
+    txt16.grid(row = 3, column = 6,sticky='w',columnspan=2)
 
     releasedata = tk.StringVar()
-    lbl17 = tk.Label(queryframe, text='Enter releasedata.')
-    lbl17.grid(row = 0, column = 9,sticky='w')
+    lbl17 = tk.Label(queryframe, text='Enter releasedate.')
+    lbl17.grid(row = 3, column = 9,sticky='w')
     txt17 = tk.Entry(queryframe, textvariable=releasedata)
-    txt17.insert(0,'input releasedata')
-    txt17.grid(row = 1, column = 9,sticky='w',columnspan=2)
+    txt17.insert(0,'input releasedate')
+    txt17.grid(row = 3, column = 9,sticky='w',columnspan=2)
 
 
-    btn5= tk.Button(queryframe, text="Get Info", command = lambda: threading.Thread(target=queryTasks(tree,prod_engine,logger,vid.get())).start())
+
+
+    btn5= tk.Button(queryframe, text="Get Info", command = lambda: threading.Thread(target=queryTasks(tree,logger,taskstatus.get(),platformname.get(),channelname.get(),vid.get())).start())
     btn5.grid(row = 0, column = 12,  padx=14, pady=15)
+    
+    
+    btn5= tk.Button(queryframe, text="Reset", padx = 0, pady = 0,command = lambda:(taskstatus.set(""),platformname.set(""),channelname.set(""),vid.set("")))
+    btn5.grid(row=1,column=12, sticky=tk.W)        
     # treeview_flight
     tableframe=tk.Frame(ttkframe)
     tableframe.grid(row = 1, column = 0,sticky='nswe')
@@ -4861,11 +5070,11 @@ def uploadView(frame,ttkframe,lang):
 
     tree.heading('#0', text = 'Task No.')
     tree.column('#0', anchor = 'center', width = 80)
-    tree.heading('#1', text = 'Video title')
+    tree.heading('#1', text = 'Status')
     tree.column('#1', anchor = 'center')
-    tree.heading('#2', text = 'Description')
+    tree.heading('#2', text = 'Platform')
     tree.column('#2', anchor = 'center')
-    tree.heading('#3', text = 'Status')
+    tree.heading('#3', text = 'Title')
     tree.column('#3', anchor = 'center', width = 40)
     tree.heading('#4', text = 'release. Date')
     tree.column('#4', anchor = 'center')
@@ -4999,11 +5208,11 @@ def center_window(window):
     window.geometry('{}x{}+{}+{}'.format(width, height, x, y))
 
 # 信息消息框
-def showinfomsg(message,title='hints',DURATION = 2000):
+def showinfomsg(message,title='hints',DURATION = 2000,parent=None):
     # msg1 = messagebox.showinfo(title="消息提示", message=message)
     # messagebox.after(2000,msg1.destroy)
-
-    top = Toplevel()
+    # parent.focus_force()
+    top = Toplevel(parent)
     top.title(title)
     center_window(top)    
     # Update the Toplevel window's width to adapt to the message width
@@ -5075,6 +5284,7 @@ def  queryProxies(logger,city=None,state=None,country=None,tags=None,network_typ
             for row in db_rows:
 
                 proxy_id = row.id
+                proxy_id=CustomID(custom_id=row.id).to_hex()
                 tree.tag_configure('checkbox', background='lightblue')  # Customize background for checkboxes
                 tree.tag_configure('delete', background='lightcoral')   # Customize background for delete buttons
 
@@ -5090,7 +5300,9 @@ def  queryProxies(logger,city=None,state=None,country=None,tags=None,network_typ
                 proxy_id = str(row.id)
                 host=str(row.proxy_host)
                 port=str(row.proxy_port)
-                langlist.insert(tk.END, proxy_id+':'+host+'-'+port)
+                protcol=row.proxy_protocol
+                print(f"add this {proxy_id+':'+host+'-'+port} to list")
+                langlist.insert(tk.END, host+'-'+port+'-'+protcol+':'+proxy_id)
                 langlist.itemconfig(int(i), bg = "lime")
 
 
@@ -6087,8 +6299,8 @@ def start(lang,root=None):
     paned_window.grid(row=0, column=0, sticky="nsew")
 
     # # Configure weights for mainwindow and log_frame
-    paned_window.grid_rowconfigure(0, weight=3)
-    paned_window.grid_rowconfigure(1, weight=1)
+    paned_window.grid_rowconfigure(0, weight=1)
+    # paned_window.grid_rowconfigure(1, weight=1)
 
     # Create the frame for the notebook
     mainwindow = ttk.Frame(paned_window)
@@ -6104,16 +6316,16 @@ def start(lang,root=None):
 
 
     log_frame =tk.Frame(paned_window)
-    paned_window.add(log_frame)
-    log_frame.grid(row=1, column=0, sticky="nsew")
+    # paned_window.add(log_frame)
+    # log_frame.grid(row=1, column=0, sticky="nsew")
 
-    log_frame.grid_rowconfigure(0, weight=1)
-    log_frame.grid_columnconfigure(0, weight=1)
-    log_frame.columnconfigure(0, weight=1)
-    log_frame.rowconfigure(0, weight=1)
+    # log_frame.grid_rowconfigure(0, weight=1)
+    # log_frame.grid_columnconfigure(0, weight=1)
+    # log_frame.columnconfigure(0, weight=1)
+    # log_frame.rowconfigure(0, weight=1)
 
 
-    st =ConsoleUi(log_frame,root)
+    # st =ConsoleUi(log_frame,root)
 
     logger.debug(f'Installation path is:{ROOT_DIR}')
 
