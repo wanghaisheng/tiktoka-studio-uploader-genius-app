@@ -3823,16 +3823,16 @@ def accountView(frame,ttkframe,lang):
     socialplatform_box = ttk.Combobox(ttkframe, textvariable=socialplatform)
 
 
-    def db_values():
+    def socialplatformdb_values():
         platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
         platform_names = [PLATFORM_TYPE.PLATFORM_TYPE_TEXT[x.type][1] for x in platform_rows]
 
         socialplatform_box['values'] = platform_names
 
-    def db_refresh(event):
-        socialplatform_box['values'] = db_values()
+    def socialplatformdb_refresh(event):
+        socialplatform_box['values'] = socialplatformdb_values()
 
-    socialplatform_box['values'] = db_values()
+    socialplatform_box['values'] = socialplatformdb_values()
 
 
 
@@ -3842,7 +3842,7 @@ def accountView(frame,ttkframe,lang):
 
     socialplatform.set("Select From Platforms")
     socialplatform.trace('w', socialplatformOptionCallBack)
-    socialplatform_box.bind('<FocusIn>', lambda event: db_refresh(event))
+    socialplatform_box.bind('<FocusIn>', lambda event: socialplatformdb_refresh(event))
 
 
     # socialplatform_box.config(values =platform_names)
@@ -3959,6 +3959,18 @@ def accountView(frame,ttkframe,lang):
 
 
     q_platform = tk.StringVar()
+    q_platform_accountbox = ttk.Combobox(frame, textvariable=q_platform)
+
+    def q_platformb_values():
+        platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
+        platform_names = [PLATFORM_TYPE.PLATFORM_TYPE_TEXT[x.type][1] for x in platform_rows]
+
+        q_platform_accountbox['values'] = platform_names
+
+    def q_platformdb_refresh(event):
+        q_platform_accountbox['values'] = q_platformb_values()
+
+    q_platform_accountbox['values'] = q_platformb_values()
 
 
     def q_platformOptionCallBack(*args):
@@ -3969,8 +3981,9 @@ def accountView(frame,ttkframe,lang):
     q_platform.trace('w', q_platformOptionCallBack)
 
 
-    q_platform_accountbox = ttk.Combobox(frame, textvariable=q_platform)
-    q_platform_accountbox.bind('<FocusIn>', lambda event: db_refresh(event))    
+    q_platform_accountbox['values'] = q_platformb_values()
+
+    q_platform_accountbox.bind('<FocusIn>', lambda event: q_platformdb_refresh(event))    
     q_platform_accountbox.grid(row = 1, column = 2, columnspan = 3, padx=14, pady=15)    
 
 
@@ -6334,11 +6347,11 @@ def start(lang,root=None):
     root.update_idletasks()
 
 # # Set the initial size of the notebook frame (4/5 of total height)
-    mainwindow_initial_percentage = 5 / 6  
+    # mainwindow_initial_percentage = 5 / 6  
 
     # Calculate the initial height of mainwindow based on the percentage
-    initial_height = int(float(root.winfo_height()) * mainwindow_initial_percentage)
-    mainwindow.config(height=initial_height)
+    # initial_height = int(float(root.winfo_height()) * mainwindow_initial_percentage)
+    # mainwindow.config(height=initial_height)
 def all_children (window) :
     _list = window.winfo_children()
 
