@@ -1223,11 +1223,11 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
                 existingaccounts[selected_platform].remove(rowid)
 
 
-                logger.info(f'this account {item} removed success')
-                showinfomsg(message=f'this account {item} removed success',parent=chooseAccountsWindow)    
+                logger.info(f'this account {rowid} removed success')
+                showinfomsg(message=f'this account {rowid} removed success',parent=chooseAccountsWindow)    
             else:
-                logger.info(f'you cannot remove this account {item}, not added before')
-                showinfomsg(message=f'this account {item} not added before',parent=chooseAccountsWindow)    
+                logger.info(f'you cannot remove this account {rowid}, not added before')
+                showinfomsg(message=f'this account {rowid} not added before',parent=chooseAccountsWindow)    
             logger.info(f'end to remove,reset account {existingaccounts}')
 
         account_var.set(str(existingaccounts))
@@ -1262,7 +1262,6 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
 
         account_var.set(str(existingaccounts))
         parentchooseaccounts.set(str(existingaccounts))
-    # langlist.bind('<<ListboxSelect>>',add_selected_accounts)   
 
 
 
@@ -3738,8 +3737,319 @@ def printValues(choices):
 def setEntry(str,var):
     var.set(str) 
 
-
 def chooseProxies(ttkframe,username,parentchooseProxies):
+    newWindow = tk.Toplevel(ttkframe)
+    newWindow.geometry(window_size)
+    
+    
+    newWindow.title('proxy selection')
+
+    if username=='':
+        username='this user account'
+
+    # label = tk.Label(newWindow,
+    #             text = f"Select the proxies for {username} below : ",
+    #             font = ("Times New Roman", 10),
+    #             padx = 10, pady = 10)
+    # # label.pack()
+    # label.grid(row=0,column=0, sticky=tk.W)
+    
+    ttkframe=newWindow
+    
+    global city_user,country_user,proxyTags_user,proxyStatus_user,proxy_str
+    city = tk.StringVar()
+    state = tk.StringVar()
+    network_type = tk.StringVar()
+    country = tk.StringVar()
+    proxyTags = tk.StringVar()
+
+    lbl15 = tk.Label(ttkframe, text='by city.')
+    # lbl15.place(x=430, y=30, anchor=tk.NE)
+    # lbl15.pack(side='left')
+
+    lbl15.grid(row=0,column=0, sticky=tk.W)
+
+    txt15 = tk.Entry(ttkframe,textvariable=city)
+    txt15.insert(0,'Los')
+    # txt15.place(x=580, y=30, anchor=tk.NE)
+    # txt15.pack(side='left')
+    txt15.grid(row=1,column=0, sticky=tk.W)
+
+
+    l_state= tk.Label(ttkframe, text='by state.')
+    l_state.grid(row=0,column=1, sticky=tk.W)
+    e_state = tk.Entry(ttkframe,textvariable=state)
+    e_state.insert(0,'LA')
+    e_state.grid(row=1,column=1, sticky=tk.W)
+
+
+    lbl16 = tk.Label(ttkframe, text='by country.')
+    lbl16.grid(row=0,column=2, sticky=tk.W)
+    txt16 = tk.Entry(ttkframe,textvariable=country)
+    txt16.insert(0,'USA')
+    txt16.grid(row=1,column=2, sticky=tk.W)
+    
+
+
+    l_networktype = tk.Label(ttkframe, text='by networktype.')
+    l_networktype.grid(row=2,column=0, sticky=tk.W)
+    e_networktype = tk.Entry(ttkframe,textvariable=network_type)
+    e_networktype.insert(0,'resident')
+    e_networktype.grid(row=3,column=0, sticky=tk.W)
+
+    lb18 = tk.Label(ttkframe, text='by status.')
+    lb18.grid(row=2,column=1, sticky=tk.W)
+    lb17 = tk.Label(ttkframe, text='by tags.')
+    lb17.grid(row=2,column=2, sticky=tk.W)
+    txt17 = tk.Entry(ttkframe,textvariable=proxyTags)
+    txt17.insert(0,'youtube')
+    txt17.grid(row=3,column=2, sticky=tk.W)
+
+    proxyStatus = tk.StringVar()
+    proxy_str = tk.StringVar()
+
+
+    def proxyStatusCallBack(*args):
+        print(proxyStatus.get())
+        print(proxyStatusbox.current())
+
+    proxyStatus.set("Select From Status")
+    proxyStatus.trace('w', proxyStatusCallBack)
+
+
+    proxyStatusbox = ttk.Combobox(ttkframe, textvariable=proxyStatus)
+    proxyStatusbox.config(values = ('valid', 'invalid','unchecked'))
+    proxyStatusbox.grid(row = 3, column = 1, padx=14, pady=15)    
+
+
+     
+
+    btn5= tk.Button(ttkframe, text="Get proxy list", padx = 0, pady = 0,command = lambda: on_platform_selected())
+    btn5.grid(row=4,column=1, sticky=tk.W)    
+    
+    btn5= tk.Button(ttkframe, text="Reset", padx = 0, pady = 0,command = lambda:(proxyStatus.set(""),country.set(""),state.set(""),city.set(""),proxyTags.set(""),proxyStatus.set("Select From Status"),network_type.set("")))
+    btn5.grid(row=4,column=2, sticky=tk.W)    
+    
+    lbl16 = tk.Label(newWindow, text='selected proxies')
+    lbl16.grid(row=5,column=0, sticky=tk.W)
+    txt16 = tk.Entry(newWindow,textvariable=proxy_str
+                    #  ,width=int(int(window_size.split('x')[-1])/4)
+                     )
+    txt16.insert(0,'')
+    txt16.grid(row=5,column=1, 
+            #    width=width,
+               columnspan=4,
+            #    rowspan=3,
+               sticky='nswe')    
+
+
+   # Create a frame for the canvas and scrollbar(s).
+    frame2 = tk.Frame(ttkframe, bg='Red', bd=1, relief=tk.FLAT)
+    frame2.grid(row=6, column=0, rowspan=5,columnspan=5,sticky=tk.NW)
+
+    frame2.grid_rowconfigure(0, weight=1)
+    frame2.grid_columnconfigure(0, weight=1)
+    frame2.grid_columnconfigure(1, weight=1)
+    # Add a canvas in that frame.
+    canvas = tk.Canvas(frame2, bg='Yellow')
+    canvas.grid(row=0, column=0)
+
+    # Create a vertical scrollbar linked to the canvas.
+    vsbar = tk.Scrollbar(frame2, orient=tk.VERTICAL, command=canvas.yview)
+    vsbar.grid(row=0, column=1, sticky=tk.NS)
+    canvas.configure(yscrollcommand=vsbar.set)
+
+    # Create a horizontal scrollbar linked to the canvas.
+    hsbar = tk.Scrollbar(frame2, orient=tk.HORIZONTAL, command=canvas.xview)
+    hsbar.grid(row=1, column=0, sticky=tk.EW)
+    canvas.configure(xscrollcommand=hsbar.set)
+
+    # Create a frame on the canvas to contain the grid of buttons.
+    buttons_frame = tk.Frame(canvas)
+    
+    def deleteRow(rowid):
+        print('delete',rowid)
+    
+    def addRow(rowid):
+        print('add',rowid)
+
+    def chooseRow(rowid):
+        print('delete',rowid)
+    
+    def unchooseRow(rowid):
+        print('add',rowid)
+        
+    def refreshcanvas(headers,datas):
+        
+
+        COLS=len(headers)+1
+        
+        ROWS=len(datas)+1
+
+        COLS_DISP=COLS
+        ROWS_DISP=ROWS        
+        # Add the buttons to the frame.
+        add_buttons = [tk.Button() for j in range(ROWS+1)] 
+        del_buttons = [tk.Button() for j in range(ROWS+1)] 
+        
+        # set table header
+
+
+        for j,h in enumerate(headers):
+            label = tk.Label(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                activebackground= 'orange', text=h)
+            label.grid(row=0, column=j, sticky='news')                    
+            if h=='operation':
+                button = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                    activebackground= 'orange', text='operation')
+                button.grid(row=0, column=j, sticky='news')
+
+                delete_button = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                    activebackground= 'orange', text='operation')
+                delete_button.grid(row=0, column=j, sticky='news')
+
+        for i,row in enumerate(datas):
+            i=i+1
+            for j in range(0,len(headers)):
+                
+                if headers[j]!='operation':
+                    label = tk.Label(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                        activebackground= 'orange', text=row[headers[j]])
+                    label.grid(row=i ,column=j, sticky='news')         
+
+
+              
+            add_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                activebackground= 'orange', text='bind',command=lambda x=i-1  :add_selected_accounts(rowid=datas[x]['id']))
+            add_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
+
+            del_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                activebackground= 'orange', text='unbind',command=lambda x=i-1 :remove_selected_accounts(rowid=datas[x]['id']))
+            del_buttons[i].grid(row=i, column=len(headers)-1, sticky='news')
+                    
+        # Create canvas window to hold the buttons_frame.
+        canvas.create_window((0,0), window=buttons_frame, anchor=tk.NW)
+
+        buttons_frame.update_idletasks()  # Needed to make bbox info available.
+        bbox = canvas.bbox(tk.ALL)  # Get bounding box of canvas with Buttons.
+
+        # Define the scrollable region as entire canvas with only the desired
+        # number of rows and columns displayed.
+        w, h = bbox[2]-bbox[1], bbox[3]-bbox[1]
+        dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
+        canvas.configure(scrollregion=bbox, width=dw, height=dh)
+    headers=['id', 'host', 'port', 'username', 'pass', 'protocol', 'status', 'city', 'country', 'state', 'tags', 'inserted_at','operation','operation']
+        
+    refreshcanvas(headers,[])
+
+
+
+
+    def on_platform_selected():
+        # Clear the current selection in the account dropdown
+
+        db_rows=  ProxyModel.filter_proxies(city=None if city.get()=='' else city.get(),
+                                            country=None if city.get()=='' else country.get(),
+                                            tags=None if proxyTags.get()=='' else proxyTags.get(),
+                                            status=None if 'Select From Status' in proxyStatus.get() else proxyStatus.get() ,
+                                            state=None if state.get()=='' else state.get(),
+                                            network_type=None if network_type.get()=='' else network_type.get()
+                                            )
+        hints=None
+        if db_rows is None or len(db_rows)==0:
+            showinfomsg(message='there is no matching proxy records')
+        else:
+            logger.info(f'we found {len(db_rows)} record matching :{db_rows}')
+            proxy_data=[]
+            for row in db_rows:
+
+                proxy={
+                    "id":CustomID(custom_id=row.id).to_hex(),
+                    "host":row.proxy_host,
+                    "port":row.proxy_port,
+                    "username":row.proxy_username,
+                    "pass":row.proxy_password,
+                    "protocol":row.proxy_protocol,
+                    "status":row.status,
+                    "city":row.city,
+                    "country":row.country,
+                    "state":row.state,
+                    "tags":row.tags,
+                    "inserted_at":row.inserted_at
+                }
+                proxy_data.append(proxy)
+                header=proxy.keys()
+                print(header)
+
+            refreshcanvas(headers,proxy_data)
+        
+
+
+    chooseAccountsWindow=ttkframe
+    def remove_selected_accounts(rowid):
+
+        existingaccounts=proxy_str.get()
+        if existingaccounts=='' or existingaccounts is None:
+            existingaccounts=[]
+        else:
+            existingaccounts=eval(existingaccounts)
+
+        print('you want to remove these selected proxies',rowid)
+        if rowid==0:
+
+            showinfomsg(message='you have not selected  proxies at all.choose one or more',parent=chooseAccountsWindow)      
+        
+        else:
+
+
+            if rowid in existingaccounts:
+                existingaccounts.remove(rowid)
+
+
+                logger.info(f'this proxies {rowid} removed success')
+                showinfomsg(message=f'this proxies {rowid} removed success',parent=chooseAccountsWindow)    
+            else:
+                logger.info(f'you cannot remove this proxies {rowid}, not added before')
+                showinfomsg(message=f'this proxies {rowid} not added before',parent=chooseAccountsWindow)    
+            logger.info(f'end to remove,reset proxies {existingaccounts}')
+
+        proxy_str.set(str(existingaccounts))
+        parentchooseProxies.set(str(existingaccounts))
+
+    def add_selected_accounts(rowid):
+        print(rowid,'0000add_selected_accounts000')
+        
+
+        existingaccounts=proxy_str.get()
+        if existingaccounts=='' or existingaccounts is None:
+            existingaccounts=[]
+        else:
+            existingaccounts=eval(existingaccounts)
+        if rowid is None:
+            logger.info('you have not selected new proxies at all')
+            showinfomsg(message='you have not selected new proxies at all',parent=chooseAccountsWindow)    
+        
+        else:
+            if rowid in existingaccounts:
+                logger.info(f'this proxies {rowid} added before')                   
+                showinfomsg(message=f'this proxies {rowid} added before',parent=chooseAccountsWindow)    
+
+            else:
+                if existingaccounts=='':
+                    existingaccounts=[]
+                existingaccounts.append(rowid)
+                logger.info(f'this proxies {rowid} added successS')
+                showinfomsg(message=f'this proxies {rowid} added success',parent=chooseAccountsWindow)    
+
+        proxy_str.set(str(existingaccounts))
+        parentchooseProxies.set(str(existingaccounts))
+
+
+
+
+
+
+def chooseProxies_listbox(ttkframe,username,parentchooseProxies):
     newWindow = tk.Toplevel(ttkframe)
     newWindow.geometry(window_size)
     

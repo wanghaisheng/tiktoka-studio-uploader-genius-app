@@ -192,8 +192,8 @@ class ProxyModel(BaseModel):
         query = cls.select()
         print('===',country,state,city,tags,status,network_type)
 
-        for person in cls.select():
-            print(person)
+        # for person in cls.select():
+        #     print(person)
 
         if country is not None:
             query = query.where(cls.country == country)
