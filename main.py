@@ -764,15 +764,15 @@ def proxyaddView(newWindow):
             lbl15.after(500,lbl15.destroy)
 
     langlist.bind('<<ListboxSelect>>',CurSelet)    
-
     
-def chooseAccountsView(newWindow,parentchooseaccounts):
+def chooseAccountsView_listbox(newWindow,parentchooseaccounts):
     chooseAccountsWindow = tk.Toplevel(newWindow)
     chooseAccountsWindow.geometry(window_size)
     chooseAccountsWindow.title('Choose associated accounts in which platform')
     account_var = tk.StringVar()
 
-
+    # chooseAccountsWindow.grid_columnconfigure(0, weight=1)
+    # frame_canvas.grid_columnconfigure(1, weight=1)    
 
 
     # Create a label for the platform dropdown
@@ -798,23 +798,54 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
     # platform_combo.configure(values=platform_rows)
     # Create a frame for the canvas with non-zero row&column weights
     frame_canvas = tk.Frame(chooseAccountsWindow)
-    frame_canvas.grid(row=4, column=0, pady=(5, 0), sticky='nw')
-    frame_canvas.grid_rowconfigure(0, weight=1)
+    frame_canvas.grid(row=4, column=0,columnspan=10, pady=(5, 0), sticky='nw')
     frame_canvas.grid_columnconfigure(0, weight=1)
+    frame_canvas.grid_columnconfigure(1, weight=1)    
+    # frame_canvas.grid_rowconfigure(0, weight=1)
+    # frame_canvas.grid_columnconfigure(0, weight=1)
     # Set grid_propagate to False to allow 5-by-5 buttons resizing later
-    frame_canvas.grid_propagate(False)     
+    # frame_canvas.grid_propagate(False)     
+    # Add a canvas in that frame.
+    canvas = tk.Canvas(frame_canvas, bg='Yellow')
+    canvas.grid(row=0, column=0)
+    canvas.grid_columnconfigure(0, weight=1)
+    canvas.grid_columnconfigure(1, weight=1)    
+    # Create a vertical scrollbar linked to the canvas.
+    vsbar = tk.Scrollbar(frame_canvas, orient=tk.VERTICAL, command=canvas.yview)
+    vsbar.grid(row=0, column=1, sticky=tk.NS)
+    canvas.configure(yscrollcommand=vsbar.set)
 
+    # Create a horizontal scrollbar linked to the canvas.
+    hsbar = tk.Scrollbar(frame_canvas, orient=tk.HORIZONTAL, command=canvas.xview)
+    hsbar.grid(row=1, column=0, sticky=tk.EW)
+    canvas.configure(xscrollcommand=hsbar.set)
     # for scrolling vertically
-    yscrollbar = tk.Scrollbar(frame_canvas)
-    yscrollbar.pack(side = tk.RIGHT, fill = 'both')
-    
-    langlist = tk.Listbox(frame_canvas, selectmode = "multiple",
-                yscrollcommand = yscrollbar.set)
-    langlist.pack(padx = 10, pady = 10,
-            expand = tk.YES, fill = "both")
 
+    langlist_frame = tk.Frame(frame_canvas)
+
+    
+    langlist = tk.Listbox(langlist_frame, selectmode = "multiple",
+                xscrollcommand=hsbar.set,
+                yscrollcommand = vsbar.set)
+    # langlist.pack(padx = 10, pady = 10,
+    #         expand = tk.YES, 
+    #         fill = "both")
+    langlist.grid(row=0,column=0,sticky='nswe')
+        # Create canvas window to hold the buttons_frame.
+    canvas.create_window((0,0), window=langlist_frame, anchor=tk.NW)
+
+    langlist_frame.update_idletasks()  # Needed to make bbox info available.
+    bbox = canvas.bbox(tk.ALL)  # Get bounding box of canvas with Buttons.
+
+    # Define the scrollable region as entire canvas with only the desired
+    # number of rows and columns displayed.
+
+    canvas.configure(scrollregion=bbox
+                    #  , width=dw, height=dh
+                     )
+    
     btn6= tk.Button(chooseAccountsWindow, text="remove selected", padx = 10, pady = 10,command = lambda: threading.Thread(target=remove_selected_accounts).start())     
-    btn6.grid(row=4,column=1, sticky=tk.W)
+    btn6.grid(row=5,column=0, sticky=tk.W)
     Tooltip(btn6, text='if you want remove any from selected user' , wraplength=200)
     lbl16 = tk.Label(chooseAccountsWindow, text='selected user')
     lbl16.grid(row=8,column=0, sticky=tk.W)
@@ -964,6 +995,274 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
         account_var.set(show_str)
         parentchooseaccounts.set(show_str)
     langlist.bind('<<ListboxSelect>>',add_selected_accounts)   
+
+    
+def chooseAccountsView(newWindow,parentchooseaccounts):
+    chooseAccountsWindow = tk.Toplevel(newWindow)
+    chooseAccountsWindow.geometry(window_size)
+    chooseAccountsWindow.title('Choose associated accounts in which platform')
+    account_var = tk.StringVar()
+  
+
+    # Create a label for the platform dropdown
+    platform_label = ttk.Label(chooseAccountsWindow, text="Select Platform:")
+    platform_label.grid(row=0, column=0, padx=10, pady=10, sticky=tk.W)
+    # Create a Combobox for the platform selection
+    platform_var = tk.StringVar()
+    platform_var.set("choose one:")    
+
+    lbl16 = tk.Label(chooseAccountsWindow, text='binded user')
+    lbl16.grid(row=1,column=0, sticky=tk.W)
+    txt16 = tk.Entry(chooseAccountsWindow,textvariable=account_var,width=int(int(window_size.split('x')[-1])/5))
+    txt16.insert(0,'')
+    txt16.grid(row=1,column=1, 
+            #    width=width,
+               columnspan=4,
+            #    rowspan=3,
+               sticky='nswe')    
+    def db_values():
+        platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
+        platform_names = [PLATFORM_TYPE.PLATFORM_TYPE_TEXT[x.type][1] for x in platform_rows]
+
+        platform_combo['values'] = platform_names
+
+    def db_refresh(event):
+        platform_combo['values'] = db_values()
+    platform_combo = ttk.Combobox(chooseAccountsWindow, textvariable=platform_var)
+    platform_combo.grid(row=0, column=1, padx=10, pady=10, sticky=tk.W)
+    platform_combo.bind('<FocusIn>', lambda event: db_refresh(event))
+    platform_combo['values'] = db_values()
+
+    # Create a frame for the canvas and scrollbar(s).
+    frame2 = tk.Frame(chooseAccountsWindow, bg='Red', bd=1, relief=tk.FLAT)
+    frame2.grid(row=2, column=0, rowspan=5,columnspan=5,sticky=tk.NW)
+
+    frame2.grid_rowconfigure(0, weight=1)
+    frame2.grid_columnconfigure(0, weight=1)
+    frame2.grid_columnconfigure(1, weight=1)
+    # Add a canvas in that frame.
+    canvas = tk.Canvas(frame2, bg='Yellow')
+    canvas.grid(row=0, column=0)
+
+    # Create a vertical scrollbar linked to the canvas.
+    vsbar = tk.Scrollbar(frame2, orient=tk.VERTICAL, command=canvas.yview)
+    vsbar.grid(row=0, column=1, sticky=tk.NS)
+    canvas.configure(yscrollcommand=vsbar.set)
+
+    # Create a horizontal scrollbar linked to the canvas.
+    hsbar = tk.Scrollbar(frame2, orient=tk.HORIZONTAL, command=canvas.xview)
+    hsbar.grid(row=1, column=0, sticky=tk.EW)
+    canvas.configure(xscrollcommand=hsbar.set)
+
+    # Create a frame on the canvas to contain the grid of buttons.
+    buttons_frame = tk.Frame(canvas)
+    
+    def deleteRow(rowid):
+        print('delete',rowid)
+    
+    def addRow(rowid):
+        print('add',rowid)
+
+    def chooseRow(rowid):
+        print('delete',rowid)
+    
+    def unchooseRow(rowid):
+        print('add',rowid)
+        
+    def refreshcanvas(headers,datas):
+        
+
+        COLS=len(headers)+1
+        
+        ROWS=len(datas)+1
+
+        COLS_DISP=COLS
+        ROWS_DISP=ROWS        
+        # Add the buttons to the frame.
+        add_buttons = [tk.Button() for j in range(ROWS+1)] 
+        del_buttons = [tk.Button() for j in range(ROWS+1)] 
+        
+        # set table header
+
+
+        for j,h in enumerate(headers):
+            label = tk.Label(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                activebackground= 'orange', text=h)
+            label.grid(row=0, column=j, sticky='news')                    
+            if h=='operation':
+                button = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                    activebackground= 'orange', text='operation')
+                button.grid(row=0, column=j, sticky='news')
+
+                delete_button = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                    activebackground= 'orange', text='operation')
+                delete_button.grid(row=0, column=j, sticky='news')
+
+        for i,row in enumerate(datas):
+            i=i+1
+            for j in range(0,len(headers)):
+                
+                if headers[j]!='operation':
+                    label = tk.Label(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                        activebackground= 'orange', text=row[headers[j]])
+                    label.grid(row=i ,column=j, sticky='news')         
+
+
+              
+            add_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                activebackground= 'orange', text='bind',command=lambda x=i-1  :add_selected_accounts(rowid=datas[x]['id']))
+            add_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
+
+            del_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                activebackground= 'orange', text='unbind',command=lambda x=i-1 :remove_selected_accounts(rowid=datas[x]['id']))
+            del_buttons[i].grid(row=i, column=len(headers)-1, sticky='news')
+                    
+        # Create canvas window to hold the buttons_frame.
+        canvas.create_window((0,0), window=buttons_frame, anchor=tk.NW)
+
+        buttons_frame.update_idletasks()  # Needed to make bbox info available.
+        bbox = canvas.bbox(tk.ALL)  # Get bounding box of canvas with Buttons.
+
+        # Define the scrollable region as entire canvas with only the desired
+        # number of rows and columns displayed.
+        w, h = bbox[2]-bbox[1], bbox[3]-bbox[1]
+        dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
+        canvas.configure(scrollregion=bbox, width=dw, height=dh)
+    refreshcanvas(['id','platform','username','is_deleted','proxy','inserted_at','operation','operation'],[])
+
+
+
+
+    def on_platform_selected(event):
+        selected_platform = platform_var.get()
+        # Clear the current selection in the account dropdown
+
+        if selected_platform:
+
+
+            platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
+            platform_names = [PLATFORM_TYPE.PLATFORM_TYPE_TEXT[x.type][1] for x in platform_rows]
+            print('platforms options are',platform_names)
+
+            # Extract platform names and set them as options in the platform dropdown
+            if platform_rows is None:
+                platform_combo["values"]=[]
+                button1 = ttk.Button(chooseAccountsWindow, text="try to add platforms first", command=lambda: (chooseAccountsWindow.withdraw(),newWindow.withdraw(),tab_control.select(1)))
+                button1.grid(row=2, column=2, padx=10, pady=10, sticky=tk.W)
+
+            else:
+                logger.info(f'query results of existing platforms is {platform_names}')
+
+                if  len(platform_names)==0:
+                    platform_combo["values"]=[]
+                    button1 = ttk.Button(chooseAccountsWindow, text="try to add platforms first", command=lambda: (chooseAccountsWindow.withdraw(),newWindow.withdraw(),tab_control.select(1)))
+                    button1.grid(row=2, column=2, padx=10, pady=10, sticky=tk.W)
+                    
+                else:
+
+                    # Execute a query to retrieve accounts based on the selected platform
+                    platform_combo["values"]=platform_names
+                    for platform in platform_names:
+                        
+                        if tmp['accountlinkaccount'].has_key(platform):
+                            logger.info(f'you have cached  this platform {platform}')
+                        else:
+                            tmp['accountlinkaccount'][platform]=''
+                    
+                    account_rows=AccountModel.filter_accounts(platform=getattr(PLATFORM_TYPE, selected_platform.upper()))
+                    print(f'query accounts for {selected_platform} {getattr(PLATFORM_TYPE, selected_platform.upper())} ')
+                    # Extract account names and set them as options in the account dropdown
+                    if account_rows is None or len(account_rows)==0:
+                        # langlist.delete(0,tk.END)
+                        showinfomsg(message=f"try to add accounts for {selected_platform} first",parent=chooseAccountsWindow)    
+
+                    else:                
+                        account_names = [row.username for row in account_rows]
+                        logger.info(f'we found {len(account_names)} record matching ')
+
+                        # langlist.delete(0,tk.END)
+                        i=0
+                        account_data=[]
+                        for row in account_rows:
+                            account={
+                                "id":CustomID(custom_id=row.id).to_hex(),
+                                "platform":row.platform,
+                                "username":row.username,
+                                "is_deleted":row.is_deleted,
+                                "proxy":row.proxy,
+                                "inserted_at":row.inserted_at
+                            }
+                            account_data.append(account)
+                        refreshcanvas(['id','platform','username','is_deleted','proxy','inserted_at','operation','operation'],account_data)
+                   
+
+    # Bind the platform selection event to the on_platform_selected function
+    platform_combo.bind("<<ComboboxSelected>>", on_platform_selected)
+
+
+
+    
+    def remove_selected_accounts(rowid):
+
+        selected_platform = platform_var.get()
+        existingaccounts=account_var.get()
+        if existingaccounts:
+            existingaccounts=eval(existingaccounts)
+        else:
+            existingaccounts={selected_platform:[]}
+
+        print('you want to remove these selected account',rowid)
+        if rowid==0:
+
+            showinfomsg(message='you have not selected  account at all.choose one or more',parent=chooseAccountsWindow)      
+        
+        else:
+
+
+            if rowid in existingaccounts[selected_platform]:
+                existingaccounts[selected_platform].remove(rowid)
+
+
+                logger.info(f'this account {item} removed success')
+                showinfomsg(message=f'this account {item} removed success',parent=chooseAccountsWindow)    
+            else:
+                logger.info(f'you cannot remove this account {item}, not added before')
+                showinfomsg(message=f'this account {item} not added before',parent=chooseAccountsWindow)    
+            logger.info(f'end to remove,reset account {existingaccounts}')
+
+        account_var.set(str(existingaccounts))
+        parentchooseaccounts.set(str(existingaccounts))
+
+    def add_selected_accounts(rowid):
+        print(rowid,'0000add_selected_accounts000')
+        
+
+        selected_platform = platform_var.get()
+        existingaccounts=account_var.get()
+        if existingaccounts:
+            existingaccounts=eval(existingaccounts)
+        else:
+            existingaccounts={selected_platform:[]}
+        # (youtube:y1,y2),(tiktok:t1:t2)
+        if rowid is None:
+            logger.info('you have not selected new accounts at all')
+            showinfomsg(message='you have not selected new accounts at all',parent=chooseAccountsWindow)    
+        
+        else:
+            if rowid in existingaccounts[selected_platform]:
+                logger.info(f'this account {rowid} added before')                   
+                showinfomsg(message=f'this account {rowid} added before',parent=chooseAccountsWindow)    
+
+            else:
+                if existingaccounts[selected_platform]=='':
+                    existingaccounts[selected_platform]=[]
+                existingaccounts[selected_platform].append(rowid)
+                logger.info(f'this account {rowid} added successS')
+                showinfomsg(message=f'this account {rowid} added success',parent=chooseAccountsWindow)    
+
+        account_var.set(str(existingaccounts))
+        parentchooseaccounts.set(str(existingaccounts))
+    # langlist.bind('<<ListboxSelect>>',add_selected_accounts)   
 
 
 
