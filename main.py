@@ -844,7 +844,7 @@ def chooseAccountsView_listbox(newWindow,parentchooseaccounts):
                     #  , width=dw, height=dh
                      )
     
-    btn6= tk.Button(chooseAccountsWindow, text="remove selected", padx = 10, pady = 10,command = lambda: threading.Thread(target=remove_selected_accounts).start())     
+    btn6= tk.Button(chooseAccountsWindow, text="remove selected", padx = 10, pady = 10,command = lambda: threading.Thread(target=remove_selected_row).start())     
     btn6.grid(row=5,column=0, sticky=tk.W)
     Tooltip(btn6, text='if you want remove any from selected user' , wraplength=200)
     lbl16 = tk.Label(chooseAccountsWindow, text='selected user')
@@ -923,7 +923,7 @@ def chooseAccountsView_listbox(newWindow,parentchooseaccounts):
     # on_platform_selected(None)
 
     
-    def remove_selected_accounts():
+    def remove_selected_row():
         selected_accounts=tmp['accountlinkaccount']['selected']
         show_str=account_var.get()
 
@@ -1114,7 +1114,7 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
             add_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
 
             del_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text='unbind',command=lambda x=i-1 :remove_selected_accounts(rowid=datas[x]['id']))
+                                activebackground= 'orange', text='unbind',command=lambda x=i-1 :remove_selected_row(rowid=datas[x]['id']))
             del_buttons[i].grid(row=i, column=len(headers)-1, sticky='news')
                     
         # Create canvas window to hold the buttons_frame.
@@ -1202,7 +1202,7 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
 
 
     
-    def remove_selected_accounts(rowid):
+    def remove_selected_row(rowid):
 
         selected_platform = platform_var.get()
         existingaccounts=account_var.get()
@@ -1234,7 +1234,6 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
         parentchooseaccounts.set(str(existingaccounts))
 
     def add_selected_accounts(rowid):
-        print(rowid,'0000add_selected_accounts000')
         
 
         selected_platform = platform_var.get()
@@ -3924,7 +3923,7 @@ def chooseProxies(ttkframe,username,parentchooseProxies):
             add_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
 
             del_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text='unbind',command=lambda x=i-1 :remove_selected_accounts(rowid=datas[x]['id']))
+                                activebackground= 'orange', text='unbind',command=lambda x=i-1 :remove_selected_row(rowid=datas[x]['id']))
             del_buttons[i].grid(row=i, column=len(headers)-1, sticky='news')
                     
         # Create canvas window to hold the buttons_frame.
@@ -3986,7 +3985,7 @@ def chooseProxies(ttkframe,username,parentchooseProxies):
 
 
     chooseAccountsWindow=ttkframe
-    def remove_selected_accounts(rowid):
+    def remove_selected_row(rowid):
 
         existingaccounts=proxy_str.get()
         if existingaccounts=='' or existingaccounts is None:
@@ -4162,7 +4161,7 @@ def chooseProxies_listbox(ttkframe,username,parentchooseProxies):
     btn5= tk.Button(ttkframe, text="Reset", padx = 0, pady = 0,command = lambda:(proxyStatus.set(""),country.set(""),state.set(""),city.set(""),proxyTags.set(""),proxyStatus.set("Select From Status"),network_type.set("")))
     btn5.grid(row=4,column=2, sticky=tk.W)    
     
-    btn6= tk.Button(newWindow, text="remove selected", padx = 10, pady = 10,command = lambda: threading.Thread(target=remove_selected_accounts).start())     
+    btn6= tk.Button(newWindow, text="remove selected", padx = 10, pady = 10,command = lambda: threading.Thread(target=remove_selected_row).start())     
     btn6.grid(row=8,column=6, sticky=tk.W)
     lbl16 = tk.Label(newWindow, text='selected proxies')
     lbl16.grid(row=8,column=0, sticky=tk.W)
@@ -4180,7 +4179,7 @@ def chooseProxies_listbox(ttkframe,username,parentchooseProxies):
 
     tmp['accountaddproxies']={}
     
-    def remove_selected_accounts():
+    def remove_selected_row():
         selected_accounts=tmp['accountaddproxies']
         show_str=proxy_str.get()
 
@@ -4525,18 +4524,7 @@ def accountView(frame,ttkframe,lang):
     b_channel_cookie_gen=tk.Button(ttkframe,text="pull",command=auto_gen_cookie_file)
     # b_channel_cookie_gen.place(x=100, y=390)    
     b_channel_cookie_gen.grid(row = 6, column = 12, columnspan = 2, padx=14, pady=15)    
-    # def if_existsOptionCallBack(*args):
-    #     print(if_exists.get())
-    #     print(if_exists_box.current())
-
-    # if_exists = tk.StringVar()
-    # if_exists.set("if the same account exists")
-    # if_exists.trace('w', if_existsOptionCallBack)
-
-
-    # if_exists_box = ttk.Combobox(ttkframe, textvariable=if_exists)
-    # if_exists_box.config(values =('replace', 'append'))
-    # if_exists_box.grid(row = 9, column = 5, columnspan = 3, padx=14, pady=15)    
+ 
     
     b_save_user=tk.Button(ttkframe,text="save user",command=lambda: threading.Thread(target=saveUser(socialplatform.get(),username.get(),password.get(),proxy_option_account.get(),channel_cookie_user.get(),linkAccounts.get())).start() )
                          
@@ -4603,7 +4591,7 @@ def accountView(frame,ttkframe,lang):
     btn5= tk.Button(frame, text="Get Info", command = lambda:queryAccounts(username=q_username_account.get(),platform=q_platform.get()) )
     # btn5.place(x=800, y=15, anchor=tk.NE)    
 
-    btn5.grid(row = 1, column =3, columnspan = 5, padx=14, pady=15)    
+    btn5.grid(row = 1, column =3, padx=14, pady=15)    
 
 
     btn5= tk.Button(frame, text="Reset", padx = 0, pady = 0,command = lambda:(q_platform.set(''),q_platform_account.set('')))
@@ -4612,7 +4600,7 @@ def accountView(frame,ttkframe,lang):
     # Create a frame for the canvas and scrollbar(s).
     chooseAccountsWindow=frame
     frame2 = tk.Frame(chooseAccountsWindow, bg='Red', bd=1, relief=tk.FLAT)
-    frame2.grid(row=2, column=0, rowspan=5,columnspan=5,sticky=tk.NW)
+    frame2.grid(row=2, column=0, rowspan=5,columnspan=15,sticky=tk.NW)
 
     frame2.grid_rowconfigure(0, weight=1)
     frame2.grid_columnconfigure(0, weight=1)
@@ -4621,17 +4609,6 @@ def accountView(frame,ttkframe,lang):
     canvas = tk.Canvas(frame2, bg='Yellow')
     canvas.grid(row=0, column=0)
 
-    def deleteRow(rowid):
-        print('delete',rowid)
-    
-    def addRow(rowid):
-        print('add',rowid)
-
-    def chooseRow(rowid):
-        print('delete',rowid)
-    
-    def unchooseRow(rowid):
-        print('add',rowid)
         
     def refreshcanvas(headers,datas):
 
@@ -4652,8 +4629,8 @@ def accountView(frame,ttkframe,lang):
         COLS=len(headers)+1
         
         ROWS=len(datas)+1
-        if COLS>9:
-            COLS_DISP=9
+        if COLS>15:
+            COLS_DISP=15
         else:
             COLS_DISP=COLS
         if ROWS>20:
@@ -4696,7 +4673,7 @@ def accountView(frame,ttkframe,lang):
             add_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
 
             del_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text='delete',command=lambda x=i-1 :remove_selected_accounts(rowid=datas[x]['id']))
+                                activebackground= 'orange', text='delete',command=lambda x=i-1 :remove_selected_row(rowid=datas[x]['id']))
             del_buttons[i].grid(row=i, column=len(headers)-1, sticky='news')
                     
         # Create canvas window to hold the buttons_frame.
@@ -4711,8 +4688,12 @@ def accountView(frame,ttkframe,lang):
 
 
         dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
-        if dw>int(width/2):
-            dw,dh=int(width/2),int(height/2)
+        print(chooseAccountsWindow.winfo_width())
+        print(canvas.winfo_width())
+
+        # if dw>int(chooseAccountsWindow.winfo_width()):
+        #     print('use parent frame widht')
+        #     dw,dh=int(chooseAccountsWindow.winfo_width()),int(chooseAccountsWindow.winfo_height())
         canvas.configure(scrollregion=bbox, width=dw, height=dh)
         print('========',w,h,dw,dh,bbox)
     tab_headers=['id','platform','username','pass','is_deleted','proxy','inserted_at','operation','operation']
@@ -4758,7 +4739,7 @@ def accountView(frame,ttkframe,lang):
                     "pass":row.password,
                     "is_deleted":row.is_deleted,
                     "proxy":row.proxy,
-                    "inserted_at":row.inserted_at
+                    "inserted_at":datetime.fromtimestamp(row.inserted_at).strftime("%Y-%m-%d %H:%M:%S")  
                 }
                 account_data.append(account)
             refreshcanvas(tab_headers,account_data)
@@ -4774,7 +4755,7 @@ def accountView(frame,ttkframe,lang):
 
 
     
-    def remove_selected_accounts(rowid):
+    def remove_selected_row(rowid):
 
 
 
@@ -4816,16 +4797,21 @@ def accountView(frame,ttkframe,lang):
         rowkeys={}
         for key,value in result.items():
             # print('current key',key,value)
+            if key=='id':
+                value=CustomID(custom_id=value).to_hex()
+            if key=='platform':
+                value=  PLATFORM_TYPE.PLATFORM_TYPE_TEXT[value][1]
+            if value==None:
+                value=''                        
+            if key=='inserted_at':
+                value=datetime.fromtimestamp(value).strftime("%Y-%m-%d %H:%M:%S")                
             if not  key  in ['id','inserted_at','unique_hash','platform']:
             
                 label= tk.Label(chooseAccountsWindow, padx=7, pady=7, relief=tk.RIDGE,
                                     activebackground= 'orange', text=key)
                 label.grid(row=i ,column=0, sticky='news')         
                 entry = tk.Entry(chooseAccountsWindow)
-                if key=='id':
-                    value=CustomID(custom_id=value).to_hex()
-                if key=='platform':
-                    value=  PLATFORM_TYPE.PLATFORM_TYPE_TEXT[value][1]
+        
                 entry.insert(0, value)
                 entry.grid(row=i ,column=1, sticky='news')   
                 rowkeys[i]=key
@@ -4863,19 +4849,6 @@ def accountView(frame,ttkframe,lang):
 
         btn5= tk.Button(chooseAccountsWindow, text="save", padx = 0, pady = 0,command = lambda:AccountModel.update_account(id=rowid,account_data=newresult))
         btn5.grid(row=i+1,column=2, sticky=tk.W)    
-        # if rowid is None:
-        #     logger.info('you have not selected new accounts at all')
-        #     showinfomsg(message='you have not selected new accounts at all',parent=chooseAccountsWindow)    
-        
-        # else:
-        #     if rowid:
-        #         logger.info(f'this account {rowid} added before')                   
-        #         showinfomsg(message=f'this account {rowid} added before',parent=chooseAccountsWindow)    
-
-        #     else:
-        #         logger.info(f'this account {rowid} added successS')
-        #         showinfomsg(message=f'this account {rowid} added success',parent=chooseAccountsWindow)    
-
 
 
     
@@ -6184,31 +6157,7 @@ def  queryProxies(logger,city=None,state=None,country=None,tags=None,network_typ
     # lbl15 = tk.Label(frame,bg="lightyellow", text=hints)
     # lbl15.grid(row=5,column=1, sticky=tk.W)
     # lbl15.after(2000,lbl15.destroy)
-def updateproxies(engine,proxies_list_raw,logger):
-    
-    print('check proxy whether valid and its city country')
-    results=ProxyModel.filter(status=2)
-    if len(results)>0:
-        showinfomsg(f'there are {len(results)} proxy to be validated')
-        for proxy in results:
-            proxy_string=(
-                        f"{proxy.proxy_username}:{proxy.proxy_password}@{proxy.proxy_host}:{proxy.proxy_port}"
-                        if proxy.proxy_username
-                        else f"{proxy.proxy_host}:{proxy.proxy_port}"
-                    )
-            http_proxy=f"socks5://{proxy_string}"
-            https_proxy=f"socks5://{proxy_string}"
 
-            check=CheckIP(http_proxy=http_proxy,https_proxy=https_proxy)
-            ip=check.check_api64ipify()
-            print('check_api64ipify',ip)
-            asp=check.check_asn_type()
-            print('asp',asp)
-            dnscountry=check.check_dns_country(ip)
-            print('dnscountry',dnscountry)
-
-            ipcountry=check.check_ip_coutry(ip)
-            print('ipcountry',ipcountry)
 
 def split_proxy(proxy_string):
     # Remove the protocol (e.g., "socks5://")
@@ -6336,7 +6285,7 @@ def proxyView(frame,ttkframe,lang):
     b_save_proxy=tk.Button(frame,text="save proxy",command=lambda: threading.Thread(target=saveproxies(prod_engine,proxy_textfield.get("1.0", tk.END),logger)).start() )
     b_save_proxy.grid(row=5,column=0, sticky=tk.W)
     
-    b_check_proxy=tk.Button(frame,text="check proxy",command=lambda: threading.Thread(target=updateproxies(prod_engine,proxy_textfield.get("1.0", tk.END),logger)).start() )
+    b_check_proxy=tk.Button(frame,text="bulk check proxy",command=lambda: threading.Thread(target=updateproxies(prod_engine,proxy_textfield.get("1.0", tk.END),logger)).start() )
     b_check_proxy.grid(row=5,column=1, sticky=tk.W)    
     
 
@@ -6417,47 +6366,315 @@ def proxyView(frame,ttkframe,lang):
 
 
 
-    btn5= tk.Button(ttkframe, text="Get proxy list", padx = 0, pady = 0,command = lambda: threading.Thread(
-        target=queryProxies(logger,city.get(),state.get(),country.get(),proxyTags.get(),network_type.get(),
-                            proxyStatus.get(),ttkframe,tree=tree,langlist=None)).start())
+    btn5= tk.Button(ttkframe, text="Get proxy list", padx = 0, pady = 0,command = lambda: queryProxy(city.get(),state.get(),country.get(),proxyTags.get(),network_type.get(),
+                            proxyStatus.get()))
+
     btn5.grid(row=4,column=0, sticky=tk.W)    
     
     btn5= tk.Button(ttkframe, text="Reset", padx = 0, pady = 0,command = lambda:(proxyStatus.set(""),country.set(""),state.set(""),city.set(""),proxyTags.set(""),proxyStatus.set("Select From Status"),network_type.set("")))
     btn5.grid(row=4,column=1, sticky=tk.W)    
+
+
+    # Create a frame for the canvas and scrollbar(s).
+    chooseAccountsWindow=ttkframe
+    frame2 = tk.Frame(chooseAccountsWindow, bg='Red', bd=1, relief=tk.FLAT)
+    frame2.grid(row=5, column=0, rowspan=5,columnspan=5,sticky=tk.NW)
+
+    frame2.grid_rowconfigure(0, weight=1)
+    frame2.grid_columnconfigure(0, weight=1)
+    frame2.grid_columnconfigure(1, weight=1)
+    # Add a canvas in that frame.
+    canvas = tk.Canvas(frame2, bg='Yellow')
+    canvas.grid(row=0, column=0)
+
+        
+    def refreshcanvas(headers,datas):
+
+        # Create a vertical scrollbar linked to the canvas.
+        vsbar = tk.Scrollbar(frame2, orient=tk.VERTICAL, command=canvas.yview)
+        vsbar.grid(row=0, column=1, sticky=tk.NS)
+        canvas.configure(yscrollcommand=vsbar.set)
+
+        # Create a horizontal scrollbar linked to the canvas.
+        hsbar = tk.Scrollbar(frame2, orient=tk.HORIZONTAL, command=canvas.xview)
+        hsbar.grid(row=1, column=0, sticky=tk.EW)
+        canvas.configure(xscrollcommand=hsbar.set)
+
+        # Create a frame on the canvas to contain the grid of buttons.
+        buttons_frame = tk.Frame(canvas)
+            
+
+        COLS=len(headers)+1
+        
+        ROWS=len(datas)+1
+        if COLS>9:
+            COLS_DISP=9
+        else:
+            COLS_DISP=COLS
+        if ROWS>20:
+            ROWS_DISP=20
+        else:
+            ROWS_DISP=ROWS        
+        # Add the buttons to the frame.
+        add_buttons = [tk.Button() for j in range(ROWS+1)] 
+        del_buttons = [tk.Button() for j in range(ROWS+1)] 
+        
+        # set table header
+
+
+        for j,h in enumerate(headers):
+            label = tk.Label(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                activebackground= 'orange', text=h)
+            label.grid(row=0, column=j, sticky='news')                    
+            if h=='operation':
+                button = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                    activebackground= 'orange', text='operation')
+                button.grid(row=0, column=j, sticky='news')
+
+                # delete_button = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                #                     activebackground= 'orange', text='operation')
+                # delete_button.grid(row=0, column=j-1, sticky='news')
+
+        for i,row in enumerate(datas):
+            i=i+1
+            for j in range(0,len(headers)):
+                
+                if headers[j]!='operation':
+                    label = tk.Label(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                        activebackground= 'orange', text=row[headers[j]])
+                    label.grid(row=i ,column=j, sticky='news')         
+
+              
+            add_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                activebackground= 'orange', text='check',command=lambda x=i-1  :check_selected_row(rowid=datas[x]['id']))
+            add_buttons[i].grid(row=i, column=len(headers)-3, sticky='news')
+              
+            add_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                activebackground= 'orange', text='edit',command=lambda x=i-1  :update_selected_row(rowid=datas[x]['id']))
+            add_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
+
+            del_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                activebackground= 'orange', text='delete',command=lambda x=i-1 :remove_selected_row(rowid=datas[x]['id']))
+            del_buttons[i].grid(row=i, column=len(headers)-1, sticky='news')
+                    
+        # Create canvas window to hold the buttons_frame.
+        canvas.create_window((0,0), window=buttons_frame, anchor=tk.NW)
+
+        buttons_frame.update_idletasks()  # Needed to make bbox info available.
+        bbox = canvas.bbox(tk.ALL)  # Get bounding box of canvas with Buttons.
+
+        # Define the scrollable region as entire canvas with only the desired
+        # number of rows and columns displayed.
+        w, h = bbox[2]-bbox[1], bbox[3]-bbox[1]
+
+
+        dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
+        if dw>int(width/2):
+            dw,dh=int(width/2),int(height/2)
+        canvas.configure(scrollregion=bbox, width=dw, height=dh)
+        print('========',w,h,dw,dh,bbox)
+    tab_headers=['id', 'provider', 'protocol', 'host', 'port', 'username', 'pass', 'country', 'state', 'city', 'tags', 'status', 'validate_results', 'is_deleted', 'inserted_at']
+    tab_headers.append('operation')
+    tab_headers.append('operation')
+    tab_headers.append('operation')
     
+    refreshcanvas(tab_headers,[])
+
+    def check_selected_row(rowid):
+        
+        print('check proxy whether valid and its city country')
+        result=ProxyModel.get_proxy_by_id(id=rowid)
+        # if len(results)>0:
+        #     showinfomsg(f'there are {len(results)} proxy to be validated')
+        #     for proxy in results:
+        #         proxy_string=(
+        #                     f"{proxy.proxy_username}:{proxy.proxy_password}@{proxy.proxy_host}:{proxy.proxy_port}"
+        #                     if proxy.proxy_username
+        #                     else f"{proxy.proxy_host}:{proxy.proxy_port}"
+        #                 )
+        #         http_proxy=f"socks5://{proxy_string}"
+        #         https_proxy=f"socks5://{proxy_string}"
+
+        #         check=CheckIP(http_proxy=http_proxy,https_proxy=https_proxy)
+        #         ip=check.check_api64ipify()
+        #         print('check_api64ipify',ip)
+        #         asp=check.check_asn_type()
+        #         print('asp',asp)
+        #         dnscountry=check.check_dns_country(ip)
+        #         print('dnscountry',dnscountry)
+
+        #         ipcountry=check.check_ip_coutry(ip)
+        #         print('ipcountry',ipcountry)
+
+
+    def queryProxy(city,state,country,tags,network_type,status):
+        city=city.lower()
+        country=country.lower()
+        tags=tags.lower()
+        if status=='valid':
+            status=1
+        elif status=='invalid':
+            status=0
+        else:
+            status=2        
+        if city=='':
+            city=None
+        if country=='':
+            country=None  
+        if tags=='':
+            tags=None      
+        if state=='':
+            state=None
+        if network_type=='':
+            network_type=None 
+        db_rows=  ProxyModel.filter_proxies(city=city,country=country,tags=tags,status=status,state=state,network_type=network_type)
+        # Extract account names and set them as options in the account dropdown
+        if db_rows is None or len(db_rows)==0:
+            # langlist.delete(0,tk.END)
+            showinfomsg(message=f"try to add proxy first",parent=chooseAccountsWindow)    
+
+        else:                
+            logger.info(f'we found {len(db_rows)} record matching ')
+
+            # langlist.delete(0,tk.END)
+            i=0
+            account_data=[]
+            for row in db_rows:
+                account={
+                    "id":CustomID(custom_id=row.id).to_hex(),
+                    "provider": PROXY_PROVIDER_TYPE.PROXY_PROVIDER_TYPE_TEXT[row.proxy_provider_type][1],
+                    "protocol":row.proxy_protocol,
+                    "host":row.proxy_host,
+                    "port":row.proxy_port,                    
+                    "username":row.proxy_username,
+                    "pass":row.proxy_password,
+                    "country":row.country,
+                    "state":row.state,
+                    "city":row.city,                    
+                    "tags":row.tags,                    
+                    "status":row.status,                    
+                    "validate_results":row.proxy_validate_results,
+                    "is_deleted":row.is_deleted   ,
+                    "inserted_at":datetime.fromtimestamp(row.inserted_at).strftime("%Y-%m-%d %H:%M:%S")
+                }
+                account_data.append(account)
+                print(account.keys())
+            refreshcanvas(tab_headers,account_data)
+        
+        
+                
+            logger.info(f'Account search and display finished')
+                    
+
+
+    # Bind the platform selection event to the on_platform_selected function
+
+
 
     
-    tree = ttk.Treeview(ttkframe, height=20, column=('#0', '#1', '#2', '#3', '#4', '#5', '#6', '#7', '#8', '#9', '#10'))
-    tree["column"] = ('#0', '#1', '#2', '#3', '#4', '#5', '#6', '#7', '#8', '#9', '#10')
-    tree.grid(row = 5, column = 0, columnspan = 20, padx=14, pady=15)
+    def remove_selected_row(rowid):
 
 
-    tree.heading('#0', text = 'proxy No.')
-    tree.column('#0', anchor = 'center', width = 30)
-    tree.heading('#1', text = 'host')
-    tree.column('#1', anchor = 'center', width = 60)
-    tree.heading('#2', text = 'port')
-    tree.column('#2', anchor = 'center', width = 60)    
-    tree.heading('#3', text = 'Status')
-    tree.column('#3', anchor = 'center', width = 50)
-    tree.heading('#4', text = 'City')
-    tree.column('#4', anchor = 'center', width = 40)
-    tree.heading('#5', text = 'State')
-    tree.column('#5', anchor = 'center', width = 40)
 
-    tree.heading('#6', text = 'Country')
-    tree.column('#6', anchor = 'center', width = 40)
-    tree.heading('#7', text = 'tags')
-    tree.column('#7', anchor = 'center', width = 80)
-    tree.heading('#8', text = 'network_type')
-    tree.column('#8', anchor = 'center', width = 80)
-    tree.heading('#9', text = 'validate_results')
-    tree.column('#9', anchor = 'center', width = 120)
-  
-        # Create the Treeview column
-    tree.heading('#10', text='Operation')
-    tree.column('#10', anchor='center', width=80)
-    # viewing_records()
+        print('you want to remove these selected account',rowid)
+        if rowid==0:
+
+            showinfomsg(message='you have not selected  account at all.choose one or more',parent=chooseAccountsWindow)      
+        
+        else:
+
+
+            if rowid :
+                rowid=CustomID(custom_id=rowid).to_bin()
+                result=ProxyModel.delete_by_id(id=rowid,is_deleted=True)
+
+                if result:
+                    logger.info(f'this account {rowid} removed success')
+                    showinfomsg(message=f'this account {rowid} removed success',parent=chooseAccountsWindow)    
+                else:
+                    logger.info(f'you cannot remove this account {rowid}, not added before')
+                    showinfomsg(message=f'this account {rowid} not added before',parent=chooseAccountsWindow)    
+            logger.info(f'end to remove,reset account {rowid}')
+
+
+    def update_selected_row(rowid):
+        # showinfomsg(message='not supported yet',parent=chooseAccountsWindow)    
+        chooseAccountsWindow = tk.Toplevel(frame)
+        chooseAccountsWindow.geometry(window_size)
+        chooseAccountsWindow.title('Edit and update account info ')
+        rowid=CustomID(custom_id=rowid).to_bin()
+
+        result=ProxyModel.get_proxy_by_id(id=rowid)
+        from playhouse.shortcuts import model_to_dict
+        result = model_to_dict(result)
+        print('----------',result)
+
+        i=1
+        newresult=result
+        rowkeys={}
+        for key,value in result.items():
+            if key=='id':
+                print('convert id to hex',value)
+                value=CustomID(custom_id=value).to_hex()
+                print('convert id to hex',value)
+                
+            if key=='platform':
+                value=  PLATFORM_TYPE.PLATFORM_TYPE_TEXT[value][1]
+            if key=='provider':
+                value=  PROXY_PROVIDER_TYPE.PROXY_PROVIDER_TYPE_TEXT[value][1]
+                
+            if key=='status':
+                value =PROXY_STATUS.PROXY_STATUS_TEXT[value][1]
+            if value==None:
+                value=''
+            if key=='inserted_at':
+                value=datetime.fromtimestamp(value).strftime("%Y-%m-%d %H:%M:%S")          
+            print('current key',key,value)
+            if not  key  in ['id','inserted_at','unique_hash','platform']:
+            
+                label= tk.Label(chooseAccountsWindow, padx=7, pady=7, relief=tk.RIDGE,
+                                    activebackground= 'orange', text=key)
+                label.grid(row=i ,column=0, sticky='news')         
+                entry = tk.Entry(chooseAccountsWindow)
+
+                entry.insert(0, value)
+                entry.grid(row=i ,column=1, sticky='news')   
+                rowkeys[i]=key
+                def callback(event):
+
+                    x = event.widget.grid_info()['row']
+                    print(f'current input changes for {rowkeys[x]}',event.widget.get())   
+
+                    newresult[rowkeys[x]]=event.widget.get()
+                    if rowkeys[x]=='is_deleted':
+                        print('is deleted',type(event.widget.get()))
+                        value='0'
+                        if event.widget.get()=='0':
+                            value=False
+                        elif event.widget.get()=='1':
+                            value=True                        
+                        newresult[rowkeys[x]]=value
+
+                    print('============update row',newresult)
+
+                # variable.trace('w', lambda:setEnty())    
+                entry.bind("<KeyRelease>", callback)
+
+            else:
+
+                label = tk.Label(chooseAccountsWindow, padx=7, pady=7, relief=tk.RIDGE,
+                                    activebackground= 'orange', text=key)
+                label.grid(row=i ,column=0, sticky='news')         
+                variable=tk.StringVar()
+                variable.set(value)
+                entry = tk.Entry(chooseAccountsWindow,textvariable=variable)
+                entry.grid(row=i ,column=1, sticky='news') 
+                entry.config(state='disabled')
+            i=i+1
+
+        btn5= tk.Button(chooseAccountsWindow, text="save", padx = 0, pady = 0,command = lambda:ProxyModel.update_proxy(id=rowid,proxy_data=newresult))
+        btn5.grid(row=i+1,column=2, sticky=tk.W)    
+
 
 def metaView(left,right,lang):
     global metaView_video_folder
@@ -6795,19 +7012,7 @@ def render(root,window,lang):
             pass
     tab_control.bind("<<NotebookTabChanged>>", refresh_video_folder)
     
-    # lefts=[]
-    # rights=[]
-    # for view in ['installView','accountView','proxyView','videosView','thumbView',
-                 
-    #              'tagsView','desView','scheduleView','metaView',
-    #              'uploadView','docView']:
 
-    #     subtab_frame,left,right=addTab(tab_control)
-    #     lefts.append(left)
-    #     rights.append(right)
-
-    #     tab_control.add(subtab_frame, 
-    #                     text=settings[lang][view])
     doc_frame = ttk.Frame(tab_control)
     doc_frame.grid_rowconfigure(0, weight=1)
     doc_frame.grid_columnconfigure(0, weight=1, uniform="group1")

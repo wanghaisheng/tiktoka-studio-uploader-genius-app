@@ -10,7 +10,7 @@ class PROXY_STATUS:
     INVALID = 1
     UNCHEKCED = 2
 
-    PROXY_PROTOCOL_TEXT = [
+    PROXY_STATUS_TEXT = [
         (VALID, "VALID"),
         (INVALID, "INVALID"),
         (UNCHEKCED, "UNCHEKCED"),
@@ -135,9 +135,9 @@ class ProxyModel(BaseModel):
     # Read (Select) Proxy by ID
     @classmethod
 
-    def get_proxy_by_id(proxy_id):
+    def get_proxy_by_id(cls,id):
         try:
-            proxy = ProxyModel.get(ProxyModel.id == proxy_id)
+            proxy = ProxyModel.get(ProxyModel.id ==id)
             return proxy
         except ProxyModel.DoesNotExist:
             return None
@@ -145,30 +145,45 @@ class ProxyModel(BaseModel):
     # Update Proxy by ID
     @classmethod
 
-    def update_proxy(proxy_id, **kwargs):
+    def update_proxy(cls,id,proxy_data,**kwargs):
         try:
-            proxy = ProxyModel.get(ProxyModel.id == proxy_id)
-            for key, value in kwargs.items():
-                setattr(proxy, key, value)
-            proxy.save(force_insert=True) 
+            proxy = ProxyModel.get(ProxyModel.id ==id)
+            if proxy_data:
+                proxy = ProxyModel(**proxy_data)
+                print('after modify',proxy,proxy.is_deleted)
+            
+
+            else:
+                for key, value in kwargs.items():
+                    # 由于entry获取的都是字符串变量值，对于bool型，需要手动转换
+                    if key=='is_deleted':
+                        print('is deleted',type(value))
+                        if value=='0':
+                            value=False
+                        elif value=='1':
+                            value=True
+                    setattr(proxy, key, value)
+                    
+                print('after modify',proxy,proxy.is_deleted)
+            proxy.save() 
             return proxy
         except ProxyModel.DoesNotExist:
             return None
     @classmethod
 
     # Delete (Soft Delete) Proxy by ID
-    def delete_proxy(proxy_id):
+    def delete_proxy(cls,id):
         try:
-            proxy = ProxyModel.get(ProxyModel.id == proxy_id)
+            proxy = ProxyModel.get(ProxyModel.id ==id)
             proxy.is_deleted = True
-            proxy.save(force_insert=True) 
+            proxy.save() 
             return True
         except ProxyModel.DoesNotExist:
             return False
     @classmethod
      
     # Assuming you have a list of proxy data named proxy_list
-    def bulk_add_proxies(proxy_list):
+    def bulk_add_proxies(cls,proxy_list):
         inserted_proxies = []
         for proxy_data in proxy_list:
             # Calculate unique hash for the proxy
