@@ -4557,14 +4557,14 @@ def accountView(frame,ttkframe,lang):
     latest_user_conditions_user=tk.StringVar()
     lbl15 = tk.Label(frame, text='By username.')
     # lbl15.place(x=430, y=15, anchor=tk.NE)
-    lbl15.grid(row = 0, column = 0, columnspan = 3, padx=14, pady=15)    
+    lbl15.grid(row = 0, column = 0, padx=14, pady=15,sticky='w')    
     txt15 = tk.Entry(frame, width=11,textvariable=q_platform_account)
     txt15.insert(0,'')
-    txt15.grid(row = 1, column = 0, columnspan = 3, padx=14, pady=15)    
+    txt15.grid(row = 1, column = 0, padx=14, pady=15,sticky='w')    
 
 
     lb18 = tk.Label(frame, text='By platform.')
-    lb18.grid(row=0,column=3, sticky=tk.W)
+    lb18.grid(row=0,column=1, sticky=tk.W)
 
 
     q_platform = tk.StringVar()
@@ -4593,7 +4593,7 @@ def accountView(frame,ttkframe,lang):
     q_platform_accountbox['values'] = q_platformb_values()
 
     q_platform_accountbox.bind('<FocusIn>', lambda event: q_platformdb_refresh(event))    
-    q_platform_accountbox.grid(row = 1, column = 2, columnspan = 3, padx=14, pady=15)    
+    q_platform_accountbox.grid(row = 1, column = 1, padx=14, pady=15,sticky='w')    
 
 
 
@@ -4603,7 +4603,7 @@ def accountView(frame,ttkframe,lang):
     btn5= tk.Button(frame, text="Get Info", command = lambda:queryAccounts(username=q_username_account.get(),platform=q_platform.get()) )
     # btn5.place(x=800, y=15, anchor=tk.NE)    
 
-    btn5.grid(row = 0, column =3, columnspan = 5, padx=14, pady=15)    
+    btn5.grid(row = 1, column =3, columnspan = 5, padx=14, pady=15)    
 
 
     btn5= tk.Button(frame, text="Reset", padx = 0, pady = 0,command = lambda:(q_platform.set(''),q_platform_account.set('')))
@@ -4727,8 +4727,12 @@ def accountView(frame,ttkframe,lang):
         if platform=='' or 'SELECT FROM PLATFORMS' in platform:
             platform=None        
         else:
-            platform=getattr(PLATFORM_TYPE, platform.upper())
-            print(f'query accounts for {platform} {getattr(PLATFORM_TYPE, platform.upper())} ')
+            try:
+                platform=int(platform)
+            except:
+                print(f'query accounts for {platform} {getattr(PLATFORM_TYPE, platform.upper())} ')
+
+                platform=getattr(PLATFORM_TYPE, platform.upper())
         selected_platform=platform
 
         account_rows=AccountModel.filter_accounts(platform=selected_platform)

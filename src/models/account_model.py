@@ -91,9 +91,11 @@ class AccountModel(BaseModel):
             return False
     @classmethod
 
-    def filter_accounts(cls, platform=None, username=None, proxy=None):
+    def filter_accounts(cls, platform=None, username=None, proxy=None,is_deleted=None):
         query = cls.select()
 
+        if is_deleted is not None:
+            query = query.where(cls.is_deleted == is_deleted)
         if platform is not None:
             query = query.where(cls.platform == platform)
 
