@@ -13,7 +13,7 @@ class AccountModel(BaseModel):
     proxy = TextField(null=True)
     inserted_at = IntegerField(null=True)
     is_deleted = BooleanField(default=False)  # Flag if the account is deleted
-    unique_hash = TextField(index=True, unique=True, null=True, default=None)  # Unique hash for the account
+    unique_hash = TextField(index=True,unique=True, null=True, default=None)  # Unique hash for the account
 
     # class Meta:
     #     db_table = db
@@ -33,7 +33,7 @@ class AccountModel(BaseModel):
             account.inserted_at = int(time.time())  # Update insert_date
             account.unique_hash=unique_hash
             account.id = CustomID().to_bin()
-
+            account.is_deleted=False
             account.save(force_insert=True) 
             return account.id
             
@@ -41,27 +41,50 @@ class AccountModel(BaseModel):
             return None
     @classmethod
 
-    def get_account_by_id(cls, account_id):
-        return cls.get_or_none(cls.id == account_id)
+    def get_account_by_id(cls, id):
+        return cls.get_or_none(cls.id == id)
+    @classmethod
+
+    def get_active_account_by_id(cls, id):
+        return cls.get_or_none(cls.id == id,cls.is_deleted==False)    
     @classmethod
 
     def get_account_by_username(cls, username):
         return cls.get_or_none(cls.username == username)
     @classmethod
     
-    def update_account(cls, account_id, **kwargs):
+    def update_account(cls, id,account_data, **kwargs):
         try:
-            account = cls.get(cls.id == account_id)
-            for key, value in kwargs.items():
-                setattr(account, key, value)
-            account.save(force_insert=True) 
+            account = cls.get_or_none(cls.id == id)
+            print('before modify',account,account.is_deleted)
+            if account_data:
+                account = AccountModel(**account_data)
+                print('after modify',account,account.is_deleted)
+
+
+            else:
+                for key, value in kwargs.items():
+                    # 由于entry获取的都是字符串变量值，对于bool型，需要手动转换
+                    if key=='is_deleted':
+                        print('is deleted',type(value))
+                        if value=='0':
+                            value=False
+                        elif value=='1':
+                            value=True
+                    setattr(account, key, value)
+                    
+                print('after modify',account,account.is_deleted)
+            account.inserted_at = int(time.time())  # Update insert_date
+
+            account.save() 
+            print('update success')
             return account
         except cls.DoesNotExist:
             return None
 
-    def delete_account(cls, account_id):
+    def delete_account(cls, id):
         try:
-            account = cls.get(cls.id == account_id)
+            account = cls.get(cls.id == id)
             account.delete_instance()
             return True
         except cls.DoesNotExist:

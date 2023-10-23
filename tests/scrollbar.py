@@ -3,7 +3,7 @@ import tkinter as tk
 LABEL_BG = 'light grey'
 ROWS, COLS = 10, 8  # Size of grid.
 ROWS_DISP = 3  # Number of rows to display.
-COLS_DISP = 8  # Number of columns to display.
+COLS_DISP = 4  # Number of columns to display.
 
 
 class HoverButton(tk.Button):
@@ -120,6 +120,10 @@ class MyApp(tk.Tk):
             # number of rows and columns displayed.
             w, h = bbox[2]-bbox[1], bbox[3]-bbox[1]
             dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
+            #scrolable region should be max parent frame width,height
+            dw,dh=frame2.winfo_reqwidth(),frame2.winfo_reqheight()
+
+            print('=====',w,h,dw,dh,bbox)
             canvas.configure(scrollregion=bbox, width=dw, height=dh)
         refreshcanvas(1,8)
 
