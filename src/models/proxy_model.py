@@ -210,22 +210,22 @@ class ProxyModel(BaseModel):
         # for person in cls.select():
         #     print(person)
 
-        if country is not None:
+        if country is not None and country!='':
             query = query.where(cls.country == country)
 
-        if state is not None:
+        if state is not None and state!='':
             query = query.where(cls.state == state)
 
-        if city is not None:
+        if city is not None and city!='':
             query = query.where(cls.city == city)
 
-        if tags is not None:
+        if tags is not None and tags!='':
             query = query.where(cls.tags == tags)
 
-        if status is not None:
+        if status is not None and status!='':
             query = query.where(cls.status == status)
 
-        if network_type is not None:
+        if network_type is not None and network_type!='':
             query = query.where(cls.proxy_validate_network_type == network_type)
         try:
             result = list(query)

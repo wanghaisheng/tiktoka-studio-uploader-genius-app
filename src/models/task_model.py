@@ -1,4 +1,4 @@
-from peewee import Model, BlobField, TextField,IntegerField,ForeignKeyField
+from peewee import TextField, BlobField, BooleanField,IntegerField,ForeignKeyField
 from src.models import BaseModel,db
 import config
 import time
@@ -22,9 +22,14 @@ class TaskModel(BaseModel):
     id = BlobField(primary_key=True)    
     type= IntegerField(default=PLATFORM_TYPE.YOUTUBE)
     status = IntegerField(default=TASK_STATUS.PENDING)
-    video = ForeignKeyField(YoutubeVideoModel, backref='tasks')
-    
-    setting = ForeignKeyField(UploadSettingModel, backref='tasks')
+    prorioty= BooleanField(default=False) 
+    video = ForeignKeyField(YoutubeVideoModel, backref='videos')
+    # video upload use which proxy
+    proxy = TextField(null=True)
+    # video upload to
+    username = TextField(null=True)
+
+    setting = ForeignKeyField(UploadSettingModel, backref='settings')
 
     inserted_at = IntegerField()
     uploaded_at = IntegerField(null=True)
@@ -42,6 +47,7 @@ class TaskModel(BaseModel):
         task.save(force_insert=True) 
         
         print('task add ok',task.id)
+        return task
         
             # for user in TaskModel.select():
             #     print(user.name)
@@ -57,7 +63,7 @@ class TaskModel(BaseModel):
             task = cls.get(cls.id == task_id)
             for key, value in kwargs.items():
                 setattr(task, key, value)
-            task.save(force_insert=True) 
+            task.save() 
             return task
         except cls.DoesNotExist:
             return None
@@ -72,28 +78,74 @@ class TaskModel(BaseModel):
             return False
     @classmethod
 
-    def filter_tasks(cls, status=None, type=None,uploaded_at=None,setting=None,inserted_at=None,video_title=None,username=None):
-        # 如果存在video 相关的查询参数，先找到对应的video id集合
-        if video_title is not None:
-            query = query.join(YoutubeVideoModel).where(YoutubeVideoModel.video_title == video_title)
+    def filter_tasks(cls, status=None, type=None,uploaded_at=None,setting=None,inserted_at=None,video_title=None,video_id=None,username=None):
+        # result=list(TaskModel.select())
+        # for i in result:
+        #     print(i.__data__)
+        #     print(i.inserted_at)
+        #     print(i.video_id)
+        #     print(i.setting_id)
 
-        # if type=='youtube' or type==0:
-        #     query = query.join(YoutubeVideoModel).where(YoutubeVideoModel.video_title == video_title)
+
+
+        query = (TaskModel
+                .select(TaskModel, YoutubeVideoModel, UploadSettingModel, AccountModel)
+                .join(YoutubeVideoModel)  # Join favorite -> user (owner of favorite).
+                .switch(TaskModel)
+                .join(UploadSettingModel)  # Join favorite -> tweet
+                .join(AccountModel)
+                )   # Join tweet -> user        
+        print('999999999',query)
+        print('999999999',len(list(query)))
+
+        for i in list( query):
+            print(i.__data__)
+            print(i.inserted_at)
+            print(i.video_id)
+            print(i.setting_id)
+        # 如果存在video 相关的查询参数，先找到对应的video id集合
+        if video_title=='':
+            video_title=None
+        if status=='':
+            status=None
+        if video_id=='':
+            video_id=None
+        if username=='':
+            username=None
+        if video_title is not None :
+            print('ding ding video title')
+            query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
+
+            query = (query
+            # .join(YoutubeVideoModel,on=(TaskModel.video_id == YoutubeVideoModel.id))
+            # .where(YoutubeVideoModel.video_title.regexp(video_title))
+            .where(YoutubeVideoModel.video_title==video_title)
+
+            )
+            query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
+
+        print('1')
+
+        if video_id is not None:
+            query = query.join(YoutubeVideoModel,on=(TaskModel.video == YoutubeVideoModel.id)).where(YoutubeVideoModel.youtube_video_id == video_id)
+            query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
+
+        print('3')        
         # 如果存在account 相关的查询参数，先找到对应的 setting id集合
         if username is not None:
-            query = query.join(UploadSettingModel).join(AccountModel).where(AccountModel.username == username)
-        
-        query = cls.select()
-        print('all platfroms are ',list(query))
-        # if video_title is not None:
-        #     query = query.where(cls.video.v == video)
+            query = query.join(UploadSettingModel,on=(TaskModel.setting == UploadSettingModel.id)).join(AccountModel,on=(UploadSettingModel.account == AccountModel.id)).where(AccountModel.username.regexp(username))
 
-        
-        if setting is not None:
-            query = query.where(cls.setting == setting)
-        
+            query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
+        print('2')
+
+
+
+
+
+  
         if status is not None:
             query = query.where(cls.status == status)
+        print('5')
 
         if inserted_at is not None:
             query = query.where(cls.inserted_at == inserted_at)
@@ -101,13 +153,22 @@ class TaskModel(BaseModel):
             query = query.where(cls.uploaded_at == uploaded_at)
         if type is not None:
             query = query.where(cls.type == type)
-            # # Assuming 'proxy_id' is the ID of the proxy you want to work with
 
-            # proxy = ProxyModel.get(ProxyModel.id == proxy_id)
-            # associated_task = proxy.task  # This will fetch the associated Account
+        print('8')
+
+        print('9',(query))
 
         try:
             result = list(query)
+            print(len(result))
+            # if len(result)==0:
+            #     result=list(TaskModel.select())
+            # for i in result:
+            #     for att in dir(i):
+            #         print(f'=======att========{att}')
+            #         print(att,getattr(i,att))
+                # print('----------',i.video)
+                # print('----------',i.setting)
             
         except cls.DoesNotExist:
             result = None  # Set a default value or perform any other action

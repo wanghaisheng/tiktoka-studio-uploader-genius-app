@@ -368,7 +368,7 @@ class YoutubeVideoModel(BaseModel):
     @classmethod
 
     # Assuming you have defined VideoModel as shown earlier
-    def create_video(cls,video_data):
+    def add_video(cls,video_data):
         try:
             unique_hash = generate_unique_hash(video_data)
             video_data['unique_hash'] = unique_hash

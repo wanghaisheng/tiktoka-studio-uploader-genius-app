@@ -38,7 +38,7 @@ class AccountModel(BaseModel):
             return account.id
             
         else:
-            return None
+            return existing_account
     @classmethod
 
     def get_account_by_id(cls, id):
@@ -93,16 +93,16 @@ class AccountModel(BaseModel):
 
     def filter_accounts(cls, platform=None, username=None, proxy=None,is_deleted=None):
         query = cls.select()
-
-        if is_deleted is not None:
+    
+        if is_deleted is not None and is_deleted!='':
             query = query.where(cls.is_deleted == is_deleted)
-        if platform is not None:
+        if platform is not None and platform !='':
             query = query.where(cls.platform == platform)
 
-        if username is not None:
+        if username is not None and username!='':
             query = query.where(cls.username == username)
 
-        if proxy is not None:
+        if proxy is not None and proxy !='':
             query = query.where(cls.proxy == proxy)
             # # Assuming 'proxy_id' is the ID of the proxy you want to work with
 

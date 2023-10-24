@@ -5771,6 +5771,16 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                                             logger.info('we use default release_date_hour 10:15')    
                                         elif video.get('release_date_hour') not in settings[locale]['availableScheduleTimes']:
                                             logger.error(f"we use choose one from {settings[locale]['availableScheduleTimes']}") 
+                    if video.get('prorioty')==None:
+                        video['prorioty']=False      
+                        logger.info(f'we use prorioty ==False')  
+                    else:                    
+                        if type(video.get('prorioty'))==bool:
+                            pass
+                        elif type(video.get('prorioty'))==str and video.get('prorioty').lower() not in ['true','false']:
+
+                            logger.error(f'prorioty is {video.get("prorioty")} of {type(video.get("prorioty"))},it should be bool, true or false')
+                    
                     if video.get('release_date')==None:
                         nowdate=datetime.now() 
                         video['release_date']=nowdate      
@@ -5804,17 +5814,35 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                                 "video_title": video['video_title'],
                                 "video_description": video['video_description'],
                                 "thumbnail_local_path": video['thumbnail_local_path'],
-                                "publish_policy": 0,
+                                "publish_policy": video['publish_policy'],
                                 "tags": 
                                     video['tags'],
                                 
                                 }
                         logger.info(f'start to save ytb video data {settingdata} to db')
 
-                        taskvideo=YoutubeVideoModel.create_video(videodata)
+                        taskvideo=YoutubeVideoModel.add_video(videodata)
+                    else:
+                        print(f"we dont support yet to save video for: {video.get('platform')}")
+                        videodata=    {
+                                "video_local_path": video['video_local_path'],
+                                "video_title": video['video_title'],
+                                "video_description": video['video_description'],
+                                "thumbnail_local_path": video['thumbnail_local_path'],
+                                "publish_policy": video['publish_policy'],
+                                "tags": 
+                                    video['tags'],
+                                
+                                }
+                        logger.info(f'start to save ytb video data {settingdata} to db')
+
+                        taskvideo=YoutubeVideoModel.add_video(videodata)                        
+                    logger.info(f'end to process video data')
+
                     taskdata={
                         "type":video['platform'],
-                        "status":0
+                        "status":0,
+                        "prorioty":video['prorioty']
                     }
                     logger.info(f'end to process video data')
                     logger.info(f'start to process task data')
@@ -5859,21 +5887,39 @@ def uploadView(frame,ttkframe,lang):
     txt15.insert(0,'input status')
     txt15.grid(row = 1, column = 3,sticky='w',columnspan=2)
 
-    platformname = tk.StringVar()
-    lbl16 = tk.Label(queryframe, text='Enter platform.')
-    lbl16.grid(row = 0, column = 6,sticky='w')
-    txt16 = tk.Entry(queryframe,textvariable=platformname)
-    txt16.insert(0,'input platformname')
-    txt16.grid(row = 1, column = 6,sticky='w',columnspan=2)
+    # Create a label for the platform dropdown
+    platform_label = ttk.Label(queryframe, text="Select Platform:")
+    platform_label.grid(row=0, column=6, padx=10, pady=10, sticky=tk.W)
+    # Create a Combobox for the platform selection
+    platform_var = tk.StringVar()
+    platform_var.set("choose one:")    
 
+    def db_values():
+        platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
+        platform_names = [PLATFORM_TYPE.PLATFORM_TYPE_TEXT[x.type][1] for x in platform_rows]
 
+        platform_combo['values'] = platform_names
+
+    def db_refresh(event):
+        platform_combo['values'] = db_values()
+    platform_combo = ttk.Combobox(queryframe, textvariable=platform_var)
+    platform_combo.grid(row=1, column=6, padx=10, pady=10, sticky=tk.W)
+    platform_combo.bind('<FocusIn>', lambda event: db_refresh(event))
+    platform_combo['values'] = db_values()
     
-    
+    # platform_combo['values'] = db_values()
     vid = tk.StringVar()
-    lbl15 = tk.Label(queryframe, text='Enter video title.')
-    lbl15.grid(row = 2, column = 3,sticky='w')
+    lbl15 = tk.Label(queryframe, text='Enter video id.')
+    lbl15.grid(row = 0, column = 9,sticky='w')
     txt15 = tk.Entry(queryframe, textvariable=vid)
     txt15.insert(0,'input task id')
+    txt15.grid(row = 1, column = 9,sticky='w',columnspan=2)
+
+    vtitle = tk.StringVar()
+    lbl15 = tk.Label(queryframe, text='Enter video title.')
+    lbl15.grid(row = 2, column = 3,sticky='w')
+    txt15 = tk.Entry(queryframe, textvariable=vtitle)
+    txt15.insert(0,'input task title')
     txt15.grid(row = 3, column = 3,sticky='w',columnspan=2)
 
     channelname = tk.StringVar()
@@ -5883,51 +5929,291 @@ def uploadView(frame,ttkframe,lang):
     txt16.insert(0,'input channelname')
     txt16.grid(row = 3, column = 6,sticky='w',columnspan=2)
 
-    releasedata = tk.StringVar()
+    releasedate = tk.StringVar()
     lbl17 = tk.Label(queryframe, text='Enter releasedate.')
-    lbl17.grid(row = 3, column = 9,sticky='w')
-    txt17 = tk.Entry(queryframe, textvariable=releasedata)
+    lbl17.grid(row = 2, column = 9,sticky='w')
+    txt17 = tk.Entry(queryframe, textvariable=releasedate)
     txt17.insert(0,'input releasedate')
     txt17.grid(row = 3, column = 9,sticky='w',columnspan=2)
 
 
 
 
-    btn5= tk.Button(queryframe, text="Get Info", command = lambda: threading.Thread(target=queryTasks(tree,logger,taskstatus.get(),platformname.get(),channelname.get(),vid.get())).start())
-    btn5.grid(row = 0, column = 12,  padx=14, pady=15)
+    btn5= tk.Button(queryframe, text="Get Info", command = lambda:queryTasks(status=taskstatus.get(),platform=platform_var.get(),username=channelname.get(),vid=vid.get(),vtitle=vtitle.get(),releasedate=releasedate.get()) )
+    btn5.grid(row = 3, column = 12,  padx=14, pady=15)
     
     
-    btn5= tk.Button(queryframe, text="Reset", padx = 0, pady = 0,command = lambda:(taskstatus.set(""),platformname.set(""),channelname.set(""),vid.set("")))
-    btn5.grid(row=1,column=12, sticky=tk.W)        
-    # treeview_flight
-    tableframe=tk.Frame(ttkframe)
-    tableframe.grid(row = 1, column = 0,sticky='nswe')
-    
-    tableframe.grid_columnconfigure(0, weight=1)    
-    tree = ttk.Treeview(tableframe, height = 20, column = 9)
-    tree["column"]=('#0','#1','#2','#3','#4','#5','#6','#7')
-    tree.grid(row = 3, column =3,padx=14, pady=15,sticky='w')
+    btn5= tk.Button(queryframe, text="Reset", padx = 0, pady = 0,command = lambda:(taskstatus.set(""),releasedate.set(""),platform_var.set(""),channelname.set(""),vid.set(''),vtitle.set('')))
+    btn5.grid(row=3,column=15, sticky=tk.W)        
+    # Create a frame for the canvas and scrollbar(s).
+    chooseAccountsWindow=queryframe
+    frame2 = tk.Frame(chooseAccountsWindow, bg='Red', bd=1, relief=tk.FLAT)
+    frame2.grid(row=4, column=0, rowspan=5,columnspan=15,sticky=tk.NW)
+
+    frame2.grid_rowconfigure(0, weight=1)
+    frame2.grid_columnconfigure(0, weight=1)
+    frame2.grid_columnconfigure(1, weight=1)
+    # Add a canvas in that frame.
+    canvas = tk.Canvas(frame2, bg='Yellow')
+    canvas.grid(row=0, column=0)
+
+        
+    def refreshcanvas(headers,datas):
+
+        # Create a vertical scrollbar linked to the canvas.
+        vsbar = tk.Scrollbar(frame2, orient=tk.VERTICAL, command=canvas.yview)
+        vsbar.grid(row=0, column=1, sticky=tk.NS)
+        canvas.configure(yscrollcommand=vsbar.set)
+
+        # Create a horizontal scrollbar linked to the canvas.
+        hsbar = tk.Scrollbar(frame2, orient=tk.HORIZONTAL, command=canvas.xview)
+        hsbar.grid(row=1, column=0, sticky=tk.EW)
+        canvas.configure(xscrollcommand=hsbar.set)
+
+        # Create a frame on the canvas to contain the grid of buttons.
+        buttons_frame = tk.Frame(canvas)
+            
+
+        COLS=len(headers)+1
+        
+        ROWS=len(datas)+1
+        if COLS>15:
+            COLS_DISP=15
+        else:
+            COLS_DISP=COLS
+        if ROWS>20:
+            ROWS_DISP=20
+        else:
+            ROWS_DISP=ROWS        
+        # Add the buttons to the frame.
+        add_buttons = [tk.Button() for j in range(ROWS+1)] 
+        del_buttons = [tk.Button() for j in range(ROWS+1)] 
+        
+        # set table header
 
 
-    tree.heading('#0', text = 'Task No.')
-    tree.column('#0', anchor = 'center', width = 80)
-    tree.heading('#1', text = 'Status')
-    tree.column('#1', anchor = 'center')
-    tree.heading('#2', text = 'Platform')
-    tree.column('#2', anchor = 'center')
-    tree.heading('#3', text = 'Title')
-    tree.column('#3', anchor = 'center', width = 40)
-    tree.heading('#4', text = 'release. Date')
-    tree.column('#4', anchor = 'center')
-    tree.heading('#5', text = 'release. Time')
-    tree.column('#5', anchor = 'center')
+        for j,h in enumerate(headers):
+            label = tk.Label(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                activebackground= 'orange', text=h)
+            label.grid(row=0, column=j, sticky='news')                    
+            if h=='operation':
+                button = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                    activebackground= 'orange', text='operation')
+                button.grid(row=0, column=j, sticky='news')
+
+                delete_button = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                    activebackground= 'orange', text='operation')
+                delete_button.grid(row=0, column=j, sticky='news')
+
+        for i,row in enumerate(datas):
+            i=i+1
+            for j in range(0,len(headers)):
+                
+                if headers[j]!='operation':
+                    label = tk.Label(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                        activebackground= 'orange', text=row[headers[j]])
+                    label.grid(row=i ,column=j, sticky='news')         
+
+
+              
+            add_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                activebackground= 'orange', text='edit',command=lambda x=i-1  :update_selected_row(rowid=datas[x]['id']))
+            add_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
+
+            del_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                activebackground= 'orange', text='delete',command=lambda x=i-1 :remove_selected_row(rowid=datas[x]['id']))
+            del_buttons[i].grid(row=i, column=len(headers)-1, sticky='news')
+                    
+        # Create canvas window to hold the buttons_frame.
+        canvas.create_window((0,0), window=buttons_frame, anchor=tk.NW)
+
+        buttons_frame.update_idletasks()  # Needed to make bbox info available.
+        bbox = canvas.bbox(tk.ALL)  # Get bounding box of canvas with Buttons.
+
+        # Define the scrollable region as entire canvas with only the desired
+        # number of rows and columns displayed.
+        w, h = bbox[2]-bbox[1], bbox[3]-bbox[1]
+
+
+        dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
+        print(chooseAccountsWindow.winfo_width())
+        print(canvas.winfo_width())
+
+        # if dw>int(chooseAccountsWindow.winfo_width()):
+        #     print('use parent frame widht')
+        #     dw,dh=int(chooseAccountsWindow.winfo_width()),int(chooseAccountsWindow.winfo_height())
+        canvas.configure(scrollregion=bbox, width=dw, height=dh)
+        print('========',w,h,dw,dh,bbox)
+    tab_headers=['id','platform','username','pass','is_deleted','proxy','inserted_at','operation','operation']
+    refreshcanvas(tab_headers,[])
+
+
+
+
+    def queryTasks(username=None,platform=None,status=None,vtitle=None,releasedate=None,vid=None):
+
+        if username==''or 'input' in username:
+            username=None
+        if releasedate==''or 'input' in releasedate:
+            releasedate=None           
+        if vid==''or 'input' in vid:
+            vid=None           
+        if vtitle==''or 'input' in vtitle:
+            vtitle=None            
+        if platform=='' or 'choose' in platform:
+            platform=None        
+        else:
+            print('======',platform)
+            print(f'query tasks for {platform} {getattr(PLATFORM_TYPE, platform.upper())} ')
+
+            platform=getattr(PLATFORM_TYPE, platform.upper())
+
+        if status=='' or 'input' in status:
+            status=None        
+        else:
+            status=getattr(TASK_STATUS, status.upper())
+            print(f'query tasks for {status} {getattr(TASK_STATUS, status.upper())} ')
+
+        task_rows=TaskModel.filter_tasks(status=status,type=platform,video_title=vtitle,video_id=vid,username=username) 
+        if task_rows is None or len(task_rows)==0:
+            showinfomsg(message=f"try to add accounts for {platform} first",parent=chooseAccountsWindow)    
+
+        else:                
+            logger.info(f'we found {len(task_rows)} record matching ')
+
+            i=0
+            task_data=[]
+            for row in task_rows:
+
+                print(row)
+                print(row.inserted_at)
+                print(row.video)
+                print(row.setting)
+
+                task={
+                    "id":CustomID(custom_id=row.id).to_hex(),
+                    "platform":                    PLATFORM_TYPE.PLATFORM_TYPE_TEXT[row.setting.platform][1]
+,
+                    "username":row.username,
+
+                    "proxy":row.proxy,
+                    "video title":row.video.video_title,
+                    "uploaded_at":datetime.fromtimestamp(row.uploaded_at).strftime("%Y-%m-%d %H:%M:%S"), 
+
+                    "inserted_at":datetime.fromtimestamp(row.inserted_at).strftime("%Y-%m-%d %H:%M:%S")  
+                }
+                print(task.keys())
+
+                task_data.append(task)
+            refreshcanvas(tab_headers,task_data)
+        
+        
+                
+            logger.info(f'Account search and display finished')
+                    
+
+
+    # Bind the platform selection event to the on_platform_selected function
+
+
+
     
-    tree.heading('#6', text = 'publish type')
-    tree.column('#6', anchor = 'center', width = 40)
-    tree.heading('#7', text = 'upload. Time')
-    tree.column('#7', anchor = 'center')
-    tree.heading('#8', text = 'local path')
-    tree.column('#8', anchor = 'center')
+    def remove_selected_row(rowid):
+
+
+
+        print('you want to remove these selected account',rowid)
+        if rowid==0:
+
+            showinfomsg(message='you have not selected  account at all.choose one or more',parent=chooseAccountsWindow)      
+        
+        else:
+
+
+            if rowid :
+                rowid=CustomID(custom_id=rowid).to_bin()
+                result=AccountModel.update_account(id=rowid,is_deleted=True)
+
+                if result:
+                    logger.info(f'this account {rowid} removed success')
+                    showinfomsg(message=f'this account {rowid} removed success',parent=chooseAccountsWindow)    
+                else:
+                    logger.info(f'you cannot remove this account {rowid}, not added before')
+                    showinfomsg(message=f'this account {rowid} not added before',parent=chooseAccountsWindow)    
+            logger.info(f'end to remove,reset account {rowid}')
+
+
+    def update_selected_row(rowid):
+        # showinfomsg(message='not supported yet',parent=chooseAccountsWindow)    
+        chooseAccountsWindow = tk.Toplevel(frame)
+        chooseAccountsWindow.geometry(window_size)
+        chooseAccountsWindow.title('Edit and update account info ')
+        rowid=CustomID(custom_id=rowid).to_bin()
+
+        result=AccountModel.get_account_by_id(id=rowid)
+        from playhouse.shortcuts import model_to_dict
+        result = model_to_dict(result)
+        print('----------',result)
+
+        i=1
+        newresult=result
+        rowkeys={}
+        for key,value in result.items():
+            # print('current key',key,value)
+            if key=='id':
+                value=CustomID(custom_id=value).to_hex()
+            if key=='platform':
+                value=  PLATFORM_TYPE.PLATFORM_TYPE_TEXT[value][1]
+            if value==None:
+                value=''                        
+            if key=='inserted_at':
+                value=datetime.fromtimestamp(value).strftime("%Y-%m-%d %H:%M:%S")                
+            if not  key  in ['id','inserted_at','unique_hash','platform']:
+            
+                label= tk.Label(chooseAccountsWindow, padx=7, pady=7, relief=tk.RIDGE,
+                                    activebackground= 'orange', text=key)
+                label.grid(row=i ,column=0, sticky='news')         
+                entry = tk.Entry(chooseAccountsWindow)
+        
+                entry.insert(0, value)
+                entry.grid(row=i ,column=1, sticky='news')   
+                rowkeys[i]=key
+                def callback(event):
+
+                    x = event.widget.grid_info()['row']
+                    print(f'current input changes for {rowkeys[x]}',event.widget.get())   
+
+                    newresult[rowkeys[x]]=event.widget.get()
+                    if rowkeys[x]=='is_deleted':
+                        print('is deleted',type(event.widget.get()))
+                        value='0'
+                        if event.widget.get()=='0':
+                            value=False
+                        elif event.widget.get()=='1':
+                            value=True                        
+                        newresult[rowkeys[x]]=value
+
+                    print('============update row',newresult)
+
+                # variable.trace('w', lambda:setEnty())    
+                entry.bind("<KeyRelease>", callback)
+
+            else:
+
+                label = tk.Label(chooseAccountsWindow, padx=7, pady=7, relief=tk.RIDGE,
+                                    activebackground= 'orange', text=key)
+                label.grid(row=i ,column=0, sticky='news')         
+                variable=tk.StringVar()
+                variable.set(value)
+                entry = tk.Entry(chooseAccountsWindow,textvariable=variable)
+                entry.grid(row=i ,column=1, sticky='news') 
+                entry.config(state='disabled')
+            i=i+1
+
+        btn5= tk.Button(chooseAccountsWindow, text="save", padx = 0, pady = 0,command = lambda:AccountModel.update_account(id=rowid,account_data=newresult))
+        btn5.grid(row=i+1,column=2, sticky=tk.W)    
+
+
     
     
         
