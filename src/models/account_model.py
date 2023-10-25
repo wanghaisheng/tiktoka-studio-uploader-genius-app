@@ -9,7 +9,8 @@ class AccountModel(BaseModel):
     platform = IntegerField()
     username = TextField()
     password = TextField(null=True)  
-    cookies = TextField(null=True)   
+    cookie_local_path = TextField(null=True)   
+    cookie_content = TextField(null=True)   
     proxy = TextField(null=True)
     inserted_at = IntegerField(null=True)
     is_deleted = BooleanField(default=False)  # Flag if the account is deleted
@@ -35,7 +36,7 @@ class AccountModel(BaseModel):
             account.id = CustomID().to_bin()
             account.is_deleted=False
             account.save(force_insert=True) 
-            return account.id
+            return account
             
         else:
             return existing_account

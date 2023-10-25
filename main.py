@@ -10,7 +10,7 @@ from src.api.account import router
   # Assuming filter_accounts is the function defined in api.py
 from playhouse.shortcuts import model_to_dict
 from pathlib import Path,PureWindowsPath,PurePath
-from src.models.addtestdata import *
+from src.models.addtestdata import TestData
 # Initialize FastAPI
 app = FastAPI()
 
@@ -1137,20 +1137,20 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
         for i in range(5,COLS_DISP):
             dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
 
-            if dw>int( canvas.winfo_width()*0.2):
+            if dw>int( width*0.6):
                 COLS=i-1
         for i in range(5,ROWS_DISP):
             dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)                
-            if dh>int( canvas.winfo_height()*0.2):
+            if dh>int( canvas.winfo_height()*0.6):
                 ROWS=i-1
 
         print('=after==',COLS,COLS_DISP,ROWS,ROWS_DISP)
         dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
 
-        if dw>int( root.winfo_width()/3):
-            dw=int( root.winfo_width()/3)
-        if dh>int( root.winfo_height()/3):
-            dh=int( root.winfo_height()/3)
+        if dw>int( width/3):
+            dw=int( width/3)
+        if dh>int( height/3):
+            dh=int( height/3)
             print('use parent frame widht')
         canvas.configure(scrollregion=bbox, width=dw, height=dh)
         print('========',w,h,dw,dh,bbox)
@@ -1890,30 +1890,30 @@ def testupload(dbm,ttkframe):
             asyncio.run(bulk_scheduletopublish_specific_date(videos=othervideos,upload=upload))
 
 
-def runTask(status=status,type=platform,video_id=vid,username=username):
-        task_rows=TaskModel.filter_tasks(status=status,type=platform,video_title=vtitle,video_id=vid,username=username) 
-        if task_rows is None or len(task_rows)==0:
-            showinfomsg(message=f"try to add accounts for {platform} first",parent=chooseAccountsWindow)    
+def runTask(status=None,type=None,video_id=None,username=None,priority=None,video_title=None,sortedby='DESC',limit=None):
+    task_rows=TaskModel.filter_tasks(status=status,type=platform,video_title=video_title,video_id=video_id,username=username,sortedby='DESC',limit=None) 
+    if task_rows is None or len(task_rows)==0:
+        showinfomsg(message=f"try to add accounts for {platform} first",parent=chooseAccountsWindow)    
 
-        else:                
-            logger.info(f'we found {len(task_rows)} record matching ')
-            showinfomsg(message='we found {} record matching'.format(len(task_rows)))
-            i=0
-            task_data=[]
-            for row in task_rows:
+    else:                
+        logger.info(f'we found {len(task_rows)} record matching ')
+        showinfomsg(message='we found {} record matching'.format(len(task_rows)))
+        i=0
+        task_data=[]
+        for row in task_rows:
 
-                task={
-                    "id":CustomID(custom_id=row.id).to_hex(),
-                    "platform":                    PLATFORM_TYPE.PLATFORM_TYPE_TEXT[row.setting.platform][1]
+            task={
+                "id":CustomID(custom_id=row.id).to_hex(),
+                "platform":                    PLATFORM_TYPE.PLATFORM_TYPE_TEXT[row.setting.platform][1]
 ,
-                    "username":row.username,
+                "username":row.username,
 
-                    "proxy":row.proxy,
-                    "video title":row.video.video_title,
-                    "uploaded_at":datetime.fromtimestamp(row.uploaded_at).strftime("%Y-%m-%d %H:%M:%S") if row.uploaded_at else None, 
+                "proxy":row.proxy,
+                "video title":row.video.video_title,
+                "uploaded_at":datetime.fromtimestamp(row.uploaded_at).strftime("%Y-%m-%d %H:%M:%S") if row.uploaded_at else None, 
 
-                    "inserted_at":datetime.fromtimestamp(row.inserted_at).strftime("%Y-%m-%d %H:%M:%S")  
-                }
+                "inserted_at":datetime.fromtimestamp(row.inserted_at).strftime("%Y-%m-%d %H:%M:%S")  
+            }
 
     if len(videos)>0:
         publicvideos=[]
@@ -1984,7 +1984,7 @@ def docView(frame,ttkframe,lang):
                              ,command=lambda: threading.Thread(target=version(frame,lang)).start() )
     b_view_version.place(x=50, y=300)   
 
-def setupWizard(frame):
+def setupWizard(frame,td):
     ttkframe = tk.Toplevel(frame)
     ttkframe.geometry(window_size)
     ttkframe.title('Setup for')
@@ -2005,18 +2005,18 @@ def setupWizard(frame):
 
     socialplatform_box['values'] =[settings[locale]['testdatainstall'],settings[locale]['startfromfolder']]
 
-
+    # test_tasks,test_setting,test_videos,test_users=None
 
     def socialplatformOptionCallBack(*args):
         print(socialplatform.get())
         print(socialplatform_box.current())
         if socialplatform_box.current()==0:
-            test_tasks,test_setting,test_videos,test_users=addTestdata()
+            test_tasks,test_setting,test_videos,test_users=td.addTestdata()
             if test_tasks:
                 showinfomsg(message='test data is prepared')
         elif socialplatform_box.current()==1:
             ttkframe.withdraw()
-            tab_control.select(5)
+            tab_control.select(8)
 
 
     socialplatform.set("Select From Platforms")
@@ -2031,6 +2031,7 @@ def setupWizard(frame):
 
 
 def installView(frame,ttkframe,lang):
+    td=TestData()
     b_view_readme=tk.Button(frame,text=settings[locale]['testinstall']
                             ,command=lambda: threading.Thread(target=testInstallRequirements).start() )
     b_view_readme.grid(row = 0, column = 1, sticky='w', padx=14, pady=15)      
@@ -2038,13 +2039,19 @@ def installView(frame,ttkframe,lang):
 
 
     b_install_testdata=tk.Button(frame,text=settings[locale]['newuserwizard']
-                            ,command=lambda: threading.Thread(target=setupWizard(frame)).start() )
+                            ,command=lambda: threading.Thread(target=setupWizard(frame,td)).start() )
     b_install_testdata.grid(row = 1, column = 1, sticky='w', padx=14, pady=15)  
 
 
-    b_install_testdata=tk.Button(frame,text=settings[locale]['testdataRemove']
-                            ,command=lambda: threading.Thread(target=removedata).start() )
-    b_install_testdata.grid(row = 2, column = 1, sticky='w', padx=14, pady=15)    
+    b_install_testdataRemove=tk.Button(frame,text=settings[locale]['testdataRemove']
+                            ,command=lambda: threading.Thread(target=td.removedata()).start() )
+    b_install_testdataRemove.grid(row = 2, column = 1, sticky='w', padx=14, pady=15)    
+
+
+
+    b_install_testdata=tk.Button(frame,text=settings[locale]['cleardb']
+                            ,command=lambda: threading.Thread(target=td.cleardata()).start() )
+    b_install_testdata.grid(row = 3, column = 1, sticky='w', padx=14, pady=15)  
     # b_view_contact=tk.Button(frame,text=settings[locale]['testnetwork']
     #                          ,command=lambda: threading.Thread(target=testNetwork).start() )
     # b_view_contact.grid(row = 1, column = 1, sticky='w', padx=14, pady=15)      
@@ -4038,20 +4045,20 @@ def chooseProxies(ttkframe,username,parentchooseProxies):
         for i in range(5,COLS_DISP):
             dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
 
-            if dw>int( canvas.winfo_width()*0.2):
+            if dw>int( width*0.6):
                 COLS=i-1
         for i in range(5,ROWS_DISP):
             dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)                
-            if dh>int( canvas.winfo_height()*0.2):
+            if dh>int( canvas.winfo_height()*0.6):
                 ROWS=i-1
 
         print('=after==',COLS,COLS_DISP,ROWS,ROWS_DISP)
         dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
 
-        if dw>int( root.winfo_width()/3):
-            dw=int( root.winfo_width()/3)
-        if dh>int( root.winfo_height()/3):
-            dh=int( root.winfo_height()/3)
+        if dw>int( width/3):
+            dw=int( width/3)
+        if dh>int( height/3):
+            dh=int( height/3)
             print('use parent frame widht')
         canvas.configure(scrollregion=bbox, width=dw, height=dh)
         print('========',w,h,dw,dh,bbox)
@@ -4803,20 +4810,20 @@ def accountView(frame,ttkframe,lang):
         for i in range(5,COLS_DISP):
             dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
 
-            if dw>int( canvas.winfo_width()*0.2):
+            if dw>int( width*0.6):
                 COLS=i-1
         for i in range(5,ROWS_DISP):
             dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)                
-            if dh>int( canvas.winfo_height()*0.2):
+            if dh>int( canvas.winfo_height()*0.6):
                 ROWS=i-1
 
         print('=after==',COLS,COLS_DISP,ROWS,ROWS_DISP)
         dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
 
-        if dw>int( root.winfo_width()/3):
-            dw=int( root.winfo_width()/3)
-        if dh>int( root.winfo_height()/3):
-            dh=int( root.winfo_height()/3)
+        if dw>int( width/3):
+            dw=int( width/3)
+        if dh>int( height/3):
+            dh=int( height/3)
             print('use parent frame widht')
         canvas.configure(scrollregion=bbox, width=dw, height=dh)
         print('========',w,h,dw,dh,bbox)
@@ -4977,46 +4984,6 @@ def accountView(frame,ttkframe,lang):
 
 
     
-    
-def  queryTasks(tree,logger,status,platform,username,video_title):
-
-
-    if status==''or 'input' in status:
-        status=None
-    if platform=='' or 'input' in platform:
-        platform=None        
-    else:
-        platform=getattr(PLATFORM_TYPE, platform.upper())
-        print(f'query tasks for {platform} {getattr(PLATFORM_TYPE, platform.upper())} ')
-
-    task_rows=TaskModel.filter_tasks(status=status,type=platform) 
-
-    logger.info(f'we found {len(task_rows)} record matching ')
-
-    if len(task_rows)==0:
-        showinfomsg(message=f'we found {len(task_rows)} record matching ')
-    else:                
-        records = tree.get_children()                
-        if records is not None:
-            for element in records:
-                tree.delete(element) 
-        for row in task_rows:
-            id=CustomID(custom_id=row.id).to_hex()
-            video=row.video
-            setting=row.setting
-            account=setting.account
-            print('======',video,account,setting)
-            platform=PLATFORM_TYPE.PLATFORM_TYPE_TEXT[row.type][1]
-            status=TASK_STATUS.PLATFORM_TYPE_TEXT[row.status][1]
-            tree.insert(
-                "", 0, text=id, values=(status,platform)
-            )                    
-            
-
-                
-            
-        logger.info(f'Account search and display finished')  
-
 
 def getBool(var): # get rid of the event argument
     print(var.get())
@@ -6065,7 +6032,7 @@ def uploadView(frame,ttkframe,lang):
 
 
 
-    btn5= tk.Button(queryframe, text="Get Info", command = lambda:queryTasks(status=taskstatus.get(),platform=platform_var.get(),username=channelname.get(),vid=vid.get(),vtitle=vtitle.get(),releasedate=releasedate.get()) )
+    btn5= tk.Button(queryframe, text="Get Info", command = lambda:queryTasks(status=taskstatus.get(),platform=platform_var.get(),username=channelname.get(),vid=vid.get(),vtitle=vtitle.get(),releasedate=releasedate.get(),pageno=1,pagecount=100) )
     btn5.grid(row = 3, column = 12,  padx=14, pady=15)
     
     
@@ -6159,20 +6126,20 @@ def uploadView(frame,ttkframe,lang):
         for i in range(5,COLS_DISP):
             dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
 
-            if dw>int( canvas.winfo_width()*0.2):
+            if dw>int( width):
                 COLS=i-1
         for i in range(5,ROWS_DISP):
             dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)                
-            if dh>int( canvas.winfo_height()*0.2):
+            if dh>int( height*0.8):
                 ROWS=i-1
 
         print('=after==',COLS,COLS_DISP,ROWS,ROWS_DISP)
         dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
 
-        if dw>int( root.winfo_width()/3):
-            dw=int( root.winfo_width()/3)
-        if dh>int( root.winfo_height()/3):
-            dh=int( root.winfo_height()/3)
+        if dw>int( width):
+            dw=int( width)
+        if dh>int( height*0.8):
+            dh=int( height*0.8)
             print('use parent frame widht')
         canvas.configure(scrollregion=bbox, width=dw, height=dh)
         print('========',w,h,dw,dh,bbox)
@@ -6185,47 +6152,70 @@ def uploadView(frame,ttkframe,lang):
     print('show tab headers')
 
 
-    def queryTasks(username=None,platform=None,status=None,vtitle=None,releasedate=None,vid=None):
-
-        if username==''or 'input' in username:
+    def queryTasks(username=None,platform=None,status=None,vtitle=None,releasedate=None,vid=None,pageno=None,pagecount=None):
+        if  username is not None and 'input' in username:
             username=None
-        if releasedate==''or 'input' in releasedate:
+        if username==''  or username is None:
+            username=None
+        if  releasedate is not None and 'input' in releasedate:
+            releasedate=None            
+        if releasedate=='' or releasedate is None:
             releasedate=None           
-        if vid==''or 'input' in vid:
+        if  vid is not None and 'input' in vid:
+            vid=None            
+        if vid=='' or vid is None:
             vid=None           
-        if vtitle==''or 'input' in vtitle:
+        if  vtitle is not None and 'input' in vtitle:
             vtitle=None            
-        if platform=='' or 'choose' in platform:
+        if vtitle=='' or vtitle is None:
+            vtitle=None            
+        if  platform is not None and 'choose' in platform:
+            platform=None            
+        if platform=='' or platform is None:
             platform=None        
-        else:
+        elif type(platform)==str:
             print('======',platform)
             print(f'query tasks for {platform} {getattr(PLATFORM_TYPE, platform.upper())} ')
 
             platform=getattr(PLATFORM_TYPE, platform.upper())
 
-        if status=='' or 'input' in status:
-            status=None        
-        else:
+        if status=='' or status is None:
+            status=None  
+        elif  status is not None and 'input' in status:
+            status=None             
+        elif type(platform)==str:
             status=getattr(TASK_STATUS, status.upper())
             print(f'query tasks for {status} {getattr(TASK_STATUS, status.upper())} ')
 
-        task_rows=TaskModel.filter_tasks(status=status,type=platform,video_title=vtitle,video_id=vid,username=username) 
+        task_rows,counts=TaskModel.filter_tasks(status=status,type=platform,video_title=vtitle,video_id=vid,username=username,pagecount=100,pageno=1) 
         if task_rows is None or len(task_rows)==0:
             showinfomsg(message=f"try to add accounts for {platform} first",parent=chooseAccountsWindow)    
 
         else:                
-            logger.info(f'we found {len(task_rows)} record matching ')
-            showinfomsg(message='we found {} record matching'.format(len(task_rows)))
+            logger.info(f'we found {counts} record matching ')
+            showinfomsg(message=f'we found {counts} record matching')
             i=0
             task_data=[]
+            if counts>100:
+
+                pages=counts/100
+                pages=int(pages)+1
+                for i in range(0,pages):
+                    # 这里如果没有lambda x=i 的话 后面的i+1 一直是1
+                    page= tk.Button(queryframe, text=str(i+1), padx = 0, pady = 0,command = lambda x=i:queryTasks(status=status,platform=platform,vtitle=vtitle,vid=vid,username=username,pagecount=100,pageno=x+1))
+                    page.grid(row=25, column=i,sticky=tk.NW)
+                # Create a frame for the canvas and scrollbar(s).
+
+
+
             for row in task_rows:
 
                 task={
                     "id":CustomID(custom_id=row.id).to_hex(),
-                    "platform":                    PLATFORM_TYPE.PLATFORM_TYPE_TEXT[row.setting.platform][1]
-,
+                    "platform":                    PLATFORM_TYPE.PLATFORM_TYPE_TEXT[row.setting.platform][1],
+                    "prorioty":row.prorioty,
                     "username":row.username,
-
+                
                     "proxy":row.proxy,
                     "video title":row.video.video_title,
                     "uploaded_at":datetime.fromtimestamp(row.uploaded_at).strftime("%Y-%m-%d %H:%M:%S") if row.uploaded_at else None, 
@@ -6282,7 +6272,6 @@ def uploadView(frame,ttkframe,lang):
 
         taskresult=TaskModel.get(id=rowid)
         taskresult = model_to_dict(taskresult)
-
 
 
         def renderelements(i=1,column=0,result={},disableelements=['id','inserted_at','unique_hash','platform'],title=None):
@@ -6359,6 +6348,7 @@ def uploadView(frame,ttkframe,lang):
                     entry.config(state='disabled')
                 i=i+1
             return newresult,i,column+2
+        i=0
 
         tmptask=taskresult
         # tmptask.pop('video')
@@ -7861,7 +7851,7 @@ def start(lang,root=None):
     # mainwindow_initial_percentage = 5 / 6  
 
     # Calculate the initial height of mainwindow based on the percentage
-    # initial_height = int(float(root.winfo_height()) * mainwindow_initial_percentage)
+    # initial_height = int(float(height) * mainwindow_initial_percentage)
     # mainwindow.config(height=initial_height)
 def all_children (window) :
     _list = window.winfo_children()
@@ -7930,7 +7920,7 @@ def  start_tkinter_app():
 
     settings['folders']=tmp
     # root.protocol('WM_DELETE_WINDOW', withdraw_window)
-
+    
 
     root.mainloop()
     

@@ -103,45 +103,22 @@ class TaskModel(BaseModel):
 
     @classmethod
 
-    def filter_tasks(cls, status=None, type=None,uploaded_at=None,setting=None,inserted_at=None,video_title=None,video_id=None,username=None):
+    def filter_tasks(cls, status=None, type=None,uploaded_at=None,setting=None,inserted_at=None,video_title=None,video_id=None,username=None,pageno=None,pagecount=None,start=None,end=None,data=None):
             query=TaskModel.select()
-            # print('========show without filter========')
-            # print('======show attr=========')     
-
-            # for i in query:
-            #     # print(list(query))
-            #     for att in dir(i):
-            #         if 'setting' in att:
-            #             print(att,getattr(i,att))           
-                        
-            #         if 'video'  in att:
-            #             print(att,getattr(i,att))           
-            # print('======show ids=========')     
-                    
-            # for i in query:
-            #     print(i.id)
-                
-            # print('======show fks=========')     
-            # for i in query:
-            #     print(i.video,i.setting)
+            counts=query.count()
             query = (TaskModel
                     .select(TaskModel, YoutubeVideoModel, UploadSettingModel, AccountModel)
                     .join(YoutubeVideoModel)  # Join favorite -> user (owner of favorite).
                     .switch(TaskModel)
                     .join(UploadSettingModel)  # Join favorite -> tweet
                     .join(AccountModel))   # Join tweet -> user        
-            # print('========show with join========')
 
-            # for fav in query:
-            #     print(fav.video,fav.setting)
-        
             if video_title is not None :
                 query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
 
                 query = (query
                 # .join(YoutubeVideoModel,on=(TaskModel.video_id == YoutubeVideoModel.id))
                 .where(YoutubeVideoModel.video_title.regexp(video_title))
-                # .where(YoutubeVideoModel.video_title==video_title)
 
                 )
                 query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
@@ -159,15 +136,28 @@ class TaskModel(BaseModel):
 
 
             try:
-                result = list(query)
-                # for i in result:
-                #     for att in dir(i):
-                #         print('======show attr=========')
-                #         print(att,getattr(i,att))
-                #     print('----------',i.video)
-                #     print('----------',i.setting)
+                print('=====',len(list(query)))
+                print(f"{pageno}")
+                print(f"{pagecount}")
+
+                counts=len(list(query))
+                if pageno:
+                    print(f'this is the  {query} {list(query)}')
+                    
+                    query=query.paginate(pageno, pagecount)
+                    print(f'this is the {pageno} {query} {list(query)}')
+
+                elif type(start)==int and type(start)==int and start<end:
+                    startpage=start/pagecount
+                    endpage=end/pagecount
+                    query=query.paginate(startpage, pagecount)
+
+                print('==current pagi===',len(list(query)))
+
+                return list(query),counts
+
                 
             except cls.DoesNotExist:
-                result = None  # Set a default value or perform any other action
+                query = None  # Set a default value or perform any other action
 
-            return result
+            return query

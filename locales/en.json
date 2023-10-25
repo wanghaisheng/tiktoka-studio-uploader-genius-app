@@ -11,6 +11,8 @@
 	"testupload": "test video upload ",
 	"videosMenu": "视频管理",
 	"docView": "Docs",		
+	"cleardb": "clear database",		
+
 	"installView": "Setup",
 	"accountView": "Accounts",
 	"proxyView": "Proxies",
