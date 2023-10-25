@@ -6065,11 +6065,16 @@ def uploadView(frame,ttkframe,lang):
 
         # Create a frame on the canvas to contain the grid of buttons.
         buttons_frame = tk.Frame(canvas)
+        
+    
+        
         ROWS_DISP = len(datas)+1 # Number of rows to display.
         COLS_DISP = len(headers)+1  # Number of columns to display.
         COLS=len(headers)+1
         
+        
         ROWS=len(datas)+1
+        
 
 
 
@@ -6187,23 +6192,27 @@ def uploadView(frame,ttkframe,lang):
             status=getattr(TASK_STATUS, status.upper())
             print(f'query tasks for {status} {getattr(TASK_STATUS, status.upper())} ')
 
-        task_rows,counts=TaskModel.filter_tasks(status=status,type=platform,video_title=vtitle,video_id=vid,username=username,pagecount=100,pageno=1) 
+        task_rows,counts=TaskModel.filter_tasks(status=status,type=platform,video_title=vtitle,video_id=vid,username=username,pagecount=pagecount,pageno=pageno) 
         if task_rows is None or len(task_rows)==0:
             showinfomsg(message=f"try to add accounts for {platform} first",parent=chooseAccountsWindow)    
 
         else:                
             logger.info(f'we found {counts} record matching ')
             showinfomsg(message=f'we found {counts} record matching')
+            
+            
+            l_totalcount = tk.Label(queryframe, text=f'total:{counts} per page:{pagecount}')
+            l_totalcount.grid(row = 25, column = 0,sticky='w')            
             i=0
             task_data=[]
             if counts>100:
 
                 pages=counts/100
                 pages=int(pages)+1
-                for i in range(0,pages):
+                for i in range(pages):
                     # 这里如果没有lambda x=i 的话 后面的i+1 一直是1
                     page= tk.Button(queryframe, text=str(i+1), padx = 0, pady = 0,command = lambda x=i:queryTasks(status=status,platform=platform,vtitle=vtitle,vid=vid,username=username,pagecount=100,pageno=x+1))
-                    page.grid(row=25, column=i,sticky=tk.NW)
+                    page.grid(row=25, column=i+1,sticky=tk.NW)
                 # Create a frame for the canvas and scrollbar(s).
 
 
@@ -6225,6 +6234,11 @@ def uploadView(frame,ttkframe,lang):
                 # print(task.keys())
 
                 task_data.append(task)
+                
+            if len(canvas.winfo_children())>0:
+                print('clear existing rows in the tabular')
+                for widget in canvas.winfo_children():
+                    widget.destroy()                    
             refreshcanvas(tab_headers,task_data)
             print('show header and rows based on query')
         

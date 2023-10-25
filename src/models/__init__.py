@@ -1,4 +1,4 @@
-import time
+import time,re
 import hashlib
 import binascii
 
@@ -6,6 +6,8 @@ import binascii
 
 from peewee import *
 from playhouse.shortcuts import model_to_dict
+from playhouse.sqlite_ext import (SqliteExtDatabase)
+
 # asyncpg 配置
 # https://github.com/fy0/Icarus
 
@@ -18,7 +20,8 @@ DATABASE_URI=f'{mode}.sqlite3'
 
 def connect(db_uri):
 
-    db = SqliteDatabase(db_uri
+    db = SqliteExtDatabase(db_uri
+                        , regexp_function=True
                         # , 
         #                 pragmas={
         # 'journal_mode': 'wal',  # WAL-mode.
@@ -31,7 +34,9 @@ def connect(db_uri):
 
 
 db = connect(DATABASE_URI)
-
+@db.func()
+def regexp(expr, s):
+    return re.search(expr, s) is not None
 
 class CITextField(TextField):
     field_type = 'CITEXT'

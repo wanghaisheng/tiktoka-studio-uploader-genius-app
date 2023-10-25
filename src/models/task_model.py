@@ -142,10 +142,9 @@ class TaskModel(BaseModel):
 
                 counts=len(list(query))
                 if pageno:
-                    print(f'this is the  {query} {list(query)}')
                     
                     query=query.paginate(pageno, pagecount)
-                    print(f'this is the {pageno} {query} {list(query)}')
+                    print(f'this is the {pageno} {list(query)}')
 
                 elif type(start)==int and type(start)==int and start<end:
                     startpage=start/pagecount
