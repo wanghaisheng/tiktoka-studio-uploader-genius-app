@@ -56,13 +56,35 @@ class TaskModel(BaseModel):
 
     def get_task_by_id(cls, id):
         return cls.get_or_none(cls.id == id)
+    
     @classmethod
-
-    def update_task(cls, id,videodata=None,settingdata=None,accountdata=None,**kwargs):
+    def update_task(cls, id,videodata=None,settingdata=None,accountdata=None,taskdata=None,**kwargs):
         try:
             task = cls.get(cls.id == id)
-            for key, value in kwargs.items():
-                setattr(task, key, value)
+            if taskdata:
+                task = TaskModel(**taskdata)
+                if accountdata:
+                    account=AccountModel(**accountdata)
+                    account.inserted_at = int(time.time())  # Update insert_date
+
+                    account.save()
+                if settingdata:
+                    setting=UploadSettingModel(**settingdata)
+                    setting.inserted_at = int(time.time())  # Update insert_date
+
+                    setting.save()
+                if videodata:
+                    video=YoutubeVideoModel(**videodata)
+                    video.inserted_at = int(time.time())  # Update insert_date
+
+                    video.save()
+
+            else:            
+            
+                for key, value in kwargs.items():
+                    setattr(task, key, value)
+            task.inserted_at = int(time.time())  # Update insert_date
+
             task.save() 
             return task
         except cls.DoesNotExist:

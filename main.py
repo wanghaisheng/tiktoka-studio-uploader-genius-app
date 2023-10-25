@@ -1826,15 +1826,6 @@ def importundonefromcsv(dbm):
 
 
 def testupload(dbm,ttkframe):
-    # try:
-    #     uploadsessionid
-    #     if uploadsessionid is None:
-    #         print('weir error',uploadsessionid)
-    #         createuploadsession(dbm,ttkframe)
-    # except:
-
-    #     print('before upload,you need create upload session first')
-    #     createuploadsession(dbm,ttkframe)
 
     videos=dbm.Query_undone_videos_in_channel()
     print('there is ',len(videos),' video need to uploading for task ')
@@ -1899,22 +1890,8 @@ def testupload(dbm,ttkframe):
             asyncio.run(bulk_scheduletopublish_specific_date(videos=othervideos,upload=upload))
 
 
-def upload(mode='prod'):
-    print('we got setting proxy ,',setting['proxy_option'])
-    dbm=DBM('prod')
-    
-    try:
-        uploadsessionid
-        if uploadsessionid is None:
-            print('weir error',uploadsessionid)
-            # createuploadsession()
-    except:
+def runTask(mode='prod'):
 
-        print('before upload,you need create upload session first')
-        # createuploadsession()
-
-    videos=dbm.Query_undone_videos_in_channel()
-    print('there is ',len(videos),' video need to uploading for task ')
 
     if len(videos)>0:
         publicvideos=[]
@@ -6386,7 +6363,7 @@ def uploadView(frame,ttkframe,lang):
 
                 newaccountresult,serialno,cols=renderelements(i=serialno,result=taskresult.get('setting').get('account'),column=cols-2,disableelements=['id','inserted_at','unique_hash','platform'],title='account data')
 
-        btn5= tk.Button(editsWindow, text="save", padx = 0, pady = 0,command = lambda:TaskModel.update_task(id=rowid,account_data=newresult))
+        btn5= tk.Button(editsWindow, text="save", padx = 0, pady = 0,command = lambda:TaskModel.update_task(id=rowid,taskdata=newtaskresult,videodata=newvideoresult,settingdata=newsettingresult,accountdata=newaccountresult))
         btn5.grid(row=i+1,column=cols+1, sticky=tk.W)    
 
 
@@ -6443,7 +6420,7 @@ def uploadView(frame,ttkframe,lang):
     b_upload.grid(row = 4, column = 1, padx=14, pady=15)
 
     b_upload = tk.Button(frame, text=settings[locale]['upload']
-                         , command=lambda: threading.Thread(target=upload).start())
+                         , command=lambda: threading.Thread(target=runTask).start())
     b_upload.grid(row = 5, column = 1, padx=14, pady=15)
 
     lb_youtube_counts = tk.Label(frame, text='youtube', font=(' ', 15))
