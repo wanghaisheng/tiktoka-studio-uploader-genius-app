@@ -1890,8 +1890,30 @@ def testupload(dbm,ttkframe):
             asyncio.run(bulk_scheduletopublish_specific_date(videos=othervideos,upload=upload))
 
 
-def runTask(mode='prod'):
+def runTask(status=status,type=platform,video_id=vid,username=username):
+        task_rows=TaskModel.filter_tasks(status=status,type=platform,video_title=vtitle,video_id=vid,username=username) 
+        if task_rows is None or len(task_rows)==0:
+            showinfomsg(message=f"try to add accounts for {platform} first",parent=chooseAccountsWindow)    
 
+        else:                
+            logger.info(f'we found {len(task_rows)} record matching ')
+            showinfomsg(message='we found {} record matching'.format(len(task_rows)))
+            i=0
+            task_data=[]
+            for row in task_rows:
+
+                task={
+                    "id":CustomID(custom_id=row.id).to_hex(),
+                    "platform":                    PLATFORM_TYPE.PLATFORM_TYPE_TEXT[row.setting.platform][1]
+,
+                    "username":row.username,
+
+                    "proxy":row.proxy,
+                    "video title":row.video.video_title,
+                    "uploaded_at":datetime.fromtimestamp(row.uploaded_at).strftime("%Y-%m-%d %H:%M:%S") if row.uploaded_at else None, 
+
+                    "inserted_at":datetime.fromtimestamp(row.inserted_at).strftime("%Y-%m-%d %H:%M:%S")  
+                }
 
     if len(videos)>0:
         publicvideos=[]
