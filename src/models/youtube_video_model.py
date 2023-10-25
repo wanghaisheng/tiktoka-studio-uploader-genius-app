@@ -1,4 +1,4 @@
-import time
+import time,base64,os
 import peewee
 from peewee import *
 from config import generate_unique_hash
@@ -377,6 +377,7 @@ class YoutubeVideoModel(BaseModel):
                 video = cls(**video_data)
                 video.inserted_at = int(time.time())  # Update insert_date
                 video.id=CustomID().to_bin()
+                video.unique_hash=unique_hash
                 video.save(force_insert=True) 
                 return video
             else:
@@ -409,7 +410,7 @@ class YoutubeVideoModel(BaseModel):
 
     def update_video(video_id, video_data):
         try:
-            video = YoutubeVideoModel.objects.get(id=video_id)
+            video = YoutubeVideoModel.objects.get(id=id)
             unique_hash = generate_unique_hash(video_data)
             video_data['unique_hash'] = unique_hash
             video.inserted_at = int(time.time())  # Update insert_date
@@ -420,19 +421,17 @@ class YoutubeVideoModel(BaseModel):
         except YoutubeVideoModel.DoesNotExist:
             return None
     @classmethod
-
-    # Read
-    def get_video_by_id(video_id):
+    def get_video_by_id(cls,id):
         try:
-            return YoutubeVideoModel.get(YoutubeVideoModel.id == video_id)
+            return cls.get_or_none(cls.id == id)
         except DoesNotExist:
             return None
     @classmethod
 
     # Read
-    def get_video_by_hash(hash):
+    def get_video_by_hash(cls,hash):
         try:
-            return YoutubeVideoModel.get(YoutubeVideoModel.unique_hash == hash).id
+            return cls.get(cls.unique_hash == hash).id
         except DoesNotExist:
             return None
     @classmethod
@@ -441,9 +440,9 @@ class YoutubeVideoModel(BaseModel):
         return YoutubeVideoModel.select()
     @classmethod
 
-    def delete_video(video_id):
+    def delete_video(id):
         try:
-            video = YoutubeVideoModel.objects.get(id=video_id)
+            video = YoutubeVideoModel.objects.get(id=id)
             video.is_deleted = True
             video.inserted_at = int(time.time())  # Update insert_date
             video.save(force_insert=True) 

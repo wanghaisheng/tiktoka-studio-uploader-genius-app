@@ -90,7 +90,6 @@ class AccountModel(BaseModel):
         except cls.DoesNotExist:
             return False
     @classmethod
-
     def filter_accounts(cls, platform=None, username=None, proxy=None,is_deleted=None):
         query = cls.select()
     

@@ -8,7 +8,9 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from src.api.account import router
   # Assuming filter_accounts is the function defined in api.py
-
+from playhouse.shortcuts import model_to_dict
+from pathlib import Path,PureWindowsPath,PurePath
+from src.models.addtestdata import *
 # Initialize FastAPI
 app = FastAPI()
 
@@ -67,6 +69,7 @@ import logging
 from src.database import createEngine,pd2table,query2df,rmEngine
 from src.gpt_thumbnail import draw_text_on_image,validateSeting
 from src.checkIp import CheckIP
+from src.models.create_tables import *
 try:
     import tkinter.scrolledtext as ScrolledText
 except ImportError:
@@ -1057,27 +1060,30 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
     # Create a frame on the canvas to contain the grid of buttons.
     buttons_frame = tk.Frame(canvas)
     
-    def deleteRow(rowid):
-        print('delete',rowid)
-    
-    def addRow(rowid):
-        print('add',rowid)
 
-    def chooseRow(rowid):
-        print('delete',rowid)
-    
-    def unchooseRow(rowid):
-        print('add',rowid)
         
     def refreshcanvas(headers,datas):
-        
 
+        # Create a vertical scrollbar linked to the canvas.
+        vsbar = tk.Scrollbar(frame2, orient=tk.VERTICAL, command=canvas.yview)
+        vsbar.grid(row=0, column=1, sticky=tk.NS)
+        canvas.configure(yscrollcommand=vsbar.set)
+
+        # Create a horizontal scrollbar linked to the canvas.
+        hsbar = tk.Scrollbar(frame2, orient=tk.HORIZONTAL, command=canvas.xview)
+        hsbar.grid(row=1, column=0, sticky=tk.EW)
+        canvas.configure(xscrollcommand=hsbar.set)
+
+        # Create a frame on the canvas to contain the grid of buttons.
+        buttons_frame = tk.Frame(canvas)
+        ROWS_DISP = len(datas)+1 # Number of rows to display.
+        COLS_DISP = len(headers)+1  # Number of columns to display.
         COLS=len(headers)+1
         
         ROWS=len(datas)+1
 
-        COLS_DISP=COLS
-        ROWS_DISP=ROWS        
+
+
         # Add the buttons to the frame.
         add_buttons = [tk.Button() for j in range(ROWS+1)] 
         del_buttons = [tk.Button() for j in range(ROWS+1)] 
@@ -1110,11 +1116,11 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
 
               
             add_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text='bind',command=lambda x=i-1  :add_selected_accounts(rowid=datas[x]['id']))
+                                activebackground= 'orange', text='edit',command=lambda x=i-1  :update_selected_row(rowid=datas[x]['id']))
             add_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
 
             del_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text='unbind',command=lambda x=i-1 :remove_selected_row(rowid=datas[x]['id']))
+                                activebackground= 'orange', text='delete',command=lambda x=i-1 :remove_selected_row(rowid=datas[x]['id']))
             del_buttons[i].grid(row=i, column=len(headers)-1, sticky='news')
                     
         # Create canvas window to hold the buttons_frame.
@@ -1126,8 +1132,28 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
         # Define the scrollable region as entire canvas with only the desired
         # number of rows and columns displayed.
         w, h = bbox[2]-bbox[1], bbox[3]-bbox[1]
+        print('=before==',COLS,COLS_DISP,ROWS,ROWS_DISP)
+
+        for i in range(5,COLS_DISP):
+            dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
+
+            if dw>int( canvas.winfo_width()*0.2):
+                COLS=i-1
+        for i in range(5,ROWS_DISP):
+            dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)                
+            if dh>int( canvas.winfo_height()*0.2):
+                ROWS=i-1
+
+        print('=after==',COLS,COLS_DISP,ROWS,ROWS_DISP)
         dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
+
+        if dw>int( root.winfo_width()/3):
+            dw=int( root.winfo_width()/3)
+        if dh>int( root.winfo_height()/3):
+            dh=int( root.winfo_height()/3)
+            print('use parent frame widht')
         canvas.configure(scrollregion=bbox, width=dw, height=dh)
+        print('========',w,h,dw,dh,bbox)
     refreshcanvas(['id','platform','username','is_deleted','proxy','inserted_at','operation','operation'],[])
 
 
@@ -1571,7 +1597,8 @@ def scanVideofiles(folder):
                         # 如果是新增 1.元数据中没有添加  前面元数据同步的话 这里是要添加的
                         # 如果是删除 1元数据中没有删除， 这里要删除掉
                             # videos.append(video)
-                            ultra[folder] ['videos'][filename]['video_local_path']=videopath
+                            # videopath=base64.b64encode(videopath.encode('utf-8'))
+                            ultra[folder] ['videos'][filename]['video_local_path']=str(PurePath(videopath))
                             ultra[folder] ['videos'][filename]['video_title']=filename
                             ultra[folder] ['videos'][filename]['video_filename']=filename
                             ultra[folder] ['videos'][filename]['video_description']=filename
@@ -1584,12 +1611,15 @@ def scanVideofiles(folder):
                                     else:
                                         if type(ultra[folder]['videos'][filename]['thumbnail_local_path'])==str:
                                             ultra[folder]['videos'][filename]['thumbnail_local_path']=eval(ultra[folder]['videos'][filename]['thumbnail_local_path'])
-                                            ultra[folder]['videos'][filename]['thumbnail_local_path'].append(filepath)
+                                            
+                                            ultra[folder]['videos'][filename]['thumbnail_local_path'].append(str(PurePath(filepath)))
                                         elif ultra[folder]['videos'][filename]['thumbnail_local_path'] is None or ultra[folder]['videos'][filename]['thumbnail_local_path'] in ['','[]'] or len(ultra[folder]['videos'][filename]['thumbnail_local_path'])==0:
-                                            empt=[].append(filepath)
+                                            empt=[].append(str(PurePath(filepath)))
                                             ultra[folder]['videos'][filename]['thumbnail_local_path']=str(empt)
                                         else:
-                                            ultra[folder]['videos'][filename]['thumbnail_local_path'].append(filepath)
+                                            # filepath=base64.b64encode(filepath.encode('utf-8'))
+
+                                            ultra[folder]['videos'][filename]['thumbnail_local_path'].append(str(PurePath(filepath)))
                                             
                             # to-do 
                             # supported_des_exts
@@ -1955,26 +1985,82 @@ def docView(frame,ttkframe,lang):
                              ,command=lambda: threading.Thread(target=version(frame,lang)).start() )
     b_view_version.place(x=50, y=300)   
 
+def setupWizard(frame):
+    ttkframe = tk.Toplevel(frame)
+    ttkframe.geometry(window_size)
+    ttkframe.title('Setup for')
+    channel_cookie_user= tk.StringVar()
+    username = tk.StringVar()
+    proxy_option_account = tk.StringVar()
+    password = tk.StringVar()
+
+
+    l_platform = tk.Label(ttkframe, text=settings[locale]['testdatainstall']
+                          )
+    # l_platform.place(x=10, y=90)
+    l_platform.grid(row = 0, column = 0, columnspan = 3, padx=14, pady=15)    
+
+    socialplatform = tk.StringVar()
+    socialplatform_box = ttk.Combobox(ttkframe, textvariable=socialplatform)
+
+
+    socialplatform_box['values'] =[settings[locale]['testdatainstall'],settings[locale]['startfromfolder']]
+
+
+
+    def socialplatformOptionCallBack(*args):
+        print(socialplatform.get())
+        print(socialplatform_box.current())
+        if socialplatform_box.current()==0:
+            test_tasks,test_setting,test_videos,test_users=addTestdata()
+            if test_tasks:
+                showinfomsg(message='test data is prepared')
+        elif socialplatform_box.current()==1:
+            ttkframe.withdraw()
+            tab_control.select(5)
+
+
+    socialplatform.set("Select From Platforms")
+    socialplatform.trace('w', socialplatformOptionCallBack)
+    socialplatform_box.bind('<FocusIn>', socialplatformOptionCallBack())
+
+
+    # socialplatform_box.config(values =platform_names)
+    socialplatform_box.grid(row = 0, column = 5, columnspan = 3, padx=14, pady=15)    
+
+
+
+
 def installView(frame,ttkframe,lang):
     b_view_readme=tk.Button(frame,text=settings[locale]['testinstall']
                             ,command=lambda: threading.Thread(target=testInstallRequirements).start() )
     b_view_readme.grid(row = 0, column = 1, sticky='w', padx=14, pady=15)      
 
-    b_view_contact=tk.Button(frame,text=settings[locale]['testnetwork']
-                             ,command=lambda: threading.Thread(target=testNetwork).start() )
-    b_view_contact.grid(row = 1, column = 1, sticky='w', padx=14, pady=15)      
+
+
+    b_install_testdata=tk.Button(frame,text=settings[locale]['newuserwizard']
+                            ,command=lambda: threading.Thread(target=setupWizard(frame)).start() )
+    b_install_testdata.grid(row = 1, column = 1, sticky='w', padx=14, pady=15)  
+
+
+    b_install_testdata=tk.Button(frame,text=settings[locale]['testdataRemove']
+                            ,command=lambda: threading.Thread(target=removedata).start() )
+    b_install_testdata.grid(row = 2, column = 1, sticky='w', padx=14, pady=15)    
+    # b_view_contact=tk.Button(frame,text=settings[locale]['testnetwork']
+    #                          ,command=lambda: threading.Thread(target=testNetwork).start() )
+    # b_view_contact.grid(row = 1, column = 1, sticky='w', padx=14, pady=15)      
     
 
-    b_view_version=tk.Button(frame,text=settings[locale]['testsettingok']
-                             ,command=lambda: threading.Thread(target=ValidateSetting).start() )
-    b_view_version.grid(row = 2, column = 1, sticky='w', padx=14, pady=15)      
+    # b_view_version=tk.Button(frame,text=settings[locale]['testsettingok']
+    #                          ,command=lambda: threading.Thread(target=ValidateSetting).start() )
+    # b_view_version.grid(row = 2, column = 1, sticky='w', padx=14, pady=15)      
     
     locale_tkstudio = tk.StringVar()
 
 
     l_lang = tk.Label(ttkframe, text=settings[locale]['chooseLang'])
     # l_lang.place(x=10, y=90)
-    l_lang.grid(row = 3, column = 0, columnspan = 3, padx=14, pady=15)    
+    l_lang.grid(row = 3, column = 0, padx=14, pady=15)    
     try:
         settings['locale']
         print(f"cache locale exist {settings['locale']}")
@@ -2010,7 +2096,7 @@ def installView(frame,ttkframe,lang):
     locale_tkstudio_box = ttk.Combobox(ttkframe, textvariable=locale_tkstudio)
     locale_tkstudio_box.config(values =('en', 'zh'))
     # locale_tkstudio_box.set(locale_tkstudio.get())    
-    locale_tkstudio_box.grid(row = 4, column = 1, columnspan = 3, padx=14, pady=15)    
+    locale_tkstudio_box.grid(row = 3, column = 1, padx=14, pady=15)    
     locale_tkstudio_box.bind("<<ComboboxSelected>>", display_selected_item_index)  
 
 
@@ -3879,14 +3965,27 @@ def chooseProxies(ttkframe,username,parentchooseProxies):
         print('add',rowid)
         
     def refreshcanvas(headers,datas):
-        
 
+        # Create a vertical scrollbar linked to the canvas.
+        vsbar = tk.Scrollbar(frame2, orient=tk.VERTICAL, command=canvas.yview)
+        vsbar.grid(row=0, column=1, sticky=tk.NS)
+        canvas.configure(yscrollcommand=vsbar.set)
+
+        # Create a horizontal scrollbar linked to the canvas.
+        hsbar = tk.Scrollbar(frame2, orient=tk.HORIZONTAL, command=canvas.xview)
+        hsbar.grid(row=1, column=0, sticky=tk.EW)
+        canvas.configure(xscrollcommand=hsbar.set)
+
+        # Create a frame on the canvas to contain the grid of buttons.
+        buttons_frame = tk.Frame(canvas)
+        ROWS_DISP = len(datas)+1 # Number of rows to display.
+        COLS_DISP = len(headers)+1  # Number of columns to display.
         COLS=len(headers)+1
         
         ROWS=len(datas)+1
 
-        COLS_DISP=COLS
-        ROWS_DISP=ROWS        
+
+
         # Add the buttons to the frame.
         add_buttons = [tk.Button() for j in range(ROWS+1)] 
         del_buttons = [tk.Button() for j in range(ROWS+1)] 
@@ -3919,11 +4018,11 @@ def chooseProxies(ttkframe,username,parentchooseProxies):
 
               
             add_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text='bind',command=lambda x=i-1  :add_selected_accounts(rowid=datas[x]['id']))
+                                activebackground= 'orange', text='edit',command=lambda x=i-1  :update_selected_row(rowid=datas[x]['id']))
             add_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
 
             del_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text='unbind',command=lambda x=i-1 :remove_selected_row(rowid=datas[x]['id']))
+                                activebackground= 'orange', text='delete',command=lambda x=i-1 :remove_selected_row(rowid=datas[x]['id']))
             del_buttons[i].grid(row=i, column=len(headers)-1, sticky='news')
                     
         # Create canvas window to hold the buttons_frame.
@@ -3935,8 +4034,28 @@ def chooseProxies(ttkframe,username,parentchooseProxies):
         # Define the scrollable region as entire canvas with only the desired
         # number of rows and columns displayed.
         w, h = bbox[2]-bbox[1], bbox[3]-bbox[1]
+        print('=before==',COLS,COLS_DISP,ROWS,ROWS_DISP)
+
+        for i in range(5,COLS_DISP):
+            dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
+
+            if dw>int( canvas.winfo_width()*0.2):
+                COLS=i-1
+        for i in range(5,ROWS_DISP):
+            dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)                
+            if dh>int( canvas.winfo_height()*0.2):
+                ROWS=i-1
+
+        print('=after==',COLS,COLS_DISP,ROWS,ROWS_DISP)
         dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
+
+        if dw>int( root.winfo_width()/3):
+            dw=int( root.winfo_width()/3)
+        if dh>int( root.winfo_height()/3):
+            dh=int( root.winfo_height()/3)
+            print('use parent frame widht')
         canvas.configure(scrollregion=bbox, width=dw, height=dh)
+        print('========',w,h,dw,dh,bbox)
     headers=['id', 'host', 'port', 'username', 'pass', 'protocol', 'status', 'city', 'country', 'state', 'tags', 'inserted_at','operation','operation']
         
     refreshcanvas(headers,[])
@@ -4624,19 +4743,14 @@ def accountView(frame,ttkframe,lang):
 
         # Create a frame on the canvas to contain the grid of buttons.
         buttons_frame = tk.Frame(canvas)
-            
-
+        ROWS_DISP = len(datas)+1 # Number of rows to display.
+        COLS_DISP = len(headers)+1  # Number of columns to display.
         COLS=len(headers)+1
         
         ROWS=len(datas)+1
-        if COLS>15:
-            COLS_DISP=15
-        else:
-            COLS_DISP=COLS
-        if ROWS>20:
-            ROWS_DISP=20
-        else:
-            ROWS_DISP=ROWS        
+
+
+
         # Add the buttons to the frame.
         add_buttons = [tk.Button() for j in range(ROWS+1)] 
         del_buttons = [tk.Button() for j in range(ROWS+1)] 
@@ -4685,15 +4799,26 @@ def accountView(frame,ttkframe,lang):
         # Define the scrollable region as entire canvas with only the desired
         # number of rows and columns displayed.
         w, h = bbox[2]-bbox[1], bbox[3]-bbox[1]
+        print('=before==',COLS,COLS_DISP,ROWS,ROWS_DISP)
 
+        for i in range(5,COLS_DISP):
+            dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
 
+            if dw>int( canvas.winfo_width()*0.2):
+                COLS=i-1
+        for i in range(5,ROWS_DISP):
+            dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)                
+            if dh>int( canvas.winfo_height()*0.2):
+                ROWS=i-1
+
+        print('=after==',COLS,COLS_DISP,ROWS,ROWS_DISP)
         dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
-        print(chooseAccountsWindow.winfo_width())
-        print(canvas.winfo_width())
 
-        # if dw>int(chooseAccountsWindow.winfo_width()):
-        #     print('use parent frame widht')
-        #     dw,dh=int(chooseAccountsWindow.winfo_width()),int(chooseAccountsWindow.winfo_height())
+        if dw>int( root.winfo_width()/3):
+            dw=int( root.winfo_width()/3)
+        if dh>int( root.winfo_height()/3):
+            dh=int( root.winfo_height()/3)
+            print('use parent frame widht')
         canvas.configure(scrollregion=bbox, width=dw, height=dh)
         print('========',w,h,dw,dh,bbox)
     tab_headers=['id','platform','username','pass','is_deleted','proxy','inserted_at','operation','operation']
@@ -4703,9 +4828,10 @@ def accountView(frame,ttkframe,lang):
 
 
     def queryAccounts(username,platform):
+        print('account view -query accounts',username,platform)
         if username=='':
             username=None
-        if platform=='' or 'SELECT FROM PLATFORMS' in platform:
+        if platform=='' or 'SELECT FROM PLATFORMS' in platform.upper():
             platform=None        
         else:
             try:
@@ -4716,7 +4842,7 @@ def accountView(frame,ttkframe,lang):
                 platform=getattr(PLATFORM_TYPE, platform.upper())
         selected_platform=platform
 
-        account_rows=AccountModel.filter_accounts(platform=selected_platform)
+        account_rows=AccountModel.filter_accounts(platform=selected_platform,username=username)
         # Extract account names and set them as options in the account dropdown
         if account_rows is None or len(account_rows)==0:
             # langlist.delete(0,tk.END)
@@ -5809,11 +5935,12 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                     logger.info(f'start to process video data')
                     print(f"this is need to use which video model:{video.get('platform')}")
                     if video.get('platform')=='youtube' or video.get('platform')==0:
+
                         videodata=    {
-                                "video_local_path": video['video_local_path'],
+                                "video_local_path": str(PurePath(video['video_local_path'])),
                                 "video_title": video['video_title'],
                                 "video_description": video['video_description'],
-                                "thumbnail_local_path": video['thumbnail_local_path'],
+                                "thumbnail_local_path":video['thumbnail_local_path'],
                                 "publish_policy": video['publish_policy'],
                                 "tags": 
                                     video['tags'],
@@ -5828,7 +5955,7 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                                 "video_local_path": video['video_local_path'],
                                 "video_title": video['video_title'],
                                 "video_description": video['video_description'],
-                                "thumbnail_local_path": video['thumbnail_local_path'],
+                                "thumbnail_local_path":video['thumbnail_local_path'],
                                 "publish_policy": video['publish_policy'],
                                 "tags": 
                                     video['tags'],
@@ -5972,19 +6099,14 @@ def uploadView(frame,ttkframe,lang):
 
         # Create a frame on the canvas to contain the grid of buttons.
         buttons_frame = tk.Frame(canvas)
-            
-
+        ROWS_DISP = len(datas)+1 # Number of rows to display.
+        COLS_DISP = len(headers)+1  # Number of columns to display.
         COLS=len(headers)+1
         
         ROWS=len(datas)+1
-        if COLS>15:
-            COLS_DISP=15
-        else:
-            COLS_DISP=COLS
-        if ROWS>20:
-            ROWS_DISP=20
-        else:
-            ROWS_DISP=ROWS        
+
+
+
         # Add the buttons to the frame.
         add_buttons = [tk.Button() for j in range(ROWS+1)] 
         del_buttons = [tk.Button() for j in range(ROWS+1)] 
@@ -6033,21 +6155,35 @@ def uploadView(frame,ttkframe,lang):
         # Define the scrollable region as entire canvas with only the desired
         # number of rows and columns displayed.
         w, h = bbox[2]-bbox[1], bbox[3]-bbox[1]
+        print('=before==',COLS,COLS_DISP,ROWS,ROWS_DISP)
 
+        for i in range(5,COLS_DISP):
+            dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
 
+            if dw>int( canvas.winfo_width()*0.2):
+                COLS=i-1
+        for i in range(5,ROWS_DISP):
+            dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)                
+            if dh>int( canvas.winfo_height()*0.2):
+                ROWS=i-1
+
+        print('=after==',COLS,COLS_DISP,ROWS,ROWS_DISP)
         dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
-        print(chooseAccountsWindow.winfo_width())
-        print(canvas.winfo_width())
 
-        # if dw>int(chooseAccountsWindow.winfo_width()):
-        #     print('use parent frame widht')
-        #     dw,dh=int(chooseAccountsWindow.winfo_width()),int(chooseAccountsWindow.winfo_height())
+        if dw>int( root.winfo_width()/3):
+            dw=int( root.winfo_width()/3)
+        if dh>int( root.winfo_height()/3):
+            dh=int( root.winfo_height()/3)
+            print('use parent frame widht')
         canvas.configure(scrollregion=bbox, width=dw, height=dh)
         print('========',w,h,dw,dh,bbox)
-    tab_headers=['id','platform','username','pass','is_deleted','proxy','inserted_at','operation','operation']
+    tab_headers=['id', 'platform', 'username', 'proxy', 'video title', 'uploaded_at', 'inserted_at']
+    tab_headers.append('operation')
+    tab_headers.append('operation')
+
     refreshcanvas(tab_headers,[])
 
-
+    print('show tab headers')
 
 
     def queryTasks(username=None,platform=None,status=None,vtitle=None,releasedate=None,vid=None):
@@ -6080,15 +6216,10 @@ def uploadView(frame,ttkframe,lang):
 
         else:                
             logger.info(f'we found {len(task_rows)} record matching ')
-
+            showinfomsg(message='we found {} record matching'.format(len(task_rows)))
             i=0
             task_data=[]
             for row in task_rows:
-
-                print(row)
-                print(row.inserted_at)
-                print(row.video)
-                print(row.setting)
 
                 task={
                     "id":CustomID(custom_id=row.id).to_hex(),
@@ -6098,15 +6229,15 @@ def uploadView(frame,ttkframe,lang):
 
                     "proxy":row.proxy,
                     "video title":row.video.video_title,
-                    "uploaded_at":datetime.fromtimestamp(row.uploaded_at).strftime("%Y-%m-%d %H:%M:%S"), 
+                    "uploaded_at":datetime.fromtimestamp(row.uploaded_at).strftime("%Y-%m-%d %H:%M:%S") if row.uploaded_at else None, 
 
                     "inserted_at":datetime.fromtimestamp(row.inserted_at).strftime("%Y-%m-%d %H:%M:%S")  
                 }
-                print(task.keys())
+                # print(task.keys())
 
                 task_data.append(task)
             refreshcanvas(tab_headers,task_data)
-        
+            print('show header and rows based on query')
         
                 
             logger.info(f'Account search and display finished')
@@ -6132,7 +6263,7 @@ def uploadView(frame,ttkframe,lang):
 
             if rowid :
                 rowid=CustomID(custom_id=rowid).to_bin()
-                result=AccountModel.update_account(id=rowid,is_deleted=True)
+                result=TaskModel.update_task(id=rowid,is_deleted=True)
 
                 if result:
                     logger.info(f'this account {rowid} removed success')
@@ -6145,73 +6276,118 @@ def uploadView(frame,ttkframe,lang):
 
     def update_selected_row(rowid):
         # showinfomsg(message='not supported yet',parent=chooseAccountsWindow)    
-        chooseAccountsWindow = tk.Toplevel(frame)
-        chooseAccountsWindow.geometry(window_size)
-        chooseAccountsWindow.title('Edit and update account info ')
+        editsWindow = tk.Toplevel(frame)
+        editsWindow.geometry(window_size)
+        editsWindow.title('Edit and update task and related setting,video info ')
         rowid=CustomID(custom_id=rowid).to_bin()
 
-        result=AccountModel.get_account_by_id(id=rowid)
-        from playhouse.shortcuts import model_to_dict
-        result = model_to_dict(result)
-        print('----------',result)
+        taskresult=TaskModel.get(id=rowid)
+        taskresult = model_to_dict(taskresult)
 
-        i=1
-        newresult=result
-        rowkeys={}
-        for key,value in result.items():
-            # print('current key',key,value)
-            if key=='id':
-                value=CustomID(custom_id=value).to_hex()
-            if key=='platform':
-                value=  PLATFORM_TYPE.PLATFORM_TYPE_TEXT[value][1]
-            if value==None:
-                value=''                        
-            if key=='inserted_at':
-                value=datetime.fromtimestamp(value).strftime("%Y-%m-%d %H:%M:%S")                
-            if not  key  in ['id','inserted_at','unique_hash','platform']:
-            
-                label= tk.Label(chooseAccountsWindow, padx=7, pady=7, relief=tk.RIDGE,
-                                    activebackground= 'orange', text=key)
-                label.grid(row=i ,column=0, sticky='news')         
-                entry = tk.Entry(chooseAccountsWindow)
-        
-                entry.insert(0, value)
-                entry.grid(row=i ,column=1, sticky='news')   
-                rowkeys[i]=key
-                def callback(event):
 
-                    x = event.widget.grid_info()['row']
-                    print(f'current input changes for {rowkeys[x]}',event.widget.get())   
 
-                    newresult[rowkeys[x]]=event.widget.get()
-                    if rowkeys[x]=='is_deleted':
-                        print('is deleted',type(event.widget.get()))
-                        value='0'
-                        if event.widget.get()=='0':
-                            value=False
-                        elif event.widget.get()=='1':
-                            value=True                        
-                        newresult[rowkeys[x]]=value
-
-                    print('============update row',newresult)
-
-                # variable.trace('w', lambda:setEnty())    
-                entry.bind("<KeyRelease>", callback)
-
-            else:
-
-                label = tk.Label(chooseAccountsWindow, padx=7, pady=7, relief=tk.RIDGE,
-                                    activebackground= 'orange', text=key)
-                label.grid(row=i ,column=0, sticky='news')         
-                variable=tk.StringVar()
-                variable.set(value)
-                entry = tk.Entry(chooseAccountsWindow,textvariable=variable)
-                entry.grid(row=i ,column=1, sticky='news') 
-                entry.config(state='disabled')
+        def renderelements(i=1,column=0,result={},disableelements=['id','inserted_at','unique_hash','platform'],title=None):
+            rowkeys={}
+            newresult={}
+            label= tk.Label(editsWindow, padx=7, pady=7,bg="lightyellow", relief=tk.RIDGE,
+                                activebackground= 'orange', text=title)
+            label.grid(row=i ,column=column, sticky='news')    
             i=i+1
+            for key,value in result.items():
+                if i >23:
+                    i=1
+                    column=i%20+column+2
+                # print('current key',key,value)
+                if key=='id':
+                    value=CustomID(custom_id=value).to_hex()
+                if key=='platform':
+                    value=  PLATFORM_TYPE.PLATFORM_TYPE_TEXT[value][1]
+                if value==None:
+                    value=''                        
+                if key=='inserted_at':
+                    value=datetime.fromtimestamp(value).strftime("%Y-%m-%d %H:%M:%S")    
+                if key=='video_local_path':
+                    print('value===',value)
+                    value=PurePath(value)
+                    print('value===',value)
+                    value=str(value)
+                    print('value===',value)
+                if key=='thumbnail_local_path':
+                    print('value===',value)
+                    value=PurePath(value)
+                    print('value===',value)
+                    value=str(value)
+                    print('value===',value)                    
+                if not  key  in disableelements:
+                
+                    label= tk.Label(editsWindow, padx=7, pady=7, relief=tk.RIDGE,
+                                        activebackground= 'orange', text=key)
+                    label.grid(row=i ,column=column, sticky='news')         
+                    entry = tk.Entry(editsWindow)
+            
+                    entry.insert(0, value)
+                    entry.grid(row=i ,column=column+1, sticky='news')   
+                    rowkeys[i]=key
+                    def callback(event):
 
-        btn5= tk.Button(chooseAccountsWindow, text="save", padx = 0, pady = 0,command = lambda:AccountModel.update_account(id=rowid,account_data=newresult))
-        btn5.grid(row=i+1,column=2, sticky=tk.W)    
+                        x = event.widget.grid_info()['row']
+                        print(f'current input changes for {rowkeys[x]}',event.widget.get())   
+
+                        newresult[rowkeys[x]]=event.widget.get()
+                        if rowkeys[x]=='is_deleted':
+                            print('is deleted',type(event.widget.get()))
+                            value='0'
+                            if event.widget.get()=='0':
+                                value=False
+                            elif event.widget.get()=='1':
+                                value=True                        
+                            newresult[rowkeys[x]]=value
+
+                        print('============update row',newresult)
+
+                    # variable.trace('w', lambda:setEnty())    
+                    entry.bind("<KeyRelease>", callback)
+
+                else:
+
+                    label = tk.Label(editsWindow, padx=7, pady=7, relief=tk.RIDGE,
+                                        activebackground= 'orange', text=key)
+                    label.grid(row=i ,column=column, sticky='news')         
+                    variable=tk.StringVar()
+                    variable.set(value)
+                    entry = tk.Entry(editsWindow,textvariable=variable)
+                    entry.grid(row=i ,column=column+1, sticky='news') 
+                    entry.config(state='disabled')
+                i=i+1
+            return newresult,i,column+2
+
+        tmptask=taskresult
+        # tmptask.pop('video')
+        # tmptask.pop('setting')
+        print('taskresult\n',taskresult)
+        print('video\n',taskresult.get('video'))
+        print('setting\n',taskresult.get('setting'))
+        newtaskresult,serialno,cols=renderelements(i=1,result=tmptask,column=0,disableelements=['id','inserted_at','type','uploaded_at','video','setting'],title='task data')
+        newvideoresult={}
+        newsettingresult={}
+        newaccountresult={}
+        print('======================',serialno,cols)
+
+        if taskresult.get('video'):
+            print('video is associated to task',serialno,cols)
+
+            newvideoresult,serialno,cols=renderelements(i=1,result=taskresult.get('video'),column=cols,disableelements=['id','inserted_at','unique_hash','platform'],title='video data')
+        if taskresult.get('setting'):
+            print('setting is associated to task',serialno,cols)
+
+            newsettingresult,serialno,cols=renderelements(i=1,result=taskresult.get('setting'),column=cols,disableelements=['id','inserted_at','account','platform'],title='setting data')
+            if taskresult.get('setting').get('account') :
+                print('account is associated to setting',serialno,cols)
+
+                newaccountresult,serialno,cols=renderelements(i=serialno,result=taskresult.get('setting').get('account'),column=cols-2,disableelements=['id','inserted_at','unique_hash','platform'],title='account data')
+
+        btn5= tk.Button(editsWindow, text="save", padx = 0, pady = 0,command = lambda:TaskModel.update_task(id=rowid,account_data=newresult))
+        btn5.grid(row=i+1,column=cols+1, sticky=tk.W)    
 
 
     
@@ -7700,11 +7876,8 @@ def changeDisplayLang(lang):
   
     mainwindow.destroy()
 
-    log_frame.destroy()
     
-       
-    paned_window.destroy()
-    
+           
     
     # root.quit()    
     settings['lastuselang']=lang
@@ -7747,8 +7920,9 @@ app.include_router(router)
 async def asynctk():
     start_tkinter_app()
 def  start_tkinter_app():
-    global root,settings
+    global root,settings,db
     tmp['accountlinkaccount']={}    
+
     root = tk.Tk()
     load_setting()
     # print('---',settings)
@@ -7768,6 +7942,8 @@ def read_root():
     return FileResponse("static/proxy.html")  # Replace with the actual path to your HTML file
 
 if __name__ == '__main__':
+
+
     loop = asyncio.new_event_loop()
 
     asyncio.set_event_loop(loop)

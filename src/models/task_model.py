@@ -54,13 +54,13 @@ class TaskModel(BaseModel):
             # return True
     @classmethod
 
-    def get_task_by_id(cls, task_id):
-        return cls.get_or_none(cls.id == task_id)
+    def get_task_by_id(cls, id):
+        return cls.get_or_none(cls.id == id)
     @classmethod
 
-    def update_task(cls, task_id, **kwargs):
+    def update_task(cls, id,videodata=None,settingdata=None,accountdata=None,**kwargs):
         try:
-            task = cls.get(cls.id == task_id)
+            task = cls.get(cls.id == id)
             for key, value in kwargs.items():
                 setattr(task, key, value)
             task.save() 
@@ -69,108 +69,83 @@ class TaskModel(BaseModel):
             return None
     @classmethod
 
-    def delete_task( cls,task_id):
+    def delete_task( cls,id):
         try:
-            task = cls.get(cls.id == task_id)
+            task = cls.get(cls.id == id)
             task.delete_instance()
             return True
         except cls.DoesNotExist:
             return False
     @classmethod
 
+
+    @classmethod
+
     def filter_tasks(cls, status=None, type=None,uploaded_at=None,setting=None,inserted_at=None,video_title=None,video_id=None,username=None):
-        # result=list(TaskModel.select())
-        # for i in result:
-        #     print(i.__data__)
-        #     print(i.inserted_at)
-        #     print(i.video_id)
-        #     print(i.setting_id)
+            query=TaskModel.select()
+            # print('========show without filter========')
+            # print('======show attr=========')     
 
-
-
-        query = (TaskModel
-                .select(TaskModel, YoutubeVideoModel, UploadSettingModel, AccountModel)
-                .join(YoutubeVideoModel)  # Join favorite -> user (owner of favorite).
-                .switch(TaskModel)
-                .join(UploadSettingModel)  # Join favorite -> tweet
-                .join(AccountModel)
-                )   # Join tweet -> user        
-        print('999999999',query)
-        print('999999999',len(list(query)))
-
-        for i in list( query):
-            print(i.__data__)
-            print(i.inserted_at)
-            print(i.video_id)
-            print(i.setting_id)
-        # 如果存在video 相关的查询参数，先找到对应的video id集合
-        if video_title=='':
-            video_title=None
-        if status=='':
-            status=None
-        if video_id=='':
-            video_id=None
-        if username=='':
-            username=None
-        if video_title is not None :
-            print('ding ding video title')
-            query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
-
-            query = (query
-            # .join(YoutubeVideoModel,on=(TaskModel.video_id == YoutubeVideoModel.id))
-            # .where(YoutubeVideoModel.video_title.regexp(video_title))
-            .where(YoutubeVideoModel.video_title==video_title)
-
-            )
-            query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
-
-        print('1')
-
-        if video_id is not None:
-            query = query.join(YoutubeVideoModel,on=(TaskModel.video == YoutubeVideoModel.id)).where(YoutubeVideoModel.youtube_video_id == video_id)
-            query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
-
-        print('3')        
-        # 如果存在account 相关的查询参数，先找到对应的 setting id集合
-        if username is not None:
-            query = query.join(UploadSettingModel,on=(TaskModel.setting == UploadSettingModel.id)).join(AccountModel,on=(UploadSettingModel.account == AccountModel.id)).where(AccountModel.username.regexp(username))
-
-            query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
-        print('2')
-
-
-
-
-
-  
-        if status is not None:
-            query = query.where(cls.status == status)
-        print('5')
-
-        if inserted_at is not None:
-            query = query.where(cls.inserted_at == inserted_at)
-        if uploaded_at is not None:
-            query = query.where(cls.uploaded_at == uploaded_at)
-        if type is not None:
-            query = query.where(cls.type == type)
-
-        print('8')
-
-        print('9',(query))
-
-        try:
-            result = list(query)
-            print(len(result))
-            # if len(result)==0:
-            #     result=list(TaskModel.select())
-            # for i in result:
+            # for i in query:
+            #     # print(list(query))
             #     for att in dir(i):
-            #         print(f'=======att========{att}')
-            #         print(att,getattr(i,att))
-                # print('----------',i.video)
-                # print('----------',i.setting)
-            
-        except cls.DoesNotExist:
-            result = None  # Set a default value or perform any other action
+            #         if 'setting' in att:
+            #             print(att,getattr(i,att))           
+                        
+            #         if 'video'  in att:
+            #             print(att,getattr(i,att))           
+            # print('======show ids=========')     
+                    
+            # for i in query:
+            #     print(i.id)
+                
+            # print('======show fks=========')     
+            # for i in query:
+            #     print(i.video,i.setting)
+            query = (TaskModel
+                    .select(TaskModel, YoutubeVideoModel, UploadSettingModel, AccountModel)
+                    .join(YoutubeVideoModel)  # Join favorite -> user (owner of favorite).
+                    .switch(TaskModel)
+                    .join(UploadSettingModel)  # Join favorite -> tweet
+                    .join(AccountModel))   # Join tweet -> user        
+            # print('========show with join========')
 
-        return result
+            # for fav in query:
+            #     print(fav.video,fav.setting)
+        
+            if video_title is not None :
+                query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
+
+                query = (query
+                # .join(YoutubeVideoModel,on=(TaskModel.video_id == YoutubeVideoModel.id))
+                .where(YoutubeVideoModel.video_title.regexp(video_title))
+                # .where(YoutubeVideoModel.video_title==video_title)
+
+                )
+                query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
+
+
+            if video_id is not None:
+                query = query.join(YoutubeVideoModel,on=(TaskModel.video == YoutubeVideoModel.id)).where(YoutubeVideoModel.youtube_video_id == video_id)
+                query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
+
+            # 如果存在account 相关的查询参数，先找到对应的 setting id集合
+            if username is not None:
+                query = query.join(UploadSettingModel,on=(TaskModel.setting == UploadSettingModel.id)).join(AccountModel,on=(UploadSettingModel.account == AccountModel.id)).where(AccountModel.username.regexp(username))
+
+                query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
+
+
+            try:
+                result = list(query)
+                # for i in result:
+                #     for att in dir(i):
+                #         print('======show attr=========')
+                #         print(att,getattr(i,att))
+                #     print('----------',i.video)
+                #     print('----------',i.setting)
+                
+            except cls.DoesNotExist:
+                result = None  # Set a default value or perform any other action
+
+            return result

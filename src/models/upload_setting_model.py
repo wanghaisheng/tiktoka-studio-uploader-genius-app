@@ -63,13 +63,13 @@ class UploadSettingModel(BaseModel):
 
     @classmethod
 
-    def get_uploadsetting_by_id(cls, uploadsetting_id):
-        return cls.get_or_none(cls.id == uploadsetting_id)
+    def get_uploadsetting_by_id(cls,id):
+        return cls.get_or_none(cls.id == id)
 
     @classmethod
-    def update_uploadsetting(cls, uploadsetting_id, **kwargs):
+    def update_uploadsetting(cls,id, **kwargs):
         try:
-            uploadsetting = cls.get(cls.id == uploadsetting_id)
+            uploadsetting = cls.get(cls.id == id)
             for key, value in kwargs.items():
                 setattr(uploadsetting, key, value)
             uploadsetting.save(force_insert=True) 
@@ -78,9 +78,9 @@ class UploadSettingModel(BaseModel):
             return None
     @classmethod
 
-    def delete_uploadsetting(cls, uploadsetting_id):
+    def delete_uploadsetting(cls,id):
         try:
-            uploadsetting = cls.get(cls.id == uploadsetting_id)
+            uploadsetting = cls.get(cls.id == id)
             uploadsetting.delete_instance()
             return True
         except cls.DoesNotExist:

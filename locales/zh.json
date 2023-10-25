@@ -44,6 +44,11 @@
 	"mode3":"模式3",
 	"default_release_hour":"10:15",
 	"linkAccounts": "关联账号",
+	"newuserwizard": "我是新手",
+
+	"testdatainstall": "添加测试数据",
+	"testdataRemove": "清除测试数据",
+	"startfromfolder": "已准备好内含视频的文件夹",
 
 	"save_setting": "保存配置",
 	"testsettingok": "测试配置",

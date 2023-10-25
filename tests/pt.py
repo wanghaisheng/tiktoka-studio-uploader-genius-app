@@ -134,7 +134,7 @@ print('222',test_settings)
 
 test_videos=[]
 for i in range(1,10):
-        video=YoutubeVideoModel(id=i,video_title='test title'+str(random.choice(range(1,100))))
+        video=YoutubeVideoModel.create(id=i,video_title='test title'+str(random.choice(range(1,100))))
         test_videos.append(video)
 
 print('333',test_videos)
