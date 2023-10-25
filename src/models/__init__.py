@@ -1,7 +1,7 @@
 import time
 import hashlib
 import binascii
-
+import env
 # peewee 配置
 
 from peewee import *
@@ -11,26 +11,25 @@ from playhouse.shortcuts import model_to_dict
 
 # TODO: 连接池
 asyncpg_conn = None
-mode='debug'
 
-DATABASE_URI=f'{mode}.sqlite3'
-# DATABASE_URI = f'sqlite:///{mode}.sqlite3'
+# DATABASE_URI=f'{mode}.sqlite3'
+# # DATABASE_URI = f'sqlite:///{mode}.sqlite3'
 
-def connect(db_uri):
+# def connect(db_uri):
 
-    db = SqliteDatabase(db_uri
-                        # , 
-        #                 pragmas={
-        # 'journal_mode': 'wal',  # WAL-mode.
-        # 'cache_size': -64 * 1000,  # 64MB cache.
-        # 'synchronous': 0}
-                        )  # Let the OS manage syncing.
-    return db
-
+#     db = SqliteDatabase(db_uri
+#                         # , 
+#         #                 pragmas={
+#         # 'journal_mode': 'wal',  # WAL-mode.
+#         # 'cache_size': -64 * 1000,  # 64MB cache.
+#         # 'synchronous': 0}
+#                         )  # Let the OS manage syncing.
+#     return db
 
 
+db = DatabaseProxy()
 
-db = connect(DATABASE_URI)
+# db = connect(DATABASE_URI)
 
 
 class CITextField(TextField):
@@ -50,9 +49,15 @@ class MyTimestampField(BigIntegerField):
     pass
 
 
+
+
 class BaseModel(Model):
     class Meta:
-        database = db
+        if env.mode == 'production':
+            database = env.config['prod']
+        else:
+            database = ThreadSafeDatabaseMetadata        
+
 
     def to_dict(self):
         return model_to_dict(self)

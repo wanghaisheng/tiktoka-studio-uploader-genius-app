@@ -7941,8 +7941,10 @@ def read_root():
     return FileResponse("static/proxy.html")  # Replace with the actual path to your HTML file
 
 if __name__ == '__main__':
-
-
+    mode='prod'
+    if mode == 'production':
+        env.config['prod'] = SqliteDatabase(f'{mode}.sqlite3', pragmas={'journal_mode': 'wal'})
+        env.config['test'] = SqliteDatabase(f'{mode}.sqlite3', pragmas={'journal_mode': 'wal'})
     loop = asyncio.new_event_loop()
 
     asyncio.set_event_loop(loop)

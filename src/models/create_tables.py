@@ -10,14 +10,15 @@ from src.models.youtube_video_model import YoutubeVideoModel,VIDEO_SETTINGS
 from src.models.task_model import TaskModel,TASK_STATUS
 from src.customid import *
 import random
+import env
 
-
-
-db.connect()
+Tables=[ProxyModel,AccountModel,AccountRelationship,PlatformModel,UploadSettingModel,YoutubeVideoModel,TaskModel]
+if env.mode == 'production':
+    env.config['database'].create_tables(Tables)
 # db.create_tables([ProxyModel, PlatformModel], safe=True)
-db.create_tables([ProxyModel,AccountModel,AccountRelationship,PlatformModel,UploadSettingModel,YoutubeVideoModel,TaskModel])
+# db.create_tables(Tables)
 
-
+    env.config['database'].bind(Tables)
 
 print('inital supported platforms')
 PlatformModel.add_platform(platform_data={
