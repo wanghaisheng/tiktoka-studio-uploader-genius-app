@@ -4,15 +4,25 @@ import time
 from src.customid import CustomID
 
 class PLATFORM_TYPE:
-    YOUTUBE = 0
-    TIKTOK = 1
-    INSTAGRAM=2
-    TWITTER=3
+    YOUTUBE = 1
+    TIKTOK = 2
+    INSTAGRAM=3
+    TWITTER=4
+    FACEBOOK=5
+    DOUYIN=6
+    SHIPINHAO=7
+    XIAOHONGSHU=8
+    UNKNOWN=100
     PLATFORM_TYPE_TEXT = [
         (YOUTUBE, "youtube"),
         (TIKTOK, "tiktok"),
         (INSTAGRAM, "instagram"),
         (TWITTER, "twitter"),
+        (FACEBOOK, "facebook"),
+        (DOUYIN, "douyin"),        
+        (SHIPINHAO, "视频号"),
+        (XIAOHONGSHU, "小红书"),
+        (UNKNOWN, "unknown")
 
     ]
 
@@ -70,7 +80,7 @@ class PlatformModel(BaseModel):
     @classmethod
     def filter_platforms(cls, name=None, ptype=None, server=None):
         query = cls.select()
-        print('all platfroms are ',list(query))
+        # print('all platfroms are ',list(query))
         if name is not None:
             query = query.where(cls.name == name)
 

@@ -28,7 +28,7 @@
 
 	"loglevel": "loglevel",
 
-	"upload": "开始上传",
+	"b_uploadAll": "查询&&上传",
 	"batchchangebgmusic": "批量替换背景音乐",
 	"is_open_browser": "静默模式",
 	"is_record_video": "录像模式",
@@ -50,6 +50,7 @@
 	"testdatainstall": "添加测试数据",
 	"testdataRemove": "清除测试数据",
 	"startfromfolder": "已准备好内含视频的文件夹",
+	"statsView": "统计",
 
 	"save_setting": "保存配置",
 	"testsettingok": "测试配置",
@@ -74,7 +75,7 @@
 	"b_createTaskMetas":"新建任务",
 	"t_createTaskMetas":"create task meta  file from video meta or folder",
 
-	"validateVideoMetas":"验证视频元信息json文件",
+	"validateVideoMetas":"验证任务文件",
 	"editVideoMetas":"纯手动编辑视频元信息json文件",
 	"username": "账号名称",
 	"password": "账号密码",

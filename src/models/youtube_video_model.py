@@ -408,17 +408,33 @@ class YoutubeVideoModel(BaseModel):
         return inserted_videos        
     @classmethod
 
-    def update_video(video_id, video_data):
+    def update_video(cls,id, video_data,**kwargs):
         try:
-            video = YoutubeVideoModel.objects.get(id=id)
-            unique_hash = generate_unique_hash(video_data)
-            video_data['unique_hash'] = unique_hash
+            video = cls.get_or_none(cls.id == id)
+            print('before modify',video,video.is_deleted)
+            if video_data:
+                video = YoutubeVideoModel(**video_data)
+                print('after modify',video,video.is_deleted)
+
+
+            else:
+                for key, value in kwargs.items():
+                    # 由于entry获取的都是字符串变量值，对于bool型，需要手动转换
+                    # if key=='is_deleted':
+                    #     print('is deleted',type(value))
+                    #     if value=='0':
+                    #         value=False
+                    #     elif value=='1':
+                    #         value=True
+                    setattr(video, key, value)
+                    
+                print('after modify',video,video.is_deleted)
             video.inserted_at = int(time.time())  # Update insert_date
-            for key, value in video_data.items():
-                setattr(video, key, value)
-            video.save(force_insert=True) 
+
+            video.save() 
+            print('update success')
             return video
-        except YoutubeVideoModel.DoesNotExist:
+        except cls.DoesNotExist:
             return None
     @classmethod
     def get_video_by_id(cls,id):

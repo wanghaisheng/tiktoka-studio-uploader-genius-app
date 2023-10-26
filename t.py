@@ -20,22 +20,11 @@ mode='debug'
 DATABASE_URI=f'{mode}.sqlite3'
 # DATABASE_URI = f'sqlite:///{mode}.sqlite3'
 
-def initdb(db_uri):
 
-    db = SqliteDatabase(db_uri
-                        # , 
-        #                 pragmas={
-        # 'journal_mode': 'wal',  # WAL-mode.
-        # 'cache_size': -64 * 1000,  # 64MB cache.
-        # 'synchronous': 0}
-                        )  # Let the OS manage syncing.
-    return db
-
-
-
-
-# db = initdb(DATABASE_URI)
+db = SqliteDatabase(DATABASE_URI)
 
 db.connect()
 
-t=TaskModel.filter_tasks(status=None, type=None,uploaded_at=None,setting=None,inserted_at=None,video_title=None,video_id=None,username=None,pageno=2,pagecount=100,start=None,end=None,data=None)
+# t=TaskModel.filter_tasks(status=None, type=None,uploaded_at=None,setting=None,inserted_at=None,video_title=None,video_id=None,username=None,pageno=2,pagecount=100,start=None,end=None,data=None)
+platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
+platform_names = [PLATFORM_TYPE.PLATFORM_TYPE_TEXT[x.type][1] for x in platform_rows]

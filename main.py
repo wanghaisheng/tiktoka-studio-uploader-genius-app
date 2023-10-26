@@ -112,7 +112,7 @@ supported_meta_exts=['.json', '.xls','.xlsx','.csv']
 
 # Add the handler to logger
 logging.basicConfig(filename='test.log',
-    level=logging.DEBUG, 
+    level=logging.INFO, 
     format='%(asctime)s - %(levelname)s - %(message)s')   
 logger = logging.getLogger()    
 
@@ -400,7 +400,7 @@ def load_setting():
     else:
         failed=True
     if failed==True:
-        logger.info('start initialize settings with default')
+        logger.debug('start initialize settings with default')
         print('start initialize settings with default')
 
         try:
@@ -415,7 +415,7 @@ def load_setting():
         settings['lastuselang']='en'
         settings['zh']=json.loads(open(os.path.join(ROOT_DIR+os.sep+'locales','zh.json'), 'r', encoding='utf-8').read())
         settings['en']=json.loads(open(os.path.join(ROOT_DIR+os.sep+'locales','en.json'), 'r', encoding='utf-8').read())
-        logger.info('end to initialize settings with default')
+        logger.debug('end to initialize settings with default')
     # print(settings)
 
 
@@ -787,7 +787,7 @@ def chooseAccountsView_listbox(newWindow,parentchooseaccounts):
 
     def db_values():
         platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
-        platform_names = [PLATFORM_TYPE.PLATFORM_TYPE_TEXT[x.type][1] for x in platform_rows]
+        platform_names = [dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[x.type] for x in platform_rows]
 
         platform_combo['values'] = platform_names
 
@@ -867,7 +867,7 @@ def chooseAccountsView_listbox(newWindow,parentchooseaccounts):
 
 
             platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
-            platform_names = [PLATFORM_TYPE.PLATFORM_TYPE_TEXT[x.type][1] for x in platform_rows]
+            platform_names = [dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[x.type] for x in platform_rows]
             print('platforms options are',platform_names)
 
             # Extract platform names and set them as options in the platform dropdown
@@ -877,7 +877,7 @@ def chooseAccountsView_listbox(newWindow,parentchooseaccounts):
                 button1.grid(row=2, column=2, padx=10, pady=10, sticky=tk.W)
 
             else:
-                logger.info(f'query results of existing platforms is {platform_names}')
+                logger.debug(f'query results of existing platforms is {platform_names}')
 
                 if  len(platform_names)==0:
                     platform_combo["values"]=[]
@@ -891,7 +891,7 @@ def chooseAccountsView_listbox(newWindow,parentchooseaccounts):
                     for platform in platform_names:
                         
                         if tmp['accountlinkaccount'].has_key(platform):
-                            logger.info(f'you have cached  this platform {platform}')
+                            logger.debug(f'you have cached  this platform {platform}')
                         else:
                             tmp['accountlinkaccount'][platform]=''
                     
@@ -904,7 +904,7 @@ def chooseAccountsView_listbox(newWindow,parentchooseaccounts):
 
                     else:                
                         account_names = [row.username for row in account_rows]
-                        logger.info(f'we found {len(account_names)} record matching ')
+                        logger.debug(f'we found {len(account_names)} record matching ')
 
                         langlist.delete(0,tk.END)
                         i=0
@@ -937,7 +937,7 @@ def chooseAccountsView_listbox(newWindow,parentchooseaccounts):
         
         else:
             existingaccounts=tmp['accountlinkaccount'][platform_var.get()].split(',')            
-            logger.info(f'you want to remove this selected proxy {selected_accounts} from existing: {existingaccounts}')
+            logger.debug(f'you want to remove this selected proxy {selected_accounts} from existing: {existingaccounts}')
 
             for item in selected_accounts:
 
@@ -945,12 +945,12 @@ def chooseAccountsView_listbox(newWindow,parentchooseaccounts):
                     existingaccounts.remove(item)
 
 
-                    logger.info(f'this proxy {item} removed success')
+                    logger.debug(f'this proxy {item} removed success')
                     showinfomsg(message=f'this proxy {item} removed success',parent=chooseAccountsWindow)    
                 else:
-                    logger.info(f'you cannot remove this proxy {item}, not added before')
+                    logger.debug(f'you cannot remove this proxy {item}, not added before')
                     showinfomsg(message=f'this proxy {item} not added before',parent=chooseAccountsWindow)    
-            logger.info(f'end to remove,reset proxystr {existingaccounts}')
+            logger.debug(f'end to remove,reset proxystr {existingaccounts}')
             tmp['accountlinkaccount'][platform_var.get()]= ','.join(item for item in existingaccounts if item is not None and item != "")
         show_str=str(tmp['accountlinkaccount'])
         if tmp['accountlinkaccount'].has_key('selected'):
@@ -970,22 +970,22 @@ def chooseAccountsView_listbox(newWindow,parentchooseaccounts):
         # (youtube:y1,y2),(tiktok:t1:t2)
         show_str=account_var.get()
         if len(list(values))==0:
-            logger.info('you have not selected  proxiess at all.choose one or more')
+            logger.debug('you have not selected  proxiess at all.choose one or more')
             showinfomsg(message='you have not selected  proxiess at all.choose one or more',parent=chooseAccountsWindow)    
         
         elif values==existingaccounts:
-            logger.info('you have not selected new proxiess at all')
+            logger.debug('you have not selected new proxiess at all')
             showinfomsg(message='you have not selected new proxiess at all',parent=chooseAccountsWindow)    
         
         else:
             for item in values:
                 if item in existingaccounts:
-                    logger.info(f'this proxy {item} added before')                   
+                    logger.debug(f'this proxy {item} added before')                   
                     showinfomsg(message=f'this proxiess {item} added before',parent=chooseAccountsWindow)    
 
                 else:
                     existingaccounts.append(item)
-                    logger.info(f'this proxy {item} added successS')
+                    logger.debug(f'this proxy {item} added successS')
                     showinfomsg(message=f'this proxy {item} added success',parent=chooseAccountsWindow)    
             tmp['accountlinkaccount'][platform_var.get()]= ','.join(item for item in existingaccounts if item is not None and item != "")
 
@@ -1025,7 +1025,7 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
                sticky='nswe')    
     def db_values():
         platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
-        platform_names = [PLATFORM_TYPE.PLATFORM_TYPE_TEXT[x.type][1] for x in platform_rows]
+        platform_names = [dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[x.type] for x in platform_rows]
 
         platform_combo['values'] = platform_names
 
@@ -1167,7 +1167,7 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
 
 
             platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
-            platform_names = [PLATFORM_TYPE.PLATFORM_TYPE_TEXT[x.type][1] for x in platform_rows]
+            platform_names = [dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[x.type] for x in platform_rows]
             print('platforms options are',platform_names)
 
             # Extract platform names and set them as options in the platform dropdown
@@ -1177,7 +1177,7 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
                 button1.grid(row=2, column=2, padx=10, pady=10, sticky=tk.W)
 
             else:
-                logger.info(f'query results of existing platforms is {platform_names}')
+                logger.debug(f'query results of existing platforms is {platform_names}')
 
                 if  len(platform_names)==0:
                     platform_combo["values"]=[]
@@ -1191,7 +1191,7 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
                     for platform in platform_names:
                         
                         if tmp['accountlinkaccount'].has_key(platform):
-                            logger.info(f'you have cached  this platform {platform}')
+                            logger.debug(f'you have cached  this platform {platform}')
                         else:
                             tmp['accountlinkaccount'][platform]=''
                     
@@ -1204,7 +1204,7 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
 
                     else:                
                         account_names = [row.username for row in account_rows]
-                        logger.info(f'we found {len(account_names)} record matching ')
+                        logger.debug(f'we found {len(account_names)} record matching ')
 
                         # langlist.delete(0,tk.END)
                         i=0
@@ -1249,12 +1249,12 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
                 existingaccounts[selected_platform].remove(rowid)
 
 
-                logger.info(f'this account {rowid} removed success')
+                logger.debug(f'this account {rowid} removed success')
                 showinfomsg(message=f'this account {rowid} removed success',parent=chooseAccountsWindow)    
             else:
-                logger.info(f'you cannot remove this account {rowid}, not added before')
+                logger.debug(f'you cannot remove this account {rowid}, not added before')
                 showinfomsg(message=f'this account {rowid} not added before',parent=chooseAccountsWindow)    
-            logger.info(f'end to remove,reset account {existingaccounts}')
+            logger.debug(f'end to remove,reset account {existingaccounts}')
 
         account_var.set(str(existingaccounts))
         parentchooseaccounts.set(str(existingaccounts))
@@ -1270,19 +1270,19 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
             existingaccounts={selected_platform:[]}
         # (youtube:y1,y2),(tiktok:t1:t2)
         if rowid is None:
-            logger.info('you have not selected new accounts at all')
+            logger.debug('you have not selected new accounts at all')
             showinfomsg(message='you have not selected new accounts at all',parent=chooseAccountsWindow)    
         
         else:
             if rowid in existingaccounts[selected_platform]:
-                logger.info(f'this account {rowid} added before')                   
+                logger.debug(f'this account {rowid} added before')                   
                 showinfomsg(message=f'this account {rowid} added before',parent=chooseAccountsWindow)    
 
             else:
                 if existingaccounts[selected_platform]=='':
                     existingaccounts[selected_platform]=[]
                 existingaccounts[selected_platform].append(rowid)
-                logger.info(f'this account {rowid} added successS')
+                logger.debug(f'this account {rowid} added successS')
                 showinfomsg(message=f'this account {rowid} added success',parent=chooseAccountsWindow)    
 
         account_var.set(str(existingaccounts))
@@ -1291,7 +1291,7 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
 
 
 def isFilePairedMetas(r,videofilename,meta_exts_list,dict,meta_name):
-    logger.info(f'start to check {meta_name} for video: {videofilename}')
+    logger.debug(f'start to check {meta_name} for video: {videofilename}')
     print(f'before check:\n{jsons.dump(dict[meta_name])}')
 
     for ext in meta_exts_list:
@@ -1300,17 +1300,17 @@ def isFilePairedMetas(r,videofilename,meta_exts_list,dict,meta_name):
 
         metapath = os.path.join(r, videofilename+ext)
         if  os.path.exists(metapath):     
-            logger.info(f'meta filed  {meta_name} for {videofilename} is  exist:\n {metapath}')
+            logger.debug(f'meta filed  {meta_name} for {videofilename} is  exist:\n {metapath}')
             if dict[meta_name] is not None and metapath not in dict[meta_name]:
                 if dict[meta_name].has_key(videofilename)==False:
                     dict[meta_name][videofilename]=[]
-                    logger.info(f'intial {meta_name} for {videofilename}:\n')
+                    logger.debug(f'intial {meta_name} for {videofilename}:\n')
                 if not metapath in dict[meta_name][videofilename]:
 
                     dict[meta_name][videofilename].append(metapath)
                 print(f'append result:\n{dict[meta_name][videofilename]}')
                 if meta_name=='thumbFilePaths':
-                    logger.info(f"found thumbfiles,start to set video metas {type(dict['videos'][videofilename]['thumbnail_local_path'])},{dict['videos'][videofilename]['thumbnail_local_path']}")
+                    logger.debug(f"found thumbfiles,start to set video metas {type(dict['videos'][videofilename]['thumbnail_local_path'])},{dict['videos'][videofilename]['thumbnail_local_path']}")
 
                     if dict['videos'][videofilename]['thumbnail_local_path'] is None or dict['videos'][videofilename]['thumbnail_local_path']=='':
                         print('video meta thumbnail is None')
@@ -1334,10 +1334,10 @@ def isFilePairedMetas(r,videofilename,meta_exts_list,dict,meta_name):
                                 dict['videos'][videofilename]['thumbnail_local_path'].append(metapath)
                         print(f"found thumbfiles,end to set video metas {ext}== {type(dict['videos'][videofilename]['thumbnail_local_path'])},{dict['videos'][videofilename]['thumbnail_local_path']}")
                                 
-                    logger.info(f"found thumbfiles,end to set video metas {type(dict['videos'][videofilename]['thumbnail_local_path'])},{dict['videos'][videofilename]['thumbnail_local_path']}")
+                    logger.debug(f"found thumbfiles,end to set video metas {type(dict['videos'][videofilename]['thumbnail_local_path'])},{dict['videos'][videofilename]['thumbnail_local_path']}")
                             
                 elif meta_name=='desFilePaths':
-                    logger.info(f"found des files,start to set video metas {type(dict['videos'][videofilename]['video_description'])},{dict['videos'][videofilename]['video_description']}")
+                    logger.debug(f"found des files,start to set video metas {type(dict['videos'][videofilename]['video_description'])},{dict['videos'][videofilename]['video_description']}")
 
                     with open(metapath,'r',encoding='utf-8') as f:
                         lines=f.readlines()
@@ -1345,10 +1345,10 @@ def isFilePairedMetas(r,videofilename,meta_exts_list,dict,meta_name):
                         contents = '\r'.join(lines)
                         contents = contents.replace('\n','')
                         dict['videos'][videofilename]['video_description']=contents 
-                    logger.info(f"found des files,end to set video metas {type(dict['videos'][videofilename]['video_description'])},{dict['videos'][videofilename]['video_description']}")
+                    logger.debug(f"found des files,end to set video metas {type(dict['videos'][videofilename]['video_description'])},{dict['videos'][videofilename]['video_description']}")
 
                 elif meta_name=='tagFilePaths':
-                    logger.info(f"found tag files,start to set video metas {type(dict['videos'][videofilename]['tags'])},{dict['videos'][videofilename]['tags']}")
+                    logger.debug(f"found tag files,start to set video metas {type(dict['videos'][videofilename]['tags'])},{dict['videos'][videofilename]['tags']}")
 
                     with open(metapath,'r',encoding='utf-8') as f:
                         lines=f.readlines()
@@ -1356,19 +1356,19 @@ def isFilePairedMetas(r,videofilename,meta_exts_list,dict,meta_name):
                         contents = '\r'.join(lines)
                         contents = contents.replace('\n','')
                         dict['videos'][videofilename]['tags']=contents       
-                    logger.info(f"found tag files,end to set video metas {type(dict['videos'][videofilename]['tags'])},{dict['videos'][videofilename]['tags']}")
+                    logger.debug(f"found tag files,end to set video metas {type(dict['videos'][videofilename]['tags'])},{dict['videos'][videofilename]['tags']}")
                                              
     print(f"after check:\n {jsons.dump(dict[meta_name])}:\n,{dict['videos'][videofilename]['thumbnail_local_path']}")
                           
-    logger.info(f"after check:\n {jsons.dump(dict[meta_name])}:\n,{dict['videos'][videofilename]['thumbnail_local_path']}")
+    logger.debug(f"after check:\n {jsons.dump(dict[meta_name])}:\n,{dict['videos'][videofilename]['thumbnail_local_path']}")
     
     tmpjson=os.path.join(r, videofilename+'.json')
     if os.path.exists(tmpjson):
-        logger.info(f'update to {videofilename} meta json')
+        logger.debug(f'update to {videofilename} meta json')
         with open(tmpjson,'w') as f:
             f.write(jsons.dumps(dict['videos'][videofilename]))        
     else:
-        logger.info(f'create a fresh {videofilename} meta json')
+        logger.debug(f'create a fresh {videofilename} meta json')
         with open(tmpjson,'a') as f:
             f.write(jsons.dumps(dict['videos'][videofilename]))
 
@@ -1397,41 +1397,41 @@ def syncVideometa2assetsjson(selectedMetafileformat,folder):
         for filename,video in changed_df_metas.items():
             print('video',video,type(video))
             if os.path.exists(video['video_local_path']):
-                logger.info('video file is ok')
+                logger.debug('video file is ok')
                 newfilenameslist.append(filename)
                 tmpvideos[filename]=video
                 
             else:
-                logger.info(f"{video['video_local_path']} video file is broken or not found according to video metafile")
+                logger.debug(f"{video['video_local_path']} video file is broken or not found according to video metafile")
                 # newfilenameslist.remove(filename)
                 # changed_df_metas.remove(filename)        
         if ultra[folder].has_key('videos'):
-            logger.info(f"=111==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
+            logger.debug(f"=111==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
             
-            logger.info(f"=222==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
+            logger.debug(f"=222==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
             # ultra[folder]['videos']= {}
             # 当某个key值为空 {} 如果你要赋值一个嵌套的对象 比如json样子的数组 是没有办法直接赋值的
             # ultra[folder]['videos']= changed_df_metas
             if dict(ultra[folder]['videos'])==dict({}):
-                logger.info(f"=333==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
+                logger.debug(f"=333==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
                 
                 for filename,video in tmpvideos.items():
                     ultra[folder]['videos'][filename]= video
-                logger.info(f"=444==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
+                logger.debug(f"=444==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
             else:
-                logger.info(f"=555==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
+                logger.debug(f"=555==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
                 try:
                     ultra[folder]['videos']=tmpvideos      
                 except Exception as e:
                     logger.error(e)
-                logger.info(f"=5551==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
+                logger.debug(f"=5551==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
 
                 for filename,video in tmpvideos.items():
                     print('is_debug',filename,video)
                     ultra[folder]['videos'][filename]= video
                     # ultra[folder]['videos']=new                   
         else:
-            logger.info(f"=666==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
+            logger.debug(f"=666==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}")
         
             new=dict({})        
             for filename,video in tmpvideos.items():
@@ -1439,7 +1439,7 @@ def syncVideometa2assetsjson(selectedMetafileformat,folder):
             ultra[folder]['videos']=new   
         ultra[folder]['filenames']= newfilenameslist
         if len(ultra[folder] ['filenames'])==0:
-            logger.info(f"we could not find any video, video counts is {ultra[folder] ['videoCounts']},supported ext includes:\n{'.'.join(supported_video_exts)}")
+            logger.debug(f"we could not find any video, video counts is {ultra[folder] ['videoCounts']},supported ext includes:\n{'.'.join(supported_video_exts)}")
         # 遍历每个视频文件，核对视频文件、缩略图等文件是否存在，核对元数据中对应字段是否存在
         ultra[folder] ['videoCounts']=len(ultra[folder] ['filenames'])    
         print(f"during sync ,detected video counts {len(ultra[folder] ['filenames'])  }")
@@ -1503,7 +1503,7 @@ def creatNewfoldercache(folder):
 
                     }     
     else:
-        logger.info(f'there is cache for {folder} already')
+        logger.debug(f'there is cache for {folder} already')
 def scanVideofiles(folder):
 
         
@@ -1534,7 +1534,7 @@ def scanVideofiles(folder):
                     if ext in supported_video_exts:
                             
                         if ultra[folder] ['filenames']!=[] and filename in ultra[folder] ['filenames']:
-                            logger.info(f'you have prepared video metas for:{filename}')
+                            logger.debug(f'you have prepared video metas for:{filename}')
                         else:
                             ultra[folder] ['filenames'].append(filename)
 
@@ -1662,7 +1662,7 @@ def scanVideofiles(folder):
                 else:
                     print('is folder',r,d,i)      
     if len(ultra[folder] ['filenames'])==0:
-        logger.info(f"we could not find any video, video counts is {ultra[folder] ['videoCounts']},supported ext includes:\n{'.'.join(supported_video_exts)}")
+        logger.debug(f"we could not find any video, video counts is {ultra[folder] ['videoCounts']},supported ext includes:\n{'.'.join(supported_video_exts)}")
     # 遍历每个视频文件，核对视频文件、缩略图等文件是否存在，核对元数据中对应字段是否存在
     ultra[folder] ['videoCounts']=len(ultra[folder] ['filenames'])    
     print(f"detected video counts {len(ultra[folder] ['filenames']) }")
@@ -1688,22 +1688,22 @@ def analyse_video_meta_pair(folder,frame,right_frame,selectedMetafileformat,isTh
 
 
     if folder=='':
-        logger.info('please choose a folder first')
+        logger.debug('please choose a folder first')
     else:
-        logger.info(f'start to detecting video metas----------{ultra.has_key(folder)}')
+        logger.debug(f'start to detecting video metas----------{ultra.has_key(folder)}')
 
         if ultra.has_key(folder):
             print(pd.Timestamp.now().value-ultra[folder] ['updatedAt'])
             duration_seconds = (pd.Timestamp.now().value-ultra[folder] ['updatedAt']) / 10**9  # Convert nanoseconds to seconds
             
-            logger.info(f"we cached {duration_seconds} seconds before for  this folder {folder}")
+            logger.debug(f"we cached {duration_seconds} seconds before for  this folder {folder}")
 
 
         else:
-            logger.info(f"create cached data for this folder:\n{folder}")
+            logger.debug(f"create cached data for this folder:\n{folder}")
             creatNewfoldercache(folder)
         if os.path.exists(videoassetsfilename):
-            logger.info('load video assets to cache')
+            logger.debug('load video assets to cache')
             # os.remove(videoassetsfilename)
             assetpath=os.path.join(folder,videoassetsfilename)
 
@@ -1717,7 +1717,7 @@ def analyse_video_meta_pair(folder,frame,right_frame,selectedMetafileformat,isTh
             
             
         if os.path.exists(os.path.join(folder,'videos-meta.'+selectedMetafileformat)):
-            logger.info('sync videos-meta')
+            logger.debug('sync videos-meta')
             print('============sync videos-meta==============')
             # os.remove(os.path.join(folder,'videos-meta.'+selectedMetafileformat))
             syncVideometa2assetsjson(selectedMetafileformat,folder)
@@ -1799,7 +1799,7 @@ def dumpMetafiles(selectedMetafileformat,folder):
 
 def dumpSetting(settingfilename):    
     folder=ROOT_DIR
-    logger.info(f'start to dump TiktokaStudio settings')
+    logger.debug(f'start to dump TiktokaStudio settings')
     logger.debug(f'check settings before dump {settings}')
     tmpjson=os.path.join(folder,settingfilename)
 
@@ -1809,7 +1809,7 @@ def dumpSetting(settingfilename):
     else:
         with open(tmpjson,'a') as f:
             f.write(jsons.dumps(settings))         
-    logger.info(f'end to dump TiktokaStudio settings')
+    logger.debug(f'end to dump TiktokaStudio settings')
 
 
 
@@ -1890,47 +1890,80 @@ def testupload(dbm,ttkframe):
             asyncio.run(bulk_scheduletopublish_specific_date(videos=othervideos,upload=upload))
 
 
-def runTask(status=None,type=None,video_id=None,username=None,priority=None,video_title=None,sortedby='DESC',limit=None):
-    task_rows=TaskModel.filter_tasks(status=status,type=platform,video_title=video_title,video_id=video_id,username=username,sortedby='DESC',limit=None) 
+def runTask(frame=None,username=None,platform=None,status=None,vtitle=None,schedule_at=None,vid=None,pageno=None,pagecount=None,ids=None,
+    sortby="ASC" ):
+
+    if sortby is None:
+        sortby="Add Date ASC"
+    elif 'choose' in sortby:
+        sortby="Add Date ASC"
+
+    else:
+        print(f'sort by {sortby}')
+    
+    sortby=find_key(SORT_BY_TYPE.SORT_BY_TYPE_TEXT,sortby)
+    if pagecount is None:
+        pagecount=100
+    if  username is not None and 'input' in username:
+        username=None
+    if username==''  or username is None:
+        username=None
+    if  schedule_at is not None and 'input' in schedule_at:
+        schedule_at=None            
+    if schedule_at=='' or schedule_at is None:
+        schedule_at=None           
+    if  vid is not None and 'input' in vid:
+        vid=None            
+    if vid=='' or vid is None:
+        vid=None           
+    if  vtitle is not None and 'input' in vtitle:
+        vtitle=None            
+    if vtitle=='' or vtitle is None:
+        vtitle=None            
+    if  platform is not None and 'choose' in platform:
+        platform=None            
+    if platform=='' or platform is None:
+        platform=None        
+    elif type(platform)==str:
+        print('======',platform)
+        print(f'query tasks for {platform} {getattr(PLATFORM_TYPE, platform.upper())} ')
+
+        platform=getattr(PLATFORM_TYPE, platform.upper())
+
+    if status=='':
+        status=None  
+    elif  status is not None and 'choose' in status:
+        status=None             
+    elif type(status)==str:
+        print(f'query tasks for {status} {getattr(TASK_STATUS, status.upper())} ')
+
+        status=getattr(TASK_STATUS, status.upper())
+    
+
+    
+    task_rows,counts=TaskModel.filter_tasks(status=status,schedule_at=schedule_at,type=platform,video_title=vtitle,video_id=vid,username=username,pagecount=pagecount,pageno=pageno,ids=ids,sortby=sortby) 
     if task_rows is None or len(task_rows)==0:
-        showinfomsg(message=f"try to add accounts for {platform} first",parent=chooseAccountsWindow)    
+        showinfomsg(message=f"try to add tasks  first",parent=frame,DURATION=500)    
 
     else:                
-        logger.info(f'we found {len(task_rows)} record matching ')
-        showinfomsg(message='we found {} record matching'.format(len(task_rows)))
+        logger.debug(f'we found {counts} record matching ')
+        showinfomsg(message=f'According to search conditions,we found {counts} record matching to upload',DURATION=500)
         i=0
         task_data=[]
         for row in task_rows:
-
+            print('row data',row.id,row.type,row.prorioty,row.status)
             task={
                 "id":CustomID(custom_id=row.id).to_hex(),
-                "platform":                    PLATFORM_TYPE.PLATFORM_TYPE_TEXT[row.setting.platform][1]
-,
+                "platform":dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[row.setting.platform],
                 "username":row.username,
-
                 "proxy":row.proxy,
                 "video title":row.video.video_title,
                 "uploaded_at":datetime.fromtimestamp(row.uploaded_at).strftime("%Y-%m-%d %H:%M:%S") if row.uploaded_at else None, 
-
                 "inserted_at":datetime.fromtimestamp(row.inserted_at).strftime("%Y-%m-%d %H:%M:%S")  
             }
 
-    if len(videos)>0:
-        publicvideos=[]
-        privatevideos=[]
-        othervideos=[]
-        if url_ok('http://www.google.com'):
-            print('network is fine,there is no need for proxy ')
-            setting['proxy_option']=""
-            print('start browser in headless mode',is_open_browser)
-
-        else:
-            print('google can not be access ')
-
-            print('we need for proxy ',setting['proxy_option'])   
-            print('start browser in headless mode',is_open_browser,setting['proxy_option'])
         upload =  YoutubeUpload(
-                root_profile_directory=setting['firefox_profile_folder'],
+                root_profile_directory=None,
                 proxy_option=setting['proxy_option'],
                 is_open_browser=is_open_browser,
                 debug=True,
@@ -1945,21 +1978,6 @@ def runTask(status=None,type=None,video_id=None,username=None,priority=None,vide
 
                 # for test purpose we need to check the video step by step ,
             )
-
-        for video in videos:
-            
-            if int(video.publishpolicy)==1:
-                print('add public uploading task video',video.videopath)
-                
-                publicvideos.append(video)
-            elif int(video.publishpolicy)==0:
-                print('add private uploading task video',video.videopath)
-
-                privatevideos.append(video)
-            else:
-                print('add schedule uploading task video',video.videopath)
-
-                othervideos.append(video)
         if len(publicvideos)>0:
             print('start public uploading task')
             asyncio.run(bulk_instantpublish(videos=publicvideos,upload=upload))
@@ -2301,36 +2319,36 @@ def render_video_folder_check_results(frame,right_frame,folder,isThumbView=True,
 def ValidateTagGenMetas(folder,mode_value,preferred_value,frame=None):
     passed=True
     print(f'start to validate tag gen metas,mode is {mode_value},{type(mode_value)}')
-    logger.info(f'start to validate tag gen metas')
+    logger.debug(f'start to validate tag gen metas')
 
     if mode_value and mode_value is not None:
-        logger.info(f'start to process mode : {mode_value},{type(mode_value)}')
+        logger.debug(f'start to process mode : {mode_value},{type(mode_value)}')
 
         ultra[folder]['tag_gen_setting']['mode']=mode_value
         ultra[folder]['tag_gen_setting']['preferred']=preferred_value
 
         if mode_value==1:
-            logger.info('in default we fill video tags with video filename')
+            logger.debug('in default we fill video tags with video filename')
         elif mode_value==2:
-            logger.info('summarize description from subtitles of video,this extension is not supported yet')
+            logger.debug('summarize description from subtitles of video,this extension is not supported yet')
 
         elif mode_value==3:
-            logger.info('summarize description from audio of video,this extension is not supported yet')
+            logger.debug('summarize description from audio of video,this extension is not supported yet')
         elif mode_value==4:
-            logger.info('read description from .des .txt with same filename of video')
+            logger.debug('read description from .des .txt with same filename of video')
         elif mode_value==5:
-            logger.info('it seems you want fill description of video by hands')
+            logger.debug('it seems you want fill description of video by hands')
 
         else: 
 
             logger.error(f'no valid mode:{mode_value}')
     else:
-        logger.info('mode value is none')
+        logger.debug('mode value is none')
         passed=False
     print(f'passed is {passed}')
 
     if passed==True:
-        logger.info(f'tag gen validation passed is {passed}')
+        logger.debug(f'tag gen validation passed is {passed}')
 
 
         
@@ -2365,20 +2383,20 @@ def genTag(folder,mode_value,prefer_tags,frame=None):
     for video_id, video_info in video_data.items():
         print(f'tag gen -process video-start tag body {video_id}')
 
-        logger.info(f'tag gen -process video-start tag body {video_id}')
+        logger.debug(f'tag gen -process video-start tag body {video_id}')
 
 
         if mode_value==1:
-            logger.info(f'tag gen -process video-extract from video filename with # {video_id}')
+            logger.debug(f'tag gen -process video-extract from video filename with # {video_id}')
 
             ultra[folder]['videos'][video_id]['tags']=','.join(ultra[folder]['videos'][video_id]['video_filename'].split('#').pop(0))
         elif mode_value==2:
-            logger.info(f'tag gen -process video-gen from  rapidtags not supported yet {video_id}')
+            logger.debug(f'tag gen -process video-gen from  rapidtags not supported yet {video_id}')
         elif mode_value==3:
-            logger.info(f'tag gen -process video-auto gen from category and video description, not supported yet {video_id}')
+            logger.debug(f'tag gen -process video-auto gen from category and video description, not supported yet {video_id}')
 
         elif mode_value==4:
-            logger.info(f'tag gen -process video-read from .tag file with  same video filename {video_id}')
+            logger.debug(f'tag gen -process video-read from .tag file with  same video filename {video_id}')
             print(f'tag gen -process video-read from .tag file with  same video filename {video_id}')
 
             # ultra[folder]['videos'][video_id]['tags']=''
@@ -2391,21 +2409,21 @@ def genTag(folder,mode_value,prefer_tags,frame=None):
                         contents = '\r'.join(lines)
                         contents = contents.replace('\n','')
                         ultra[folder]['videos'][video_id]['tags']=contents 
-                    logger.info(f'tag gen -set file content  to tag field:\r{tagfilepath}')
+                    logger.debug(f'tag gen -set file content  to tag field:\r{tagfilepath}')
 
                 else:
                     logger.debug(f'tag gen file broken {tagfilepath}')
                     print(f'tag gen file broken {tagfilepath}')
 
                 ultra[folder]['videos'][video_id]['tags']
-        logger.info(f'tag gen -process video-end tag body {video_id}')
+        logger.debug(f'tag gen -process video-end tag body {video_id}')
         print(f'tag gen -process video-end tag body {video_id}')
 
 
-        logger.info(f'tag gen -process video  start with prefer_tags {video_id}')
+        logger.debug(f'tag gen -process video  start with prefer_tags {video_id}')
         if prefer_tags and prefer_tags !='':
             ultra[folder]['videos'][video_id]['tags']=prefer_tags+','+ultra[folder]['videos'][video_id]['tags']
-        logger.info(f'tag gen -process video  end with prefer_tags {video_id}')
+        logger.debug(f'tag gen -process video  end with prefer_tags {video_id}')
 
     
     lab = tk.Label(frame,text="end to gen tagcription,run check video assets again to see what happens",bg="lightyellow")
@@ -2413,51 +2431,51 @@ def genTag(folder,mode_value,prefer_tags,frame=None):
     lab.after(5000,lab.destroy)    
     print(f'sync total video assets with tag gen video meta {ultra[folder]["videos"]}')
 
-    logger.info('end to gen tagcription')
-    logger.info('start to sync tagcription meta to video meta file')
+    logger.debug('end to gen tagcription')
+    logger.debug('start to sync tagcription meta to video meta file')
 
     dumpMetafiles(ultra[folder]['metafileformat'],folder)
-    logger.info('end to sync gen tagcription meta to video meta file')
+    logger.debug('end to sync gen tagcription meta to video meta file')
 
-    logger.info('start to sync gen tagcription meta to video assets file')
+    logger.debug('start to sync gen tagcription meta to video assets file')
     
     syncVideometa2assetsjson(ultra[folder]['metafileformat'],folder)
-    logger.info('end to sync gen tagcription meta to video assets file')
+    logger.debug('end to sync gen tagcription meta to video assets file')
 
 def ValidateDesGenMetas(folder,descriptionPrefix_value,mode_value,descriptionSuffix_value,frame=None):
     passed=True
     print(f'start to validate des gen metas,mode is {mode_value},{type(mode_value)}')
-    logger.info(f'start to validate des gen metas')
+    logger.debug(f'start to validate des gen metas')
 
     if mode_value and mode_value is not None:
-        logger.info(f'start to process mode : {mode_value},{type(mode_value)}')
+        logger.debug(f'start to process mode : {mode_value},{type(mode_value)}')
 
         ultra[folder]['des_gen_setting']['mode']=mode_value
         ultra[folder]['des_gen_setting']['descriptionPrefix']=descriptionPrefix_value
         ultra[folder]['des_gen_setting']['descriptionSuffix']=descriptionSuffix_value
 
         if mode_value==1:
-            logger.info('in default we fill video description with video filename')
+            logger.debug('in default we fill video description with video filename')
         elif mode_value==2:
-            logger.info('summarize description from subtitles of video,this extension is not supported yet')
+            logger.debug('summarize description from subtitles of video,this extension is not supported yet')
 
         elif mode_value==3:
-            logger.info('summarize description from audio of video,this extension is not supported yet')
+            logger.debug('summarize description from audio of video,this extension is not supported yet')
         elif mode_value==4:
-            logger.info('read description from .des .txt with same filename of video')
+            logger.debug('read description from .des .txt with same filename of video')
         elif mode_value==5:
-            logger.info('it seems you want fill description of video by hands')
+            logger.debug('it seems you want fill description of video by hands')
 
         else: 
 
             logger.error(f'no valid mode:{mode_value}')
     else:
-        logger.info('mode value is none')
+        logger.debug('mode value is none')
         passed=False
     print(f'passed is {passed}')
 
     if passed==True:
-        logger.info(f'des gen validation passed is {passed}')
+        logger.debug(f'des gen validation passed is {passed}')
 
 
         
@@ -2491,7 +2509,7 @@ def genDes(folder,descriptionPrefix_value,mode_value,descriptionSuffix_value,fra
     video_data = ultra[folder]['videos']
    
     for video_id, video_info in video_data.items():
-        logger.info(f'des gen -process video-start des body {video_id}')
+        logger.debug(f'des gen -process video-start des body {video_id}')
 
         if mode_value==4:
             ultra[folder]['videos'][video_id]['video_description']=''
@@ -2504,18 +2522,18 @@ def genDes(folder,descriptionPrefix_value,mode_value,descriptionSuffix_value,fra
                         contents = '\r'.join(lines)
                         contents = contents.replace('\n','')
                         ultra[folder]['videos'][video_id]['video_description']=contents 
-                    logger.info(f'des gen -set file content  to video_description field:\r{desfilepath}')
+                    logger.debug(f'des gen -set file content  to video_description field:\r{desfilepath}')
 
                 else:
                     logger.debug(f'des gen file broken {desfilepath}')
 
                 ultra[folder]['videos'][video_id]['video_description']
-        logger.info(f'des gen -process video-end des body {video_id}')
+        logger.debug(f'des gen -process video-end des body {video_id}')
 
 
-        logger.info(f'des gen -process video  start with suffix and prefix {video_id}')
+        logger.debug(f'des gen -process video  start with suffix and prefix {video_id}')
         ultra[folder]['videos'][video_id]['video_description']=descriptionPrefix_value+ultra[folder]['videos'][video_id]['video_description']+descriptionSuffix_value
-        logger.info(f'des gen -process video  end with suffix and prefix {video_id}')
+        logger.debug(f'des gen -process video  end with suffix and prefix {video_id}')
 
     
     lab = tk.Label(frame,text="end to gen description,run check video assets again to see what happens",bg="lightyellow")
@@ -2523,16 +2541,16 @@ def genDes(folder,descriptionPrefix_value,mode_value,descriptionSuffix_value,fra
     lab.after(5000,lab.destroy)    
     print(f'sync total video assets with des gen video meta {ultra[folder]["videos"]}')
 
-    logger.info('end to gen description')
-    logger.info('start to sync description meta to video meta file')
+    logger.debug('end to gen description')
+    logger.debug('start to sync description meta to video meta file')
 
     dumpMetafiles(ultra[folder]['metafileformat'],folder)
-    logger.info('end to sync gen description meta to video meta file')
+    logger.debug('end to sync gen description meta to video meta file')
 
-    logger.info('start to sync gen description meta to video assets file')
+    logger.debug('start to sync gen description meta to video assets file')
     
     syncVideometa2assetsjson(ultra[folder]['metafileformat'],folder)
-    logger.info('end to sync gen description meta to video assets file')
+    logger.debug('end to sync gen description meta to video assets file')
 def render_des_gen(frame,isneed,folder,selectedMetafileformat='json'):
     if isneed==True:
         if len(frame.winfo_children())>0:
@@ -2935,7 +2953,7 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
         # print(f'modeis {type(mode.get())} {mode.get()}')
         if mode.get() in [1,2]:
             try:
-                logger.info(f'grid_remove hidden offset elements')
+                logger.debug(f'grid_remove hidden offset elements')
 
                 l_dailycount.grid_remove()
                 l_start_publish_date.grid_remove()            
@@ -2948,7 +2966,7 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
                 pass     
 
             try:
-                logger.info(f'grid_forget hidden offset elements')
+                logger.debug(f'grid_forget hidden offset elements')
 
                 l_dailycount.grid_forget()
                 l_start_publish_date.grid_forget()            
@@ -2956,7 +2974,7 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
                 releasedatehourbox.grid_forget() 
                 l_releasehour.grid_forget()
                 e_releasehour.grid_forget()     
-                logger.info(f'visible {l_dailycount.winfo_ismapped() }')
+                logger.debug(f'visible {l_dailycount.winfo_ismapped() }')
 
             except:
                 pass              
@@ -2964,7 +2982,7 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
 
             
             try:
-                logger.info(f'destroy hidden offset elements')
+                logger.debug(f'destroy hidden offset elements')
 
                 l_dailycount.destroy()
                 l_start_publish_date.destroy()            
@@ -2976,7 +2994,7 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
             except:
                 pass     
         elif mode.get() in [3,4,5]:
-            logger.info(f'show offset elements')
+            logger.debug(f'show offset elements')
 
             l_dailycount.grid(row = 1, column = 0,  padx=14, pady=15,sticky='nswe') 
             releasedatehourbox.grid(row=1, column=1, padx=10)
@@ -3078,7 +3096,7 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
         b_check_metas_.grid(row = 12, column = 0, padx=14, pady=15,sticky='nswe') 
 
 def genScheduleSLots(folder,mode_value,start_publish_date_value,dailycount_value,releasehour_value,frame,selectedMetafileformat):
-    logger.info('start to gen slots')
+    logger.debug('start to gen slots')
     publish_policy=[1,2,3,4,5].index(mode_value)
     # //0 -private 1-publish 2-schedule 3-Unlisted 4-public&premiere 
     today = date.today()
@@ -3115,17 +3133,17 @@ def genScheduleSLots(folder,mode_value,start_publish_date_value,dailycount_value
     else:
         avalaibleslots.append(releasehour_value)   
     if dailycount_value==len(avalaibleslots):
-        logger.info('your daily count and time slot matchs')
+        logger.debug('your daily count and time slot matchs')
     elif dailycount_value>len(avalaibleslots) and len(avalaibleslots)==1:
-        logger.info(f'your daily count is{dailycount_value} time slot is {avalaibleslots},it appears you want to publish them at the same time')
+        logger.debug(f'your daily count is{dailycount_value} time slot is {avalaibleslots},it appears you want to publish them at the same time')
         for i in len(dailycount_value)-1:
             avalaibleslots.append(avalaibleslots[0])
     elif dailycount_value>len(avalaibleslots) and len(avalaibleslots)>1:
-        logger.info(f'your daily count is{dailycount_value} time slot is {avalaibleslots},it appears you want to random choose { dailycount_value -len(avalaibleslots)} slots for the missing')
+        logger.debug(f'your daily count is{dailycount_value} time slot is {avalaibleslots},it appears you want to random choose { dailycount_value -len(avalaibleslots)} slots for the missing')
         randomslots=random.sample(settings[locale]['availableScheduleTimes'],dailycount_value-len(avalaibleslots))
         avalaibleslots+=randomslots
     elif dailycount_value  < len(avalaibleslots):
-        logger.info(f'your daily count is{dailycount_value} time slot is {avalaibleslots},it appears you want to random choose { dailycount_value} slots from you specify: {avalaibleslots}  ')
+        logger.debug(f'your daily count is{dailycount_value} time slot is {avalaibleslots},it appears you want to random choose { dailycount_value} slots from you specify: {avalaibleslots}  ')
         randomslots=random.sample(avalaibleslots,dailycount_value)
         avalaibleslots=randomslots
     tmpslots=    avalaibleslots        
@@ -3134,7 +3152,7 @@ def genScheduleSLots(folder,mode_value,start_publish_date_value,dailycount_value
             offsets=0
             tmpslots=avalaibleslots
         if  video_info['publish_policy'] in  [0,1]:
-            logger.info(f'this video {video_id} is set to public or private without need to gen schedule')
+            logger.debug(f'this video {video_id} is set to public or private without need to gen schedule')
         else:
             if  video_info['release_date']=="":
             
@@ -3142,17 +3160,17 @@ def genScheduleSLots(folder,mode_value,start_publish_date_value,dailycount_value
                 offsets+=1
                 date_hour=random.choice(tmpslots)  
                 video_info['release_date_hour']=date_hour
-                logger.info(f"start to assign this video {video_id},{video_info['release_date']},{video_info['release_date_hour']} ")
+                logger.debug(f"start to assign this video {video_id},{video_info['release_date']},{video_info['release_date_hour']} ")
 
                 tmpslots.remove(date_hour)
             else:
-                logger.info(f"this video {video_id} is assigned release date{video_info['release_date']},{video_info['release_date_hour']} ")
+                logger.debug(f"this video {video_id} is assigned release date{video_info['release_date']},{video_info['release_date_hour']} ")
 
 
-    logger.info('sync slots to video metas')
+    logger.debug('sync slots to video metas')
     dumpMetafiles(selectedMetafileformat,folder)
-    logger.info('sync slots to video assets')
-    logger.info('sync slots to cache')
+    logger.debug('sync slots to video assets')
+    logger.debug('sync slots to cache')
     lab = tk.Label(frame,text="assign schedules finished,you can check videometa",bg="lightyellow")
     lab.grid(row = 10, column = 0,  padx=14, pady=15,sticky='nw')     
     lab.after(5000,lab.destroy)    
@@ -3228,7 +3246,7 @@ def check_folder_thumb_bg(folder):
                         filepath=os.path.join(r,filename+ext)
                         bg_images.append(filepath)
     if len(bg_images)==0:
-        logger.info(f'please choose another bg folder,there is no image found:\n{folder}')
+        logger.debug(f'please choose another bg folder,there is no image found:\n{folder}')
     return bg_images
 
 def check_fields_and_empty_values(data_dict, allowed_fields):
@@ -3253,16 +3271,16 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
         ultra[folder]['thumb_gen_setting']['mode']=mode_value
 
         if mode_value==1:
-            logger.info('extract first frame of video,this extension is not supported yet')
+            logger.debug('extract first frame of video,this extension is not supported yet')
         elif mode_value==2:
-            logger.info('extract random key frame of video,this extension is not supported yet')
+            logger.debug('extract random key frame of video,this extension is not supported yet')
         elif mode_value==3:
             if thumbnail_template_file_path is None or thumbnail_template_file_path=='':
                 logger.error('please choose a thumbtemplate first')
             
 
             else:
-                logger.info(f'start to load thumbnail gen setting json from::\r{thumbnail_template_file_path}')
+                logger.debug(f'start to load thumbnail gen setting json from::\r{thumbnail_template_file_path}')
 
                 if os.path.exists(thumbnail_template_file_path):
                     try:
@@ -3371,7 +3389,7 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
                                         }
 
                         try:
-                            logger.info('start to validate template')
+                            logger.debug('start to validate template')
                             print(f'start to validate template:\r{setting}')
 
                             validate(setting, schema=templateschema)
@@ -3381,11 +3399,11 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
                             ultra[folder]['thumb_gen_setting']['result_image_height']=setting['height']
                             ultra[folder]['thumb_gen_setting']['template_path']=thumbnail_template_file_path
 
-                            logger.info(f'validate thumbnail gen template passed')
+                            logger.debug(f'validate thumbnail gen template passed')
 
 
 
-                            logger.info('start to validate metadata for thumbgen setting')
+                            logger.debug('start to validate metadata for thumbgen setting')
                             allowedTextTypes=[]
                             for item in setting['texts']:
                                 allowedTextTypes.append(item['textType'])
@@ -3414,7 +3432,7 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
                                 # List of allowed field names
                                 print('reading video meta\r',df)
                                 
-                                logger.info(f'start to check {allowedTextTypes} defined in template')
+                                logger.debug(f'start to check {allowedTextTypes} defined in template')
 
                                 # Check the data dictionary for allowed fields and empty values in each entry
                                 for key, entry in dfdict:
@@ -3434,12 +3452,12 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
                                                 passed=False
                                              
                                             else:
-                                                logger.info(f'{field} value is {value} in entry {key}.')                                                
+                                                logger.debug(f'{field} value is {value} in entry {key}.')                                                
                                                 # ultra[folder]['videos'][key][field]=value
                             if passed==True:
-                                logger.info('validate metadata for thumbgen setting passed')
+                                logger.debug('validate metadata for thumbgen setting passed')
                                 if df is not None:
-                                    logger.info('start to update user submited metafile to video assets')
+                                    logger.debug('start to update user submited metafile to video assets')
                                     # df.to_json()==str  直接赋值 这个key的值就是str 后面没法拿video的字段值
                                     # print('==1==',type(ultra[folder]['videos']))
                                     # print('==2==',ultra[folder]['videos'])
@@ -3473,7 +3491,7 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
                                         ultra[folder]['videos']=new
                                     except Exception as e:
                                         print(f'wohhha {e}')
-                                    logger.info('update user submited metafile to video assets passed')
+                                    logger.debug('update user submited metafile to video assets passed')
 
                             else:
                                 logger.error('validate metadata for thumbgen setting failed')
@@ -3491,12 +3509,12 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
                     logger.error("template json is not found")
                     passed =False
                     
-                logger.info('start to validate bg folder')
+                logger.debug('start to validate bg folder')
      
                 if os.path.exists(thummbnail_bg_folder_path):
 
                     bg_images=check_folder_thumb_bg(thummbnail_bg_folder_path)
-                    logger.info(f'bg folder image list :{bg_images}')
+                    logger.debug(f'bg folder image list :{bg_images}')
                     if len(bg_images)>0:
                         ultra[folder]['thumb_gen_setting']['bg_folder']=thummbnail_bg_folder_path
                         
@@ -3511,13 +3529,13 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
                             
                             if  ultra[folder]['videos'][filename]['thumbnail_local_path'] in [[],'[]']:
                                 ultra[folder]['videos'][filename]['thumbnail_bg_image_path']=bgpath
-                                logger.info(f"Random assign bg:{bgpath} to  video:{filename}")
+                                logger.debug(f"Random assign bg:{bgpath} to  video:{filename}")
                                 
                             else:
-                                logger.info(f"{ultra[folder]['videos'][filename]} has got thumbnail setup:\r{ultra[folder]['videos'][filename]['thumbnail_local_path']}")
+                                logger.debug(f"{ultra[folder]['videos'][filename]} has got thumbnail setup:\r{ultra[folder]['videos'][filename]['thumbnail_local_path']}")
 
 
-                        logger.info('validate bg folder passed')
+                        logger.debug('validate bg folder passed')
 
 
                         
@@ -3526,7 +3544,7 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
                         logger.error('validate bg folder failed')
                         passed=False
 
-                        logger.info(f'there is no images under {thummbnail_bg_folder_path}.please choose another folder')
+                        logger.debug(f'there is no images under {thummbnail_bg_folder_path}.please choose another folder')
                 else:
                     logger.error('validate bg folder failed')
                     
@@ -3539,7 +3557,7 @@ def ValidateThumbnailGenMetas(folder,thumbnail_template_file_path,mode_value,thu
 
 
     else:
-        logger.info('mode value is none')
+        logger.debug('mode value is none')
         passed=False
     print(f'passed is {passed}')
     if passed==True:
@@ -3612,7 +3630,7 @@ def genThumbnailFromTemplate(folder,thumbnail_template_file_path,mode_value,thum
         filename=video_id+ext
         # filename=video_id+"_"+str(result_image_width)+"x"+str(result_image_height)+ext
         outputpath=draw_text_on_image(video_info,thumb_gen_setting,result_image_width,result_image_height,render_style,output_folder,filename)
-        logger.info('start to add new gen thum to video meta')
+        logger.debug('start to add new gen thum to video meta')
         print(f"before add thumb for video {video_id} is {video_data[video_id]['thumbnail_local_path']}")
         print('test===',type(video_data[video_id]['thumbnail_local_path']),video_data[video_id]['thumbnail_local_path'])
         if type(video_data[video_id]['thumbnail_local_path'])==str:
@@ -3661,16 +3679,16 @@ def genThumbnailFromTemplate(folder,thumbnail_template_file_path,mode_value,thum
                 result_image_height=int(result_image_height)
 
                 filepath=draw_text_on_image(video_info,thumb_gen_setting,result_image_width,result_image_height,render_style,output_folder,filename)
-    logger.info('end to gen thumbnail')
-    logger.info('start to sync thumbnail meta to video meta file')
+    logger.debug('end to gen thumbnail')
+    logger.debug('start to sync thumbnail meta to video meta file')
 
     dumpMetafiles(ultra[folder]['metafileformat'],folder)
-    logger.info('end to sync gen thumbnail meta to video meta file')
+    logger.debug('end to sync gen thumbnail meta to video meta file')
 
-    logger.info('start to sync gen thumbnail meta to video assets file')
+    logger.debug('start to sync gen thumbnail meta to video assets file')
     
     syncVideometa2assetsjson(ultra[folder]['metafileformat'],folder)
-    logger.info('end to sync gen thumbnail meta to video assets file')
+    logger.debug('end to sync gen thumbnail meta to video assets file')
 
 def render_thumb_gen(frame,isneed,folder,selectedMetafileformat='json'):
     if isneed==True:
@@ -4083,7 +4101,7 @@ def chooseProxies(ttkframe,username,parentchooseProxies):
         if db_rows is None or len(db_rows)==0:
             showinfomsg(message='there is no matching proxy records')
         else:
-            logger.info(f'we found {len(db_rows)} record matching :{db_rows}')
+            logger.debug(f'we found {len(db_rows)} record matching :{db_rows}')
             proxy_data=[]
             for row in db_rows:
 
@@ -4130,12 +4148,12 @@ def chooseProxies(ttkframe,username,parentchooseProxies):
                 existingaccounts.remove(rowid)
 
 
-                logger.info(f'this proxies {rowid} removed success')
+                logger.debug(f'this proxies {rowid} removed success')
                 showinfomsg(message=f'this proxies {rowid} removed success',parent=chooseAccountsWindow)    
             else:
-                logger.info(f'you cannot remove this proxies {rowid}, not added before')
+                logger.debug(f'you cannot remove this proxies {rowid}, not added before')
                 showinfomsg(message=f'this proxies {rowid} not added before',parent=chooseAccountsWindow)    
-            logger.info(f'end to remove,reset proxies {existingaccounts}')
+            logger.debug(f'end to remove,reset proxies {existingaccounts}')
 
         proxy_str.set(str(existingaccounts))
         parentchooseProxies.set(str(existingaccounts))
@@ -4150,19 +4168,19 @@ def chooseProxies(ttkframe,username,parentchooseProxies):
         else:
             existingaccounts=eval(existingaccounts)
         if rowid is None:
-            logger.info('you have not selected new proxies at all')
+            logger.debug('you have not selected new proxies at all')
             showinfomsg(message='you have not selected new proxies at all',parent=chooseAccountsWindow)    
         
         else:
             if rowid in existingaccounts:
-                logger.info(f'this proxies {rowid} added before')                   
+                logger.debug(f'this proxies {rowid} added before')                   
                 showinfomsg(message=f'this proxies {rowid} added before',parent=chooseAccountsWindow)    
 
             else:
                 if existingaccounts=='':
                     existingaccounts=[]
                 existingaccounts.append(rowid)
-                logger.info(f'this proxies {rowid} added successS')
+                logger.debug(f'this proxies {rowid} added successS')
                 showinfomsg(message=f'this proxies {rowid} added success',parent=chooseAccountsWindow)    
 
         proxy_str.set(str(existingaccounts))
@@ -4314,7 +4332,7 @@ def chooseProxies_listbox(ttkframe,username,parentchooseProxies):
         
         else:
             existingaccounts=proxy_str.get().split(',')
-            logger.info(f'you want to remove this selected proxy {selected_accounts} from existing: {existingaccounts}')
+            logger.debug(f'you want to remove this selected proxy {selected_accounts} from existing: {existingaccounts}')
 
             for item in selected_accounts:
 
@@ -4322,12 +4340,12 @@ def chooseProxies_listbox(ttkframe,username,parentchooseProxies):
                     existingaccounts.remove(item)
 
 
-                    logger.info(f'this proxy {item} removed success')
+                    logger.debug(f'this proxy {item} removed success')
                     showinfomsg(message=f'this proxy {item} removed success')
                 else:
-                    logger.info(f'you cannot remove this proxy {item}, not added before')
+                    logger.debug(f'you cannot remove this proxy {item}, not added before')
                     showinfomsg(message=f'this proxy {item} not added before')
-            logger.info(f'end to remove,reset proxystr {existingaccounts}')
+            logger.debug(f'end to remove,reset proxystr {existingaccounts}')
             show_str= ','.join(item for item in existingaccounts if item is not None and item != "")
 
         proxy_str.set(show_str)
@@ -4341,22 +4359,22 @@ def chooseProxies_listbox(ttkframe,username,parentchooseProxies):
         existingaccounts=proxy_str.get().split(',')
         show_str=proxy_str.get()
         if len(list(values))==0:
-            logger.info('you have not selected  proxiess at all.choose one or more')
+            logger.debug('you have not selected  proxiess at all.choose one or more')
             showinfomsg(message='you have not selected  proxiess at all.choose one or more')
         
         elif values==existingaccounts:
-            logger.info('you have not selected new proxiess at all')
+            logger.debug('you have not selected new proxiess at all')
             showinfomsg(message='you have not selected new proxiess at all')
         
         else:
             for item in values:
                 if item in existingaccounts:
-                    logger.info(f'this proxy {item} added before')                   
+                    logger.debug(f'this proxy {item} added before')                   
                     showinfomsg(message=f'this proxiess {item} added before') 
 
                 else:
                     existingaccounts.append(item)
-                    logger.info(f'this proxy {item} added successS')
+                    logger.debug(f'this proxy {item} added successS')
                     showinfomsg(message=f'this proxy {item} added successS')
 
                     if show_str=='':
@@ -4467,7 +4485,7 @@ def saveUser(platform,username,password,proxy,cookies,linkaccounts=None):
 
     else:    
         if password is None:
-            logger.info('you dont provide password')        
+            logger.debug('you dont provide password')        
             if cookies is None:
                 logger.error('please provide a cookie file without  password')     
                 showinfomsg(message='please provide a cookie file without  password')
@@ -4515,7 +4533,7 @@ def  queryAccounts(newWindow,tree,logger,username,platform):
 
     account_rows=AccountModel.filter_accounts(username=username,platform=platform) 
 
-    logger.info(f'we found {len(account_rows)} record matching ')
+    logger.debug(f'we found {len(account_rows)} record matching ')
 
     if len(account_rows)==0:
         showinfomsg(message=f'we found {len(account_rows)} record matching ')
@@ -4534,8 +4552,15 @@ def  queryAccounts(newWindow,tree,logger,username,platform):
 
                 
             
-        logger.info(f'Account search and display finished')
-
+        logger.debug(f'Account search and display finished')
+def find_key(input_dict, value):
+    if type(input_dict)==list:
+        input_dict=dict(input_dict)
+    result = "None"
+    for key,val in input_dict.items():
+        if val == value:
+            result = key
+    return result
 
 def accountView(frame,ttkframe,lang):
 
@@ -4558,7 +4583,9 @@ def accountView(frame,ttkframe,lang):
 
     def socialplatformdb_values():
         platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
-        platform_names = [PLATFORM_TYPE.PLATFORM_TYPE_TEXT[x.type][1] for x in platform_rows]
+
+
+        platform_names = [dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[x.type] for x in platform_rows]
 
         socialplatform_box['values'] = platform_names
 
@@ -4685,7 +4712,7 @@ def accountView(frame,ttkframe,lang):
 
     def q_platformb_values():
         platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
-        platform_names = [PLATFORM_TYPE.PLATFORM_TYPE_TEXT[x.type][1] for x in platform_rows]
+        platform_names = [dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[x.type] for x in platform_rows]
 
         q_platform_accountbox['values'] = platform_names
 
@@ -4856,7 +4883,7 @@ def accountView(frame,ttkframe,lang):
 
         else:                
             account_names = [row.username for row in account_rows]
-            logger.info(f'we found {len(account_names)} record matching ')
+            logger.debug(f'we found {len(account_names)} record matching ')
 
             # langlist.delete(0,tk.END)
             i=0
@@ -4864,7 +4891,7 @@ def accountView(frame,ttkframe,lang):
             for row in account_rows:
                 account={
                     "id":CustomID(custom_id=row.id).to_hex(),
-                    "platform":                    PLATFORM_TYPE.PLATFORM_TYPE_TEXT[row.platform][1]
+                    "platform":                    dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[row.platform]
 ,
                     "username":row.username,
 
@@ -4878,7 +4905,7 @@ def accountView(frame,ttkframe,lang):
         
         
                 
-            logger.info(f'Account search and display finished')
+            logger.debug(f'Account search and display finished')
                     
 
 
@@ -4904,12 +4931,12 @@ def accountView(frame,ttkframe,lang):
                 result=AccountModel.update_account(id=rowid,is_deleted=True)
 
                 if result:
-                    logger.info(f'this account {rowid} removed success')
+                    logger.debug(f'this account {rowid} removed success')
                     showinfomsg(message=f'this account {rowid} removed success',parent=chooseAccountsWindow)    
                 else:
-                    logger.info(f'you cannot remove this account {rowid}, not added before')
+                    logger.debug(f'you cannot remove this account {rowid}, not added before')
                     showinfomsg(message=f'this account {rowid} not added before',parent=chooseAccountsWindow)    
-            logger.info(f'end to remove,reset account {rowid}')
+            logger.debug(f'end to remove,reset account {rowid}')
 
 
     def update_selected_row(rowid):
@@ -4932,7 +4959,7 @@ def accountView(frame,ttkframe,lang):
             if key=='id':
                 value=CustomID(custom_id=value).to_hex()
             if key=='platform':
-                value=  PLATFORM_TYPE.PLATFORM_TYPE_TEXT[value][1]
+                value=  dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[value]
             if value==None:
                 value=''                        
             if key=='inserted_at':
@@ -5028,7 +5055,7 @@ def createTaskMetas(left,right):
     # txt15.pack(side='left')
     txt15.grid(row=1,column=1, sticky=tk.W)
 
-    button1 = ttk.Button(creatTaskWindow, text="Start from video folder", command=lambda: (creatTaskWindow.withdraw(),tab_control.select(5)))
+    button1 = ttk.Button(creatTaskWindow, text="Start from video folder", command=lambda: (creatTaskWindow.withdraw(),tab_control.select(8)))
     button1.grid(row=1,column=3, sticky=tk.W)
 
     uploadStrategy = tk.StringVar()
@@ -5243,10 +5270,10 @@ def load_meta_file(filepath):
         filename = os.path.splitext(videometafilepath)[0]
         folder=os.path.dirname(videometafilepath)
         ext = os.path.splitext(videometafilepath)[1].replace('.','')
-        logger.info(f'you select video metafile is {videometafilepath}')
+        logger.debug(f'you select video metafile is {videometafilepath}')
         if  os.path.exists(videometafilepath):
             # check_video_thumb_pair(dbm,video_folder_path,True)
-            logger.info('start to load  and parse meta file')
+            logger.debug('start to load  and parse meta file')
 
             tmpdict={}
             if ext=='xlsx':
@@ -5288,7 +5315,7 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
         multiAccountsPolicy_value=3    
     print('assign account',choosedAccounts_value)
     if choosedAccounts_value=='' or choosedAccounts_value is None:
-        logger.info('please choose which platform and account you want to upload ')
+        logger.debug('please choose which platform and account you want to upload ')
         showinfomsg(message="please choose which platform and account you want to upload ",parent=frame)    
         return                 
     else:
@@ -5297,12 +5324,12 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
             print('convert str to dict',choosedAccounts_value)
 
         except:
-            logger.info(f'please check {choosedAccounts_value} format')
+            logger.debug(f'please check {choosedAccounts_value} format')
             showinfomsg(message=f'please check {choosedAccounts_value} format',parent=frame)    
             return 
 
     print('load video meta')
-    logger.info('start to load video meta')
+    logger.debug('start to load video meta')
 
     if videometafilepath !='' and videometafilepath is not None:
         filename = os.path.splitext(videometafilepath)[0]
@@ -5310,7 +5337,7 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
         ext = os.path.splitext(videometafilepath)[1].replace('.','')
         
         if load_meta_file(videometafilepath):
-            logger.info('video meta file is ok')
+            logger.debug('video meta file is ok')
 
             tmpdict=load_meta_file(videometafilepath)
 
@@ -5340,11 +5367,11 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
                 print(f"start to process platform {platform}, accounts are:{accounts},{multiAccountsPolicy_value}")
                 
                 if len(accounts)==0:
-                    logger.info(f'you dont choose any account for this platform:{platform}')
+                    logger.debug(f'you dont choose any account for this platform:{platform}')
                 else:
                     if  multiAccountsPolicy_value==0:
                         if len(accounts)==0:
-                            logger.info(f'you dont choose any account for this platform:{platform}')
+                            logger.debug(f'you dont choose any account for this platform:{platform}')
                         tmpaccounts=  extends_accounts(accounts,videocounts)     
                         print('==单账号=',tmpaccounts)
                         for key, entry in tmpdict.items():
@@ -5366,7 +5393,7 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
                             data=(AccountModel.filter_accounts(username=accounts[0]))[0]
                             # print('data====',data[0],data[0].username)
                             tmp['tasks'][key]['username']=data.username
-                            logger.info(f'get credentials for this account {accounts[0]}')
+                            logger.debug(f'get credentials for this account {accounts[0]}')
 
                             tmp['tasks'][key]['password']=data.password
                             tmp['tasks'][key]['proxy_option']=data.proxy
@@ -5409,7 +5436,7 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
 
 
                                     tmp['tasks'][key]['username']=r.backup_account.username
-                                    logger.info(f'get credentials for this account {r.backup_account.username}')
+                                    logger.debug(f'get credentials for this account {r.backup_account.username}')
 
                                     tmp['tasks'][key]['password']=r.backup_account.password
                                     tmp['tasks'][key]['proxy_option']=r.backup_account.proxy
@@ -5436,7 +5463,7 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
                                 data=(AccountModel.filter_accounts(username=username))[0]
                                 # print('data====',data[0],data[0].username)
                                 tmp['tasks'][key]['username']=data.username
-                                logger.info(f'get credentials for this account {data.username}')
+                                logger.debug(f'get credentials for this account {data.username}')
 
                                 tmp['tasks'][key]['password']=data.password
                                 tmp['tasks'][key]['proxy_option']=data.proxy
@@ -5469,7 +5496,7 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
                             data=(AccountModel.filter_accounts(username=account.username))[0]
                             # print('data====',data[0],data[0].username)
                             tmp['tasks'][key]['username']=data.username
-                            logger.info(f'get credentials for this account {account}')
+                            logger.debug(f'get credentials for this account {account}')
 
                             tmp['tasks'][key]['password']=data.password
                             tmp['tasks'][key]['proxy_option']=data.proxy
@@ -5502,7 +5529,7 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
                             data=(AccountModel.filter_accounts(username=account.username))[0]
                             # print('data====',data[0],data[0].username)
                             tmp['tasks'][key]['username']=data.username
-                            logger.info(f'get credentials for this account {account}')
+                            logger.debug(f'get credentials for this account {account}')
 
                             tmp['tasks'][key]['password']=data.password
                             tmp['tasks'][key]['proxy_option']=data.proxy
@@ -5514,7 +5541,7 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
                 
 
             
-            logger.info(f'start to save task meta success')
+            logger.debug(f'start to save task meta success')
             print(f"task json:{tmp['tasks']}")
 
             dumpTaskMetafiles(ext,folder)
@@ -5522,18 +5549,18 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
             showinfomsg(message=f'save task meta success',parent=frame)    
         else:
             showinfomsg(message=f'load video meta failed',parent=frame)    
-def validateTaskMetafile(engine,ttkframe,metafile):
-    logger.info('load task metas to database ')
+def validateTaskMetafile(frame,metafile):
+    logger.debug('load task metas to database ')
     print('load task meta')
 
-
+    taskids=[]
     if metafile !='' and metafile is not None:
         
-        logger.info(f'you select task metafile is {metafile}')
+        logger.debug(f'you select task metafile is {metafile}')
         filename = os.path.splitext(metafile)[0]
         folder=os.path.dirname(metafile)    
         ext = os.path.splitext(metafile)[1].replace('.','')
-        logger.info('start to load  and parse meta file')
+        logger.debug('start to load  and parse meta file')
 
         if load_meta_file(metafile):
             data=load_meta_file(metafile)    
@@ -5542,11 +5569,12 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                
             try:
                 videos=data
-                logger.info(f'we found {len(videos)} videos to be load in db')
+                logger.debug(f'we found {len(videos)} videos to be load in db')
+                showinfomsg(message=f'we found {len(videos)} videos to be load in db',DURATION=500)
                 
                 for idx,video in videos.items():
-                    logger.info(f'video json is ,{type(video)},{video}')
-                    logger.info(f'start to process uploadsetting related filed\n:{video} ')
+                    logger.debug(f'video json is ,{type(video)},{video}')
+                    logger.debug(f'start to process uploadsetting related filed\n:{video} ')
                     settingid=None
 
                     for key in ['proxy_option','channel_cookie_path']:
@@ -5556,13 +5584,13 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                             
                     for key in ['timeout','timeout','is_debug','wait_policy','is_record_video','username','password']:
                         if video.get(key)==None:
-                            logger.info(f"no {key} filed provide in given video json data,we can use default value")
-                    logger.info(f"start to validate browser_type:{video.get('browser_type')}")
+                            logger.debug(f"no {key} filed provide in given video json data,we can use default value")
+                    logger.debug(f"start to validate browser_type:{video.get('browser_type')}")
 
                     if video.get('browser_type')==None:
                         video['browser_type']='firefox'        
                         video['browser_type']=1
-                        logger.info('we use browser_type =firefox')
+                        logger.debug('we use browser_type =firefox')
                     elif type(video.get('browser_type'))==str:
                         video['browser_type']=getattr(BROWSER_TYPE,video.get('browser_type').upper())
                         print('*****',video['browser_type'])
@@ -5577,22 +5605,23 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                         logger.error('browser_type should be one of"chromium", "firefox", "webkit"')
 
                     
-                    logger.info(f"start to validate platform:{video.get('platform')}")
+                    logger.debug(f"start to validate platform:{video.get('platform')}")
                     supported_platform=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
-                    supported_platform_names = [PLATFORM_TYPE.PLATFORM_TYPE_TEXT[x.type][1] for x in supported_platform]
+                    supported_platform_names = [dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[x.type]for x in supported_platform]
                     supported_platform_types=[x.type for x in supported_platform]
                     if len(supported_platform)==0:
                         logger.error('please initialize supported_platform first')
                     if video.get('platform')==None:
                         video['platform']='youtube'     
                         video['platform']=0   
-                        logger.info('you dont specify platform field,we use default youtube')
+                        logger.debug('you dont specify platform field,we use default youtube')
                     elif   type(video.get('platform'))==str:     
                         platform_rows=PlatformModel.filter_platforms(name=video.get('platform'), ptype=None, server=None)
                         if len(platform_rows)>0:
                             video['platform']=platform_rows[0].type
                         else:
-                            logger.error(f'platform should be one of {supported_platform_names} or {supported_platform_types} ')
+                            video['platform']=100
+                            logger.error(f'platform name is unknown,it should be one of {supported_platform_names} or {supported_platform_types} ')
 
                     elif   type(video.get('platform'))==int:     
                         platform_rows=PlatformModel.filter_platforms(name=None, ptype=video.get('platform'), server=None)
@@ -5604,19 +5633,19 @@ def validateTaskMetafile(engine,ttkframe,metafile):
 
                     else:
                             logger.error('platform should be one of {platform_names} or {platform_types} ')
-                    logger.info('start to validate timeout')
+                    logger.debug('start to validate timeout')
 
                     if video.get('timeout')==None:
                         video['timeout']=200000
-                        logger.info("you dont specify timeout field,we use default 200*1000")
+                        logger.debug("you dont specify timeout field,we use default 200*1000")
                     else:
                         if type(video.get('timeout'))!=int:
                             logger.error('timeout should be integer,such as 20*1000=20000, 20 seconds')
-                    logger.info('start to validate is_open_browser')
+                    logger.debug('start to validate is_open_browser')
 
                     if video.get('is_open_browser')==None:
                         video['is_open_browser']=True
-                        logger.info("you dont specify is_open_browser field,we use default True")
+                        logger.debug("you dont specify is_open_browser field,we use default True")
                         
                     else:
                         
@@ -5625,11 +5654,11 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                         elif type(video.get('is_open_browser'))==str and video.get('is_open_browser').lower() not in ['true','false']:
 
                             logger.error(f'is_open_browser is {video.get("is_open_browser")} of {type(video.get("is_open_browser"))},it should be bool, true or false')
-                    logger.info(f"start to validate debug:{video.get('is_debug')}")
+                    logger.debug(f"start to validate debug:{video.get('is_debug')}")
 
                     if video.get('is_debug')==None:
                         video['is_debug']=True
-                        logger.info("you dont specify debug field,we use default True")
+                        logger.debug("you dont specify debug field,we use default True")
                         
                     else:
                         
@@ -5644,7 +5673,7 @@ def validateTaskMetafile(engine,ttkframe,metafile):
 
                     if video.get('is_record_video')==None:
                         video['is_record_video']=True        
-                        logger.info("you dont specify is_record_video field,we use default True")
+                        logger.debug("you dont specify is_record_video field,we use default True")
                         
                     else:
                         
@@ -5655,11 +5684,11 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                             logger.error(f'is_record_video is {video.get("is_record_video")} of {type(video.get("is_record_video"))},it should be bool, true or false')
                     if video.get('wait_policy')==None:
                         video['wait_policy']=2        
-                        logger.info("you dont specify wait_policy field,we use default 2")
+                        logger.debug("you dont specify wait_policy field,we use default 2")
                     else:
                         if type(video.get('wait_policy'))!=int:
                             logger.error('wait_policy should be one of 0,1,2,3,4')
-                            video['wait_policy']=WAIT_POLICY_TYPE.WAIT_POLICY_TYPE_TEXT[video.get('wait_policy')][1] 
+                            video['wait_policy']=dict(WAIT_POLICY_TYPE.WAIT_POLICY_TYPE_TEXT)[video.get('wait_policy')][1] 
 
                         else:
                             if not video.get('wait_policy') in [0,1,2,3,4]:
@@ -5710,10 +5739,10 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                             'wait_policy':video.get('wait_policy'),
 
                         }                
-                    logger.info(f'start to process uploadsetting data {settingdata}')
+                    logger.debug(f'start to process uploadsetting data {settingdata}')
                     tasksetting=None
                     if video.get('uploadsettingid')==None:
-                        logger.info(f" this field uploadsettingid is optional in given video json data")
+                        logger.debug(f" this field uploadsettingid is optional in given video json data")
 
                         print('add to upload setting and return id for reuse')
 
@@ -5721,7 +5750,7 @@ def validateTaskMetafile(engine,ttkframe,metafile):
 
 
                     else:
-                        logger.info(f" if uploadsettingid is given,we can auto fill if  the other field is null ")
+                        logger.debug(f" if uploadsettingid is given,we can auto fill if  the other field is null ")
                         setting_id=CustomID(custom_id=video.get('uploadsettingid')).to_bin()
 
                         tasksetting=UploadSettingModel.get_uploadsetting_by_id(id=setting_id)
@@ -5729,10 +5758,10 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                         if tasksetting==None:
                             tasksetting=UploadSettingModel.add_uploadsetting(settingdata,task_account)
                             
-                    logger.info(f'end to process uploadsetting data')
+                    logger.debug(f'end to process uploadsetting data')
                             
                             
-                    logger.info(f'start to process video related fields\n:{video} ')
+                    logger.debug(f'start to process video related fields\n:{video} ')
 
 
                     for key in ['video_local_path','video_title','video_description','thumbnail_local_path','publish_policy','tags']:
@@ -5760,7 +5789,7 @@ def validateTaskMetafile(engine,ttkframe,metafile):
 
                     for key in ['video_film_date','video_film_location','first_comment','subtitles']:
                         video[key]=None 
-                        logger.info(f'now we have no rules about {key} validation ')
+                        logger.debug(f'now we have no rules about {key} validation ')
 
                     for key in ['is_allow_embedding','is_publish_to_subscriptions_feed_notify',
                                 'is_automatic_chapters','is_featured_place', 'is_not_for_kid',
@@ -5769,7 +5798,7 @@ def validateTaskMetafile(engine,ttkframe,metafile):
 
                         if video.get(key)==None:
                             video[key]=True 
-                            logger.info(f"This field {key} is optional in given video json data,we can use default true")
+                            logger.debug(f"This field {key} is optional in given video json data,we can use default true")
                         else:
                             if video.get(key) not in ['true','false',True,False]:
                                 logger.error(f'{key} should be bool, true or false') 
@@ -5779,14 +5808,14 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                         if video.get(key)==None:
                             video[key]=False 
 
-                            logger.info(f"This field {key} is optional in given video json data,we can use default false")
+                            logger.debug(f"This field {key} is optional in given video json data,we can use default false")
                         else:
                             if video.get(key) not in  ['true','false',True,False]:
                                 logger.error(f'{key} should be bool, true or false') 
 
                     if video.get('categories')==None or video.get('categories')=='':
                         video['categories']=None      
-                        logger.info('we use categories =none')
+                        logger.debug('we use categories =none')
                     else:
                         if type(video.get('categories'))!=int:
                             logger.error('categories should be one of 0,1,....,14')
@@ -5796,7 +5825,7 @@ def validateTaskMetafile(engine,ttkframe,metafile):
 
                     if video.get('license_type')==None or video.get('license_type')=='':
                         video['license_type']=0       
-                        logger.info('we use license_type =0')
+                        logger.debug('we use license_type =0')
                     else:
                         if type(video.get('license_type'))!=int:
                             logger.error('license_type should be one of 0,1')
@@ -5805,7 +5834,7 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                                 logger.error('license_type should be one of 0,1')
                     if video.get('shorts_remixing_type')==None:
                         video['shorts_remixing_type']=0       
-                        logger.info('we use shorts_remixing_type =0')
+                        logger.debug('we use shorts_remixing_type =0')
                     else:
                         if type(video.get('shorts_remixing_type'))!=int:
                             logger.error('shorts_remixing_type should be one of 0,1,2')
@@ -5814,7 +5843,7 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                                 logger.error('shorts_remixing_type should be one of 0,1,2')
                     if video.get('comments_ratings_policy')==None:
                         video['comments_ratings_policy']=1       
-                        logger.info('we use comments_ratings_policy =1')
+                        logger.debug('we use comments_ratings_policy =1')
                     else:
                         if type(video.get('comments_ratings_policy'))!=int:
                             logger.error('comments_ratings_policy should be one of 0,1,2,3,4,5')
@@ -5826,7 +5855,7 @@ def validateTaskMetafile(engine,ttkframe,metafile):
 
                     if video.get('captions_certification')==None:
                         video['captions_certification']=0       
-                        logger.info('we use captions_certification =0')
+                        logger.debug('we use captions_certification =0')
                     else:
                         if type(video.get('captions_certification'))!=int:
                             logger.error('captions_certification should be one of 0,1,2,3,4,5')
@@ -5835,7 +5864,7 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                                 logger.error('captions_certification should be one of 0,1,2,3,4,5')
                     if video.get('video_language')==None or video.get('video_language')=='':
                         video['video_language']=None       
-                        logger.info('we use video_language =none')
+                        logger.debug('we use video_language =none')
                     else:
                         if type(video.get('video_language'))!=int:
                             logger.error('video_language should be one of 0,1,2,3,4...23')
@@ -5845,7 +5874,7 @@ def validateTaskMetafile(engine,ttkframe,metafile):
 
                     if video.get('publish_policy')==None:
                         video['publish_policy']=0       
-                        logger.info('we use publish_policy =0')
+                        logger.debug('we use publish_policy =0')
                     else:
                         if type(video.get('publish_policy'))!=int:
                             logger.error('publish_policy should be one of 0,1,2,3,4')
@@ -5857,15 +5886,15 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                                 if video.get('publish_policy')==2:
                                     if video.get('release_date')==None:
                                         video['release_date']=None      
-                                        logger.info('we use release_date ==none')  
+                                        logger.debug('we use release_date ==none')  
                                     else:
                                         if video.get('release_date_hour')==None:     
-                                            logger.info('we use default release_date_hour 10:15')    
+                                            logger.debug('we use default release_date_hour 10:15')    
                                         elif video.get('release_date_hour') not in settings[locale]['availableScheduleTimes']:
                                             logger.error(f"we use choose one from {settings[locale]['availableScheduleTimes']}") 
                     if video.get('prorioty')==None:
                         video['prorioty']=False      
-                        logger.info(f'we use prorioty ==False')  
+                        logger.debug(f'we use prorioty ==False')  
                     else:                    
                         if type(video.get('prorioty'))==bool:
                             pass
@@ -5876,29 +5905,29 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                     if video.get('release_date')==None:
                         nowdate=datetime.now() 
                         video['release_date']=nowdate      
-                        logger.info(f'we use release_date =={nowdate }')  
+                        logger.debug(f'we use release_date =={nowdate }')  
                     else:
                         if video.get('release_date_hour')==None:    
                             video['release_date_hour']="10:15"   
-                            logger.info('we use default release_date_hour 10:15')    
+                            logger.debug('we use default release_date_hour 10:15')    
                         elif video.get('release_date_hour') not in settings[locale]['availableScheduleTimes']:
                             logger.error(f"we use choose one from {settings[locale]['availableScheduleTimes']}")    
                     if video.get('release_date_hour')==None:     
                         video['release_date_hour']="10:15"   
-                        logger.info('we use default release_date_hour 10:15')    
+                        logger.debug('we use default release_date_hour 10:15')    
                     elif video.get('release_date_hour') not in settings[locale]['availableScheduleTimes']:
                         logger.error(f"we use choose one from {settings[locale]['availableScheduleTimes']}")  
                     if video.get('tags')==None:
                         video['tags']=None      
-                        logger.info('we use tags =[]')
+                        logger.debug('we use tags =[]')
                     else:
                         if type(video.get('tags'))==str and "," in video.get('tags'):
-                            logger.info(f'tags is ok:{video.get("tags")}')                                
+                            logger.debug(f'tags is ok:{video.get("tags")}')                                
 
                         else:
                             logger.error('tags should be a list of keywords such as "one,two" ')
                     taskvideo=None
-                    logger.info(f'start to process video data')
+                    logger.debug(f'start to process video data')
                     print(f"this is need to use which video model:{video.get('platform')}")
                     if video.get('platform')=='youtube' or video.get('platform')==0:
 
@@ -5912,7 +5941,7 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                                     video['tags'],
                                 
                                 }
-                        logger.info(f'start to save ytb video data {settingdata} to db')
+                        logger.debug(f'start to save ytb video data {settingdata} to db')
 
                         taskvideo=YoutubeVideoModel.add_video(videodata)
                     else:
@@ -5927,26 +5956,32 @@ def validateTaskMetafile(engine,ttkframe,metafile):
                                     video['tags'],
                                 
                                 }
-                        logger.info(f'start to save ytb video data {settingdata} to db')
+                        logger.debug(f'start to save ytb video data {settingdata} to db')
 
                         taskvideo=YoutubeVideoModel.add_video(videodata)                        
-                    logger.info(f'end to process video data')
+                    logger.debug(f'end to process video data')
 
                     taskdata={
                         "type":video['platform'],
                         "status":0,
                         "prorioty":video['prorioty']
                     }
-                    logger.info(f'end to process video data')
-                    logger.info(f'start to process task data')
+                    logger.debug(f'end to process video data')
+                    logger.debug(f'start to process task data')
 
-                    taskid=TaskModel.add_task(taskdata,taskvideo,tasksetting)
-                    if taskid==None:
+                    task=TaskModel.add_task(taskdata,taskvideo,tasksetting)
+                    if task==None:
                         print(f'add task failure:{idx},{video}')
 
                     else:
                         print(f'add task success:{idx},{video}')
-                    logger.info(f'end to process task data')
+                        taskids.append(task.id)
+
+                logger.debug(f'end to process task data')
+                print('show added task in the tabular',taskids)
+                
+                queryTasks(frame=frame,canvas=None,tab_headers=None,username=None,platform=None,status=None,vtitle=None,schedule_at=None,vid=None,pageno=1,pagecount=100,ids=taskids,sortby="ASC")
+                showinfomsg(message=f'end to process task data')
 
                                                 
             except Exception as e:
@@ -5961,9 +5996,421 @@ def validateTaskMetafile(engine,ttkframe,metafile):
     else:
         showinfomsg(message="please choose a valid task file")
         logger.error("you choosed task meta  file is missing or broken.")       
+def queryTasks(frame=None,canvas=None,tab_headers=None,username=None,platform=None,status=None,vtitle=None,schedule_at=None,vid=None,pageno=None,pagecount=None,ids=None,sortby="ASC"):
+    if sortby is None:
+        sortby="Add Date ASC"
+    elif 'choose' in sortby:
+        sortby="Add Date ASC"
 
+    else:
+        print(f'sort by {sortby}')
+    
+    sortby=find_key(SORT_BY_TYPE.SORT_BY_TYPE_TEXT,sortby)
+    if pagecount is None:
+        pagecount=100
+    if  username is not None and 'input' in username:
+        username=None
+    if username==''  or username is None:
+        username=None
+    if  schedule_at is not None and 'input' in schedule_at:
+        schedule_at=None            
+    if schedule_at=='' or schedule_at is None:
+        schedule_at=None           
+    if  vid is not None and 'input' in vid:
+        vid=None            
+    if vid=='' or vid is None:
+        vid=None           
+    if  vtitle is not None and 'input' in vtitle:
+        vtitle=None            
+    if vtitle=='' or vtitle is None:
+        vtitle=None            
+    if  platform is not None and 'choose' in platform:
+        platform=None            
+    if platform=='' or platform is None:
+        platform=None        
+    elif type(platform)==str:
+        print('======',platform)
+        print(f'query tasks for {platform} {getattr(PLATFORM_TYPE, platform.upper())} ')
+
+        platform=getattr(PLATFORM_TYPE, platform.upper())
+
+    if status=='':
+        status=None  
+    elif  status is not None and 'choose' in status:
+        status=None             
+    elif type(status)==str:
+        print(f'query tasks for {status} {getattr(TASK_STATUS, status.upper())} ')
+
+        status=getattr(TASK_STATUS, status.upper())
+
+    task_rows,counts=TaskModel.filter_tasks(status=status,schedule_at=schedule_at,type=platform,video_title=vtitle,video_id=vid,username=username,pagecount=pagecount,pageno=pageno,ids=ids,sortby=sortby) 
+    if task_rows is None or len(task_rows)==0:
+        showinfomsg(message=f"try to add tasks  first",parent=frame,DURATION=500)    
+
+    else:                
+        logger.debug(f'we found {counts} record matching ')
+        showinfomsg(message=f'we found {counts} record matching',DURATION=500)
+        
+        
+        l_totalcount = tk.Label(frame, text=f'total:{counts} per page:{pagecount}')
+        l_totalcount.grid(row = 25, column = 0,sticky='w')            
+        i=0
+        task_data=[]
+        # tab_headers=None
+        if counts>pagecount:
+
+            pages=counts/pagecount
+            pages=int(pages)+1
+            for i in range(pages):
+                # 这里如果没有lambda x=i 的话 后面的i+1 一直是1
+                page= tk.Button(frame, text=str(i+1), padx = 0, pady = 0,command = lambda x=i:queryTasks(frame=frame,status=status,schedule_at=schedule_at,type=platform,video_title=vtitle,video_id=vid,username=username,pagecount=pagecount,pageno=x+1,ids=ids,sortby=sortby) )
+                page.grid(row=25, column=i+1,sticky=tk.NW)
+            # Create a frame for the canvas and scrollbar(s).
+
+
+        print(f'prepare row data to render:{task_rows}')
+        for row in task_rows:
+            print('row data',row.id,row.type,row.prorioty,row.status)
+            print(f"{dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[row.type]}")
+            print(f"{dict(TASK_STATUS.TASK_STATUS_TEXT)[row.status]}")
+            p_value=row.type
+            if type(row.type)!=int:
+                p_value=100
+            task={
+                "id":CustomID(custom_id=row.id).to_hex(),
+                "platform":dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[p_value],
+                "prorioty":row.prorioty,
+                "username":row.username,
+                "status":dict(TASK_STATUS.TASK_STATUS_TEXT)[row.status],
+                "schedule_at":row.video.release_date,
+                "proxy":row.proxy,
+                "video title":row.video.video_title,
+                "uploaded_at":datetime.fromtimestamp(row.uploaded_at).strftime("%Y-%m-%d %H:%M:%S") if row.uploaded_at else None, 
+
+                "inserted_at":datetime.fromtimestamp(row.inserted_at).strftime("%Y-%m-%d %H:%M:%S")  
+            }
+            if list(task.keys())!=tab_headers:
+                tab_headers=list(task.keys())
+
+            task_data.append(task)
+        print(f'end to prepare row data to render:{task_data}')
+        print(f'try to clear existing rows in the tabular')
+        if canvas is not None:
+            try:
+                canvas.winfo_children
+                if len(canvas.winfo_children())>0:
+                    for widget in canvas.winfo_children():
+                        widget.destroy()      
+
+            except:
+                print('there is no rows in the tabular at all')
+        else:
+            print('there is no tabular at all')
+        tab_headers.append('operation')
+        tab_headers.append('operation')
+        tab_headers.append('operation')
+
+        print(f'show header and rows based on query {tab_headers}\n{task_data}')
+
+        refreshTaskcanvas(frame=frame,headers=tab_headers,datas=task_data)
+    
+        print(f'end to show header and rows based on query {tab_headers}\n{task_data}')
+
+        logger.debug(f'Account search and display finished')
+                    
+def refreshTaskcanvas(frame=None,headers=None,datas=None):
+    print('start to render tabular rows')
+    chooseAccountsWindow=frame
+    frame2 = tk.Frame(chooseAccountsWindow, bg='Red', bd=1, relief=tk.FLAT)
+    frame2.grid(row=3, column=0, rowspan=5,sticky=tk.NW)
+
+    frame2.grid_rowconfigure(0, weight=1)
+    frame2.grid_columnconfigure(0, weight=1)
+    frame2.grid_columnconfigure(1, weight=1)
+    # Add a canvas in that frame.
+    canvas = tk.Canvas(frame2, bg='Yellow')
+    canvas.grid(row=0, column=0)
+    # Create a vertical scrollbar linked to the canvas.
+    vsbar = tk.Scrollbar(frame2, orient=tk.VERTICAL, command=canvas.yview)
+    vsbar.grid(row=0, column=1, sticky=tk.NS)
+    canvas.configure(yscrollcommand=vsbar.set)
+
+    # Create a horizontal scrollbar linked to the canvas.
+    hsbar = tk.Scrollbar(frame2, orient=tk.HORIZONTAL, command=canvas.xview)
+    hsbar.grid(row=1, column=0, sticky=tk.EW)
+    canvas.configure(xscrollcommand=hsbar.set)
+
+    # Create a frame on the canvas to contain the grid of buttons.
+    buttons_frame = tk.Frame(canvas)
+    
+
+    
+    ROWS_DISP = len(datas)+1 # Number of rows to display.
+    COLS_DISP = len(headers)+1  # Number of columns to display.
+    COLS=len(headers)+1
+    
+    
+    ROWS=len(datas)+1
+    
+
+
+
+    # Add the buttons to the frame.
+    add_buttons = [tk.Button() for j in range(ROWS+1)] 
+    del_buttons = [tk.Button() for j in range(ROWS+1)] 
+    upload_buttons = [tk.Button() for j in range(ROWS+1)] 
+
+    
+    # set table header
+    print('start to set table header')
+
+
+    for j,h in enumerate(headers):
+        label = tk.Label(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                            activebackground= 'orange', text=h)
+        label.grid(row=0, column=j, sticky='news')                    
+        if h=='operation':
+            button = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                activebackground= 'orange', text='operation')
+            button.grid(row=0, column=j, sticky='news')
+
+            delete_button = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                activebackground= 'orange', text='operation')
+            delete_button.grid(row=0, column=j, sticky='news')
+    print('start to set table data')
+
+    for i,row in enumerate(datas):
+        i=i+1
+        for j in range(0,len(headers)):
+            
+            if headers[j]!='operation':
+                label = tk.Label(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                    activebackground= 'orange', text=row[headers[j]])
+                label.grid(row=i ,column=j, sticky='news')         
+
+
+        add_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                            activebackground= 'orange', text='edit',command=lambda x=i-1  :update_selected_row_task(rowid=datas[x]['id'],name='task'))
+        add_buttons[i].grid(row=i, column=len(headers)-3, sticky='news')
+
+        del_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                            activebackground= 'orange', text='delete',command=lambda x=i-1 :remove_selected_row_task(rowid=datas[x]['id'],name='task'))
+        del_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
+
+        upload_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                            activebackground= 'orange', text='upload',command=lambda x=i-1 :upload_selected_row_task(rowid=datas[x]['id'],frame=frame))
+        upload_buttons[i].grid(row=i, column=len(headers)-1, sticky='news')
+    # Create canvas window to hold the buttons_frame.
+    canvas.create_window((0,0), window=buttons_frame, anchor=tk.NW)
+    buttons_frame.update_idletasks()  # Needed to make bbox info available.
+    bbox = canvas.bbox(tk.ALL)  # Get bounding box of canvas with Buttons.
+
+    # Define the scrollable region as entire canvas with only the desired
+    # number of rows and columns displayed.
+    w, h = bbox[2]-bbox[1], bbox[3]-bbox[1]
+    print('=before==',COLS,COLS_DISP,ROWS,ROWS_DISP)
+
+    for i in range(5,COLS_DISP):
+        dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
+
+        if dw>int( width):
+            COLS=i-1
+    for i in range(5,ROWS_DISP):
+        dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)                
+        if dh>int( height*0.8):
+            ROWS=i-1
+
+    print('=after==',COLS,COLS_DISP,ROWS,ROWS_DISP)
+    dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
+
+    if dw>int( width):
+        dw=int( width)
+    if dh>int( height*0.8):
+        dh=int( height*0.8)
+        print('use parent frame widht')
+    canvas.configure(scrollregion=bbox, width=dw, height=dh)
+    print('end to render tabular rows')
+
+def remove_selected_row_task(rowid,frame=None,name=None,func=None):
+
+
+
+    print(f'you want to remove these selected {name}',rowid)
+    if rowid==0:
+
+        showinfomsg(message=f'you have not selected  {name} at all.choose one or more',parent=frame)      
+    
+    else:
+
+
+        if rowid :
+            rowid_bin=CustomID(custom_id=rowid).to_bin()
+            result=TaskModel.update_task(id=rowid_bin,is_deleted=True)
+            # result=func(id=rowid,is_deleted=True)
+
+            if result:
+                logger.debug(f'this {name}: {rowid} removed success')
+                showinfomsg(message=f'this {name}: {rowid} removed success',parent=frame)    
+            else:
+                logger.debug(f'you cannot remove this {name} {rowid}, not added before')
+                showinfomsg(message=f'this {name}: {rowid} not added before',parent=frame)    
+        logger.debug(f'end to remove,reset {name} {rowid}')
+
+def upload_selected_row_task(rowid,frame=None):
+
+
+
+    print('you want to upload this task',rowid)
+    if rowid==0:
+
+        showinfomsg(message='you have not selected  task at all.choose one or more',parent=frame)      
+    
+    else:
+
+
+        if rowid :
+            rowid_bin=CustomID(custom_id=rowid).to_bin()
+            result=TaskModel.update_task(id=rowid_bin,is_deleted=True)
+
+            if result:
+                logger.debug(f'this task {rowid} removed success')
+                showinfomsg(message=f'this task {rowid} removed success',parent=frame)    
+            else:
+                logger.debug(f'you cannot remove this task {rowid}, not added before')
+                showinfomsg(message=f'this task {rowid} not added before',parent=frame)    
+        logger.debug(f'end to remove,reset task {rowid}')
+def update_selected_row_task(rowid,frame=None,name=None,func=None):
+    # showinfomsg(message='not supported yet',parent=chooseAccountsWindow)    
+    editsWindow = tk.Toplevel(frame)
+    editsWindow.geometry(window_size)
+    editsWindow.title('Edit and update task and related setting,video info ')
+    rowid_bin=CustomID(custom_id=rowid).to_bin()
+
+    taskresult=TaskModel.get(id=rowid_bin)
+    taskresult = model_to_dict(taskresult)
+
+
+    def renderelements(i=1,column=0,result={},disableelements=['id','inserted_at','unique_hash','platform'],title=None):
+        rowkeys={}
+        newresult={}
+        label= tk.Label(editsWindow, padx=7, pady=7,bg="lightyellow", relief=tk.RIDGE,
+                            activebackground= 'orange', text=title)
+        label.grid(row=i ,column=column, sticky='news')    
+        i=i+1
+
+        fenlie=1
+        for key,value in result.items():
+
+            if i >23:
+                i=1
+                
+                column=i%20+column+2
+            # print('current key',key,value)
+            if key=='id':
+                value=CustomID(custom_id=value).to_hex()
+            if key=='platform':
+                value=  PLATFORM_TYPE.PLATFORM_TYPE_TEXT[value][1]
+            if value==None:
+                value=''                        
+            if key=='inserted_at':
+                value=datetime.fromtimestamp(value).strftime("%Y-%m-%d %H:%M:%S")    
+            if key=='video_local_path':
+                print('value===',value)
+                value=PurePath(value)
+                print('value===',value)
+                value=str(value)
+                print('value===',value)
+            if key=='thumbnail_local_path':
+                print('value===',value)
+                value=PurePath(value)
+                print('value===',value)
+                value=str(value)
+                print('value===',value)                    
+            if not  key  in disableelements:
+            
+                label= tk.Label(editsWindow, padx=7, pady=7, relief=tk.RIDGE,
+                                    activebackground= 'orange', text=key)
+                label.grid(row=i ,column=column, sticky='news')         
+                entry = tk.Entry(editsWindow)
+        
+                entry.insert(0, value)
+                entry.grid(row=i ,column=column+1, sticky='news')   
+
+                rowkeys[i+int(column*0.25)*23]=key
+                print(f'set {i+int(column*0.25)*23} to -{key}')
+
+                def callback(event):
+
+                    x = event.widget.grid_info()['row']
+                    y = event.widget.grid_info()['column']
+                    index=int((int(y)-1)*0.5-1)*23
+                    index=int(index)+x
+                    print(f'index  is {index},x {x} y-{y} column-{column}key-{key}')
+
+                    print(f'current input changes for {rowkeys[index]}',event.widget.get())   
+
+                    newresult[rowkeys[index]]=event.widget.get()
+                    if rowkeys[index]=='is_deleted':
+                        print('is deleted',type(event.widget.get()))
+                        if event.widget.get()=='0':
+                            value=False
+                        elif event.widget.get()=='1':
+                            value=True                        
+                        newresult[rowkeys[fenlie]]=value
+
+                        print('============update row isdeleted to',newresult)
+
+                # variable.trace('w', lambda:setEnty())    
+                entry.bind("<KeyRelease>", callback)
+
+            else:
+
+                label = tk.Label(editsWindow, padx=7, pady=7, relief=tk.RIDGE,
+                                    activebackground= 'orange', text=key)
+                label.grid(row=i ,column=column, sticky='news')         
+                variable=tk.StringVar()
+                variable.set(value)
+                entry = tk.Entry(editsWindow,textvariable=variable)
+                entry.grid(row=i ,column=column+1, sticky='news') 
+                entry.config(state='disabled')
+            i=i+1
+            fenlie=fenlie+1
+        return newresult,i,column+2
+    i=0
+
+    tmptask=taskresult
+    # tmptask.pop('video')
+    # tmptask.pop('setting')
+    print('taskresult\n',taskresult)
+    print('video\n',taskresult.get('video'))
+    print('setting\n',taskresult.get('setting'))
+    newtaskresult,serialno,cols=renderelements(i=1,result=tmptask,column=0,disableelements=['id','inserted_at','type','uploaded_at','video','setting'],title='task data')
+    newvideoresult={}
+    newsettingresult={}
+    newaccountresult={}
+    print('======================',serialno,cols)
+
+    if taskresult.get('video'):
+        print('video is associated to task',serialno,cols)
+
+        newvideoresult,serialno,cols=renderelements(i=1,result=taskresult.get('video'),column=cols,disableelements=['id','inserted_at','unique_hash','platform'],title='video data')
+    if taskresult.get('setting'):
+        print('setting is associated to task',serialno,cols)
+
+        newsettingresult,serialno,cols=renderelements(i=1,result=taskresult.get('setting'),column=cols,disableelements=['id','inserted_at','account','platform'],title='setting data')
+        if taskresult.get('setting').get('account') :
+            print('account is associated to setting',serialno,cols)
+
+            newaccountresult,serialno,cols=renderelements(i=serialno,result=taskresult.get('setting').get('account'),column=cols-2,disableelements=['id','inserted_at','unique_hash','platform'],title='account data')
+
+    btn5= tk.Button(editsWindow, text="save", padx = 0, pady = 0,command = lambda:TaskModel.update_task(**newtaskresult,id=rowid_bin,taskdata=None,videodata=newvideoresult,settingdata=newsettingresult,accountdata=newaccountresult))
+    btn5.grid(row=i+1,column=cols+1, sticky=tk.W)    
+
+
+    
 def uploadView(frame,ttkframe,lang):
     queryframe=tk.Frame(ttkframe)
+    # queryframe=frame
     queryframe.grid(row = 0, column = 0,sticky='w')
     queryframe.grid_rowconfigure((0,1), weight=1)
     
@@ -5974,277 +6421,158 @@ def uploadView(frame,ttkframe,lang):
     global vid
     
     taskstatus = tk.StringVar()
-    lbl15 = tk.Label(queryframe, text='Enter status.')
-    lbl15.grid(row = 0, column = 3,sticky='w')
-    txt15 = tk.Entry(queryframe, textvariable=taskstatus)
-    txt15.insert(0,'input status')
-    txt15.grid(row = 1, column = 3,sticky='w',columnspan=2)
+    lbl15 = tk.Label(queryframe, text='Select Status:')
+    lbl15.grid(row = 0, column = 0,sticky='w')
+
+    task_status_var = tk.StringVar()
+    task_status_var.set("choose one:")    
+
+    def task_status_db_values():
+        task_status_names = dict(TASK_STATUS.TASK_STATUS_TEXT).values()
+
+        task_status_combo['values'] = list(task_status_names)
+
+    def task_status_db_refresh(event):
+        task_status_combo['values'] = task_status_db_values()
+    task_status_combo = ttk.Combobox(queryframe, textvariable=task_status_var)
+    task_status_combo.grid(row=1, column=0, sticky=tk.W)
+    task_status_combo.bind('<FocusIn>', lambda event: task_status_db_refresh(event))
+    task_status_combo['values'] = task_status_db_values()
+    
+
+
+
 
     # Create a label for the platform dropdown
     platform_label = ttk.Label(queryframe, text="Select Platform:")
-    platform_label.grid(row=0, column=6, padx=10, pady=10, sticky=tk.W)
+    platform_label.grid(row=0, column=3,  sticky=tk.W)
     # Create a Combobox for the platform selection
     platform_var = tk.StringVar()
     platform_var.set("choose one:")    
 
-    def db_values():
+    def platform_db_values():
         platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
-        platform_names = [PLATFORM_TYPE.PLATFORM_TYPE_TEXT[x.type][1] for x in platform_rows]
+        platform_names = [dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[x.type] for x in platform_rows]
 
         platform_combo['values'] = platform_names
 
-    def db_refresh(event):
-        platform_combo['values'] = db_values()
+    def platform_db_refresh(event):
+        platform_combo['values'] = platform_db_values()
     platform_combo = ttk.Combobox(queryframe, textvariable=platform_var)
-    platform_combo.grid(row=1, column=6, padx=10, pady=10, sticky=tk.W)
-    platform_combo.bind('<FocusIn>', lambda event: db_refresh(event))
-    platform_combo['values'] = db_values()
+    platform_combo.grid(row=1, column=3, padx=10, pady=10, sticky=tk.W)
+    platform_combo.bind('<FocusIn>', lambda event: platform_db_refresh(event))
+    platform_combo['values'] = platform_db_values()
     
     # platform_combo['values'] = db_values()
     vid = tk.StringVar()
     lbl15 = tk.Label(queryframe, text='Enter video id.')
-    lbl15.grid(row = 0, column = 9,sticky='w')
+    lbl15.grid(row = 0, column = 6,sticky='w')
     txt15 = tk.Entry(queryframe, textvariable=vid)
     txt15.insert(0,'input task id')
-    txt15.grid(row = 1, column = 9,sticky='w',columnspan=2)
+    txt15.grid(row = 1, column = 6,sticky='w',columnspan=2)
 
     vtitle = tk.StringVar()
     lbl15 = tk.Label(queryframe, text='Enter video title.')
-    lbl15.grid(row = 2, column = 3,sticky='w')
+    lbl15.grid(row = 0, column = 9,sticky='w')
     txt15 = tk.Entry(queryframe, textvariable=vtitle)
     txt15.insert(0,'input task title')
-    txt15.grid(row = 3, column = 3,sticky='w',columnspan=2)
+    txt15.grid(row = 1, column = 9,sticky='w',columnspan=2)
 
     channelname = tk.StringVar()
     lbl16 = tk.Label(queryframe, text='Enter channelname.')
-    lbl16.grid(row = 2, column = 6,sticky='w')
+    lbl16.grid(row = 0, column = 12,sticky='w')
     txt16 = tk.Entry(queryframe,textvariable=channelname)
     txt16.insert(0,'input channelname')
-    txt16.grid(row = 3, column = 6,sticky='w',columnspan=2)
+    txt16.grid(row = 1, column = 12,sticky='w',columnspan=2)
 
-    releasedate = tk.StringVar()
-    lbl17 = tk.Label(queryframe, text='Enter releasedate.')
-    lbl17.grid(row = 2, column = 9,sticky='w')
-    txt17 = tk.Entry(queryframe, textvariable=releasedate)
-    txt17.insert(0,'input releasedate')
-    txt17.grid(row = 3, column = 9,sticky='w',columnspan=2)
-
-
+    schedule_at_var = tk.StringVar()
+    lbl17 = tk.Label(queryframe, text='Enter schedule date.')
+    lbl17.grid(row = 0, column = 15,sticky='w')
+    txt17 = tk.Entry(queryframe, textvariable=schedule_at_var)
+    txt17.insert(0,'input schedule date')
+    txt17.grid(row = 1, column = 15,sticky='w',columnspan=2)
 
 
-    btn5= tk.Button(queryframe, text="Get Info", command = lambda:queryTasks(status=taskstatus.get(),platform=platform_var.get(),username=channelname.get(),vid=vid.get(),vtitle=vtitle.get(),releasedate=releasedate.get(),pageno=1,pagecount=100) )
-    btn5.grid(row = 3, column = 12,  padx=14, pady=15)
+    sortby_var = tk.StringVar()
+    sortby_var.set("choose:")    
+
+    l_sortby= tk.Label(queryframe, text='Sortby.')
+    l_sortby.grid(row = 0, column = 18,columnspan=1, sticky='w')
+
+    sortby_combo = ttk.Combobox(queryframe, textvariable=sortby_var)
+    sortby_combo.grid(row=1, column=18,columnspan=1, padx=10, pady=10, sticky=tk.W)
+    # sortby_combo.bind('<FocusIn>', lambda event: platform_db_refresh(event))
+    sortby_combo['values'] = list( dict(SORT_BY_TYPE.SORT_BY_TYPE_TEXT).values())
+    btn5= tk.Button(queryframe, text="Get Info", command = lambda:queryTasks(status=task_status_var.get(),platform=platform_var.get(),username=channelname.get(),vid=vid.get(),vtitle=vtitle.get(),schedule_at=schedule_at_var.get(),pageno=1,pagecount=100,sortby=sortby_var.get()) )
+    btn5.grid(row = 1, column = 24,  padx=14, pady=15)
     
     
-    btn5= tk.Button(queryframe, text="Reset", padx = 0, pady = 0,command = lambda:(taskstatus.set(""),releasedate.set(""),platform_var.set(""),channelname.set(""),vid.set(''),vtitle.set('')))
-    btn5.grid(row=3,column=15, sticky=tk.W)        
-    # Create a frame for the canvas and scrollbar(s).
-    chooseAccountsWindow=queryframe
-    frame2 = tk.Frame(chooseAccountsWindow, bg='Red', bd=1, relief=tk.FLAT)
-    frame2.grid(row=4, column=0, rowspan=5,columnspan=15,sticky=tk.NW)
+    btn5= tk.Button(queryframe, text="Reset", padx = 0, pady = 0,command = lambda:(task_status_var.set(""),schedule_at_var.set(""),platform_var.set(""),channelname.set(""),vid.set(''),vtitle.set(''),sortby_var.set('')))
+    btn5.grid(row=1,column=21, sticky=tk.W)        
 
-    frame2.grid_rowconfigure(0, weight=1)
-    frame2.grid_columnconfigure(0, weight=1)
-    frame2.grid_columnconfigure(1, weight=1)
-    # Add a canvas in that frame.
-    canvas = tk.Canvas(frame2, bg='Yellow')
-    canvas.grid(row=0, column=0)
 
-        
-    def refreshcanvas(headers,datas):
 
-        # Create a vertical scrollbar linked to the canvas.
-        vsbar = tk.Scrollbar(frame2, orient=tk.VERTICAL, command=canvas.yview)
-        vsbar.grid(row=0, column=1, sticky=tk.NS)
-        canvas.configure(yscrollcommand=vsbar.set)
 
-        # Create a horizontal scrollbar linked to the canvas.
-        hsbar = tk.Scrollbar(frame2, orient=tk.HORIZONTAL, command=canvas.xview)
-        hsbar.grid(row=1, column=0, sticky=tk.EW)
-        canvas.configure(xscrollcommand=hsbar.set)
-
-        # Create a frame on the canvas to contain the grid of buttons.
-        buttons_frame = tk.Frame(canvas)
-        
+    operationframe=tk.Frame(ttkframe)
+    # queryframe=frame
+    operationframe.grid(row = 1, column = 0,sticky='w')
     
+    b_create_task_metas = tk.Button(operationframe, text=settings[lang]['b_createTaskMetas'],
+                                         command=lambda: threading.Thread(target=createTaskMetas(frame,ttkframe)).start())
+    b_create_task_metas.grid(row = 0, column = 0,padx=14, pady=15,sticky='w')
+    Tooltip(b_create_task_metas, text=settings[lang]['t_createTaskMetas'], wraplength=200)
+
+
+    b_down_video_metas_temp = tk.Button(operationframe, text=settings[lang]['b_editTaskMetas'], command=
+                                #  lambda: webbrowser.open_new("https://jsoncrack.com/editor")
+                                 lambda: threading.Thread(target=webbrowser.open_new("https://jsoncrack.com/editor")).start())
+    b_down_video_metas_temp.grid(row = 0, column = 1, padx=14, pady=15,sticky='w')
+    
+
+
+    # l_import_task_metas = tk.Label(operationframe, text=settings[lang]['l_importTaskMetas'])
+    # l_import_task_metas.grid(row = 0, column = 2, padx=14, pady=15,sticky='w')
+    
+
+    b_imported_video_metas_file=tk.Button(operationframe,text=settings[lang]['l_importTaskMetas'],command=lambda:SelectMetafile('taskmetafilepath',imported_task_metas_file))
+    b_imported_video_metas_file.grid(row = 0, column = 2, padx=14, pady=15)
+    Tooltip(b_imported_video_metas_file, text=settings[locale]['t_importTaskMetas'] , wraplength=200)
+
+
+    imported_task_metas_file = tk.StringVar()        
+    e_imported_video_metas_file = tk.Entry(operationframe, width=int(width*0.02), textvariable=imported_task_metas_file)
+    e_imported_video_metas_file.grid(row = 0, column = 3, padx=14, pady=15)
+
+  
+    b_validate_video_metas = tk.Button(operationframe, text=settings[locale]['validateVideoMetas']
+                                       , command=lambda: threading.Thread(target=validateTaskMetafile(frame,imported_task_metas_file.get())).start())
+    b_validate_video_metas.grid(row = 0, column = 5, padx=14, pady=15)
+
+
+    # test upload  跳转到一个单独页面，录入一个视频的上传信息，点击上传进行测试。
+    b_upload = tk.Button(operationframe, text=settings[locale]['testupload']
+                         , command=lambda: threading.Thread(target=testupload(DBM('test'),ttkframe)).start())
+    b_upload.grid(row =0 ,column = 6, padx=14, pady=15)
+
+    b_upload = tk.Button(operationframe, text=settings[locale]['b_uploadAll']
+                         , command=lambda: threading.Thread(target=runTask(frame=frame,status=task_status_var.get(),platform=platform_var.get(),username=channelname.get(),vid=vid.get(),vtitle=vtitle.get(),schedule_at=schedule_at_var.get(),pageno=None,pagecount=100,sortby=sortby_var.get())).start())
+    b_upload.grid(row = 0, column = 7, padx=14, pady=15)
+
+
+
         
-        ROWS_DISP = len(datas)+1 # Number of rows to display.
-        COLS_DISP = len(headers)+1  # Number of columns to display.
-        COLS=len(headers)+1
-        
-        
-        ROWS=len(datas)+1
-        
 
-
-
-        # Add the buttons to the frame.
-        add_buttons = [tk.Button() for j in range(ROWS+1)] 
-        del_buttons = [tk.Button() for j in range(ROWS+1)] 
-        
-        # set table header
-
-
-        for j,h in enumerate(headers):
-            label = tk.Label(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text=h)
-            label.grid(row=0, column=j, sticky='news')                    
-            if h=='operation':
-                button = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                    activebackground= 'orange', text='operation')
-                button.grid(row=0, column=j, sticky='news')
-
-                delete_button = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                    activebackground= 'orange', text='operation')
-                delete_button.grid(row=0, column=j, sticky='news')
-
-        for i,row in enumerate(datas):
-            i=i+1
-            for j in range(0,len(headers)):
-                
-                if headers[j]!='operation':
-                    label = tk.Label(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                        activebackground= 'orange', text=row[headers[j]])
-                    label.grid(row=i ,column=j, sticky='news')         
-
-
-              
-            add_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text='edit',command=lambda x=i-1  :update_selected_row(rowid=datas[x]['id']))
-            add_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
-
-            del_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text='delete',command=lambda x=i-1 :remove_selected_row(rowid=datas[x]['id']))
-            del_buttons[i].grid(row=i, column=len(headers)-1, sticky='news')
-                    
-        # Create canvas window to hold the buttons_frame.
-        canvas.create_window((0,0), window=buttons_frame, anchor=tk.NW)
-
-        buttons_frame.update_idletasks()  # Needed to make bbox info available.
-        bbox = canvas.bbox(tk.ALL)  # Get bounding box of canvas with Buttons.
-
-        # Define the scrollable region as entire canvas with only the desired
-        # number of rows and columns displayed.
-        w, h = bbox[2]-bbox[1], bbox[3]-bbox[1]
-        print('=before==',COLS,COLS_DISP,ROWS,ROWS_DISP)
-
-        for i in range(5,COLS_DISP):
-            dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
-
-            if dw>int( width):
-                COLS=i-1
-        for i in range(5,ROWS_DISP):
-            dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)                
-            if dh>int( height*0.8):
-                ROWS=i-1
-
-        print('=after==',COLS,COLS_DISP,ROWS,ROWS_DISP)
-        dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
-
-        if dw>int( width):
-            dw=int( width)
-        if dh>int( height*0.8):
-            dh=int( height*0.8)
-            print('use parent frame widht')
-        canvas.configure(scrollregion=bbox, width=dw, height=dh)
-        print('========',w,h,dw,dh,bbox)
-    tab_headers=['id', 'platform', 'username', 'proxy', 'video title', 'uploaded_at', 'inserted_at']
+    tab_headers=['id', 'platform', 'prorioty', 'username', 'status', 'schedule_at', 'proxy', 'video title', 'uploaded_at', 'inserted_at']
+    tab_headers.append('operation')
     tab_headers.append('operation')
     tab_headers.append('operation')
 
-    refreshcanvas(tab_headers,[])
 
-    print('show tab headers')
+    refreshTaskcanvas(frame=frame,headers=tab_headers,datas=[])
 
-
-    def queryTasks(username=None,platform=None,status=None,vtitle=None,releasedate=None,vid=None,pageno=None,pagecount=None):
-        if  username is not None and 'input' in username:
-            username=None
-        if username==''  or username is None:
-            username=None
-        if  releasedate is not None and 'input' in releasedate:
-            releasedate=None            
-        if releasedate=='' or releasedate is None:
-            releasedate=None           
-        if  vid is not None and 'input' in vid:
-            vid=None            
-        if vid=='' or vid is None:
-            vid=None           
-        if  vtitle is not None and 'input' in vtitle:
-            vtitle=None            
-        if vtitle=='' or vtitle is None:
-            vtitle=None            
-        if  platform is not None and 'choose' in platform:
-            platform=None            
-        if platform=='' or platform is None:
-            platform=None        
-        elif type(platform)==str:
-            print('======',platform)
-            print(f'query tasks for {platform} {getattr(PLATFORM_TYPE, platform.upper())} ')
-
-            platform=getattr(PLATFORM_TYPE, platform.upper())
-
-        if status=='' or status is None:
-            status=None  
-        elif  status is not None and 'input' in status:
-            status=None             
-        elif type(platform)==str:
-            status=getattr(TASK_STATUS, status.upper())
-            print(f'query tasks for {status} {getattr(TASK_STATUS, status.upper())} ')
-
-        task_rows,counts=TaskModel.filter_tasks(status=status,type=platform,video_title=vtitle,video_id=vid,username=username,pagecount=pagecount,pageno=pageno) 
-        if task_rows is None or len(task_rows)==0:
-            showinfomsg(message=f"try to add accounts for {platform} first",parent=chooseAccountsWindow)    
-
-        else:                
-            logger.info(f'we found {counts} record matching ')
-            showinfomsg(message=f'we found {counts} record matching')
-            
-            
-            l_totalcount = tk.Label(queryframe, text=f'total:{counts} per page:{pagecount}')
-            l_totalcount.grid(row = 25, column = 0,sticky='w')            
-            i=0
-            task_data=[]
-            if counts>100:
-
-                pages=counts/100
-                pages=int(pages)+1
-                for i in range(pages):
-                    # 这里如果没有lambda x=i 的话 后面的i+1 一直是1
-                    page= tk.Button(queryframe, text=str(i+1), padx = 0, pady = 0,command = lambda x=i:queryTasks(status=status,platform=platform,vtitle=vtitle,vid=vid,username=username,pagecount=100,pageno=x+1))
-                    page.grid(row=25, column=i+1,sticky=tk.NW)
-                # Create a frame for the canvas and scrollbar(s).
+    print('First time render tab headers')
 
 
-
-            for row in task_rows:
-
-                task={
-                    "id":CustomID(custom_id=row.id).to_hex(),
-                    "platform":                    PLATFORM_TYPE.PLATFORM_TYPE_TEXT[row.setting.platform][1],
-                    "prorioty":row.prorioty,
-                    "username":row.username,
-                
-                    "proxy":row.proxy,
-                    "video title":row.video.video_title,
-                    "uploaded_at":datetime.fromtimestamp(row.uploaded_at).strftime("%Y-%m-%d %H:%M:%S") if row.uploaded_at else None, 
-
-                    "inserted_at":datetime.fromtimestamp(row.inserted_at).strftime("%Y-%m-%d %H:%M:%S")  
-                }
-                # print(task.keys())
-
-                task_data.append(task)
-                
-            if len(canvas.winfo_children())>0:
-                print('clear existing rows in the tabular')
-                for widget in canvas.winfo_children():
-                    widget.destroy()                    
-            refreshcanvas(tab_headers,task_data)
-            print('show header and rows based on query')
-        
-                
-            logger.info(f'Account search and display finished')
-                    
 
 
     # Bind the platform selection event to the on_platform_selected function
@@ -6252,254 +6580,63 @@ def uploadView(frame,ttkframe,lang):
 
 
     
-    def remove_selected_row(rowid):
 
-
-
-        print('you want to remove these selected account',rowid)
-        if rowid==0:
-
-            showinfomsg(message='you have not selected  account at all.choose one or more',parent=chooseAccountsWindow)      
-        
-        else:
-
-
-            if rowid :
-                rowid=CustomID(custom_id=rowid).to_bin()
-                result=TaskModel.update_task(id=rowid,is_deleted=True)
-
-                if result:
-                    logger.info(f'this account {rowid} removed success')
-                    showinfomsg(message=f'this account {rowid} removed success',parent=chooseAccountsWindow)    
-                else:
-                    logger.info(f'you cannot remove this account {rowid}, not added before')
-                    showinfomsg(message=f'this account {rowid} not added before',parent=chooseAccountsWindow)    
-            logger.info(f'end to remove,reset account {rowid}')
-
-
-    def update_selected_row(rowid):
-        # showinfomsg(message='not supported yet',parent=chooseAccountsWindow)    
-        editsWindow = tk.Toplevel(frame)
-        editsWindow.geometry(window_size)
-        editsWindow.title('Edit and update task and related setting,video info ')
-        rowid=CustomID(custom_id=rowid).to_bin()
-
-        taskresult=TaskModel.get(id=rowid)
-        taskresult = model_to_dict(taskresult)
-
-
-        def renderelements(i=1,column=0,result={},disableelements=['id','inserted_at','unique_hash','platform'],title=None):
-            rowkeys={}
-            newresult={}
-            label= tk.Label(editsWindow, padx=7, pady=7,bg="lightyellow", relief=tk.RIDGE,
-                                activebackground= 'orange', text=title)
-            label.grid(row=i ,column=column, sticky='news')    
-            i=i+1
-            for key,value in result.items():
-                if i >23:
-                    i=1
-                    column=i%20+column+2
-                # print('current key',key,value)
-                if key=='id':
-                    value=CustomID(custom_id=value).to_hex()
-                if key=='platform':
-                    value=  PLATFORM_TYPE.PLATFORM_TYPE_TEXT[value][1]
-                if value==None:
-                    value=''                        
-                if key=='inserted_at':
-                    value=datetime.fromtimestamp(value).strftime("%Y-%m-%d %H:%M:%S")    
-                if key=='video_local_path':
-                    print('value===',value)
-                    value=PurePath(value)
-                    print('value===',value)
-                    value=str(value)
-                    print('value===',value)
-                if key=='thumbnail_local_path':
-                    print('value===',value)
-                    value=PurePath(value)
-                    print('value===',value)
-                    value=str(value)
-                    print('value===',value)                    
-                if not  key  in disableelements:
-                
-                    label= tk.Label(editsWindow, padx=7, pady=7, relief=tk.RIDGE,
-                                        activebackground= 'orange', text=key)
-                    label.grid(row=i ,column=column, sticky='news')         
-                    entry = tk.Entry(editsWindow)
-            
-                    entry.insert(0, value)
-                    entry.grid(row=i ,column=column+1, sticky='news')   
-                    rowkeys[i]=key
-                    def callback(event):
-
-                        x = event.widget.grid_info()['row']
-                        print(f'current input changes for {rowkeys[x]}',event.widget.get())   
-
-                        newresult[rowkeys[x]]=event.widget.get()
-                        if rowkeys[x]=='is_deleted':
-                            print('is deleted',type(event.widget.get()))
-                            value='0'
-                            if event.widget.get()=='0':
-                                value=False
-                            elif event.widget.get()=='1':
-                                value=True                        
-                            newresult[rowkeys[x]]=value
-
-                        print('============update row',newresult)
-
-                    # variable.trace('w', lambda:setEnty())    
-                    entry.bind("<KeyRelease>", callback)
-
-                else:
-
-                    label = tk.Label(editsWindow, padx=7, pady=7, relief=tk.RIDGE,
-                                        activebackground= 'orange', text=key)
-                    label.grid(row=i ,column=column, sticky='news')         
-                    variable=tk.StringVar()
-                    variable.set(value)
-                    entry = tk.Entry(editsWindow,textvariable=variable)
-                    entry.grid(row=i ,column=column+1, sticky='news') 
-                    entry.config(state='disabled')
-                i=i+1
-            return newresult,i,column+2
-        i=0
-
-        tmptask=taskresult
-        # tmptask.pop('video')
-        # tmptask.pop('setting')
-        print('taskresult\n',taskresult)
-        print('video\n',taskresult.get('video'))
-        print('setting\n',taskresult.get('setting'))
-        newtaskresult,serialno,cols=renderelements(i=1,result=tmptask,column=0,disableelements=['id','inserted_at','type','uploaded_at','video','setting'],title='task data')
-        newvideoresult={}
-        newsettingresult={}
-        newaccountresult={}
-        print('======================',serialno,cols)
-
-        if taskresult.get('video'):
-            print('video is associated to task',serialno,cols)
-
-            newvideoresult,serialno,cols=renderelements(i=1,result=taskresult.get('video'),column=cols,disableelements=['id','inserted_at','unique_hash','platform'],title='video data')
-        if taskresult.get('setting'):
-            print('setting is associated to task',serialno,cols)
-
-            newsettingresult,serialno,cols=renderelements(i=1,result=taskresult.get('setting'),column=cols,disableelements=['id','inserted_at','account','platform'],title='setting data')
-            if taskresult.get('setting').get('account') :
-                print('account is associated to setting',serialno,cols)
-
-                newaccountresult,serialno,cols=renderelements(i=serialno,result=taskresult.get('setting').get('account'),column=cols-2,disableelements=['id','inserted_at','unique_hash','platform'],title='account data')
-
-        btn5= tk.Button(editsWindow, text="save", padx = 0, pady = 0,command = lambda:TaskModel.update_task(id=rowid,taskdata=newtaskresult,videodata=newvideoresult,settingdata=newsettingresult,accountdata=newaccountresult))
-        btn5.grid(row=i+1,column=cols+1, sticky=tk.W)    
-
-
-    
     
         
 
-
-
-        
-    
-    b_create_task_metas = tk.Button(frame, text=settings[lang]['b_createTaskMetas'],
-                                         command=lambda: threading.Thread(target=createTaskMetas(frame,ttkframe)).start())
-    b_create_task_metas.grid(row = 0, column = 0, columnspan=2,padx=14, pady=15,sticky='w')
-    Tooltip(b_create_task_metas, text=settings[lang]['t_createTaskMetas'], wraplength=200)
-
-
-    b_down_video_metas_temp = tk.Button(frame, text=settings[lang]['b_editTaskMetas'], command=
-                                #  lambda: webbrowser.open_new("https://jsoncrack.com/editor")
-                                 lambda: threading.Thread(target=webbrowser.open_new("https://jsoncrack.com/editor")).start())
-    b_down_video_metas_temp.grid(row = 0, column = 1, padx=14, pady=15,sticky='w')
-    
-
-
-    l_import_task_metas = tk.Label(frame, text=settings[lang]['l_importTaskMetas'])
-    l_import_task_metas.grid(row = 2, column = 0, padx=14, pady=15,sticky='w')
-    Tooltip(l_import_task_metas, text=settings[lang]['t_importTaskMetas'] , wraplength=200)
-
-    b_imported_video_metas_file=tk.Button(frame,text="Select",command=lambda:SelectMetafile('taskmetafilepath',imported_task_metas_file))
-    b_imported_video_metas_file.grid(row = 2, column = 2, padx=14, pady=15)
-
-
-    imported_task_metas_file = tk.StringVar()        
-    # l_imported_video_metas_file = tk.Label(ttkframe, text='thumbnail template file')
-    # if tmp.has_key('taskmetafilepath'):
-    #     imported_task_metas_file.set(tmp['taskmetafilepath'])
-    # else:
-    #     imported_task_metas_file.set('')
-    # l_imported_video_metas_file.place(x=10, y=200)
-    e_imported_video_metas_file = tk.Entry(frame, width=int(width*0.02), textvariable=imported_task_metas_file)
-    e_imported_video_metas_file.grid(row = 2, column = 1, padx=14, pady=15)
-
-  
-    b_validate_video_metas = tk.Button(frame, text=settings[locale]['validateVideoMetas']
-                                       , command=lambda: threading.Thread(target=validateTaskMetafile(test_engine,ttkframe,imported_task_metas_file.get())).start())
-    b_validate_video_metas.grid(row = 4, column = 0, padx=14, pady=15)
-    b_createuploadsession = tk.Button(frame, text=settings[locale]['createuploadsession']
-                                      , command=lambda: threading.Thread(target=validateTaskMetafile(prod_engine,ttkframe,imported_task_metas_file.get())).start())
-    b_createuploadsession.grid(row = 5, column = 0, padx=14, pady=15)
-
-    # test upload  跳转到一个单独页面，录入一个视频的上传信息，点击上传进行测试。
-    b_upload = tk.Button(frame, text=settings[locale]['testupload']
-                         , command=lambda: threading.Thread(target=testupload(DBM('test'),ttkframe)).start())
-    b_upload.grid(row = 4, column = 1, padx=14, pady=15)
-
-    b_upload = tk.Button(frame, text=settings[locale]['upload']
-                         , command=lambda: threading.Thread(target=runTask).start())
-    b_upload.grid(row = 5, column = 1, padx=14, pady=15)
+def statsView(frame,ttkframe,lang):
 
     lb_youtube_counts = tk.Label(frame, text='youtube', font=(' ', 15))
-    lb_youtube_counts.grid(row = 8, column = 0)
+    lb_youtube_counts.grid(row = 2, column = 0)
 
     lb_tiktok_counts = tk.Label(frame, text='tiktok', font=(' ', 15))
-    lb_tiktok_counts.grid(row = 9, column =0)
+    lb_tiktok_counts.grid(row = 3, column =0)
 
     lb_total_counts = tk.Label(frame, text='all', font=(' ', 15))
-    lb_total_counts.grid(row = 10, column =0)
+    lb_total_counts.grid(row = 4, column =0)
 
     lb_account_counts = tk.Label(frame, text='account', font=(' ', 15))
-    lb_account_counts.grid(row = 7, column = 1)
+    lb_account_counts.grid(row = 1, column = 1)
 
     lb_video_counts = tk.Label(frame, text='success', font=(' ', 15))
-    lb_video_counts.grid(row = 7, column = 2)
+    lb_video_counts.grid(row = 1, column = 2)
     
     lb_video_queuedcounts = tk.Label(frame, text='queued', font=(' ', 15))
-    lb_video_queuedcounts.grid(row = 7, column = 3)
+    lb_video_queuedcounts.grid(row = 1, column = 3)
 
     lb_video_failure_counts = tk.Label(frame, text='failure', font=(' ', 15))
-    lb_video_failure_counts.grid(row = 7, column = 4)
+    lb_video_failure_counts.grid(row = 1, column = 4)
 
     checkvideocounts=0
     lb_youtube_success_counts_value = tk.Label(frame, text=str(checkvideocounts), font=(' ', 18))
-    lb_youtube_success_counts_value.grid(row = 8, column = 1)
+    lb_youtube_success_counts_value.grid(row = 2, column = 1)
 
     lb_youtube_queued_counts_value = tk.Label(frame, text=str(checkvideocounts), font=(' ', 18))
-    lb_youtube_queued_counts_value.grid(row = 8, column = 2)
+    lb_youtube_queued_counts_value.grid(row = 2, column = 2)
 
     lb_youtube_failure_counts_value = tk.Label(frame, text=str(checkvideocounts), font=(' ', 18))
-    lb_youtube_failure_counts_value.grid(row = 8, column = 3)
+    lb_youtube_failure_counts_value.grid(row = 2, column = 3)
     
     
     lb_tiktok_success_counts_value = tk.Label(frame, text=str(checkvideocounts), font=(' ', 18))
-    lb_tiktok_success_counts_value.grid(row = 9, column = 1)
+    lb_tiktok_success_counts_value.grid(row = 3, column = 1)
 
     lb_tiktok_queued_counts_value = tk.Label(frame, text=str(checkvideocounts), font=(' ', 18))
-    lb_tiktok_queued_counts_value.grid(row = 9, column = 2)
+    lb_tiktok_queued_counts_value.grid(row = 3, column = 2)
 
     lb_tiktok_failure_counts_value = tk.Label(frame, text=str(checkvideocounts), font=(' ', 18))
-    lb_tiktok_failure_counts_value.grid(row = 9, column = 3)
+    lb_tiktok_failure_counts_value.grid(row = 3, column = 3)
     
     
 
     lb_total_success_counts_value = tk.Label(frame, text=str(checkvideocounts), font=(' ', 18))
-    lb_total_success_counts_value.grid(row = 10, column =1)
+    lb_total_success_counts_value.grid(row = 4, column =1)
 
     lb_total_queued_counts_value = tk.Label(frame, text=str(checkvideocounts), font=(' ', 18))
-    lb_total_queued_counts_value.grid(row = 10, column = 2)
+    lb_total_queued_counts_value.grid(row = 4, column = 2)
 
     lb_total_failure_counts_value = tk.Label(frame, text=str(checkvideocounts), font=(' ', 18))
-    lb_total_failure_counts_value.grid(row = 10, column = 3)
+    lb_total_failure_counts_value.grid(row = 4, column = 3)
     
 
     
@@ -6600,7 +6737,7 @@ def  queryProxies(logger,city=None,state=None,country=None,tags=None,network_typ
                     )
         if langlist !=None:
             langlist.delete(0,tk.END)
-            logger.info(f'we found {len(db_rows)} record matching ')
+            logger.debug(f'we found {len(db_rows)} record matching ')
             i=0
             for row in db_rows:
                 proxy_id = str(row.id)
@@ -6613,9 +6750,9 @@ def  queryProxies(logger,city=None,state=None,country=None,tags=None,network_typ
 
 
         hints=f'there is {len(db_rows)} matching records found for query'
-        logger.info(f'search and display finished:\n')
+        logger.debug(f'search and display finished:\n')
     else:
-        logger.info(f'there is no matching records for query:\n')
+        logger.debug(f'there is no matching records for query:\n')
         hints=f'there is {len(db_rows)} matching records found for query'
         
     showinfomsg(hints)
@@ -6651,28 +6788,28 @@ def saveproxies(engine,proxies_list_raw,logger):
         proxies_list=proxies_list_raw.split('\n')
         proxies_list=list(set(proxies_list))
         proxies_list=list(filter(None, proxies_list))
-        logger.info(f'detected {len(proxies_list) } records to be added')
+        logger.debug(f'detected {len(proxies_list) } records to be added')
         
         
         tags=None
         servers=[]
         for idx,ele in enumerate(proxies_list):
-            logger.info(f'start to pre-process {str(idx)} record: {type(ele)}')
-            logger.info(f'start to detect whether tag exist:{ele}')
+            logger.debug(f'start to pre-process {str(idx)} record: {type(ele)}')
+            logger.debug(f'start to detect whether tag exist:{ele}')
 
             if ";" in ele:
-                logger.info(f'there is tags in this record:{ele}')
+                logger.debug(f'there is tags in this record:{ele}')
 
                 url=ele.split(";")[0]
                 tags=ele.split(";")[-1]
             else:
-                logger.info(f'there is no tags in this record:{ele}')
+                logger.debug(f'there is no tags in this record:{ele}')
 
                 url=ele
-            logger.info(f'end to detect whether tag exist:{ele}')
+            logger.debug(f'end to detect whether tag exist:{ele}')
                 
             if url:    
-                logger.info(f'split into url:\n{ele.split(";")[0]}\ntags:\n{ele.split(";")[-1]}')
+                logger.debug(f'split into url:\n{ele.split(";")[0]}\ntags:\n{ele.split(";")[-1]}')
                                 
                 proxy_protocol_type, host, port, user, password=split_proxy(url)
 
@@ -6703,10 +6840,10 @@ def saveproxies(engine,proxies_list_raw,logger):
             else:
                 logger.error(f'there is no valid proxy in this record :{ele}')         
                 showinfomsg(f'there is no valid proxy in this record :{ele}')       
-            logger.info(f'end to validate {str(idx)} record: {type(url)}')
+            logger.debug(f'end to validate {str(idx)} record: {type(url)}')
 
     else:
-        logger.info('you should input valid proxy list and try again')
+        logger.debug('you should input valid proxy list and try again')
 def returnProxy_textfield(event):
     proxy_textfield_str.set(event.widget.get("1.0", "end-1c"))
     print(proxy_textfield_str.get())
@@ -6915,7 +7052,7 @@ def proxyView(frame,ttkframe,lang):
             add_buttons[i].grid(row=i, column=len(headers)-3, sticky='news')
               
             add_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text='edit',command=lambda x=i-1  :update_selected_row(rowid=datas[x]['id']))
+                                activebackground= 'orange', text='edit',command=lambda x=i-1  :update_selected_row(rowid=datas[x]['id']),frame=frame)
             add_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
 
             del_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
@@ -6999,7 +7136,7 @@ def proxyView(frame,ttkframe,lang):
             showinfomsg(message=f"try to add proxy first",parent=chooseAccountsWindow)    
 
         else:                
-            logger.info(f'we found {len(db_rows)} record matching ')
+            logger.debug(f'we found {len(db_rows)} record matching ')
 
             # langlist.delete(0,tk.END)
             i=0
@@ -7028,7 +7165,7 @@ def proxyView(frame,ttkframe,lang):
         
         
                 
-            logger.info(f'Account search and display finished')
+            logger.debug(f'Account search and display finished')
                     
 
 
@@ -7054,12 +7191,12 @@ def proxyView(frame,ttkframe,lang):
                 result=ProxyModel.delete_by_id(id=rowid,is_deleted=True)
 
                 if result:
-                    logger.info(f'this account {rowid} removed success')
+                    logger.debug(f'this account {rowid} removed success')
                     showinfomsg(message=f'this account {rowid} removed success',parent=chooseAccountsWindow)    
                 else:
-                    logger.info(f'you cannot remove this account {rowid}, not added before')
+                    logger.debug(f'you cannot remove this account {rowid}, not added before')
                     showinfomsg(message=f'this account {rowid} not added before',parent=chooseAccountsWindow)    
-            logger.info(f'end to remove,reset account {rowid}')
+            logger.debug(f'end to remove,reset account {rowid}')
 
 
     def update_selected_row(rowid):
@@ -7411,7 +7548,7 @@ def logView(log_tab_frame,root,lang):
     st =ConsoleUi(log_tab_frame,root,row=1,column=0)
     logger.debug(f'Installation path is:{ROOT_DIR}')
 
-    logger.info('TiktokaStudio GUI started')
+    logger.debug('TiktokaStudio GUI started')
 def hide_log_frame():
     log_frame.grid_forget()
 
@@ -7518,7 +7655,6 @@ def render(root,window,lang):
 
 
     thumb_frame = ttk.Frame(tab_control)
-    thumb_frame = ttk.Frame(tab_control)
     thumb_frame.grid_rowconfigure(0, weight=1)
     thumb_frame.grid_columnconfigure(0, weight=1, uniform="group1")
     thumb_frame.grid_columnconfigure(1, weight=1, uniform="group1")
@@ -7542,7 +7678,6 @@ def render(root,window,lang):
 
 
     tags_frame = ttk.Frame(tab_control)
-    tags_frame = ttk.Frame(tab_control)
     tags_frame.grid_rowconfigure(0, weight=1)
     tags_frame.grid_columnconfigure(0, weight=1, uniform="group1")
     tags_frame.grid_columnconfigure(1, weight=1, uniform="group1")
@@ -7563,7 +7698,6 @@ def render(root,window,lang):
 
 
 
-    des_frame = ttk.Frame(tab_control)
     des_frame = ttk.Frame(tab_control)
     des_frame.grid_rowconfigure(0, weight=1)
     des_frame.grid_columnconfigure(0, weight=1, uniform="group1")
@@ -7586,7 +7720,6 @@ def render(root,window,lang):
 
 
 
-    schedule_frame = ttk.Frame(tab_control)
     schedule_frame = ttk.Frame(tab_control)
     schedule_frame.grid_rowconfigure(0, weight=1)
     schedule_frame.grid_columnconfigure(0, weight=1, uniform="group1")
@@ -7665,13 +7798,13 @@ def render(root,window,lang):
 
     upload_frame = ttk.Frame(tab_control)
     upload_frame.grid_rowconfigure(0, weight=1)
-    upload_frame.grid_columnconfigure(0, weight=1, uniform="group1")
-    upload_frame.grid_columnconfigure(1, weight=1, uniform="group1")
-    upload_frame.grid_columnconfigure(0, weight=1,
-                                      minsize=int(0.5*width)
+    # upload_frame.grid_columnconfigure(0, weight=1, uniform="group1")
+    # upload_frame.grid_columnconfigure(1, weight=1, uniform="group1")
+    # upload_frame.grid_columnconfigure(0, weight=1,
+    #                                   minsize=int(0.5*width)
 
-                                      )
-    upload_frame.grid_columnconfigure(1, weight=2)
+    #                                   )
+    # upload_frame.grid_columnconfigure(1, weight=2)
     upload_frame.grid(row=0, column=0, sticky="nsew")
     upload_frame_left = tk.Frame(upload_frame)
     upload_frame_left.grid(row=0,column=0,sticky="nswe")
@@ -7695,7 +7828,16 @@ def render(root,window,lang):
     meta_frame_right = tk.Frame(meta_frame)
     meta_frame_right.grid(row=0,column=1,sticky="nswe") 
 
+    stats_frame = ttk.Frame(tab_control)
+    # stats_frame.grid_rowconfigure(0, weight=1)
+    # stats_frame.grid_columnconfigure(0, weight=1, uniform="group1")
+    # stats_frame.grid_columnconfigure(1, weight=1, uniform="group1")
+    # stats_frame.grid_columnconfigure(0, weight=1,
+    #                                   minsize=int(0.5*width)
 
+    #                                   )
+    # stats_frame.grid_columnconfigure(1, weight=2)
+    stats_frame.grid(row=0, column=0, sticky="nsew")
 
 
     tab_control.add(install_frame, 
@@ -7749,8 +7891,13 @@ def render(root,window,lang):
 
 
     tab_control.add(upload_frame, text=settings[lang]['uploadView'])
-    uploadView(upload_frame_left,upload_frame_right,lang)
+    # uploadView(upload_frame_left,upload_frame_right,lang)
+    uploadView(upload_frame_left,upload_frame_left,lang)
     
+    statsView(stats_frame,root,lang)
+
+    tab_control.add(stats_frame, text=settings[lang]['statsView'],sticky='nswe')
+
 
     tab_control.add(doc_frame, text=settings[lang]['docView'])
 
@@ -7769,7 +7916,6 @@ def render(root,window,lang):
     logView(log_tab_frame,root,lang)
 
     tab_control.add(log_tab_frame, text=settings[lang]['logView'],sticky='nswe')
-
 
 
 
@@ -7857,7 +8003,7 @@ def start(lang,root=None):
 
     logger.debug(f'Installation path is:{ROOT_DIR}')
 
-    logger.info('TiktokaStudio GUI started')
+    logger.debug('TiktokaStudio GUI started')
     render(root,mainwindow,lang)
     root.update_idletasks()
 
@@ -7885,7 +8031,7 @@ def changeDisplayLang(lang):
     # root.quit()    
     settings['lastuselang']=lang
     start(lang,root)
-    logger.info(f'switch lang to locale:{lang}')
+    logger.debug(f'switch lang to locale:{lang}')
     
     root.mainloop()
 
