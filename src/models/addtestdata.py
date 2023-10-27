@@ -14,6 +14,8 @@ if  os.path.exists('debug.sqlite3'):
         os.remove('debug.sqlite3')
 
 platforms=list(dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT).keys())
+platforms=platforms*5
+
 policys=list(dict(WAIT_POLICY.WAIT_POLICY_TEXT).keys())
 taskstatus=list(dict(TASK_STATUS.TASK_STATUS_TEXT).keys())
 browsers=list(dict(BROWSER_TYPE.BROWSER_TYPE_TEXT).keys())
@@ -104,7 +106,7 @@ class TestData:
 
 
                 test_users=[]
-                for i in range(1,20):
+                for i in range(0,100):
                         account=AccountModel.add_account(
                                 account_data={
                                 "platform":random.choice(platforms),
@@ -117,42 +119,34 @@ class TestData:
                                         
 
                         )
+                        
                         test_users.append(account)
 
-                print('accounts',test_users)
+                print(f'accounts {len(test_users)}')
                 if test_users[0] is not None:
                         AccountRelationship.add_AccountRelationship_by_id(main_id=test_users[0],otherid=test_users[1])
 
-                # test_setting={
-                
-                # "timeout":random.choice(range(200,2000)),
-                # "is_open_browser":random.choice([True,False]),
-                # "is_debug":random.choice([True,False]),
-                # "is_record_video":random.choice([True,False]),
-                # "platform":random.choice([0,1,2,3]),
-                # "browser_type":random.choice(['chromium','webKit','firefox']),
-                # "wait_policy":random.choice([0,1,2,3,4]),
-                # "account":random.choice(test_users),
-                # }
 
                 test_settings=[]
-                for i in range(1,20):
-                        setting=UploadSettingModel.add_uploadsetting(
+                for i in range(0,20):
+                    user=random.choice(test_users)
+                    setting=UploadSettingModel.add_uploadsetting(
                                 setting_data={
                 
                 "timeout":random.choice(range(200,2000)),
                 "is_open_browser":random.choice([True,False]),
                 "is_debug":random.choice([True,False]),
                 "is_record_video":random.choice([True,False]),
-                "platform":random.choice(platforms),
+                "platform":user.platform,
                 "browser_type":random.choice(browsers),
-                "wait_policy":random.choice(policys)        },account=random.choice(test_users)
+                "wait_policy":random.choice(policys)        },
+                account=user
                                         
 
                         )
-                        test_settings.append(setting)
+                    test_settings.append(setting)
 
-                print('test_settings',test_settings)
+                print(f'settings {len(test_settings)}')
 
                 fule=["D:\/Download\/audio-visual\/saas\/tiktoka\/tiktoka-studio-uploader-genius\/tests\/videos\/vertical\\1.mp4"]
                 images=[
@@ -187,7 +181,7 @@ class TestData:
                         print('add video ok',video.video_title)
                         test_videos.append(video)
 
-                print('test_videos',test_videos)
+                print(f'videos {len(test_videos)}')
 
 
                 # test_task={
@@ -203,20 +197,22 @@ class TestData:
                 test_tasks=[]
 
                 for i in range(1,120):
+                        setting=random.choice(test_settings)
+                        user=setting.account
                         t=TaskModel.add_task( 
                                 task_data={
-                                "type":random.choice(platforms),
+                                "platform":user.platform,
                         "username":'',
 
                         "proxy":'',
                         "status":random.choice(taskstatus),
 
-                        },tasksetting=random.choice(test_settings),taskvideo=random.choice(test_videos)
+                        },tasksetting=setting,taskvideo=random.choice(test_videos)
                                         
 
                         )
                         test_tasks.append(t)
-                print('test_tasks',test_tasks)
+                print(f'tasks {len(test_tasks)}')
                 self.test_tasks=test_tasks
                 self.test_setting=test_settings
                 self.test_videos=test_videos

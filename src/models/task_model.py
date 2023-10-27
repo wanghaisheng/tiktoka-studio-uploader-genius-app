@@ -29,7 +29,7 @@ class SORT_BY_TYPE:
 
 class TaskModel(BaseModel):
     id = BlobField(primary_key=True)    
-    type= IntegerField(default=PLATFORM_TYPE.YOUTUBE)
+    platform= IntegerField(default=PLATFORM_TYPE.YOUTUBE)
     status = IntegerField(default=TASK_STATUS.PENDING)
     prorioty= BooleanField(default=False) 
     video = ForeignKeyField(YoutubeVideoModel, backref='videos')
@@ -52,8 +52,21 @@ class TaskModel(BaseModel):
         task.inserted_at = int(time.time())  # Update insert_date
         # task.id = CustomID().to_bin()
         task.id = CustomID().to_bin()
-        task.video=taskvideo
+        if taskvideo:
+            
+            task.video=taskvideo
         task.setting=tasksetting
+        print('sync task platform to account binding platform')
+        if task.setting.platform:
+            if task.setting.account:
+                print(task.setting.account.platform,task.setting.platform,task.platform)
+                task.platform=task.setting.account.platform
+                task.setting.platform=task.setting.account.platform
+            else:
+                print('be caution!!!this account is not bind to any platform yet')
+        else:
+            print('be caution!!!this upload setting is not bind to any platform yet')
+
         task.save(force_insert=True) 
         
         print('task add ok',task.id)
@@ -166,7 +179,7 @@ class TaskModel(BaseModel):
 
     @classmethod
 
-    def filter_tasks(cls, status=None, type=None,uploaded_at=None,schedule_at=None,limit=None,setting=None,inserted_at=None,video_title=None,video_id=None,username=None,pageno=None,pagecount=None,start=None,end=None,data=None,ids=None,sortby=None):
+    def filter_tasks(cls, status=None, platform=None,uploaded_at=None,schedule_at=None,limit=None,setting=None,inserted_at=None,video_title=None,video_id=None,username=None,pageno=None,pagecount=None,start=None,end=None,data=None,ids=None,sortby=None):
             query=TaskModel.select()
             counts=query.count()
             query = (TaskModel
@@ -216,15 +229,27 @@ class TaskModel(BaseModel):
                 query = query.join(YoutubeVideoModel,on=(TaskModel.video == YoutubeVideoModel.id)).where(YoutubeVideoModel.youtube_video_id == video_id)
                 query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
 
+
+
+            if platform is not None:
+                if platform in dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT).keys():
+                    query=query.where(TaskModel.platform==platform)
+                else:
+                    print(f'there is no support for platform value yet:{platform}')
+
             # 如果存在account 相关的查询参数，先找到对应的 setting id集合
             if username is not None:
-                query = query.join(UploadSettingModel,on=(TaskModel.setting == UploadSettingModel.id)).join(AccountModel,on=(UploadSettingModel.account == AccountModel.id)).where(AccountModel.username.regexp(username))
+                query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
+                
+                query = query.where(AccountModel.username.regexp(username))
 
                 query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
 
 
             try:
-                print('==total record counts===',len(list(query)))
+                print('==total record counts===',len(list(query)),list(query))
+                for i in list(query):
+                    print(i.platform)
                 print('==per page counts===',pagecount)
                 print('==page number===',pageno)
 
@@ -245,8 +270,10 @@ class TaskModel(BaseModel):
                     if pageno==None and start is None and end is None:
                         print(f'grab all records matching filters:{list(query)}')
 
-
-
+                print('before return result=========')
+                for i in list(query):
+                    print(i.platform)
+                    
                 return list(query),counts
 
                 

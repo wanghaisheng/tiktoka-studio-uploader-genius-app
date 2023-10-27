@@ -1940,7 +1940,7 @@ def runTask(frame=None,username=None,platform=None,status=None,vtitle=None,sched
     
 
     
-    task_rows,counts=TaskModel.filter_tasks(status=status,schedule_at=schedule_at,type=platform,video_title=vtitle,video_id=vid,username=username,pagecount=pagecount,pageno=pageno,ids=ids,sortby=sortby) 
+    task_rows,counts=TaskModel.filter_tasks(status=status,schedule_at=schedule_at,platform=platform,video_title=vtitle,video_id=vid,username=username,pagecount=pagecount,pageno=pageno,ids=ids,sortby=sortby) 
     if task_rows is None or len(task_rows)==0:
         showinfomsg(message=f"try to add tasks  first",parent=frame,DURATION=500)    
 
@@ -1950,7 +1950,7 @@ def runTask(frame=None,username=None,platform=None,status=None,vtitle=None,sched
         i=0
         task_data=[]
         for row in task_rows:
-            print('row data',row.id,row.type,row.prorioty,row.status)
+            print('row data',row.id,row.platform,row.prorioty,row.status)
             task={
                 "id":CustomID(custom_id=row.id).to_hex(),
                 "platform":dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[row.setting.platform],
@@ -5548,7 +5548,7 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
             showinfomsg(message=f'save task meta success',parent=frame)    
         else:
             showinfomsg(message=f'load video meta failed',parent=frame)    
-def validateTaskMetafile(frame,metafile,taskcanvas=None):
+def validateTaskMetafile(frame,metafile,canvas=None):
     logger.debug('load task metas to database ')
     print('load task meta')
 
@@ -5687,7 +5687,7 @@ def validateTaskMetafile(frame,metafile,taskcanvas=None):
                     else:
                         if type(video.get('wait_policy'))!=int:
                             logger.error('wait_policy should be one of 0,1,2,3,4')
-                            video['wait_policy']=dict(WAIT_POLICY_TYPE.WAIT_POLICY_TYPE_TEXT)[video.get('wait_policy')][1] 
+                            video['wait_policy']=dict(WAIT_POLICY_TYPE.WAIT_POLICY_TYPE_TEXT)[video.get('wait_policy')]
 
                         else:
                             if not video.get('wait_policy') in [0,1,2,3,4]:
@@ -5979,7 +5979,7 @@ def validateTaskMetafile(frame,metafile,taskcanvas=None):
                 logger.debug(f'end to process task data')
                 print('show added task in the tabular',taskids)
                 
-                queryTasks(frame=frame,taskcanvas=taskcanvas,tab_headers=None,username=None,platform=None,status=None,video_title=None,schedule_at=None,video_id=None,pageno=1,pagecount=50,ids=taskids,sortby="ASC")
+                queryTasks(frame=frame,canvas=canvas,tab_headers=None,username=None,platform=None,status=None,video_title=None,schedule_at=None,video_id=None,pageno=1,pagecount=50,ids=taskids,sortby="ASC")
                 showinfomsg(message=f'end to process task data')
 
                                                 
@@ -5995,7 +5995,7 @@ def validateTaskMetafile(frame,metafile,taskcanvas=None):
     else:
         showinfomsg(message="please choose a valid task file")
         logger.error("you choosed task meta  file is missing or broken.")       
-def queryTasks(frame=None,taskcanvas=None,tab_headers=None,username=None,platform=None,status=None,video_title=None,schedule_at=None,video_id=None,pageno=None,pagecount=None,ids=None,sortby="Add DATE ASC"):
+def queryTasks(frame=None,canvas=None,tab_headers=None,username=None,platform=None,status=None,video_title=None,schedule_at=None,video_id=None,pageno=None,pagecount=None,ids=None,sortby="Add DATE ASC"):
 
     if pagecount is None:
         pagecount=50
@@ -6021,9 +6021,9 @@ def queryTasks(frame=None,taskcanvas=None,tab_headers=None,username=None,platfor
         platform=None        
     elif type(platform)==str:
         print('======',platform)
-        print(f'query tasks for {platform} {getattr(PLATFORM_TYPE, platform.upper())} ')
+        print(f'query tasks for {platform} {find_key(PLATFORM_TYPE.PLATFORM_TYPE_TEXT, platform)} ')
 
-        platform=getattr(PLATFORM_TYPE, platform.upper())
+        platform=find_key(PLATFORM_TYPE.PLATFORM_TYPE_TEXT, platform)
 
     if status=='':
         status=None  
@@ -6056,7 +6056,7 @@ def queryTasks(frame=None,taskcanvas=None,tab_headers=None,username=None,platfor
 
         #     print(f"{getattr(dict(TASK_STATUS.TASK_STATUS_TEXT),row.status)}")        
 
-    task_rows,counts=TaskModel.filter_tasks(status=status,schedule_at=schedule_at,type=platform,video_title=video_title,video_id=video_id,username=username,pagecount=pagecount,pageno=pageno,ids=ids,sortby=sortby) 
+    task_rows,counts=TaskModel.filter_tasks(status=status,schedule_at=schedule_at,platform=platform,video_title=video_title,video_id=video_id,username=username,pagecount=pagecount,pageno=pageno,ids=ids,sortby=sortby) 
     if task_rows is None or len(task_rows)==0:
         showinfomsg(message=f"try to add tasks  first",parent=frame,DURATION=500)    
 
@@ -6064,34 +6064,55 @@ def queryTasks(frame=None,taskcanvas=None,tab_headers=None,username=None,platfor
         logger.debug(f'we found {counts} record matching ')
         # showinfomsg(message=f'we found {counts} record matching',DURATION=500)
         
-        
+        print(f'try to clear existing result frame  {len(frame.winfo_children())} ')
+
+        try:
+            print(frame.winfo_children())
+            frame.winfo_children()
+
+
+            if len(frame.winfo_children())>0:
+                for widget in frame.winfo_children():
+                    widget.destroy()      
+
+        except:
+            print('there is no result frame  at all')    
         l_totalcount = tk.Label(frame, text=f'total:{counts} per page:{pagecount} current page: {pageno}')
-        l_totalcount.grid(row = 25, column = 0,sticky='w')            
+        l_totalcount.grid(row = 3, column = 0,sticky='w')            
         i=0
         task_data=[]
         # tab_headers=None
+        pagebuttons=[]
         if counts>pagecount:
 
             pages=counts/pagecount
             pages=int(pages)+1
             for i in range(pages):
                 # 这里如果没有lambda x=i 的话 后面的i+1 一直是1
-                page= tk.Button(frame, text=str(i+1), padx = 0, pady = 0,
-                                command = lambda x=i:queryTasks(taskcanvas=taskcanvas,frame=frame,status=status,schedule_at=schedule_at,platform=platform,
+                pagebutton= tk.Button(frame, text=str(i+1), padx = 0, pady = 0,
+                                command = lambda x=i:queryTasks(canvas=canvas,frame=frame,status=status,schedule_at=schedule_at,platform=platform,
                                                 video_title=video_title,video_id=video_id,username=username,pagecount=pagecount,pageno=x+1,ids=ids,sortby=sortby) )
                 
 
-                page.grid(row=25, column=i+1,sticky=tk.NW)
+                pagebutton.grid(row=3, column=i+1,sticky=tk.NW)
+                pagebuttons.append(pagebutton)
             # Create a frame for the canvas and scrollbar(s).
 
+        else:
+            pagebutton= tk.Button(frame, text=str(1), padx = 0, pady = 0,
+                                command = lambda x=0:queryTasks(canvas=canvas,frame=frame,status=status,schedule_at=schedule_at,platform=platform,
+                                                video_title=video_title,video_id=video_id,username=username,pagecount=pagecount,pageno=x+1,ids=ids,sortby=sortby) )
+                
 
+            pagebutton.grid(row=3, column=1,sticky=tk.NW)
         print(f'prepare row data to render:{task_rows}')
         for row in task_rows:
-            print('row data',row.id,row.type,row.prorioty,row.status)
+            print('row data',row)
+            print('platform',row.platform,dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[row.platform])
 
 
-            p_value=row.type
-            if type(row.type)!=int:
+            p_value=row.platform
+            if type(row.platform)!=int:
                 p_value=100
             task={
                 "id":CustomID(custom_id=row.id).to_hex(),
@@ -6112,12 +6133,12 @@ def queryTasks(frame=None,taskcanvas=None,tab_headers=None,username=None,platfor
             task_data.append(task)
         print(f'end to prepare row data to render:{task_data}')
         # print(f'try to clear existing rows in the tabular ')
-        # if taskcanvas is not None:
+        # if canvas is not None:
         #     try:
-        #         taskcanvas.winfo_children
-        #         print('+++++++++++++++++',len(taskcanvas.winfo_children()))
-        #         if len(taskcanvas.winfo_children())>0:
-        #             for widget in taskcanvas.winfo_children():
+        #         canvas.winfo_children
+        #         print('+++++++++++++++++',len(canvas.winfo_children()))
+        #         if len(canvas.winfo_children())>0:
+        #             for widget in canvas.winfo_children():
         #                 widget.destroy()      
 
         #     except:
@@ -6129,52 +6150,44 @@ def queryTasks(frame=None,taskcanvas=None,tab_headers=None,username=None,platfor
         tab_headers.append('operation')
 
         print(f'show header and rows based on query {tab_headers}\n{task_data}')
-        refreshTaskcanvas(taskcanvas=taskcanvas,frame=frame,headers=tab_headers,datas=[])
+        refreshTaskcanvas(canvas=canvas,frame=frame,headers=tab_headers,datas=[])
 
-        refreshTaskcanvas(taskcanvas=taskcanvas,frame=frame,headers=tab_headers,datas=task_data)
+        refreshTaskcanvas(canvas=canvas,frame=frame,headers=tab_headers,datas=task_data)
     
         print(f'end to show header and rows based on query {tab_headers}\n{task_data}')
 
         logger.debug(f'Account search and display finished')
                     
-def refreshTaskcanvas(taskcanvas=None,frame=None,headers=None,datas=None):
+def refreshTaskcanvas(canvas=None,frame=None,headers=None,datas=None):
 
     print(f'try to clear existing rows in the tabular {len(frame.winfo_children())} ')
 
     try:
-        print(frame.winfo_children())
-        frame.winfo_children()[2]
-        for i in range(2,len(frame.winfo_children())):
-            print('--------+++------',len(frame.winfo_children()[i].winfo_children()))
+        print(canvas.winfo_children())
+        canvas.winfo_children()
 
-            if len(frame.winfo_children()[i].winfo_children())>0:
-                for widget in frame.winfo_children()[i].winfo_children():
-                    widget.destroy()      
+
+        if len(canvas.winfo_children())>0:
+            for widget in canvas.winfo_children():
+                widget.destroy()      
 
     except:
         print('there is no rows in the tabular at all')
         
     print('start to render tabular rows')
-    chooseAccountsWindow=frame
-    frame2 = tk.Frame(chooseAccountsWindow,  bd=1, relief=tk.FLAT)
-    frame2.grid(row=3, column=0, rowspan=5,sticky=tk.NW)
-
-    frame2.grid_rowconfigure(0, weight=1)
-    frame2.grid_columnconfigure(0, weight=1)
-    frame2.grid_columnconfigure(1, weight=1)
     # Add a canvas in that frame.
-    canvas = tk.Canvas(frame2, bg='Yellow')
+    canvas = tk.Canvas(frame, bg='Yellow')
     canvas.grid(row=0, column=0)
-    print(f'currrent taskvas is {taskcanvas}')    
-    taskcanvas=canvas
-    print(f'set taskcanvas to {taskcanvas}')
+    print(f'currrent taskvas is {canvas}')    
+    canvas=canvas
+    print(f'set canvas to {canvas}')
     # Create a vertical scrollbar linked to the canvas.
-    vsbar = tk.Scrollbar(frame2, orient=tk.VERTICAL, command=canvas.yview)
+    vsbar = tk.Scrollbar(frame, orient=tk.VERTICAL, command=canvas.yview)
     vsbar.grid(row=0, column=1, sticky=tk.NS)
     canvas.configure(yscrollcommand=vsbar.set)
 
     # Create a horizontal scrollbar linked to the canvas.
-    hsbar = tk.Scrollbar(frame2, orient=tk.HORIZONTAL, command=canvas.xview)
+    hsbar = tk.Scrollbar(frame, orient=tk.HORIZONTAL, command=canvas.xview)
     hsbar.grid(row=1, column=0, sticky=tk.EW)
     canvas.configure(xscrollcommand=hsbar.set)
 
@@ -6329,7 +6342,7 @@ def update_selected_row_task(rowid,frame=None,name=None,func=None):
     taskresult = model_to_dict(taskresult)
 
 
-    def renderelements(i=1,column=0,result={},disableelements=['id','inserted_at','unique_hash','platform'],title=None,lastindex=0,fenlie=True):
+    def renderelements(i=1,column=0,result={},disableelements=['id','inserted_at','unique_hash'],title=None,lastindex=0,fenlie=True):
         rowkeys={}
         newresult={}
         rowlimit=22
@@ -6350,7 +6363,7 @@ def update_selected_row_task(rowid,frame=None,name=None,func=None):
             if key=='id':
                 value=CustomID(custom_id=value).to_hex()
             if key=='platform':
-                value=  PLATFORM_TYPE.PLATFORM_TYPE_TEXT[value][1]
+                value= dict( PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[value]
             if value==None:
                 value=''                        
             if key=='inserted_at':
@@ -6441,7 +6454,7 @@ def update_selected_row_task(rowid,frame=None,name=None,func=None):
     print('taskresult\n',taskresult)
     print('video\n',taskresult.get('video'))
     print('setting\n',taskresult.get('setting'))
-    newtaskresult,serialno,cols,lastindex=renderelements(lastindex=0,i=1,result=tmptask,column=0,disableelements=['id','inserted_at','type','uploaded_at','video','setting'],title='task data')
+    newtaskresult,serialno,cols,lastindex=renderelements(lastindex=0,i=1,result=tmptask,column=0,disableelements=['id','inserted_at','uploaded_at','video','setting'],title='task data')
     newvideoresult={}
     newsettingresult={}
     newaccountresult={}
@@ -6450,11 +6463,11 @@ def update_selected_row_task(rowid,frame=None,name=None,func=None):
     if taskresult.get('video'):
         print('video is associated to task',serialno,cols,lastindex)
 
-        newvideoresult,serialno,cols,lastindex=renderelements(lastindex=lastindex,i=1,result=taskresult.get('video'),column=cols,disableelements=['id','inserted_at','unique_hash','platform'],title='video data')
+        newvideoresult,serialno,cols,lastindex=renderelements(lastindex=lastindex,i=1,result=taskresult.get('video'),column=cols,disableelements=['id','inserted_at','unique_hash'],title='video data')
     if taskresult.get('setting'):
         print('setting is associated to task',serialno,cols,lastindex)
 
-        newsettingresult,serialno,cols,lastindex=renderelements(lastindex=lastindex,i=1,result=taskresult.get('setting'),column=cols,disableelements=['id','inserted_at','account','platform'],title='setting data',fenlie=False)
+        newsettingresult,serialno,cols,lastindex=renderelements(lastindex=lastindex,i=1,result=taskresult.get('setting'),column=cols,disableelements=['id','inserted_at','account'],title='setting data',fenlie=False)
         if taskresult.get('setting').get('account') :
             print('account is associated to setting',serialno,cols,lastindex)
 
@@ -6483,7 +6496,7 @@ def uploadView(frame,ttkframe,lang):
     
     
     
-    global vid,taskcanvas
+    global vid,canvas
     
     taskstatus = tk.StringVar()
     lbl15 = tk.Label(queryframe, text='Select Status:')
@@ -6568,14 +6581,7 @@ def uploadView(frame,ttkframe,lang):
     sortby_combo.grid(row=1, column=18,columnspan=1, padx=10, pady=10, sticky=tk.W)
     # sortby_combo.bind('<FocusIn>', lambda event: platform_db_refresh(event))
     sortby_combo['values'] = list( dict(SORT_BY_TYPE.SORT_BY_TYPE_TEXT).values())
-    taskcanvas=None
-
-    btn5= tk.Button(queryframe, text="Get Info", command = lambda:queryTasks(taskcanvas=taskcanvas,frame=frame,status=task_status_var.get(),platform=platform_var.get(),username=channelname.get(),video_id=vid.get(),video_title=vtitle.get(),schedule_at=schedule_at_var.get(),pageno=1,pagecount=50,sortby=sortby_var.get()) )
-    btn5.grid(row = 1, column = 24,  padx=14, pady=15)
-    
-    
-    btn5= tk.Button(queryframe, text="Reset", padx = 0, pady = 0,command = lambda:(task_status_var.set(""),schedule_at_var.set(""),platform_var.set(""),channelname.set(""),vid.set(''),vtitle.set(''),sortby_var.set('')))
-    btn5.grid(row=1,column=21, sticky=tk.W)        
+ 
 
 
 
@@ -6612,7 +6618,7 @@ def uploadView(frame,ttkframe,lang):
 
   
     b_validate_video_metas = tk.Button(operationframe, text=settings[locale]['validateVideoMetas']
-                                       , command=lambda: threading.Thread(target=validateTaskMetafile(frame,imported_task_metas_file.get())).start())
+                                       , command=lambda: threading.Thread(target=validateTaskMetafile(frame,imported_task_metas_file.get(),canvas=None)).start())
     b_validate_video_metas.grid(row = 0, column = 5, padx=14, pady=15)
 
 
@@ -6621,9 +6627,6 @@ def uploadView(frame,ttkframe,lang):
                          , command=lambda: threading.Thread(target=testupload(DBM('test'),ttkframe)).start())
     b_upload.grid(row =0 ,column = 6, padx=14, pady=15)
 
-    b_upload = tk.Button(operationframe, text=settings[locale]['b_uploadAll']
-                         , command=lambda: threading.Thread(target=runTask(frame=frame,status=task_status_var.get(),platform=platform_var.get(),username=channelname.get(),vid=vid.get(),vtitle=vtitle.get(),schedule_at=schedule_at_var.get(),pageno=None,pagecount=50,sortby=sortby_var.get())).start())
-    b_upload.grid(row = 0, column = 7, padx=14, pady=15)
 
 
 
@@ -6634,13 +6637,31 @@ def uploadView(frame,ttkframe,lang):
     tab_headers.append('operation')
     tab_headers.append('operation')
 
+    chooseAccountsWindow=frame
+    result_frame = tk.Frame(chooseAccountsWindow,  bd=1, relief=tk.FLAT)
+    result_frame.grid(row=3, column=0, rowspan=5,sticky=tk.NW)
 
-    refreshTaskcanvas(taskcanvas=taskcanvas,frame=frame,headers=tab_headers,datas=[])
+    result_frame.grid_rowconfigure(0, weight=1)
+    result_frame.grid_columnconfigure(0, weight=1)
+    result_frame.grid_columnconfigure(1, weight=1)
+
+    refreshTaskcanvas(canvas=None,frame=result_frame,headers=tab_headers,datas=[])
 
     print('First time render tab headers')
 
 
+    btn5= tk.Button(queryframe, text="Get Info", command = lambda:queryTasks(canvas=None,frame=result_frame,status=task_status_var.get(),platform=platform_var.get(),username=channelname.get(),video_id=vid.get(),video_title=vtitle.get(),schedule_at=schedule_at_var.get(),pageno=1,pagecount=50,sortby=sortby_var.get()) )
+    btn5.grid(row = 1, column = 24,  padx=14, pady=15)
+    
+    
+    btn5= tk.Button(queryframe, text="Reset", padx = 0, pady = 0,command = lambda:(task_status_var.set(""),schedule_at_var.set(""),platform_var.set(""),channelname.set(""),vid.set(''),vtitle.set(''),sortby_var.set('')))
+    btn5.grid(row=1,column=21, sticky=tk.W)       
 
+
+
+    b_upload = tk.Button(operationframe, text=settings[locale]['b_uploadAll']
+                         , command=lambda: threading.Thread(target=runTask(frame=result_frame,status=task_status_var.get(),platform=platform_var.get(),username=channelname.get(),vid=vid.get(),vtitle=vtitle.get(),schedule_at=schedule_at_var.get(),pageno=None,pagecount=50,sortby=sortby_var.get())).start())
+    b_upload.grid(row = 0, column = 7, padx=14, pady=15)
 
     # Bind the platform selection event to the on_platform_selected function
 
@@ -7211,7 +7232,7 @@ def proxyView(frame,ttkframe,lang):
             for row in db_rows:
                 account={
                     "id":CustomID(custom_id=row.id).to_hex(),
-                    "provider": PROXY_PROVIDER_TYPE.PROXY_PROVIDER_TYPE_TEXT[row.proxy_provider_type][1],
+                    "provider": dict(PROXY_PROVIDER_TYPE.PROXY_PROVIDER_TYPE_TEXT)[row.proxy_provider_type],
                     "protocol":row.proxy_protocol,
                     "host":row.proxy_host,
                     "port":row.proxy_port,                    
@@ -7288,12 +7309,12 @@ def proxyView(frame,ttkframe,lang):
                 print('convert id to hex',value)
                 
             if key=='platform':
-                value=  PLATFORM_TYPE.PLATFORM_TYPE_TEXT[value][1]
+                value=  dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[value]
             if key=='provider':
-                value=  PROXY_PROVIDER_TYPE.PROXY_PROVIDER_TYPE_TEXT[value][1]
+                value=  dict(PROXY_PROVIDER_TYPE.PROXY_PROVIDER_TYPE_TEXT)[value]
                 
             if key=='status':
-                value =PROXY_STATUS.PROXY_STATUS_TEXT[value][1]
+                value =dict(PROXY_STATUS.PROXY_STATUS_TEXT)[value]
             if value==None:
                 value=''
             if key=='inserted_at':
@@ -8037,7 +8058,7 @@ def start(lang,root=None):
 
 
 
-    global mainwindow,taskcanvas
+    global mainwindow,canvas
 
     root.geometry(window_size)
     # root.resizable(width=True, height=True)
@@ -8123,7 +8144,7 @@ app.include_router(router)
 async def asynctk():
     start_tkinter_app()
 def  start_tkinter_app():
-    global root,settings,db,taskcanvas
+    global root,settings,db,canvas
     tmp['accountlinkaccount']={}    
 
     root = tk.Tk()
