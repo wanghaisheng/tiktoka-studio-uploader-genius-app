@@ -6290,18 +6290,19 @@ def update_selected_row_task(rowid,frame=None,name=None,func=None):
     taskresult = model_to_dict(taskresult)
 
 
-    def renderelements(i=1,column=0,result={},disableelements=['id','inserted_at','unique_hash','platform'],title=None):
+    def renderelements(i=1,column=0,result={},disableelements=['id','inserted_at','unique_hash','platform'],title=None,lastindex=0,fenlie=True):
         rowkeys={}
         newresult={}
+        if lastindex==0:
+            lastindex=1        
         label= tk.Label(editsWindow, padx=7, pady=7,bg="lightyellow", relief=tk.RIDGE,
                             activebackground= 'orange', text=title)
         label.grid(row=i ,column=column, sticky='news')    
         i=i+1
 
-        fenlie=1
         for key,value in result.items():
 
-            if i >23:
+            if i >20:
                 i=1
                 
                 column=i%20+column+2
@@ -6336,16 +6337,16 @@ def update_selected_row_task(rowid,frame=None,name=None,func=None):
                 entry.insert(0, value)
                 entry.grid(row=i ,column=column+1, sticky='news')   
 
-                rowkeys[i+int(column*0.25)*23]=key
-                print(f'set {i+int(column*0.25)*23} to -{key}')
+                rowkeys[lastindex]=key
+                print(f'set {lastindex} to -{key}')
 
                 def callback(event):
 
                     x = event.widget.grid_info()['row']
                     y = event.widget.grid_info()['column']
-                    index=int((int(y)-1)*0.5-1)*23
-                    index=int(index)+x
-                    print(f'index  is {index},x {x} y-{y} column-{column}key-{key}')
+                    index=int((int(y-1))*0.5)*20
+                    index=int(index)+x-2
+                    print(f'index  is {index},x {x} y-{y} column-{column}key-')
 
                     print(f'current input changes for {rowkeys[index]}',event.widget.get())   
 
@@ -6356,12 +6357,16 @@ def update_selected_row_task(rowid,frame=None,name=None,func=None):
                             value=False
                         elif event.widget.get()=='1':
                             value=True                        
-                        newresult[rowkeys[fenlie]]=value
+                        newresult[rowkeys[index]]=value
 
                         print('============update row isdeleted to',newresult)
 
                 # variable.trace('w', lambda:setEnty())    
                 entry.bind("<KeyRelease>", callback)
+                i=i+1
+
+            elif  key  in ['account','video','setting','unique_hash']:
+                print('ignore showing these elements')
 
             else:
 
@@ -6373,10 +6378,16 @@ def update_selected_row_task(rowid,frame=None,name=None,func=None):
                 entry = tk.Entry(editsWindow,textvariable=variable)
                 entry.grid(row=i ,column=column+1, sticky='news') 
                 entry.config(state='disabled')
-            i=i+1
-            fenlie=fenlie+1
-        return newresult,i,column+2
-    i=0
+                i=i+1
+            lastindex=lastindex+1
+        if fenlie==True:
+            print('is fenlie',lastindex)
+            if i<20:
+                lastindex=20*(int(lastindex/20)+1)
+        else:
+            print('is not fenlie',lastindex)
+
+        return newresult,i,column+2,lastindex
 
     tmptask=taskresult
     # tmptask.pop('video')
@@ -6384,30 +6395,38 @@ def update_selected_row_task(rowid,frame=None,name=None,func=None):
     print('taskresult\n',taskresult)
     print('video\n',taskresult.get('video'))
     print('setting\n',taskresult.get('setting'))
-    newtaskresult,serialno,cols=renderelements(i=1,result=tmptask,column=0,disableelements=['id','inserted_at','type','uploaded_at','video','setting'],title='task data')
+    newtaskresult,serialno,cols,lastindex=renderelements(lastindex=1,i=1,result=tmptask,column=0,disableelements=['id','inserted_at','type','uploaded_at','video','setting'],title='task data')
     newvideoresult={}
     newsettingresult={}
     newaccountresult={}
-    print('======================',serialno,cols)
+    print('======================',serialno,cols,lastindex)
 
     if taskresult.get('video'):
-        print('video is associated to task',serialno,cols)
+        print('video is associated to task',serialno,cols,lastindex)
 
-        newvideoresult,serialno,cols=renderelements(i=1,result=taskresult.get('video'),column=cols,disableelements=['id','inserted_at','unique_hash','platform'],title='video data')
+        newvideoresult,serialno,cols,lastindex=renderelements(lastindex=lastindex,i=1,result=taskresult.get('video'),column=cols,disableelements=['id','inserted_at','unique_hash','platform'],title='video data')
     if taskresult.get('setting'):
-        print('setting is associated to task',serialno,cols)
+        print('setting is associated to task',serialno,cols,lastindex)
 
-        newsettingresult,serialno,cols=renderelements(i=1,result=taskresult.get('setting'),column=cols,disableelements=['id','inserted_at','account','platform'],title='setting data')
+        newsettingresult,serialno,cols,lastindex=renderelements(lastindex=lastindex,i=1,result=taskresult.get('setting'),column=cols,disableelements=['id','inserted_at','account','platform'],title='setting data',fenlie=False)
         if taskresult.get('setting').get('account') :
-            print('account is associated to setting',serialno,cols)
+            print('account is associated to setting',serialno,cols,lastindex)
 
-            newaccountresult,serialno,cols=renderelements(i=serialno,result=taskresult.get('setting').get('account'),column=cols-2,disableelements=['id','inserted_at','unique_hash','platform'],title='account data')
+            newaccountresult,serialno,cols,lastindex=renderelements(lastindex=lastindex,i=serialno,result=taskresult.get('setting').get('account'),column=cols-2,disableelements=['id','inserted_at','unique_hash','platform'],title='account data')
 
-    btn5= tk.Button(editsWindow, text="save", padx = 0, pady = 0,command = lambda:TaskModel.update_task(**newtaskresult,id=rowid_bin,taskdata=None,videodata=newvideoresult,settingdata=newsettingresult,accountdata=newaccountresult))
-    btn5.grid(row=i+1,column=cols+1, sticky=tk.W)    
+    btn5= tk.Button(editsWindow, text="save && update", padx = 0, pady = 0,command = lambda:update_task_video(id=rowid_bin,newvideoresult=newvideoresult,newsettingresult=newsettingresult,newaccountresult=newaccountresult,newtaskresult=newtaskresult))
+    btn5.grid(row=0,column=cols+1, rowspan=2,sticky=tk.W)    
 
 
-    
+def update_task_video(newvideoresult=None,newsettingresult=None,newaccountresult=None,newtaskresult=None,id=id):
+    if newvideoresult==None and newsettingresult==None and newaccountresult==None and newtaskresult==None:
+        showinfomsg(message='you have not make any changes')
+    else:
+        result=TaskModel.update_task(**newtaskresult,id=id,taskdata=None,videodata=newvideoresult,settingdata=newsettingresult,accountdata=newaccountresult)    
+        if result:
+            showinfomsg(message='changes have been updated')
+        else:
+            showinfomsg(message='changes update failed')
 def uploadView(frame,ttkframe,lang):
     queryframe=tk.Frame(ttkframe)
     # queryframe=frame
