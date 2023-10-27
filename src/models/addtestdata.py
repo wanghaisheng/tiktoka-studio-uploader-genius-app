@@ -4,7 +4,7 @@ from src.models.proxy_model import ProxyModel
 from src.models.platform_model import PlatformModel,PLATFORM_TYPE
 from src.models.account_model import AccountModel,AccountRelationship
 from src.models.upload_setting_model import UploadSettingModel,BROWSER_TYPE,WAIT_POLICY_TYPE
-from src.models.youtube_video_model import YoutubeVideoModel,VIDEO_SETTINGS
+from src.models.youtube_video_model import *
 import random
 
 from src.models.task_model import TaskModel,TASK_STATUS
@@ -13,7 +13,10 @@ if  os.path.exists('debug.sqlite3'):
         print('remove tmp database')
         os.remove('debug.sqlite3')
 
-
+platforms=list(dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT).keys())
+policys=list(dict(WAIT_POLICY.WAIT_POLICY_TEXT).keys())
+taskstatus=list(dict(TASK_STATUS.TASK_STATUS_TEXT).keys())
+browsers=list(dict(BROWSER_TYPE.BROWSER_TYPE_TEXT).keys())
 
 # https://github.com/coleifer/peewee/issues/221
 # 如何切换数据库
@@ -104,7 +107,7 @@ class TestData:
                 for i in range(1,20):
                         account=AccountModel.add_account(
                                 account_data={
-                                "platform":random.choice([0,1,2,3]),
+                                "platform":random.choice(platforms),
                                 "username":"user "+str(i),
                                 "password":"pass "+str(i)
 
@@ -141,9 +144,9 @@ class TestData:
                 "is_open_browser":random.choice([True,False]),
                 "is_debug":random.choice([True,False]),
                 "is_record_video":random.choice([True,False]),
-                "platform":random.choice([0,1,2,3]),
-                "browser_type":random.choice(['chromium','webKit','firefox']),
-                "wait_policy":random.choice([0,1,2,3,4])        },account=random.choice(test_users)
+                "platform":random.choice(platforms),
+                "browser_type":random.choice(browsers),
+                "wait_policy":random.choice(policys)        },account=random.choice(test_users)
                                         
 
                         )
@@ -173,7 +176,7 @@ class TestData:
                         "video_title": 'test title'+str(random.choice(range(1,100))),
                         "video_description":'test description'+str(random.choice(range(1,100))),
                         "thumbnail_local_path": random.choice(images),
-                        "publish_policy": random.choice([0,1,2,3,4]),
+                        "publish_policy": random.choice(policys),
                         "tags": random.choice(['t1,t2,t3']),
 
                         }
@@ -202,11 +205,11 @@ class TestData:
                 for i in range(1,120):
                         t=TaskModel.add_task( 
                                 task_data={
-                        "type":random.choice([0,1,2,3]),
+                                "type":random.choice(platforms),
                         "username":'',
 
                         "proxy":'',
-                        "status":random.choice([0,1,2]),
+                        "status":random.choice(taskstatus),
 
                         },tasksetting=random.choice(test_settings),taskvideo=random.choice(test_videos)
                                         

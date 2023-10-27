@@ -23,8 +23,8 @@ class SORT_BY_TYPE:
     ASC = 0
     DESC = 1
     SORT_BY_TYPE_TEXT = [
-        (ASC, "Add Date ASC"),
-        (DESC, "Add Date DESC")
+        (ASC, "Add DATE ASC"),
+        (DESC, "Add DATE DESC")
     ]
 
 class TaskModel(BaseModel):
@@ -83,11 +83,12 @@ class TaskModel(BaseModel):
             accountid=task.setting.account
             if taskdata:
                 task = TaskModel(**taskdata)
-                print('after modify',task,task.is_deleted)
+                print('before modify',task)
 
 
             else:
                 for key, value in kwargs.items():
+                    print(f'start to update field {key} to {value}')
                     # 由于entry获取的都是字符串变量值，对于bool型，需要手动转换
                     if key=='is_deleted':
                         print('is deleted',type(value))
@@ -97,23 +98,24 @@ class TaskModel(BaseModel):
                             value=True
 
                     if key=='is_deleted':
-                        print(f'sync status to is deleted')
+                        print(f'sync status to is deleted :{value}')
 
                         if value==True:
                             setattr(task,'status',4)
                         elif value==False:
                             setattr(task,'status',0)
+                        print(f"sync status to is deleted :{value} ----status:{getattr(task,'status')}")
 
                     setattr(task, key, value)
                     
-                print('after modify',task,task.is_deleted)
+                print('after modify',task)
 
             print(f'sync status to is deleted')
 
             if task.is_deleted==True:
-                task.status=4
+                task.status=TASK_STATUS.CANCEL
             elif task.is_deleted==False:
-                task.status=0
+                task.status=TASK_STATUS.PENDING
             task.inserted_at = int(time.time())  # Update insert_date                print(f'sync status to is deleted')
 
 
@@ -174,7 +176,7 @@ class TaskModel(BaseModel):
                     .join(UploadSettingModel)  # Join favorite -> tweet
                     .join(AccountModel))   # Join tweet -> user        
             if status is not None:
-                if status in dict(TASK_STATUS.TASK_STATUS_TEXT).values():
+                if status in dict(TASK_STATUS.TASK_STATUS_TEXT).keys():
                     query=query.where(TaskModel.status==status)
                 else:
                     print(f'there is no support for status value yet:{status}')

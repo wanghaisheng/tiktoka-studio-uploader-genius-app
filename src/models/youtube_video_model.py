@@ -12,6 +12,33 @@ logging.basicConfig(filename='test.log',
     level=logging.DEBUG, 
     format='%(asctime)s - %(levelname)s - %(message)s')   
 logger = logging.getLogger()    
+
+class WAIT_POLICY:
+    GO_NEXT_UPLOAD_SUCCESS = 1
+    GO_NEXT_PROCESSING_SUCCESS = 2
+    GO_NEXT_COPYRIGHT_CHECK_SUCCESS=3
+    # Mapping of options to human-readable text
+    WAIT_POLICY_TEXT = {
+        GO_NEXT_UPLOAD_SUCCESS: "Go next after uploading success",
+        GO_NEXT_PROCESSING_SUCCESS: "Go next after processing success",
+        GO_NEXT_COPYRIGHT_CHECK_SUCCESS: "Go next after copyright check success"
+    }
+
+class PUBLISH_POLICY_TYPE:
+    Private = 1
+    Publish = 2
+    Schedule=3
+    Unlisted=4
+    # Mapping of options to human-readable text
+    Public_Premiere=5
+    # Publish Policy Options
+    PUBLISH_POLICY_TYPE_TEXT = {
+        Private:"Private",
+        Publish:"Publish",
+        Schedule:"Schedule",
+        Unlisted:"Unlisted",
+        Public_Premiere:"Public & Premiere"
+    }
 class VIDEO_SETTINGS:
     # Wait Policy options
     GO_NEXT_UPLOAD_SUCCESS = 0
@@ -34,12 +61,6 @@ class VIDEO_SETTINGS:
     HOLD_ALL_COMMENTS_FOR_REVIEW = 3
     DISABLE_COMMENTS = 4
 
-    # Mapping of options to human-readable text
-    WAIT_POLICY_TEXT = {
-        GO_NEXT_UPLOAD_SUCCESS: "Go next after uploading success",
-        GO_NEXT_PROCESSING_SUCCESS: "Go next after processing success",
-        GO_NEXT_COPYRIGHT_CHECK_SUCCESS: "Go next after copyright check success"
-    }
 
     LICENSE_TYPE_TEXT = {
         STANDARD_YOUTUBE_LICENSE: "Standard YouTube License",
@@ -317,16 +338,8 @@ class VIDEO_SETTINGS:
     VIDEO_CATEGORIES_TEXT = {v: k for k, v in VIDEO_CATEGORIES_OPTIONS.items()}
     
 
-    # Publish Policy Options
-    PUBLISH_POLICY_OPTIONS = {
-        "Private": 0,
-        "Publish": 1,
-        "Schedule": 2,
-        "Unlisted": 3,
-        "Public & Premiere": 4
-    }
 
-    PUBLISH_POLICY_TEXT = {v: k for k, v in PUBLISH_POLICY_OPTIONS.items()}
+
 class YoutubeVideoModel(BaseModel):
     id = BlobField(primary_key=True)    
     youtube_video_id = TextField(null=True,default=None)

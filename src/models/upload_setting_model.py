@@ -72,7 +72,7 @@ class UploadSettingModel(BaseModel):
             uploadsetting = cls.get(cls.id == id)
             for key, value in kwargs.items():
                 setattr(uploadsetting, key, value)
-            uploadsetting.save(force_insert=True) 
+            uploadsetting.save() 
             return uploadsetting
         except cls.DoesNotExist:
             return None

@@ -13,7 +13,6 @@ from pathlib import Path,PureWindowsPath,PurePath
 from src.models.addtestdata import TestData
 # Initialize FastAPI
 app = FastAPI()
-
 # Allow all origins
 app.add_middleware(
     CORSMiddleware,
@@ -1903,7 +1902,7 @@ def runTask(frame=None,username=None,platform=None,status=None,vtitle=None,sched
     
     sortby=find_key(SORT_BY_TYPE.SORT_BY_TYPE_TEXT,sortby)
     if pagecount is None:
-        pagecount=100
+        pagecount=50
     if  username is not None and 'input' in username:
         username=None
     if username==''  or username is None:
@@ -5549,7 +5548,7 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
             showinfomsg(message=f'save task meta success',parent=frame)    
         else:
             showinfomsg(message=f'load video meta failed',parent=frame)    
-def validateTaskMetafile(frame,metafile):
+def validateTaskMetafile(frame,metafile,taskcanvas=None):
     logger.debug('load task metas to database ')
     print('load task meta')
 
@@ -5980,7 +5979,7 @@ def validateTaskMetafile(frame,metafile):
                 logger.debug(f'end to process task data')
                 print('show added task in the tabular',taskids)
                 
-                queryTasks(frame=frame,canvas=None,tab_headers=None,username=None,platform=None,status=None,vtitle=None,schedule_at=None,vid=None,pageno=1,pagecount=100,ids=taskids,sortby="ASC")
+                queryTasks(frame=frame,taskcanvas=taskcanvas,tab_headers=None,username=None,platform=None,status=None,video_title=None,schedule_at=None,video_id=None,pageno=1,pagecount=50,ids=taskids,sortby="ASC")
                 showinfomsg(message=f'end to process task data')
 
                                                 
@@ -5996,18 +5995,10 @@ def validateTaskMetafile(frame,metafile):
     else:
         showinfomsg(message="please choose a valid task file")
         logger.error("you choosed task meta  file is missing or broken.")       
-def queryTasks(frame=None,canvas=None,tab_headers=None,username=None,platform=None,status=None,vtitle=None,schedule_at=None,vid=None,pageno=None,pagecount=None,ids=None,sortby="ASC"):
-    if sortby is None:
-        sortby="Add Date ASC"
-    elif 'choose' in sortby:
-        sortby="Add Date ASC"
+def queryTasks(frame=None,taskcanvas=None,tab_headers=None,username=None,platform=None,status=None,video_title=None,schedule_at=None,video_id=None,pageno=None,pagecount=None,ids=None,sortby="Add DATE ASC"):
 
-    else:
-        print(f'sort by {sortby}')
-    
-    sortby=find_key(SORT_BY_TYPE.SORT_BY_TYPE_TEXT,sortby)
     if pagecount is None:
-        pagecount=100
+        pagecount=50
     if  username is not None and 'input' in username:
         username=None
     if username==''  or username is None:
@@ -6016,14 +6007,14 @@ def queryTasks(frame=None,canvas=None,tab_headers=None,username=None,platform=No
         schedule_at=None            
     if schedule_at=='' or schedule_at is None:
         schedule_at=None           
-    if  vid is not None and 'input' in vid:
-        vid=None            
-    if vid=='' or vid is None:
-        vid=None           
-    if  vtitle is not None and 'input' in vtitle:
-        vtitle=None            
-    if vtitle=='' or vtitle is None:
-        vtitle=None            
+    if  video_id is not None and 'input' in video_id:
+        video_id=None            
+    if video_id=='' or video_id is None:
+        video_id=None           
+    if  video_title is not None and 'input' in video_title:
+        video_title=None            
+    if video_title=='' or video_title is None:
+        video_title=None            
     if  platform is not None and 'choose' in platform:
         platform=None            
     if platform=='' or platform is None:
@@ -6043,16 +6034,38 @@ def queryTasks(frame=None,canvas=None,tab_headers=None,username=None,platform=No
 
         status=getattr(TASK_STATUS, status.upper())
 
-    task_rows,counts=TaskModel.filter_tasks(status=status,schedule_at=schedule_at,type=platform,video_title=vtitle,video_id=vid,username=username,pagecount=pagecount,pageno=pageno,ids=ids,sortby=sortby) 
+    if sortby=='':
+        sortby="Add DATE ASC"
+    elif sortby  in list(dict(SORT_BY_TYPE.SORT_BY_TYPE_TEXT).keys()):
+        pass
+    elif  sortby is not None and 'choose' in sortby:
+        sortby=None             
+    elif type(sortby)==str:
+        print(f'query tasks for {sortby} {getattr(SORT_BY_TYPE, sortby.upper())} ')
+
+        sortby=getattr(SORT_BY_TYPE, sortby.upper())
+
+        # sortby=find_key(SORT_BY_TYPE.SORT_BY_TYPE_TEXT,sortby)
+        # if row.type in dict(TASK_STATUS.TASK_STATUS_TEXT).values():
+            
+        #     ptype=getattr(dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT),row.type)
+        #     ptype=dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[ptype]
+        #     print(f"{getattr(dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT),row.type)}")
+        # if row.status in dict(TASK_STATUS.TASK_STATUS_TEXT).values():
+        #     status=getattr(dict(TASK_STATUS.TASK_STATUS_TEXT),row.status)
+
+        #     print(f"{getattr(dict(TASK_STATUS.TASK_STATUS_TEXT),row.status)}")        
+
+    task_rows,counts=TaskModel.filter_tasks(status=status,schedule_at=schedule_at,type=platform,video_title=video_title,video_id=video_id,username=username,pagecount=pagecount,pageno=pageno,ids=ids,sortby=sortby) 
     if task_rows is None or len(task_rows)==0:
         showinfomsg(message=f"try to add tasks  first",parent=frame,DURATION=500)    
 
     else:                
         logger.debug(f'we found {counts} record matching ')
-        showinfomsg(message=f'we found {counts} record matching',DURATION=500)
+        # showinfomsg(message=f'we found {counts} record matching',DURATION=500)
         
         
-        l_totalcount = tk.Label(frame, text=f'total:{counts} per page:{pagecount}')
+        l_totalcount = tk.Label(frame, text=f'total:{counts} per page:{pagecount} current page: {pageno}')
         l_totalcount.grid(row = 25, column = 0,sticky='w')            
         i=0
         task_data=[]
@@ -6063,7 +6076,11 @@ def queryTasks(frame=None,canvas=None,tab_headers=None,username=None,platform=No
             pages=int(pages)+1
             for i in range(pages):
                 # 这里如果没有lambda x=i 的话 后面的i+1 一直是1
-                page= tk.Button(frame, text=str(i+1), padx = 0, pady = 0,command = lambda x=i:queryTasks(frame=frame,status=status,schedule_at=schedule_at,type=platform,video_title=vtitle,video_id=vid,username=username,pagecount=pagecount,pageno=x+1,ids=ids,sortby=sortby) )
+                page= tk.Button(frame, text=str(i+1), padx = 0, pady = 0,
+                                command = lambda x=i:queryTasks(taskcanvas=taskcanvas,frame=frame,status=status,schedule_at=schedule_at,platform=platform,
+                                                video_title=video_title,video_id=video_id,username=username,pagecount=pagecount,pageno=x+1,ids=ids,sortby=sortby) )
+                
+
                 page.grid(row=25, column=i+1,sticky=tk.NW)
             # Create a frame for the canvas and scrollbar(s).
 
@@ -6071,8 +6088,8 @@ def queryTasks(frame=None,canvas=None,tab_headers=None,username=None,platform=No
         print(f'prepare row data to render:{task_rows}')
         for row in task_rows:
             print('row data',row.id,row.type,row.prorioty,row.status)
-            print(f"{dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[row.type]}")
-            print(f"{dict(TASK_STATUS.TASK_STATUS_TEXT)[row.status]}")
+
+
             p_value=row.type
             if type(row.type)!=int:
                 p_value=100
@@ -6094,34 +6111,52 @@ def queryTasks(frame=None,canvas=None,tab_headers=None,username=None,platform=No
 
             task_data.append(task)
         print(f'end to prepare row data to render:{task_data}')
-        print(f'try to clear existing rows in the tabular')
-        if canvas is not None:
-            try:
-                canvas.winfo_children
-                if len(canvas.winfo_children())>0:
-                    for widget in canvas.winfo_children():
-                        widget.destroy()      
+        # print(f'try to clear existing rows in the tabular ')
+        # if taskcanvas is not None:
+        #     try:
+        #         taskcanvas.winfo_children
+        #         print('+++++++++++++++++',len(taskcanvas.winfo_children()))
+        #         if len(taskcanvas.winfo_children())>0:
+        #             for widget in taskcanvas.winfo_children():
+        #                 widget.destroy()      
 
-            except:
-                print('there is no rows in the tabular at all')
-        else:
-            print('there is no tabular at all')
+        #     except:
+        #         print('there is no rows in the tabular at all')
+        # else:
+        #     print('there is no tabular at all')
         tab_headers.append('operation')
         tab_headers.append('operation')
         tab_headers.append('operation')
 
         print(f'show header and rows based on query {tab_headers}\n{task_data}')
+        refreshTaskcanvas(taskcanvas=taskcanvas,frame=frame,headers=tab_headers,datas=[])
 
-        refreshTaskcanvas(frame=frame,headers=tab_headers,datas=task_data)
+        refreshTaskcanvas(taskcanvas=taskcanvas,frame=frame,headers=tab_headers,datas=task_data)
     
         print(f'end to show header and rows based on query {tab_headers}\n{task_data}')
 
         logger.debug(f'Account search and display finished')
                     
-def refreshTaskcanvas(frame=None,headers=None,datas=None):
+def refreshTaskcanvas(taskcanvas=None,frame=None,headers=None,datas=None):
+
+    print(f'try to clear existing rows in the tabular {len(frame.winfo_children())} ')
+
+    try:
+        print(frame.winfo_children())
+        frame.winfo_children()[2]
+        for i in range(2,len(frame.winfo_children())):
+            print('--------+++------',len(frame.winfo_children()[i].winfo_children()))
+
+            if len(frame.winfo_children()[i].winfo_children())>0:
+                for widget in frame.winfo_children()[i].winfo_children():
+                    widget.destroy()      
+
+    except:
+        print('there is no rows in the tabular at all')
+        
     print('start to render tabular rows')
     chooseAccountsWindow=frame
-    frame2 = tk.Frame(chooseAccountsWindow, bg='Red', bd=1, relief=tk.FLAT)
+    frame2 = tk.Frame(chooseAccountsWindow,  bd=1, relief=tk.FLAT)
     frame2.grid(row=3, column=0, rowspan=5,sticky=tk.NW)
 
     frame2.grid_rowconfigure(0, weight=1)
@@ -6130,6 +6165,9 @@ def refreshTaskcanvas(frame=None,headers=None,datas=None):
     # Add a canvas in that frame.
     canvas = tk.Canvas(frame2, bg='Yellow')
     canvas.grid(row=0, column=0)
+    print(f'currrent taskvas is {taskcanvas}')    
+    taskcanvas=canvas
+    print(f'set taskcanvas to {taskcanvas}')
     # Create a vertical scrollbar linked to the canvas.
     vsbar = tk.Scrollbar(frame2, orient=tk.VERTICAL, command=canvas.yview)
     vsbar.grid(row=0, column=1, sticky=tk.NS)
@@ -6160,7 +6198,6 @@ def refreshTaskcanvas(frame=None,headers=None,datas=None):
     del_buttons = [tk.Button() for j in range(ROWS+1)] 
     upload_buttons = [tk.Button() for j in range(ROWS+1)] 
 
-    
     # set table header
     print('start to set table header')
 
@@ -6178,28 +6215,30 @@ def refreshTaskcanvas(frame=None,headers=None,datas=None):
                                 activebackground= 'orange', text='operation')
             delete_button.grid(row=0, column=j, sticky='news')
     print('start to set table data')
+    if datas and datas!=[]:
+        
+        for i,row in enumerate(datas):
+            i=i+1
+            for j in range(0,len(headers)):
+                
+                if headers[j]!='operation':
+                    label = tk.Label(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                        activebackground= 'orange', text=row[headers[j]])
+                    label.grid(row=i ,column=j, sticky='news')         
 
-    for i,row in enumerate(datas):
-        i=i+1
-        for j in range(0,len(headers)):
-            
-            if headers[j]!='operation':
-                label = tk.Label(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                    activebackground= 'orange', text=row[headers[j]])
-                label.grid(row=i ,column=j, sticky='news')         
 
+            add_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                activebackground= 'orange', text='edit',command=lambda x=i-1  :update_selected_row_task(rowid=datas[x]['id'],name='task'))
+            add_buttons[i].grid(row=i, column=len(headers)-3, sticky='news')
 
-        add_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                            activebackground= 'orange', text='edit',command=lambda x=i-1  :update_selected_row_task(rowid=datas[x]['id'],name='task'))
-        add_buttons[i].grid(row=i, column=len(headers)-3, sticky='news')
+            del_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                activebackground= 'orange', text='delete',command=lambda x=i-1 :remove_selected_row_task(rowid=datas[x]['id'],name='task'))
+            del_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
 
-        del_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                            activebackground= 'orange', text='delete',command=lambda x=i-1 :remove_selected_row_task(rowid=datas[x]['id'],name='task'))
-        del_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
+            upload_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                activebackground= 'orange', text='upload',command=lambda x=i-1 :upload_selected_row_task(rowid=datas[x]['id'],frame=frame))
+            upload_buttons[i].grid(row=i, column=len(headers)-1, sticky='news')
 
-        upload_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                            activebackground= 'orange', text='upload',command=lambda x=i-1 :upload_selected_row_task(rowid=datas[x]['id'],frame=frame))
-        upload_buttons[i].grid(row=i, column=len(headers)-1, sticky='news')
     # Create canvas window to hold the buttons_frame.
     canvas.create_window((0,0), window=buttons_frame, anchor=tk.NW)
     buttons_frame.update_idletasks()  # Needed to make bbox info available.
@@ -6213,20 +6252,20 @@ def refreshTaskcanvas(frame=None,headers=None,datas=None):
     for i in range(5,COLS_DISP):
         dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
 
-        if dw>int( width):
+        if dw>int( width*1.2):
             COLS=i-1
     for i in range(5,ROWS_DISP):
         dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)                
-        if dh>int( height*0.8):
+        if dh>int( height*0.7):
             ROWS=i-1
 
     print('=after==',COLS,COLS_DISP,ROWS,ROWS_DISP)
     dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
 
-    if dw>int( width):
-        dw=int( width)
-    if dh>int( height*0.8):
-        dh=int( height*0.8)
+    if dw>int( width*1.2):
+        dw=int( width*1.2)
+    if dh>int( height*0.7):
+        dh=int( height*0.7)
         print('use parent frame widht')
     canvas.configure(scrollregion=bbox, width=dw, height=dh)
     print('end to render tabular rows')
@@ -6293,8 +6332,9 @@ def update_selected_row_task(rowid,frame=None,name=None,func=None):
     def renderelements(i=1,column=0,result={},disableelements=['id','inserted_at','unique_hash','platform'],title=None,lastindex=0,fenlie=True):
         rowkeys={}
         newresult={}
+        rowlimit=22
         if lastindex==0:
-            lastindex=1        
+            lastindex=0        
         label= tk.Label(editsWindow, padx=7, pady=7,bg="lightyellow", relief=tk.RIDGE,
                             activebackground= 'orange', text=title)
         label.grid(row=i ,column=column, sticky='news')    
@@ -6302,10 +6342,10 @@ def update_selected_row_task(rowid,frame=None,name=None,func=None):
 
         for key,value in result.items():
 
-            if i >20:
+            if i >rowlimit:
                 i=1
                 
-                column=i%20+column+2
+                column=i%rowlimit+column+2
             # print('current key',key,value)
             if key=='id':
                 value=CustomID(custom_id=value).to_hex()
@@ -6327,6 +6367,8 @@ def update_selected_row_task(rowid,frame=None,name=None,func=None):
                 print('value===',value)
                 value=str(value)
                 print('value===',value)                    
+
+
             if not  key  in disableelements:
             
                 label= tk.Label(editsWindow, padx=7, pady=7, relief=tk.RIDGE,
@@ -6337,33 +6379,35 @@ def update_selected_row_task(rowid,frame=None,name=None,func=None):
                 entry.insert(0, value)
                 entry.grid(row=i ,column=column+1, sticky='news')   
 
-                rowkeys[lastindex]=key
-                print(f'set {lastindex} to -{key}')
+
 
                 def callback(event):
 
                     x = event.widget.grid_info()['row']
                     y = event.widget.grid_info()['column']
-                    index=int((int(y-1))*0.5)*20
+                    index=int((int(y-1))*0.5)*rowlimit
                     index=int(index)+x-2
-                    print(f'index  is {index},x {x} y-{y} column-{column}key-')
+                    print(f'index  is {index},x {x} y-{y} column-{column}key- {rowkeys[index]}')
 
                     print(f'current input changes for {rowkeys[index]}',event.widget.get())   
 
                     newresult[rowkeys[index]]=event.widget.get()
                     if rowkeys[index]=='is_deleted':
-                        print('is deleted',type(event.widget.get()))
+                        # print('is deleted',type(event.widget.get()))
                         if event.widget.get()=='0':
                             value=False
                         elif event.widget.get()=='1':
                             value=True                        
                         newresult[rowkeys[index]]=value
 
-                        print('============update row isdeleted to',newresult)
+                        print(f'============update row {rowkeys[index]} to',newresult)
 
                 # variable.trace('w', lambda:setEnty())    
                 entry.bind("<KeyRelease>", callback)
                 i=i+1
+                rowkeys[lastindex]=key
+                print(f'set {lastindex} to -{key}')
+                lastindex=lastindex+1
 
             elif  key  in ['account','video','setting','unique_hash']:
                 print('ignore showing these elements')
@@ -6379,11 +6423,13 @@ def update_selected_row_task(rowid,frame=None,name=None,func=None):
                 entry.grid(row=i ,column=column+1, sticky='news') 
                 entry.config(state='disabled')
                 i=i+1
-            lastindex=lastindex+1
+                rowkeys[lastindex]=key
+                print(f'set {lastindex} to -{key}')                
+                lastindex=lastindex+1
         if fenlie==True:
-            print('is fenlie',lastindex)
-            if i<20:
-                lastindex=20*(int(lastindex/20)+1)
+            # print('is fenlie',lastindex)s
+            if i<rowlimit:
+                lastindex=rowlimit*(int(lastindex/rowlimit)+1)
         else:
             print('is not fenlie',lastindex)
 
@@ -6395,11 +6441,11 @@ def update_selected_row_task(rowid,frame=None,name=None,func=None):
     print('taskresult\n',taskresult)
     print('video\n',taskresult.get('video'))
     print('setting\n',taskresult.get('setting'))
-    newtaskresult,serialno,cols,lastindex=renderelements(lastindex=1,i=1,result=tmptask,column=0,disableelements=['id','inserted_at','type','uploaded_at','video','setting'],title='task data')
+    newtaskresult,serialno,cols,lastindex=renderelements(lastindex=0,i=1,result=tmptask,column=0,disableelements=['id','inserted_at','type','uploaded_at','video','setting'],title='task data')
     newvideoresult={}
     newsettingresult={}
     newaccountresult={}
-    print('======================',serialno,cols,lastindex)
+    # print('======================',serialno,cols,lastindex)
 
     if taskresult.get('video'):
         print('video is associated to task',serialno,cols,lastindex)
@@ -6437,7 +6483,7 @@ def uploadView(frame,ttkframe,lang):
     
     
     
-    global vid
+    global vid,taskcanvas
     
     taskstatus = tk.StringVar()
     lbl15 = tk.Label(queryframe, text='Select Status:')
@@ -6522,7 +6568,9 @@ def uploadView(frame,ttkframe,lang):
     sortby_combo.grid(row=1, column=18,columnspan=1, padx=10, pady=10, sticky=tk.W)
     # sortby_combo.bind('<FocusIn>', lambda event: platform_db_refresh(event))
     sortby_combo['values'] = list( dict(SORT_BY_TYPE.SORT_BY_TYPE_TEXT).values())
-    btn5= tk.Button(queryframe, text="Get Info", command = lambda:queryTasks(status=task_status_var.get(),platform=platform_var.get(),username=channelname.get(),vid=vid.get(),vtitle=vtitle.get(),schedule_at=schedule_at_var.get(),pageno=1,pagecount=100,sortby=sortby_var.get()) )
+    taskcanvas=None
+
+    btn5= tk.Button(queryframe, text="Get Info", command = lambda:queryTasks(taskcanvas=taskcanvas,frame=frame,status=task_status_var.get(),platform=platform_var.get(),username=channelname.get(),video_id=vid.get(),video_title=vtitle.get(),schedule_at=schedule_at_var.get(),pageno=1,pagecount=50,sortby=sortby_var.get()) )
     btn5.grid(row = 1, column = 24,  padx=14, pady=15)
     
     
@@ -6574,7 +6622,7 @@ def uploadView(frame,ttkframe,lang):
     b_upload.grid(row =0 ,column = 6, padx=14, pady=15)
 
     b_upload = tk.Button(operationframe, text=settings[locale]['b_uploadAll']
-                         , command=lambda: threading.Thread(target=runTask(frame=frame,status=task_status_var.get(),platform=platform_var.get(),username=channelname.get(),vid=vid.get(),vtitle=vtitle.get(),schedule_at=schedule_at_var.get(),pageno=None,pagecount=100,sortby=sortby_var.get())).start())
+                         , command=lambda: threading.Thread(target=runTask(frame=frame,status=task_status_var.get(),platform=platform_var.get(),username=channelname.get(),vid=vid.get(),vtitle=vtitle.get(),schedule_at=schedule_at_var.get(),pageno=None,pagecount=50,sortby=sortby_var.get())).start())
     b_upload.grid(row = 0, column = 7, padx=14, pady=15)
 
 
@@ -6587,7 +6635,7 @@ def uploadView(frame,ttkframe,lang):
     tab_headers.append('operation')
 
 
-    refreshTaskcanvas(frame=frame,headers=tab_headers,datas=[])
+    refreshTaskcanvas(taskcanvas=taskcanvas,frame=frame,headers=tab_headers,datas=[])
 
     print('First time render tab headers')
 
@@ -7989,7 +8037,7 @@ def start(lang,root=None):
 
 
 
-    global paned_window,log_frame,mainwindow,text_handler
+    global mainwindow,taskcanvas
 
     root.geometry(window_size)
     # root.resizable(width=True, height=True)
@@ -8006,19 +8054,6 @@ def start(lang,root=None):
     mainwindow.grid_columnconfigure(1, weight=1)
 
 
-    
-
-
-    # paned_window.add(log_frame)
-    # log_frame.grid(row=1, column=0, sticky="nsew")
-
-    # log_frame.grid_rowconfigure(0, weight=1)
-    # log_frame.grid_columnconfigure(0, weight=1)
-    # log_frame.columnconfigure(0, weight=1)
-    # log_frame.rowconfigure(0, weight=1)
-
-
-    # st =ConsoleUi(log_frame,root)
 
     logger.debug(f'Installation path is:{ROOT_DIR}')
 
@@ -8088,7 +8123,7 @@ app.include_router(router)
 async def asynctk():
     start_tkinter_app()
 def  start_tkinter_app():
-    global root,settings,db
+    global root,settings,db,taskcanvas
     tmp['accountlinkaccount']={}    
 
     root = tk.Tk()
@@ -8109,8 +8144,8 @@ def  start_tkinter_app():
 def read_root():
     return FileResponse("static/proxy.html")  # Replace with the actual path to your HTML file
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
 
     loop = asyncio.new_event_loop()
 

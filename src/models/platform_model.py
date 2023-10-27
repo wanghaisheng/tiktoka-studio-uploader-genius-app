@@ -47,10 +47,10 @@ class PlatformModel(BaseModel):
 
 
             print('plaform add ok',r,platform.id,platform.type,platform.name,platform.server,platform.inserted_at)
-            print('start check all records')
-            for user in PlatformModel.select():
-                print('!!!!!',user)
-            print('end check all records')
+            # print('start check all records')
+            # for user in PlatformModel.select():
+            #     print('!!!!!',user)
+            # # print('end check all records')
                 
             return True
 
