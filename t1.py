@@ -41,3 +41,5 @@ print(find_key(d,'unknown'))
 print(d[100])
 print(list(d.values()))
 print(list(d.keys()))
+
+

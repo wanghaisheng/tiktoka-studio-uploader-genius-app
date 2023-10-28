@@ -78,7 +78,7 @@ class PlatformModel(BaseModel):
         except cls.DoesNotExist:
             return False
     @classmethod
-    def filter_platforms(cls, name=None, ptype=None, server=None):
+    def filter_platforms(cls, name=None, ptype=None, server=None,pageno=None,pagecount=None,start=None,end=None,data=None,ids=None,sortby=None):
         query = cls.select()
         # print('all platfroms are ',list(query))
         if name is not None:

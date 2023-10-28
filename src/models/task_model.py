@@ -180,104 +180,104 @@ class TaskModel(BaseModel):
     @classmethod
 
     def filter_tasks(cls, status=None, platform=None,uploaded_at=None,schedule_at=None,limit=None,setting=None,inserted_at=None,video_title=None,video_id=None,username=None,pageno=None,pagecount=None,start=None,end=None,data=None,ids=None,sortby=None):
-            query=TaskModel.select()
-            counts=query.count()
-            query = (TaskModel
-                    .select(TaskModel, YoutubeVideoModel, UploadSettingModel, AccountModel)
-                    .join(YoutubeVideoModel)  # Join favorite -> user (owner of favorite).
-                    .switch(TaskModel)
-                    .join(UploadSettingModel)  # Join favorite -> tweet
-                    .join(AccountModel))   # Join tweet -> user        
-            if status is not None:
-                if status in dict(TASK_STATUS.TASK_STATUS_TEXT).keys():
-                    query=query.where(TaskModel.status==status)
-                else:
-                    print(f'there is no support for status value yet:{status}')
+        query=TaskModel.select()
+        counts=query.count()
+        query = (TaskModel
+                .select(TaskModel, YoutubeVideoModel, UploadSettingModel, AccountModel)
+                .join(YoutubeVideoModel)  # Join favorite -> user (owner of favorite).
+                .switch(TaskModel)
+                .join(UploadSettingModel)  # Join favorite -> tweet
+                .join(AccountModel))   # Join tweet -> user        
+        if status is not None:
+            if status in dict(TASK_STATUS.TASK_STATUS_TEXT).keys():
+                query=query.where(TaskModel.status==status)
+            else:
+                print(f'there is no support for status value yet:{status}')
 
-            if sortby is not None:
-                if sortby==0:
-                    query=query.order_by(TaskModel.inserted_at.asc())
+        if sortby is not None:
+            if sortby==0:
+                query=query.order_by(TaskModel.inserted_at.asc())
 
-                elif  sortby==1:
-                    query=query.order_by(TaskModel.inserted_at.desc())
-                else:
-                    print(f'there is no support for sortby value yet:{sortby}')
-            if ids is not None:
-                query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
+            elif  sortby==1:
+                query=query.order_by(TaskModel.inserted_at.desc())
+            else:
+                print(f'there is no support for sortby value yet:{sortby}')
+        if ids is not None:
+            query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
 
-                query=query.where(TaskModel.id.in_(ids))
-                print(f'show ids task {ids}')
-            if video_title is not None :
-                query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
+            query=query.where(TaskModel.id.in_(ids))
+            print(f'show ids task {ids}')
+        if video_title is not None :
+            query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
 
-                query = (query
-                # .join(YoutubeVideoModel,on=(TaskModel.video_id == YoutubeVideoModel.id))
-                .where(YoutubeVideoModel.video_title.regexp(video_title))
+            query = (query
+            # .join(YoutubeVideoModel,on=(TaskModel.video_id == YoutubeVideoModel.id))
+            .where(YoutubeVideoModel.video_title.regexp(video_title))
 
-                )
-                query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
-            if schedule_at is not None :
-                query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
+            )
+            query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
+        if schedule_at is not None :
+            query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
 
-                query = (query
-                .where(YoutubeVideoModel.release_date.regexp(schedule_at))
+            query = (query
+            .where(YoutubeVideoModel.release_date.regexp(schedule_at))
 
-                )
-                query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
+            )
+            query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
 
-            if video_id is not None:
-                query = query.join(YoutubeVideoModel,on=(TaskModel.video == YoutubeVideoModel.id)).where(YoutubeVideoModel.youtube_video_id == video_id)
-                query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
+        if video_id is not None:
+            query = query.join(YoutubeVideoModel,on=(TaskModel.video == YoutubeVideoModel.id)).where(YoutubeVideoModel.youtube_video_id == video_id)
+            query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
 
 
 
-            if platform is not None:
-                if platform in dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT).keys():
-                    query=query.where(TaskModel.platform==platform)
-                else:
-                    print(f'there is no support for platform value yet:{platform}')
+        if platform is not None:
+            if platform in dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT).keys():
+                query=query.where(TaskModel.platform==platform)
+            else:
+                print(f'there is no support for platform value yet:{platform}')
 
-            # 如果存在account 相关的查询参数，先找到对应的 setting id集合
-            if username is not None:
-                query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
+        # 如果存在account 相关的查询参数，先找到对应的 setting id集合
+        if username is not None:
+            query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
+            
+            query = query.where(AccountModel.username.regexp(username))
+
+            query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
+
+
+        try:
+            print('==total record counts===',len(list(query)),list(query))
+            for i in list(query):
+                print(i.platform)
+            print('==per page counts===',pagecount)
+            print('==page number===',pageno)
+
+            counts=len(list(query))
+            if pageno:
                 
-                query = query.where(AccountModel.username.regexp(username))
+                query=query.paginate(pageno, pagecount)
+                print(f'==current pagi  {pageno} record counts===',len(list(query)))
 
-                query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
+            elif start and type(start)==int and type(start)==int:
+                startpage=start/pagecount
+                # and start<end                   
+                # endpage=end/pagecount
+                query=query.paginate(startpage, pagecount)
+                print(f'==current pagi start {start} record counts===',len(list(query)))
 
+            else:
+                if pageno==None and start is None and end is None:
+                    print(f'grab all records matching filters:{list(query)}')
 
-            try:
-                print('==total record counts===',len(list(query)),list(query))
-                for i in list(query):
-                    print(i.platform)
-                print('==per page counts===',pagecount)
-                print('==page number===',pageno)
-
-                counts=len(list(query))
-                if pageno:
-                    
-                    query=query.paginate(pageno, pagecount)
-                    print(f'==current pagi  {pageno} record counts===',len(list(query)))
-
-                elif start and type(start)==int and type(start)==int:
-                    startpage=start/pagecount
-                    # and start<end                   
-                    # endpage=end/pagecount
-                    query=query.paginate(startpage, pagecount)
-                    print(f'==current pagi start {start} record counts===',len(list(query)))
-
-                else:
-                    if pageno==None and start is None and end is None:
-                        print(f'grab all records matching filters:{list(query)}')
-
-                print('before return result=========')
-                for i in list(query):
-                    print(i.platform)
-                    
-                return list(query),counts
-
+            print('before return result=========')
+            for i in list(query):
+                print(i.platform)
                 
-            except cls.DoesNotExist:
-                query = None  # Set a default value or perform any other action
+            return list(query),counts
 
-                return query,None
+            
+        except cls.DoesNotExist:
+            query = None  # Set a default value or perform any other action
+
+            return query,None

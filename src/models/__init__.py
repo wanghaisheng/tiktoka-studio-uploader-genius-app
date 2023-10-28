@@ -54,6 +54,13 @@ class INETField(TextField):
 class MyTimestampField(BigIntegerField):
     pass
 
+class SORT_BY_TYPE:
+    ASC = 0
+    DESC = 1
+    SORT_BY_TYPE_TEXT = [
+        (ASC, "Add DATE ASC"),
+        (DESC, "Add DATE DESC")
+    ]
 
 class BaseModel(Model):
     class Meta:

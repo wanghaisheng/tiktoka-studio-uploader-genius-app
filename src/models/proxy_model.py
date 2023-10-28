@@ -203,7 +203,7 @@ class ProxyModel(BaseModel):
 
     @classmethod
 
-    def filter_proxies(cls,country=None, state=None, city=None, tags=None, status=None, network_type=None):
+    def filter_proxies(cls,country=None, state=None, city=None, tags=None, status=None, network_type=None,pageno=None,pagecount=None,start=None,end=None,data=None,ids=None,sortby=None):
         query = cls.select()
         print('===',country,state,city,tags,status,network_type)
 

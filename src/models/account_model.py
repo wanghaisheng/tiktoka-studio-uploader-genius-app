@@ -3,10 +3,11 @@ from src.models import BaseModel,db
 import config
 import time
 from src.customid import CustomID
+from src.models.platform_model import PLATFORM_TYPE
 
 class AccountModel(BaseModel):
     id = BlobField(primary_key=True)    
-    platform = IntegerField()
+    platform= IntegerField(default=PLATFORM_TYPE.YOUTUBE)
     username = TextField()
     password = TextField(null=True)  
     cookie_local_path = TextField(null=True)   
@@ -54,7 +55,7 @@ class AccountModel(BaseModel):
         return cls.get_or_none(cls.username == username)
     @classmethod
     
-    def update_account(cls, id,account_data, **kwargs):
+    def update_account(cls, id,account_data=None, **kwargs):
         try:
             account = cls.get_or_none(cls.id == id)
             print('before modify',account,account.is_deleted)
@@ -91,16 +92,23 @@ class AccountModel(BaseModel):
         except cls.DoesNotExist:
             return False
     @classmethod
-    def filter_accounts(cls, platform=None, username=None, proxy=None,is_deleted=None):
+    def filter_accounts(cls, platform=None, username=None,cookie_local_path=None, cookie_content=None,proxy=None,inserted_at=None,is_deleted=None,pageno=None,pagecount=None,start=None,end=None,data=None,ids=None,sortby=None):
         query = cls.select()
-    
+        print('platform',platform)
+        print('username',username)
+
         if is_deleted is not None and is_deleted!='':
             query = query.where(cls.is_deleted == is_deleted)
-        if platform is not None and platform !='':
-            query = query.where(cls.platform == platform)
+
 
         if username is not None and username!='':
             query = query.where(cls.username == username)
+
+        if platform is not None:
+            if platform in dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT).keys():
+                query=query.where(cls.platform==platform)
+            else:
+                print(f'there is no support for platform value yet:{platform}')
 
         if proxy is not None and proxy !='':
             query = query.where(cls.proxy == proxy)
@@ -110,12 +118,40 @@ class AccountModel(BaseModel):
             # associated_account = proxy.account  # This will fetch the associated Account
 
         try:
-            result = list(query)
-            
-        except AccountModel.DoesNotExist:
-            result = None  # Set a default value or perform any other action
+            print('==total record counts===',len(list(query)),list(query))
+            for i in list(query):
+                print(i.platform)
+            print('==per page counts===',pagecount)
+            print('==page number===',pageno)
 
-        return result
+            counts=len(list(query))
+            if pageno:
+                
+                query=query.paginate(pageno, pagecount)
+                print(f'==current pagi  {pageno} record counts===',len(list(query)))
+
+            elif start and type(start)==int and type(start)==int:
+                startpage=start/pagecount
+                # and start<end                   
+                # endpage=end/pagecount
+                query=query.paginate(startpage, pagecount)
+                print(f'==current pagi start {start} record counts===',len(list(query)))
+
+            else:
+                if pageno==None and start is None and end is None:
+                    print(f'grab all records matching filters:{list(query)}')
+
+            print('before return result=========')
+            for i in list(query):
+                print(i.platform)
+                
+            return list(query),counts
+
+            
+        except cls.DoesNotExist:
+            query = None  # Set a default value or perform any other action
+
+            return query,None
 
 
 

@@ -87,7 +87,7 @@ class UploadSettingModel(BaseModel):
             return False
     @classmethod
 
-    def filter_uploadsettings(cls, platform=None, browser_type=None, timeout=None):
+    def filter_uploadsettings(cls, platform=None, browser_type=None, timeout=None,pageno=None,pagecount=None,start=None,end=None,data=None,ids=None,sortby=None):
         query = cls.select()
 
         if platform is not None:

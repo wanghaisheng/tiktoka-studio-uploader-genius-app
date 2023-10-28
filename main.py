@@ -76,13 +76,13 @@ except ImportError:
     import ScrolledText
 import pyperclip as clip
 import platform
-from easy_i18n.t import Ai18n
 from pystray import MenuItem as item
 import pystray
 
 from UltraDict import UltraDict
 
-
+from src.log import logger,addKeywordfilter
+from src.accountTablecrud import *
 if platform.system()=='Windows':
 
     ultra = UltraDict(shared_lock=True,recurse=True)
@@ -109,11 +109,7 @@ supported_meta_exts=['.json', '.xls','.xlsx','.csv']
 
 
 
-# Add the handler to logger
-logging.basicConfig(filename='test.log',
-    level=logging.INFO, 
-    format='%(asctime)s - %(levelname)s - %(message)s')   
-logger = logging.getLogger()    
+ 
 
 test_engine=createEngine('test')
 prod_engine=createEngine('prod')
@@ -175,33 +171,7 @@ class ConsoleUi:
         formatter = logging.Formatter('%(asctime)s: %(message)s')
         self.queue_handler.setFormatter(formatter)
         logger.addHandler(self.queue_handler)
-        # level='is_debug'
-        # level=level.lower()
-        # if level=='is_debug':
-        #     # Logging configuration
-        #     logging.basicConfig(filename='test.log',
-        #         level=logging.DEBUG, 
-        #         format='%(asctime)s - %(levelname)s - %(message)s')    
-        # elif level=='info':
-        #     # Logging configuration
-        #     logging.basicConfig(filename='test.log',
-        #         level=logging.INFO, 
-        #         format='%(asctime)s - %(levelname)s - %(message)s')              
-        # elif level=='WARNING':
-        #     # Logging configuration
-        #     logging.basicConfig(filename='test.log',
-        #         level=logging.WARNING, 
-        #         format='%(asctime)s - %(levelname)s - %(message)s')   
-        # elif level=='ERROR':
-        #     # Logging configuration
-        #     logging.basicConfig(filename='test.log',
-        #         level=logging.ERROR, 
-        #         format='%(asctime)s - %(levelname)s - %(message)s')   
-        # elif level=='CRITICAL':
-        #     # Logging configuration
-        #     logging.basicConfig(filename='test.log',
-        #         level=logging.CRITICAL, 
-        #         format='%(asctime)s - %(levelname)s - %(message)s')   
+
         # Start polling messages from the queue
         self.frame.after(100, self.poll_log_queue)
     def clear_text(self):
@@ -767,236 +737,6 @@ def proxyaddView(newWindow):
 
     langlist.bind('<<ListboxSelect>>',CurSelet)    
     
-def chooseAccountsView_listbox(newWindow,parentchooseaccounts):
-    chooseAccountsWindow = tk.Toplevel(newWindow)
-    chooseAccountsWindow.geometry(window_size)
-    chooseAccountsWindow.title('Choose associated accounts in which platform')
-    account_var = tk.StringVar()
-
-    # chooseAccountsWindow.grid_columnconfigure(0, weight=1)
-    # frame_canvas.grid_columnconfigure(1, weight=1)    
-
-
-    # Create a label for the platform dropdown
-    platform_label = ttk.Label(chooseAccountsWindow, text="Select Platform:")
-    platform_label.grid(row=2, column=0, padx=10, pady=10, sticky=tk.W)
-    # Create a Combobox for the platform selection
-    platform_var = tk.StringVar()
-    platform_var.set("choose one:")    
-
-    def db_values():
-        platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
-        platform_names = [dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[x.type] for x in platform_rows]
-
-        platform_combo['values'] = platform_names
-
-    def db_refresh(event):
-        platform_combo['values'] = db_values()
-    platform_combo = ttk.Combobox(chooseAccountsWindow, textvariable=platform_var)
-    platform_combo.grid(row=2, column=1, padx=10, pady=10, sticky=tk.W)
-    platform_combo.bind('<FocusIn>', lambda event: db_refresh(event))
-    platform_combo['values'] = db_values()
-
-    # platform_combo.configure(values=platform_rows)
-    # Create a frame for the canvas with non-zero row&column weights
-    frame_canvas = tk.Frame(chooseAccountsWindow)
-    frame_canvas.grid(row=4, column=0,columnspan=10, pady=(5, 0), sticky='nw')
-    frame_canvas.grid_columnconfigure(0, weight=1)
-    frame_canvas.grid_columnconfigure(1, weight=1)    
-    # frame_canvas.grid_rowconfigure(0, weight=1)
-    # frame_canvas.grid_columnconfigure(0, weight=1)
-    # Set grid_propagate to False to allow 5-by-5 buttons resizing later
-    # frame_canvas.grid_propagate(False)     
-    # Add a canvas in that frame.
-    canvas = tk.Canvas(frame_canvas, bg='Yellow')
-    canvas.grid(row=0, column=0)
-    canvas.grid_columnconfigure(0, weight=1)
-    canvas.grid_columnconfigure(1, weight=1)    
-    # Create a vertical scrollbar linked to the canvas.
-    vsbar = tk.Scrollbar(frame_canvas, orient=tk.VERTICAL, command=canvas.yview)
-    vsbar.grid(row=0, column=1, sticky=tk.NS)
-    canvas.configure(yscrollcommand=vsbar.set)
-
-    # Create a horizontal scrollbar linked to the canvas.
-    hsbar = tk.Scrollbar(frame_canvas, orient=tk.HORIZONTAL, command=canvas.xview)
-    hsbar.grid(row=1, column=0, sticky=tk.EW)
-    canvas.configure(xscrollcommand=hsbar.set)
-    # for scrolling vertically
-
-    langlist_frame = tk.Frame(frame_canvas)
-
-    
-    langlist = tk.Listbox(langlist_frame, selectmode = "multiple",
-                xscrollcommand=hsbar.set,
-                yscrollcommand = vsbar.set)
-    # langlist.pack(padx = 10, pady = 10,
-    #         expand = tk.YES, 
-    #         fill = "both")
-    langlist.grid(row=0,column=0,sticky='nswe')
-        # Create canvas window to hold the buttons_frame.
-    canvas.create_window((0,0), window=langlist_frame, anchor=tk.NW)
-
-    langlist_frame.update_idletasks()  # Needed to make bbox info available.
-    bbox = canvas.bbox(tk.ALL)  # Get bounding box of canvas with Buttons.
-
-    # Define the scrollable region as entire canvas with only the desired
-    # number of rows and columns displayed.
-
-    canvas.configure(scrollregion=bbox
-                    #  , width=dw, height=dh
-                     )
-    
-    btn6= tk.Button(chooseAccountsWindow, text="remove selected", padx = 10, pady = 10,command = lambda: threading.Thread(target=remove_selected_row).start())     
-    btn6.grid(row=5,column=0, sticky=tk.W)
-    Tooltip(btn6, text='if you want remove any from selected user' , wraplength=200)
-    lbl16 = tk.Label(chooseAccountsWindow, text='selected user')
-    lbl16.grid(row=8,column=0, sticky=tk.W)
-    txt16 = tk.Entry(chooseAccountsWindow,textvariable=account_var,width=int(int(window_size.split('x')[-1])/5))
-    txt16.insert(0,'')
-    txt16.grid(row=8,column=1, 
-            #    width=width,
-               columnspan=4,
-            #    rowspan=3,
-               sticky='nswe')    
-    def on_platform_selected(event):
-        selected_platform = platform_var.get()
-        # Clear the current selection in the account dropdown
-
-        if selected_platform:
-
-
-            platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
-            platform_names = [dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[x.type] for x in platform_rows]
-            print('platforms options are',platform_names)
-
-            # Extract platform names and set them as options in the platform dropdown
-            if platform_rows is None:
-                platform_combo["values"]=[]
-                button1 = ttk.Button(chooseAccountsWindow, text="try to add platforms first", command=lambda: (chooseAccountsWindow.withdraw(),newWindow.withdraw(),tab_control.select(1)))
-                button1.grid(row=2, column=2, padx=10, pady=10, sticky=tk.W)
-
-            else:
-                logger.debug(f'query results of existing platforms is {platform_names}')
-
-                if  len(platform_names)==0:
-                    platform_combo["values"]=[]
-                    button1 = ttk.Button(chooseAccountsWindow, text="try to add platforms first", command=lambda: (chooseAccountsWindow.withdraw(),newWindow.withdraw(),tab_control.select(1)))
-                    button1.grid(row=2, column=2, padx=10, pady=10, sticky=tk.W)
-                    
-                else:
-
-                    # Execute a query to retrieve accounts based on the selected platform
-                    platform_combo["values"]=platform_names
-                    for platform in platform_names:
-                        
-                        if tmp['accountlinkaccount'].has_key(platform):
-                            logger.debug(f'you have cached  this platform {platform}')
-                        else:
-                            tmp['accountlinkaccount'][platform]=''
-                    
-                    account_rows=AccountModel.filter_accounts(platform=getattr(PLATFORM_TYPE, selected_platform.upper()))
-                    print(f'query accounts for {selected_platform} {getattr(PLATFORM_TYPE, selected_platform.upper())} ')
-                    # Extract account names and set them as options in the account dropdown
-                    if account_rows is None or len(account_rows)==0:
-                        langlist.delete(0,tk.END)
-                        showinfomsg(message=f"try to add accounts for {selected_platform} first",parent=chooseAccountsWindow)    
-
-                    else:                
-                        account_names = [row.username for row in account_rows]
-                        logger.debug(f'we found {len(account_names)} record matching ')
-
-                        langlist.delete(0,tk.END)
-                        i=0
-                        for row in account_names:
-
-                            langlist.insert(tk.END, row)
-                            langlist.itemconfig(int(i), bg = "lime")                        
-
-    # Bind the platform selection event to the on_platform_selected function
-    platform_combo.bind("<<ComboboxSelected>>", on_platform_selected)
-
-
-    # Create a label for the account dropdown
-    account_label = ttk.Label(chooseAccountsWindow, text="Select Account(one or many):")
-    account_label.grid(row=3, column=0, padx=10, pady=10, sticky=tk.W)
-
-
-    # Initialize the platform dropdown by calling the event handler
-    # on_platform_selected(None)
-
-    
-    def remove_selected_row():
-        selected_accounts=tmp['accountlinkaccount']['selected']
-        show_str=account_var.get()
-
-        print('you want to remove these selected proxy',selected_accounts)
-        if len(selected_accounts)==0:
-
-            showinfomsg(message='you have not selected  proxy at all.choose one or more',parent=chooseAccountsWindow)      
-        
-        else:
-            existingaccounts=tmp['accountlinkaccount'][platform_var.get()].split(',')            
-            logger.debug(f'you want to remove this selected proxy {selected_accounts} from existing: {existingaccounts}')
-
-            for item in selected_accounts:
-
-                if item in existingaccounts:
-                    existingaccounts.remove(item)
-
-
-                    logger.debug(f'this proxy {item} removed success')
-                    showinfomsg(message=f'this proxy {item} removed success',parent=chooseAccountsWindow)    
-                else:
-                    logger.debug(f'you cannot remove this proxy {item}, not added before')
-                    showinfomsg(message=f'this proxy {item} not added before',parent=chooseAccountsWindow)    
-            logger.debug(f'end to remove,reset proxystr {existingaccounts}')
-            tmp['accountlinkaccount'][platform_var.get()]= ','.join(item for item in existingaccounts if item is not None and item != "")
-        show_str=str(tmp['accountlinkaccount'])
-        if tmp['accountlinkaccount'].has_key('selected'):
-            new=dict(tmp['accountlinkaccount'])
-            new.pop('selected')
-            show_str=str(new)
-        account_var.set(show_str)
-        parentchooseaccounts.set(show_str)
-
-    def add_selected_accounts(event):
-        listbox = event.widget
-        values = [listbox.get(idx).split(':')[0] for idx in listbox.curselection()]
-        selected_platform = platform_var.get()
-        print('----------',type(tmp['accountlinkaccount']),type(values))
-        tmp['accountlinkaccount']['selected']=values
-        existingaccounts=tmp['accountlinkaccount'][platform_var.get()].split(',')
-        # (youtube:y1,y2),(tiktok:t1:t2)
-        show_str=account_var.get()
-        if len(list(values))==0:
-            logger.debug('you have not selected  proxiess at all.choose one or more')
-            showinfomsg(message='you have not selected  proxiess at all.choose one or more',parent=chooseAccountsWindow)    
-        
-        elif values==existingaccounts:
-            logger.debug('you have not selected new proxiess at all')
-            showinfomsg(message='you have not selected new proxiess at all',parent=chooseAccountsWindow)    
-        
-        else:
-            for item in values:
-                if item in existingaccounts:
-                    logger.debug(f'this proxy {item} added before')                   
-                    showinfomsg(message=f'this proxiess {item} added before',parent=chooseAccountsWindow)    
-
-                else:
-                    existingaccounts.append(item)
-                    logger.debug(f'this proxy {item} added successS')
-                    showinfomsg(message=f'this proxy {item} added success',parent=chooseAccountsWindow)    
-            tmp['accountlinkaccount'][platform_var.get()]= ','.join(item for item in existingaccounts if item is not None and item != "")
-
-        show_str=str(tmp['accountlinkaccount'])
-        if tmp['accountlinkaccount'].has_key('selected'):
-            new=dict(tmp['accountlinkaccount'])
-            new.pop('selected')
-            show_str=str(new)
-
-        account_var.set(show_str)
-        parentchooseaccounts.set(show_str)
-    langlist.bind('<<ListboxSelect>>',add_selected_accounts)   
 
     
 def chooseAccountsView(newWindow,parentchooseaccounts):
@@ -1193,8 +933,8 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
                             logger.debug(f'you have cached  this platform {platform}')
                         else:
                             tmp['accountlinkaccount'][platform]=''
-                    
-                    account_rows=AccountModel.filter_accounts(platform=getattr(PLATFORM_TYPE, selected_platform.upper()))
+                    account_rows,counts=AccountModel.filter_accounts(platform=find_key(dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT),selected_platform),username=None,pagecount=50,pageno=100,ids=None,sortby=None) 
+
                     print(f'query accounts for {selected_platform} {getattr(PLATFORM_TYPE, selected_platform.upper())} ')
                     # Extract account names and set them as options in the account dropdown
                     if account_rows is None or len(account_rows)==0:
@@ -1203,7 +943,7 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
 
                     else:                
                         account_names = [row.username for row in account_rows]
-                        logger.debug(f'we found {len(account_names)} record matching ')
+                        logger.debug(f'we found {counts} record matching ')
 
                         # langlist.delete(0,tk.END)
                         i=0
@@ -4521,37 +4261,7 @@ def saveUser(platform,username,password,proxy,cookies,linkaccounts=None):
             showinfomsg(message='this account added failed')
 
     
-def  queryAccounts(newWindow,tree,logger,username,platform):
-    if username=='':
-        username=None
-    if platform=='':
-        platform=None        
-    else:
-        platform=getattr(PLATFORM_TYPE, platform.upper())
-        print(f'query accounts for {platform} {getattr(PLATFORM_TYPE, platform.upper())} ')
 
-    account_rows=AccountModel.filter_accounts(username=username,platform=platform) 
-
-    logger.debug(f'we found {len(account_rows)} record matching ')
-
-    if len(account_rows)==0:
-        showinfomsg(message=f'we found {len(account_rows)} record matching ')
-    else:                
-        records = tree.get_children()                
-        if records is not None:
-            for element in records:
-                tree.delete(element) 
-        for row in account_rows:
-            id=CustomID(custom_id=row.id).to_hex()
-
-            tree.insert(
-                "", 0, text=id, values=(row.username,row.password,row.platform,row.proxy, row.cookies, row.inserted_at)
-            )                    
-            
-
-                
-            
-        logger.debug(f'Account search and display finished')
 def find_key(input_dict, value):
     if type(input_dict)==list:
         input_dict=dict(input_dict)
@@ -4693,21 +4403,25 @@ def accountView(frame,ttkframe,lang):
     q_username_account = tk.StringVar()
     q_platform_account = tk.StringVar()
 
+
+
+    query_frame = tk.Frame(frame,  bd=1, relief=tk.FLAT)
+    query_frame.grid(row=0, column=0,sticky=tk.NW)
     latest_user_conditions_user=tk.StringVar()
-    lbl15 = tk.Label(frame, text='By username.')
+    lbl15 = tk.Label(query_frame, text='By username.')
     # lbl15.place(x=430, y=15, anchor=tk.NE)
     lbl15.grid(row = 0, column = 0, padx=14, pady=15,sticky='w')    
-    txt15 = tk.Entry(frame, width=11,textvariable=q_platform_account)
+    txt15 = tk.Entry(query_frame, width=11,textvariable=q_platform_account)
     txt15.insert(0,'')
     txt15.grid(row = 1, column = 0, padx=14, pady=15,sticky='w')    
 
 
-    lb18 = tk.Label(frame, text='By platform.')
+    lb18 = tk.Label(query_frame, text='By platform.')
     lb18.grid(row=0,column=1, sticky=tk.W)
 
 
     q_platform = tk.StringVar()
-    q_platform_accountbox = ttk.Combobox(frame, textvariable=q_platform)
+    q_platform_accountbox = ttk.Combobox(query_frame, textvariable=q_platform)
 
     def q_platformb_values():
         platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
@@ -4737,277 +4451,40 @@ def accountView(frame,ttkframe,lang):
 
 
 
+
+
+
+    btn5= tk.Button(query_frame, text="Reset", padx = 0, pady = 0,command = lambda:(q_platform.set(''),q_platform_account.set('')))
+    btn5.grid(row=1,column=5, sticky=tk.W)    
+
+
+
+
+    
+    result_frame = tk.Frame(frame,  bd=1, relief=tk.FLAT)
+    result_frame.grid(row=3, column=0,sticky=tk.NW)
+
+    result_frame.grid_rowconfigure(0, weight=1)
+    result_frame.grid_columnconfigure(0, weight=1)
+    result_frame.grid_columnconfigure(1, weight=1)
+    
+    tab_headers=['id','platform','username','pass','is_deleted','proxy','inserted_at','operation','operation']
+
+
+    tab_headers.append('operation')
+    tab_headers.append('operation')
+    tab_headers.append('operation')
+
+
+
+    refreshAccountcanvas(canvas=None,frame=result_frame,headers=tab_headers,datas=[])
+
     
     # txt15.place(x=580, y=15, anchor=tk.NE)
-    btn5= tk.Button(frame, text="Get Info", command = lambda:queryAccounts(username=q_username_account.get(),platform=q_platform.get()) )
+    btn5= tk.Button(query_frame, text="Get Info", command = lambda:queryAccounts(frame=result_frame,canvas=None,tab_headers=tab_headers,username=q_username_account.get(),platform=q_platform.get(),linkAccounts=linkAccounts) )
     # btn5.place(x=800, y=15, anchor=tk.NE)    
 
     btn5.grid(row = 1, column =3, padx=14, pady=15)    
-
-
-    btn5= tk.Button(frame, text="Reset", padx = 0, pady = 0,command = lambda:(q_platform.set(''),q_platform_account.set('')))
-    btn5.grid(row=1,column=5, sticky=tk.W)    
-
-    # Create a frame for the canvas and scrollbar(s).
-    chooseAccountsWindow=frame
-    frame2 = tk.Frame(chooseAccountsWindow, bg='Red', bd=1, relief=tk.FLAT)
-    frame2.grid(row=2, column=0, rowspan=5,columnspan=15,sticky=tk.NW)
-
-    frame2.grid_rowconfigure(0, weight=1)
-    frame2.grid_columnconfigure(0, weight=1)
-    frame2.grid_columnconfigure(1, weight=1)
-    # Add a canvas in that frame.
-    canvas = tk.Canvas(frame2, bg='Yellow')
-    canvas.grid(row=0, column=0)
-
-        
-    def refreshcanvas(headers,datas):
-
-        # Create a vertical scrollbar linked to the canvas.
-        vsbar = tk.Scrollbar(frame2, orient=tk.VERTICAL, command=canvas.yview)
-        vsbar.grid(row=0, column=1, sticky=tk.NS)
-        canvas.configure(yscrollcommand=vsbar.set)
-
-        # Create a horizontal scrollbar linked to the canvas.
-        hsbar = tk.Scrollbar(frame2, orient=tk.HORIZONTAL, command=canvas.xview)
-        hsbar.grid(row=1, column=0, sticky=tk.EW)
-        canvas.configure(xscrollcommand=hsbar.set)
-
-        # Create a frame on the canvas to contain the grid of buttons.
-        buttons_frame = tk.Frame(canvas)
-        ROWS_DISP = len(datas)+1 # Number of rows to display.
-        COLS_DISP = len(headers)+1  # Number of columns to display.
-        COLS=len(headers)+1
-        
-        ROWS=len(datas)+1
-
-
-
-        # Add the buttons to the frame.
-        add_buttons = [tk.Button() for j in range(ROWS+1)] 
-        del_buttons = [tk.Button() for j in range(ROWS+1)] 
-        
-        # set table header
-
-
-        for j,h in enumerate(headers):
-            label = tk.Label(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text=h)
-            label.grid(row=0, column=j, sticky='news')                    
-            if h=='operation':
-                button = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                    activebackground= 'orange', text='operation')
-                button.grid(row=0, column=j, sticky='news')
-
-                delete_button = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                    activebackground= 'orange', text='operation')
-                delete_button.grid(row=0, column=j, sticky='news')
-
-        for i,row in enumerate(datas):
-            i=i+1
-            for j in range(0,len(headers)):
-                
-                if headers[j]!='operation':
-                    label = tk.Label(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                        activebackground= 'orange', text=row[headers[j]])
-                    label.grid(row=i ,column=j, sticky='news')         
-
-
-              
-            add_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text='edit',command=lambda x=i-1  :update_selected_row(rowid=datas[x]['id']))
-            add_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
-
-            del_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text='delete',command=lambda x=i-1 :remove_selected_row(rowid=datas[x]['id']))
-            del_buttons[i].grid(row=i, column=len(headers)-1, sticky='news')
-                    
-        # Create canvas window to hold the buttons_frame.
-        canvas.create_window((0,0), window=buttons_frame, anchor=tk.NW)
-
-        buttons_frame.update_idletasks()  # Needed to make bbox info available.
-        bbox = canvas.bbox(tk.ALL)  # Get bounding box of canvas with Buttons.
-
-        # Define the scrollable region as entire canvas with only the desired
-        # number of rows and columns displayed.
-        w, h = bbox[2]-bbox[1], bbox[3]-bbox[1]
-        print('=before==',COLS,COLS_DISP,ROWS,ROWS_DISP)
-
-        for i in range(5,COLS_DISP):
-            dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
-
-            if dw>int( width*0.6):
-                COLS=i-1
-        for i in range(5,ROWS_DISP):
-            dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)                
-            if dh>int( canvas.winfo_height()*0.6):
-                ROWS=i-1
-
-        print('=after==',COLS,COLS_DISP,ROWS,ROWS_DISP)
-        dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
-
-        if dw>int( width/3):
-            dw=int( width/3)
-        if dh>int( height/3):
-            dh=int( height/3)
-            print('use parent frame widht')
-        canvas.configure(scrollregion=bbox, width=dw, height=dh)
-        print('========',w,h,dw,dh,bbox)
-    tab_headers=['id','platform','username','pass','is_deleted','proxy','inserted_at','operation','operation']
-    refreshcanvas(tab_headers,[])
-
-
-
-
-    def queryAccounts(username,platform):
-        print('account view -query accounts',username,platform)
-        if username=='':
-            username=None
-        if platform=='' or 'SELECT FROM PLATFORMS' in platform.upper():
-            platform=None        
-        else:
-            try:
-                platform=int(platform)
-            except:
-                print(f'query accounts for {platform} {getattr(PLATFORM_TYPE, platform.upper())} ')
-
-                platform=getattr(PLATFORM_TYPE, platform.upper())
-        selected_platform=platform
-
-        account_rows=AccountModel.filter_accounts(platform=selected_platform,username=username)
-        # Extract account names and set them as options in the account dropdown
-        if account_rows is None or len(account_rows)==0:
-            # langlist.delete(0,tk.END)
-            showinfomsg(message=f"try to add accounts for {selected_platform} first",parent=chooseAccountsWindow)    
-
-        else:                
-            account_names = [row.username for row in account_rows]
-            logger.debug(f'we found {len(account_names)} record matching ')
-
-            # langlist.delete(0,tk.END)
-            i=0
-            account_data=[]
-            for row in account_rows:
-                account={
-                    "id":CustomID(custom_id=row.id).to_hex(),
-                    "platform":                    dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[row.platform]
-,
-                    "username":row.username,
-
-                    "pass":row.password,
-                    "is_deleted":row.is_deleted,
-                    "proxy":row.proxy,
-                    "inserted_at":datetime.fromtimestamp(row.inserted_at).strftime("%Y-%m-%d %H:%M:%S")  
-                }
-                account_data.append(account)
-            refreshcanvas(tab_headers,account_data)
-        
-        
-                
-            logger.debug(f'Account search and display finished')
-                    
-
-
-    # Bind the platform selection event to the on_platform_selected function
-
-
-
-    
-    def remove_selected_row(rowid):
-
-
-
-        print('you want to remove these selected account',rowid)
-        if rowid==0:
-
-            showinfomsg(message='you have not selected  account at all.choose one or more',parent=chooseAccountsWindow)      
-        
-        else:
-
-
-            if rowid :
-                rowid=CustomID(custom_id=rowid).to_bin()
-                result=AccountModel.update_account(id=rowid,is_deleted=True)
-
-                if result:
-                    logger.debug(f'this account {rowid} removed success')
-                    showinfomsg(message=f'this account {rowid} removed success',parent=chooseAccountsWindow)    
-                else:
-                    logger.debug(f'you cannot remove this account {rowid}, not added before')
-                    showinfomsg(message=f'this account {rowid} not added before',parent=chooseAccountsWindow)    
-            logger.debug(f'end to remove,reset account {rowid}')
-
-
-    def update_selected_row(rowid):
-        # showinfomsg(message='not supported yet',parent=chooseAccountsWindow)    
-        chooseAccountsWindow = tk.Toplevel(frame)
-        chooseAccountsWindow.geometry(window_size)
-        chooseAccountsWindow.title('Edit and update account info ')
-        rowid=CustomID(custom_id=rowid).to_bin()
-
-        result=AccountModel.get_account_by_id(id=rowid)
-        from playhouse.shortcuts import model_to_dict
-        result = model_to_dict(result)
-        print('----------',result)
-
-        i=1
-        newresult=result
-        rowkeys={}
-        for key,value in result.items():
-            # print('current key',key,value)
-            if key=='id':
-                value=CustomID(custom_id=value).to_hex()
-            if key=='platform':
-                value=  dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[value]
-            if value==None:
-                value=''                        
-            if key=='inserted_at':
-                value=datetime.fromtimestamp(value).strftime("%Y-%m-%d %H:%M:%S")                
-            if not  key  in ['id','inserted_at','unique_hash','platform']:
-            
-                label= tk.Label(chooseAccountsWindow, padx=7, pady=7, relief=tk.RIDGE,
-                                    activebackground= 'orange', text=key)
-                label.grid(row=i ,column=0, sticky='news')         
-                entry = tk.Entry(chooseAccountsWindow)
-        
-                entry.insert(0, value)
-                entry.grid(row=i ,column=1, sticky='news')   
-                rowkeys[i]=key
-                def callback(event):
-
-                    x = event.widget.grid_info()['row']
-                    print(f'current input changes for {rowkeys[x]}',event.widget.get())   
-
-                    newresult[rowkeys[x]]=event.widget.get()
-                    if rowkeys[x]=='is_deleted':
-                        print('is deleted',type(event.widget.get()))
-                        value='0'
-                        if event.widget.get()=='0':
-                            value=False
-                        elif event.widget.get()=='1':
-                            value=True                        
-                        newresult[rowkeys[x]]=value
-
-                    print('============update row',newresult)
-
-                # variable.trace('w', lambda:setEnty())    
-                entry.bind("<KeyRelease>", callback)
-
-            else:
-
-                label = tk.Label(chooseAccountsWindow, padx=7, pady=7, relief=tk.RIDGE,
-                                    activebackground= 'orange', text=key)
-                label.grid(row=i ,column=0, sticky='news')         
-                variable=tk.StringVar()
-                variable.set(value)
-                entry = tk.Entry(chooseAccountsWindow,textvariable=variable)
-                entry.grid(row=i ,column=1, sticky='news') 
-                entry.config(state='disabled')
-            i=i+1
-
-        btn5= tk.Button(chooseAccountsWindow, text="save", padx = 0, pady = 0,command = lambda:AccountModel.update_account(id=rowid,account_data=newresult))
-        btn5.grid(row=i+1,column=2, sticky=tk.W)    
-
 
     
 
@@ -5766,23 +5243,27 @@ def validateTaskMetafile(frame,metafile,canvas=None):
                     for key in ['video_local_path','video_title','video_description','thumbnail_local_path','publish_policy','tags']:
                         if video.get(key)==None:
                             logger.error(f"these {key} field is required,No target{key} in given video json data")
-                            raise ValueError(f"these {key} field is required,No target{key} in given video json data")
+                            # raise ValueError(f"these {key} field is required,No target{key} in given video json data")
                         if key in['video_local_path']:
                             if os.path.exists(video.get(key))==False:
                                 logger.error(f"these {key} field is required,and check whether local file exists")
-                                raise ValueError(f"these {key} field is required,and check whether local file exists")
+                                # raise ValueError(f"these {key} field is required,and check whether local file exists")
+                                break
                         if key in['thumbnail_local_path']:
                             if type(video.get(key)) ==list and len(video.get(key))>0:
                                 
                                 if os.path.exists(video.get(key)[0])==False:
                                     logger.error(f"these {key} field is required,and check whether local file exists")
-                                    raise ValueError(f"these {key} field is required,and check whether local file exists")
+                                    # raise ValueError(f"these {key} field is required,and check whether local file exists")
+                                    break
 
                             elif type(video.get(key)) ==str and len(video.get(key))>0:
                                 
                                 if os.path.exists(eval(video.get(key))[0])==False:
                                     logger.error(f"these {key} field is required,and check whether local file exists")
-                                    raise ValueError(f"these {key} field is required,and check whether local file exists")
+                                    # raise ValueError(f"these {key} field is required,and check whether local file exists")
+                                    break
+                                
                             else:
                                 logger.error(f"these {key} field is required,and check whether filed value is ok :{video.get(key)}")
 
@@ -6223,10 +5704,11 @@ def refreshTaskcanvas(canvas=None,frame=None,headers=None,datas=None):
             button = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
                                 activebackground= 'orange', text='operation')
             button.grid(row=0, column=j, sticky='news')
+            button.config(state=tk.DISABLED)
 
-            delete_button = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text='operation')
-            delete_button.grid(row=0, column=j, sticky='news')
+            # delete_button = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+            #                     activebackground= 'orange', text='operation')
+            # delete_button.grid(row=0, column=j, sticky='news')
     print('start to set table data')
     if datas and datas!=[]:
         
@@ -6471,7 +5953,7 @@ def update_selected_row_task(rowid,frame=None,name=None,func=None):
         if taskresult.get('setting').get('account') :
             print('account is associated to setting',serialno,cols,lastindex)
 
-            newaccountresult,serialno,cols,lastindex=renderelements(lastindex=lastindex,i=serialno,result=taskresult.get('setting').get('account'),column=cols-2,disableelements=['id','inserted_at','unique_hash','platform'],title='account data')
+            newaccountresult,serialno,cols,lastindex=renderelements(lastindex=lastindex,i=serialno,result=taskresult.get('setting').get('account'),column=cols-2,disableelements=['id','inserted_at','unique_hash'],title='account data')
 
     btn5= tk.Button(editsWindow, text="save && update", padx = 0, pady = 0,command = lambda:update_task_video(id=rowid_bin,newvideoresult=newvideoresult,newsettingresult=newsettingresult,newaccountresult=newaccountresult,newtaskresult=newtaskresult))
     btn5.grid(row=0,column=cols+1, rowspan=2,sticky=tk.W)    
@@ -6590,6 +6072,17 @@ def uploadView(frame,ttkframe,lang):
     # queryframe=frame
     operationframe.grid(row = 1, column = 0,sticky='w')
     
+    
+    
+    result_frame = tk.Frame(ttkframe,  bd=1, relief=tk.FLAT)
+    result_frame.grid(row=3, column=0, rowspan=5,sticky=tk.NW)
+
+    result_frame.grid_rowconfigure(0, weight=1)
+    result_frame.grid_columnconfigure(0, weight=1)
+    result_frame.grid_columnconfigure(1, weight=1)
+    
+    
+    
     b_create_task_metas = tk.Button(operationframe, text=settings[lang]['b_createTaskMetas'],
                                          command=lambda: threading.Thread(target=createTaskMetas(frame,ttkframe)).start())
     b_create_task_metas.grid(row = 0, column = 0,padx=14, pady=15,sticky='w')
@@ -6618,7 +6111,7 @@ def uploadView(frame,ttkframe,lang):
 
   
     b_validate_video_metas = tk.Button(operationframe, text=settings[locale]['validateVideoMetas']
-                                       , command=lambda: threading.Thread(target=validateTaskMetafile(frame,imported_task_metas_file.get(),canvas=None)).start())
+                                       , command=lambda: threading.Thread(target=validateTaskMetafile(result_frame,imported_task_metas_file.get(),canvas=None)).start())
     b_validate_video_metas.grid(row = 0, column = 5, padx=14, pady=15)
 
 
@@ -6637,13 +6130,7 @@ def uploadView(frame,ttkframe,lang):
     tab_headers.append('operation')
     tab_headers.append('operation')
 
-    chooseAccountsWindow=frame
-    result_frame = tk.Frame(chooseAccountsWindow,  bd=1, relief=tk.FLAT)
-    result_frame.grid(row=3, column=0, rowspan=5,sticky=tk.NW)
 
-    result_frame.grid_rowconfigure(0, weight=1)
-    result_frame.grid_columnconfigure(0, weight=1)
-    result_frame.grid_columnconfigure(1, weight=1)
 
     refreshTaskcanvas(canvas=None,frame=result_frame,headers=tab_headers,datas=[])
 
@@ -7615,11 +7102,13 @@ def logView(log_tab_frame,root,lang):
     def debugLevelCallBack(*args):
         print(debugLevel.get())
         print(debugLevelbox.current())
-        st =ConsoleUi(log_tab_frame,root,row=1,column=0)
+        logger.setLevel(debugLevel.get())
 
     def log_filterCallBack(*args):
         print(log_filter.get())
-        st =ConsoleUi(log_tab_frame,root,row=1,column=0)
+        # for k in log_filter.get().split(','):
+        #     addKeywordfilter(k)
+        
 
     debugLevel.trace('w', debugLevelCallBack)
 
@@ -7637,18 +7126,10 @@ def logView(log_tab_frame,root,lang):
     logger.debug(f'Installation path is:{ROOT_DIR}')
 
     logger.debug('TiktokaStudio GUI started')
-def hide_log_frame():
-    log_frame.grid_forget()
 
-def show_log_frame():
-    log_frame.grid(row=1, column=0, sticky="nsew")
 
 def on_tab_change(event):
     selected_tab = tab_control.index(tab_control.select())
-    if selected_tab == 11:  # Assuming you want to hide the log frame when the first tab is selected
-        hide_log_frame()
-    else:
-        show_log_frame()
 
 def addTab(tab_control):
 
