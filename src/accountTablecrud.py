@@ -87,7 +87,7 @@ def queryAccounts(linkAccounts=None,frame=None,canvas=None,tab_headers=None, pla
         if counts>pagecount:
 
             pages=counts/pagecount
-            pages=int(pages)+1
+            pages=int(pages)
             for i in range(pages):
                 # 这里如果没有lambda x=i 的话 后面的i+1 一直是1
                 pagebutton= tk.Button(frame, text=str(i+1), padx = 0, pady = 0,
@@ -131,19 +131,7 @@ def queryAccounts(linkAccounts=None,frame=None,canvas=None,tab_headers=None, pla
 
             account_data.append(account)
         print(f'end to prepare row data to render:{account_data}')
-        # print(f'try to clear existing rows in the tabular ')
-        # if canvas is not None:
-        #     try:
-        #         canvas.winfo_children
-        #         print('+++++++++++++++++',len(canvas.winfo_children()))
-        #         if len(canvas.winfo_children())>0:
-        #             for widget in canvas.winfo_children():
-        #                 widget.destroy()      
 
-        #     except:
-        #         print('there is no rows in the tabular at all')
-        # else:
-        #     print('there is no tabular at all')
         tab_headers.append('operation')
         tab_headers.append('operation')
         tab_headers.append('operation')
@@ -394,7 +382,7 @@ def update_selected_row_account(rowid,frame=None,name=None,func=None):
     editsWindow.title('Edit and update account and related setting,video info ')
     rowid_bin=CustomID(custom_id=rowid).to_bin()
 
-    accountresult=AccountModel.get(id=rowid_bin)
+    accountresult=AccountModel.get_account_by_id(id=rowid_bin)
     accountresult = model_to_dict(accountresult)
 
 
@@ -510,24 +498,24 @@ def update_selected_row_account(rowid,frame=None,name=None,func=None):
     print('accountresult\n',accountresult)
     print('video\n',accountresult.get('video'))
     print('setting\n',accountresult.get('setting'))
-    newaccountresult,serialno,cols,lastindex=renderelements(lastindex=0,i=1,result=tmpaccount,column=0,disableelements=['id','inserted_at','uploaded_at','video','setting'],title='account data')
+    newaccountresult,serialno,cols,lastindex=renderelements(lastindex=0,i=1,result=tmpaccount,column=0,disableelements=['id','inserted_at','uploaded_at','unique_hash','setting'],title='account data')
     newvideoresult={}
     newsettingresult={}
     newaccountresult={}
     # print('======================',serialno,cols,lastindex)
 
-    if accountresult.get('video'):
-        print('video is associated to account',serialno,cols,lastindex)
+    # if accountresult.get('video'):
+    #     print('video is associated to account',serialno,cols,lastindex)
 
-        newvideoresult,serialno,cols,lastindex=renderelements(lastindex=lastindex,i=1,result=accountresult.get('video'),column=cols,disableelements=['id','inserted_at','unique_hash'],title='video data')
-    if accountresult.get('setting'):
-        print('setting is associated to account',serialno,cols,lastindex)
+    #     newvideoresult,serialno,cols,lastindex=renderelements(lastindex=lastindex,i=1,result=accountresult.get('video'),column=cols,disableelements=['id','inserted_at','unique_hash'],title='video data')
+    # if accountresult.get('setting'):
+    #     print('setting is associated to account',serialno,cols,lastindex)
 
-        newsettingresult,serialno,cols,lastindex=renderelements(lastindex=lastindex,i=1,result=accountresult.get('setting'),column=cols,disableelements=['id','inserted_at','account'],title='setting data',fenlie=False)
-        if accountresult.get('setting').get('account') :
-            print('account is associated to setting',serialno,cols,lastindex)
+    #     newsettingresult,serialno,cols,lastindex=renderelements(lastindex=lastindex,i=1,result=accountresult.get('setting'),column=cols,disableelements=['id','inserted_at','account'],title='setting data',fenlie=False)
+    #     if accountresult.get('setting').get('account') :
+    #         print('account is associated to setting',serialno,cols,lastindex)
 
-            newaccountresult,serialno,cols,lastindex=renderelements(lastindex=lastindex,i=serialno,result=accountresult.get('setting').get('account'),column=cols-2,disableelements=['id','inserted_at','unique_hash'],title='account data')
+    #         newaccountresult,serialno,cols,lastindex=renderelements(lastindex=lastindex,i=serialno,result=accountresult.get('setting').get('account'),column=cols-2,disableelements=['id','inserted_at','unique_hash'],title='account data')
 
     btn5= tk.Button(editsWindow, text="save && update", padx = 0, pady = 0,command = lambda:update_account_video(id=rowid_bin,newvideoresult=newvideoresult,newsettingresult=newsettingresult,newaccountresult=newaccountresult))
     btn5.grid(row=0,column=cols+1, rowspan=2,sticky=tk.W)    

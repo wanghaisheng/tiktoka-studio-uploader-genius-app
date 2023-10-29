@@ -4468,9 +4468,10 @@ def accountView(frame,ttkframe,lang):
     result_frame.grid_columnconfigure(0, weight=1)
     result_frame.grid_columnconfigure(1, weight=1)
     
-    tab_headers=['id','platform','username','pass','is_deleted','proxy','inserted_at','operation','operation']
+    tab_headers=['id','platform','username','pass','is_deleted','proxy','inserted_at']
 
 
+    tab_headers.append('operation')
     tab_headers.append('operation')
     tab_headers.append('operation')
     tab_headers.append('operation')

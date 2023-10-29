@@ -104,7 +104,7 @@ def queryTasks(frame=None,canvas=None,tab_headers=None,username=None,platform=No
         if counts>pagecount:
 
             pages=counts/pagecount
-            pages=int(pages)+1
+            pages=int(pages)
             for i in range(pages):
                 # 这里如果没有lambda x=i 的话 后面的i+1 一直是1
                 pagebutton= tk.Button(frame, text=str(i+1), padx = 0, pady = 0,
