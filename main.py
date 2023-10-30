@@ -4128,20 +4128,34 @@ def chooseProxies_listbox(ttkframe,username,parentchooseProxies):
 
 
 
-def bulkImportUsers(ttkframe):
-    newWindow = tk.Toplevel(ttkframe)
+def bulkImportUsers(frame):
+
+    newWindow = tk.Toplevel(frame)
     newWindow.geometry(window_size)
     #缺少这两行填充设置，两个frame展示的大小始终是不对的
     newWindow.rowconfigure(0, weight=1)
     newWindow.columnconfigure((0,1), weight=1)
 
     newWindow.title('user bulk import')
-    
-    input_canvas = tk.Frame(newWindow)
-    input_canvas.grid(row=0, column=0, pady=(5, 0), sticky='nw')    
-    
+    newWindow.grid_rowconfigure(0, weight=1)
+    newWindow.grid_columnconfigure(0, weight=1, uniform="group1")
+    newWindow.grid_columnconfigure(1, weight=1, uniform="group1")
+    newWindow.grid_columnconfigure(0, weight=1,
+                                      minsize=int(0.5*width)
 
-    lbl15 = tk.Label(input_canvas, text='input account info with \\n separator')
+                                      )
+    newWindow.grid_columnconfigure(1, weight=2)
+    
+    account_frame_left = tk.Frame(newWindow, height = height)
+    account_frame_left.grid(row=0,column=0,sticky="nsew")
+    account_frame_right = tk.Frame(newWindow, height = height)
+    account_frame_right.grid(row=0,column=1,sticky="nsew") 
+    accountView(account_frame_right)
+
+
+    ttkframe=account_frame_left
+
+    lbl15 = tk.Label(ttkframe, text='input account info with \\n separator')
     lbl15.grid(row=0,column=0, sticky=tk.W)
     
 
@@ -4150,69 +4164,19 @@ def bulkImportUsers(ttkframe):
     
     
     from tkinter.scrolledtext import ScrolledText
-    textfield = ScrolledText(input_canvas, wrap=tk.WORD)
+    textfield = ScrolledText(ttkframe, wrap=tk.WORD)
     textfield.grid(row = 1, column = 0, columnspan = 5, padx=14, pady=15)
     textfield.bind_all("<Control-c>",_copy)
-
+    accountfilepath=tk.StringVar()
     
-    b_choose_proxy=tk.Button(input_canvas,text="load  from file",command=lambda: threading.Thread(target=select_cookie_file).start() )
+    b_choose_proxy=tk.Button(ttkframe,text="load  from file",command=lambda: threading.Thread(target=select_file('',variable=accountfilepath,)).start() )
     b_choose_proxy.grid(row=2,column=0, sticky=tk.W)
 
     
-    
-    hints='bulk pull sessionid and cookies'
-
-    b_bulk_pull_cookies=tk.Button(ttkframe,text=hints,command=lambda: threading.Thread(target=bulkImportUsers(ttkframe)).start() )
-    # b_bulk_import_users.place(x=10, y=450)    
-    b_bulk_pull_cookies.grid(row = 9, column = 4, columnspan = 3, padx=14, pady=15)        
-    
-    res_canvas = tk.Frame(newWindow,width=int(0.5*width))
-    res_canvas.grid(row=0, column=10,pady=(5, 0), sticky='ne')    
-    
-        
-    global vid
-    vid = tk.StringVar()
-    lbl15 = tk.Label(res_canvas, text='Filter by Username.')
-    # lbl15.place(x=430, y=30, anchor=tk.NE)
-    # lbl15.pack(side='left')
-
-    lbl15.grid(row=0,column=0, sticky=tk.W)
-
-    txt15 = tk.Entry(res_canvas, width=11,textvariable=vid)
-    txt15.insert(0,'input username')
-    # txt15.place(x=580, y=30, anchor=tk.NE)
-    # txt15.pack(side='left')
-    txt15.grid(row=0,column=1, sticky=tk.W)
-    
-    
-    btn5= tk.Button(res_canvas, text="Get user list", padx = 10, pady = 10,command = lambda: threading.Thread(target=filterProxiesLocations(prod_engine,logger,vid.get())).start())
-    # btn5.place(x=800, y=30, anchor=tk.NE)    
-    # btn5.pack(side='left')       
-    btn5.grid(row=0,column=5, sticky=tk.W)    
-    
-    
-    
-    # treeview_flight
-    tree = ttk.Treeview(res_canvas, height = 20, column = 8)
-    tree["column"]=('#0','#1','#2','#3','#4','#5','#6','#7')
-    tree.grid(row = 1, column = 0, columnspan = 20, padx=14, pady=15)
-
-    tree.heading('#0', text = 'Account No.')
-    tree.column('#0', anchor = 'center', width = 70)
-    tree.heading('#1', text = 'username')
-    tree.column('#1', anchor = 'center', width = 60)
-    tree.heading('#2', text = 'password')
-    tree.column('#2', anchor = 'center', width = 60)
-    tree.heading('#3', text = 'platform')
-    tree.column('#3', anchor = 'center', width = 80)
-    tree.heading('#4', text = 'proxies')
-    tree.column('#4', anchor = 'center', width = 80)
-    tree.heading('#5', text = 'Cookiefile')
-    tree.column('#5', anchor = 'center', width = 80)
-    tree.heading('#6', text = 'create. Time')
-    tree.column('#6', anchor = 'center', width = 80)
-    tree.heading('#7', text = 'updated. Time')
-    tree.column('#7', anchor = 'center', width = 80)
+    b_save_user=tk.Button(ttkframe,text="save user",command=lambda: threading.Thread(target=bulksaveUser(accountfilepath.get())).start() )
+    b_save_user.grid(row = 10, column = 0, columnspan = 3, padx=14, pady=15)    
+def bulksaveUser(accountfilepath):
+    print(accountfilepath)
 def saveUser(platform,username,password,proxy,cookies,linkaccounts=None):
 
     if platform is None:
@@ -4270,9 +4234,31 @@ def find_key(input_dict, value):
         if val == value:
             result = key
     return result
+def newaccountView(frame):
+    newWindow = tk.Toplevel(frame)
+    newWindow.geometry(window_size)
+    #缺少这两行填充设置，两个frame展示的大小始终是不对的
+    newWindow.rowconfigure(0, weight=1)
+    newWindow.columnconfigure((0,1), weight=1)
 
-def accountView(frame,ttkframe,lang):
+    newWindow.title('user bulk import')
+    newWindow.grid_rowconfigure(0, weight=1)
+    newWindow.grid_columnconfigure(0, weight=1, uniform="group1")
+    newWindow.grid_columnconfigure(1, weight=1, uniform="group1")
+    newWindow.grid_columnconfigure(0, weight=1,
+                                      minsize=int(0.5*width)
 
+                                      )
+    newWindow.grid_columnconfigure(1, weight=2)
+    
+    account_frame_left = tk.Frame(newWindow, height = height)
+    account_frame_left.grid(row=0,column=0,sticky="nsew")
+    account_frame_right = tk.Frame(newWindow, height = height)
+    account_frame_right.grid(row=0,column=1,sticky="nsew") 
+    accountView(account_frame_right)
+
+
+    ttkframe=account_frame_left
     global proxy_option_account,channel_cookie_user
 
     channel_cookie_user= tk.StringVar()
@@ -4388,15 +4374,27 @@ def accountView(frame,ttkframe,lang):
  
     
     b_save_user=tk.Button(ttkframe,text="save user",command=lambda: threading.Thread(target=saveUser(socialplatform.get(),username.get(),password.get(),proxy_option_account.get(),channel_cookie_user.get(),linkAccounts.get())).start() )
-                         
-    # b_save_user.place(x=10, y=420)        
     b_save_user.grid(row = 10, column = 0, columnspan = 3, padx=14, pady=15)    
 
-    b_bulk_import_users=tk.Button(ttkframe,text="bulk import",command=lambda: threading.Thread(target=bulkImportUsers(ttkframe)).start() )
-    # b_bulk_import_users.place(x=10, y=450)    
-    b_bulk_import_users.grid(row = 10, column = 4, columnspan = 3, padx=14, pady=15)    
+def accountView(frame,mode='query'):
 
-        
+
+
+    operation_frame = tk.Frame(frame,  bd=1, relief=tk.FLAT)
+    operation_frame.grid(row=1, column=0,sticky=tk.NW)
+
+    b_new_users=tk.Button(operation_frame,text="New account",command=lambda: threading.Thread(target=newaccountView(frame)).start() )
+    b_new_users.grid(row = 0, column = 0,  padx=14, pady=15)    
+
+    b_bulk_import_users=tk.Button(operation_frame,text="bulk import",command=lambda: threading.Thread(target=bulkImportUsers(frame)).start() )
+    # b_bulk_import_users.place(x=10, y=450)    
+    b_bulk_import_users.grid(row = 0, column = 1,  padx=14, pady=15)    
+    
+    hints='bulk pull sessionid and cookies'
+
+    b_bulk_pull_cookies=tk.Button(operation_frame,text=hints,command=lambda: threading.Thread(target=bulkImportUsers(frame)).start() )
+    # b_bulk_import_users.place(x=10, y=450)    
+    b_bulk_pull_cookies.grid(row = 0, column = 2,padx=14, pady=15)     
     
 
     global q_username_account,latest_user_conditions_user,q_platform_account
@@ -4482,7 +4480,7 @@ def accountView(frame,ttkframe,lang):
 
     
     # txt15.place(x=580, y=15, anchor=tk.NE)
-    btn5= tk.Button(query_frame, text="Get Info", command = lambda:queryAccounts(frame=result_frame,canvas=None,tab_headers=tab_headers,username=q_username_account.get(),platform=q_platform.get(),linkAccounts=linkAccounts) )
+    btn5= tk.Button(query_frame, text="Get Info", command = lambda:queryAccounts(frame=result_frame,canvas=None,tab_headers=tab_headers,username=q_username_account.get(),platform=q_platform.get(),linkAccounts=None) )
     # btn5.place(x=800, y=15, anchor=tk.NE)    
 
     btn5.grid(row = 1, column =3, padx=14, pady=15)    
@@ -7351,14 +7349,14 @@ def render(root,window,lang):
     # input_canvas.grid(row=0, column=0, pady=(5, 0), sticky='nw')   
 
     account_frame = ttk.Frame(tab_control)
-    account_frame.grid_rowconfigure(0, weight=1)
-    account_frame.grid_columnconfigure(0, weight=1, uniform="group1")
-    account_frame.grid_columnconfigure(1, weight=1, uniform="group1")
-    account_frame.grid_columnconfigure(0, weight=1,
-                                      minsize=int(0.5*width)
+    # account_frame.grid_rowconfigure(0, weight=1)
+    # account_frame.grid_columnconfigure(0, weight=1, uniform="group1")
+    # account_frame.grid_columnconfigure(1, weight=1, uniform="group1")
+    # account_frame.grid_columnconfigure(0, weight=1,
+    #                                   minsize=int(0.5*width)
 
-                                      )
-    account_frame.grid_columnconfigure(1, weight=2)
+    #                                   )
+    # account_frame.grid_columnconfigure(1, weight=2)
     account_frame.grid(row=0, column=0, sticky="nsew")
     
     account_frame_left = tk.Frame(account_frame, height = height)
@@ -7419,7 +7417,7 @@ def render(root,window,lang):
     tab_control.add(account_frame, 
                      text=settings[lang]['accountView'])
                     
-    accountView(account_frame_right,account_frame_left,lang)
+    accountView(account_frame_left,mode='query')
 
     tab_control.add(proxy_frame,
                     text=settings[lang]['proxyView'])

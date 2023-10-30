@@ -14,6 +14,8 @@ from src.constants import height,width,window_size
 from src.log import logger
 from src.utils import showinfomsg
 def queryTasks(frame=None,canvas=None,tab_headers=None,username=None,platform=None,status=None,video_title=None,schedule_at=None,video_id=None,pageno=None,pagecount=None,ids=None,sortby="Add DATE ASC"):
+    if pageno is None:
+        pageno=1
 
     if pagecount is None:
         pagecount=50

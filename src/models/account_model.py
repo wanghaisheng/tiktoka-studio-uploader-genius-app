@@ -16,6 +16,7 @@ class AccountModel(BaseModel):
     inserted_at = IntegerField(null=True)
     is_deleted = BooleanField(default=False)  # Flag if the account is deleted
     unique_hash = TextField(index=True,unique=True, null=True, default=None)  # Unique hash for the account
+    link_accounts = TextField(null=True)  
 
     # class Meta:
     #     db_table = db
@@ -95,6 +96,7 @@ class AccountModel(BaseModel):
     @classmethod
     def filter_accounts(cls, platform=None, username=None,cookie_local_path=None, cookie_content=None,proxy=None,inserted_at=None,is_deleted=None,pageno=None,pagecount=None,start=None,end=None,data=None,ids=None,sortby=None):
         query = cls.select()
+        
         print('platform',platform)
         print('username',username)
 
@@ -161,7 +163,8 @@ class AccountRelationship(BaseModel):
     
     account = ForeignKeyField(AccountModel, backref='backup_relationships')
     backup_account = ForeignKeyField(AccountModel, backref='main_account_relationships')
-
+    inserted_at = IntegerField(null=True)
+    is_deleted = BooleanField(default=False)  # Flag if the account is deleted
     @classmethod
 
     def add_AccountRelationship_by_main_id(cls,main_id,otherid):
@@ -172,12 +175,20 @@ class AccountRelationship(BaseModel):
         elif AccountModel.get_by_id(otherid)==None:
             return False
         else:
-            if AccountModel.get_by_id(main_id):
-                new.account=AccountModel.get_by_id(main_id)
-            if AccountModel.get_by_id(otherid):
-                new.backup_account=AccountModel.get_by_id(otherid)            
-            new.save(force_insert=True) 
-            return True
+            if len(cls.filter_AccountRelationship(main_id=main_id,otherid=otherid))>0:
+                print('bind record is exsit now')
+            else:
+                if AccountModel.get_by_id(main_id):
+                    new.account=AccountModel.get_by_id(main_id)
+                if AccountModel.get_by_id(otherid):
+                    new.backup_account=AccountModel.get_by_id(otherid)       
+
+                new.inserted_at = int(time.time())  # Update insert_date
+                new.id = CustomID().to_bin()
+                new.is_deleted=False
+
+                new.save(force_insert=True) 
+                return True
     @classmethod
 
     def add_AccountRelationship_by_username(cls,main_username,otherusername):
@@ -204,26 +215,18 @@ class AccountRelationship(BaseModel):
             
             return cls.get_or_none(cls.account == AccountRelationship.get_by_id(id))
     @classmethod
-    def filter_AccountRelationship(cls, platform=None, username=None,cookie_local_path=None, cookie_content=None,proxy=None,inserted_at=None,is_deleted=None,pageno=None,pagecount=None,start=None,end=None,data=None,ids=None,sortby=None):
+    def filter_AccountRelationship(cls, main_id=None, otherid=None,inserted_at=None,is_deleted=None,pageno=None,pagecount=None,start=None,end=None,data=None,ids=None,sortby=None):
         query = cls.select()
-        print('platform',platform)
-        print('username',username)
-
         if is_deleted is not None and is_deleted!='':
             query = query.where(cls.is_deleted == is_deleted)
 
 
-        if username is not None and username!='':
-            query = query.where(cls.username == username)
+        if main_id is not None and main_id!='':
+            query = query.where(cls.account == main_id)
 
-        if platform is not None:
-            if platform in dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT).keys():
-                query=query.where(cls.platform==platform)
-            else:
-                print(f'there is no support for platform value yet:{platform}')
 
-        if proxy is not None and proxy !='':
-            query = query.where(cls.proxy == proxy)
+        if otherid is not None and otherid !='':
+            query = query.where(cls.backup_account == otherid)
             # # Assuming 'proxy_id' is the ID of the proxy you want to work with
 
             # proxy = ProxyModel.get(ProxyModel.id == proxy_id)
@@ -231,8 +234,8 @@ class AccountRelationship(BaseModel):
 
         try:
             print('==total record counts===',len(list(query)),list(query))
-            for i in list(query):
-                print(i.platform)
+            # for i in list(query):
+            #     print(i.id)
             print('==per page counts===',pagecount)
             print('==page number===',pageno)
 
@@ -254,8 +257,8 @@ class AccountRelationship(BaseModel):
                     print(f'grab all records matching filters:{list(query)}')
 
             print('before return result=========')
-            for i in list(query):
-                print(i.platform)
+            # for i in list(query):
+            #     print(i.id)
                 
             return list(query),counts
 

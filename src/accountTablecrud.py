@@ -15,7 +15,9 @@ import tkinter as tk
 from src.constants import height,width,window_size
 from src.log import logger
 from src.utils import showinfomsg,find_key
-def queryAccounts(linkAccounts=None,frame=None,canvas=None,tab_headers=None, platform=None, username=None,cookie_local_path=None, cookie_content=None,proxy=None,inserted_at=None,is_deleted=None,pageno=None,pagecount=None,ids=None,sortby="Add DATE ASC"):
+def queryAccounts(linkAccounts=None,frame=None,canvas=None,tab_headers=None, platform=None, username=None,cookie_local_path=None, cookie_content=None,proxy=None,inserted_at=None,is_deleted=None,pageno=None,pagecount=None,ids=None,sortby="Add DATE ASC",mode='query'):
+    if pageno is None:
+        pageno=1
     if pagecount is None:
         pagecount=50
     if  username is not None and 'input' in username:
@@ -108,8 +110,11 @@ def queryAccounts(linkAccounts=None,frame=None,canvas=None,tab_headers=None, pla
         for row in account_rows:
             print('row data',row)
             print('platform',row.platform,dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[row.platform])
+            backup_accounts=row.link_accounts 
 
-
+            if backup_accounts is None or len(list(row.link_accounts))==0:
+                backupaccount_rows,counts=AccountRelationship.filter_AccountRelationship(main_id=row.id,otherid=None,pagecount=pagecount,pageno=pageno,ids=ids,sortby=sortby) 
+                backup_accounts=backupaccount_rows
             p_value=row.platform
             if type(row.platform)!=int:
                 p_value=100
@@ -120,8 +125,9 @@ def queryAccounts(linkAccounts=None,frame=None,canvas=None,tab_headers=None, pla
                 "username":row.username,
                 "is_deleted":row.is_deleted,
                 "cookie_local_path":row.cookie_local_path,
-
                 "proxy":row.proxy,
+
+                "backup_accounts":backup_accounts,
                 # "uploaded_at":datetime.fromtimestamp(row.uploaded_at).strftime("%Y-%m-%d %H:%M:%S") if row.uploaded_at else None, 
 
                 "inserted_at":datetime.fromtimestamp(row.inserted_at).strftime("%Y-%m-%d %H:%M:%S")  
@@ -138,15 +144,15 @@ def queryAccounts(linkAccounts=None,frame=None,canvas=None,tab_headers=None, pla
         tab_headers.append('operation')
 
         print(f'show header and rows based on query {tab_headers}\n{account_data}')
-        refreshAccountcanvas(linkAccounts=linkAccounts,canvas=canvas,frame=frame,headers=tab_headers,datas=[])
+        refreshAccountcanvas(linkAccounts=linkAccounts,canvas=canvas,frame=frame,headers=tab_headers,datas=[],mode='query')
 
-        refreshAccountcanvas(linkAccounts=linkAccounts,canvas=canvas,frame=frame,headers=tab_headers,datas=account_data)
+        refreshAccountcanvas(linkAccounts=linkAccounts,canvas=canvas,frame=frame,headers=tab_headers,datas=account_data,mode='query')
     
         print(f'end to show header and rows based on query {tab_headers}\n{account_data}')
 
         logger.debug(f'Account search and display finished')
                     
-def refreshAccountcanvas(linkAccounts=None,canvas=None,frame=None,headers=None,datas=None):
+def refreshAccountcanvas(linkAccounts=None,canvas=None,frame=None,headers=None,datas=None,mode='query'):
 
     print(f'try to clear existing rows in the tabular {len(frame.winfo_children())} ')
 
@@ -237,15 +243,15 @@ def refreshAccountcanvas(linkAccounts=None,canvas=None,frame=None,headers=None,d
             del_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
                                 activebackground= 'orange', text='delete',command=lambda x=i-1 :remove_selected_row_account(rowid=datas[x]['id'],name='account'))
             del_buttons[i].grid(row=i, column=len(headers)-3, sticky='news')
+            if mode!='query':
+                bind_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                    activebackground= 'orange', text='bind',command=lambda x=i-1 :bind_selected_row_account(selected_platform=datas[x]['platform'],linkAccounts=linkAccounts,rowid=datas[x]['id'],frame=frame))
+                bind_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
 
-            bind_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text='bind',command=lambda x=i-1 :bind_selected_row_account(selected_platform=datas[x]['platform'],linkAccounts=linkAccounts,rowid=datas[x]['id'],frame=frame))
-            bind_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
 
-
-            unbind_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text='unbind',command=lambda x=i-1 :unbind_selected_row_account(selected_platform=datas[x]['platform'],linkAccounts=linkAccounts,rowid=datas[x]['id'],frame=frame))
-            unbind_buttons[i].grid(row=i, column=len(headers)-1, sticky='news')
+                unbind_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                    activebackground= 'orange', text='unbind',command=lambda x=i-1 :unbind_selected_row_account(selected_platform=datas[x]['platform'],linkAccounts=linkAccounts,rowid=datas[x]['id'],frame=frame))
+                unbind_buttons[i].grid(row=i, column=len(headers)-1, sticky='news')
     # Create canvas window to hold the buttons_frame.
     canvas.create_window((0,0), window=buttons_frame, anchor=tk.NW)
     buttons_frame.update_idletasks()  # Needed to make bbox info available.
@@ -255,7 +261,7 @@ def refreshAccountcanvas(linkAccounts=None,canvas=None,frame=None,headers=None,d
     # number of rows and columns displayed.
     w, h = bbox[2]-bbox[1], bbox[3]-bbox[1]
     print('=before==',COLS,COLS_DISP,ROWS,ROWS_DISP)
-    widthratio=0.7
+    widthratio=1
     height_ratio=0.7
     for i in range(5,COLS_DISP):
         dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
@@ -384,8 +390,9 @@ def update_selected_row_account(rowid,frame=None,name=None,func=None):
 
     accountresult=AccountModel.get_account_by_id(id=rowid_bin)
     accountresult = model_to_dict(accountresult)
-
-
+    if len(accountresult['link_accounts'])==0:
+        backupaccount_rows,counts=AccountRelationship.filter_AccountRelationship(main_id=rowid_bin,otherid=None)
+        accountresult['link_accounts'] =   backupaccount_rows
     def renderelements(i=1,column=0,result={},disableelements=['id','inserted_at','unique_hash'],title=None,lastindex=0,fenlie=True):
         rowkeys={}
         newresult={}
@@ -496,18 +503,17 @@ def update_selected_row_account(rowid,frame=None,name=None,func=None):
     # tmpaccount.pop('video')
     # tmpaccount.pop('setting')
     print('accountresult\n',accountresult)
-    print('video\n',accountresult.get('video'))
-    print('setting\n',accountresult.get('setting'))
+    print('link_accounts\n',accountresult.get('link_accounts'))
     newaccountresult,serialno,cols,lastindex=renderelements(lastindex=0,i=1,result=tmpaccount,column=0,disableelements=['id','inserted_at','uploaded_at','unique_hash','setting'],title='account data')
-    newvideoresult={}
+    newbackupaccountresult={}
     newsettingresult={}
     newaccountresult={}
     # print('======================',serialno,cols,lastindex)
 
-    # if accountresult.get('video'):
-    #     print('video is associated to account',serialno,cols,lastindex)
+    # if backupaccount_rows:
+        # print('video is associated to account',serialno,cols,lastindex)
 
-    #     newvideoresult,serialno,cols,lastindex=renderelements(lastindex=lastindex,i=1,result=accountresult.get('video'),column=cols,disableelements=['id','inserted_at','unique_hash'],title='video data')
+        # newvideoresult,serialno,cols,lastindex=renderelements(lastindex=lastindex,i=1,result=backupaccount_rows,column=cols,disableelements=['id','inserted_at','unique_hash'],title='link account data')
     # if accountresult.get('setting'):
     #     print('setting is associated to account',serialno,cols,lastindex)
 
@@ -517,15 +523,21 @@ def update_selected_row_account(rowid,frame=None,name=None,func=None):
 
     #         newaccountresult,serialno,cols,lastindex=renderelements(lastindex=lastindex,i=serialno,result=accountresult.get('setting').get('account'),column=cols-2,disableelements=['id','inserted_at','unique_hash'],title='account data')
 
-    btn5= tk.Button(editsWindow, text="save && update", padx = 0, pady = 0,command = lambda:update_account_video(id=rowid_bin,newvideoresult=newvideoresult,newsettingresult=newsettingresult,newaccountresult=newaccountresult))
+    btn5= tk.Button(editsWindow, text="save && update", padx = 0, pady = 0,command = lambda:update_account(id=rowid_bin,newaccountresult=newaccountresult))
     btn5.grid(row=0,column=cols+1, rowspan=2,sticky=tk.W)    
 
 
-def update_account_video(newvideoresult=None,newsettingresult=None,newaccountresult=None,id=id):
-    if newvideoresult==None and newsettingresult==None and newaccountresult==None and newaccountresult==None:
+def update_account(newaccountresult=None,id=id):
+    if newaccountresult==None:
         showinfomsg(message='you have not make any changes')
     else:
-        result=AccountModel.update_account(**newaccountresult,id=id,videodata=newvideoresult,settingdata=newsettingresult,accountdata=newaccountresult)    
+        result=AccountModel.update_account(**newaccountresult,id=id,accountdata=newaccountresult)    
+        if len(newaccountresult['link_accounts'] )>0:
+            for otherid in newaccountresult['link_accounts']:
+
+                result=AccountRelationship.add_AccountRelationship_by_main_id(**newaccountresult,main_id=id,otherid=otherid)    
+
+
         if result:
             showinfomsg(message='changes have been updated')
         else:

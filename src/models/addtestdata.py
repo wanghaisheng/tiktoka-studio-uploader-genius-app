@@ -106,6 +106,8 @@ class TestData:
 
 
                 test_users=[]
+                test_users_ids=[]
+
                 for i in range(0,100):
                         account=AccountModel.add_account(
                                 account_data={
@@ -121,10 +123,22 @@ class TestData:
                         )
                         
                         test_users.append(account)
-
+                        test_users_ids.append(CustomID(custom_id=account.id).to_hex())
                 print(f'accounts {len(test_users)}')
                 if test_users[0] is not None:
-                        AccountRelationship.add_AccountRelationship_by_id(main_id=test_users[0],otherid=test_users[1])
+                        t=test_users_ids
+                        for mainid in test_users_ids:
+                            n =random.choice([0,1,2,3,4,5])
+                            print('n',n)
+
+                            print('t',t.remove(mainid))
+                            print(f'bind {n} account to {mainid}')
+                            otherids=random.sample(t,n)
+                            result=AccountModel.update_account(id=CustomID(custom_id=mainid).to_bin(),link_accounts=otherids)
+                            print(f'update bind {n} accounts to {mainid}')
+
+                            for otherid in otherids:
+                                AccountRelationship.add_AccountRelationship_by_main_id(main_id=CustomID(custom_id=mainid).to_bin(),otherid=CustomID(custom_id=otherid).to_bin())
 
 
                 test_settings=[]
