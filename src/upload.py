@@ -9,7 +9,13 @@ import asyncio
 # upload = Upload(
 # )
 async def uploadTask(uploadsetting=None,account=None,video=None):
+
     youtubevideoid=None
+    
+    upload = YoutubeUpload(uploadsetting)
+
+    youtubevideoid=await upload.upload(video
+    )
     return youtubevideoid
 async def startUpload(root_profile_directory="",use_stealth_js=False,proxy_option="",is_open_browser=True,debug=True,channel_cookie_path='',wait_policy="go next after copyright check success",username='',password='',is_record_video=True):
     uploadSetting=UploadSetting(
