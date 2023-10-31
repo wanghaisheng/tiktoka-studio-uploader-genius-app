@@ -8,7 +8,9 @@ import asyncio
 # # for cookie issue,
 # upload = Upload(
 # )
-
+async def uploadTask(uploadsetting=None,account=None,video=None):
+    youtubevideoid=None
+    return youtubevideoid
 async def startUpload(root_profile_directory="",use_stealth_js=False,proxy_option="",is_open_browser=True,debug=True,channel_cookie_path='',wait_policy="go next after copyright check success",username='',password='',is_record_video=True):
     uploadSetting=UploadSetting(
     root_profile_directory="",
@@ -28,6 +30,7 @@ async def startUpload(root_profile_directory="",use_stealth_js=False,proxy_optio
 
 
     upload = YoutubeUpload(uploadSetting)
+
 
     return upload
 async def instantpublish(uploadSession:UploadSession,upload:YoutubeUpload):

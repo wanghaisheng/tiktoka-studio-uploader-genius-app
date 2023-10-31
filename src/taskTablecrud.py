@@ -13,6 +13,8 @@ import tkinter as tk
 from src.constants import height,width,window_size
 from src.log import logger
 from src.utils import showinfomsg,find_key
+from pathlib import Path,PureWindowsPath,PurePath
+import asyncio
 def queryTasks(frame=None,canvas=None,tab_headers=None,username=None,platform=None,status=None,video_title=None,schedule_at=None,video_id=None,pageno=None,pagecount=None,ids=None,sortby="Add DATE ASC"):
     if pageno is None:
         pageno=1
@@ -342,11 +344,39 @@ def upload_selected_row_task(rowid,frame=None):
 
         if rowid :
             rowid_bin=CustomID(custom_id=rowid).to_bin()
-            result=TaskModel.update_task(id=rowid_bin,is_deleted=True)
+            task_rows,counts=TaskModel.filter_tasks(id=rowid_bin,is_deleted=True)
 
-            if result:
-                logger.debug(f'this task {rowid} removed success')
-                showinfomsg(message=f'this task {rowid} removed success',parent=frame)    
+            if counts>0:
+                logger.debug(f'this task {rowid} start to upload')
+                setting=None
+                video=None
+            else:
+                logger.debug(f'could not find this task {rowid} ')
+
+            for row in task_rows:
+                print('platform',row.platform,dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[row.platform])
+
+
+                # p_value=row.platform
+                # if type(row.platform)!=int:
+                #     p_value=100
+                # task={
+                #     "id":CustomID(custom_id=row.id).to_hex(),
+                #     "platform":dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[p_value],
+                #     "prorioty":row.prorioty,
+                #     "username":row.username,
+                #     "status":dict(TASK_STATUS.TASK_STATUS_TEXT)[row.status],
+                #     "schedule_at":row.video.release_date,
+                #     "proxy":row.proxy,
+                #     "video title":row.video.video_title,
+                #     "uploaded_at":datetime.fromtimestamp(row.uploaded_at).strftime("%Y-%m-%d %H:%M:%S") if row.uploaded_at else None, 
+
+                #     "inserted_at":datetime.fromtimestamp(row.inserted_at).strftime("%Y-%m-%d %H:%M:%S")  
+                # }
+
+                asyncio.run(uploadTask(video=row.video,uploadsetting=row.setting,account=row.setting.account))
+
+                showinfomsg(message=f'this task {rowid} upload success',parent=frame)    
             else:
                 logger.debug(f'you cannot remove this task {rowid}, not added before')
                 showinfomsg(message=f'this task {rowid} not added before',parent=frame)    

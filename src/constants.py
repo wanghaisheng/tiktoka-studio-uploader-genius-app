@@ -1,4 +1,12 @@
-  
-width=1280
+videoassetsfilename='videos-assets.json'
+settingfilename='settings.json'
+locale='en'
+window_size='1280x720'
 height=720
-window_size='1024x720'
+width=1280
+supported_video_exts=['.flv', '.mp4', '.avi']
+supported_thumb_exts=['.jpeg', '.png', '.jpg','webp']
+supported_des_exts=['.des']
+supported_tag_exts=['.tags']
+supported_schedule_exts=['.schedule']
+supported_meta_exts=['.json', '.xls','.xlsx','.csv']      

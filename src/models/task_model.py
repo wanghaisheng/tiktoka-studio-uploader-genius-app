@@ -7,6 +7,7 @@ from src.models.youtube_video_model import YoutubeVideoModel
 from src.models.platform_model import PLATFORM_TYPE
 from src.models.upload_setting_model import UploadSettingModel
 from src.models.account_model import AccountModel
+from src.upload import uploadTask
 class TASK_STATUS:
     PENDING = 0
     FAILURE = 1
@@ -179,7 +180,7 @@ class TaskModel(BaseModel):
 
     @classmethod
 
-    def filter_tasks(cls, status=None, platform=None,uploaded_at=None,schedule_at=None,limit=None,setting=None,inserted_at=None,video_title=None,video_id=None,username=None,pageno=None,pagecount=None,start=None,end=None,data=None,ids=None,sortby=None):
+    def filter_tasks(cls, id=None,status=None, platform=None,uploaded_at=None,schedule_at=None,limit=None,setting=None,inserted_at=None,video_title=None,video_id=None,username=None,pageno=None,pagecount=None,start=None,end=None,data=None,ids=None,sortby=None):
         query=TaskModel.select()
         counts=query.count()
         query = (TaskModel
@@ -202,6 +203,11 @@ class TaskModel(BaseModel):
                 query=query.order_by(TaskModel.inserted_at.desc())
             else:
                 print(f'there is no support for sortby value yet:{sortby}')
+        if id is not None:
+            query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
+
+            query=query.where(TaskModel.id==id)
+            print(f'show id task {ids}')                
         if ids is not None:
             query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
 

@@ -12,7 +12,7 @@ def center_window(window):
     window.geometry('{}x{}+{}+{}'.format(width, height, x, y))
 
 # 信息消息框
-def showinfomsg(message,title='hints',DURATION = 2000,parent=None):
+def showinfomsg(message,title='hints',DURATION = 500,parent=None):
     # msg1 = messagebox.showinfo(title="消息提示", message=message)
     # messagebox.after(2000,msg1.destroy)
     # parent.focus_force()
