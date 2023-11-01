@@ -180,7 +180,7 @@ class TaskModel(BaseModel):
 
     @classmethod
 
-    def filter_tasks(cls, id=None,status=None, platform=None,uploaded_at=None,schedule_at=None,limit=None,setting=None,inserted_at=None,video_title=None,video_id=None,username=None,pageno=None,pagecount=None,start=None,end=None,data=None,ids=None,sortby=None):
+    def filter_tasks(cls, id=None,status=None,is_deleted=None, platform=None,uploaded_at=None,schedule_at=None,limit=None,setting=None,inserted_at=None,video_title=None,video_id=None,username=None,pageno=None,pagecount=None,start=None,end=None,data=None,ids=None,sortby=None):
         query=TaskModel.select()
         counts=query.count()
         query = (TaskModel
@@ -189,6 +189,16 @@ class TaskModel(BaseModel):
                 .switch(TaskModel)
                 .join(UploadSettingModel)  # Join favorite -> tweet
                 .join(AccountModel))   # Join tweet -> user        
+        if is_deleted is not None:
+            if is_deleted in [0,1]:
+                is_deleted=True if is_deleted==1 else False
+                query=query.where(TaskModel.is_deleted==is_deleted)
+            elif type(is_deleted)==bool:
+                query=query.where(TaskModel.is_deleted==is_deleted)
+
+            else:
+                print(f'there is no support for status value yet:{status}')
+
         if status is not None:
             if status in dict(TASK_STATUS.TASK_STATUS_TEXT).keys():
                 query=query.where(TaskModel.status==status)
@@ -251,7 +261,7 @@ class TaskModel(BaseModel):
 
             query=query.switch(TaskModel)  # <-- switch the "query context" back to ticket.
 
-
+        print('sql is',query)
         try:
             print('==total record counts===',len(list(query)),list(query))
             for i in list(query):

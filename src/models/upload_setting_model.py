@@ -40,6 +40,7 @@ class UploadSettingModel(BaseModel):
     browser_type = IntegerField(default=BROWSER_TYPE.FIREFOX)
     account = ForeignKeyField(AccountModel, backref='account_id')
     is_record_video = BooleanField(default=True)
+    is_deleted = BooleanField(default=False)  # Add a field to flag if video is deleted
 
     wait_policy=IntegerField(default=WAIT_POLICY_TYPE.check)
     @classmethod

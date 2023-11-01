@@ -12,7 +12,7 @@ from datetime import datetime,date,timedelta
 import tkinter as tk
 from src.constants import height,width,window_size
 from src.log import logger
-from src.utils import showinfomsg,find_key
+from src.utils import showinfomsg,find_key,askokcancelmsg
 from pathlib import Path,PureWindowsPath,PurePath
 import asyncio
 def queryTasks(frame=None,canvas=None,tab_headers=None,username=None,platform=None,status=None,video_title=None,schedule_at=None,video_id=None,pageno=None,pagecount=None,ids=None,sortby="Add DATE ASC"):
@@ -177,7 +177,7 @@ def queryTasks(frame=None,canvas=None,tab_headers=None,username=None,platform=No
     
         print(f'end to show header and rows based on query {tab_headers}\n{task_data}')
 
-        logger.debug(f'Account search and display finished')
+        logger.debug(f'Task search and display finished')
                     
 def refreshTaskcanvas(canvas=None,frame=None,headers=None,datas=None):
 
@@ -271,7 +271,7 @@ def refreshTaskcanvas(canvas=None,frame=None,headers=None,datas=None):
             del_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
 
             upload_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text='upload',command=lambda x=i-1 :upload_selected_row_task(rowid=datas[x]['id'],frame=frame))
+                                activebackground= 'orange', text='upload',command=lambda x=i-1 :upload_selected_row_task(rowid=datas[x]['id'],frame=frame,status=datas[x]['status'],platform=datas[x]['platform']))
             upload_buttons[i].grid(row=i, column=len(headers)-1, sticky='news')
 
     # Create canvas window to hold the buttons_frame.
@@ -330,7 +330,7 @@ def remove_selected_row_task(rowid,frame=None,name=None,func=None):
                 showinfomsg(message=f'this {name}: {rowid} not added before',parent=frame)    
         logger.debug(f'end to remove,reset {name} {rowid}')
 
-def upload_selected_row_task(rowid,frame=None):
+def upload_selected_row_task(rowid,frame=None,status=None,platform=None):
 
 
 
@@ -340,47 +340,51 @@ def upload_selected_row_task(rowid,frame=None):
         showinfomsg(message='you have not selected  task at all.choose one or more',parent=frame)      
     
     else:
+        if status=='success':
+            askokcancelmsg(message='this video is been uploaded before',parent=frame)    
+        if platform!='youtube':
+            showinfomsg(message='this platform not supported yet',parent=frame)      
+        else:
+            if status=='success':
+                askokcancelmsg(message='this video is been uploaded before',parent=frame)    
+            if rowid :
+                rowid_bin=CustomID(custom_id=rowid).to_bin()
+                task_rows,counts=TaskModel.filter_tasks(id=rowid_bin,is_deleted=False)
+
+                if counts>0:
+                    logger.debug(f'this task {rowid} start to upload')
+                    setting=None
+                    video=None
 
 
-        if rowid :
-            rowid_bin=CustomID(custom_id=rowid).to_bin()
-            task_rows,counts=TaskModel.filter_tasks(id=rowid_bin,is_deleted=True)
+                    for row in task_rows:
+                        print('platform',row.platform,dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[row.platform])
+                        uploadsetting=model_to_dict(row.setting)
+                        uploadsetting.pop('id')
+                        uploadsetting.pop('inserted_at')
+                        uploadsetting.pop('account')
+                        uploadsetting.pop('is_deleted')
+                        uploadsetting.pop('platform')
+                        proxy=row.setting.account.proxy
+                        if proxy:
+                            uploadsetting['proxy_option']='socks5:127.0.0.1:1080'
 
-            if counts>0:
-                logger.debug(f'this task {rowid} start to upload')
-                setting=None
-                video=None
-            else:
-                logger.debug(f'could not find this task {rowid} ')
-
-            for row in task_rows:
-                print('platform',row.platform,dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[row.platform])
+                        video=model_to_dict(row.video)
+                        video.pop('id')
+                        video.pop('unique_hash')
+                        video.pop('inserted_at')
+                        video.pop('is_deleted')
 
 
-                # p_value=row.platform
-                # if type(row.platform)!=int:
-                #     p_value=100
-                # task={
-                #     "id":CustomID(custom_id=row.id).to_hex(),
-                #     "platform":dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[p_value],
-                #     "prorioty":row.prorioty,
-                #     "username":row.username,
-                #     "status":dict(TASK_STATUS.TASK_STATUS_TEXT)[row.status],
-                #     "schedule_at":row.video.release_date,
-                #     "proxy":row.proxy,
-                #     "video title":row.video.video_title,
-                #     "uploaded_at":datetime.fromtimestamp(row.uploaded_at).strftime("%Y-%m-%d %H:%M:%S") if row.uploaded_at else None, 
+                        videoid= asyncio.run(uploadTask(video=video,uploadsetting=uploadsetting,account=row.setting.account))
+                        if videoid:
 
-                #     "inserted_at":datetime.fromtimestamp(row.inserted_at).strftime("%Y-%m-%d %H:%M:%S")  
-                # }
 
-                asyncio.run(uploadTask(video=row.video,uploadsetting=row.setting,account=row.setting.account))
-
-                showinfomsg(message=f'this task {rowid} upload success',parent=frame)    
-            else:
-                logger.debug(f'you cannot remove this task {rowid}, not added before')
-                showinfomsg(message=f'this task {rowid} not added before',parent=frame)    
-        logger.debug(f'end to remove,reset task {rowid}')
+                            showinfomsg(message=f'this task {rowid} upload success',parent=frame)    
+                else:
+                    logger.debug(f'you cannot upload this task {rowid}, not added before')
+                    showinfomsg(message=f'this task {rowid} not added before',parent=frame)    
+        logger.debug(f'end to upload,reset task {rowid}')
 def update_selected_row_task(rowid,frame=None,name=None,func=None):
     # showinfomsg(message='not supported yet',parent=chooseAccountsWindow)    
     editsWindow = tk.Toplevel(frame)

@@ -342,7 +342,7 @@ class VIDEO_SETTINGS:
 
 class YoutubeVideoModel(BaseModel):
     id = BlobField(primary_key=True)    
-    youtube_video_id = TextField(null=True,default=None)
+    video_id = TextField(null=True,default=None)
     
     video_local_path = TextField(null=True,default=None)
     video_title = TextField(null=True,default=None)

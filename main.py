@@ -84,7 +84,8 @@ from UltraDict import UltraDict
 from src.log import logger,addKeywordfilter
 from src.accountTablecrud import *
 from src.taskTablecrud import *
-
+from src.proxyTablecrud import *
+import pycountry
 if platform.system()=='Windows':
 
     ultra = UltraDict(shared_lock=True,recurse=True)
@@ -4385,6 +4386,7 @@ def accountView(frame,mode='query'):
     operation_frame = tk.Frame(frame,  bd=1, relief=tk.FLAT)
     operation_frame.grid(row=1, column=0,sticky=tk.NW)
 
+
     b_new_users=tk.Button(operation_frame,text="New account",command=lambda: threading.Thread(target=newaccountView(frame)).start() )
     b_new_users.grid(row = 0, column = 0,  padx=14, pady=15)    
 
@@ -4461,6 +4463,7 @@ def accountView(frame,mode='query'):
 
 
     
+    
     result_frame = tk.Frame(frame,  bd=1, relief=tk.FLAT)
     result_frame.grid(row=3, column=0,sticky=tk.NW)
 
@@ -4481,9 +4484,7 @@ def accountView(frame,mode='query'):
     refreshAccountcanvas(canvas=None,frame=result_frame,headers=tab_headers,datas=[])
 
     
-    # txt15.place(x=580, y=15, anchor=tk.NE)
     btn5= tk.Button(query_frame, text="Get Info", command = lambda:queryAccounts(frame=result_frame,canvas=None,tab_headers=tab_headers,username=q_username_account.get(),platform=q_platform.get(),linkAccounts=None) )
-    # btn5.place(x=800, y=15, anchor=tk.NE)    
 
     btn5.grid(row = 1, column =3, padx=14, pady=15)    
 
@@ -5665,9 +5666,9 @@ def uploadView(frame,ttkframe,lang):
 
 
 
-    
+def pluginsView(frame,ttkframe,lang):
 
-    
+    plugins=['youtube basic upload','']
         
 
 def statsView(frame,ttkframe,lang):
@@ -5728,123 +5729,6 @@ def statsView(frame,ttkframe,lang):
     
 
 
-def center_window(window):
-    window.update_idletasks()
-    width = window.winfo_width()
-    height = window.winfo_height()
-    x = (window.winfo_screenwidth() // 2) - (width // 2)
-    y = (window.winfo_screenheight() // 2) - (height // 2)
-    window.geometry('{}x{}+{}+{}'.format(width, height, x, y))
-
-# 信息消息框
-def showinfomsg(message,title='hints',DURATION = 2000,parent=None):
-    # msg1 = messagebox.showinfo(title="消息提示", message=message)
-    # messagebox.after(2000,msg1.destroy)
-    # parent.focus_force()
-    top = Toplevel(parent)
-    top.title(title)
-    center_window(top)    
-    # Update the Toplevel window's width to adapt to the message width
-
-    message_widget=Message(top, text=message, padx=120, pady=120)
-    message_widget.pack()
-    message_widget.update_idletasks()
-    window_width = message_widget.winfo_reqwidth() + 40  # Add padding      
-    top.geometry(f"{window_width}x200")  # You can adjust the height as needed      
-    top.after(DURATION, top.destroy)
-
-
-# 疑问消息框
-
-# def askquestionmsg(message):
-#     msg4 = messagebox.askquestion(title="询问确认", message=message)
-#     print(msg4)
-
-
-# def askokcancelmsg(message):
-#     msg5 = messagebox.askokcancel(title="确定或取消", message=message)
-#     print(msg5)
-
-
-# def askretrycancelmsg(message):
-#     msg6 = messagebox.askretrycancel(title="重试或取消", message=message)
-#     print(msg6)
-
-
-# def askyesonmsg(message):
-#     msg7 = messagebox.askyesno(title="是或否", message="是否开启团战")
-#     print(msg7)
-
-
-# def askyesnocancelmsg(message):
-#     msg8 = messagebox.askyesnocancel(title="是或否或取消", message="是否打大龙", default=messagebox.CANCEL)
-#     print(msg8)
-
-def  queryProxies(logger,city=None,state=None,country=None,tags=None,network_type=None,status=None,frame=None,tree=None,langlist=None):
-    city=city.lower()
-    country=country.lower()
-    tags=tags.lower()
-    if status=='valid':
-        status=1
-    elif status=='invalid':
-        status=0
-    else:
-        status=2        
-    if city=='':
-        city=None
-    if country=='':
-        country=None  
-    if tags=='':
-        tags=None      
-    if state=='':
-        state=None
-    if network_type=='':
-        network_type=None 
-    db_rows=  ProxyModel.filter_proxies(city=city,country=country,tags=tags,status=status,state=state,network_type=network_type)
-    hints=None
-
-
- 
-    if db_rows is not None:
-        if tree != None:
-            records = tree.get_children()
-            for element in records:
-                tree.delete(element) 
-            for row in db_rows:
-
-                proxy_id = row.id
-                proxy_id=CustomID(custom_id=row.id).to_hex()
-                tree.tag_configure('checkbox', background='lightblue')  # Customize background for checkboxes
-                tree.tag_configure('delete', background='lightcoral')   # Customize background for delete buttons
-
-                tree.insert(
-                        "", 0, text=proxy_id,
-                        values=(row.proxy_host, row.proxy_port, row.status, row.city, row.country, row.tags, row.proxy_validate_network_type, row.inserted_at)# Add a tag to the item
-                    )
-        if langlist !=None:
-            langlist.delete(0,tk.END)
-            logger.debug(f'we found {len(db_rows)} record matching ')
-            i=0
-            for row in db_rows:
-                proxy_id = str(row.id)
-                host=str(row.proxy_host)
-                port=str(row.proxy_port)
-                protcol=row.proxy_protocol
-                print(f"add this {proxy_id+':'+host+'-'+port} to list")
-                langlist.insert(tk.END, host+'-'+port+'-'+protcol+':'+proxy_id)
-                langlist.itemconfig(int(i), bg = "lime")
-
-
-        hints=f'there is {len(db_rows)} matching records found for query'
-        logger.debug(f'search and display finished:\n')
-    else:
-        logger.debug(f'there is no matching records for query:\n')
-        hints=f'there is {len(db_rows)} matching records found for query'
-        
-    showinfomsg(hints)
-    # lbl15 = tk.Label(frame,bg="lightyellow", text=hints)
-    # lbl15.grid(row=5,column=1, sticky=tk.W)
-    # lbl15.after(2000,lbl15.destroy)
 
 
 def split_proxy(proxy_string):
@@ -5943,10 +5827,32 @@ def _copy(event):
     except:
         pass
 
-def proxyView(frame,ttkframe,lang):
-
-    
+def bulkproxyimportView(frame):
  
+    newWindow = tk.Toplevel(frame)
+    newWindow.geometry(window_size)
+    #缺少这两行填充设置，两个frame展示的大小始终是不对的
+    newWindow.rowconfigure(0, weight=1)
+    newWindow.columnconfigure((0,1), weight=1)
+
+    newWindow.title('user bulk import')
+    newWindow.grid_rowconfigure(0, weight=1)
+    newWindow.grid_columnconfigure(0, weight=1, uniform="group1")
+    newWindow.grid_columnconfigure(1, weight=1, uniform="group1")
+    newWindow.grid_columnconfigure(0, weight=1,
+                                      minsize=int(0.5*width)
+
+                                      )
+    newWindow.grid_columnconfigure(1, weight=2)
+    
+    account_frame_left = tk.Frame(newWindow, height = height)
+    account_frame_left.grid(row=0,column=0,sticky="nsew")
+    account_frame_right = tk.Frame(newWindow, height = height)
+    account_frame_right.grid(row=0,column=1,sticky="nsew") 
+    proxyView(account_frame_right)
+
+
+    frame=account_frame_left
 
 
     lbl15 = tk.Label(frame, text='copy proxy info here')
@@ -5985,6 +5891,380 @@ def proxyView(frame,ttkframe,lang):
 
 
 
+def newproxyView(frame):
+    newWindow = tk.Toplevel(frame)
+    newWindow.geometry(window_size)
+    #缺少这两行填充设置，两个frame展示的大小始终是不对的
+    newWindow.rowconfigure(0, weight=1)
+    newWindow.columnconfigure((0,1), weight=1)
+
+    newWindow.title('proxy bulk import')
+    newWindow.grid_rowconfigure(0, weight=1)
+    newWindow.grid_columnconfigure(0, weight=1, uniform="group1")
+    newWindow.grid_columnconfigure(1, weight=1, uniform="group1")
+    newWindow.grid_columnconfigure(0, weight=1,
+                                      minsize=int(0.5*width)
+
+                                      )
+    newWindow.grid_columnconfigure(1, weight=2)
+    
+    account_frame_left = tk.Frame(newWindow, height = height)
+    account_frame_left.grid(row=0,column=0,sticky="nsew")
+    account_frame_right = tk.Frame(newWindow, height = height)
+    account_frame_right.grid(row=0,column=1,sticky="nsew") 
+    proxyView(account_frame_right)
+
+
+    ttkframe=account_frame_left
+
+
+
+    l_provider = tk.Label(ttkframe, text=settings[locale]['l_provider']
+                          )
+    # l_platform.place(x=10, y=90)
+    l_provider.grid(row = 0, column = 0,  padx=14, pady=15)    
+
+    proxyprovider = tk.StringVar()
+    proxyprovider_box = ttk.Combobox(ttkframe, textvariable=proxyprovider)
+
+
+    def proxyproviderdb_values():
+
+
+        proxyprovider_names = list(dict(PROXY_PROVIDER_TYPE.PROXY_PROVIDER_TYPE_TEXT).values())
+
+        proxyprovider_box['values'] = proxyprovider_names
+
+    def proxyproviderdb_refresh(event):
+        proxyprovider_box['values'] = proxyproviderdb_values()
+
+    proxyprovider_box['values'] = proxyproviderdb_values()
+
+
+
+    def proxyproviderOptionCallBack(*args):
+        print(proxyprovider.get())
+        print(proxyprovider_box.current())
+
+    proxyprovider.set("Select From providers")
+    proxyprovider.trace('w', proxyproviderOptionCallBack)
+    proxyprovider_box.bind('<FocusIn>', lambda event: proxyproviderdb_refresh(event))
+
+    # proxyprovider_box.config(values =proxyprovider_names)
+    proxyprovider_box.grid(row = 0, column = 5,  padx=14, pady=15)    
+
+    channel_cookie_user= tk.StringVar()
+    proxy_host=tk.StringVar()
+    proxy_port=tk.StringVar()
+    proxy_ip=tk.StringVar()
+
+    username = tk.StringVar()
+    proxy_option_account = tk.StringVar()
+    password = tk.StringVar()
+    refresh_url= tk.StringVar()
+    username = tk.StringVar()
+    proxy_tag = tk.StringVar()
+    password = tk.StringVar()
+
+
+
+    l_host = tk.Label(ttkframe, text=settings[locale]['L_proxy_host']
+                          )
+    l_host.grid(row = 7, column = 0,  padx=14, pady=15)    
+
+    e_host = tk.Entry(ttkframe, width=int(width*0.01), textvariable=proxy_host)
+    e_host.grid(row = 7, column = 5,  padx=14, pady=15,sticky='w')    
+
+
+
+    l_port = tk.Label(ttkframe, text=settings[locale]['L_proxy_port']
+                          )
+    l_port.grid(row = 8, column = 0,  padx=14, pady=15)    
+
+    e_port = tk.Entry(ttkframe, width=int(width*0.01), textvariable=proxy_port)
+    e_port.grid(row = 8, column = 5,  padx=14, pady=15,sticky='w')    
+
+
+    l_ip = tk.Label(ttkframe, text=settings[locale]['L_proxy_ip']
+                          )
+    l_ip.grid(row = 9, column = 0,  padx=14, pady=15)    
+
+    e_ip = tk.Entry(ttkframe, width=int(width*0.01), textvariable=proxy_ip)
+    e_ip.grid(row = 9, column = 5,  padx=14, pady=15,sticky='w')    
+
+
+
+    l_username = tk.Label(ttkframe, text=settings[locale]['username']
+                          )
+    l_username.grid(row = 10, column = 0,  padx=14, pady=15)    
+
+    e_username = tk.Entry(ttkframe, width=int(width*0.01), textvariable=username)
+    e_username.grid(row = 10, column = 5,  padx=14, pady=15,sticky='w')    
+
+
+
+
+    l_password = tk.Label(ttkframe, text=settings[locale]['password']
+                          )
+    e_password = tk.Entry(ttkframe, width=int(width*0.01), textvariable=password)
+
+    l_password.grid(row = 11, column = 0,  padx=14, pady=15)    
+    e_password.grid(row = 11, column = 5,  padx=14, pady=15,sticky='w')   
+
+
+    l_refresh_url = tk.Label(ttkframe, text=settings[locale]['L_refresh_url']
+                          )
+    l_refresh_url.grid(row = 12, column = 0,  padx=14, pady=15)    
+
+    e_refresh_url = tk.Entry(ttkframe, width=int(width*0.01), textvariable=refresh_url)
+    e_refresh_url.grid(row = 12, column = 5,  padx=14, pady=15,sticky='w')    
+
+    l_tag = tk.Label(ttkframe, text=settings[locale]['L_proxy_tag']
+                          )
+    l_tag.grid(row = 13, column = 0,  padx=14, pady=15)    
+
+    e_tag = tk.Entry(ttkframe, width=int(width*0.01), textvariable=proxy_tag)
+    e_tag.grid(row = 13, column = 5,  padx=14, pady=15,sticky='w')    
+
+    
+ 
+    l_iptype = tk.Label(ttkframe, text=settings[locale]['l_iptype']
+                          )
+    l_iptype.grid(row = 1, column = 0,  padx=14, pady=15)    
+
+    iptype = tk.StringVar()
+    iptype_box = ttk.Combobox(ttkframe, textvariable=iptype)
+
+
+    def iptypedb_values():
+        platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
+
+
+        platform_names = list(dict(IP_TYPE.IP_TYPE_TEXT).values())
+
+        iptype_box['values'] = platform_names
+
+    def iptypedb_refresh(event):
+        iptype_box['values'] = iptypedb_values()
+
+    iptype_box['values'] = iptypedb_values()
+
+
+
+    def iptypeOptionCallBack(*args):
+        print(iptype.get())
+        print(iptype_box.current())
+
+    iptype.set("Select From ip type")
+    iptype.trace('w', iptypeOptionCallBack)
+    iptype_box.bind('<FocusIn>', lambda event: iptypedb_refresh(event))
+    iptype_names = list(dict(IP_TYPE.IP_TYPE_TEXT).values())
+
+    iptype_box.config(values =iptype_names)
+    iptype_box.grid(row = 1, column = 5,  padx=14, pady=15)   
+
+
+ 
+    l_ipsource = tk.Label(ttkframe, text=settings[locale]['l_ipsource']
+                          )
+    # l_platform.place(x=10, y=90)
+    l_ipsource.grid(row = 2, column = 0,  padx=14, pady=15)    
+
+    ipsource = tk.StringVar()
+    ipsource_box = ttk.Combobox(ttkframe, textvariable=ipsource)
+
+
+    def ipsourcedb_values():
+        platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
+
+
+        platform_names = list(dict(IP_SOURCE_TYPE.IP_SOURCE_TYPE_TEXT).values())
+
+        ipsource_box['values'] = platform_names
+
+    def ipsourcedb_refresh(event):
+        ipsource_box['values'] = ipsourcedb_values()
+
+    ipsource_box['values'] = ipsourcedb_values()
+
+
+
+    def ipsourceOptionCallBack(*args):
+        print(ipsource.get())
+        print(ipsource_box.current())
+
+    ipsource.set("Select From ip source")
+    ipsource.trace('w', ipsourceOptionCallBack)
+    ipsource_box.bind('<FocusIn>', lambda event: ipsourcedb_refresh(event))
+    ipsource_names = list(dict(IP_SOURCE_TYPE.IP_SOURCE_TYPE_TEXT).values())
+
+    ipsource_box.config(values =ipsource_names)
+    ipsource_box.grid(row = 2, column = 5,  padx=14, pady=15)   
+
+
+ 
+    l_proxycountry = tk.Label(ttkframe, text=settings[locale]['l_proxycountry']
+                          )
+    # l_platform.place(x=10, y=90)
+    l_proxycountry.grid(row = 3, column = 0,  padx=14, pady=15)    
+
+    proxycountry = tk.StringVar()
+    proxycountry_box = ttk.Combobox(ttkframe, textvariable=proxycountry)
+    proxycountrycode = tk.StringVar()
+
+    def proxycountrydb_values():
+        proxycountry_names = [x.name for x in list(pycountry.countries)]
+
+        proxycountry_box['values'] = proxycountry_names
+
+    def proxycountrydb_refresh(event):
+        proxycountry_box['values'] = proxycountrydb_values()
+
+    proxycountry_box['values'] = proxycountrydb_values()
+
+
+
+    def proxycountryOptionCallBack(*args):
+        print(proxycountry.get())
+        country_code= pycountry.countries.get(name=proxycountry.get())
+        if country_code:
+            country_code=country_code.alpha_2
+        proxycountrycode.set(country_code)
+        print(proxycountry_box.current())
+
+    proxycountry.set("Select From country")
+    proxycountry.trace('w', proxycountryOptionCallBack)
+    proxycountry_box.bind('<FocusIn>', lambda event: proxycountrydb_refresh(event))
+
+    # proxycountry_box.config(values =proxycountry_names)
+    proxycountry_box.grid(row =3, column = 5,  padx=14, pady=15)   
+
+
+ 
+    l_proxystate = tk.Label(ttkframe, text=settings[locale]['l_proxystate']
+                          )
+    # l_platform.place(x=10, y=90)
+    l_proxystate.grid(row = 4, column = 0,  padx=14, pady=15)    
+
+    proxystate = tk.StringVar()
+    proxystate_box = ttk.Combobox(ttkframe, textvariable=proxystate)
+    proxystatecode = tk.StringVar()
+
+
+    def proxystatedb_values():
+        proxystate_names=[]
+        print(f'cache proxycountry_codes : {proxycountrycode.get()}')
+        if proxycountry.get() is not None:
+            print(proxycountry.get() )
+            if proxycountrycode.get():
+                country_code=proxycountrycode.get()
+                country_code= pycountry.countries.get(name=proxycountry.get())
+
+                country_code=country_code.alpha_2
+                print(f"country_code:{country_code}")
+
+                proxystate_names = pycountry.subdivisions.get(country_code=country_code)
+                proxystate_names = [x.name for x in proxystate_names]
+
+                print(f"proxystate_names:{proxystate_names}")
+
+                proxystate_box['values'] = proxystate_names
+
+    def proxystatedb_refresh(event):
+        proxystate_box['values'] = proxystatedb_values()
+
+    proxystate_box['values'] = proxystatedb_values()
+
+
+
+    def proxystateOptionCallBack(*args):
+        print(proxystate.get())
+        print(proxystate_box.current())
+        country_code= pycountry.countries.get(name=proxycountry.get())
+        if country_code:
+            country_code=country_code.alpha_2
+            proxystatecode= pycountry.subdivisions.get(name=proxystate.get())
+            print(f"proxystatecode:{proxystatecode}")
+
+    proxystate.set("Select From state")
+    proxystate.trace('w', proxystateOptionCallBack)
+    proxystate_box.bind('<FocusIn>', lambda event: proxystatedb_refresh(event))
+
+    proxystate_box.config(values =[])
+    proxystate_box.grid(row = 4, column = 5,  padx=14, pady=15)   
+
+
+ 
+    l_proxycity = tk.Label(ttkframe, text=settings[locale]['l_proxycity']
+                          )
+    # l_platform.place(x=10, y=90)
+    l_proxycity.grid(row = 5, column = 0,  padx=14, pady=15)    
+
+    proxycity = tk.StringVar()
+    proxycity_box = ttk.Combobox(ttkframe, textvariable=proxycity)
+
+
+    def proxycitydb_values():
+        platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
+
+
+        platform_names = list(dict(PROXY_PROVIDER_TYPE.PROXY_PROVIDER_TYPE_TEXT).values())
+
+        proxycity_box['values'] = platform_names
+
+    def proxycitydb_refresh(event):
+        proxycity_box['values'] = proxycitydb_values()
+
+    proxycity_box['values'] = proxycitydb_values()
+
+
+
+    def proxycityOptionCallBack(*args):
+        print(proxycity.get())
+        print(proxycity_box.current())
+
+    proxycity.set("Select From city")
+    proxycity.trace('w', proxycityOptionCallBack)
+    proxycity_box.bind('<FocusIn>', lambda event: proxycitydb_refresh(event))
+    proxycity_names = list(dict(PROXY_PROVIDER_TYPE.PROXY_PROVIDER_TYPE_TEXT).values())
+
+    proxycity_box.config(values =proxycity_names)
+    proxycity_box.grid(row = 5, column = 5,  padx=14, pady=15)   
+
+
+
+
+
+def proxyView(frame):
+
+    
+
+
+    operation_frame = tk.Frame(frame,  bd=1, relief=tk.FLAT)
+    operation_frame.grid(row=1, column=0,sticky=tk.NW)
+    query_frame = tk.Frame(frame,  bd=1, relief=tk.FLAT)
+    query_frame.grid(row=0, column=0,sticky=tk.NW)
+
+
+    b_new_proxy=tk.Button(operation_frame,text="New proxy",command=lambda: threading.Thread(target=newproxyView(frame)).start() )
+    b_new_proxy.grid(row = 0, column = 0,  padx=14, pady=15)    
+
+    b_bulk_import_users=tk.Button(operation_frame,text="bulk import",command=lambda: threading.Thread(target=bulkproxyimportView(frame)).start() )
+    # b_bulk_import_users.place(x=10, y=450)    
+    b_bulk_import_users.grid(row = 0, column = 1,  padx=14, pady=15)    
+
+    b_check_proxy=tk.Button(operation_frame,text="bulk check proxy",command=lambda: threading.Thread(target=updateproxies(prod_engine,proxy_textfield.get("1.0", tk.END),logger)).start() )
+    b_check_proxy.grid(row=0,column=2, sticky=tk.W)      
+
+    result_frame = tk.Frame(frame,  bd=1, relief=tk.FLAT)
+    result_frame.grid(row=3, column=0,sticky=tk.NW)
+
+    result_frame.grid_rowconfigure(0, weight=1)
+    result_frame.grid_columnconfigure(0, weight=1)
+    result_frame.grid_columnconfigure(1, weight=1)
+    
+
+
         
     global city,country,proxyTags,proxyStatus
     city = tk.StringVar()
@@ -5993,45 +6273,45 @@ def proxyView(frame,ttkframe,lang):
     country = tk.StringVar()
     proxyTags = tk.StringVar()
 
-    lbl15 = tk.Label(ttkframe, text='by city.')
+    lbl15 = tk.Label(query_frame, text='by city.')
     # lbl15.place(x=430, y=30, anchor=tk.NE)
     # lbl15.pack(side='left')
 
     lbl15.grid(row=0,column=0, sticky=tk.W)
 
-    txt15 = tk.Entry(ttkframe,textvariable=city)
+    txt15 = tk.Entry(query_frame,textvariable=city)
     txt15.insert(0,'Los')
     # txt15.place(x=580, y=30, anchor=tk.NE)
     # txt15.pack(side='left')
     txt15.grid(row=1,column=0, sticky=tk.W)
 
 
-    l_state= tk.Label(ttkframe, text='by state.')
+    l_state= tk.Label(query_frame, text='by state.')
     l_state.grid(row=0,column=1, sticky=tk.W)
-    e_state = tk.Entry(ttkframe,textvariable=state)
+    e_state = tk.Entry(query_frame,textvariable=state)
     e_state.insert(0,'LA')
     e_state.grid(row=1,column=1, sticky=tk.W)
 
 
-    lbl16 = tk.Label(ttkframe, text='by country.')
+    lbl16 = tk.Label(query_frame, text='by country.')
     lbl16.grid(row=0,column=2, sticky=tk.W)
-    txt16 = tk.Entry(ttkframe,textvariable=country)
+    txt16 = tk.Entry(query_frame,textvariable=country)
     txt16.insert(0,'USA')
     txt16.grid(row=1,column=2, sticky=tk.W)
     
-    lb17 = tk.Label(ttkframe, text='by tags.')
+    lb17 = tk.Label(query_frame, text='by tags.')
     lb17.grid(row=0,column=3, sticky=tk.W)
-    txt17 = tk.Entry(ttkframe,textvariable=proxyTags)
+    txt17 = tk.Entry(query_frame,textvariable=proxyTags)
     txt17.insert(0,'youtube')
     txt17.grid(row=1,column=3, sticky=tk.W)
 
-    l_networktype = tk.Label(ttkframe, text='by networktype.')
+    l_networktype = tk.Label(query_frame, text='by networktype.')
     l_networktype.grid(row=2,column=0, sticky=tk.W)
-    e_networktype = tk.Entry(ttkframe,textvariable=network_type)
+    e_networktype = tk.Entry(query_frame,textvariable=network_type)
     e_networktype.insert(0,'resident')
     e_networktype.grid(row=3,column=0, sticky=tk.W)
 
-    lb18 = tk.Label(ttkframe, text='by status.')
+    lb18 = tk.Label(query_frame, text='by status.')
     lb18.grid(row=2,column=1, sticky=tk.W)
 
 
@@ -6046,7 +6326,7 @@ def proxyView(frame,ttkframe,lang):
     proxyStatus.trace('w', proxyStatusCallBack)
 
 
-    proxyStatusbox = ttk.Combobox(ttkframe, textvariable=proxyStatus)
+    proxyStatusbox = ttk.Combobox(query_frame, textvariable=proxyStatus)
     proxyStatusbox.config(values = ('valid', 'invalid','unchecked'))
     proxyStatusbox.grid(row = 3, column = 1, padx=14, pady=15)    
 
@@ -6054,315 +6334,28 @@ def proxyView(frame,ttkframe,lang):
 
 
 
-    btn5= tk.Button(ttkframe, text="Get proxy list", padx = 0, pady = 0,command = lambda: queryProxy(city.get(),state.get(),country.get(),proxyTags.get(),network_type.get(),
-                            proxyStatus.get()))
+    btn5= tk.Button(query_frame, text="Get proxy list", padx = 0, pady = 0,command = lambda: queryProxy(
+        frame=result_frame,canvas=None,tab_headers=tab_headers,city=city.get(),state=state.get(),country=country.get(),tags=proxyTags.get(),network_type=network_type.get(), status=proxyStatus.get()))
+
+
 
     btn5.grid(row=4,column=0, sticky=tk.W)    
     
-    btn5= tk.Button(ttkframe, text="Reset", padx = 0, pady = 0,command = lambda:(proxyStatus.set(""),country.set(""),state.set(""),city.set(""),proxyTags.set(""),proxyStatus.set("Select From Status"),network_type.set("")))
+    btn5= tk.Button(query_frame, text="Reset", padx = 0, pady = 0,command = lambda:(proxyStatus.set(""),country.set(""),state.set(""),city.set(""),proxyTags.set(""),proxyStatus.set("Select From Status"),network_type.set("")))
     btn5.grid(row=4,column=1, sticky=tk.W)    
 
 
-    # Create a frame for the canvas and scrollbar(s).
-    chooseAccountsWindow=ttkframe
-    frame2 = tk.Frame(chooseAccountsWindow, bg='Red', bd=1, relief=tk.FLAT)
-    frame2.grid(row=5, column=0, rowspan=5,columnspan=5,sticky=tk.NW)
 
-    frame2.grid_rowconfigure(0, weight=1)
-    frame2.grid_columnconfigure(0, weight=1)
-    frame2.grid_columnconfigure(1, weight=1)
-    # Add a canvas in that frame.
-    canvas = tk.Canvas(frame2, bg='Yellow')
-    canvas.grid(row=0, column=0)
-
-        
-    def refreshcanvas(headers,datas):
-
-        # Create a vertical scrollbar linked to the canvas.
-        vsbar = tk.Scrollbar(frame2, orient=tk.VERTICAL, command=canvas.yview)
-        vsbar.grid(row=0, column=1, sticky=tk.NS)
-        canvas.configure(yscrollcommand=vsbar.set)
-
-        # Create a horizontal scrollbar linked to the canvas.
-        hsbar = tk.Scrollbar(frame2, orient=tk.HORIZONTAL, command=canvas.xview)
-        hsbar.grid(row=1, column=0, sticky=tk.EW)
-        canvas.configure(xscrollcommand=hsbar.set)
-
-        # Create a frame on the canvas to contain the grid of buttons.
-        buttons_frame = tk.Frame(canvas)
-            
-
-        COLS=len(headers)+1
-        
-        ROWS=len(datas)+1
-        if COLS>9:
-            COLS_DISP=9
-        else:
-            COLS_DISP=COLS
-        if ROWS>20:
-            ROWS_DISP=20
-        else:
-            ROWS_DISP=ROWS        
-        # Add the buttons to the frame.
-        add_buttons = [tk.Button() for j in range(ROWS+1)] 
-        del_buttons = [tk.Button() for j in range(ROWS+1)] 
-        
-        # set table header
-
-
-        for j,h in enumerate(headers):
-            label = tk.Label(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text=h)
-            label.grid(row=0, column=j, sticky='news')                    
-            if h=='operation':
-                button = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                    activebackground= 'orange', text='operation')
-                button.grid(row=0, column=j, sticky='news')
-
-                # delete_button = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                #                     activebackground= 'orange', text='operation')
-                # delete_button.grid(row=0, column=j-1, sticky='news')
-
-        for i,row in enumerate(datas):
-            i=i+1
-            for j in range(0,len(headers)):
-                
-                if headers[j]!='operation':
-                    label = tk.Label(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                        activebackground= 'orange', text=row[headers[j]])
-                    label.grid(row=i ,column=j, sticky='news')         
-
-              
-            add_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text='check',command=lambda x=i-1  :check_selected_row(rowid=datas[x]['id']))
-            add_buttons[i].grid(row=i, column=len(headers)-3, sticky='news')
-              
-            add_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text='edit',command=lambda x=i-1  :update_selected_row(rowid=datas[x]['id']),frame=frame)
-            add_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
-
-            del_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text='delete',command=lambda x=i-1 :remove_selected_row(rowid=datas[x]['id']))
-            del_buttons[i].grid(row=i, column=len(headers)-1, sticky='news')
-                    
-        # Create canvas window to hold the buttons_frame.
-        canvas.create_window((0,0), window=buttons_frame, anchor=tk.NW)
-
-        buttons_frame.update_idletasks()  # Needed to make bbox info available.
-        bbox = canvas.bbox(tk.ALL)  # Get bounding box of canvas with Buttons.
-
-        # Define the scrollable region as entire canvas with only the desired
-        # number of rows and columns displayed.
-        w, h = bbox[2]-bbox[1], bbox[3]-bbox[1]
-
-
-        dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
-        if dw>int(width/2):
-            dw,dh=int(width/2),int(height/2)
-        canvas.configure(scrollregion=bbox, width=dw, height=dh)
-        print('========',w,h,dw,dh,bbox)
     tab_headers=['id', 'provider', 'protocol', 'host', 'port', 'username', 'pass', 'country', 'state', 'city', 'tags', 'status', 'validate_results', 'is_deleted', 'inserted_at']
     tab_headers.append('operation')
     tab_headers.append('operation')
     tab_headers.append('operation')
     
-    refreshcanvas(tab_headers,[])
-
-    def check_selected_row(rowid):
-        
-        print('check proxy whether valid and its city country')
-        result=ProxyModel.get_proxy_by_id(id=rowid)
-        # if len(results)>0:
-        #     showinfomsg(f'there are {len(results)} proxy to be validated')
-        #     for proxy in results:
-        #         proxy_string=(
-        #                     f"{proxy.proxy_username}:{proxy.proxy_password}@{proxy.proxy_host}:{proxy.proxy_port}"
-        #                     if proxy.proxy_username
-        #                     else f"{proxy.proxy_host}:{proxy.proxy_port}"
-        #                 )
-        #         http_proxy=f"socks5://{proxy_string}"
-        #         https_proxy=f"socks5://{proxy_string}"
-
-        #         check=CheckIP(http_proxy=http_proxy,https_proxy=https_proxy)
-        #         ip=check.check_api64ipify()
-        #         print('check_api64ipify',ip)
-        #         asp=check.check_asn_type()
-        #         print('asp',asp)
-        #         dnscountry=check.check_dns_country(ip)
-        #         print('dnscountry',dnscountry)
-
-        #         ipcountry=check.check_ip_coutry(ip)
-        #         print('ipcountry',ipcountry)
-
-
-    def queryProxy(city,state,country,tags,network_type,status):
-        city=city.lower()
-        country=country.lower()
-        tags=tags.lower()
-        if status=='valid':
-            status=1
-        elif status=='invalid':
-            status=0
-        else:
-            status=2        
-        if city=='':
-            city=None
-        if country=='':
-            country=None  
-        if tags=='':
-            tags=None      
-        if state=='':
-            state=None
-        if network_type=='':
-            network_type=None 
-        db_rows=  ProxyModel.filter_proxies(city=city,country=country,tags=tags,status=status,state=state,network_type=network_type)
-        # Extract account names and set them as options in the account dropdown
-        if db_rows is None or len(db_rows)==0:
-            # langlist.delete(0,tk.END)
-            showinfomsg(message=f"try to add proxy first",parent=chooseAccountsWindow)    
-
-        else:                
-            logger.debug(f'we found {len(db_rows)} record matching ')
-
-            # langlist.delete(0,tk.END)
-            i=0
-            account_data=[]
-            for row in db_rows:
-                account={
-                    "id":CustomID(custom_id=row.id).to_hex(),
-                    "provider": dict(PROXY_PROVIDER_TYPE.PROXY_PROVIDER_TYPE_TEXT)[row.proxy_provider_type],
-                    "protocol":row.proxy_protocol,
-                    "host":row.proxy_host,
-                    "port":row.proxy_port,                    
-                    "username":row.proxy_username,
-                    "pass":row.proxy_password,
-                    "country":row.country,
-                    "state":row.state,
-                    "city":row.city,                    
-                    "tags":row.tags,                    
-                    "status":row.status,                    
-                    "validate_results":row.proxy_validate_results,
-                    "is_deleted":row.is_deleted   ,
-                    "inserted_at":datetime.fromtimestamp(row.inserted_at).strftime("%Y-%m-%d %H:%M:%S")
-                }
-                account_data.append(account)
-                print(account.keys())
-            refreshcanvas(tab_headers,account_data)
-        
-        
-                
-            logger.debug(f'Account search and display finished')
-                    
-
-
-    # Bind the platform selection event to the on_platform_selected function
 
 
 
-    
-    def remove_selected_row(rowid):
 
-
-
-        print('you want to remove these selected account',rowid)
-        if rowid==0:
-
-            showinfomsg(message='you have not selected  account at all.choose one or more',parent=chooseAccountsWindow)      
-        
-        else:
-
-
-            if rowid :
-                rowid=CustomID(custom_id=rowid).to_bin()
-                result=ProxyModel.delete_by_id(id=rowid,is_deleted=True)
-
-                if result:
-                    logger.debug(f'this account {rowid} removed success')
-                    showinfomsg(message=f'this account {rowid} removed success',parent=chooseAccountsWindow)    
-                else:
-                    logger.debug(f'you cannot remove this account {rowid}, not added before')
-                    showinfomsg(message=f'this account {rowid} not added before',parent=chooseAccountsWindow)    
-            logger.debug(f'end to remove,reset account {rowid}')
-
-
-    def update_selected_row(rowid):
-        # showinfomsg(message='not supported yet',parent=chooseAccountsWindow)    
-        chooseAccountsWindow = tk.Toplevel(frame)
-        chooseAccountsWindow.geometry(window_size)
-        chooseAccountsWindow.title('Edit and update account info ')
-        rowid=CustomID(custom_id=rowid).to_bin()
-
-        result=ProxyModel.get_proxy_by_id(id=rowid)
-        from playhouse.shortcuts import model_to_dict
-        result = model_to_dict(result)
-        print('----------',result)
-
-        i=1
-        newresult=result
-        rowkeys={}
-        for key,value in result.items():
-            if key=='id':
-                print('convert id to hex',value)
-                value=CustomID(custom_id=value).to_hex()
-                print('convert id to hex',value)
-                
-            if key=='platform':
-                value=  dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[value]
-            if key=='provider':
-                value=  dict(PROXY_PROVIDER_TYPE.PROXY_PROVIDER_TYPE_TEXT)[value]
-                
-            if key=='status':
-                value =dict(PROXY_STATUS.PROXY_STATUS_TEXT)[value]
-            if value==None:
-                value=''
-            if key=='inserted_at':
-                value=datetime.fromtimestamp(value).strftime("%Y-%m-%d %H:%M:%S")          
-            print('current key',key,value)
-            if not  key  in ['id','inserted_at','unique_hash','platform']:
-            
-                label= tk.Label(chooseAccountsWindow, padx=7, pady=7, relief=tk.RIDGE,
-                                    activebackground= 'orange', text=key)
-                label.grid(row=i ,column=0, sticky='news')         
-                entry = tk.Entry(chooseAccountsWindow)
-
-                entry.insert(0, value)
-                entry.grid(row=i ,column=1, sticky='news')   
-                rowkeys[i]=key
-                def callback(event):
-
-                    x = event.widget.grid_info()['row']
-                    print(f'current input changes for {rowkeys[x]}',event.widget.get())   
-
-                    newresult[rowkeys[x]]=event.widget.get()
-                    if rowkeys[x]=='is_deleted':
-                        print('is deleted',type(event.widget.get()))
-                        value='0'
-                        if event.widget.get()=='0':
-                            value=False
-                        elif event.widget.get()=='1':
-                            value=True                        
-                        newresult[rowkeys[x]]=value
-
-                    print('============update row',newresult)
-
-                # variable.trace('w', lambda:setEnty())    
-                entry.bind("<KeyRelease>", callback)
-
-            else:
-
-                label = tk.Label(chooseAccountsWindow, padx=7, pady=7, relief=tk.RIDGE,
-                                    activebackground= 'orange', text=key)
-                label.grid(row=i ,column=0, sticky='news')         
-                variable=tk.StringVar()
-                variable.set(value)
-                entry = tk.Entry(chooseAccountsWindow,textvariable=variable)
-                entry.grid(row=i ,column=1, sticky='news') 
-                entry.config(state='disabled')
-            i=i+1
-
-        btn5= tk.Button(chooseAccountsWindow, text="save", padx = 0, pady = 0,command = lambda:ProxyModel.update_proxy(id=rowid,proxy_data=newresult))
-        btn5.grid(row=i+1,column=2, sticky=tk.W)    
-
+    refreshProxycanvas(canvas=None,frame=result_frame,headers=tab_headers,datas=[])
 
 def metaView(left,right,lang):
     global metaView_video_folder
@@ -6844,14 +6837,14 @@ def render(root,window,lang):
 
 
     proxy_frame = ttk.Frame(tab_control)
-    proxy_frame.grid_rowconfigure(0, weight=1)
-    proxy_frame.grid_columnconfigure(0, weight=1, uniform="group1")
-    proxy_frame.grid_columnconfigure(1, weight=1, uniform="group1")
-    proxy_frame.grid_columnconfigure(0, weight=1,
-                                      minsize=int(0.5*width)
+    # proxy_frame.grid_rowconfigure(0, weight=1)
+    # proxy_frame.grid_columnconfigure(0, weight=1, uniform="group1")
+    # proxy_frame.grid_columnconfigure(1, weight=1, uniform="group1")
+    # proxy_frame.grid_columnconfigure(0, weight=1,
+    #                                   minsize=int(0.5*width)
 
-                                      )
-    proxy_frame.grid_columnconfigure(1, weight=2)
+    #                                   )
+    # proxy_frame.grid_columnconfigure(1, weight=2)
     proxy_frame.grid(row=0, column=0, sticky="nsew")
     
     proxy_frame_left = tk.Frame(proxy_frame, height = height)
@@ -6919,6 +6912,17 @@ def render(root,window,lang):
     # stats_frame.grid_columnconfigure(1, weight=2)
     stats_frame.grid(row=0, column=0, sticky="nsew")
 
+    plugins_frame = ttk.Frame(tab_control)
+    # plugins_frame.grid_rowconfigure(0, weight=1)
+    # plugins_frame.grid_columnconfigure(0, weight=1, uniform="group1")
+    # plugins_frame.grid_columnconfigure(1, weight=1, uniform="group1")
+    # plugins_frame.grid_columnconfigure(0, weight=1,
+    #                                   minsize=int(0.5*width)
+
+    #                                   )
+    # plugins_frame.grid_columnconfigure(1, weight=2)
+    plugins_frame.grid(row=0, column=0, sticky="nsew")
+
 
     tab_control.add(install_frame, 
                      text=settings[lang]['installView'])
@@ -6934,7 +6938,7 @@ def render(root,window,lang):
     tab_control.add(proxy_frame,
                     text=settings[lang]['proxyView'])
 
-    proxyView(proxy_frame_left,proxy_frame_right,lang)
+    proxyView(proxy_frame_left)
 
     tab_control.add(video_frame, text=settings[lang]['videosView']
                     )
@@ -6997,7 +7001,9 @@ def render(root,window,lang):
 
     tab_control.add(log_tab_frame, text=settings[lang]['logView'],sticky='nswe')
 
+    pluginsView(stats_frame,root,lang)
 
+    tab_control.add(plugins_frame, text=settings[lang]['pluginsView'],sticky='nswe')
 
 
 

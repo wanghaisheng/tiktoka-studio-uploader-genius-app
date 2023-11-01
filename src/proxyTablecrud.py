@@ -8,177 +8,116 @@ from src.models.platform_model import PLATFORM_TYPE
 from src.models.upload_setting_model import UploadSettingModel
 from src.models.account_model import AccountModel
 from src.models.task_model import *
+from src.models.proxy_model import *
 from datetime import datetime,date,timedelta
 import tkinter as tk
 from src.constants import height,width,window_size
 from src.log import logger
 from src.utils import showinfomsg
-def queryTasks(frame=None,canvas=None,tab_headers=None,username=None,platform=None,status=None,video_title=None,schedule_at=None,video_id=None,pageno=None,pagecount=None,ids=None,sortby="Add DATE ASC"):
-    if pageno is None:
-        pageno=1
+from src.utils import showinfomsg,find_key,askokcancelmsg
+from pathlib import Path,PureWindowsPath,PurePath
+import asyncio
+def check_selected_row(rowid):
+    
+    print('check proxy whether valid and its city country')
+    result=ProxyModel.get_proxy_by_id(id=rowid)
+    # if len(results)>0:
+    #     showinfomsg(f'there are {len(results)} proxy to be validated')
+    #     for proxy in results:
+    #         proxy_string=(
+    #                     f"{proxy.proxy_username}:{proxy.proxy_password}@{proxy.proxy_host}:{proxy.proxy_port}"
+    #                     if proxy.proxy_username
+    #                     else f"{proxy.proxy_host}:{proxy.proxy_port}"
+    #                 )
+    #         http_proxy=f"socks5://{proxy_string}"
+    #         https_proxy=f"socks5://{proxy_string}"
 
-    if pagecount is None:
-        pagecount=50
-    if  username is not None and 'input' in username:
-        username=None
-    if username==''  or username is None:
-        username=None
-    if  schedule_at is not None and 'input' in schedule_at:
-        schedule_at=None            
-    if schedule_at=='' or schedule_at is None:
-        schedule_at=None           
-    if  video_id is not None and 'input' in video_id:
-        video_id=None            
-    if video_id=='' or video_id is None:
-        video_id=None           
-    if  video_title is not None and 'input' in video_title:
-        video_title=None            
-    if video_title=='' or video_title is None:
-        video_title=None            
-    if  platform is not None and 'choose' in platform:
-        platform=None            
-    if platform=='' or platform is None:
-        platform=None        
-    elif type(platform)==str:
-        print('======',platform)
-        print(f'query tasks for {platform} {find_key(PLATFORM_TYPE.PLATFORM_TYPE_TEXT, platform)} ')
+    #         check=CheckIP(http_proxy=http_proxy,https_proxy=https_proxy)
+    #         ip=check.check_api64ipify()
+    #         print('check_api64ipify',ip)
+    #         asp=check.check_asn_type()
+    #         print('asp',asp)
+    #         dnscountry=check.check_dns_country(ip)
+    #         print('dnscountry',dnscountry)
 
-        platform=find_key(PLATFORM_TYPE.PLATFORM_TYPE_TEXT, platform)
+    #         ipcountry=check.check_ip_coutry(ip)
+    #         print('ipcountry',ipcountry)
 
-    if status=='':
-        status=None  
-    elif  status is not None and 'choose' in status:
-        status=None             
-    elif type(status)==str:
-        print(f'query tasks for {status} {getattr(TASK_STATUS, status.upper())} ')
 
-        status=getattr(TASK_STATUS, status.upper())
+def queryProxy(frame=None,canvas=None,tab_headers=None,state=None,city=None,status=None,country=None,tags=None,network_type=None,pageno=None,pagecount=None,ids=None,sortby="Add DATE ASC",mode='query'):
 
-    if sortby=='':
-        sortby="Add DATE ASC"
-    elif sortby  in list(dict(SORT_BY_TYPE.SORT_BY_TYPE_TEXT).keys()):
-        pass
-    elif  sortby is not None and 'choose' in sortby:
-        sortby=None             
-    elif type(sortby)==str:
-        print(f'query tasks for {sortby} {getattr(SORT_BY_TYPE, sortby.upper())} ')
+    if status=='valid':
+        status=1
+    elif status=='invalid':
+        status=0
+    else:
+        status=2        
+    if city=='':
+        city=None
+    if country=='':
+        country=None  
+    if tags=='':
+        tags=None      
+    if state=='':
+        state=None
+    if network_type=='':
+        network_type=None 
+    if city is not None:
+        city=city.lower()
+    if country is not None:
 
-        sortby=getattr(SORT_BY_TYPE, sortby.upper())
+        country=country.lower()
+    if tags is not None:
 
-        # sortby=find_key(SORT_BY_TYPE.SORT_BY_TYPE_TEXT,sortby)
-        # if row.type in dict(TASK_STATUS.TASK_STATUS_TEXT).values():
-            
-        #     ptype=getattr(dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT),row.type)
-        #     ptype=dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[ptype]
-        #     print(f"{getattr(dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT),row.type)}")
-        # if row.status in dict(TASK_STATUS.TASK_STATUS_TEXT).values():
-        #     status=getattr(dict(TASK_STATUS.TASK_STATUS_TEXT),row.status)
+        tags=tags.lower()
 
-        #     print(f"{getattr(dict(TASK_STATUS.TASK_STATUS_TEXT),row.status)}")        
-
-    task_rows,counts=TaskModel.filter_tasks(status=status,schedule_at=schedule_at,platform=platform,video_title=video_title,video_id=video_id,username=username,pagecount=pagecount,pageno=pageno,ids=ids,sortby=sortby) 
-    if task_rows is None or len(task_rows)==0:
-        showinfomsg(message=f"try to add tasks  first",parent=frame,DURATION=500)    
+    db_rows=  ProxyModel.filter_proxies(city=city,country=country,tags=tags,status=status,state=state,network_type=network_type)
+    # Extract account names and set them as options in the account dropdown
+    if db_rows is None or len(db_rows)==0:
+        # langlist.delete(0,tk.END)
+        showinfomsg(message=f"try to add proxy first",parent=frame)    
 
     else:                
-        logger.debug(f'we found {counts} record matching ')
-        # showinfomsg(message=f'we found {counts} record matching',DURATION=500)
-        
-        print(f'try to clear existing result frame  {len(frame.winfo_children())} ')
+        logger.debug(f'we found {len(db_rows)} record matching ')
 
-        try:
-            print(frame.winfo_children())
-            frame.winfo_children()
-
-
-            if len(frame.winfo_children())>0:
-                for widget in frame.winfo_children():
-                    widget.destroy()      
-
-        except:
-            print('there is no result frame  at all')    
-        l_totalcount = tk.Label(frame, text=f'total:{counts} per page:{pagecount} current page: {pageno}')
-        l_totalcount.grid(row = 3, column = 0,sticky='w')            
+        # langlist.delete(0,tk.END)
         i=0
-        task_data=[]
-        # tab_headers=None
-        pagebuttons=[]
-        if counts>pagecount:
-
-            pages=counts/pagecount
-            pages=int(pages)+1
-            for i in range(pages):
-                # 这里如果没有lambda x=i 的话 后面的i+1 一直是1
-                pagebutton= tk.Button(frame, text=str(i+1), padx = 0, pady = 0,
-                                command = lambda x=i:queryTasks(canvas=canvas,frame=frame,status=status,schedule_at=schedule_at,platform=platform,
-                                                video_title=video_title,video_id=video_id,username=username,pagecount=pagecount,pageno=x+1,ids=ids,sortby=sortby) )
-                
-
-                pagebutton.grid(row=3, column=i+1,sticky=tk.NW)
-                pagebuttons.append(pagebutton)
-            # Create a frame for the canvas and scrollbar(s).
-
-        else:
-            pagebutton= tk.Button(frame, text=str(1), padx = 0, pady = 0,
-                                command = lambda x=0:queryTasks(canvas=canvas,frame=frame,status=status,schedule_at=schedule_at,platform=platform,
-                                                video_title=video_title,video_id=video_id,username=username,pagecount=pagecount,pageno=x+1,ids=ids,sortby=sortby) )
-                
-
-            pagebutton.grid(row=3, column=1,sticky=tk.NW)
-        print(f'prepare row data to render:{task_rows}')
-        for row in task_rows:
-            print('row data',row)
-            print('platform',row.platform,dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[row.platform])
-
-
-            p_value=row.platform
-            if type(row.platform)!=int:
-                p_value=100
-            task={
+        proxy_data=[]
+        for row in db_rows:
+            proxy={
                 "id":CustomID(custom_id=row.id).to_hex(),
-                "platform":dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[p_value],
-                "prorioty":row.prorioty,
-                "username":row.username,
-                "status":dict(TASK_STATUS.TASK_STATUS_TEXT)[row.status],
-                "schedule_at":row.video.release_date,
-                "proxy":row.proxy,
-                "video title":row.video.video_title,
-                "uploaded_at":datetime.fromtimestamp(row.uploaded_at).strftime("%Y-%m-%d %H:%M:%S") if row.uploaded_at else None, 
-
-                "inserted_at":datetime.fromtimestamp(row.inserted_at).strftime("%Y-%m-%d %H:%M:%S")  
+                "provider": dict(PROXY_PROVIDER_TYPE.PROXY_PROVIDER_TYPE_TEXT)[row.proxy_provider_type],
+                "protocol":row.proxy_protocol,
+                "host":row.proxy_host,
+                "port":row.proxy_port,                    
+                "username":row.proxy_username,
+                "pass":row.proxy_password,
+                "country":row.country,
+                "state":row.state,
+                "city":row.city,                    
+                "tags":row.tags,                    
+                "status":row.status,                    
+                "validate_results":row.proxy_validate_results,
+                "is_deleted":row.is_deleted   ,
+                "inserted_at":datetime.fromtimestamp(row.inserted_at).strftime("%Y-%m-%d %H:%M:%S")
             }
-            if list(task.keys())!=tab_headers:
-                tab_headers=list(task.keys())
+            proxy_data.append(proxy)
+            print(proxy.keys())
+        print(f'show header and rows based on query {tab_headers}\n{proxy_data}')
+        refreshProxycanvas(canvas=canvas,frame=frame,headers=tab_headers,datas=[],mode='query')
 
-            task_data.append(task)
-        print(f'end to prepare row data to render:{task_data}')
-        # print(f'try to clear existing rows in the tabular ')
-        # if canvas is not None:
-        #     try:
-        #         canvas.winfo_children
-        #         print('+++++++++++++++++',len(canvas.winfo_children()))
-        #         if len(canvas.winfo_children())>0:
-        #             for widget in canvas.winfo_children():
-        #                 widget.destroy()      
-
-        #     except:
-        #         print('there is no rows in the tabular at all')
-        # else:
-        #     print('there is no tabular at all')
-        tab_headers.append('operation')
-        tab_headers.append('operation')
-        tab_headers.append('operation')
-
-        print(f'show header and rows based on query {tab_headers}\n{task_data}')
-        refreshTaskcanvas(canvas=canvas,frame=frame,headers=tab_headers,datas=[])
-
-        refreshTaskcanvas(canvas=canvas,frame=frame,headers=tab_headers,datas=task_data)
+        refreshProxycanvas(canvas=canvas,frame=frame,headers=tab_headers,datas=proxy_data,mode='query')
     
-        print(f'end to show header and rows based on query {tab_headers}\n{task_data}')
 
-        logger.debug(f'Account search and display finished')
+
+
+        print(f'end to show header and rows based on query {tab_headers}\n{proxy_data}')
+
+        logger.debug(f'Proxy search and display finished')
+                
+
                     
-def refreshTaskcanvas(canvas=None,frame=None,headers=None,datas=None):
+def refreshProxycanvas(linkAccounts=None,canvas=None,frame=None,headers=None,datas=None,mode='query'):
 
     print(f'try to clear existing rows in the tabular {len(frame.winfo_children())} ')
 
@@ -198,7 +137,7 @@ def refreshTaskcanvas(canvas=None,frame=None,headers=None,datas=None):
     # Add a canvas in that frame.
     canvas = tk.Canvas(frame, bg='Yellow')
     canvas.grid(row=0, column=0)
-    print(f'currrent taskvas is {canvas}')    
+    print(f'currrent accountvas is {canvas}')    
     canvas=canvas
     print(f'set canvas to {canvas}')
     # Create a vertical scrollbar linked to the canvas.
@@ -229,7 +168,8 @@ def refreshTaskcanvas(canvas=None,frame=None,headers=None,datas=None):
     # Add the buttons to the frame.
     add_buttons = [tk.Button() for j in range(ROWS+1)] 
     del_buttons = [tk.Button() for j in range(ROWS+1)] 
-    upload_buttons = [tk.Button() for j in range(ROWS+1)] 
+    bind_buttons = [tk.Button() for j in range(ROWS+1)] 
+    unbind_buttons = [tk.Button() for j in range(ROWS+1)] 
 
     # set table header
     print('start to set table header')
@@ -262,17 +202,21 @@ def refreshTaskcanvas(canvas=None,frame=None,headers=None,datas=None):
 
 
             add_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text='edit',command=lambda x=i-1  :update_selected_row_task(rowid=datas[x]['id'],name='task'))
-            add_buttons[i].grid(row=i, column=len(headers)-3, sticky='news')
+                                activebackground= 'orange', text='edit',command=lambda x=i-1  :update_selected_row_account(rowid=datas[x]['id'],name='account'))
+            add_buttons[i].grid(row=i, column=len(headers)-4, sticky='news')
 
             del_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text='delete',command=lambda x=i-1 :remove_selected_row_task(rowid=datas[x]['id'],name='task'))
-            del_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
+                                activebackground= 'orange', text='delete',command=lambda x=i-1 :remove_selected_row_account(rowid=datas[x]['id'],name='account'))
+            del_buttons[i].grid(row=i, column=len(headers)-3, sticky='news')
+            if mode!='query':
+                bind_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                    activebackground= 'orange', text='bind',command=lambda x=i-1 :bind_selected_row_account(selected_platform=datas[x]['platform'],linkAccounts=linkAccounts,rowid=datas[x]['id'],frame=frame))
+                bind_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
 
-            upload_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text='upload',command=lambda x=i-1 :upload_selected_row_task(rowid=datas[x]['id'],frame=frame))
-            upload_buttons[i].grid(row=i, column=len(headers)-1, sticky='news')
 
+                unbind_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
+                                    activebackground= 'orange', text='unbind',command=lambda x=i-1 :unbind_selected_row_account(selected_platform=datas[x]['platform'],linkAccounts=linkAccounts,rowid=datas[x]['id'],frame=frame))
+                unbind_buttons[i].grid(row=i, column=len(headers)-1, sticky='news')
     # Create canvas window to hold the buttons_frame.
     canvas.create_window((0,0), window=buttons_frame, anchor=tk.NW)
     buttons_frame.update_idletasks()  # Needed to make bbox info available.
@@ -282,29 +226,30 @@ def refreshTaskcanvas(canvas=None,frame=None,headers=None,datas=None):
     # number of rows and columns displayed.
     w, h = bbox[2]-bbox[1], bbox[3]-bbox[1]
     print('=before==',COLS,COLS_DISP,ROWS,ROWS_DISP)
-
+    widthratio=1
+    height_ratio=0.7
     for i in range(5,COLS_DISP):
         dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
 
-        if dw>int( width*1.2):
+        if dw>int( width*widthratio):
             COLS=i-1
     for i in range(5,ROWS_DISP):
         dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)                
-        if dh>int( height*0.7):
+        if dh>int( height*height_ratio):
             ROWS=i-1
 
     print('=after==',COLS,COLS_DISP,ROWS,ROWS_DISP)
     dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
 
-    if dw>int( width*1.2):
-        dw=int( width*1.2)
-    if dh>int( height*0.7):
-        dh=int( height*0.7)
+    if dw>int( width*widthratio):
+        dw=int( width*widthratio)
+    if dh>int( height*height_ratio):
+        dh=int( height*height_ratio)
         print('use parent frame widht')
     canvas.configure(scrollregion=bbox, width=dw, height=dh)
     print('end to render tabular rows')
 
-def remove_selected_row_task(rowid,frame=None,name=None,func=None):
+def remove_selected_row_proxy(rowid,frame=None,name=None,func=None):
 
 
 
@@ -329,7 +274,7 @@ def remove_selected_row_task(rowid,frame=None,name=None,func=None):
                 showinfomsg(message=f'this {name}: {rowid} not added before',parent=frame)    
         logger.debug(f'end to remove,reset {name} {rowid}')
 
-def upload_selected_row_task(rowid,frame=None):
+def upload_selected_row_proxy(rowid,frame=None,status=None,platform=None):
 
 
 
@@ -339,19 +284,51 @@ def upload_selected_row_task(rowid,frame=None):
         showinfomsg(message='you have not selected  task at all.choose one or more',parent=frame)      
     
     else:
+        if status=='success':
+            askokcancelmsg(message='this video is been uploaded before',parent=frame)    
+        if platform!='youtube':
+            showinfomsg(message='this platform not supported yet',parent=frame)      
+        else:
+            if status=='success':
+                askokcancelmsg(message='this video is been uploaded before',parent=frame)    
+            if rowid :
+                rowid_bin=CustomID(custom_id=rowid).to_bin()
+                task_rows,counts=TaskModel.filter_tasks(id=rowid_bin,is_deleted=False)
+
+                if counts>0:
+                    logger.debug(f'this task {rowid} start to upload')
+                    setting=None
+                    video=None
 
 
-        if rowid :
-            rowid_bin=CustomID(custom_id=rowid).to_bin()
-            result=TaskModel.update_task(id=rowid_bin,is_deleted=True)
+                    for row in task_rows:
+                        print('platform',row.platform,dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[row.platform])
+                        uploadsetting=model_to_dict(row.setting)
+                        uploadsetting.pop('id')
+                        uploadsetting.pop('inserted_at')
+                        uploadsetting.pop('account')
+                        uploadsetting.pop('is_deleted')
+                        uploadsetting.pop('platform')
+                        proxy=row.setting.account.proxy
+                        if proxy:
+                            uploadsetting['proxy_option']='socks5:127.0.0.1:1080'
 
-            if result:
-                logger.debug(f'this task {rowid} removed success')
-                showinfomsg(message=f'this task {rowid} removed success',parent=frame)    
-            else:
-                logger.debug(f'you cannot remove this task {rowid}, not added before')
-                showinfomsg(message=f'this task {rowid} not added before',parent=frame)    
-        logger.debug(f'end to remove,reset task {rowid}')
+                        video=model_to_dict(row.video)
+                        video.pop('id')
+                        video.pop('unique_hash')
+                        video.pop('inserted_at')
+                        video.pop('is_deleted')
+
+
+                        videoid= asyncio.run(uploadTask(video=video,uploadsetting=uploadsetting,account=row.setting.account))
+                        if videoid:
+
+
+                            showinfomsg(message=f'this task {rowid} upload success',parent=frame)    
+                else:
+                    logger.debug(f'you cannot upload this task {rowid}, not added before')
+                    showinfomsg(message=f'this task {rowid} not added before',parent=frame)    
+        logger.debug(f'end to upload,reset task {rowid}')
 def update_selected_row_task(rowid,frame=None,name=None,func=None):
     # showinfomsg(message='not supported yet',parent=chooseAccountsWindow)    
     editsWindow = tk.Toplevel(frame)

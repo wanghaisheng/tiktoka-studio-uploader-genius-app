@@ -17,6 +17,28 @@ class PROXY_STATUS:
     ]
     
     
+class IP_TYPE:
+    IPv4 = 1
+    IPv6 = 2
+
+    IP_TYPE_TEXT = [
+        (IPv4, "IPv4"),
+        (IPv6, "IPv6")
+    ]
+class IP_SOURCE_TYPE:
+    mobile = 1
+    residential  = 2
+    datacenter  = 3
+
+    IP_SOURCE_TYPE_TEXT = [
+        (mobile, "mobile"),
+        (residential, "residential"),
+        (datacenter, "datacenter"),
+
+    ]
+
+
+
 class PROXY_PROTOCOL:
     HTTP = 'HTTP'
     HTTPS = 'HTTPS'
@@ -68,7 +90,7 @@ class ProxyModel(BaseModel):
     # Proxy Protocol (HTTP/HTTPS/SOCKS5)
     proxy_protocol = IntegerField(choices=PROXY_PROTOCOL)
     
-    # Proxy Type
+    # Proxy provider Type
     proxy_provider_type = IntegerField(default=PROXY_PROVIDER_TYPE.CUSTOM,null=True)
     
     # Proxy Host
