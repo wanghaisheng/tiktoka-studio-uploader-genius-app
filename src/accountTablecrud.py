@@ -144,9 +144,9 @@ def queryAccounts(linkAccounts=None,frame=None,canvas=None,tab_headers=None, pla
         tab_headers.append('operation')
 
         print(f'show header and rows based on query {tab_headers}\n{account_data}')
-        refreshAccountcanvas(linkAccounts=linkAccounts,canvas=canvas,frame=frame,headers=tab_headers,datas=[],mode='query')
+        refreshAccountcanvas(linkAccounts=linkAccounts,canvas=canvas,frame=frame,headers=tab_headers,datas=[],mode=mode)
 
-        refreshAccountcanvas(linkAccounts=linkAccounts,canvas=canvas,frame=frame,headers=tab_headers,datas=account_data,mode='query')
+        refreshAccountcanvas(linkAccounts=linkAccounts,canvas=canvas,frame=frame,headers=tab_headers,datas=account_data,mode=mode)
     
         print(f'end to show header and rows based on query {tab_headers}\n{account_data}')
 
