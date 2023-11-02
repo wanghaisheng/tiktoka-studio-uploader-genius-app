@@ -743,49 +743,49 @@ def proxyaddView(newWindow):
 
     
 def chooseAccountsView(newWindow,parentchooseaccounts):
-    chooseAccountsWindow = tk.Toplevel(newWindow)
-    chooseAccountsWindow.geometry(window_size)
-    chooseAccountsWindow.title('Choose associated accounts in which platform')
-    chooseAccountsWindow.grid_rowconfigure(0, weight=1)
-    chooseAccountsWindow.grid_columnconfigure(0, weight=1, uniform="group1")
-    chooseAccountsWindow.grid_columnconfigure(1, weight=1, uniform="group1")
-    chooseAccountsWindow.grid_columnconfigure(0, weight=1,
-                                      minsize=int(0.5*width)
+    # chooseAccountsWindow = tk.Toplevel(newWindow)
+    # chooseAccountsWindow.geometry(window_size)
+    # chooseAccountsWindow.title('Choose associated accounts in which platform')
+    # chooseAccountsWindow.grid_rowconfigure(0, weight=1)
+    # chooseAccountsWindow.grid_columnconfigure(0, weight=1, uniform="group1")
+    # chooseAccountsWindow.grid_columnconfigure(1, weight=1, uniform="group1")
+    # chooseAccountsWindow.grid_columnconfigure(0, weight=1,
+    #                                   minsize=int(0.5*width)
 
-                                      )
-    chooseAccountsWindow.grid_columnconfigure(1, weight=2)
+    #                                   )
+    # chooseAccountsWindow.grid_columnconfigure(1, weight=2)
     
-    account_frame_left = tk.Frame(chooseAccountsWindow, height = height)
-    account_frame_left.grid(row=0,column=0,sticky="nsew")
-    account_frame_right = tk.Frame(chooseAccountsWindow, height = height)
-    account_frame_right.grid(row=0,column=1,sticky="nsew") 
+    # account_frame_left = tk.Frame(chooseAccountsWindow, height = height)
+    # account_frame_left.grid(row=0,column=0,sticky="nsew")
+    # account_frame_right = tk.Frame(chooseAccountsWindow, height = height)
+    # account_frame_right.grid(row=0,column=1,sticky="nsew") 
 
     
-    frame1 = tk.Frame(account_frame_left)
-    frame1.grid(row=1, column=0, sticky='nswe')    
-    account_var = tk.StringVar()
+    # frame1 = tk.Frame(account_frame_left)
+    # frame1.grid(row=1, column=0, sticky='nswe')    
+    # account_var = tk.StringVar()
   
 
-    # Create a label for the platform dropdown
-    platform_label = ttk.Label(frame1, text="Select Platform:")
-    platform_label.grid(row=0, column=0, padx=10, pady=10, sticky=tk.W)
-    # Create a Combobox for the platform selection
-    platform_var = tk.StringVar()
-    platform_var.set("choose one:")    
+    # # Create a label for the platform dropdown
+    # platform_label = ttk.Label(frame1, text="Select Platform:")
+    # platform_label.grid(row=0, column=0, padx=10, pady=10, sticky=tk.W)
+    # # Create a Combobox for the platform selection
+    # platform_var = tk.StringVar()
+    # platform_var.set("choose one:")    
 
-    lbl16 = tk.Label(frame1, text='binded user')
-    lbl16.grid(row=1,column=0, sticky=tk.W)
-    txt16 = tk.Entry(frame1,textvariable=account_var,width=int(int(window_size.split('x')[-1])/5))
-    txt16.insert(0,'')
+    # lbl16 = tk.Label(frame1, text='binded user')
+    # lbl16.grid(row=1,column=0, sticky=tk.W)
+    # txt16 = tk.Entry(frame1,textvariable=account_var,width=int(int(window_size.split('x')[-1])/5))
+    # txt16.insert(0,'')
     
     
-    txt16.grid(row=1,column=1, 
-            #    width=width,
-               columnspan=4,
-            #    rowspan=3,
-               sticky='nswe')  
+    # txt16.grid(row=1,column=1, 
+    #         #    width=width,
+    #            columnspan=4,
+    #         #    rowspan=3,
+    #            sticky='nswe')  
     
-    accountView(account_frame_right,mode='bind',linkAccounts=account_var)
+    accountView(newWindow,mode='bind',linkAccounts=parentchooseaccounts)
 
     from tkinter.scrolledtext import ScrolledText
     # proxy_textfield = ScrolledText(frame1, wrap=tk.WORD)
@@ -795,18 +795,18 @@ def chooseAccountsView(newWindow,parentchooseaccounts):
     # proxy_textfield.bind_all("<Control-c>",_copy)    
     
       
-    def db_values():
-        platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
-        platform_names = [dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[x.type] for x in platform_rows]
+    # def db_values():
+    #     platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
+    #     platform_names = [dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[x.type] for x in platform_rows]
 
-        platform_combo['values'] = platform_names
+    #     platform_combo['values'] = platform_names
 
-    def db_refresh(event):
-        platform_combo['values'] = db_values()
-    platform_combo = ttk.Combobox(frame1, textvariable=platform_var)
-    platform_combo.grid(row=0, column=1, padx=10, pady=10, sticky=tk.W)
-    platform_combo.bind('<FocusIn>', lambda event: db_refresh(event))
-    platform_combo['values'] = db_values()
+    # def db_refresh(event):
+    #     platform_combo['values'] = db_values()
+    # platform_combo = ttk.Combobox(frame1, textvariable=platform_var)
+    # platform_combo.grid(row=0, column=1, padx=10, pady=10, sticky=tk.W)
+    # platform_combo.bind('<FocusIn>', lambda event: db_refresh(event))
+    # platform_combo['values'] = db_values()
 
 
 
@@ -3848,23 +3848,23 @@ def newaccountView(frame):
 def accountView(frame,mode='query',linkAccounts=None):
 
 
+    if mode=='query':
+        operation_frame = tk.Frame(frame,  bd=1, relief=tk.FLAT)
+        operation_frame.grid(row=1, column=0,sticky='nswe')
 
-    operation_frame = tk.Frame(frame,  bd=1, relief=tk.FLAT)
-    operation_frame.grid(row=1, column=0,sticky='nswe')
 
+        b_new_users=tk.Button(operation_frame,text="New account",command=lambda: threading.Thread(target=newaccountView(frame)).start() )
+        b_new_users.grid(row = 0, column = 0,  padx=14, pady=15)    
 
-    b_new_users=tk.Button(operation_frame,text="New account",command=lambda: threading.Thread(target=newaccountView(frame)).start() )
-    b_new_users.grid(row = 0, column = 0,  padx=14, pady=15)    
+        b_bulk_import_users=tk.Button(operation_frame,text="bulk import",command=lambda: threading.Thread(target=bulkImportUsers(frame)).start() )
+        # b_bulk_import_users.place(x=10, y=450)    
+        b_bulk_import_users.grid(row = 0, column = 1,  padx=14, pady=15)    
+        
+        hints='bulk pull sessionid and cookies'
 
-    b_bulk_import_users=tk.Button(operation_frame,text="bulk import",command=lambda: threading.Thread(target=bulkImportUsers(frame)).start() )
-    # b_bulk_import_users.place(x=10, y=450)    
-    b_bulk_import_users.grid(row = 0, column = 1,  padx=14, pady=15)    
-    
-    hints='bulk pull sessionid and cookies'
-
-    b_bulk_pull_cookies=tk.Button(operation_frame,text=hints,command=lambda: threading.Thread(target=bulkImportUsers(frame)).start() )
-    # b_bulk_import_users.place(x=10, y=450)    
-    b_bulk_pull_cookies.grid(row = 0, column = 2,padx=14, pady=15)     
+        b_bulk_pull_cookies=tk.Button(operation_frame,text=hints,command=lambda: threading.Thread(target=bulkImportUsers(frame)).start() )
+        # b_bulk_import_users.place(x=10, y=450)    
+        b_bulk_pull_cookies.grid(row = 0, column = 2,padx=14, pady=15)     
     
 
     global q_username_account,latest_user_conditions_user,q_platform_account
@@ -3931,7 +3931,11 @@ def accountView(frame,mode='query',linkAccounts=None):
     
     
     result_frame = tk.Frame(frame,  bd=1, relief=tk.FLAT)
-    result_frame.grid(row=3, column=0,sticky='nswe')
+    if mode=='query':
+        result_frame.grid(row=2, column=0,sticky='nswe')
+    else:
+        print('result frame line no is 1')
+        result_frame.grid(row=1, column=0,sticky='nswe')
 
     result_frame.grid_rowconfigure(0, weight=1)
     result_frame.grid_columnconfigure(0, weight=1)
@@ -3963,17 +3967,35 @@ def getBool(var): # get rid of the event argument
 def createTaskMetas(left,right):
     creatTaskWindow = tk.Toplevel(right)
     creatTaskWindow.geometry(window_size)
+    
     username = tk.StringVar()
 
     # creatTaskWindow.focus_force()
     # creatTaskWindow.grab_set()
     
     creatTaskWindow.title('create tasks from scratch')
+    
+    creatTaskWindow.grid_rowconfigure(0, weight=1)
+    creatTaskWindow.grid_columnconfigure(0, weight=1, uniform="group1")
+    creatTaskWindow.grid_columnconfigure(1, weight=1, uniform="group1")
+    creatTaskWindow.grid_columnconfigure(0, weight=1,
+                                      minsize=int(0.5*width)
+
+                                      )
+    creatTaskWindow.grid_columnconfigure(1, weight=2)
+    
+    
+       
+    account_frame_left = tk.Frame(creatTaskWindow, height = height)
+    account_frame_left.grid(row=0,column=0,sticky="nsew")
+    account_frame_right = tk.Frame(creatTaskWindow, height = height)
+    account_frame_right.grid(row=0,column=1,sticky="nsew")     
+    
 
     if username=='':
         username='this user account'
 
-    label = tk.Label(creatTaskWindow,
+    label = tk.Label(account_frame_left,
                 text = f"If you are new,try to start from a folder with videos",
                 font = ("Times New Roman", 10),
                 padx = 10, pady = 10)
@@ -3988,19 +4010,19 @@ def createTaskMetas(left,right):
     choosedAccounts = tk.StringVar()
     global latest_proxy_conditions_user
     latest_proxy_conditions_user = tk.StringVar()
-    lbl15 = tk.Label(creatTaskWindow, text='load video metas from file')
+    lbl15 = tk.Label(account_frame_left, text='load video metas from file')
     lbl15.grid(row=1,column=0, padx=14, pady=15, sticky=tk.W)
 
-    txt15 = tk.Entry(creatTaskWindow,textvariable=videometafile)
+    txt15 = tk.Entry(account_frame_left,textvariable=videometafile)
     txt15.insert(0,'')
-    b_thumbnail_template_file=tk.Button(creatTaskWindow,text="select",command=lambda: threading.Thread(target=select_file('select video meta  file',videometafile,'','all',creatTaskWindow)).start() )
+    b_thumbnail_template_file=tk.Button(account_frame_left,text="select",command=lambda: threading.Thread(target=select_file('select video meta  file',videometafile,'','all',creatTaskWindow)).start() )
     b_thumbnail_template_file.grid(row = 1, column = 2,  padx=14, pady=15,sticky='nswe')     
     # txt15.place(x=580, y=30, anchor=tk.NE)
     # txt15.pack(side='left')
     txt15.grid(row=1,column=1, sticky=tk.W)
 
-    button1 = ttk.Button(creatTaskWindow, text="Start from video folder", command=lambda: (creatTaskWindow.withdraw(),tab_control.select(8)))
-    button1.grid(row=1,column=3, sticky=tk.W)
+    button1 = ttk.Button(account_frame_left, text="Start from video folder", command=lambda: (creatTaskWindow.withdraw(),tab_control.select(8)))
+    button1.grid(row=0,column=1, sticky=tk.W)
 
     uploadStrategy = tk.StringVar()
     uploadStrategy.set("start from template")
@@ -4023,14 +4045,14 @@ def createTaskMetas(left,right):
 
 
     
-    lb17 = tk.Label(creatTaskWindow, text='choose accounts')
+    lb17 = tk.Label(account_frame_left, text='choose accounts')
     lb17.grid(row=4,column=0, padx=14, pady=15,  sticky=tk.W)
-    txt17 = tk.Entry(creatTaskWindow,textvariable=choosedAccounts)
+    txt17 = tk.Entry(account_frame_left,textvariable=choosedAccounts)
     txt17.insert(0,'')
     txt17.grid(row=4,column=1, sticky=tk.W)
 
 
-    button1 = ttk.Button(creatTaskWindow, text="ADD", command=lambda:chooseAccountsView(creatTaskWindow,choosedAccounts))
+    button1 = ttk.Button(account_frame_left, text="ADD", command=lambda:chooseAccountsView(account_frame_right,choosedAccounts))
     button1.grid(row=4,column=2, sticky=tk.W)
 
     multiAccountsPolicy=tk.StringVar()
@@ -4046,12 +4068,12 @@ def createTaskMetas(left,right):
     multiAccountsPolicy.trace('w', multiAccountsPolicyCallBack)
 
 
-    multiAccountsPolicybox = ttk.Combobox(creatTaskWindow, textvariable=multiAccountsPolicy)
+    multiAccountsPolicybox = ttk.Combobox(account_frame_left, textvariable=multiAccountsPolicy)
     multiAccountsPolicybox.config(values = ('单平台单账号', '单平台主副账号','单平台多账号随机发布','单平台多账号平均发布'))
-    multiAccountsPolicybox.grid(row = 4, column = 3, padx=14, pady=15, sticky='w')   
+    multiAccountsPolicybox.grid(row = 5, column = 1, padx=14, pady=15, sticky='w')   
 
-    lb18 = tk.Label(creatTaskWindow, text='Runs on.')
-    lb18.grid(row=5,column=0,  padx=14, pady=15, sticky=tk.W)
+    lb18 = tk.Label(account_frame_left, text='Runs on.')
+    lb18.grid(row=6,column=0,  padx=14, pady=15, sticky=tk.W)
 
 
     deviceType = tk.StringVar()
@@ -4068,7 +4090,7 @@ def createTaskMetas(left,right):
                 print(browserTypebox.current())
             browserType.trace('w', browserTypeCallBack)
 
-            browserTypebox = ttk.Combobox(creatTaskWindow, textvariable=browserType)
+            browserTypebox = ttk.Combobox(account_frame_left, textvariable=browserType)
             browserTypebox.config(values = ('firefox', 'webkit','chrome'))
             browserTypebox.grid(row = 5, column = 2,padx=14, pady=15, sticky='w')   
 
@@ -4077,60 +4099,60 @@ def createTaskMetas(left,right):
     deviceType.trace('w', deviceTypeCallBack)
 
 
-    deviceTypebox = ttk.Combobox(creatTaskWindow, textvariable=deviceType)
+    deviceTypebox = ttk.Combobox(account_frame_left, textvariable=deviceType)
     deviceTypebox.config(values = ('embed browser', 'adspower','phone emulator','iphone','android'))
-    deviceTypebox.grid(row = 5, column = 1, padx=14, pady=15, sticky='w')   
+    deviceTypebox.grid(row = 6, column = 1, padx=14, pady=15, sticky='w')   
 
     is_open_browser = tk.BooleanVar()
     is_open_browser.set(True)
     is_open_browser.trace('w', lambda *_: print("The value is_open_browser was changed"))    
-    l_is_open_browser = tk.Label(creatTaskWindow, text='静默模式')
+    l_is_open_browser = tk.Label(account_frame_left, text='静默模式')
 
-    l_is_open_browser.grid(row = 6, column = 0,  padx=14, pady=15,sticky='w') 
-    checkbutton = tk.Checkbutton(creatTaskWindow, text="是", variable=is_open_browser,command = lambda:getBool(is_open_browser))
-    checkbutton.grid(row=6, column=1, padx=14, pady=15, sticky='w')
+    l_is_open_browser.grid(row = 7, column = 0,  padx=14, pady=15,sticky='w') 
+    checkbutton = tk.Checkbutton(account_frame_left, text="是", variable=is_open_browser,command = lambda:getBool(is_open_browser))
+    checkbutton.grid(row=7, column=1, padx=14, pady=15, sticky='w')
 
     is_debug = tk.BooleanVar()
     is_debug.set(True)
-    l_is_debug = tk.Label(creatTaskWindow, text='是否调试')
+    l_is_debug = tk.Label(account_frame_left, text='是否调试')
     is_debug.trace('w', lambda *_: print("The value is_debug was changed"))    
 
-    l_is_debug.grid(row = 9, column = 0,  padx=14, pady=15,sticky='w') 
-    checkbutton = tk.Checkbutton(creatTaskWindow, text="是", variable=is_debug,command =lambda: getBool(is_debug))
-    checkbutton.grid(row=9, column=1, padx=14, pady=15, sticky='w')
+    l_is_debug.grid(row = 8, column = 0,  padx=14, pady=15,sticky='w') 
+    checkbutton = tk.Checkbutton(account_frame_left, text="是", variable=is_debug,command =lambda: getBool(is_debug))
+    checkbutton.grid(row=8, column=1, padx=14, pady=15, sticky='w')
 
     is_record_video = tk.BooleanVar()
     is_record_video.set(True)
     is_record_video.trace('w', lambda *_: print("The value is_record_video was changed"))    
 
-    l_is_record_video = tk.Label(creatTaskWindow, text='是否录制视频')
-    l_is_record_video.grid(row=7, column=0, padx=14, pady=15, sticky='w')
+    l_is_record_video = tk.Label(account_frame_left, text='是否录制视频')
+    l_is_record_video.grid(row=9, column=0, padx=14, pady=15, sticky='w')
 
 
-    checkbutton = tk.Checkbutton(creatTaskWindow, text="是", variable=is_record_video,command = lambda:getBool(is_record_video))
-    checkbutton.grid(row=7, column=1, padx=14, pady=15, sticky='w')
+    checkbutton = tk.Checkbutton(account_frame_left, text="是", variable=is_record_video,command = lambda:getBool(is_record_video))
+    checkbutton.grid(row=9, column=1, padx=14, pady=15, sticky='w')
 
 
     wait_policy = tk.IntVar()
     wait_policy.set(3)
-    l_wait_policy = tk.Label(creatTaskWindow, text='视频处理等待机制')
+    l_wait_policy = tk.Label(account_frame_left, text='视频处理等待机制')
     wait_policy.trace('w', lambda *_: print("The value wait_policy was changed"))    
 
-    l_wait_policy.grid(row = 8, column = 0, padx=14, pady=15,sticky='w') 
-    mode0=tk.Radiobutton(creatTaskWindow,text="after processing success",variable=wait_policy,value=1,command=lambda: getBool(wait_policy))
-    mode0.grid(row = 8, column = 1, padx=14, pady=15,sticky='w') 
-    mode1=tk.Radiobutton(creatTaskWindow,text="after uploading success",variable=wait_policy,value=2,command=lambda: getBool(wait_policy))
-    mode1.grid(row = 8, column = 2, padx=14, pady=15,sticky='w') 
-    mode1=tk.Radiobutton(creatTaskWindow,text="after copyright check success",variable=wait_policy,value=3,command=lambda: getBool(wait_policy))
-    mode1.grid(row = 8, column = 3, padx=14, pady=15,sticky='w') 
-    btn6= tk.Button(creatTaskWindow, text="gen task meta file", padx = 10, pady = 10,command = lambda: threading.Thread(
+    l_wait_policy.grid(row = 10, column = 0, padx=14, pady=15,sticky='w') 
+    mode0=tk.Radiobutton(account_frame_left,text="after processing success",variable=wait_policy,value=1,command=lambda: getBool(wait_policy))
+    mode0.grid(row = 11, column = 1, padx=14, pady=15,sticky='w') 
+    mode1=tk.Radiobutton(account_frame_left,text="after uploading success",variable=wait_policy,value=2,command=lambda: getBool(wait_policy))
+    mode1.grid(row = 12, column = 1, padx=14, pady=15,sticky='w') 
+    mode1=tk.Radiobutton(account_frame_left,text="after copyright check success",variable=wait_policy,value=3,command=lambda: getBool(wait_policy))
+    mode1.grid(row = 13, column = 1, padx=14, pady=15,sticky='w') 
+    btn6= tk.Button(account_frame_left, text="gen task meta file", padx = 10, pady = 10,command = lambda: threading.Thread(
         target=genUploadTaskMetas(
             videometafile.get(),
             choosedAccounts.get(),
             multiAccountsPolicy.get(),
             deviceType.get(),browserType.get(),
-            is_open_browser.get(),wait_policy.get(),is_debug.get(),is_record_video.get(),creatTaskWindow)).start())     
-    btn6.grid(row=10,column=1, sticky=tk.W)
+            is_open_browser.get(),wait_policy.get(),is_debug.get(),is_record_video.get(),account_frame_left)).start())     
+    btn6.grid(row=14,column=1, sticky=tk.W)
     def uploadStrategyCallBack(*args):
         print(uploadStrategy.get())
         # print(uploadStrategybox.current())
