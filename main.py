@@ -3848,23 +3848,6 @@ def newaccountView(frame):
 def accountView(frame,mode='query',linkAccounts=None):
 
 
-    if mode=='query':
-        operation_frame = tk.Frame(frame,  bd=1, relief=tk.FLAT)
-        operation_frame.grid(row=1, column=0,sticky='nswe')
-
-
-        b_new_users=tk.Button(operation_frame,text="New account",command=lambda: threading.Thread(target=newaccountView(frame)).start() )
-        b_new_users.grid(row = 0, column = 0,  padx=14, pady=15)    
-
-        b_bulk_import_users=tk.Button(operation_frame,text="bulk import",command=lambda: threading.Thread(target=bulkImportUsers(frame)).start() )
-        # b_bulk_import_users.place(x=10, y=450)    
-        b_bulk_import_users.grid(row = 0, column = 1,  padx=14, pady=15)    
-        
-        hints='bulk pull sessionid and cookies'
-
-        b_bulk_pull_cookies=tk.Button(operation_frame,text=hints,command=lambda: threading.Thread(target=bulkImportUsers(frame)).start() )
-        # b_bulk_import_users.place(x=10, y=450)    
-        b_bulk_pull_cookies.grid(row = 0, column = 2,padx=14, pady=15)     
     
 
     global q_username_account,latest_user_conditions_user,q_platform_account
@@ -3927,6 +3910,23 @@ def accountView(frame,mode='query',linkAccounts=None):
 
 
 
+    if mode=='query':
+        operation_frame = tk.Frame(frame)
+        operation_frame.grid(row=1, column=0,sticky='nswe')
+
+
+        b_new_users=tk.Button(operation_frame,text="New account",command=lambda: threading.Thread(target=newaccountView(frame)).start() )
+        b_new_users.grid(row = 0, column = 0,  padx=14, pady=15)    
+
+        b_bulk_import_users=tk.Button(operation_frame,text="bulk import",command=lambda: threading.Thread(target=bulkImportUsers(frame)).start() )
+        # b_bulk_import_users.place(x=10, y=450)    
+        b_bulk_import_users.grid(row = 0, column = 1,  padx=14, pady=15)    
+        
+        hints='bulk pull sessionid and cookies'
+
+        b_bulk_pull_cookies=tk.Button(operation_frame,text=hints,command=lambda: threading.Thread(target=bulkImportUsers(frame)).start() )
+        # b_bulk_import_users.place(x=10, y=450)    
+        b_bulk_pull_cookies.grid(row = 0, column = 2,padx=14, pady=15)     
 
     
     
@@ -3937,9 +3937,9 @@ def accountView(frame,mode='query',linkAccounts=None):
         print('result frame line no is 1')
         result_frame.grid(row=1, column=0,sticky='nswe')
 
-    result_frame.grid_rowconfigure(0, weight=1)
-    result_frame.grid_columnconfigure(0, weight=1)
-    result_frame.grid_columnconfigure(1, weight=1)
+    # result_frame.grid_rowconfigure(0, weight=1)
+    # result_frame.grid_columnconfigure(0, weight=1)
+    # result_frame.grid_columnconfigure(1, weight=1)
     
     tab_headers=['id','platform','username','pass','is_deleted','proxy','inserted_at']
 
