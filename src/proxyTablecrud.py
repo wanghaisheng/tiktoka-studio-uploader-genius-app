@@ -104,9 +104,9 @@ def queryProxy(frame=None,canvas=None,tab_headers=None,state=None,city=None,stat
             proxy_data.append(proxy)
             print(proxy.keys())
         print(f'show header and rows based on query {tab_headers}\n{proxy_data}')
-        refreshProxycanvas(canvas=canvas,frame=frame,headers=tab_headers,datas=[],mode='query')
+        refreshProxycanvas(canvas=canvas,frame=frame,headers=tab_headers,datas=[],mode=mode)
 
-        refreshProxycanvas(canvas=canvas,frame=frame,headers=tab_headers,datas=proxy_data,mode='query')
+        refreshProxycanvas(canvas=canvas,frame=frame,headers=tab_headers,datas=proxy_data,mode=mode)
     
 
 
@@ -117,7 +117,7 @@ def queryProxy(frame=None,canvas=None,tab_headers=None,state=None,city=None,stat
                 
 
                     
-def refreshProxycanvas(linkAccounts=None,canvas=None,frame=None,headers=None,datas=None,mode='query'):
+def refreshProxycanvas(linkAccounts=None,canvas=None,frame=None,headers=None,datas=None,mode=None):
 
     print(f'try to clear existing rows in the tabular {len(frame.winfo_children())} ')
 
@@ -202,20 +202,20 @@ def refreshProxycanvas(linkAccounts=None,canvas=None,frame=None,headers=None,dat
 
 
             add_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text='edit',command=lambda x=i-1  :update_selected_row_account(rowid=datas[x]['id'],name='account'))
+                                activebackground= 'orange', text='edit',command=lambda x=i-1  :update_selected_row_proxy(rowid=datas[x]['id'],name='account'))
             add_buttons[i].grid(row=i, column=len(headers)-4, sticky='news')
 
             del_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                activebackground= 'orange', text='delete',command=lambda x=i-1 :remove_selected_row_account(rowid=datas[x]['id'],name='account'))
+                                activebackground= 'orange', text='delete',command=lambda x=i-1 :remove_selected_row_proxy(rowid=datas[x]['id'],name='account'))
             del_buttons[i].grid(row=i, column=len(headers)-3, sticky='news')
             if mode!='query':
                 bind_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                    activebackground= 'orange', text='bind',command=lambda x=i-1 :bind_selected_row_account(selected_platform=datas[x]['platform'],linkAccounts=linkAccounts,rowid=datas[x]['id'],frame=frame))
+                                    activebackground= 'orange', text='bind',command=lambda x=i-1 :bind_selected_row_proxy(selected_platform=datas[x]['platform'],linkAccounts=linkAccounts,rowid=datas[x]['id'],frame=frame))
                 bind_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
 
 
                 unbind_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                    activebackground= 'orange', text='unbind',command=lambda x=i-1 :unbind_selected_row_account(selected_platform=datas[x]['platform'],linkAccounts=linkAccounts,rowid=datas[x]['id'],frame=frame))
+                                    activebackground= 'orange', text='unbind',command=lambda x=i-1 :unbind_selected_row_proxy(selected_platform=datas[x]['platform'],linkAccounts=linkAccounts,rowid=datas[x]['id'],frame=frame))
                 unbind_buttons[i].grid(row=i, column=len(headers)-1, sticky='news')
     # Create canvas window to hold the buttons_frame.
     canvas.create_window((0,0), window=buttons_frame, anchor=tk.NW)
@@ -263,7 +263,7 @@ def remove_selected_row_proxy(rowid,frame=None,name=None,func=None):
 
         if rowid :
             rowid_bin=CustomID(custom_id=rowid).to_bin()
-            result=TaskModel.update_task(id=rowid_bin,is_deleted=True)
+            result=ProxyModel.update_proxy(id=rowid_bin,is_deleted=True)
             # result=func(id=rowid,is_deleted=True)
 
             if result:
@@ -274,71 +274,87 @@ def remove_selected_row_proxy(rowid,frame=None,name=None,func=None):
                 showinfomsg(message=f'this {name}: {rowid} not added before',parent=frame)    
         logger.debug(f'end to remove,reset {name} {rowid}')
 
-def upload_selected_row_proxy(rowid,frame=None,status=None,platform=None):
+def bind_selected_row_proxy(rowid,selected_platform=None,linkAccounts=None,frame=None):
+
+    
 
 
+    existingaccounts=linkAccounts.get()
+    if existingaccounts =='' or existingaccounts is None:
+        existingaccounts=dict({})   
+    else:
+        existingaccounts=eval(existingaccounts)
+    
+    if not selected_platform in existingaccounts:
 
-    print('you want to upload this task',rowid)
-    if rowid==0:
-
-        showinfomsg(message='you have not selected  task at all.choose one or more',parent=frame)      
+        existingaccounts[selected_platform]=[]
+    # (youtube:y1,y2),(tiktok:t1:t2)
+    if rowid is None:
+        logger.debug('you have not selected new accounts at all')
+        showinfomsg(message='you have not selected new accounts at all',parent=frame)    
     
     else:
-        if status=='success':
-            askokcancelmsg(message='this video is been uploaded before',parent=frame)    
-        if platform!='youtube':
-            showinfomsg(message='this platform not supported yet',parent=frame)      
+        if rowid in existingaccounts[selected_platform]:
+            logger.debug(f'this account {rowid} added before')                   
+            showinfomsg(message=f'this account {rowid} added before',parent=frame)    
+
         else:
-            if status=='success':
-                askokcancelmsg(message='this video is been uploaded before',parent=frame)    
-            if rowid :
-                rowid_bin=CustomID(custom_id=rowid).to_bin()
-                task_rows,counts=TaskModel.filter_tasks(id=rowid_bin,is_deleted=False)
+            if existingaccounts[selected_platform]=='':
+                existingaccounts[selected_platform]=[]
+            existingaccounts[selected_platform].append(rowid)
+            logger.debug(f'this account {rowid} added successS')
+            showinfomsg(message=f'this account {rowid} added success',parent=frame)    
 
-                if counts>0:
-                    logger.debug(f'this task {rowid} start to upload')
-                    setting=None
-                    video=None
-
-
-                    for row in task_rows:
-                        print('platform',row.platform,dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[row.platform])
-                        uploadsetting=model_to_dict(row.setting)
-                        uploadsetting.pop('id')
-                        uploadsetting.pop('inserted_at')
-                        uploadsetting.pop('account')
-                        uploadsetting.pop('is_deleted')
-                        uploadsetting.pop('platform')
-                        proxy=row.setting.account.proxy
-                        if proxy:
-                            uploadsetting['proxy_option']='socks5:127.0.0.1:1080'
-
-                        video=model_to_dict(row.video)
-                        video.pop('id')
-                        video.pop('unique_hash')
-                        video.pop('inserted_at')
-                        video.pop('is_deleted')
+    linkAccounts.set(str(existingaccounts))
+        
+        
+def unbind_selected_row_proxy(rowid,selected_platform=None,linkAccounts=None,frame=None):
 
 
-                        videoid= asyncio.run(uploadTask(video=video,uploadsetting=uploadsetting,account=row.setting.account))
-                        if videoid:
+
+    existingaccounts=linkAccounts.get()
+    if existingaccounts =='' or existingaccounts is None:
+        existingaccounts=dict({})    
+    else:
+        existingaccounts=eval(existingaccounts)
+    
+    if not selected_platform in existingaccounts:
+
+        existingaccounts[selected_platform]=[]
+    # (youtube:y1,y2),(tiktok:t1:t2)
+    if rowid is None:
+        logger.debug('you have not selected new accounts at all')
+        showinfomsg(message='you have not selected new accounts at all',parent=frame)    
+    
+    else:
+        if selected_platform in existingaccounts:
+            if rowid in existingaccounts[selected_platform]:
+                existingaccounts[selected_platform].remove(rowid)
 
 
-                            showinfomsg(message=f'this task {rowid} upload success',parent=frame)    
-                else:
-                    logger.debug(f'you cannot upload this task {rowid}, not added before')
-                    showinfomsg(message=f'this task {rowid} not added before',parent=frame)    
-        logger.debug(f'end to upload,reset task {rowid}')
-def update_selected_row_task(rowid,frame=None,name=None,func=None):
+                logger.debug(f'this account {rowid} removed success')
+                showinfomsg(message=f'this account {rowid} removed success',parent=frame)    
+            else:
+                logger.debug(f'you cannot remove this account {rowid}, not added before')
+                showinfomsg(message=f'this account {rowid} not added before',parent=frame)    
+        else:
+            logger.debug(f'you cannot remove this account {rowid}, not added before')
+            showinfomsg(message=f'this account {rowid} not added before',parent=frame) 
+        logger.debug(f'end to remove,reset account {existingaccounts}') 
+
+    linkAccounts.set(str(existingaccounts))
+        
+
+
+def update_selected_row_proxy(rowid,frame=None,name=None,func=None):
     # showinfomsg(message='not supported yet',parent=chooseAccountsWindow)    
     editsWindow = tk.Toplevel(frame)
     editsWindow.geometry(window_size)
-    editsWindow.title('Edit and update task and related setting,video info ')
+    editsWindow.title('Edit and update account and related setting,video info ')
     rowid_bin=CustomID(custom_id=rowid).to_bin()
 
-    taskresult=TaskModel.get(id=rowid_bin)
-    taskresult = model_to_dict(taskresult)
-
+    accountresult=ProxyModel.get_proxy_by_id(id=rowid_bin)
+    accountresult = model_to_dict(accountresult)
 
     def renderelements(i=1,column=0,result={},disableelements=['id','inserted_at','unique_hash'],title=None,lastindex=0,fenlie=True):
         rowkeys={}
@@ -446,40 +462,40 @@ def update_selected_row_task(rowid,frame=None,name=None,func=None):
 
         return newresult,i,column+2,lastindex
 
-    tmptask=taskresult
-    # tmptask.pop('video')
-    # tmptask.pop('setting')
-    print('taskresult\n',taskresult)
-    print('video\n',taskresult.get('video'))
-    print('setting\n',taskresult.get('setting'))
-    newtaskresult,serialno,cols,lastindex=renderelements(lastindex=0,i=1,result=tmptask,column=0,disableelements=['id','inserted_at','uploaded_at','video','setting'],title='task data')
-    newvideoresult={}
+    tmpaccount=accountresult
+    # tmpaccount.pop('video')
+    # tmpaccount.pop('setting')
+    print('accountresult\n',accountresult)
+    print('link_accounts\n',accountresult.get('link_accounts'))
+    newaccountresult,serialno,cols,lastindex=renderelements(lastindex=0,i=1,result=tmpaccount,column=0,disableelements=['id','inserted_at','uploaded_at','unique_hash','setting'],title='account data')
+    newbackupaccountresult={}
     newsettingresult={}
     newaccountresult={}
     # print('======================',serialno,cols,lastindex)
 
-    if taskresult.get('video'):
-        print('video is associated to task',serialno,cols,lastindex)
+    # if backupaccount_rows:
+        # print('video is associated to account',serialno,cols,lastindex)
 
-        newvideoresult,serialno,cols,lastindex=renderelements(lastindex=lastindex,i=1,result=taskresult.get('video'),column=cols,disableelements=['id','inserted_at','unique_hash'],title='video data')
-    if taskresult.get('setting'):
-        print('setting is associated to task',serialno,cols,lastindex)
+        # newvideoresult,serialno,cols,lastindex=renderelements(lastindex=lastindex,i=1,result=backupaccount_rows,column=cols,disableelements=['id','inserted_at','unique_hash'],title='link account data')
+    # if accountresult.get('setting'):
+    #     print('setting is associated to account',serialno,cols,lastindex)
 
-        newsettingresult,serialno,cols,lastindex=renderelements(lastindex=lastindex,i=1,result=taskresult.get('setting'),column=cols,disableelements=['id','inserted_at','account'],title='setting data',fenlie=False)
-        if taskresult.get('setting').get('account') :
-            print('account is associated to setting',serialno,cols,lastindex)
+    #     newsettingresult,serialno,cols,lastindex=renderelements(lastindex=lastindex,i=1,result=accountresult.get('setting'),column=cols,disableelements=['id','inserted_at','account'],title='setting data',fenlie=False)
+    #     if accountresult.get('setting').get('account') :
+    #         print('account is associated to setting',serialno,cols,lastindex)
 
-            newaccountresult,serialno,cols,lastindex=renderelements(lastindex=lastindex,i=serialno,result=taskresult.get('setting').get('account'),column=cols-2,disableelements=['id','inserted_at','unique_hash'],title='account data')
+    #         newaccountresult,serialno,cols,lastindex=renderelements(lastindex=lastindex,i=serialno,result=accountresult.get('setting').get('account'),column=cols-2,disableelements=['id','inserted_at','unique_hash'],title='account data')
 
-    btn5= tk.Button(editsWindow, text="save && update", padx = 0, pady = 0,command = lambda:update_task_video(id=rowid_bin,newvideoresult=newvideoresult,newsettingresult=newsettingresult,newaccountresult=newaccountresult,newtaskresult=newtaskresult))
+    btn5= tk.Button(editsWindow, text="save && update", padx = 0, pady = 0,command = lambda:update_proxy(id=rowid_bin,newaccountresult=newaccountresult))
     btn5.grid(row=0,column=cols+1, rowspan=2,sticky=tk.W)    
 
 
-def update_task_video(newvideoresult=None,newsettingresult=None,newaccountresult=None,newtaskresult=None,id=id):
-    if newvideoresult==None and newsettingresult==None and newaccountresult==None and newtaskresult==None:
+def update_proxy(newaccountresult=None,id=id):
+    if newaccountresult==None:
         showinfomsg(message='you have not make any changes')
     else:
-        result=TaskModel.update_task(**newtaskresult,id=id,taskdata=None,videodata=newvideoresult,settingdata=newsettingresult,accountdata=newaccountresult)    
+        result=ProxyModel.update_proxy(**newaccountresult,id=id,accountdata=newaccountresult)     
+
         if result:
             showinfomsg(message='changes have been updated')
         else:

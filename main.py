@@ -90,14 +90,19 @@ if platform.system()=='Windows':
 
     ultra = UltraDict(shared_lock=True,recurse=True)
     tmp = UltraDict(shared_lock=True,recurse=True)
+    citydb = UltraDict(shared_lock=True,recurse=True)
+
 else:
     ultra = UltraDict(recurse=True)
-    tmp = UltraDict(recurse=True)    
+    tmp = UltraDict(recurse=True)  
+    citydb = UltraDict(recurse=True)
+
 ROOT_DIR = os.path.dirname(
     os.path.abspath(__file__)
 )
 
 videoassetsfilename='videos-assets.json'
+citydbfilename='assets/country-db/json/country-state-db.json'
 settingfilename='settings.json'
 locale='en'
 window_size='1024x720'
@@ -353,7 +358,25 @@ def load_locales():
         file_path = os.path.join(folder_path, json_file)
         with open(file_path, 'r') as file:
             data = json.load(file)
+def load_citydb():
+    dbfile=PurePath(ROOT_DIR,citydbfilename)
+    print(f'start to load country data {dbfile}')
+    # print('===',open(dbfile,encoding='utf-8').read())
+    failed=False
+    if os.path.exists(dbfile) :
+        try:
+            datas = json.loads(open(dbfile,encoding='utf-8').read())
+            print('json data',datas)
+            for key,value in enumerate(datas):
+                print(f'load country db {key} {value}')
+                citydb[key]=value
+        except:
+            failed=True
+            print('load country db file failure')
 
+    else:
+        failed=True
+        print('country db file not exist')
 def load_setting():
     global settings
     settingfile=os.path.join(ROOT_DIR,settingfilename)
@@ -3373,25 +3396,25 @@ def chooseProxies(ttkframe,username,parentchooseProxies):
     chooseAccountsWindow = tk.Toplevel(ttkframe)
     chooseAccountsWindow.geometry(window_size)
     chooseAccountsWindow.title('Choose associated proxy')
-    chooseAccountsWindow.grid_rowconfigure(0, weight=1)
-    chooseAccountsWindow.grid_columnconfigure(0, weight=1, uniform="group1")
-    chooseAccountsWindow.grid_columnconfigure(1, weight=1, uniform="group1")
-    chooseAccountsWindow.grid_columnconfigure(0, weight=1,
-                                      minsize=int(0.5*width)
+    # chooseAccountsWindow.grid_rowconfigure(0, weight=1)
+    # chooseAccountsWindow.grid_columnconfigure(0, weight=1, uniform="group1")
+    # chooseAccountsWindow.grid_columnconfigure(1, weight=1, uniform="group1")
+    # chooseAccountsWindow.grid_columnconfigure(0, weight=1,
+    #                                   minsize=int(0.5*width)
 
-                                      )
-    chooseAccountsWindow.grid_columnconfigure(1, weight=2)
+    #                                   )
+    # chooseAccountsWindow.grid_columnconfigure(1, weight=2)
     
-    account_frame_left = tk.Frame(chooseAccountsWindow, height = height)
-    account_frame_left.grid(row=0,column=0,sticky="nsew")
-    account_frame_right = tk.Frame(chooseAccountsWindow, height = height)
-    account_frame_right.grid(row=0,column=1,sticky="nsew") 
-    proxyView(account_frame_right,mode='bind')
+    # account_frame_left = tk.Frame(chooseAccountsWindow, height = height)
+    # account_frame_left.grid(row=0,column=0,sticky="nsew")
+    # account_frame_right = tk.Frame(chooseAccountsWindow, height = height)
+    # account_frame_right.grid(row=0,column=1,sticky="nsew") 
+    proxyView(chooseAccountsWindow,mode='bind')
     proxy_var=tk.StringVar()
-    lbl16 = tk.Label(account_frame_left, text='binded proxy')
-    lbl16.grid(row=1,column=0, sticky=tk.W)
-    txt16 = tk.Entry(account_frame_left,textvariable=proxy_var,width=int(int(window_size.split('x')[-1])/5))
-    txt16.grid(row=2,column=0, sticky=tk.W)
+    lbl16 = tk.Label(chooseAccountsWindow, text='binded proxy')
+    lbl16.grid(row=5,column=0, sticky=tk.W)
+    txt16 = tk.Entry(chooseAccountsWindow,textvariable=proxy_var,width=int(int(window_size.split('x')[-1])/5))
+    txt16.grid(row=6,column=0, sticky=tk.W)
 
 
 
@@ -3910,32 +3933,33 @@ def accountView(frame,mode='query',linkAccounts=None):
 
 
 
-    if mode=='query':
-        operation_frame = tk.Frame(frame)
-        operation_frame.grid(row=1, column=0,sticky='nswe')
+    operation_frame = tk.Frame(frame)
+    operation_frame.grid(row=1, column=0,sticky='nswe')
 
 
-        b_new_users=tk.Button(operation_frame,text="New account",command=lambda: threading.Thread(target=newaccountView(frame)).start() )
-        b_new_users.grid(row = 0, column = 0,  padx=14, pady=15)    
+    b_new_users=tk.Button(operation_frame,text="New account",command=lambda: threading.Thread(target=newaccountView(frame)).start() )
+    b_new_users.grid(row = 0, column = 0,  padx=14, pady=15)    
 
-        b_bulk_import_users=tk.Button(operation_frame,text="bulk import",command=lambda: threading.Thread(target=bulkImportUsers(frame)).start() )
-        # b_bulk_import_users.place(x=10, y=450)    
-        b_bulk_import_users.grid(row = 0, column = 1,  padx=14, pady=15)    
-        
-        hints='bulk pull sessionid and cookies'
+    b_bulk_import_users=tk.Button(operation_frame,text="bulk import",command=lambda: threading.Thread(target=bulkImportUsers(frame)).start() )
+    # b_bulk_import_users.place(x=10, y=450)    
+    b_bulk_import_users.grid(row = 0, column = 1,  padx=14, pady=15)    
+    
+    hints='bulk pull sessionid and cookies'
 
-        b_bulk_pull_cookies=tk.Button(operation_frame,text=hints,command=lambda: threading.Thread(target=bulkImportUsers(frame)).start() )
-        # b_bulk_import_users.place(x=10, y=450)    
-        b_bulk_pull_cookies.grid(row = 0, column = 2,padx=14, pady=15)     
+    b_bulk_pull_cookies=tk.Button(operation_frame,text=hints,command=lambda: threading.Thread(target=bulkImportUsers(frame)).start() )
+    # b_bulk_import_users.place(x=10, y=450)    
+    b_bulk_pull_cookies.grid(row = 0, column = 2,padx=14, pady=15)     
 
     
     
     result_frame = tk.Frame(frame,  bd=1, relief=tk.FLAT)
-    if mode=='query':
-        result_frame.grid(row=2, column=0,sticky='nswe')
-    else:
-        print('result frame line no is 1')
-        result_frame.grid(row=1, column=0,sticky='nswe')
+    result_frame.grid(row=2, column=0,sticky='nswe')
+
+    # if mode=='query':
+    #     result_frame.grid(row=2, column=0,sticky='nswe')
+    # else:
+    #     print('result frame line no is 1')
+    #     result_frame.grid(row=1, column=0,sticky='nswe')
 
     # result_frame.grid_rowconfigure(0, weight=1)
     # result_frame.grid_columnconfigure(0, weight=1)
@@ -4016,10 +4040,10 @@ def createTaskMetas(left,right):
     txt15 = tk.Entry(account_frame_left,textvariable=videometafile)
     txt15.insert(0,'')
     b_thumbnail_template_file=tk.Button(account_frame_left,text="select",command=lambda: threading.Thread(target=select_file('select video meta  file',videometafile,'','all',creatTaskWindow)).start() )
-    b_thumbnail_template_file.grid(row = 1, column = 2,  padx=14, pady=15,sticky='nswe')     
+    b_thumbnail_template_file.grid(row = 1, column = 1,  padx=14, pady=15,sticky='nswe')     
     # txt15.place(x=580, y=30, anchor=tk.NE)
     # txt15.pack(side='left')
-    txt15.grid(row=1,column=1, sticky=tk.W)
+    txt15.grid(row=2,column=1, sticky=tk.W)
 
     button1 = ttk.Button(account_frame_left, text="Start from video folder", command=lambda: (creatTaskWindow.withdraw(),tab_control.select(8)))
     button1.grid(row=0,column=1, sticky=tk.W)
@@ -4045,15 +4069,15 @@ def createTaskMetas(left,right):
 
 
     
-    lb17 = tk.Label(account_frame_left, text='choose accounts')
+    lb17 = tk.Label(account_frame_left, text='Binded accounts')
     lb17.grid(row=4,column=0, padx=14, pady=15,  sticky=tk.W)
     txt17 = tk.Entry(account_frame_left,textvariable=choosedAccounts)
     txt17.insert(0,'')
-    txt17.grid(row=4,column=1, sticky=tk.W)
+    txt17.grid(row=5,column=1, sticky=tk.W)
 
 
-    button1 = ttk.Button(account_frame_left, text="ADD", command=lambda:chooseAccountsView(account_frame_right,choosedAccounts))
-    button1.grid(row=4,column=2, sticky=tk.W)
+    button1 = ttk.Button(account_frame_left, text="Bind", command=lambda:chooseAccountsView(account_frame_right,choosedAccounts))
+    button1.grid(row=4,column=1, sticky=tk.W)
 
     multiAccountsPolicy=tk.StringVar()
 
@@ -4067,13 +4091,15 @@ def createTaskMetas(left,right):
     multiAccountsPolicy.set("Select From policy")
     multiAccountsPolicy.trace('w', multiAccountsPolicyCallBack)
 
+    l_multiAccountsPolicybox= tk.Label(account_frame_left, text='Policy')
+    l_multiAccountsPolicybox.grid(row=6,column=0,  padx=14, pady=15, sticky=tk.W)
 
     multiAccountsPolicybox = ttk.Combobox(account_frame_left, textvariable=multiAccountsPolicy)
-    multiAccountsPolicybox.config(values = ('单平台单账号', '单平台主副账号','单平台多账号随机发布','单平台多账号平均发布'))
-    multiAccountsPolicybox.grid(row = 5, column = 1, padx=14, pady=15, sticky='w')   
+    multiAccountsPolicybox.config(values = ('单平台单账号', '同平台主副账号','单平台多独立账号随机发布','单平台多独立账号平均发布'))
+    multiAccountsPolicybox.grid(row = 6, column = 1, padx=14, pady=15, sticky='w')   
 
     lb18 = tk.Label(account_frame_left, text='Runs on.')
-    lb18.grid(row=6,column=0,  padx=14, pady=15, sticky=tk.W)
+    lb18.grid(row=7,column=0,  padx=14, pady=15, sticky=tk.W)
 
 
     deviceType = tk.StringVar()
@@ -4092,45 +4118,46 @@ def createTaskMetas(left,right):
 
             browserTypebox = ttk.Combobox(account_frame_left, textvariable=browserType)
             browserTypebox.config(values = ('firefox', 'webkit','chrome'))
-            browserTypebox.grid(row = 5, column = 2,padx=14, pady=15, sticky='w')   
+            browserTypebox.grid(row = 8, column = 1,padx=14, pady=15, sticky='w')   
 
-
+        else:
+            showinfomsg(message='not supported yet')
     deviceType.set("Select From device")
     deviceType.trace('w', deviceTypeCallBack)
 
 
     deviceTypebox = ttk.Combobox(account_frame_left, textvariable=deviceType)
     deviceTypebox.config(values = ('embed browser', 'adspower','phone emulator','iphone','android'))
-    deviceTypebox.grid(row = 6, column = 1, padx=14, pady=15, sticky='w')   
+    deviceTypebox.grid(row = 7, column = 1, padx=14, pady=15, sticky='w')   
 
     is_open_browser = tk.BooleanVar()
     is_open_browser.set(True)
     is_open_browser.trace('w', lambda *_: print("The value is_open_browser was changed"))    
     l_is_open_browser = tk.Label(account_frame_left, text='静默模式')
 
-    l_is_open_browser.grid(row = 7, column = 0,  padx=14, pady=15,sticky='w') 
+    l_is_open_browser.grid(row = 9, column = 0,  padx=14, pady=15,sticky='w') 
     checkbutton = tk.Checkbutton(account_frame_left, text="是", variable=is_open_browser,command = lambda:getBool(is_open_browser))
-    checkbutton.grid(row=7, column=1, padx=14, pady=15, sticky='w')
+    checkbutton.grid(row=9, column=1, padx=14, pady=15, sticky='w')
 
     is_debug = tk.BooleanVar()
     is_debug.set(True)
     l_is_debug = tk.Label(account_frame_left, text='是否调试')
     is_debug.trace('w', lambda *_: print("The value is_debug was changed"))    
 
-    l_is_debug.grid(row = 8, column = 0,  padx=14, pady=15,sticky='w') 
+    l_is_debug.grid(row = 10, column = 0,  padx=14, pady=15,sticky='w') 
     checkbutton = tk.Checkbutton(account_frame_left, text="是", variable=is_debug,command =lambda: getBool(is_debug))
-    checkbutton.grid(row=8, column=1, padx=14, pady=15, sticky='w')
+    checkbutton.grid(row=10, column=1, padx=14, pady=15, sticky='w')
 
     is_record_video = tk.BooleanVar()
     is_record_video.set(True)
     is_record_video.trace('w', lambda *_: print("The value is_record_video was changed"))    
 
     l_is_record_video = tk.Label(account_frame_left, text='是否录制视频')
-    l_is_record_video.grid(row=9, column=0, padx=14, pady=15, sticky='w')
+    l_is_record_video.grid(row=11, column=0, padx=14, pady=15, sticky='w')
 
 
     checkbutton = tk.Checkbutton(account_frame_left, text="是", variable=is_record_video,command = lambda:getBool(is_record_video))
-    checkbutton.grid(row=9, column=1, padx=14, pady=15, sticky='w')
+    checkbutton.grid(row=11, column=1, padx=14, pady=15, sticky='w')
 
 
     wait_policy = tk.IntVar()
@@ -4138,13 +4165,13 @@ def createTaskMetas(left,right):
     l_wait_policy = tk.Label(account_frame_left, text='视频处理等待机制')
     wait_policy.trace('w', lambda *_: print("The value wait_policy was changed"))    
 
-    l_wait_policy.grid(row = 10, column = 0, padx=14, pady=15,sticky='w') 
+    l_wait_policy.grid(row = 12, column = 0, padx=14, pady=15,sticky='w') 
     mode0=tk.Radiobutton(account_frame_left,text="after processing success",variable=wait_policy,value=1,command=lambda: getBool(wait_policy))
-    mode0.grid(row = 11, column = 1, padx=14, pady=15,sticky='w') 
+    mode0.grid(row = 12, column = 1, padx=14, pady=15,sticky='w') 
     mode1=tk.Radiobutton(account_frame_left,text="after uploading success",variable=wait_policy,value=2,command=lambda: getBool(wait_policy))
-    mode1.grid(row = 12, column = 1, padx=14, pady=15,sticky='w') 
-    mode1=tk.Radiobutton(account_frame_left,text="after copyright check success",variable=wait_policy,value=3,command=lambda: getBool(wait_policy))
     mode1.grid(row = 13, column = 1, padx=14, pady=15,sticky='w') 
+    mode1=tk.Radiobutton(account_frame_left,text="after copyright check success",variable=wait_policy,value=3,command=lambda: getBool(wait_policy))
+    mode1.grid(row = 14, column = 1, padx=14, pady=15,sticky='w') 
     btn6= tk.Button(account_frame_left, text="gen task meta file", padx = 10, pady = 10,command = lambda: threading.Thread(
         target=genUploadTaskMetas(
             videometafile.get(),
@@ -4152,7 +4179,7 @@ def createTaskMetas(left,right):
             multiAccountsPolicy.get(),
             deviceType.get(),browserType.get(),
             is_open_browser.get(),wait_policy.get(),is_debug.get(),is_record_video.get(),account_frame_left)).start())     
-    btn6.grid(row=14,column=1, sticky=tk.W)
+    btn6.grid(row=15,column=1, sticky=tk.W)
     def uploadStrategyCallBack(*args):
         print(uploadStrategy.get())
         # print(uploadStrategybox.current())
@@ -4271,13 +4298,13 @@ def load_meta_file(filepath):
 def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPolicy_value,deviceType_value,browserType_value,is_open_browser_value,wait_policy_value,is_debug_value,is_record_video_value,frame):     
     
     if multiAccountsPolicy_value=='单平台单账号':
-        # ('单平台单账号', '单平台主副账号','单平台多账号随机发布','单平台多账号平均发布')
+    # ('单平台单账号', '同平台主副账号','单平台多独立账号随机发布','单平台多独立账号平均发布'))
         multiAccountsPolicy_value=0
-    elif multiAccountsPolicy_value=='单平台主副账号':
+    elif multiAccountsPolicy_value=='同平台主副账号':
         multiAccountsPolicy_value=1
-    elif multiAccountsPolicy_value=='单平台多账号随机发布':
+    elif multiAccountsPolicy_value=='单平台多独立账号随机发布':
         multiAccountsPolicy_value=2
-    elif multiAccountsPolicy_value=='单平台多账号平均发布':
+    elif multiAccountsPolicy_value=='单平台多独立账号平均发布':
         multiAccountsPolicy_value=3    
     print('assign account',choosedAccounts_value)
     if choosedAccounts_value=='' or choosedAccounts_value is None:
@@ -5601,7 +5628,7 @@ def newproxyView(frame):
     proxycountrycode = tk.StringVar()
 
     def proxycountrydb_values():
-        proxycountry_names = [x.name for x in list(pycountry.countries)]
+        proxycountry_names = citydb['00'].values()
 
         proxycountry_box['values'] = proxycountry_names
 
@@ -5614,9 +5641,7 @@ def newproxyView(frame):
 
     def proxycountryOptionCallBack(*args):
         print(proxycountry.get())
-        country_code= pycountry.countries.get(name=proxycountry.get())
-        if country_code:
-            country_code=country_code.alpha_2
+        country_code= getattr(citydb['00'],proxycountry.get())
         proxycountrycode.set(country_code)
         print(proxycountry_box.current())
 
@@ -5645,14 +5670,9 @@ def newproxyView(frame):
         if proxycountry.get() is not None:
             print(proxycountry.get() )
             if proxycountrycode.get():
-                country_code=proxycountrycode.get()
-                country_code= pycountry.countries.get(name=proxycountry.get())
+                country_code= getattr(citydb['00'],proxycountry.get())
 
-                country_code=country_code.alpha_2
-                print(f"country_code:{country_code}")
-
-                proxystate_names = pycountry.subdivisions.get(country_code=country_code)
-                proxystate_names = [x.name for x in proxystate_names]
+                proxystate_names = citydb[country_code].values()
 
                 print(f"proxystate_names:{proxystate_names}")
 
@@ -5668,11 +5688,7 @@ def newproxyView(frame):
     def proxystateOptionCallBack(*args):
         print(proxystate.get())
         print(proxystate_box.current())
-        country_code= pycountry.countries.get(name=proxycountry.get())
-        if country_code:
-            country_code=country_code.alpha_2
-            proxystatecode= pycountry.subdivisions.get(name=proxystate.get())
-            print(f"proxystatecode:{proxystatecode}")
+
 
     proxystate.set("Select From state")
     proxystate.trace('w', proxystateOptionCallBack)
@@ -5823,7 +5839,7 @@ def proxyView(frame,mode='query'):
 
 
     btn5= tk.Button(query_frame, text="Get proxy list", padx = 0, pady = 0,command = lambda: queryProxy(
-        frame=result_frame,canvas=None,tab_headers=tab_headers,city=city.get(),state=state.get(),country=country.get(),tags=proxyTags.get(),network_type=network_type.get(), status=proxyStatus.get()))
+        frame=result_frame,canvas=None,tab_headers=tab_headers,city=city.get(),state=state.get(),country=country.get(),tags=proxyTags.get(),network_type=network_type.get(), status=proxyStatus.get(),mode=mode))
 
 
 
@@ -6518,11 +6534,11 @@ def render(root,window,lang):
  
  
      # definition of the menu one level up...
-    Cascade_button.menu.loglevel.add_command(label='DEBUG',command=lambda:changeLoglevel('DEBUG',window,log_frame))
-    Cascade_button.menu.loglevel.add_command(label='INFO',command=lambda:changeLoglevel('INFO',window,log_frame))
-    Cascade_button.menu.loglevel.add_command(label='WARNING',command=lambda:changeLoglevel('WARNING',window,log_frame))
-    Cascade_button.menu.loglevel.add_command(label='ERROR',command=lambda:changeLoglevel('ERROR',window,log_frame))
-    Cascade_button.menu.loglevel.add_command(label='CRITICAL',command=lambda:changeLoglevel('CRITICAL',window,log_frame))
+    Cascade_button.menu.loglevel.add_command(label='DEBUG',command=lambda:logger.setLevel('DEBUG'))
+    Cascade_button.menu.loglevel.add_command(label='INFO',command=lambda:logger.setLevel('INFO'))
+    Cascade_button.menu.loglevel.add_command(label='WARNING',command=lambda:logger.setLevel('WARNING'))
+    Cascade_button.menu.loglevel.add_command(label='ERROR',command=lambda:logger.setLevel('ERROR'))
+    Cascade_button.menu.loglevel.add_command(label='CRITICAL',command=lambda:logger.setLevel('CRITICAL'))
 
     
     Cascade_button.menu.add_cascade(label=settings[locale]['loglevel']
@@ -6635,6 +6651,7 @@ def  start_tkinter_app():
 
     root = tk.Tk()
     load_setting()
+    load_citydb()
     # print('---',settings)
     locale=settings['lastuselang']
     start(locale,root)
