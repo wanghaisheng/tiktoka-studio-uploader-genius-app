@@ -5651,7 +5651,7 @@ def newproxyView(frame):
 
     proxycountry.set("Select From country")
     proxycountry.trace('w', proxycountryOptionCallBack)
-    proxycountry_box.bind('<FocusIn>', lambda event: proxycountrydb_refresh(event))
+    proxycountry_box.bind('<Button-1>', lambda event: proxycountrydb_refresh(event))
     # proxycountry_box.bind("<<ComboboxSelected>>",proxycountryOptionCallBack) 
 
     # proxycountry_box.config(values =proxycountry_names)
@@ -5695,12 +5695,13 @@ def newproxyView(frame):
     def proxystateOptionCallBack(*args):
         print(proxystate.get())
         print(proxystate_box.current())
-        proxystate_box['values'] = proxystatedb_values()
+        # proxystate_box['values'] = proxystatedb_values()
 
     proxystate.set("Select From state")
-    proxystate.trace('w', proxystateOptionCallBack)
-    proxystate_box.bind('<FocusIn>', lambda event: proxystatedb_refresh(event))
-    proxystate_box.bind("<<ComboboxSelected>>",proxystatedb_refresh) 
+    # proxystate.trace('w', proxystateOptionCallBack)
+    proxystate_box.bind('<Button-1>', lambda event: proxystatedb_refresh(event))
+    
+    proxystate_box.bind("<<ComboboxSelected>>",proxystateOptionCallBack) 
 
     proxystate_box.config(values =[])
     proxystate_box.grid(row = 4, column = 5,  padx=14, pady=15)   
@@ -5740,6 +5741,10 @@ def newproxyView(frame):
                 citynames=[None]
             print('city names',citynames)        
             proxycity_box['values'] =citynames
+            # proxycity.set("Select From city")
+            
+        else:
+            showinfomsg(message='choose a country and state first')
 
     def proxycitydb_refresh(event):
         proxycity_box['values'] = proxycitydb_values()
@@ -5748,17 +5753,20 @@ def newproxyView(frame):
 
 
     def proxycityOptionCallBack(*args):
-        proxycity_box['values'] = proxycitydb_values()
 
+        print('choose city',proxycity.get())
 
     proxycity.set("Select From city")
-    proxycity.trace('w', proxycityOptionCallBack)
-    proxycity_box.bind('<FocusIn>', lambda event: proxycitydb_refresh(event))
-    proxycity_box.bind("<<ComboboxSelected>>",proxycitydb_refresh) 
-    # proxycity_box.bind("<KeyRelease>",proxycityOptionCallBack) 
-    proxycity_box['values'] = proxycitydb_values()
+    # proxycity.trace('w', proxycityOptionCallBack)
+    
+    proxycity_box.bind('<Button-1>',  lambda event: proxycitydb_refresh(event))
 
-    proxycity_box.config(values =[])
+    # proxycity_box.bind('<FocusIn>', lambda event: proxycitydb_refresh(event))
+    proxycity_box.bind("<<ComboboxSelected>>",proxycityOptionCallBack) 
+    # proxycity_box.bind("<KeyRelease>",proxycityOptionCallBack) 
+    # proxycity_box['values'] = proxycitydb_values()
+
+    # proxycity_box.config(values =proxycitydb_values())
     proxycity_box.grid(row = 5, column = 5,  padx=14, pady=15)   
 
 
