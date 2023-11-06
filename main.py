@@ -102,7 +102,7 @@ ROOT_DIR = os.path.dirname(
 )
 
 videoassetsfilename='videos-assets.json'
-citydbfilename='assets/country-db/json/country-state-db.json'
+citydbfilename='assets/country-db/qq/en_loclist.json'
 settingfilename='settings.json'
 locale='en'
 window_size='1024x720'
@@ -359,6 +359,8 @@ def load_locales():
         with open(file_path, 'r') as file:
             data = json.load(file)
 def load_citydb():
+    global citydb
+
     dbfile=PurePath(ROOT_DIR,citydbfilename)
     print(f'start to load country data {dbfile}')
     # print('===',open(dbfile,encoding='utf-8').read())
@@ -367,9 +369,10 @@ def load_citydb():
         try:
             datas = json.loads(open(dbfile,encoding='utf-8').read())
             print('json data',datas)
-            for key,value in enumerate(datas):
-                print(f'load country db {key} {value}')
-                citydb[key]=value
+            citydb=datas
+            # for key,value in enumerate(datas):
+            #     print(f'load country db {key} {value}')
+            #     citydb[key]=value
         except:
             failed=True
             print('load country db file failure')
@@ -5628,9 +5631,10 @@ def newproxyView(frame):
     proxycountrycode = tk.StringVar()
 
     def proxycountrydb_values():
-        proxycountry_names = citydb['00'].values()
+        proxycountry_names = citydb['countries'].values()
+        # print('proxycountry_names',proxycountry_names)
 
-        proxycountry_box['values'] = proxycountry_names
+        proxycountry_box['values'] = list(proxycountry_names)
 
     def proxycountrydb_refresh(event):
         proxycountry_box['values'] = proxycountrydb_values()
@@ -5641,13 +5645,14 @@ def newproxyView(frame):
 
     def proxycountryOptionCallBack(*args):
         print(proxycountry.get())
-        country_code= getattr(citydb['00'],proxycountry.get())
+        country_code= find_key(citydb['countries'],proxycountry.get())
         proxycountrycode.set(country_code)
         print(proxycountry_box.current())
 
     proxycountry.set("Select From country")
     proxycountry.trace('w', proxycountryOptionCallBack)
     proxycountry_box.bind('<FocusIn>', lambda event: proxycountrydb_refresh(event))
+    # proxycountry_box.bind("<<ComboboxSelected>>",proxycountryOptionCallBack) 
 
     # proxycountry_box.config(values =proxycountry_names)
     proxycountry_box.grid(row =3, column = 5,  padx=14, pady=15)   
@@ -5670,14 +5675,16 @@ def newproxyView(frame):
         if proxycountry.get() is not None:
             print(proxycountry.get() )
             if proxycountrycode.get():
-                country_code= getattr(citydb['00'],proxycountry.get())
+                country_code= find_key(citydb['countries'],proxycountry.get())
+                # print(f"country_code:{country_code}")
 
-                proxystate_names = citydb[country_code].values()
-
-                print(f"proxystate_names:{proxystate_names}")
-
+                proxystate_names = citydb[country_code].keys()
+                proxystate_names=list(proxystate_names)
+                # print(f"proxystate_names:{proxystate_names}")
+                if len(proxystate_names)==0:
+                    proxystate_names=[None]
                 proxystate_box['values'] = proxystate_names
-
+        
     def proxystatedb_refresh(event):
         proxystate_box['values'] = proxystatedb_values()
 
@@ -5688,11 +5695,12 @@ def newproxyView(frame):
     def proxystateOptionCallBack(*args):
         print(proxystate.get())
         print(proxystate_box.current())
-
+        proxystate_box['values'] = proxystatedb_values()
 
     proxystate.set("Select From state")
     proxystate.trace('w', proxystateOptionCallBack)
     proxystate_box.bind('<FocusIn>', lambda event: proxystatedb_refresh(event))
+    proxystate_box.bind("<<ComboboxSelected>>",proxystatedb_refresh) 
 
     proxystate_box.config(values =[])
     proxystate_box.grid(row = 4, column = 5,  padx=14, pady=15)   
@@ -5709,30 +5717,48 @@ def newproxyView(frame):
 
 
     def proxycitydb_values():
-        platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
+        print(f'cache proxycountry_codes : {proxycountrycode.get()}')
+        country_code=None
+        state_code=None        
+        if proxycountry.get() is not None:
+            print(proxycountry.get() )
+            country_code=proxycountry.get()
+            if proxycountrycode.get():
+                country_code= find_key(citydb['countries'],proxycountry.get())
+                print(f"country_code:{country_code}")
 
+                if proxystate.get():
+                    state_code=proxystate.get()
+                    print(f"state_code:{state_code}")
 
-        platform_names = list(dict(PROXY_PROVIDER_TYPE.PROXY_PROVIDER_TYPE_TEXT).values())
+                    citynames=citydb[country_code][state_code]
+                    citynames=list(citynames)
+                else:
+                    citynames=[None]
 
-        proxycity_box['values'] = platform_names
+            else:
+                citynames=[None]
+            print('city names',citynames)        
+            proxycity_box['values'] =citynames
 
     def proxycitydb_refresh(event):
         proxycity_box['values'] = proxycitydb_values()
 
-    proxycity_box['values'] = proxycitydb_values()
 
 
 
     def proxycityOptionCallBack(*args):
-        print(proxycity.get())
-        print(proxycity_box.current())
+        proxycity_box['values'] = proxycitydb_values()
+
 
     proxycity.set("Select From city")
     proxycity.trace('w', proxycityOptionCallBack)
     proxycity_box.bind('<FocusIn>', lambda event: proxycitydb_refresh(event))
-    proxycity_names = list(dict(PROXY_PROVIDER_TYPE.PROXY_PROVIDER_TYPE_TEXT).values())
+    proxycity_box.bind("<<ComboboxSelected>>",proxycitydb_refresh) 
+    # proxycity_box.bind("<KeyRelease>",proxycityOptionCallBack) 
+    proxycity_box['values'] = proxycitydb_values()
 
-    proxycity_box.config(values =proxycity_names)
+    proxycity_box.config(values =[])
     proxycity_box.grid(row = 5, column = 5,  padx=14, pady=15)   
 
 
