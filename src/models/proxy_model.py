@@ -117,13 +117,14 @@ class ProxyModel(BaseModel):
     # City
     city = CharField(null=True)
     
+    ip_type = IntegerField(default=IP_TYPE.IPv4)
+    network_type = IntegerField(default=IP_SOURCE_TYPE.datacenter)
 
     
     tags = TextField(null=True)
     status = IntegerField(default=PROXY_STATUS.UNCHEKCED)
 
     # Proxy network
-    proxy_validate_network_type = CharField(null=True)
     proxy_validate_server = TextField(null=True)
     #json保存多个核对结果 核对服务器url：核对结果json字符串
     proxy_validate_results = TextField(null=True)
@@ -151,9 +152,9 @@ class ProxyModel(BaseModel):
 
             proxy.save(force_insert=True) 
 
-            return True
+            return proxy
         else:
-            return False
+            return proxy
     # Read (Select) Proxy by ID
     @classmethod
 

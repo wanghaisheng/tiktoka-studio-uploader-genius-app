@@ -5263,7 +5263,7 @@ def split_proxy(proxy_string):
     else:
         return None
 
-def saveproxies(engine,proxies_list_raw,logger):
+def saveBulkproxies(proxies_list_raw,logger):
     proxies_list=[]
     if 'proxy list should be one proxy oneline,and each proxy in such format' in proxies_list_raw:
         proxies_list_raw=proxies_list_raw.replace('proxy list should be one proxy oneline,and each proxy in such format:','')
@@ -5303,8 +5303,8 @@ def saveproxies(engine,proxies_list_raw,logger):
                     'proxy_port': port,
                     'proxy_username': user,
                     'proxy_password': password,
-                    'ip_address': '127.0.0.1',
-                    'country': 'US',
+                    'ip_address': None,
+                    'country': None,
                     'tags': tags,
                     'status': 2,
                     'proxy_validate_network_type': None,
@@ -5313,12 +5313,12 @@ def saveproxies(engine,proxies_list_raw,logger):
                 }
                 result=ProxyModel.add_proxy(proxy_data)
                 print(f'save proxy {ele} :{result}')
-                if result==False:
+                if result==None:
                     logger.error(f'add proxy failure :{ele}')   
                     showinfomsg(f'we can not add the same proxy twice :{ele}') 
                 else:
 
-                    showinfomsg(f'add proxy ok :{ele}') 
+                    showinfomsg(f'add proxy ok {result.id}')  
 
             else:
                 logger.error(f'there is no valid proxy in this record :{ele}')         
@@ -5327,6 +5327,52 @@ def saveproxies(engine,proxies_list_raw,logger):
 
     else:
         logger.debug('you should input valid proxy list and try again')
+        
+def saveProxy(proxy_protocol_type=None,iptype=None,proxy_provider_type=None,host=None,port=None,user=None,password=None,ip_address=None,country=None, state=None, city=None, tags=None, status=None, network_type=None):
+    if proxy_provider_type==None and proxy_protocol_type==None and host==None and port ==None:
+        logger.error(f'there is no valid proxy ')         
+        showinfomsg(f'there is no valid proxy')  
+    else: 
+        if proxy_provider_type:
+            proxy_provider_type=find_key(PROXY_PROVIDER_TYPE.PROXY_PROVIDER_TYPE_TEXT,proxy_provider_type)
+        if proxy_protocol_type:
+            proxy_protocol_type=find_key(PROXY_PROTOCOL.PROXY_PROTOCOL_TEXT,proxy_protocol_type)
+        if status:
+            status=find_key(PROXY_STATUS.PROXY_STATUS_TEXT,status)
+        if network_type:
+            network_type=find_key(IP_SOURCE_TYPE.IP_SOURCE_TYPE_TEXT,network_type)
+        if iptype:
+            iptype=find_key(IP_TYPE.IP_TYPE_TEXT,iptype)
+
+
+
+            
+        proxy_data = {
+            'proxy_protocol': proxy_protocol_type,
+            'proxy_provider_type': proxy_provider_type,
+            'proxy_host': host,
+            'proxy_port': port,
+            'proxy_username': user,
+            'proxy_password': password,
+            'ip_address': ip_address,
+            'country': country,
+            'state': state,
+            'city': city,
+            'ip_type':iptype,
+            'tags': tags,
+            'status': status,
+            'network_type': network_type,
+            'proxy_validate_server': None,
+            'proxy_validate_results': None,
+        }
+        result=ProxyModel.add_proxy(proxy_data)
+        print(f'save proxy {proxy_data} :{result}')
+        if result==None:
+            logger.error(f'add proxy failure :{proxy_data}')   
+            showinfomsg(f'add proxy failure') 
+        else:
+
+            showinfomsg(f'add proxy ok {CustomID(custom_id=result.id).to_hex()}')  
 def returnProxy_textfield(event):
     proxy_textfield_str.set(event.widget.get("1.0", "end-1c"))
     print(proxy_textfield_str.get())
@@ -5389,7 +5435,7 @@ def bulkproxyimportView(frame):
     proxy_textfield.bind("<Return>", returnProxy_textfield)
     proxy_textfield.bind_all("<Control-c>",_copy)
 
-    b_save_proxy=tk.Button(frame,text="save proxy",command=lambda: threading.Thread(target=saveproxies(prod_engine,proxy_textfield.get("1.0", tk.END),logger)).start() )
+    b_save_proxy=tk.Button(frame,text="save proxy",command=lambda: threading.Thread(target=saveBulkproxies(proxy_textfield.get("1.0", tk.END),logger)).start() )
     b_save_proxy.grid(row=5,column=0, sticky=tk.W)
     
     b_check_proxy=tk.Button(frame,text="bulk check proxy",command=lambda: threading.Thread(target=updateproxies(prod_engine,proxy_textfield.get("1.0", tk.END),logger)).start() )
@@ -5466,7 +5512,6 @@ def newproxyView(frame):
     # proxyprovider_box.config(values =proxyprovider_names)
     proxyprovider_box.grid(row = 0, column = 5,  padx=14, pady=15)    
 
-    channel_cookie_user= tk.StringVar()
     proxy_host=tk.StringVar()
     proxy_port=tk.StringVar()
     proxy_ip=tk.StringVar()
@@ -5763,8 +5808,54 @@ def newproxyView(frame):
 
     # proxycity_box.config(values =proxycitydb_values())
     proxycity_box.grid(row = 5, column = 5,  padx=14, pady=15)   
+    
+ 
+    l_proxyprotocol = tk.Label(ttkframe, text=settings[locale]['L_proxyprotocol']
+                          )
+    # l_platform.place(x=10, y=90)
+    l_proxyprotocol.grid(row = 14, column = 0,  padx=14, pady=15)    
+
+    proxyprotocol = tk.StringVar()
+    proxyprotocol_box = ttk.Combobox(ttkframe, textvariable=proxyprotocol)
 
 
+    def proxyprotocoldb_values():
+        proxyprotocol_box['values'] = list(dict(PROXY_PROTOCOL.PROXY_PROTOCOL_TEXT).values())
+
+
+    def proxyprotocoldb_refresh(event):
+        proxyprotocol_box['values'] = proxyprotocoldb_values()
+
+
+
+
+    def proxyprotocolOptionCallBack(*args):
+
+        print('choose PROXY_PROTOCOL',proxyprotocol.get())
+
+    proxyprotocol.set("Select From")
+    # proxyprotocol.trace('w', proxyprotocolOptionCallBack)
+    
+    proxyprotocol_box.bind('<Button-1>',  lambda event: proxyprotocoldb_refresh(event))
+
+    # proxyprotocol_box.bind('<FocusIn>', lambda event: proxyprotocoldb_refresh(event))
+    proxyprotocol_box.bind("<<ComboboxSelected>>",proxyprotocolOptionCallBack) 
+    # proxyprotocol_box.bind("<KeyRelease>",proxyprotocolOptionCallBack) 
+    # proxyprotocol_box['values'] = proxyprotocoldb_values()
+
+    # proxyprotocol_box.config(values =proxyprotocoldb_values())
+    proxyprotocol_box.grid(row = 14, column = 5,  padx=14, pady=15)       
+    
+    
+
+    b_save_proxy=tk.Button(ttkframe,text="save proxy",command=lambda: threading.Thread(target=saveProxy(
+proxy_protocol_type=proxyprotocol.get(),proxy_provider_type=proxyprovider.get(),host=proxy_host.get(),port=proxy_port.get(),
+user=username.get(),password=password.get(),ip_address=proxy_ip.get(),iptype=iptype.get(),country=proxycountry.get(),
+state=proxystate.get(), city=proxycity.get(), tags=proxy_tag.get(), status=2, network_type=ipsource.get()
+        
+        
+        )).start() )
+    b_save_proxy.grid(row=15,column=0, sticky=tk.W)
 
 
 

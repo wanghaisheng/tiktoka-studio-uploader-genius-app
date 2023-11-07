@@ -37,8 +37,10 @@
 	"l_proxycity": "city",	
 	"loglevel": "loglevel",
 	"L_refresh_url": "refresh_url",		
-	"L_proxy_tag": "tags",		
+	"L_proxy_tag": "标签",		
+	"L_proxyprotocol": "协议",		
 
+	
 	"b_uploadAll": "查询&&上传",
 	"batchchangebgmusic": "批量替换背景音乐",
 	"is_open_browser": "静默模式",

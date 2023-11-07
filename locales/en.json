@@ -25,6 +25,7 @@
 	"L_proxy_tag": "tags",		
 	
 	"l_proxycity": "city",		
+	"L_proxyprotocol": "protocol",		
 
 	"installView": "Setup",
 	"accountView": "Accounts",
