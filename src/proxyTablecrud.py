@@ -44,7 +44,7 @@ def check_selected_row(rowid):
     #         print('ipcountry',ipcountry)
 
 
-def queryProxy(frame=None,canvas=None,tab_headers=None,state=None,city=None,status=None,country=None,tags=None,network_type=None,pageno=None,pagecount=None,ids=None,sortby="Add DATE ASC",mode='query'):
+def queryProxy(linkProxy=None,platform=None,frame=None,canvas=None,tab_headers=None,state=None,city=None,status=None,country=None,tags=None,network_type=None,pageno=None,pagecount=None,ids=None,sortby="Add DATE ASC",mode='query'):
 
     if status=='valid':
         status=1
@@ -104,9 +104,9 @@ def queryProxy(frame=None,canvas=None,tab_headers=None,state=None,city=None,stat
             proxy_data.append(proxy)
             print(proxy.keys())
         print(f'show header and rows based on query {tab_headers}\n{proxy_data}')
-        refreshProxycanvas(canvas=canvas,frame=frame,headers=tab_headers,datas=[],mode=mode)
+        refreshProxycanvas(canvas=canvas,frame=frame,headers=tab_headers,datas=[],mode=mode,linkProxy=linkProxy,platform=platform)
 
-        refreshProxycanvas(canvas=canvas,frame=frame,headers=tab_headers,datas=proxy_data,mode=mode)
+        refreshProxycanvas(canvas=canvas,frame=frame,headers=tab_headers,datas=proxy_data,mode=mode,linkProxy=linkProxy,platform=platform)
     
 
 
@@ -117,7 +117,7 @@ def queryProxy(frame=None,canvas=None,tab_headers=None,state=None,city=None,stat
                 
 
                     
-def refreshProxycanvas(linkAccounts=None,canvas=None,frame=None,headers=None,datas=None,mode=None):
+def refreshProxycanvas(linkProxy=None,canvas=None,frame=None,headers=None,datas=None,mode=None,platform=None):
 
     print(f'try to clear existing rows in the tabular {len(frame.winfo_children())} ')
 
@@ -210,12 +210,12 @@ def refreshProxycanvas(linkAccounts=None,canvas=None,frame=None,headers=None,dat
             del_buttons[i].grid(row=i, column=len(headers)-3, sticky='news')
             if mode!='query':
                 bind_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                    activebackground= 'orange', text='bind',command=lambda x=i-1 :bind_selected_row_proxy(selected_platform=datas[x]['platform'],linkAccounts=linkAccounts,rowid=datas[x]['id'],frame=frame))
+                                    activebackground= 'orange', text='bind',command=lambda x=i-1 :bind_selected_row_proxy(selected_platform=platform,linkProxy=linkProxy,rowid=datas[x]['id'],frame=frame))
                 bind_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
 
 
                 unbind_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
-                                    activebackground= 'orange', text='unbind',command=lambda x=i-1 :unbind_selected_row_proxy(selected_platform=datas[x]['platform'],linkAccounts=linkAccounts,rowid=datas[x]['id'],frame=frame))
+                                    activebackground= 'orange', text='unbind',command=lambda x=i-1 :unbind_selected_row_proxy(selected_platform=platform,linkProxy=linkProxy,rowid=datas[x]['id'],frame=frame))
                 unbind_buttons[i].grid(row=i, column=len(headers)-1, sticky='news')
     # Create canvas window to hold the buttons_frame.
     canvas.create_window((0,0), window=buttons_frame, anchor=tk.NW)
@@ -274,75 +274,58 @@ def remove_selected_row_proxy(rowid,frame=None,name=None,func=None):
                 showinfomsg(message=f'this {name}: {rowid} not added before',parent=frame)    
         logger.debug(f'end to remove,reset {name} {rowid}')
 
-def bind_selected_row_proxy(rowid,selected_platform=None,linkAccounts=None,frame=None):
+def bind_selected_row_proxy(rowid,selected_platform=None,linkProxy=None,frame=None):
 
-    
-
-
-    existingaccounts=linkAccounts.get()
-    if existingaccounts =='' or existingaccounts is None:
-        existingaccounts=dict({})   
-    else:
-        existingaccounts=eval(existingaccounts)
-    
-    if not selected_platform in existingaccounts:
-
-        existingaccounts[selected_platform]=[]
-    # (youtube:y1,y2),(tiktok:t1:t2)
+    existingaProxies=linkProxy.get().split(',')
+    show_str=linkProxy.get()
     if rowid is None:
-        logger.debug('you have not selected new accounts at all')
-        showinfomsg(message='you have not selected new accounts at all',parent=frame)    
+        logger.debug('you have not selected new proxies at all')
+        showinfomsg(message='you have not selected new proxies at all',parent=frame)    
     
     else:
-        if rowid in existingaccounts[selected_platform]:
-            logger.debug(f'this account {rowid} added before')                   
-            showinfomsg(message=f'this account {rowid} added before',parent=frame)    
+        if rowid in existingaProxies:
+            logger.debug(f'this proxy {rowid} added before')                   
+            showinfomsg(message=f'this proxiess {rowid} added before') 
 
         else:
-            if existingaccounts[selected_platform]=='':
-                existingaccounts[selected_platform]=[]
-            existingaccounts[selected_platform].append(rowid)
-            logger.debug(f'this account {rowid} added successS')
-            showinfomsg(message=f'this account {rowid} added success',parent=frame)    
+            existingaProxies.append(rowid)
+            logger.debug(f'this proxy {rowid} added successS')
+            showinfomsg(message=f'this proxy {rowid} added successS')
 
-    linkAccounts.set(str(existingaccounts))
-        
-        
-def unbind_selected_row_proxy(rowid,selected_platform=None,linkAccounts=None,frame=None):
-
-
-
-    existingaccounts=linkAccounts.get()
-    if existingaccounts =='' or existingaccounts is None:
-        existingaccounts=dict({})    
-    else:
-        existingaccounts=eval(existingaccounts)
-    
-    if not selected_platform in existingaccounts:
-
-        existingaccounts[selected_platform]=[]
-    # (youtube:y1,y2),(tiktok:t1:t2)
-    if rowid is None:
-        logger.debug('you have not selected new accounts at all')
-        showinfomsg(message='you have not selected new accounts at all',parent=frame)    
-    
-    else:
-        if selected_platform in existingaccounts:
-            if rowid in existingaccounts[selected_platform]:
-                existingaccounts[selected_platform].remove(rowid)
-
-
-                logger.debug(f'this account {rowid} removed success')
-                showinfomsg(message=f'this account {rowid} removed success',parent=frame)    
+            if show_str=='':
+                show_str=rowid
             else:
-                logger.debug(f'you cannot remove this account {rowid}, not added before')
-                showinfomsg(message=f'this account {rowid} not added before',parent=frame)    
-        else:
-            logger.debug(f'you cannot remove this account {rowid}, not added before')
-            showinfomsg(message=f'this account {rowid} not added before',parent=frame) 
-        logger.debug(f'end to remove,reset account {existingaccounts}') 
+                show_str= show_str+','+rowid
 
-    linkAccounts.set(str(existingaccounts))
+    linkProxy.set(show_str)
+
+        
+        
+def unbind_selected_row_proxy(rowid,selected_platform=None,linkProxy=None,frame=None):
+    existingaProxies=linkProxy.get().split(',')
+    show_str=linkProxy.get()
+    if rowid is None:
+        logger.debug('you have not selected new proxies at all')
+        showinfomsg(message='you have not selected new proxies at all',parent=frame)    
+    
+    else:
+        logger.debug(f'you want to remove this selected proxy {rowid} from existing: {existingaProxies}')
+
+        if rowid in existingaProxies==False:
+            logger.debug(f'this proxy {rowid} has not added before')                   
+            showinfomsg(message=f'this proxiess {rowid}  has not added before') 
+
+        else:
+            existingaProxies.remove(rowid)
+
+            logger.debug(f'this proxy {rowid} removed success')
+            showinfomsg(message=f'this proxy {rowid} removed success')
+        show_str= ','.join(item for item in existingaProxies if item is not None and item != "")
+
+
+    linkProxy.set(show_str)
+
+
         
 
 

@@ -3393,32 +3393,23 @@ def printValues(choices):
 def setEntry(str,var):
     var.set(str) 
 
-def chooseProxies(ttkframe,username,parentchooseProxies):
+def chooseProxies(ttkframe,platform=None,accountLinkproxy=None):
 
 
     chooseAccountsWindow = tk.Toplevel(ttkframe)
     chooseAccountsWindow.geometry(window_size)
     chooseAccountsWindow.title('Choose associated proxy')
-    # chooseAccountsWindow.grid_rowconfigure(0, weight=1)
-    # chooseAccountsWindow.grid_columnconfigure(0, weight=1, uniform="group1")
-    # chooseAccountsWindow.grid_columnconfigure(1, weight=1, uniform="group1")
-    # chooseAccountsWindow.grid_columnconfigure(0, weight=1,
-    #                                   minsize=int(0.5*width)
-
-    #                                   )
-    # chooseAccountsWindow.grid_columnconfigure(1, weight=2)
-    
-    # account_frame_left = tk.Frame(chooseAccountsWindow, height = height)
-    # account_frame_left.grid(row=0,column=0,sticky="nsew")
-    # account_frame_right = tk.Frame(chooseAccountsWindow, height = height)
-    # account_frame_right.grid(row=0,column=1,sticky="nsew") 
-    proxyView(chooseAccountsWindow,mode='bind')
+    def refreshproxyoption(*args):
+        print('sync link proxy back')
+        accountLinkproxy.set(proxy_var.get())
     proxy_var=tk.StringVar()
     lbl16 = tk.Label(chooseAccountsWindow, text='binded proxy')
     lbl16.grid(row=5,column=0, sticky=tk.W)
     txt16 = tk.Entry(chooseAccountsWindow,textvariable=proxy_var,width=int(int(window_size.split('x')[-1])/5))
     txt16.grid(row=6,column=0, sticky=tk.W)
+    proxy_var.trace('w',refreshproxyoption)
 
+    proxyView(chooseAccountsWindow,mode='bind',linkProxy=proxy_var,platform=None)
 
 
 
@@ -3735,7 +3726,7 @@ def newaccountView(frame):
     newWindow.rowconfigure(0, weight=1)
     newWindow.columnconfigure((0,1), weight=1)
 
-    newWindow.title('user bulk import')
+    newWindow.title('create a new account')
     newWindow.grid_rowconfigure(0, weight=1)
     newWindow.grid_columnconfigure(0, weight=1, uniform="group1")
     newWindow.grid_columnconfigure(1, weight=1, uniform="group1")
@@ -3827,10 +3818,13 @@ def newaccountView(frame):
 
     l_linkAccounts.grid(row = 4, column = 0, columnspan = 3, padx=14, pady=15)    
     e_linkAccounts.grid(row = 4, column = 5, columnspan = 3, padx=14, pady=15,sticky='w')   
+
+    Tooltip(l_linkAccounts, text='if you want to associate any account as the backup accounts,query in the right and bind one' , wraplength=200)
+
+
     accountView(account_frame_right,mode='bind',linkAccounts=linkAccounts)
 
     # b_choose_account=tk.Button(ttkframe,text="Link",command=lambda: threading.Thread(target=lambda:chooseAccountsView(ttkframe,linkAccounts)).start() )
-    # Tooltip(b_choose_account, text='if you want to associate any account as the backup accounts' , wraplength=200)
 
     # b_choose_account.grid(row = 4, column = 9, columnspan = 2, padx=14, pady=15)    
     l_proxy_option = tk.Label(ttkframe, text=settings[locale]['proxySetting']
@@ -3841,9 +3835,10 @@ def newaccountView(frame):
     e_proxy_option = tk.Entry(ttkframe, textvariable=proxy_option_account)
     e_proxy_option.grid(row = 5, column = 5, columnspan = 3, padx=14, pady=15,sticky='w')    
 
-    b_choose_proxy=tk.Button(ttkframe,text="Link",command=lambda: threading.Thread(target=chooseProxies(ttkframe,username.get(),proxy_option_account)).start() )
+    b_choose_proxy=tk.Button(ttkframe,text="Link",command=lambda: threading.Thread(target=chooseProxies(ttkframe,platform=socialplatform.get(),accountLinkproxy=proxy_option_account)).start() )
     
     b_choose_proxy.grid(row = 5, column = 9, columnspan = 2, padx=14, pady=15)    
+    Tooltip(b_choose_proxy, text='if you want to use any proxy' , wraplength=200)
 
 
 
@@ -5773,7 +5768,7 @@ def newproxyView(frame):
 
 
 
-def proxyView(frame,mode='query'):
+def proxyView(frame,mode='query',linkProxy=None,platform=None):
 
     
 
@@ -5873,7 +5868,7 @@ def proxyView(frame,mode='query'):
 
 
     btn5= tk.Button(query_frame, text="Get proxy list", padx = 0, pady = 0,command = lambda: queryProxy(
-        frame=result_frame,canvas=None,tab_headers=tab_headers,city=city.get(),state=state.get(),country=country.get(),tags=proxyTags.get(),network_type=network_type.get(), status=proxyStatus.get(),mode=mode))
+        frame=result_frame,canvas=None,tab_headers=tab_headers,city=city.get(),state=state.get(),country=country.get(),tags=proxyTags.get(),network_type=network_type.get(), status=proxyStatus.get(),mode=mode,linkProxy=linkProxy,platform=platform))
 
 
 
