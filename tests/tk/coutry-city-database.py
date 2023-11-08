@@ -1,14 +1,6 @@
-import xmltodict
 import jsons
-def load_json(xml_path):
-    #获取xml文件
-    xml_file = open(xml_path, 'r',encoding='utf-8')
-    #读取xml文件内容
-    xml_str = xml_file.read()
-    #将读取的xml内容转为json
-    json = xmltodict.parse(xml_str)
-    return json
-filename=r'D:\Download\audio-visual\saas\tiktoka\tiktoka-studio-uploader-genius\assets\country-db\qq\en_loclist.xml'
+
+filename='assets/country-db/qq/en_loclist.xml'
 # r=load_json(filename)
 # datas={}
 # countrycodes={}
@@ -86,35 +78,13 @@ countries={}
 
 for states in root:
     print('country is:',states.attrib['Name'],states.attrib['Code'])
+    if states.attrib['Name']=="China":
+        states.attrib['Code']="CHN"
+    
     countries[states.attrib['Code']]=states.attrib['Name']
     print(f"country has states:{len(states)}")
     if states.attrib['Name']:
-    #     cities={}
 
-    #     datas['CHN']={}
-    #     if len(states)==0:
-
-    #         datas['CHN']={}
-    #     elif len(states)==1:
-    #         tmp=[]
-    #         for c in states[0]:
-    #             print(c.attrib['Name'],c.attrib['Code'])
-    #             tmp.append(c.attrib['Name'])
-    #         datas['CHN']['states']=tmp
-    #     else:
-    #         for s in states:
-    #             print('state is ',s.attrib['Name'],s.attrib['Code'])
-    #             tmp=[]
-
-    #             for c in s:
-    #                 print('city is ',c.attrib['Name'],c.attrib['Code'])
-
-    #                 tmp.append(c.attrib['Name'])
-    #             cities[s.attrib['Name']]=tmp
-    #         print('cities',cities)
-    #         datas['CHN']=cities
-
-    # else:
         cities={}
 
         datas[states.attrib['Code']]={}
@@ -138,9 +108,9 @@ for states in root:
                     tmp.append(c.attrib['Name'])
                 cities[s.attrib['Name']]=tmp
             print('cities',cities)
-            datas[states.attrib['Name']]=cities
+            datas[states.attrib['Code']]=cities
 
 
 datas['countries']=countries
-with open('2.json','w') as f:
+with open('assets/country-db/qq/en_loclist.json','w') as f:
     f.write(jsons.dumps(datas))    

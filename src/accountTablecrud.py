@@ -109,7 +109,8 @@ def queryAccounts(linkAccounts=None,frame=None,canvas=None,tab_headers=None, pla
         print(f'prepare row data to render:{account_rows}')
         for row in account_rows:
             print('row data',row)
-            print('platform',row.platform,dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[row.platform])
+            print('platform',row.platform)
+            print(dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[row.platform])
             backup_accounts=row.link_accounts 
 
             if backup_accounts is None or len(list(row.link_accounts))==0:

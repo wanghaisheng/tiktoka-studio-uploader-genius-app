@@ -3662,10 +3662,14 @@ def bulkImportUsers(frame):
 def bulksaveUser(accountfilepath):
     print(accountfilepath)
 def saveUser(platform,username,password,proxy,cookies,linkaccounts=None):
-
+    for v in [platform,username,password,proxy,linkaccounts]:
+        if v=="" or len(v)==0:
+            v=None
     if platform is None:
         logger.error('please choose a platform')
         showinfomsg(message='please choose a platform first')
+    else:
+        platform=find_key(dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT),platform)
     if username is None:
         logger.error('please provide  a username')
         showinfomsg(message='please provide  a username')
@@ -3694,8 +3698,12 @@ def saveUser(platform,username,password,proxy,cookies,linkaccounts=None):
         userid = AccountModel.add_account(user_data)
 
         if userid:
+            print(f"check link account {type(linkaccounts)} {len(linkaccounts)}")
+            if linkaccounts is None or len(linkaccounts)==0:
+                print(f'there is no backup account to be add at all')
 
-            if linkaccounts !=None:
+            else:
+                
                 accounts=eval(linkaccounts)
                 for key,value in enumerate(accounts):
                     if len(value.split(','))!=0:
@@ -3703,7 +3711,10 @@ def saveUser(platform,username,password,proxy,cookies,linkaccounts=None):
                             r=AccountRelationship.add_AccountRelationship_by_username(main_username=userid,otherusername=id)
                             if r:
                                 print(f'bind {id} to {username} as side account')
-            showinfomsg(message='this account added ok')
+                                showinfomsg(message='this backup account added ok')
+                            else:
+
+                                showinfomsg(message='this backup account added failed')                
         else:
 
             showinfomsg(message='this account added failed')
@@ -4334,7 +4345,9 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
                 if accounts=='':
                     accounts=[]
                 else:
-                    accounts=accounts.split(',')
+                    if type(accounts)==str:
+                        accounts=accounts.split(',')
+                    accounts=[CustomID(custom_id=x).to_bin() for x in accounts]
                 # 直接检测某平台下的账号数量，=1，默认情况 >1,看看策略
                 tmpaccounts=[]  
                 # ('单平台单账号', '单平台主副账号','单平台多账号随机发布','单平台多账号平均发布')
@@ -4374,14 +4387,14 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
                             
 
 
-                            data=(AccountModel.filter_accounts(username=accounts[0]))[0]
+                            data=(AccountModel.get_account_by_id(id=accounts[0]))[0]
                             # print('data====',data[0],data[0].username)
                             tmp['tasks'][key]['username']=data.username
                             logger.debug(f'get credentials for this account {accounts[0]}')
 
                             tmp['tasks'][key]['password']=data.password
                             tmp['tasks'][key]['proxy_option']=data.proxy
-                            tmp['tasks'][key]['channel_cookie_path']=data.cookies
+                            tmp['tasks'][key]['channel_cookie_path']=data.cookie_local_path
                         
                         
                                 
@@ -4390,8 +4403,8 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
                         # video={'1.mp4'}
                         # accounts={'y1'} {'y1','y11'}
                         taskno=0
-                        for username in accounts:
-                            r=AccountRelationship.get_AccountRelationship_by_username(username=username)
+                        for id_ in accounts:
+                            r=AccountRelationship.get_AccountRelationship_by_username(id=id_)
                             if r is not None:
                                 r.backup_account.id
                                 # tmpaccounts.append([r.backup_account.id  for x in range(0,videocounts)]   )
@@ -4424,7 +4437,7 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
 
                                     tmp['tasks'][key]['password']=r.backup_account.password
                                     tmp['tasks'][key]['proxy_option']=r.backup_account.proxy
-                                    tmp['tasks'][key]['channel_cookie_path']=r.backup_account.cookies
+                                    tmp['tasks'][key]['channel_cookie_path']=r.backup_account.cookie_local_path
                                     taskno=+1                                
                             
                             for key, entry in tmpdict.items():
@@ -4444,22 +4457,22 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
 
                                 
 
-                                data=(AccountModel.filter_accounts(username=username))[0]
+                                data=AccountModel.get_account_by_id(id=id_)
                                 # print('data====',data[0],data[0].username)
                                 tmp['tasks'][key]['username']=data.username
                                 logger.debug(f'get credentials for this account {data.username}')
 
                                 tmp['tasks'][key]['password']=data.password
                                 tmp['tasks'][key]['proxy_option']=data.proxy
-                                tmp['tasks'][key]['channel_cookie_path']=data.cookies
+                                tmp['tasks'][key]['channel_cookie_path']=data.cookie_local_path
                                 taskno=+1    
                             
                     elif multiAccountsPolicy_value==2:
                         print('遍历账号，生成视频数量对应大小的账号数组，随机分配')
                         if videocounts <len(accounts):
-                            tmpaccounts=[random.choice(accounts)]
+                            tmpaccounts= extends_accounts(accounts,videocounts,mode='random')  
                         else:
-                            tmpaccounts=  extends_accounts(accounts,videocounts,mode='random')  
+                            tmpaccounts=  extends_accounts(accounts,len(accounts),mode='random')  
                         taskno=0
                         for key, entry in tmpdict.items():
                             print('key',key)
@@ -4477,14 +4490,14 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
                             
 
                             account=tmpaccounts[taskno]
-                            data=(AccountModel.filter_accounts(username=account.username))[0]
+                            data=AccountModel.get_account_by_id(id=account)
                             # print('data====',data[0],data[0].username)
                             tmp['tasks'][key]['username']=data.username
                             logger.debug(f'get credentials for this account {account}')
 
                             tmp['tasks'][key]['password']=data.password
                             tmp['tasks'][key]['proxy_option']=data.proxy
-                            tmp['tasks'][key]['channel_cookie_path']=data.cookies
+                            tmp['tasks'][key]['channel_cookie_path']=data.cookie_local_path
                             taskno=+1    
                                                 
                     elif multiAccountsPolicy_value==3:
@@ -4510,14 +4523,14 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
                             
 
                             account=tmpaccounts[taskno]
-                            data=(AccountModel.filter_accounts(username=account.username))[0]
+                            data=AccountModel.get_account_by_id(id=account)
                             # print('data====',data[0],data[0].username)
                             tmp['tasks'][key]['username']=data.username
                             logger.debug(f'get credentials for this account {account}')
 
                             tmp['tasks'][key]['password']=data.password
                             tmp['tasks'][key]['proxy_option']=data.proxy
-                            tmp['tasks'][key]['channel_cookie_path']=data.cookies
+                            tmp['tasks'][key]['channel_cookie_path']=data.cookie_local_path
                             taskno=+1                                                  
                     else:
                         print('coming soon ')
@@ -6318,8 +6331,8 @@ def render(root,window,lang):
 
     tab_control = ttk.Notebook(window)
     tab_control.bind("<<NotebookTabChanged>>", on_tab_change)
-    tab_control.grid_columnconfigure(0, weight=1)
-    tab_control.grid_columnconfigure(1, weight=1)
+    # tab_control.grid_columnconfigure(0, weight=1)
+    # tab_control.grid_columnconfigure(1, weight=1)
 
     def refresh_video_folder(event):
         if tab_control.index(tab_control.select()) == 4:
@@ -6496,7 +6509,7 @@ def render(root,window,lang):
     # proxy_frame.grid_columnconfigure(1, weight=2)
     proxy_frame.grid(row=0, column=0, sticky="nsew")
     
-    proxy_frame_left = tk.Frame(proxy_frame, height = height)
+    proxy_frame_left = tk.Frame(proxy_frame)
     proxy_frame_left.grid(row=0,column=0,sticky="nsew")
     # proxy_frame_right = tk.Frame(proxy_frame, height = height)
     # proxy_frame_right.grid(row=0,column=1,sticky="nsew") 
@@ -6513,7 +6526,7 @@ def render(root,window,lang):
     # account_frame.grid_columnconfigure(1, weight=2)
     account_frame.grid(row=0, column=0, sticky="nsew")
     
-    account_frame_left = tk.Frame(account_frame, height = height)
+    account_frame_left = tk.Frame(account_frame)
     account_frame_left.grid(row=0,column=0,sticky="nsew")
     # account_frame_right = tk.Frame(account_frame, height = height)
     # account_frame_right.grid(row=0,column=1,sticky="nsew") 
@@ -6582,12 +6595,12 @@ def render(root,window,lang):
     tab_control.add(account_frame, 
                      text=settings[lang]['accountView'])
                     
-    accountView(account_frame_left,mode='query')
+    accountView(account_frame,mode='query')
 
     tab_control.add(proxy_frame,
                     text=settings[lang]['proxyView'])
 
-    proxyView(proxy_frame_left)
+    proxyView(proxy_frame)
 
     tab_control.add(video_frame, text=settings[lang]['videosView']
                     )
@@ -6717,9 +6730,9 @@ def start(lang,root=None):
     mainwindow = ttk.Frame(root)
     mainwindow.grid(row=0, column=0, sticky="nsew")
 
-    mainwindow.grid_rowconfigure(0, weight=1)
-    mainwindow.grid_columnconfigure(0, weight=1)
-    mainwindow.grid_columnconfigure(1, weight=1)
+    # mainwindow.grid_rowconfigure(0, weight=1)
+    # mainwindow.grid_columnconfigure(0, weight=1)
+    # mainwindow.grid_columnconfigure(1, weight=1)
 
 
 

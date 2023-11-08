@@ -458,7 +458,7 @@ def update_selected_row_proxy(rowid,frame=None,name=None,func=None):
     # tmpaccount.pop('setting')
     print('accountresult\n',accountresult)
     print('link_accounts\n',accountresult.get('link_accounts'))
-    newaccountresult,serialno,cols,lastindex=renderelements(lastindex=0,i=1,result=tmpaccount,column=0,disableelements=['id','inserted_at','uploaded_at','unique_hash','setting'],title='account data')
+    newaccountresult,serialno,cols,lastindex=renderelements(lastindex=0,i=1,result=tmpaccount,column=0,disableelements=['id','inserted_at','uploaded_at','unique_hash','setting'],title='proxy data')
     newbackupaccountresult={}
     newsettingresult={}
     newaccountresult={}
