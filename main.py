@@ -4999,7 +4999,7 @@ def uploadView(frame,ttkframe,lang):
     global vid,canvas
     
     taskstatus = tk.StringVar()
-    lbl15 = tk.Label(queryframe, text='Select Status:')
+    lbl15 = tk.Label(queryframe, text=settings[locale]['uploadview']['uploadView_q_status'])
     lbl15.grid(row = 0, column = 0,sticky='w')
 
     task_status_var = tk.StringVar()

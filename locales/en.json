@@ -23,7 +23,16 @@
 	"L_proxy_ip": "ip",		
 	"L_refresh_url": "refresh_url",		
 	"L_proxy_tag": "tags",		
+	"uploadview":{
+		"uploadView_q_status":"任务状态",
+		"uploadView_q_platform":"任务平台",
+		"uploadView_q_videoid":"视频id",
+		"uploadView_q_videotitle":"视频标题",
+		"uploadView_q_channelname":"账号名称",
+		"uploadView_q_scheduledate":"公开日期",
+		"uploadView_q_Sortby":"排序"
 	
+	},	
 	"l_proxycity": "city",		
 	"L_proxyprotocol": "protocol",		
 
