@@ -4,115 +4,70 @@ pip install requirements.txt
 python main.py
 
 
-Roadmap
 
+## Thumbnail Generation
 
-数据库管理
+* 1. Randomly select keyframes as the base for thumbnails [X]
+* 2. Extract the first frame of the video as the base for thumbnails [X]
+* 3. Read images from a specified folder to use as the base for thumbnails
+* 4. Read thumbnail templates and render thumbnails
 
-## 缩略图生成
+## Proxy Management
+* 0. Batch import proxy lists
+* 1. Import proxy lists and automatically group them by geographical location [X]
+* 2. Proxy query to obtain geographical location and time zone, supports IP location and IPAPI [X]
+* 3. Proxy validation, check if they can access Google, Facebook, and several fingerprint technology provider websites [X]
+* 4. Proxy scoring, evaluating native IPs, anonymity, and more [X]
 
-* 1.随机抽取关键帧作为缩略图底版  [X]
-* 2.抽取视频第一帧作为缩略图底版 [X]
-* 3.读取指定文件夹中的图片作为缩略图底版
-* 4.读取缩略图模板，渲染缩略图
+## Account Management
+* 1. Add accounts, enter usernames and passwords, and generate cookies automatically
+* 2. Bind accounts to proxies, select at least one, and have the option to choose multiple proxies from the same geographical location as candidates. Defaults to switching to a candidate proxy in case of connection failure [X]
 
+## Upload Configuration and Metadata Management
+* 0. Metadata format, please refer to [meta file docs](meta-json-docs.md)
+* 1. Manually edit video metadata, prepare video and thumbnail information manually in advance, and use an editor such as [jsoncrack.com/editor](https://jsoncrack.com/editor)
+* 2. Automatically generate metadata and export JSON files, which can be edited by users after export
+* Create upload configurations, enter account and proxy information, description prefixes, suffixes, tags, and publishing strategies. By default, load the configuration file used in the previous session
+* Select a video folder to generate video metadata base files
+* 2.0 Video pre-processing [X]
+* 2.0.1 Remove background music
+* 2.0.2 Use copyright-free music
+* 2.0.3 Embed invisible watermarks
+* 2.1 If there are images with the same name in the video folder, consider them as thumbnails
+* 2.2 If there are no images with the same name in the video folder, execute thumbnail generation tasks
+* 2.3 If there is a .txt file with the same name in the video folder, consider it as video description
+* 2.4 Plan the scheduled publication date for each video based on the timing publication strategy, the number of videos in the folder, and the daily public quantity limit
+* 2.4.1 Strategy: Daily One Release
+  - Daily public quantity is 1
+  - If a publication time slot is not selected, use the default time of 10:15
+  - If only one publication time slot is provided, e.g., 9:00, use that time slot.
+  - If multiple time slots are provided, choose one randomly as the video's public time slot
+* 2.4.2 Strategy: Daily Two Releases
+  - Daily public quantity is 2
+  - If a publication time slot is not selected, use the default time of 10:15
+  - If only one publication time slot is provided, e.g., 9:00, all videos will use that time slot.
+  - If two publication time slots are provided, e.g., 9:00 and 14:00, each video will use one of these time slots.
+  - If multiple time slots are provided, choose two randomly as the video's public time slots
+* 2.4.3 Strategy: Daily Four Releases
+  - If a publication time slot is not selected, use the default time of 10:15
+  - If only one, two, or three publication time slots are provided, choose one or two time slots randomly.
+  - If four time slots are provided, use them as video's public time slots
+  - The same pattern continues for Daily Six Releases and so on
 
-## 代理管理    
-* 0.批量导入代理列表       
-* 1.导入代理列表，自动按地理位置分组 [X]
-* 2.代理查询，获取地理位置、时区，支持iplocation ipapi [X]
-* 3.代理验证，能否访问google facebook，能否访问指纹技术供应商客户的几个网站 [X]
-* 4.代理打分，原生ip、伪装度、等等 [X]
+## Upload Task Management
+* 0. Edit task data
+  - Select video metadata and analyze the number of videos
+  - Choose upload strategies: single account publishing, primary-secondary account publishing, multi-account random publishing, multi-account average publishing
+  - Choose account names, import pre-configured proxy information. If no proxies are available, you can manually add proxy information related to the account.
+  - Generate and export upload task files for later import into the system
+* 1. Import prepared video metadata, which can be single account single video, single account multiple videos, multiple accounts single video, or multiple accounts multiple videos. Refer to the metadata format. Each group of videos corresponds to an upload configuration item (the proxies and accounts used to upload the video). After importing, the system will automatically create upload tasks
+* 2. View the list of pending upload tasks, edit corresponding fields, and set priority order
+* 3. Click "Upload" to automatically pull the pending upload queue, execute the upload action, and return the video ID upon completion. Update the video upload status [X]
+* 3.1 If there are top comments, continue with the comment posting action after video upload is completed, and record the status [X]
+* 4. View the list of uploaded tasks
+* 5. View the list of failed upload tasks and set up automatic retries [X]
 
+Issue: 
 
-## 账号管理
-
-* 1.新增账号，填写用户名、密码，自动生成cookie
-* 2.账号绑定代理，最少选择一个，可选择同一地理位置的多个作为候选，默认连接失败自动切换到候选代理 [X]
-
-
-
-## 上传配置和元数据管理
-
-* 0. 元数据格式请参考 [meta file docs](meta-json-docs.md)
-
-
-
-* 1.纯手动编辑视频元数据，需提前手动准备视频、缩略图等配套信息，使用编辑器
-
-
-https://jsoncrack.com/editor
-
-
-* 2、自动生成元数据并导出json文件，用户仍可二次编辑导出的json文件。
-
-* 新建上传配置，填写账号、代理信息，描述前缀、后缀、标签、发布策略等。
-默认自动加载上一次使用的配置文件
-
-* 选择视频文件夹，生成视频元数据底版文件，
-
-* 2.0 视频预处理 [X]
-* 2.0.1 去除背景音乐
-* 2.0.2 使用无版权音乐
-* 2.0.3 埋入隐形水印
-* 2.1 如果视频文件夹下存在同名图片，则视为缩略图
-* 2.2 如果视频文件夹下不存在同名图片，则可执行缩略图生成任务
-* 2.3 如果视频文件夹下存在同名txt，则视为视频描述
-* 2.4 根据定时发布策略、文件夹下的视频数量和每日公开数量上限，规划每个视频的定时公开日期
-* 2.4.1 策略：每日一发              
-每日公开数量为1,
-* 如果发布时间段未选择，使用默认的10:15,
-* 如果仅提供了一个发布时间段，比如9:00，则使用该时间段。
-* 如果提供了多个时间段，则随机从中选择一个作为视频公开时间段
-
-* 2.4.2 策略:每日二发           
-每日公开数量为2，
-* 如果发布时间段未选择，使用默认的10:15,
-* 如果仅提供了一个发布时间段，比如9:00，则所有视频都使用该时间段。
-* 如果仅提供了两个发布时间段，比如9:00，14:00,则分别使用其中之一时间段。
-* 如果提供了多个时间段，则随机从中选择两个个作为视频公开时间段
-
-* 2.4.3 策略: 每日4发      
-* 如果发布时间段未选择，使用默认的10:15,
-* 如果仅提供了一个发布时间段，比如9:00，则所有视频都使用该时间段。
-* 如果仅提供了两个或三个发布时间段，比如9:00，14:00,则随机填充一个或2个时间段。
-* 如果提供了四个时间段，则使用作为视频公开时间段
-
-
- 每日6发  
-规则如上所示，依此类推
-
-
-
-
-## 上传任务管理
-
-* 0.编辑任务数据            
-
-选择视频元数据，分析视频数量
-
-选择上传策略，单账号发布，主副账号发布，多账号随机发布，多账号平均发布，
-
-选择账号名称，引入已配置代理信息，如无代理，可编辑新增与账号相关的代理信息，
-
-生成导出上传任务文件，供后续导入入库
-
-
-* 1.导入已准备好的视频元数据，可以是单个账号单视频，单个账号多视频，多个账号单视频，多个账号多视频，
-元数据格式请参考，每组视频对应一个上传配置项(上传该视频所使用的代理、账号等)，导入完成后自动创建上传任务
-* 2.可查看待上传任务列表，编辑对应字段和优先顺序
-* 3.点击上传可自动拉取待上传队列，执行上传动作，上传完成后返回视频id，更新视频上传状态 [X]
-* 3.1 如果存在置顶评论，则在视频上传完成后继续执行留评动作，完成后记录状态 [X]
-* 4.可查看已上传任务列表
-* 5.可查看上传失败任务列表，可设置自动重试 [X]
-
-
-
-
-issue
-
-
-1. thumb tab
-
-先选择format，再选择文件夹，不会触发自动生成元数据，需要手动点击check
-
+1. Thumbnail Tab
+   - Select the format first, then select the folder; it does not trigger the automatic generation of metadata. Manual clicking on "check" is required.
