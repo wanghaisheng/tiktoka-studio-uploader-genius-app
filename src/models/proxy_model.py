@@ -91,7 +91,7 @@ class ProxyModel(BaseModel):
     proxy_protocol = IntegerField(choices=PROXY_PROTOCOL)
     
     # Proxy provider Type
-    proxy_provider_type = IntegerField(default=PROXY_PROVIDER_TYPE.CUSTOM,null=True)
+    proxy_provider_type = IntegerField(default=PROXY_PROVIDER_TYPE.CUSTOM)
     
     # Proxy Host
     proxy_host = CharField()
@@ -130,6 +130,7 @@ class ProxyModel(BaseModel):
     proxy_validate_results = TextField(null=True)
     is_deleted = BooleanField(default=False)  # Add a field to flag if video is deleted
     unique_hash = TextField(index=True, unique=True, null=True, default=None)  # Add this line
+    inserted_at = IntegerField(null=True)
 
     # class Meta:
     #     db_table = db
@@ -168,7 +169,7 @@ class ProxyModel(BaseModel):
     # Update Proxy by ID
     @classmethod
 
-    def update_proxy(cls,id,proxy_data,**kwargs):
+    def update_proxy(cls,id,proxy_data=None,**kwargs):
         try:
             proxy = ProxyModel.get(ProxyModel.id ==id)
             if proxy_data:
@@ -188,6 +189,8 @@ class ProxyModel(BaseModel):
                     setattr(proxy, key, value)
                     
                 print('after modify',proxy,proxy.is_deleted)
+            proxy.inserted_at = int(time.time())  # Update insert_date
+
             proxy.save() 
             return proxy
         except ProxyModel.DoesNotExist:
@@ -199,6 +202,7 @@ class ProxyModel(BaseModel):
         try:
             proxy = ProxyModel.get(ProxyModel.id ==id)
             proxy.is_deleted = True
+            
             proxy.save() 
             return True
         except ProxyModel.DoesNotExist:
@@ -226,7 +230,8 @@ class ProxyModel(BaseModel):
 
     @classmethod
 
-    def filter_proxies(cls,country=None, state=None, city=None, tags=None, status=None, network_type=None,pageno=None,pagecount=None,start=None,end=None,data=None,ids=None,sortby=None):
+    def filter_proxies(cls,country=None, state=None, city=None, tags=None, status=None, network_type=None,
+                       pageno=None,pagecount=None,start=None,end=None,data=None,ids=None,sortby=None):
         query = cls.select()
         print('===',country,state,city,tags,status,network_type)
 

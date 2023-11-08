@@ -85,7 +85,6 @@ from src.log import logger,addKeywordfilter
 from src.accountTablecrud import *
 from src.taskTablecrud import *
 from src.proxyTablecrud import *
-import pycountry
 if platform.system()=='Windows':
 
     ultra = UltraDict(shared_lock=True,recurse=True)
@@ -3966,12 +3965,6 @@ def accountView(frame,mode='query',linkAccounts=None):
     tab_headers=['id','platform','username','pass','is_deleted','proxy','inserted_at']
 
 
-    tab_headers.append('operation')
-    tab_headers.append('operation')
-    tab_headers.append('operation')
-    tab_headers.append('operation')
-
-
 
     refreshAccountcanvas(canvas=None,frame=result_frame,headers=tab_headers,datas=[])
 
@@ -5329,23 +5322,60 @@ def saveBulkproxies(proxies_list_raw,logger):
         logger.debug('you should input valid proxy list and try again')
         
 def saveProxy(proxy_protocol_type=None,iptype=None,proxy_provider_type=None,host=None,port=None,user=None,password=None,ip_address=None,country=None, state=None, city=None, tags=None, status=None, network_type=None):
-    if proxy_provider_type==None and proxy_protocol_type==None and host==None and port ==None:
-        logger.error(f'there is no valid proxy ')         
-        showinfomsg(f'there is no valid proxy')  
-    else: 
-        if proxy_provider_type:
-            proxy_provider_type=find_key(PROXY_PROVIDER_TYPE.PROXY_PROVIDER_TYPE_TEXT,proxy_provider_type)
-        if proxy_protocol_type:
-            proxy_protocol_type=find_key(PROXY_PROTOCOL.PROXY_PROTOCOL_TEXT,proxy_protocol_type)
-        if status:
-            status=find_key(PROXY_STATUS.PROXY_STATUS_TEXT,status)
-        if network_type:
+    print('proxy_protocol_type',proxy_protocol_type,type(proxy_protocol_type))
+    if 'Select' in country:
+        country=None
+    if 'Select' in state:
+        state=None            
+    if 'Select' in city:
+        city=None
+
+    if 'Select' in proxy_protocol_type:
+        proxy_protocol_type=None
+    if 'Select' in proxy_provider_type:
+        proxy_provider_type=None            
+    if 'Select' in iptype:
+        iptype=None
+    if 'Select' in network_type:
+        network_type=None        
+
+    if proxy_provider_type ==None:
+        proxy_provider_type=PROXY_PROVIDER_TYPE.CUSTOM
+    if type(proxy_provider_type)==str:
+        proxy_provider_type=find_key(PROXY_PROVIDER_TYPE.PROXY_PROVIDER_TYPE_TEXT,proxy_provider_type)
+    if proxy_protocol_type==None:
+        proxy_protocol_type=PROXY_PROTOCOL.HTTP
+    if type(proxy_protocol_type)==str:
+        proxy_protocol_type=find_key(PROXY_PROTOCOL.PROXY_PROTOCOL_TEXT,proxy_protocol_type)
+    if  status in ['VALID','INVALID','UNCHEKCED']:
+        status=find_key(PROXY_STATUS.PROXY_STATUS_TEXT,status)
+    if network_type==None:
+        network_type=IP_SOURCE_TYPE.datacenter
+    else:
+        if type(network_type)==str:
             network_type=find_key(IP_SOURCE_TYPE.IP_SOURCE_TYPE_TEXT,network_type)
-        if iptype:
+    if iptype==None:
+        iptype=IP_TYPE.IPv4
+    else:
+        if type(iptype)==str:
             iptype=find_key(IP_TYPE.IP_TYPE_TEXT,iptype)
 
-
-
+    if host=='':
+        host=None
+    if port=='':
+        port=None        
+    if user=='':
+        user=None        
+    if password=='':
+        password=None                
+    if ip_address=='':
+        ip_address=None        
+    if tags=='':
+        tags=None    
+    if host==None or port ==None or proxy_protocol_type==None:
+        logger.error(f'there is no valid proxy ')         
+        showinfomsg(f'there is no valid proxy,please fill host and port protocol at least')  
+    else: 
             
         proxy_data = {
             'proxy_protocol': proxy_protocol_type,
@@ -5457,14 +5487,11 @@ def newproxyView(frame):
     newWindow.rowconfigure(0, weight=1)
     newWindow.columnconfigure((0,1), weight=1)
 
-    newWindow.title('proxy bulk import')
+    newWindow.title('create a new proxy')
     newWindow.grid_rowconfigure(0, weight=1)
     newWindow.grid_columnconfigure(0, weight=1, uniform="group1")
     newWindow.grid_columnconfigure(1, weight=1, uniform="group1")
-    newWindow.grid_columnconfigure(0, weight=1,
-                                      minsize=int(0.5*width)
-
-                                      )
+    newWindow.grid_columnconfigure(0, weight=1)
     newWindow.grid_columnconfigure(1, weight=2)
     
     account_frame_left = tk.Frame(newWindow, height = height)
@@ -5890,7 +5917,7 @@ def proxyView(frame,mode='query',linkProxy=None,platform=None):
 
 
         
-    global city,country,proxyTags,proxyStatus
+    # global city,country,proxyTags,proxyStatus
     city = tk.StringVar()
     state = tk.StringVar()
     network_type = tk.StringVar()
@@ -5971,9 +5998,7 @@ def proxyView(frame,mode='query',linkProxy=None,platform=None):
 
 
     tab_headers=['id', 'provider', 'protocol', 'host', 'port', 'username', 'pass', 'country', 'state', 'city', 'tags', 'status', 'validate_results', 'is_deleted', 'inserted_at']
-    tab_headers.append('operation')
-    tab_headers.append('operation')
-    tab_headers.append('operation')
+
     
 
 
@@ -6722,11 +6747,12 @@ def changeDisplayLang(lang):
   
     mainwindow.destroy()
 
-    
+    global locale
            
     
     # root.quit()    
     settings['lastuselang']=lang
+    locale=lang
     start(lang,root)
     logger.debug(f'switch lang to locale:{lang}')
     
@@ -6766,7 +6792,7 @@ app.include_router(router)
 async def asynctk():
     start_tkinter_app()
 def  start_tkinter_app():
-    global root,settings,db,canvas
+    global root,settings,db,canvas,locale
     tmp['accountlinkaccount']={}    
 
     root = tk.Tk()

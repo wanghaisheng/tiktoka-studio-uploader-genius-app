@@ -44,7 +44,9 @@ def check_selected_row(rowid):
     #         print('ipcountry',ipcountry)
 
 
-def queryProxy(linkProxy=None,platform=None,frame=None,canvas=None,tab_headers=None,state=None,city=None,status=None,country=None,tags=None,network_type=None,pageno=None,pagecount=None,ids=None,sortby="Add DATE ASC",mode='query'):
+def queryProxy(linkProxy=None,platform=None,frame=None,canvas=None,tab_headers=None,state=None,
+               city=None,status=None,country=None,tags=None,network_type=None,
+               pageno=None,pagecount=None,ids=None,sortby="Add DATE ASC",mode='query'):
 
     if status=='valid':
         status=1
@@ -96,7 +98,7 @@ def queryProxy(linkProxy=None,platform=None,frame=None,canvas=None,tab_headers=N
                 "state":row.state,
                 "city":row.city,                    
                 "tags":row.tags,                    
-                "status":row.status,                    
+                "status":dict(PROXY_STATUS.PROXY_STATUS_TEXT)[row.status],                  
                 "validate_results":row.proxy_validate_results,
                 "is_deleted":row.is_deleted   ,
                 "inserted_at":datetime.fromtimestamp(row.inserted_at).strftime("%Y-%m-%d %H:%M:%S")
@@ -104,6 +106,12 @@ def queryProxy(linkProxy=None,platform=None,frame=None,canvas=None,tab_headers=N
             proxy_data.append(proxy)
             print(proxy.keys())
         print(f'show header and rows based on query {tab_headers}\n{proxy_data}')
+        tab_headers.append('operation')
+        tab_headers.append('operation')
+
+        if mode=='bind':
+            tab_headers.append('operation')
+            tab_headers.append('operation')
         refreshProxycanvas(canvas=canvas,frame=frame,headers=tab_headers,datas=[],mode=mode,linkProxy=linkProxy,platform=platform)
 
         refreshProxycanvas(canvas=canvas,frame=frame,headers=tab_headers,datas=proxy_data,mode=mode,linkProxy=linkProxy,platform=platform)
@@ -203,20 +211,20 @@ def refreshProxycanvas(linkProxy=None,canvas=None,frame=None,headers=None,datas=
 
             add_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
                                 activebackground= 'orange', text='edit',command=lambda x=i-1  :update_selected_row_proxy(rowid=datas[x]['id'],name='account'))
-            add_buttons[i].grid(row=i, column=len(headers)-4, sticky='news')
+            add_buttons[i].grid(row=i, column=len(headers)-1, sticky='news')
 
             del_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
                                 activebackground= 'orange', text='delete',command=lambda x=i-1 :remove_selected_row_proxy(rowid=datas[x]['id'],name='account'))
-            del_buttons[i].grid(row=i, column=len(headers)-3, sticky='news')
+            del_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
             if mode!='query':
                 bind_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
                                     activebackground= 'orange', text='bind',command=lambda x=i-1 :bind_selected_row_proxy(selected_platform=platform,linkProxy=linkProxy,rowid=datas[x]['id'],frame=frame))
-                bind_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
+                bind_buttons[i].grid(row=i, column=len(headers)-3, sticky='news')
 
 
                 unbind_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
                                     activebackground= 'orange', text='unbind',command=lambda x=i-1 :unbind_selected_row_proxy(selected_platform=platform,linkProxy=linkProxy,rowid=datas[x]['id'],frame=frame))
-                unbind_buttons[i].grid(row=i, column=len(headers)-1, sticky='news')
+                unbind_buttons[i].grid(row=i, column=len(headers)-4, sticky='news')
     # Create canvas window to hold the buttons_frame.
     canvas.create_window((0,0), window=buttons_frame, anchor=tk.NW)
     buttons_frame.update_idletasks()  # Needed to make bbox info available.
@@ -226,7 +234,7 @@ def refreshProxycanvas(linkProxy=None,canvas=None,frame=None,headers=None,datas=
     # number of rows and columns displayed.
     w, h = bbox[2]-bbox[1], bbox[3]-bbox[1]
     print('=before==',COLS,COLS_DISP,ROWS,ROWS_DISP)
-    widthratio=1
+    widthratio=0.8
     height_ratio=0.7
     for i in range(5,COLS_DISP):
         dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)

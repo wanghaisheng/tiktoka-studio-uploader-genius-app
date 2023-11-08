@@ -40,7 +40,6 @@
 	"L_proxy_tag": "标签",		
 	"L_proxyprotocol": "协议",		
 
-	
 	"b_uploadAll": "查询&&上传",
 	"batchchangebgmusic": "批量替换背景音乐",
 	"is_open_browser": "静默模式",
@@ -58,7 +57,7 @@
 	"mode3":"模式3",
 	"default_release_hour":"10:15",
 	"linkAccounts": "关联账号",
-	"newuserwizard": "我是新手",
+	"newuserwizard": "导入测试数据",
 
 	"testdatainstall": "添加测试数据",
 	"testdataRemove": "清除测试数据",

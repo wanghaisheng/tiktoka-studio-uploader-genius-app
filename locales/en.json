@@ -67,7 +67,7 @@
 	"scheduleView": "Schedule",
 	"default_release_hour":"10:15",
     "importVideoMetas":"import video meta",
-    "newuserwizard": "我是新手",
+    "newuserwizard": "setup test data",
     "startfromfolder": "已准备好内含视频的文件夹",
 
     "importVideoMetasToolip":"import video meta  file,support json excel csv",

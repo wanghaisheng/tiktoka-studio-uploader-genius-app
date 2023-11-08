@@ -140,8 +140,10 @@ def queryAccounts(linkAccounts=None,frame=None,canvas=None,tab_headers=None, pla
 
         tab_headers.append('operation')
         tab_headers.append('operation')
-        tab_headers.append('operation')
-        tab_headers.append('operation')
+
+        if mode=='bind':
+            tab_headers.append('operation')
+            tab_headers.append('operation')
 
         print(f'show header and rows based on query {tab_headers}\n{account_data}')
         refreshAccountcanvas(linkAccounts=linkAccounts,canvas=canvas,frame=frame,headers=tab_headers,datas=[],mode=mode)
@@ -238,20 +240,20 @@ def refreshAccountcanvas(linkAccounts=None,canvas=None,frame=None,headers=None,d
 
             add_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
                                 activebackground= 'orange', text='edit',command=lambda x=i-1  :update_selected_row_account(rowid=datas[x]['id'],name='account'))
-            add_buttons[i].grid(row=i, column=len(headers)-4, sticky='news')
+            add_buttons[i].grid(row=i, column=len(headers)-1, sticky='news')
 
             del_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
                                 activebackground= 'orange', text='delete',command=lambda x=i-1 :remove_selected_row_account(rowid=datas[x]['id'],name='account'))
-            del_buttons[i].grid(row=i, column=len(headers)-3, sticky='news')
+            del_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
             if mode!='query':
                 bind_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
                                     activebackground= 'orange', text='bind',command=lambda x=i-1 :bind_selected_row_account(selected_platform=datas[x]['platform'],linkAccounts=linkAccounts,rowid=datas[x]['id'],frame=frame))
-                bind_buttons[i].grid(row=i, column=len(headers)-2, sticky='news')
+                bind_buttons[i].grid(row=i, column=len(headers)-3, sticky='news')
 
 
                 unbind_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
                                     activebackground= 'orange', text='unbind',command=lambda x=i-1 :unbind_selected_row_account(selected_platform=datas[x]['platform'],linkAccounts=linkAccounts,rowid=datas[x]['id'],frame=frame))
-                unbind_buttons[i].grid(row=i, column=len(headers)-1, sticky='news')
+                unbind_buttons[i].grid(row=i, column=len(headers)-4, sticky='news')
     # Create canvas window to hold the buttons_frame.
     canvas.create_window((0,0), window=buttons_frame, anchor=tk.NW)
     buttons_frame.update_idletasks()  # Needed to make bbox info available.
