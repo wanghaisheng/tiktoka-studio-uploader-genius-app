@@ -33,6 +33,139 @@
 		"uploadView_q_Sortby":"排序"
 	
 	},	
+	"installview":{
+		"testinstall":"test install",
+		"newuserwizard":"import test data",
+		"testdataRemove":"clear test data",
+		"cleardb":"clear database",
+		"L_chooseLang":"Langs:",
+		"chooseLanghint":"Select From Langs"
+
+	},
+
+	"accountview":{
+		"q_username":"By username.",
+		"q_platform":"By platform",
+		"q_platform_hints":"Select From Platforms",
+		"reset":"Reset",
+		"new":"New account",
+		"bulkimport":"bulk import",
+		"bulkimport_hints":"bulk pull sessionid and cookies",
+		"querynow":"Query"
+
+	},
+	"newaccountview":{
+		"title":"create a new account",
+		"l_platform":"platform",
+		"l_platform_hints":"Select From Platforms",
+		"username":"username",
+		"password":"password",
+		"linkAccounts":"linkAccounts",
+		"proxy":"proxy",
+		"proxylink":"link",		
+		"cookies":"cookies file path",
+		"pullcookie":"pullcookie",
+		"save":"save user"
+	},	
+	
+	"proxyview":{
+		"new":"New proxy",
+		"q_username":"By username.",
+		"q_city":"By city.",
+		"q_country":"By country.",
+		"q_state":"By state.",
+		"q_tags":"By tags.",
+		"q_networktype":"By networktype.",
+		"q_status":"By status.",
+		"q_status_hints":"Select",
+		"reset":"Reset",
+		"bulkimport":"bulk import",
+		"bulkcheck":"bulk check proxy",
+		"querynow":"Query"
+	},
+
+	"newproxyview":{
+		"title":"create a new proxy",
+		"l_provider":"provider",
+		"dropdown_hints":"Select",
+		"L_proxy_host":"host",
+		"L_proxy_port":"port",
+		"L_proxy_ip":"ip",
+		"L_refresh_url":"refresh_url",
+		"L_proxy_tag":"tags",
+		"l_iptype":"ip type",
+		"l_ipsource":"ip source",
+		"l_proxycountry":"country",
+		"l_proxystate":"state",
+		"l_proxycity":"city",
+		"L_proxyprotocol":"protocol",
+		"username":"username",
+		"password":"password",
+		"save":"save proxy"
+	},	
+	"bulkimportproxyView":{
+		"title":"bulk import proxy",
+		"copyhints":"copy proxy info here",
+		"placeholder":"proxy list should be one proxy oneline,and each proxy in such format:\nsocks5://127.0.0.1:1080;tiktok\nsocks5://127.0.0.1:1088;youtube",
+		"save":"save proxy",
+		"bulkimport":"bulk import",
+		"bulkcheck":"bulk check proxy",
+		"clearall":"clear all texts",
+		"loadfile":"load from file"
+
+	},
+	"thumbview":{
+		"videoFolder":"video folder",
+		"videoFolder_hints":"Start from where your video lives",
+		"openlocalfolder":"open local",
+		"openlocalfolder_hints":"open video folder to find out files change",
+		"l_metafileformat":"fileformat",
+		"l_metafileformat_hints":"Choose the one you like to edit metadata",
+		"dropdown_hints":"Select",
+		"b_downvideometafile":"check video meta files",
+		"b_downvideometafile_hints":"run the download video assets will auto gen templates under folder if they dont",
+		"b_checkvideoassets":"Step1:check video assets",
+		"b_checkvideoassets_hints":"calculate video counts,thumb file count and others",
+		"b_regen":"remove cache data to re-gen"
+		
+	},
+	"metaview":{
+		"videoFolder":"video folder",
+		"videoFolder_hints":"Start from where your video lives",
+		"openlocalfolder":"open local",
+		"openlocalfolder_hints":"open video folder to find out files change",
+		"l_metafileformat":"fileformat",
+		"l_metafileformat_hints":"Choose the one you like to edit metadata",
+		"dropdown_hints":"Select",
+		"b_downvideometafile":"check video meta files",
+		"b_downvideometafile_hints":"run the download video assets will auto gen templates under folder if they dont",
+		"b_checkvideoassets":"Step1:check video assets",
+		"b_checkvideoassets_hints":"calculate video counts,thumb file count and others",
+		"b_regen":"remove cache data to re-gen",
+		"videototalcounts":"video total counts",
+		"choosethumbpolicy":"how to get thumbnails",
+		"choosethumbpolicy_manual":"manually prepared",
+		"choosethumbpolicy_auto":"auto gen",
+		"choosethumbpolicy_manual_options":"options",
+		"choosethumbpolicy_manual_options_1":"'1.prepare the same thumbnail file with video filename,run the check again",
+		"choosethumbpolicy_manual_options_2":"'2.if thumbnail file path is not in the same folder where video lives or thumbnail file name is diff with video filename,\redit in the video meta file manually and run the check agai\r'",
+		"editwithlocaleditor":"edit videometa with local editor",
+		"editwithonline":"edit json with online editor",
+		"editwithlocaleditor_hints":"'fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field'",
+		"validateVideoMetas":"validate meta",
+		"return":"Back to previous page",
+		"choosethumbpolicy_auto_options":"Step1:choose one you preferred", 
+		"choosethumbpolicy_auto_options_1":"first key frame as background image",
+		"choosethumbpolicy_auto_options_2":"random key frame as background image",
+		"choosethumbpolicy_auto_options_3":"random choose one from image folder",
+		"choosethumbpolicy_auto_options_template":"Step2:select thumbnail template file",
+		"createtemplatewithlocaleditor":"create thumbnails template with editor",
+		"L_editvideometa":"Step3:edit video meta file before gen",
+		"L_genthumb":"Step4:gen",
+		"B_genthumb":"gen thumb",
+		"b_checkvideometafile":"check video meta files"
+
+	},	
 	"l_proxycity": "city",		
 	"L_proxyprotocol": "protocol",		
 

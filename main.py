@@ -11,6 +11,7 @@ from src.api.account import router
 from playhouse.shortcuts import model_to_dict
 from pathlib import Path,PureWindowsPath,PurePath
 from src.models.addtestdata import TestData
+from src.bg_music import batchchangebgmusic
 # Initialize FastAPI
 app = FastAPI()
 # Allow all origins
@@ -450,9 +451,11 @@ def select_tabview_video_folder(folder_variable,cache_var):
             print('==',tmp)
         else:
             print('please choose a valid video folder')
+            showinfomsg(message='please choose a valid video folder')
 
     except:
         print('please choose a valid video folder')
+        showinfomsg(message='please choose a valid video folder')
 
 def openLocal(folder):
     try:
@@ -460,6 +463,7 @@ def openLocal(folder):
         webbrowser.open('file:///' + folder)
     except:
         logger.error(f'please choose a valid video folder:\n{folder}')
+        showinfomsg(message='please choose a valid video folder')
 
 
 
@@ -640,29 +644,7 @@ def init_worker(mps, fps, cut):
     print("process initializing", mp.current_process())
     memorizedPaths, filepaths, cutoff = mps, fps, cut
     DG = 1##nx.read_gml("KeggComplete.gml", relabel = True)
-def changeLoglevel(level,window,log_frame):
-    values = ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']
 
-    if level=='DEBUG':
-        logging.basicConfig(filename='test.log',
-            level=logging.DEBUG, 
-            format='%(asctime)s - %(levelname)s - %(message)s')   
-    elif level=='INFO':
-        logging.basicConfig(filename='test.log',
-            level=logging.INFO, 
-            format='%(asctime)s - %(levelname)s - %(message)s') 
-    elif level=='WARNING':
-        logging.basicConfig(filename='test.log',
-            level=logging.WARNING, 
-            format='%(asctime)s - %(levelname)s - %(message)s') 
-    elif level=='ERROR':
-        logging.basicConfig(filename='test.log',
-            level=logging.ERROR, 
-            format='%(asctime)s - %(levelname)s - %(message)s') 
-    elif level=='CRITICAL':
-        logging.basicConfig(filename='test.log',
-            level=logging.CRITICAL, 
-            format='%(asctime)s - %(levelname)s - %(message)s') 
 
 
 
@@ -707,131 +689,13 @@ def SelectMetafile(cachename,var):
         logger.error('you should choose a valid path')
     # setting['channelcookiepath'] = channel_cookie_path
     logger.debug('finished to import prepared video metas in json format')
-def proxyaddView(newWindow):
-    btn6= tk.Button(newWindow, text="add selected", padx = 10, pady = 10,command = lambda: threading.Thread(target=setEntry(proxy_str.get())).start())     
-    btn6.grid(row=9,column=0, sticky=tk.W)
-    
-
-    
-    
-
-    # Create a frame for the canvas with non-zero row&column weights
-    frame_canvas = tk.Frame(newWindow)
-    frame_canvas.grid(row=7, column=0, pady=(5, 0), sticky='nw')
-    frame_canvas.grid_rowconfigure(0, weight=1)
-    frame_canvas.grid_columnconfigure(0, weight=1)
-    # Set grid_propagate to False to allow 5-by-5 buttons resizing later
-    frame_canvas.grid_propagate(False)     
-
-    # for scrolling vertically
-    # for scrolling vertically
-    yscrollbar = tk.Scrollbar(frame_canvas)
-    yscrollbar.pack(side = tk.RIGHT, fill = 'both')
-    
-    langlist = tk.Listbox(frame_canvas, selectmode = "multiple",
-                yscrollcommand = yscrollbar.set)
-    langlist.pack(padx = 10, pady = 10,
-            expand = tk.YES, fill = "both")
-
-    btn5= tk.Button(newWindow, text="Get proxy list", padx = 0, 
-                    pady = 0,command = lambda: threading.Thread(target=
-                    filterProxiesLocations(newWindow,langlist,prod_engine,logger,city_user.get(),country_user.get(),proxyTags_user.get(),proxyStatusbox.get(),latest_proxy_conditions_user.get())).start())
-    btn5.grid(row=6,column=2, sticky=tk.W)    
-    def CurSelet(event):
-        listbox = event.widget
-        # values = [listbox.get(idx) for idx in listbox.curselection()]
-        selection=listbox.curselection()
-        # picked = listbox.get(selection[1])
-        print(selection,list(selection),listbox.get(0))
-        tmp=''
-        for i in list(selection):
-            tmp=tmp+listbox.get(i)+';'
-        proxy_str.set(tmp)
-        print('000000',proxy_str.get())
-        if len(list(selection))==3:
-            lbl15 = tk.Label(newWindow, text='you have reached 3 proxy limit for one account.dont select anymore')
-            lbl15.grid(row=6,column=0, sticky=tk.W)
-            lbl15.after(5*1000,lbl15.destroy)        
-        
-        elif len(list(selection))>3:
-            print('you should choose no more than 3 proxy for one account')
-            lbl15 = tk.Label(newWindow, text='you should choose no more than 3 proxy for one account.please remove')
-            lbl15.grid(row=6,column=0, sticky=tk.W)
-            lbl15.after(3*1000,lbl15.destroy)
-        else:
-            lbl15 = tk.Label(newWindow, text='you can add at least 1 and max 3 proxy for one account.')
-            lbl15.grid(row=6,column=0, sticky=tk.W)
-            lbl15.after(500,lbl15.destroy)
-
-    langlist.bind('<<ListboxSelect>>',CurSelet)    
-    
 
     
 def chooseAccountsView(newWindow,parentchooseaccounts):
-    # chooseAccountsWindow = tk.Toplevel(newWindow)
-    # chooseAccountsWindow.geometry(window_size)
-    # chooseAccountsWindow.title('Choose associated accounts in which platform')
-    # chooseAccountsWindow.grid_rowconfigure(0, weight=1)
-    # chooseAccountsWindow.grid_columnconfigure(0, weight=1, uniform="group1")
-    # chooseAccountsWindow.grid_columnconfigure(1, weight=1, uniform="group1")
-    # chooseAccountsWindow.grid_columnconfigure(0, weight=1,
-    #                                   minsize=int(0.5*width)
 
-    #                                   )
-    # chooseAccountsWindow.grid_columnconfigure(1, weight=2)
-    
-    # account_frame_left = tk.Frame(chooseAccountsWindow, height = height)
-    # account_frame_left.grid(row=0,column=0,sticky="nsew")
-    # account_frame_right = tk.Frame(chooseAccountsWindow, height = height)
-    # account_frame_right.grid(row=0,column=1,sticky="nsew") 
-
-    
-    # frame1 = tk.Frame(account_frame_left)
-    # frame1.grid(row=1, column=0, sticky='nswe')    
-    # account_var = tk.StringVar()
-  
-
-    # # Create a label for the platform dropdown
-    # platform_label = ttk.Label(frame1, text="Select Platform:")
-    # platform_label.grid(row=0, column=0, padx=10, pady=10, sticky=tk.W)
-    # # Create a Combobox for the platform selection
-    # platform_var = tk.StringVar()
-    # platform_var.set("choose one:")    
-
-    # lbl16 = tk.Label(frame1, text='binded user')
-    # lbl16.grid(row=1,column=0, sticky=tk.W)
-    # txt16 = tk.Entry(frame1,textvariable=account_var,width=int(int(window_size.split('x')[-1])/5))
-    # txt16.insert(0,'')
-    
-    
-    # txt16.grid(row=1,column=1, 
-    #         #    width=width,
-    #            columnspan=4,
-    #         #    rowspan=3,
-    #            sticky='nswe')  
     
     accountView(newWindow,mode='bind',linkAccounts=parentchooseaccounts)
 
-    from tkinter.scrolledtext import ScrolledText
-    # proxy_textfield = ScrolledText(frame1, wrap=tk.WORD)
-    # proxy_textfield.grid(row = 1, column = 0, columnspan =2, padx=0, pady=15)
-    # proxy_textfield.insert(tk.END,'proxy list should be one proxy oneline,and each proxy in such format:\nsocks5://127.0.0.1:1080;tiktok\nsocks5://127.0.0.1:1088;youtube')
-    # proxy_textfield.bind("<Return>", returnProxy_textfield)
-    # proxy_textfield.bind_all("<Control-c>",_copy)    
-    
-      
-    # def db_values():
-    #     platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
-    #     platform_names = [dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[x.type] for x in platform_rows]
-
-    #     platform_combo['values'] = platform_names
-
-    # def db_refresh(event):
-    #     platform_combo['values'] = db_values()
-    # platform_combo = ttk.Combobox(frame1, textvariable=platform_var)
-    # platform_combo.grid(row=0, column=1, padx=10, pady=10, sticky=tk.W)
-    # platform_combo.bind('<FocusIn>', lambda event: db_refresh(event))
-    # platform_combo['values'] = db_values()
 
 
 
@@ -1585,7 +1449,7 @@ def setupWizard(frame,td):
 
     socialplatform.set("Select From Platforms")
     socialplatform.trace('w', socialplatformOptionCallBack)
-    socialplatform_box.bind('<FocusIn>', socialplatformOptionCallBack())
+    socialplatform_box.bind('<Button-1>', socialplatformOptionCallBack())
 
 
     # socialplatform_box.config(values =platform_names)
@@ -1596,24 +1460,24 @@ def setupWizard(frame,td):
 
 def installView(frame,ttkframe,lang):
     td=TestData()
-    b_view_readme=tk.Button(frame,text=settings[locale]['testinstall']
+    b_view_readme=tk.Button(frame,text=settings[locale]['installview']['testinstall']
                             ,command=lambda: threading.Thread(target=testInstallRequirements).start() )
     b_view_readme.grid(row = 0, column = 1, sticky='w', padx=14, pady=15)      
 
 
 
-    b_install_testdata=tk.Button(frame,text=settings[locale]['newuserwizard']
+    b_install_testdata=tk.Button(frame,text=settings[locale]['installview']['newuserwizard']
                             ,command=lambda: threading.Thread(target=setupWizard(frame,td)).start() )
     b_install_testdata.grid(row = 1, column = 1, sticky='w', padx=14, pady=15)  
 
 
-    b_install_testdataRemove=tk.Button(frame,text=settings[locale]['testdataRemove']
+    b_install_testdataRemove=tk.Button(frame,text=settings[locale]['installview']['testdataRemove']
                             ,command=lambda: threading.Thread(target=td.removedata()).start() )
     b_install_testdataRemove.grid(row = 2, column = 1, sticky='w', padx=14, pady=15)    
 
 
 
-    b_install_testdata=tk.Button(frame,text=settings[locale]['cleardb']
+    b_install_testdata=tk.Button(frame,text=settings[locale]['installview']['cleardb']
                             ,command=lambda: threading.Thread(target=td.cleardata()).start() )
     b_install_testdata.grid(row = 3, column = 1, sticky='w', padx=14, pady=15)  
     # b_view_contact=tk.Button(frame,text=settings[locale]['testnetwork']
@@ -1628,7 +1492,7 @@ def installView(frame,ttkframe,lang):
     locale_tkstudio = tk.StringVar()
 
 
-    l_lang = tk.Label(ttkframe, text=settings[locale]['chooseLang'])
+    l_lang = tk.Label(ttkframe, text=settings[locale]['installview']['L_chooseLang'])
     # l_lang.place(x=10, y=90)
     l_lang.grid(row = 3, column = 0, padx=14, pady=15)    
     try:
@@ -1638,7 +1502,7 @@ def installView(frame,ttkframe,lang):
     except:
         print('keep the default locale placeholder')
         # locale_tkstudio_box.set("Select From Langs")
-        locale_tkstudio.set("Select From Langs")    
+        locale_tkstudio.set(settings[locale]['installview']['chooseLanghint'])    
         settings['locale']='en'
     def display_selected_item_index(event): 
         try:
@@ -1647,9 +1511,7 @@ def installView(frame,ttkframe,lang):
             locale_tkstudio.set(settings['locale'])
         except:
             print('keep the default locale')
-
-            # locale_tkstudio_box.set("Select From Langs")
-            locale_tkstudio.set("Select From Langs")
+            locale_tkstudio.set(settings[locale]['installview']['chooseLanghint'])    
     def locale_tkstudioOptionCallBack(*args):
         print(locale_tkstudio.get())
         print(locale_tkstudio_box.current())
@@ -1707,9 +1569,9 @@ def thumbView(left,right,lang):
     thumbView_video_folder = tk.StringVar()
 
 
-    l_video_folder = tk.Label(left, text=settings[locale]['videoFolder'])
+    l_video_folder = tk.Label(left, text=settings[locale]['thumbview']['videoFolder'])
     l_video_folder.grid(row = 0, column = 0, sticky='w', padx=14, pady=15)    
-    Tooltip(l_video_folder, text='Start from where your video lives' , wraplength=200)
+    Tooltip(l_video_folder, text=settings[locale]['thumbview']['videoFolder_hints'] , wraplength=200)
 
 
     e_video_folder = tk.Entry(left,textvariable=thumbView_video_folder)
@@ -1731,23 +1593,23 @@ def thumbView(left,right,lang):
     thumbView_video_folder.trace('w', e_video_folderCallBack)
 
     
-    b_video_folder=tk.Button(left,text="Select",command=lambda: threading.Thread(target=select_tabview_video_folder(thumbView_video_folder,'thumbView_video_folder')).start() )
+    b_video_folder=tk.Button(left,text=settings[locale]['thumbview']['dropdown_hints'],command=lambda: threading.Thread(target=select_tabview_video_folder(thumbView_video_folder,'thumbView_video_folder')).start() )
     b_video_folder.grid(row = 0, column = 2, sticky='w', padx=14, pady=15)       
 
-    b_open_video_folder=tk.Button(left,text="open local",command=lambda: threading.Thread(target=openLocal(thumbView_video_folder.get())).start() )
+    b_open_video_folder=tk.Button(left,text=settings[locale]['thumbview']["openlocalfolder"],command=lambda: threading.Thread(target=openLocal(thumbView_video_folder.get())).start() )
     b_open_video_folder.grid(row = 0, column = 3, sticky='w', padx=14, pady=15)    
-    Tooltip(b_open_video_folder, text='open video folder to find out files change' , wraplength=200)
+    Tooltip(b_open_video_folder, text=settings[locale]['thumbview']["openlocalfolder_hints"] , wraplength=200)
 
-    l_meta_format = tk.Label(left, text=settings[locale]['l_metafileformat'])
+    l_meta_format = tk.Label(left, text=settings[locale]['thumbview']['l_metafileformat'])
     # l_platform.place(x=10, y=90)
     l_meta_format.grid(row = 1, column = 0, sticky='w', padx=14, pady=15)    
-    Tooltip(l_meta_format, text='Choose the one you like to edit metadata' , wraplength=200)
+    Tooltip(l_meta_format, text= settings[locale]['thumbview']['l_metafileformat_hints'], wraplength=200)
 
     metafileformat = tk.StringVar()
 
 
 
-    metafileformat.set("Select From format")
+    metafileformat.set(settings[locale]['thumbview']['dropdown_hints'] )
 
 
     metafileformatbox = ttk.Combobox(left, textvariable=metafileformat)
@@ -1760,17 +1622,17 @@ def thumbView(left,right,lang):
     print(f'right now metafileformatbox.get():{metafileformatbox.get()}')
     metafileformat.trace('w', metafileformatCallBack)
     metafileformatbox.bind("<<ComboboxSelected>>", metafileformatCallBack)  
-    b_download_meta_templates=tk.Button(left,text="check video meta files",command=lambda: threading.Thread(target=openLocal(thumbView_video_folder.get())).start() )
+    b_download_meta_templates=tk.Button(left,text=settings[locale]['thumbview']['b_downvideometafile'],command=lambda: threading.Thread(target=openLocal(thumbView_video_folder.get())).start() )
     b_download_meta_templates.grid(row = 1, column = 3, sticky='w', padx=14, pady=15)  
-    Tooltip(b_download_meta_templates, text='run the check video assets will auto gen templates under folder if they dont' , wraplength=200)
+    Tooltip(b_download_meta_templates, text=settings[locale]['thumbview']['b_downvideometafile_hints'], wraplength=200)
 
-    b_video_folder_check=tk.Button(left,text="Step1:check video assets",command=
+    b_video_folder_check=tk.Button(left,text=settings[locale]['thumbview']['b_checkvideoassets'],command=
                                    lambda: threading.Thread(target=analyse_video_meta_pair(
                                        thumbView_video_folder.get(),left,right,metafileformatbox.get(),
                                        isThumbView=True,isDesView=False,isTagsView=False,isScheduleView=False)).start() )
     b_video_folder_check.grid(row = 2, column = 0,sticky='w', padx=14, pady=15)    
-    Tooltip(b_video_folder_check, text='calculate video counts,thumb file count and others' , wraplength=200)
-    b_delete_folder_cache=tk.Button(left,text="remove cache data to re-gen",command=lambda: threading.Thread(target=ultra[thumbView_video_folder].unlink()).start() )
+    Tooltip(b_video_folder_check, text=settings[locale]['thumbview']['b_checkvideoassets_hints'] , wraplength=200)
+    b_delete_folder_cache=tk.Button(left,text=settings[locale]['thumbview']['b_regen'],command=lambda: threading.Thread(target=ultra[thumbView_video_folder].unlink()).start() )
     b_delete_folder_cache.grid(row = 2, column = 1,sticky='w', padx=14, pady=15)  
 
 
@@ -1827,7 +1689,8 @@ def rendersubmeta(frame,right_frame,folder,pairlabel,missingfilevar,missingmetav
     Tooltip(b_gen_submeta, text=f'Click  to create {pairlabel} meta files' , wraplength=200)
     
 def render_video_folder_check_results(frame,right_frame,folder,isThumbView=True,isDesView=True,isTagsView=True,isScheduleView=True,selectedMetafileformat='json'):
-    lb_video_counts = tk.Label(frame, text='video total counts')
+    lb_video_counts = tk.Label(frame, text=settings[locale]['metaview']['videototalcounts']
+                               )
 
     lb_video_counts.grid(row = 3, column = 0,sticky='w')    
 
@@ -1838,7 +1701,7 @@ def render_video_folder_check_results(frame,right_frame,folder,isThumbView=True,
 
 
     if isThumbView==True:
-        rendersubmeta(frame,right_frame,folder,'thum','thumbFileCounts','thumbMetaCounts',render_thumb_gen,4,selectedMetafileformat)
+        rendersubmeta(frame,right_frame,folder,'thumb','thumbFileCounts','thumbMetaCounts',render_thumb_gen,4,selectedMetafileformat)
 
 
     if isDesView==True:
@@ -2163,12 +2026,12 @@ def render_des_update_view(frame,folder,desmode,previous_frame=None):
         b_check_metas_=tk.Button(frame,text="edit videometa",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
         b_check_metas_.grid(row = 7, column = 0, padx=14, pady=15,sticky='nswe') 
 
-        b_return=tk.Button(frame,text="Back to previous page",command=lambda: render_des_gen(previous_frame,True,folder))
+        b_return=tk.Button(frame,text=settings[locale]['metaview']['return'],command=lambda: render_des_gen(previous_frame,True,folder))
         b_return.grid(row = 8, column =0)   
 
     else:
 
-        b_return=tk.Button(frame,text="Back to previous page",command=lambda: render_des_gen(previous_frame,True,folder))
+        b_return=tk.Button(frame,text=settings[locale]['metaview']['return'],command=lambda: render_des_gen(previous_frame,True,folder))
         b_return.grid(row = 0, column =1)   
 
 
@@ -2318,12 +2181,12 @@ def render_tag_update_view(frame,folder,desmode,previous_frame=None):
         b_check_metas_=tk.Button(frame,text="edit videometa",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
         b_check_metas_.grid(row = 7, column = 0, padx=14, pady=15,sticky='nswe') 
 
-        b_return=tk.Button(frame,text="Back to previous page",command=lambda: render_tag_gen(previous_frame,True,folder))
+        b_return=tk.Button(frame,text=settings[locale]['metaview']['return'],command=lambda: render_tag_gen(previous_frame,True,folder))
         b_return.grid(row = 8, column =0)   
 
     else:
 
-        b_return=tk.Button(frame,text="Back to previous page",command=lambda: render_tag_gen(previous_frame,True,folder))
+        b_return=tk.Button(frame,text=settings[locale]['metaview']['return'],command=lambda: render_tag_gen(previous_frame,True,folder))
         b_return.grid(row = 0, column =1)   
 
 
@@ -2559,7 +2422,7 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
     if thumbmode.get() ==1:
         lbl15 = tk.Label(frame, text='两种选择')
         lbl15.grid(row=1,column=0,padx=14, pady=15,sticky='w') 
-        b_return=tk.Button(frame,text="Back to previous page",command=lambda: render_schedule_gen(previous_frame,True,folder))
+        b_return=tk.Button(frame,text=settings[locale]['metaview']['return'],command=lambda: render_schedule_gen(previous_frame,True,folder))
         b_return.grid(row = 0, column =1,padx=14, pady=15,sticky='w') 
 
         lbl15 = tk.Label(frame, text='1.手动准备发布时间文件，需放在视频所在文件夹下，且与视频文件同名,完成后再次检测即可',wraplength=600)
@@ -2601,7 +2464,7 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
 
         lab = tk.Label(frame,text="Step1:请选择你的发布时间生成策略",bg="lightyellow",width=30)
         lab.grid(row = 1, column = 0,  padx=14, pady=15,sticky='nw')    
-        b_return=tk.Button(frame,text="Back to previous page",command=lambda: render_schedule_gen(previous_frame,True,folder))
+        b_return=tk.Button(frame,text=settings[locale]['metaview']['return'],command=lambda: render_schedule_gen(previous_frame,True,folder))
         b_return.grid(row = 1, column = 2,  padx=14, pady=15,sticky='e')   
 
 
@@ -3237,6 +3100,7 @@ def genThumbnailFromTemplate(folder,thumbnail_template_file_path,mode_value,thum
     logger.debug('end to sync gen thumbnail meta to video assets file')
 
 def render_thumb_gen(frame,isneed,folder,selectedMetafileformat='json'):
+
     if isneed==True:
         if len(frame.winfo_children())>0:
             for widget in frame.winfo_children():
@@ -3253,13 +3117,14 @@ def render_thumb_gen(frame,isneed,folder,selectedMetafileformat='json'):
         thumbmode = tk.IntVar()
         # thumbmode.set(1)
 
-        lab = tk.Label(new_canvas,text="请选择你的缩略图从何而来",bg="lightyellow",width=30)
+        lab = tk.Label(new_canvas,text=settings[locale]['metaview']['choosethumbpolicy']
+                      ,bg="lightyellow",width=30)
         lab.grid(row = 1, column = 0,  padx=14, pady=15,sticky='nw') 
    
-        thumbmode1=tk.Radiobutton(new_canvas,text="手动准备",variable=thumbmode,value=1,command=lambda:render_thumb_update_view(new_canvas,folder,thumbmode,frame))
+        thumbmode1=tk.Radiobutton(new_canvas,text=settings[locale]['metaview']['choosethumbpolicy_manual'],variable=thumbmode,value=1,command=lambda:render_thumb_update_view(new_canvas,folder,thumbmode,frame))
         thumbmode1.grid(row = 1, column = 1,  padx=14, pady=15,sticky='nw') 
-        thumbmode2=tk.Radiobutton(new_canvas,text=" 批量生成",variable=thumbmode,value=2,command=lambda:render_thumb_update_view(new_canvas,folder,thumbmode,frame))
-        thumbmode2.grid(row = 1, column = 2,  padx=14, pady=15,sticky='nw') 
+        thumbmode2=tk.Radiobutton(new_canvas,text=settings[locale]['metaview']['choosethumbpolicy_auto'],variable=thumbmode,value=2,command=lambda:render_thumb_update_view(new_canvas,folder,thumbmode,frame))
+        thumbmode2.grid(row = 2, column = 1,  padx=14, pady=15,sticky='nw') 
 
         # thumbmode.trace_add('write', render_thumb_update_view(new_canvas,folder,thumbmode))
 
@@ -3268,75 +3133,76 @@ def render_thumb_gen(frame,isneed,folder,selectedMetafileformat='json'):
 
 def render_thumb_update_view(frame,folder,thumbmode,previous_frame=None):
     print('thumbmode',type(thumbmode.get()),thumbmode.get())    
-
+    chooseAccountsWindow = tk.Toplevel(frame)
+    chooseAccountsWindow.geometry(window_size)
+    chooseAccountsWindow.title('Choose associated proxy')
+    chooseAccountsWindow=frame
     if len(frame.winfo_children())>0:
         for widget in frame.winfo_children():
             widget.destroy()      
    
     if thumbmode.get() ==1:
-        lbl15 = tk.Label(frame, text='两种选择')
+        lbl15 = tk.Label(frame, text=settings[locale]['metaview']['choosethumbpolicy_manual_options'])
         lbl15.grid(row=0,column=0,padx=14, pady=15,sticky='w') 
        
-        lbl15 = tk.Label(frame, text='1.手动准备缩略图文件，需放在视频所在文件夹下，且与视频文件同名,完成后再次检测即可',wraplength=600)
+        lbl15 = tk.Label(frame, text=settings[locale]['metaview']['choosethumbpolicy_manual_options_1'],wraplength=600)
         lbl15.grid(row=1,column=0, sticky='w')
 
-        lbl15 = tk.Label(frame, text='2.如果缩略图后文件与视频不在同一个文件夹或者缩略图文件为自定义命名，\r需手动编辑视频元数据中缩略图文件路径,编辑完成后可再次进行检测\r',wraplength=600)
+        lbl15 = tk.Label(frame, text=settings[locale]['metaview']['choosethumbpolicy_manual_options_2'],wraplength=600)
         lbl15.grid(row=2,column=0, sticky='w')
 
 
 
-        b_check_metas_=tk.Button(frame,text="edit videometa with local editor",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
-        b_check_metas_.grid(row = 6, column = 0, padx=14, pady=15,sticky='nswe') 
+        b_edit_metas_=tk.Button(frame,text=settings[locale]['metaview']['editwithlocaleditor'],command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
+        b_edit_metas_.grid(row = 6, column = 0, padx=14, pady=15,sticky='nswe') 
         if ultra[folder]['metafileformat']=='json':
 
-            b_edit_thumb_metas=tk.Button(frame,text="edit json with online editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
+            b_edit_thumb_metas=tk.Button(frame,text=settings[locale]['metaview']['editwithonline'],command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
             b_edit_thumb_metas.grid(row = 5, column = 0, padx=14, pady=15,sticky='nswe') 
-            Tooltip(b_edit_thumb_metas, text='fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field' , wraplength=200)
-        b_open_video_folder=tk.Button(frame,text="open local",command=lambda: threading.Thread(target=openLocal(folder)).start() )
+        Tooltip(b_edit_metas_, text=settings[locale]['metaview']['editwithlocaleditor_hints'] , wraplength=200)
+        b_open_video_folder=tk.Button(frame,text=settings[locale]['metaview']['openlocalfolder'] ,command=lambda: threading.Thread(target=openLocal(folder)).start() )
         b_open_video_folder.grid(row = 4, column = 0, padx=14, pady=15,sticky='nswe')      
 
+        # b_update_metas_=tk.Button(frame,text=settings[locale]['metaview']['validateVideoMetas'],command=lambda: ValidateThumbnailGenMetas(folder,thumbnail_template_file.get(),mode.get(),thummbnail_bg_folder.get(),frame))
 
-        b_update_metas_=tk.Button(frame,text="validate meta",command='validate thumbpath is there')
-        b_update_metas_.grid(row = 7, column = 0,  padx=14, pady=15,sticky='nswe') 
+        # b_update_metas_.grid(row = 7, column = 0,  padx=14, pady=15,sticky='nswe') 
 
-        b_return=tk.Button(frame,text="Back to previous page",command=lambda: render_thumb_gen(previous_frame,True,folder))
+        b_return=tk.Button(frame,text=settings[locale]['metaview']['return'],command=lambda: render_thumb_gen(previous_frame,True,folder))
         b_return.grid(row = 8, column =0)   
 
     else:
         mode = tk.IntVar()
         mode.set(3)
-        lab = tk.Label(frame,text="Step1:请选择你的缩略图生成模式",bg="lightyellow",width=30)
+        lab = tk.Label(frame,text=settings[locale]['metaview']['choosethumbpolicy_auto_options'],bg="lightyellow",width=30)
         lab.grid(row = 1, column = 0,  padx=14, pady=15,sticky='nw')    
-        b_return=tk.Button(frame,text="Back to previous page",command=lambda: render_thumb_gen(previous_frame,True,folder))
-        b_return.grid(row = 1, column = 2,  padx=14, pady=15,sticky='e')              
-        mode1=tk.Radiobutton(frame,text="选择视频第一帧作为缩略图背景图",variable=mode,value=1,command='')
+        b_return=tk.Button(frame,text=settings[locale]['metaview']['return'],command=lambda: render_thumb_gen(previous_frame,True,folder))
+        b_return.grid(row = 1, column = 1,  padx=14, pady=15,sticky='e')              
+        mode1=tk.Radiobutton(frame,text=settings[locale]['metaview']['choosethumbpolicy_auto_options_1'],variable=mode,value=1,command='')
         mode1.configure(state = tk.DISABLED)
         Tooltip(mode1, text='you dont install this extension yet' , wraplength=200)
 
         mode1.grid(row = 2, column = 0,  padx=14, pady=15,sticky='nw') 
-        mode2=tk.Radiobutton(frame,text="视频任意关键帧作为背景图",variable=mode,value=2,command='')
+        mode2=tk.Radiobutton(frame,text=settings[locale]['metaview']['choosethumbpolicy_auto_options_2'],variable=mode,value=2,command='')
         mode2.configure(state = tk.DISABLED)
         Tooltip(mode2, text='you dont install this extension yet' , wraplength=200)
 
         mode2.grid(row = 2, column = 1,  padx=14, pady=15,sticky='nw') 
-        mode3=tk.Radiobutton(frame,text="文件夹中随机一张图片作为背景图",variable=mode,value=3,command='')
+        mode3=tk.Radiobutton(frame,text=settings[locale]['metaview']['choosethumbpolicy_auto_options_3'],variable=mode,value=3,command='')
         mode3.grid(row = 3, column = 0,  padx=14, pady=15,sticky='nw') 
         Tooltip(mode3, text='please select the bg image folder ' , wraplength=200)
 
 
         b_thumbnail_bg_folder=tk.Button(frame,text="select",command=lambda: threading.Thread(target=select_folder(ultra[folder]['thumb_gen_setting']['bg_folder'],thummbnail_bg_folder)).start() )
-        b_thumbnail_bg_folder.grid(row = 3, column = 2, padx=14, pady=15,sticky='nswe') 
+        b_thumbnail_bg_folder.grid(row = 4, column = 1, padx=14, pady=15,sticky='nswe') 
         e_thumbnail_bg_folder = tk.Entry(frame, textvariable=thummbnail_bg_folder)
-        e_thumbnail_bg_folder.grid(row = 3, column =1, padx=14, pady=15,sticky='nswe') 
+        e_thumbnail_bg_folder.grid(row = 4, column =0, padx=14, pady=15,sticky='nswe') 
 
-        lab = tk.Label(frame,text="Step2:请选择你的缩略图模板",bg="lightyellow",width=30)
+        lab = tk.Label(frame,text=settings[locale]['metaview']['choosethumbpolicy_auto_options_template'],bg="lightyellow",width=30)
         lab.grid(row = 5, column = 0,  padx=14, pady=15,sticky='nw')         
 
-        b_check_metas_=tk.Button(frame,text="edit metajson",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
-        b_check_metas_.grid(row = 6, column = 1, padx=14, pady=15,sticky='nswe')   
         
 
-        b_edit_thumb=tk.Button(frame,text="create thumbnails template with editor",command=lambda: webbrowser.open_new('file:///{base_dir}/template.html'.format(base_dir=ROOT_DIR)))
+        b_edit_thumb=tk.Button(frame,text=settings[locale]['metaview']['createtemplatewithlocaleditor'],command=lambda: webbrowser.open_new('file:///{base_dir}/template.html'.format(base_dir=ROOT_DIR)))
 
         b_edit_thumb.grid(row = 6, column = 0, padx=14, pady=15,sticky='nswe') 
         Tooltip(b_edit_thumb, text='figure out  heading,subheading,extra text position,font,fontclolor use editor.you can update the json manually to set heading,subheading,extra type,adjust font name and font file ,because fontcolor,fontsize is auto detected, it need to be verify.and set a default bg image for all the videos to use' , wraplength=200)
@@ -3346,42 +3212,46 @@ def render_thumb_update_view(frame,folder,thumbmode,previous_frame=None):
 
 
         b_thumbnail_template_file=tk.Button(frame,text="select",command=lambda: threading.Thread(target=select_file('select thumb template json file',thumbnail_template_file,ultra[folder]['thumb_gen_setting']['template_path'],'json')).start() )
-        b_thumbnail_template_file.grid(row = 6, column = 2,  padx=14, pady=15,sticky='nswe') 
+        b_thumbnail_template_file.grid(row = 7, column = 1,  padx=14, pady=15,sticky='nswe') 
         e_thumbnail_template_file = tk.Entry(frame, textvariable=thumbnail_template_file)
-        e_thumbnail_template_file.grid(row = 6, column = 1, padx=14, pady=15,sticky='nswe') 
+        e_thumbnail_template_file.grid(row = 7, column = 0, padx=14, pady=15,sticky='nswe') 
         
-        lab = tk.Label(frame,text="Step3:请编辑视频元数据",bg="lightyellow",width=30)
-        lab.grid(row = 7, column = 0,  padx=14, pady=15,sticky='nw')         
+        lab = tk.Label(frame,text=settings[locale]['metaview']['L_editvideometa'],bg="lightyellow",width=30)
+        lab.grid(row = 8, column = 0,  padx=14, pady=15,sticky='nw')         
 
 
 
+        # b_check_metas_=tk.Button(frame,text=settings[locale]['metaview']['editwithlocaleditor'],command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
+        # b_check_metas_.grid(row = 8, column = 1, padx=14, pady=15,sticky='nswe')   
 
-        b_check_metas_=tk.Button(frame,text="edit videometa",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
-        b_check_metas_.grid(row = 8, column = 0, padx=14, pady=15,sticky='nswe') 
-        Tooltip(b_check_metas_, text='fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field' , wraplength=200)
-
+        b_edit_metas_=tk.Button(frame,text=settings[locale]['metaview']['editwithlocaleditor'],command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
+        b_edit_metas_.grid(row = 9, column = 0, padx=14, pady=15,sticky='nswe') 
         if ultra[folder]['metafileformat']=='json':
 
-            b_edit_thumb_metas=tk.Button(frame,text="edit json with online editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
-            b_edit_thumb_metas.grid(row = 8, column = 1, padx=14, pady=15,sticky='nswe') 
-            Tooltip(b_edit_thumb_metas, text='if you dont have json editor locally,try this' , wraplength=200)
-        b_open_video_folder=tk.Button(frame,text="open local",command=lambda: threading.Thread(target=openLocal(folder)).start() )
-        b_open_video_folder.grid(row = 8, column = 2, padx=14, pady=15,sticky='nswe')    
-        lab = tk.Label(frame,text="Step4:生成缩略图",bg="lightyellow",width=30)
-        lab.grid(row = 9, column = 0,  padx=14, pady=15,sticky='nw')         
+            b_edit_thumb_metas=tk.Button(frame,text=settings[locale]['metaview']['editwithonline'],command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
+            b_edit_thumb_metas.grid(row = 9, column = 1, padx=14, pady=15,sticky='nswe') 
+        Tooltip(b_edit_metas_, text=settings[locale]['metaview']['editwithlocaleditor_hints'] , wraplength=200)
+        # b_open_video_folder=tk.Button(frame,text=settings[locale]['metaview']['openlocalfolder'] ,command=lambda: threading.Thread(target=openLocal(folder)).start() )
+        # b_open_video_folder.grid(row =8, column = 2, padx=14, pady=15,sticky='nswe')      
 
 
-        b_update_metas_=tk.Button(frame,text="validate meta",command=lambda: ValidateThumbnailGenMetas(folder,thumbnail_template_file.get(),mode.get(),thummbnail_bg_folder.get(),frame))
-        b_update_metas_.grid(row = 10, column = 0,  padx=14, pady=15,sticky='nswe') 
+
+
         
+        lab = tk.Label(frame,text=settings[locale]['metaview']['L_genthumb'],bg="lightyellow",width=30)
+        lab.grid(row = 10, column = 0,  padx=14, pady=15,sticky='nw')         
+
+        
+        b_validate_metas_=tk.Button(frame,text=settings[locale]['metaview']['validateVideoMetas'],command=lambda: ValidateThumbnailGenMetas(folder,thumbnail_template_file.get(),mode.get(),thummbnail_bg_folder.get(),frame))
+
+        b_validate_metas_.grid(row =11, column = 0,  padx=14, pady=15,sticky='nswe') 
 
 
+        b_gen_thumb_=tk.Button(frame,text=settings[locale]['metaview']['B_genthumb'],command=lambda: genThumbnailFromTemplate(folder,thumbnail_template_file.get(),mode.get(),thummbnail_bg_folder.get(),frame))
+        b_gen_thumb_.grid(row = 11, column =1, padx=14, pady=15,sticky='nswe') 
 
-        b_gen_thumb_=tk.Button(frame,text="gen thumb",command=lambda: genThumbnailFromTemplate(folder,thumbnail_template_file.get(),mode.get(),thummbnail_bg_folder.get(),frame))
-        b_gen_thumb_.grid(row = 11, column =0, padx=14, pady=15,sticky='nswe') 
 
-
-        b_check_metas_=tk.Button(frame,text="check metajson",command=lambda: threading.Thread(target=openLocal(folder)).start() )
+        b_check_metas_=tk.Button(frame,text=settings[locale]['metaview']['b_checkvideometafile'],command=lambda: threading.Thread(target=openLocal(folder)).start() )
         b_check_metas_.grid(row = 12, column = 0, padx=14, pady=15,sticky='nswe') 
 
 
@@ -3736,7 +3606,7 @@ def newaccountView(frame):
     newWindow.rowconfigure(0, weight=1)
     newWindow.columnconfigure((0,1), weight=1)
 
-    newWindow.title('create a new account')
+    newWindow.title(settings[locale]['newaccountview']['title'])
     newWindow.grid_rowconfigure(0, weight=1)
     newWindow.grid_columnconfigure(0, weight=1, uniform="group1")
     newWindow.grid_columnconfigure(1, weight=1, uniform="group1")
@@ -3761,7 +3631,7 @@ def newaccountView(frame):
     password = tk.StringVar()
 
 
-    l_platform = tk.Label(ttkframe, text=settings[locale]['l_platform']
+    l_platform = tk.Label(ttkframe, text=settings[locale]['newaccountview']['l_platform']
                           )
     # l_platform.place(x=10, y=90)
     l_platform.grid(row = 0, column = 0, columnspan = 3, padx=14, pady=15)    
@@ -3789,9 +3659,9 @@ def newaccountView(frame):
         print(socialplatform.get())
         print(socialplatform_box.current())
 
-    socialplatform.set("Select From Platforms")
+    socialplatform.set(settings[locale]['newaccountview']['l_platform_hints'])
     socialplatform.trace('w', socialplatformOptionCallBack)
-    socialplatform_box.bind('<FocusIn>', lambda event: socialplatformdb_refresh(event))
+    socialplatform_box.bind('<Button-1>', lambda event: socialplatformdb_refresh(event))
 
 
     # socialplatform_box.config(values =platform_names)
@@ -3799,7 +3669,7 @@ def newaccountView(frame):
 
 
 
-    l_username = tk.Label(ttkframe, text=settings[locale]['username']
+    l_username = tk.Label(ttkframe, text=settings[locale]['newaccountview']['username']
                           )
     # l_username.place(x=10, y=150)
     l_username.grid(row = 2, column = 0, columnspan = 3, padx=14, pady=15)    
@@ -3811,7 +3681,7 @@ def newaccountView(frame):
 
 
 
-    l_password = tk.Label(ttkframe, text=settings[locale]['password']
+    l_password = tk.Label(ttkframe, text=settings[locale]['newaccountview']['password']
                           )
     e_password = tk.Entry(ttkframe, width=int(width*0.01), textvariable=password)
 
@@ -3822,7 +3692,7 @@ def newaccountView(frame):
     linkAccounts=tk.StringVar()
 
 
-    l_linkAccounts = tk.Label(ttkframe, text=settings[locale]['linkAccounts']
+    l_linkAccounts = tk.Label(ttkframe, text=settings[locale]['newaccountview']['linkAccounts']
                           )
     e_linkAccounts = tk.Entry(ttkframe, width=int(width*0.01), textvariable=linkAccounts)
 
@@ -3837,7 +3707,7 @@ def newaccountView(frame):
     # b_choose_account=tk.Button(ttkframe,text="Link",command=lambda: threading.Thread(target=lambda:chooseAccountsView(ttkframe,linkAccounts)).start() )
 
     # b_choose_account.grid(row = 4, column = 9, columnspan = 2, padx=14, pady=15)    
-    l_proxy_option = tk.Label(ttkframe, text=settings[locale]['proxySetting']
+    l_proxy_option = tk.Label(ttkframe, text=settings[locale]['newaccountview']['proxy']
                               )
     
     l_proxy_option.grid(row = 5, column = 0, columnspan = 3, padx=14, pady=15)    
@@ -3845,7 +3715,7 @@ def newaccountView(frame):
     e_proxy_option = tk.Entry(ttkframe, textvariable=proxy_option_account)
     e_proxy_option.grid(row = 5, column = 5, columnspan = 3, padx=14, pady=15,sticky='w')    
 
-    b_choose_proxy=tk.Button(ttkframe,text="Link",command=lambda: threading.Thread(target=chooseProxies(ttkframe,platform=socialplatform.get(),accountLinkproxy=proxy_option_account)).start() )
+    b_choose_proxy=tk.Button(ttkframe,text=settings[locale]['newaccountview']['proxylink'],command=lambda: threading.Thread(target=chooseProxies(ttkframe,platform=socialplatform.get(),accountLinkproxy=proxy_option_account)).start() )
     
     b_choose_proxy.grid(row = 5, column = 9, columnspan = 2, padx=14, pady=15)    
     Tooltip(b_choose_proxy, text='if you want to use any proxy' , wraplength=200)
@@ -3853,7 +3723,7 @@ def newaccountView(frame):
 
 
 
-    l_channel_cookie = tk.Label(ttkframe, text='cookies' 
+    l_channel_cookie = tk.Label(ttkframe, text=settings[locale]['newaccountview']['cookies']
                                 # settings[locale]['select_cookie_file']
                                 )
     # l_channel_cookie.place(x=10, y=330)
@@ -3868,12 +3738,12 @@ def newaccountView(frame):
     b_channel_cookie.grid(row = 6, column = 9, columnspan = 2, padx=14, pady=15)    
 
     
-    b_channel_cookie_gen=tk.Button(ttkframe,text="pull",command=auto_gen_cookie_file)
+    b_channel_cookie_gen=tk.Button(ttkframe,text=settings[locale]['newaccountview']['pullcookie'],command=auto_gen_cookie_file)
     # b_channel_cookie_gen.place(x=100, y=390)    
     b_channel_cookie_gen.grid(row = 6, column = 12, columnspan = 2, padx=14, pady=15)    
  
     
-    b_save_user=tk.Button(ttkframe,text="save user",command=lambda: threading.Thread(target=saveUser(socialplatform.get(),username.get(),password.get(),proxy_option_account.get(),channel_cookie_user.get(),linkAccounts.get())).start() )
+    b_save_user=tk.Button(ttkframe,text=settings[locale]['newaccountview']['save'],command=lambda: threading.Thread(target=saveUser(socialplatform.get(),username.get(),password.get(),proxy_option_account.get(),channel_cookie_user.get(),linkAccounts.get())).start() )
     b_save_user.grid(row = 10, column = 0, columnspan = 3, padx=14, pady=15)    
 
 def accountView(frame,mode='query',linkAccounts=None):
@@ -3890,7 +3760,7 @@ def accountView(frame,mode='query',linkAccounts=None):
     query_frame = tk.Frame(frame,  bd=1, relief=tk.FLAT)
     query_frame.grid(row=0, column=0,sticky='nswe')
     latest_user_conditions_user=tk.StringVar()
-    lbl15 = tk.Label(query_frame, text='By username.')
+    lbl15 = tk.Label(query_frame, text=settings[locale]['accountview']['q_username'])
     # lbl15.place(x=430, y=15, anchor=tk.NE)
     lbl15.grid(row = 0, column = 0, padx=14, pady=15,sticky='w')    
     txt15 = tk.Entry(query_frame, width=11,textvariable=q_platform_account)
@@ -3898,7 +3768,7 @@ def accountView(frame,mode='query',linkAccounts=None):
     txt15.grid(row = 1, column = 0, padx=14, pady=15,sticky='w')    
 
 
-    lb18 = tk.Label(query_frame, text='By platform.')
+    lb18 = tk.Label(query_frame, text=settings[locale]['accountview']['q_platform'])
     lb18.grid(row=0,column=1, sticky=tk.W)
 
 
@@ -3921,13 +3791,13 @@ def accountView(frame,mode='query',linkAccounts=None):
         print(q_platform.get())
         print(q_platform_accountbox.current())
 
-    q_platform.set("Select From Platforms")
+    q_platform.set(settings[locale]['accountview']['q_platform_hints'])
     q_platform.trace('w', q_platformOptionCallBack)
 
 
     q_platform_accountbox['values'] = q_platformb_values()
 
-    q_platform_accountbox.bind('<FocusIn>', lambda event: q_platformdb_refresh(event))    
+    q_platform_accountbox.bind('<Button-1>', lambda event: q_platformdb_refresh(event))    
     q_platform_accountbox.grid(row = 1, column = 1, padx=14, pady=15,sticky='w')    
 
 
@@ -3936,7 +3806,7 @@ def accountView(frame,mode='query',linkAccounts=None):
 
 
 
-    btn5= tk.Button(query_frame, text="Reset", padx = 0, pady = 0,command = lambda:(q_platform.set(''),q_platform_account.set('')))
+    btn5= tk.Button(query_frame, text=settings[locale]['accountview']['reset'], padx = 0, pady = 0,command = lambda:(q_platform.set(''),q_platform_account.set('')))
     btn5.grid(row=1,column=5, sticky=tk.W)    
 
 
@@ -3945,16 +3815,16 @@ def accountView(frame,mode='query',linkAccounts=None):
     operation_frame.grid(row=1, column=0,sticky='nswe')
 
 
-    b_new_users=tk.Button(operation_frame,text="New account",command=lambda: threading.Thread(target=newaccountView(frame)).start() )
+    b_new_users=tk.Button(operation_frame,text=settings[locale]['accountview']['new'],command=lambda: threading.Thread(target=newaccountView(frame)).start() )
     b_new_users.grid(row = 0, column = 0,  padx=14, pady=15)    
 
-    b_bulk_import_users=tk.Button(operation_frame,text="bulk import",command=lambda: threading.Thread(target=bulkImportUsers(frame)).start() )
+    b_bulk_import_users=tk.Button(operation_frame,text=settings[locale]['accountview']['bulkimport'],command=lambda: threading.Thread(target=bulkImportUsers(frame)).start() )
     # b_bulk_import_users.place(x=10, y=450)    
     b_bulk_import_users.grid(row = 0, column = 1,  padx=14, pady=15)    
     
     hints='bulk pull sessionid and cookies'
 
-    b_bulk_pull_cookies=tk.Button(operation_frame,text=hints,command=lambda: threading.Thread(target=bulkImportUsers(frame)).start() )
+    b_bulk_pull_cookies=tk.Button(operation_frame,text=settings[locale]['accountview']['bulkimport_hints'],command=lambda: threading.Thread(target=bulkImportUsers(frame)).start() )
     # b_bulk_import_users.place(x=10, y=450)    
     b_bulk_pull_cookies.grid(row = 0, column = 2,padx=14, pady=15)     
 
@@ -3963,15 +3833,6 @@ def accountView(frame,mode='query',linkAccounts=None):
     result_frame = tk.Frame(frame,  bd=1, relief=tk.FLAT)
     result_frame.grid(row=2, column=0,sticky='nswe')
 
-    # if mode=='query':
-    #     result_frame.grid(row=2, column=0,sticky='nswe')
-    # else:
-    #     print('result frame line no is 1')
-    #     result_frame.grid(row=1, column=0,sticky='nswe')
-
-    # result_frame.grid_rowconfigure(0, weight=1)
-    # result_frame.grid_columnconfigure(0, weight=1)
-    # result_frame.grid_columnconfigure(1, weight=1)
     
     tab_headers=['id','platform','username','pass','is_deleted','proxy','inserted_at']
 
@@ -3980,7 +3841,7 @@ def accountView(frame,mode='query',linkAccounts=None):
     refreshAccountcanvas(canvas=None,frame=result_frame,headers=tab_headers,datas=[])
 
     
-    btn5= tk.Button(query_frame, text="Get Info", command = lambda:queryAccounts(frame=result_frame,canvas=None,tab_headers=tab_headers,username=q_username_account.get(),platform=q_platform.get(),linkAccounts=linkAccounts,mode=mode) )
+    btn5= tk.Button(query_frame, text=settings[locale]['accountview']['querynow'], command = lambda:queryAccounts(frame=result_frame,canvas=None,tab_headers=tab_headers,username=q_username_account.get(),platform=q_platform.get(),linkAccounts=linkAccounts,mode=mode) )
 
     btn5.grid(row = 1, column =3, padx=14, pady=15)    
 
@@ -4097,7 +3958,7 @@ def createTaskMetas(left,right):
     l_multiAccountsPolicybox.grid(row=6,column=0,  padx=14, pady=15, sticky=tk.W)
 
     multiAccountsPolicybox = ttk.Combobox(account_frame_left, textvariable=multiAccountsPolicy)
-    multiAccountsPolicybox.config(values = ('单平台单账号', '同平台主副账号','单平台多独立账号随机发布','单平台多独立账号平均发布'))
+    multiAccountsPolicybox.config(values = ('单平台单账号', '同平台主副账号','单平台多独立账号独立发布','单平台多独立账号平均发布'))
     multiAccountsPolicybox.grid(row = 6, column = 1, padx=14, pady=15, sticky='w')   
 
     lb18 = tk.Label(account_frame_left, text='Runs on.')
@@ -4304,7 +4165,7 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
         multiAccountsPolicy_value=0
     elif multiAccountsPolicy_value=='同平台主副账号':
         multiAccountsPolicy_value=1
-    elif multiAccountsPolicy_value=='单平台多独立账号随机发布':
+    elif multiAccountsPolicy_value=='单平台多独立账号独立发布':
         multiAccountsPolicy_value=2
     elif multiAccountsPolicy_value=='单平台多独立账号平均发布':
         multiAccountsPolicy_value=3    
@@ -4468,11 +4329,9 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
                                 taskno=+1    
                             
                     elif multiAccountsPolicy_value==2:
-                        print('遍历账号，生成视频数量对应大小的账号数组，随机分配')
-                        if videocounts <len(accounts):
-                            tmpaccounts= extends_accounts(accounts,videocounts,mode='random')  
-                        else:
-                            tmpaccounts=  extends_accounts(accounts,len(accounts),mode='random')  
+                        print('遍历账号，生成视频数量*账号数量的对应大小的账号数组')
+
+                        tmpaccounts=  extends_accounts(accounts,len(accounts)*videocounts,mode='random')  
                         taskno=0
                         for key, entry in tmpdict.items():
                             print('key',key)
@@ -4487,23 +4346,23 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
                             tmp['tasks'][key]['is_record_video']=is_record_video_value
                             tmp['tasks'][key]['browser_type']=browserType_value
 
-                            
+                            for id_ in accounts:
 
-                            account=tmpaccounts[taskno]
-                            data=AccountModel.get_account_by_id(id=account)
-                            # print('data====',data[0],data[0].username)
-                            tmp['tasks'][key]['username']=data.username
-                            logger.debug(f'get credentials for this account {account}')
+                            # account=tmpaccounts[taskno]
+                                data=AccountModel.get_account_by_id(id=id_)
+                                # print('data====',data[0],data[0].username)
+                                tmp['tasks'][key]['username']=data.username
+                                logger.debug(f'get credentials for this account {account}')
 
-                            tmp['tasks'][key]['password']=data.password
-                            tmp['tasks'][key]['proxy_option']=data.proxy
-                            tmp['tasks'][key]['channel_cookie_path']=data.cookie_local_path
-                            taskno=+1    
-                                                
+                                tmp['tasks'][key]['password']=data.password
+                                tmp['tasks'][key]['proxy_option']=data.proxy
+                                tmp['tasks'][key]['channel_cookie_path']=data.cookie_local_path
+                                taskno=+1    
+                                                    
                     elif multiAccountsPolicy_value==3:
                         print('遍历账号，生成视频数量对应大小的账号数组，平均分配')
                         if videocounts <len(accounts):
-                            tmpaccounts=[random.choice(accounts)]
+                            tmpaccounts=  extends_accounts(accounts,videocounts,mode='random')      
                         else:
                             tmpaccounts=  extends_accounts(accounts,videocounts,mode='equal')      
                         taskno=0
@@ -5027,7 +4886,7 @@ def uploadView(frame,ttkframe,lang):
         task_status_combo['values'] = task_status_db_values()
     task_status_combo = ttk.Combobox(queryframe, textvariable=task_status_var)
     task_status_combo.grid(row=1, column=0, sticky=tk.W)
-    task_status_combo.bind('<FocusIn>', lambda event: task_status_db_refresh(event))
+    task_status_combo.bind('<Button-1>', lambda event: task_status_db_refresh(event))
     task_status_combo['values'] = task_status_db_values()
     
 
@@ -5051,7 +4910,7 @@ def uploadView(frame,ttkframe,lang):
         platform_combo['values'] = platform_db_values()
     platform_combo = ttk.Combobox(queryframe, textvariable=platform_var)
     platform_combo.grid(row=1, column=3, padx=10, pady=10, sticky=tk.W)
-    platform_combo.bind('<FocusIn>', lambda event: platform_db_refresh(event))
+    platform_combo.bind('<Button-1>', lambda event: platform_db_refresh(event))
     platform_combo['values'] = platform_db_values()
     
     # platform_combo['values'] = db_values()
@@ -5092,7 +4951,7 @@ def uploadView(frame,ttkframe,lang):
 
     sortby_combo = ttk.Combobox(queryframe, textvariable=sortby_var)
     sortby_combo.grid(row=1, column=18,columnspan=1, padx=10, pady=10, sticky=tk.W)
-    # sortby_combo.bind('<FocusIn>', lambda event: platform_db_refresh(event))
+    # sortby_combo.bind('<Button-1>', lambda event: platform_db_refresh(event))
     sortby_combo['values'] = list( dict(SORT_BY_TYPE.SORT_BY_TYPE_TEXT).values())
  
 
@@ -5429,7 +5288,7 @@ def _copy(event):
     except:
         pass
 
-def bulkproxyimportView(frame):
+def bulkimportproxyView(frame):
  
     newWindow = tk.Toplevel(frame)
     newWindow.geometry(window_size)
@@ -5437,7 +5296,7 @@ def bulkproxyimportView(frame):
     newWindow.rowconfigure(0, weight=1)
     newWindow.columnconfigure((0,1), weight=1)
 
-    newWindow.title('user bulk import')
+    newWindow.title(settings[locale]['bulkimportproxyView']['title'])
     newWindow.grid_rowconfigure(0, weight=1)
     newWindow.grid_columnconfigure(0, weight=1, uniform="group1")
     newWindow.grid_columnconfigure(1, weight=1, uniform="group1")
@@ -5457,7 +5316,7 @@ def bulkproxyimportView(frame):
     frame=account_frame_left
 
 
-    lbl15 = tk.Label(frame, text='copy proxy info here')
+    lbl15 = tk.Label(frame, text=settings[locale]['bulkimportproxyView']['copyhints'])
     lbl15.grid(row=0,column=0, sticky=tk.W)
     
 
@@ -5474,21 +5333,24 @@ def bulkproxyimportView(frame):
     from tkinter.scrolledtext import ScrolledText
     proxy_textfield = ScrolledText(frame, wrap=tk.WORD)
     proxy_textfield.grid(row = 3, column = 0, columnspan =2, padx=0, pady=15)
-    proxy_textfield.insert(tk.END,'proxy list should be one proxy oneline,and each proxy in such format:\nsocks5://127.0.0.1:1080;tiktok\nsocks5://127.0.0.1:1088;youtube')
+    proxy_textfield.insert(tk.END,
+                           
+                           settings[locale]['bulkimportproxyView']['placeholder']
+                           )
     proxy_textfield.bind("<Return>", returnProxy_textfield)
     proxy_textfield.bind_all("<Control-c>",_copy)
 
-    b_save_proxy=tk.Button(frame,text="save proxy",command=lambda: threading.Thread(target=saveBulkproxies(proxy_textfield.get("1.0", tk.END),logger)).start() )
+    b_save_proxy=tk.Button(frame,text=settings[locale]['bulkimportproxyView']['save'],command=lambda: threading.Thread(target=saveBulkproxies(proxy_textfield.get("1.0", tk.END),logger)).start() )
     b_save_proxy.grid(row=5,column=0, sticky=tk.W)
     
-    b_check_proxy=tk.Button(frame,text="bulk check proxy",command=lambda: threading.Thread(target=updateproxies(prod_engine,proxy_textfield.get("1.0", tk.END),logger)).start() )
+    b_check_proxy=tk.Button(frame,text=settings[locale]['bulkimportproxyView']['bulkcheck'],command=lambda: threading.Thread(target=updateproxies(prod_engine,proxy_textfield.get("1.0", tk.END),logger)).start() )
     b_check_proxy.grid(row=5,column=1, sticky=tk.W)    
     
 
-    b_clear_texts=tk.Button(frame,text="clear all texts",command=lambda: threading.Thread(target=proxy_textfield.delete(1.0,tk.END)).start() )
+    b_clear_texts=tk.Button(frame,text=settings[locale]['bulkimportproxyView']['clearall'],command=lambda: threading.Thread(target=proxy_textfield.delete(1.0,tk.END)).start() )
     b_clear_texts.grid(row=4,column=1, sticky=tk.W)
     
-    b_choose_proxy=tk.Button(frame,text="load  from file",command=lambda: threading.Thread(target=select_file).start() )
+    b_choose_proxy=tk.Button(frame,text=settings[locale]['bulkimportproxyView']['loadfile'],command=lambda: threading.Thread(target=select_file).start() )
     b_choose_proxy.grid(row=4,column=0, sticky=tk.W)
 
 
@@ -5500,7 +5362,7 @@ def newproxyView(frame):
     newWindow.rowconfigure(0, weight=1)
     newWindow.columnconfigure((0,1), weight=1)
 
-    newWindow.title('create a new proxy')
+    newWindow.title(settings[locale]['newproxyview']['title'])
     newWindow.grid_rowconfigure(0, weight=1)
     newWindow.grid_columnconfigure(0, weight=1, uniform="group1")
     newWindow.grid_columnconfigure(1, weight=1, uniform="group1")
@@ -5518,7 +5380,7 @@ def newproxyView(frame):
 
 
 
-    l_provider = tk.Label(ttkframe, text=settings[locale]['l_provider']
+    l_provider = tk.Label(ttkframe, text=settings[locale]['newproxyview']['l_provider']
                           )
     # l_platform.place(x=10, y=90)
     l_provider.grid(row = 0, column = 0,  padx=14, pady=15)    
@@ -5545,9 +5407,9 @@ def newproxyView(frame):
         print(proxyprovider.get())
         print(proxyprovider_box.current())
 
-    proxyprovider.set("Select From providers")
+    proxyprovider.set(settings[locale]['newproxyview']['dropdown_hints'])
     proxyprovider.trace('w', proxyproviderOptionCallBack)
-    proxyprovider_box.bind('<FocusIn>', lambda event: proxyproviderdb_refresh(event))
+    proxyprovider_box.bind('<Button-1>', lambda event: proxyproviderdb_refresh(event))
 
     # proxyprovider_box.config(values =proxyprovider_names)
     proxyprovider_box.grid(row = 0, column = 5,  padx=14, pady=15)    
@@ -5566,7 +5428,7 @@ def newproxyView(frame):
 
 
 
-    l_host = tk.Label(ttkframe, text=settings[locale]['L_proxy_host']
+    l_host = tk.Label(ttkframe, text=settings[locale]['newproxyview']['L_proxy_host']
                           )
     l_host.grid(row = 7, column = 0,  padx=14, pady=15)    
 
@@ -5575,7 +5437,7 @@ def newproxyView(frame):
 
 
 
-    l_port = tk.Label(ttkframe, text=settings[locale]['L_proxy_port']
+    l_port = tk.Label(ttkframe, text=settings[locale]['newproxyview']['L_proxy_port']
                           )
     l_port.grid(row = 8, column = 0,  padx=14, pady=15)    
 
@@ -5583,7 +5445,7 @@ def newproxyView(frame):
     e_port.grid(row = 8, column = 5,  padx=14, pady=15,sticky='w')    
 
 
-    l_ip = tk.Label(ttkframe, text=settings[locale]['L_proxy_ip']
+    l_ip = tk.Label(ttkframe, text=settings[locale]['newproxyview']['L_proxy_ip']
                           )
     l_ip.grid(row = 9, column = 0,  padx=14, pady=15)    
 
@@ -5592,7 +5454,7 @@ def newproxyView(frame):
 
 
 
-    l_username = tk.Label(ttkframe, text=settings[locale]['username']
+    l_username = tk.Label(ttkframe, text=settings[locale]['newproxyview']['username']
                           )
     l_username.grid(row = 10, column = 0,  padx=14, pady=15)    
 
@@ -5602,7 +5464,7 @@ def newproxyView(frame):
 
 
 
-    l_password = tk.Label(ttkframe, text=settings[locale]['password']
+    l_password = tk.Label(ttkframe, text=settings[locale]['newproxyview']['password']
                           )
     e_password = tk.Entry(ttkframe, width=int(width*0.01), textvariable=password)
 
@@ -5610,14 +5472,14 @@ def newproxyView(frame):
     e_password.grid(row = 11, column = 5,  padx=14, pady=15,sticky='w')   
 
 
-    l_refresh_url = tk.Label(ttkframe, text=settings[locale]['L_refresh_url']
+    l_refresh_url = tk.Label(ttkframe, text=settings[locale]['newproxyview']['L_refresh_url']
                           )
     l_refresh_url.grid(row = 12, column = 0,  padx=14, pady=15)    
 
     e_refresh_url = tk.Entry(ttkframe, width=int(width*0.01), textvariable=refresh_url)
     e_refresh_url.grid(row = 12, column = 5,  padx=14, pady=15,sticky='w')    
 
-    l_tag = tk.Label(ttkframe, text=settings[locale]['L_proxy_tag']
+    l_tag = tk.Label(ttkframe, text=settings[locale]['newproxyview']['L_proxy_tag']
                           )
     l_tag.grid(row = 13, column = 0,  padx=14, pady=15)    
 
@@ -5626,7 +5488,7 @@ def newproxyView(frame):
 
     
  
-    l_iptype = tk.Label(ttkframe, text=settings[locale]['l_iptype']
+    l_iptype = tk.Label(ttkframe, text=settings[locale]['newproxyview']['l_iptype']
                           )
     l_iptype.grid(row = 1, column = 0,  padx=14, pady=15)    
 
@@ -5653,9 +5515,9 @@ def newproxyView(frame):
         print(iptype.get())
         print(iptype_box.current())
 
-    iptype.set("Select From ip type")
+    iptype.set(settings[locale]['newproxyview']['dropdown_hints'])
     iptype.trace('w', iptypeOptionCallBack)
-    iptype_box.bind('<FocusIn>', lambda event: iptypedb_refresh(event))
+    iptype_box.bind('<Button-1>', lambda event: iptypedb_refresh(event))
     iptype_names = list(dict(IP_TYPE.IP_TYPE_TEXT).values())
 
     iptype_box.config(values =iptype_names)
@@ -5663,7 +5525,7 @@ def newproxyView(frame):
 
 
  
-    l_ipsource = tk.Label(ttkframe, text=settings[locale]['l_ipsource']
+    l_ipsource = tk.Label(ttkframe, text=settings[locale]['newproxyview']['l_ipsource']
                           )
     # l_platform.place(x=10, y=90)
     l_ipsource.grid(row = 2, column = 0,  padx=14, pady=15)    
@@ -5691,9 +5553,9 @@ def newproxyView(frame):
         print(ipsource.get())
         print(ipsource_box.current())
 
-    ipsource.set("Select From ip source")
+    ipsource.set(settings[locale]['newproxyview']['dropdown_hints'])
     ipsource.trace('w', ipsourceOptionCallBack)
-    ipsource_box.bind('<FocusIn>', lambda event: ipsourcedb_refresh(event))
+    ipsource_box.bind('<Button-1>', lambda event: ipsourcedb_refresh(event))
     ipsource_names = list(dict(IP_SOURCE_TYPE.IP_SOURCE_TYPE_TEXT).values())
 
     ipsource_box.config(values =ipsource_names)
@@ -5728,8 +5590,8 @@ def newproxyView(frame):
         country_code= find_key(citydb['countries'],proxycountry.get())
         proxycountrycode.set(country_code)
         print(proxycountry_box.current())
+    proxycountry.set(settings[locale]['newproxyview']['dropdown_hints'])
 
-    proxycountry.set("Select From country")
     proxycountry.trace('w', proxycountryOptionCallBack)
     proxycountry_box.bind('<Button-1>', lambda event: proxycountrydb_refresh(event))
     # proxycountry_box.bind("<<ComboboxSelected>>",proxycountryOptionCallBack) 
@@ -5776,8 +5638,8 @@ def newproxyView(frame):
         print(proxystate.get())
         print(proxystate_box.current())
         # proxystate_box['values'] = proxystatedb_values()
+    proxystate.set(settings[locale]['newproxyview']['dropdown_hints'])
 
-    proxystate.set("Select From state")
     # proxystate.trace('w', proxystateOptionCallBack)
     proxystate_box.bind('<Button-1>', lambda event: proxystatedb_refresh(event))
     
@@ -5836,12 +5698,11 @@ def newproxyView(frame):
 
         print('choose city',proxycity.get())
 
-    proxycity.set("Select From city")
-    # proxycity.trace('w', proxycityOptionCallBack)
+    proxycity.set(settings[locale]['newproxyview']['dropdown_hints'])
     
     proxycity_box.bind('<Button-1>',  lambda event: proxycitydb_refresh(event))
 
-    # proxycity_box.bind('<FocusIn>', lambda event: proxycitydb_refresh(event))
+    # proxycity_box.bind('<Button-1>', lambda event: proxycitydb_refresh(event))
     proxycity_box.bind("<<ComboboxSelected>>",proxycityOptionCallBack) 
     # proxycity_box.bind("<KeyRelease>",proxycityOptionCallBack) 
     # proxycity_box['values'] = proxycitydb_values()
@@ -5873,12 +5734,12 @@ def newproxyView(frame):
 
         print('choose PROXY_PROTOCOL',proxyprotocol.get())
 
-    proxyprotocol.set("Select From")
     # proxyprotocol.trace('w', proxyprotocolOptionCallBack)
-    
+    proxyprotocol.set(settings[locale]['newproxyview']['dropdown_hints'])
+   
     proxyprotocol_box.bind('<Button-1>',  lambda event: proxyprotocoldb_refresh(event))
 
-    # proxyprotocol_box.bind('<FocusIn>', lambda event: proxyprotocoldb_refresh(event))
+    # proxyprotocol_box.bind('<Button-1>', lambda event: proxyprotocoldb_refresh(event))
     proxyprotocol_box.bind("<<ComboboxSelected>>",proxyprotocolOptionCallBack) 
     # proxyprotocol_box.bind("<KeyRelease>",proxyprotocolOptionCallBack) 
     # proxyprotocol_box['values'] = proxyprotocoldb_values()
@@ -5888,7 +5749,7 @@ def newproxyView(frame):
     
     
 
-    b_save_proxy=tk.Button(ttkframe,text="save proxy",command=lambda: threading.Thread(target=saveProxy(
+    b_save_proxy=tk.Button(ttkframe,text=settings[locale]['newproxyview']['save'],command=lambda: threading.Thread(target=saveProxy(
 proxy_protocol_type=proxyprotocol.get(),proxy_provider_type=proxyprovider.get(),host=proxy_host.get(),port=proxy_port.get(),
 user=username.get(),password=password.get(),ip_address=proxy_ip.get(),iptype=iptype.get(),country=proxycountry.get(),
 state=proxystate.get(), city=proxycity.get(), tags=proxy_tag.get(), status=2, network_type=ipsource.get()
@@ -5910,14 +5771,14 @@ def proxyView(frame,mode='query',linkProxy=None,platform=None):
     query_frame.grid(row=0, column=0,sticky='nswe')
 
 
-    b_new_proxy=tk.Button(operation_frame,text="New proxy",command=lambda: threading.Thread(target=newproxyView(frame)).start() )
+    b_new_proxy=tk.Button(operation_frame,text=settings[locale]['proxyview']['new'],command=lambda: threading.Thread(target=newproxyView(frame)).start() )
     b_new_proxy.grid(row = 0, column = 0,  padx=14, pady=15)    
 
-    b_bulk_import_users=tk.Button(operation_frame,text="bulk import",command=lambda: threading.Thread(target=bulkproxyimportView(frame)).start() )
+    b_bulk_import_users=tk.Button(operation_frame,text=settings[locale]['proxyview']['bulkimport'],command=lambda: threading.Thread(target=bulkimportproxyView(frame)).start() )
     # b_bulk_import_users.place(x=10, y=450)    
     b_bulk_import_users.grid(row = 0, column = 1,  padx=14, pady=15)    
 
-    b_check_proxy=tk.Button(operation_frame,text="bulk check proxy",command=lambda: threading.Thread(target=updateproxies(prod_engine,proxy_textfield.get("1.0", tk.END),logger)).start() )
+    b_check_proxy=tk.Button(operation_frame,text=settings[locale]['proxyview']['bulkcheck'],command=lambda: threading.Thread(target=updateproxies(prod_engine,proxy_textfield.get("1.0", tk.END),logger)).start() )
     b_check_proxy.grid(row=0,column=2, sticky=tk.W)      
 
     result_frame = tk.Frame(frame,  bd=1, relief=tk.FLAT)
@@ -5937,7 +5798,7 @@ def proxyView(frame,mode='query',linkProxy=None,platform=None):
     country = tk.StringVar()
     proxyTags = tk.StringVar()
 
-    lbl15 = tk.Label(query_frame, text='by city.')
+    lbl15 = tk.Label(query_frame, text=settings[locale]['proxyview']['q_city'])
     # lbl15.place(x=430, y=30, anchor=tk.NE)
     # lbl15.pack(side='left')
 
@@ -5950,62 +5811,66 @@ def proxyView(frame,mode='query',linkProxy=None,platform=None):
     txt15.grid(row=1,column=0, sticky=tk.W)
 
 
-    l_state= tk.Label(query_frame, text='by state.')
+    l_state= tk.Label(query_frame, text=settings[locale]['proxyview']['q_state'])
     l_state.grid(row=0,column=1, sticky=tk.W)
     e_state = tk.Entry(query_frame,textvariable=state)
     e_state.insert(0,'LA')
     e_state.grid(row=1,column=1, sticky=tk.W)
 
 
-    lbl16 = tk.Label(query_frame, text='by country.')
+    lbl16 = tk.Label(query_frame, text=settings[locale]['proxyview']['q_country'])
     lbl16.grid(row=0,column=2, sticky=tk.W)
     txt16 = tk.Entry(query_frame,textvariable=country)
     txt16.insert(0,'USA')
     txt16.grid(row=1,column=2, sticky=tk.W)
     
-    lb17 = tk.Label(query_frame, text='by tags.')
+    lb17 = tk.Label(query_frame, text=settings[locale]['proxyview']['q_tags'])
     lb17.grid(row=0,column=3, sticky=tk.W)
     txt17 = tk.Entry(query_frame,textvariable=proxyTags)
     txt17.insert(0,'youtube')
     txt17.grid(row=1,column=3, sticky=tk.W)
 
-    l_networktype = tk.Label(query_frame, text='by networktype.')
+    l_networktype = tk.Label(query_frame, text=settings[locale]['proxyview']['q_networktype'])
     l_networktype.grid(row=2,column=0, sticky=tk.W)
     e_networktype = tk.Entry(query_frame,textvariable=network_type)
     e_networktype.insert(0,'resident')
     e_networktype.grid(row=3,column=0, sticky=tk.W)
 
-    lb18 = tk.Label(query_frame, text='by status.')
+    lb18 = tk.Label(query_frame, text=settings[locale]['proxyview']['q_status'])
     lb18.grid(row=2,column=1, sticky=tk.W)
 
 
     proxyStatus = tk.StringVar()
+
+    proxyStatusbox = ttk.Combobox(query_frame, textvariable=proxyStatus)
+    # proxyStatusbox.config(values = ('valid', 'invalid','unchecked'))
+    proxyStatusbox.grid(row = 3, column = 1, padx=14, pady=15)    
+    def proxyStatusbox_refresh(*args):
+        proxyStatusbox['values'] = list(dict(PROXY_STATUS.PROXY_STATUS_TEXT).values())
 
 
     def proxyStatusCallBack(*args):
         print(proxyStatus.get())
         print(proxyStatusbox.current())
 
-    proxyStatus.set("Select From Status")
+    proxyStatus.set(settings[locale]['proxyview']['q_status_hints'])
     proxyStatus.trace('w', proxyStatusCallBack)
-
-
-    proxyStatusbox = ttk.Combobox(query_frame, textvariable=proxyStatus)
-    proxyStatusbox.config(values = ('valid', 'invalid','unchecked'))
-    proxyStatusbox.grid(row = 3, column = 1, padx=14, pady=15)    
+    proxyStatusbox.bind('<Button-1>', lambda event: proxyStatusbox_refresh(event))
 
 
 
 
 
-    btn5= tk.Button(query_frame, text="Get proxy list", padx = 0, pady = 0,command = lambda: queryProxy(
+
+
+    btn5= tk.Button(query_frame, text=settings[locale]['proxyview']['querynow'], padx = 0, pady = 0,command = lambda: queryProxy(
         frame=result_frame,canvas=None,tab_headers=tab_headers,city=city.get(),state=state.get(),country=country.get(),tags=proxyTags.get(),network_type=network_type.get(), status=proxyStatus.get(),mode=mode,linkProxy=linkProxy,platform=platform))
 
 
 
     btn5.grid(row=4,column=0, sticky=tk.W)    
     
-    btn5= tk.Button(query_frame, text="Reset", padx = 0, pady = 0,command = lambda:(proxyStatus.set(""),country.set(""),state.set(""),city.set(""),proxyTags.set(""),proxyStatus.set("Select From Status"),network_type.set("")))
+    btn5= tk.Button(query_frame, text=settings[locale]['proxyview']['reset'], padx = 0, pady = 0,command = lambda:(proxyStatus.set(""),country.set(""),state.set(""),city.set(""),proxyTags.set(""),proxyStatus.set("Select From Status"),network_type.set("")))
     btn5.grid(row=4,column=1, sticky=tk.W)    
 
 
@@ -6019,12 +5884,12 @@ def proxyView(frame,mode='query',linkProxy=None,platform=None):
 
     refreshProxycanvas(canvas=None,frame=result_frame,headers=tab_headers,datas=[])
 
-def metaView(left,right,lang):
+def metaView(left,right,isThumbView=True,isDesView=True,isTagsView=True,isScheduleView=True):
     global metaView_video_folder
     metaView_video_folder = tk.StringVar()
 
 
-    l_video_folder = tk.Label(left, text=settings[locale]['videoFolder'])
+    l_video_folder = tk.Label(left, text=settings[locale]['metaview']['videoFolder'])
     l_video_folder.grid(row = 0, column = 0, sticky='w', padx=14, pady=15)    
 
 
@@ -6037,16 +5902,16 @@ def metaView(left,right,lang):
             if tmp['metaView_video_folder'] is None:
                 metaView_video_folder.set(tmp['lastfolder'])        
             metaView_video_folder.set(tmp['metaView_video_folder'])   
-    b_video_folder=tk.Button(left,text="Select",command=lambda: threading.Thread(target=select_tabview_video_folder(metaView_video_folder,'metaView_video_folder')).start() )
+    b_video_folder=tk.Button(left,text=settings[locale]['metaview']['dropdown_hints'],command=lambda: threading.Thread(target=select_tabview_video_folder(metaView_video_folder,'metaView_video_folder')).start() )
     b_video_folder.grid(row = 0, column = 2, sticky='w', padx=14, pady=15)       
 
     if metaView_video_folder.get()!='':
 
         tmp['metaView_video_folder']=metaView_video_folder.get()
 
-    b_open_video_folder=tk.Button(left,text="open local",command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
+    b_open_video_folder=tk.Button(left,text=settings[locale]['metaview']['openlocalfolder'],command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
     b_open_video_folder.grid(row = 0, column = 3, sticky='w', padx=14, pady=15)    
-    l_meta_format = tk.Label(left, text=settings[locale]['l_metafileformat']
+    l_meta_format = tk.Label(left, text=settings[locale]['metaview']['l_metafileformat']
                              )
     # l_platform.place(x=10, y=90)
     l_meta_format.grid(row = 1, column = 0, sticky='w', padx=14, pady=15)    
@@ -6060,8 +5925,8 @@ def metaView(left,right,lang):
         print(metafileformat.get())
         print(metafileformatbox.current())
         # ultra[metaView_video_folder]['metafileformat']=metafileformat.get()
-        analyse_video_meta_pair(metaView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=True,isDesView=True,isTagsView=True,isScheduleView=True)        
-    metafileformat.set("Select From format")
+        analyse_video_meta_pair(metaView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=isThumbView,isDesView=isDesView,isTagsView=isTagsView,isScheduleView=isTagsView)        
+    metafileformat.set(settings[locale]['metaview']['dropdown_hints'])
     metafileformat.trace('w', metafileformatCallBack)
 
 
@@ -6072,11 +5937,11 @@ def metaView(left,right,lang):
 
 
 
-    b_download_meta_templates=tk.Button(left,text="check video meta files",command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
+    b_download_meta_templates=tk.Button(left,text=settings[locale]['metaview']['b_downvideometafile'],command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
     b_download_meta_templates.grid(row = 1, column = 3, sticky='w', padx=14, pady=15)  
-    Tooltip(b_download_meta_templates, text='run the check video assets will auto gen templates under folder if they dont' , wraplength=200)
+    Tooltip(b_download_meta_templates, text=settings[locale]['metaview']['b_downvideometafile_hints'] , wraplength=200)
 
-    b_video_folder_check=tk.Button(left,text="Step1:check video assets",command=lambda: threading.Thread(target=analyse_video_meta_pair(metaView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=True,isDesView=True,isTagsView=True,isScheduleView=True)).start() )
+    b_video_folder_check=tk.Button(left,text=settings[locale]['metaview']['b_checkvideoassets'],command=lambda: threading.Thread(target=analyse_video_meta_pair(metaView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=True,isDesView=True,isTagsView=True,isScheduleView=True)).start() )
     b_video_folder_check.grid(row = 2, column = 0,sticky='w', padx=14, pady=15)    
     
 
@@ -6552,10 +6417,7 @@ def render(root,window,lang):
     meta_frame.grid_rowconfigure(0, weight=1)
     meta_frame.grid_columnconfigure(0, weight=1, uniform="group1")
     meta_frame.grid_columnconfigure(1, weight=1, uniform="group1")
-    meta_frame.grid_columnconfigure(0, weight=1,
-                                      minsize=int(0.5*width)
-
-                                      )
+    meta_frame.grid_columnconfigure(0, weight=1)
     meta_frame.grid_columnconfigure(1, weight=2)
     meta_frame.grid(row=0, column=0, sticky="nsew")
     meta_frame_left = tk.Frame(meta_frame)
@@ -6632,7 +6494,8 @@ def render(root,window,lang):
 
     tab_control.add(meta_frame, 
                      text=settings[lang]['metaView'])
-    metaView(meta_frame_left,meta_frame_right,lang)
+    metaView(meta_frame_left,meta_frame_right,isThumbView=True,isDesView=True,isTagsView=True,isScheduleView=True)    
+    # metaView(meta_frame_left,meta_frame_right,lang)
     # metaView(meta_frame_right,meta_frame_left,lang)
 
 

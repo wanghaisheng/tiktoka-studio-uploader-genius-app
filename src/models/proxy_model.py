@@ -254,7 +254,7 @@ class ProxyModel(BaseModel):
             query = query.where(cls.status == status)
 
         if network_type is not None and network_type!='':
-            query = query.where(cls.proxy_validate_network_type == network_type)
+            query = query.where(cls.network_type == network_type)
         try:
             result = list(query)
             

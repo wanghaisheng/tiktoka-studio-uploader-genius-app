@@ -1,4 +1,146 @@
 {
+	"uploadview":{
+		"uploadView_q_status":"任务状态",
+		"uploadView_q_platform":"任务平台",
+		"uploadView_q_videoid":"视频id",
+		"uploadView_q_videotitle":"视频标题",
+		"uploadView_q_channelname":"账号名称",
+		"uploadView_q_scheduledate":"公开日期",
+		"uploadView_q_Sortby":"排序"
+	
+	},
+	"installview":{
+		"testinstall":"测试安装",
+		"newuserwizard":"导入测试数据",
+		"testdataRemove":"清除测试数据",
+		"cleardb":"清空数据",
+		"L_chooseLang":"语言:",
+		"chooseLanghint":"Select From Langs"
+
+	},
+
+	"accountview":{
+		"q_username":"账号名称",
+		"q_platform":"平台",
+		"q_platform_hints":"选择",
+		"reset":"重置",
+		"new":"新建账号",
+		"bulkimport":"批量导入",
+		"bulkimport_hints":"批量拉取cookie",
+		"querynow":"查询"
+
+	},
+	"newaccountview":{
+		"title":"新建账号",
+		"l_platform":"平台",
+		"l_platform_hints":"选择",
+		"username":"账号名称",
+		"password":"账号密码",
+		"linkAccounts":"关联账号",
+		"cookies":"cookies文件路径",
+		"proxy":"代理",
+		"proxylink":"关联",
+		"pullcookie":"拉取cookie",
+
+		"save":"保存"
+	},
+	"proxyview":{
+		"new":"新建代理",
+		"q_username":"账号名称",
+		"q_city":"市",
+		"q_country":"国家",
+		"q_state":"省/洲",
+		"q_tags":"标签",
+		"q_networktype":"网络类型",
+		"q_status":"状态",
+		"q_status_hints":"选择",
+		"reset":"重置",
+		"bulkimport":"批量导入",
+		"bulkcheck":"批量检查代理",
+		"querynow":"查询"
+	},	
+	"newproxyview":{
+		"title":"新建代理",
+		"l_provider":"代理厂家",
+		"dropdown_hints":"选择",
+		"L_proxy_host":"主机",
+		"L_proxy_port":"端口",
+		"L_proxy_ip":"ip",
+		"L_refresh_url":"refresh_url",
+		"L_proxy_tag":"标签",
+		"l_iptype":"ip 类型",
+		"l_ipsource":"ip 来源",
+		"l_proxycountry":"国家",
+		"l_proxystate":"省/洲",
+		"l_proxycity":"城市",
+		"L_proxyprotocol":"协议类型",
+		"username":"username",
+		"password":"password",
+		"save":"保存"
+	},	
+	"bulkimportproxyView":{
+		"title":"批量导入代理",
+		"copyhints":"复制内容到下面文本框中",
+		"placeholder":"proxy list should be one proxy oneline,and each proxy in such format:\nsocks5://127.0.0.1:1080;tiktok\nsocks5://127.0.0.1:1088;youtube",
+		"save":"保存",
+		"bulkimport":"批量导入",
+		"bulkcheck":"批量检查代理",
+		"clearall":"清空文本",
+		"loadfile":"导入文件"
+
+	},
+	"thumbview":{
+		"videoFolder":"视频文件夹",
+		"videoFolder_hints":"选择视频文件夹",
+		"openlocalfolder":"打开本地文件夹",
+		"openlocalfolder_hints":"打开视频所在文件夹，查看生成的文件",
+		"l_metafileformat":"文件格式",
+		"l_metafileformat_hints":"Choose the one you like to edit metadata",
+		"dropdown_hints":"选择",
+		"b_downvideometafile":"检查视频元数据",
+		"b_downvideometafile_hints":"run the download video assets will auto gen templates under folder if they dont",
+		"b_checkvideoassets":"分析视频",
+		"b_checkvideoassets_hints":"计算视频数量、缩略图数量等",
+		"b_regen":"重新生成"
+		
+	},	
+	"metaview":{
+		"videoFolder":"视频文件夹",
+		"videoFolder_hints":"选择视频文件夹",
+		"openlocalfolder":"打开本地文件夹",
+		"openlocalfolder_hints":"打开视频所在文件夹，查看生成的文件",
+		"l_metafileformat":"文件格式",
+		"l_metafileformat_hints":"Choose the one you like to edit metadata",
+		"dropdown_hints":"选择",
+		"b_downvideometafile":"检查视频元数据",
+		"b_downvideometafile_hints":"run the download video assets will auto gen templates under folder if they dont",
+		"b_checkvideoassets":"分析视频",
+		"b_checkvideoassets_hints":"计算视频数量、缩略图数量等",
+		"b_regen":"重新生成",
+		"videototalcounts":"video total counts",
+		"choosethumbpolicy":"请选择你的缩略图从何而来",
+		"choosethumbpolicy_manual":"手动准备",
+		"choosethumbpolicy_auto":"批量生成",
+		"choosethumbpolicy_manual_options":"两种选择",
+		"choosethumbpolicy_manual_options_1":"'1.手动准备缩略图文件，需放在视频所在文件夹下，且与视频文件同名,完成后再次检测即可'",
+		"choosethumbpolicy_manual_options_2":"'2.如果缩略图后文件与视频不在同一个文件夹或者缩略图文件为自定义命名，\r需手动编辑视频元数据中缩略图文件路径,编辑完成后可再次进行检测\r'",
+		"editwithlocaleditor":"本地编辑器编辑视频元数据",
+		"editwithonline":"在线编辑器编辑元数据",
+		"editwithlocaleditor_hints":"'fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field'",
+		"validateVideoMetas":"验证元数据",
+		"return":"回到上一页",
+		"choosethumbpolicy_auto_options":"Step1:请选择你的缩略图生成模式",
+		"choosethumbpolicy_auto_options_1":"选择视频第一帧作为缩略图背景图",
+		"choosethumbpolicy_auto_options_2":"视频任意关键帧作为背景图",
+		"choosethumbpolicy_auto_options_3":"文件夹中随机一张图片作为背景图",
+		"choosethumbpolicy_auto_options_template":"Step2:请选择你的缩略图模板",
+		"createtemplatewithlocaleditor":"使用缩略图编辑器创建缩略图模板",
+		"L_editvideometa":"Step3:请编辑视频元数据",
+		"L_genthumb":"Step4:生成缩略图",
+		"B_genthumb":"生成缩略图",
+		"b_checkvideometafile":"检查视频元数据"
+
+	},	
 	"title": "TiktokaStudio 视频批量上传助手测试版",
 	"select_musics_folder": "选择背景音樂文件夹",
 	"select_videos_folder": "选择视频文件夹",
@@ -58,16 +200,6 @@
 	"default_release_hour":"10:15",
 	"linkAccounts": "关联账号",
 	"newuserwizard": "导入测试数据",
-	"uploadview":{
-		"uploadView_q_status":"任务状态",
-		"uploadView_q_platform":"任务平台",
-		"uploadView_q_videoid":"视频id",
-		"uploadView_q_videotitle":"视频标题",
-		"uploadView_q_channelname":"账号名称",
-		"uploadView_q_scheduledate":"公开日期",
-		"uploadView_q_Sortby":"排序"
-	
-	},
 
 	"testdatainstall": "添加测试数据",
 	"testdataRemove": "清除测试数据",
