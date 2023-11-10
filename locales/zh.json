@@ -1,12 +1,16 @@
 {
 	"uploadview":{
-		"uploadView_q_status":"任务状态",
-		"uploadView_q_platform":"任务平台",
-		"uploadView_q_videoid":"视频id",
-		"uploadView_q_videotitle":"视频标题",
-		"uploadView_q_channelname":"账号名称",
-		"uploadView_q_scheduledate":"公开日期",
-		"uploadView_q_Sortby":"排序"
+		"q_status":"任务状态",
+		"q_platform":"任务平台",
+		"q_videoid":"视频id",
+		"q_videotitle":"视频标题",
+		"q_channelname":"账号名称",
+		"q_scheduledate":"公开日期",
+		"q_Sortby":"排序",
+		"reset":"重置",
+		"querynow":"查询",
+
+		"dropdown_hints":"选择"
 	
 	},
 	"installview":{
@@ -119,11 +123,28 @@
 		"b_regen":"重新生成",
 		"videototalcounts":"video total counts",
 		"choosethumbpolicy":"请选择你的缩略图从何而来",
+		"choosedespolicy":"请选择你的视频描述从何而来",
+		"choosetagspolicy":"请选择你的标签从何而来",
+		"chooseschedulepolicy":"请选择你的发布时间从何而来",
+
 		"choosethumbpolicy_manual":"手动准备",
 		"choosethumbpolicy_auto":"批量生成",
 		"choosethumbpolicy_manual_options":"两种选择",
 		"choosethumbpolicy_manual_options_1":"'1.手动准备缩略图文件，需放在视频所在文件夹下，且与视频文件同名,完成后再次检测即可'",
 		"choosethumbpolicy_manual_options_2":"'2.如果缩略图后文件与视频不在同一个文件夹或者缩略图文件为自定义命名，\r需手动编辑视频元数据中缩略图文件路径,编辑完成后可再次进行检测\r'",
+		
+		"choosetagpolicy_manual":"手动准备",
+		"choosetagpolicy_auto":"批量生成",
+		"choosetagpolicy_manual_options":"两种选择",
+		"choosetagpolicy_manual_options_1":"1.手动准备视频标签，填充到元数据对应字段即可，元数据格式支持xlsx json csv",
+		"choosetagpolicy_manual_options_2":"",
+
+		"chooseschedulepolicy_manual":"手动准备",
+		"chooseschedulepolicy_auto":"批量生成",
+		"chooseschedulepolicy_manual_options":"两种选择",
+		"chooseschedulepolicy_manual_options_1":"1.手动准备发布时间文件，需放在视频所在文件夹下，且与视频文件同名,完成后再次检测即可",
+		"chooseschedulepolicy_manual_options_2":"2.如果没有发布时间文件，需手动编辑视频元数据中发布时间字段,包括日期和时间段,编辑完成后可再次进行检测\r",
+		
 		"editwithlocaleditor":"本地编辑器编辑视频元数据",
 		"editwithonline":"在线编辑器编辑元数据",
 		"editwithlocaleditor_hints":"'fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field'",
@@ -138,7 +159,51 @@
 		"L_editvideometa":"Step3:请编辑视频元数据",
 		"L_genthumb":"Step4:生成缩略图",
 		"B_genthumb":"生成缩略图",
-		"b_checkvideometafile":"检查视频元数据"
+		"b_checkvideometafile":"检查视频元数据",
+
+		"choosetagpolicy_auto_options":"Step1:请选择视频标签从何而来",
+		"choosetagpolicy_auto_options_1":"视频文件名称中#",
+		"choosetagpolicy_auto_options_1_hints":"视频标签使用视频文件名称带#的部分,比如文件名为xxxxxxxxxx#t1#t2#t3.mp4",
+		"choosetagpolicy_auto_options_2":"rapidtags",
+		"choosetagpolicy_auto_options_2_hints":"利用rapidtags api获取",
+
+		"choosetagpolicy_auto_options_3":"视频内容自动提取",
+		"choosetagpolicy_auto_options_3_hints":"gpt利用视频分类和视频内容总结,推荐最佳的视频标签",
+		"choosetagpolicy_auto_options_4":"从视频标签文件中来",
+		"choosetagpolicy_auto_options_4_hints":"视频描述文件须与视频文件同名，后缀必须是.tag,新建txt文件填写内容，修改后缀为tag",	
+		"choosetagpolicy_auto_options_prefertag":"Step2:是否使用优先标签",
+		"choosetagpolicy_auto_options_prefertag_hints":"可以通过设置优先标签批量标准化频道的视频标签",
+		"choosetagpolicy_auto_options_prefertag_label":"首选标签",
+		"choosetagpolicy_auto_options_prefertag_label_hints":"add \r if you want line breaks",
+		"L_gentags":"Step4:生成视频标签",
+		"B_gentags":"生成视频标签",
+		"dailyVideoLimit":"每日公开视频数量",
+		"dailyVideoLimit_hints":"you want to release how many video in one day",
+		"releasehour":"发布时间",
+		"releasehour_hints":"you can input like '10:15,' more available can choose from {settings[locale]['availableScheduleTimes']}",
+		"default_release_hour":"10:15",
+		"default_release_hour_hints":"you can input more than one with comma separator,such as 10:15,12:00,if you want publish 10 video in serial you should put 10 time here,more available can choose from {settings[locale]['availableScheduleTimes']}",
+		"offsetDays":"起始发布日期-当日(天数)",
+		"offsetDays_hints":"we calculate publish date from today,  default +1 is tomorrow",
+
+		"chooseschedulepolicy_auto_options":"Step1:请选择你的发布时间生成策略",
+		"chooseschedulepolicy_auto_options_1":"私有",
+		"chooseschedulepolicy_auto_options_1_hints":"",
+
+		"chooseschedulepolicy_auto_options_2":"公开",
+		"chooseschedulepolicy_auto_options_2_hints":"",
+
+		"chooseschedulepolicy_auto_options_3":"定时",
+		"chooseschedulepolicy_auto_options_3_hints":"",
+		"chooseschedulepolicy_auto_options_4":"unlisted",
+		"chooseschedulepolicy_auto_options_4_hints":"",
+
+		"chooseschedulepolicy_auto_options_5":"public&premiere",
+		"chooseschedulepolicy_auto_options_5_hints":"",
+
+		"chooseschedulepolicy_auto_options_template":"Step2:请选择你的缩略图模板",
+		"L_genschedule":"Step4:自动规划发布时间",
+		"B_genschedule":"生成发布时间"
 
 	},	
 	"title": "TiktokaStudio 视频批量上传助手测试版",

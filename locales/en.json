@@ -24,13 +24,17 @@
 	"L_refresh_url": "refresh_url",		
 	"L_proxy_tag": "tags",		
 	"uploadview":{
-		"uploadView_q_status":"任务状态",
-		"uploadView_q_platform":"任务平台",
-		"uploadView_q_videoid":"视频id",
-		"uploadView_q_videotitle":"视频标题",
-		"uploadView_q_channelname":"账号名称",
-		"uploadView_q_scheduledate":"公开日期",
-		"uploadView_q_Sortby":"排序"
+		"q_status":"By status.",
+		"q_platform":"By platform",
+		"q_videoid":"by videoid",
+		"q_videotitle":"by video title",
+		"q_channelname":"By username",
+		"q_scheduledate":"By publish date",
+		"q_Sortby":"sort by",
+		"reset":"Reset",
+		"querynow":"Query",
+
+		"dropdown_hints":"Select"
 	
 	},	
 	"installview":{
@@ -144,13 +148,32 @@
 		"b_regen":"remove cache data to re-gen",
 		"videototalcounts":"video total counts",
 		"choosethumbpolicy":"how to get thumbnails",
+		"choosedespolicy":"how to get des",
+		"choosetagspolicy":"how to get Tags",
+		"chooseschedulepolicy":"how to get schedule datetime",
+
 		"choosethumbpolicy_manual":"manually prepared",
 		"choosethumbpolicy_auto":"auto gen",
 		"choosethumbpolicy_manual_options":"options",
 		"choosethumbpolicy_manual_options_1":"'1.prepare the same thumbnail file with video filename,run the check again",
 		"choosethumbpolicy_manual_options_2":"'2.if thumbnail file path is not in the same folder where video lives or thumbnail file name is diff with video filename,\redit in the video meta file manually and run the check agai\r'",
+		
+		"choosetagpolicy_manual":"manually prepared",
+		"choosetagpolicy_auto":"auto gen",
+		"choosetagpolicy_manual_options":"options",
+		"choosetagpolicy_manual_options_1":"'1.prepare the same tagnail file with video filename,run the check again",
+		"choosetagpolicy_manual_options_2":"'2.if tagnail file path is not in the same folder where video lives or tagnail file name is diff with video filename,\redit in the video meta file manually and run the check agai\r'",
+		
+		"chooseschedulepolicy_manual":"manually prepared",
+		"chooseschedulepolicy_auto":"auto gen",
+		"chooseschedulepolicy_manual_options":"options",
+		"chooseschedulepolicy_manual_options_1":"'1.prepare the same schedulenail file with video filename,run the check again",
+		"chooseschedulepolicy_manual_options_2":"'2.if schedulenail file path is not in the same folder where video lives or schedulenail file name is diff with video filename,\redit in the video meta file manually and run the check agai\r'",
+				
 		"editwithlocaleditor":"edit videometa with local editor",
 		"editwithonline":"edit json with online editor",
+		"editwithonline_hints":"For those who dont have json editor or have install issues",
+
 		"editwithlocaleditor_hints":"'fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field'",
 		"validateVideoMetas":"validate meta",
 		"return":"Back to previous page",
@@ -163,8 +186,51 @@
 		"L_editvideometa":"Step3:edit video meta file before gen",
 		"L_genthumb":"Step4:gen",
 		"B_genthumb":"gen thumb",
-		"b_checkvideometafile":"check video meta files"
+		"b_checkvideometafile":"check video meta files",
 
+		"choosetagpolicy_auto_options":"Step1:choose one you preferred",
+		"choosetagpolicy_auto_options_1":"# in video filename",
+		"choosetagpolicy_auto_options_1_hints":"such as  video filename is xxxxxxxxxx#t1#t2#t3.mp4,we take t1,t2,t3",
+		"choosetagpolicy_auto_options_2":"rapidtags",
+		"choosetagpolicy_auto_options_2_hints":"from rapidtags api",
+
+		"choosetagpolicy_auto_options_3":"gpt aid extract",
+		"choosetagpolicy_auto_options_3_hints":"gpt aid video content extract and recommend use hot video`s tags",
+		"choosetagpolicy_auto_options_4":"video tag file",
+		"choosetagpolicy_auto_options_4_hints":"tag file with the same video name .tag,新建txt文件填写内容，修改后缀为tag",	
+		"choosetagpolicy_auto_options_prefertag":"Step2:choose preferred tags",
+		"choosetagpolicy_auto_options_prefertag_hints":"a group of tags your channel or videos share",
+		"choosetagpolicy_auto_options_prefertag_label":"preferTags",
+		"choosetagpolicy_auto_options_prefertag_label_hints":"add \r if you want line breaks",
+		"L_gentags":"Step4:gen tags",
+		"B_gentags":"gen tags",
+		"dailyVideoLimit":"每日公开视频数量",
+		"dailyVideoLimit_hints":"you want to release how many video in one day",
+		"releasehour":"发布时间",
+		"releasehour_hints":"you can input like '10:15,' more available can choose from {settings[locale]['availableScheduleTimes']}",
+		"default_release_hour":"10:15",
+		"default_release_hour_hints":"you can input more than one with comma separator,such as 10:15,12:00,if you want publish 10 video in serial you should put 10 time here,more available can choose from {settings[locale]['availableScheduleTimes']}",
+		"offsetDays":"起始发布日期-当日(天数)",
+		"offsetDays_hints":"we calculate publish date from today,  default +1 is tomorrow",
+
+		"chooseschedulepolicy_auto_options":"Step1:请选择你的发布时间生成策略",
+		"chooseschedulepolicy_auto_options_1":"私有",
+		"chooseschedulepolicy_auto_options_1_hints":"",
+
+		"chooseschedulepolicy_auto_options_2":"公开",
+		"chooseschedulepolicy_auto_options_2_hints":"",
+
+		"chooseschedulepolicy_auto_options_3":"定时",
+		"chooseschedulepolicy_auto_options_3_hints":"",
+		"chooseschedulepolicy_auto_options_4":"unlisted",
+		"chooseschedulepolicy_auto_options_4_hints":"",
+
+		"chooseschedulepolicy_auto_options_5":"public&premiere",
+		"chooseschedulepolicy_auto_options_5_hints":"",
+
+		"chooseschedulepolicy_auto_options_template":"Step2:请选择你的缩略图模板",
+		"L_genschedule":"Step4:自动规划发布时间",
+		"B_genschedule":"生成发布时间"
 	},	
 	"l_proxycity": "city",		
 	"L_proxyprotocol": "protocol",		

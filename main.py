@@ -447,7 +447,7 @@ def select_tabview_video_folder(folder_variable,cache_var):
             for i in otherfolders.remove(folder_variable):
                 if i =='' or i is None:
                     tmp[i]=folder_variable.get()
-            tmp['lastfodler']=folder_variable.get()
+            tmp['lastfolder']=folder_variable.get()
             print('==',tmp)
         else:
             print('please choose a valid video folder')
@@ -1518,6 +1518,8 @@ def installView(frame,ttkframe,lang):
         settings['locale']=locale_tkstudio.get()
         print(f"save locale to cache { settings['locale']}")        
         changeDisplayLang(locale_tkstudio.get())
+        settings['locale']=locale_tkstudio.get()
+
         locale=locale_tkstudio.get()
 
 
@@ -1533,36 +1535,86 @@ def installView(frame,ttkframe,lang):
 
 
       
-def videosView(frame,ttkframe,lang):
-    global videosView_video_folder
-    videosView_video_folder = tk.StringVar()
+def videosView(left,right,lang):
+    # global metaView_video_folder
+    metaView_video_folder = tk.StringVar()
 
-    # videosView_video_folder.set(setting['video_folder'])
 
-    l_video_folder = tk.Label(frame, text=settings[locale]['videoFolder']
-                              )
-    l_video_folder.place(x=10, y=20)
-    e_video_folder = tk.Entry(frame, width=45, textvariable=videosView_video_folder)
-    e_video_folder.place(x=150, y=20)
-    b_video_folder=tk.Button(frame,text="Select",command=lambda: threading.Thread(target=select_videosView_video_folder).start() )
-    b_video_folder.place(x=580, y=20)    
+    l_video_folder = tk.Label(left, text=settings[locale]['metaview']['videoFolder'])
+    l_video_folder.grid(row = 0, column = 0, sticky='w', padx=14, pady=15)    
 
-    l_mode_1 = tk.Label(frame, text=settings[locale]['toolkits']
+
+    e_video_folder = tk.Entry(left,textvariable=metaView_video_folder)
+    e_video_folder.grid(row = 0, column = 1, sticky='w', padx=14, pady=15)     
+    if metaView_video_folder.get()!='':
+        if tmp['lastfolder'] is None or tmp['lastfolder']=='':
+            pass
+        else:            
+            if tmp['metaView_video_folder'] is None:
+                metaView_video_folder.set(tmp['lastfolder'])        
+            metaView_video_folder.set(tmp['metaView_video_folder'])   
+    b_video_folder=tk.Button(left,text=settings[locale]['metaview']['dropdown_hints'],command=lambda: threading.Thread(target=select_tabview_video_folder(metaView_video_folder,'metaView_video_folder')).start() )
+    b_video_folder.grid(row = 0, column = 2, sticky='w', padx=14, pady=15)       
+
+    if metaView_video_folder.get()!='':
+
+        tmp['metaView_video_folder']=metaView_video_folder.get()
+
+    b_open_video_folder=tk.Button(left,text=settings[locale]['metaview']['openlocalfolder'],command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
+    b_open_video_folder.grid(row = 0, column = 3, sticky='w', padx=14, pady=15)    
+    l_meta_format = tk.Label(left, text=settings[locale]['metaview']['l_metafileformat']
+                             )
+    # l_platform.place(x=10, y=90)
+    l_meta_format.grid(row = 1, column = 0, sticky='w', padx=14, pady=15)    
+    global metafileformat
+    
+
+    metafileformat = tk.StringVar()
+
+
+    def metafileformatCallBack(*args):
+        print(metafileformat.get())
+        print(metafileformatbox.current())
+        # ultra[metaView_video_folder]['metafileformat']=metafileformat.get()
+        # analyse_video_meta_pair(metaView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=isThumbView,isDesView=isDesView,isTagsView=isTagsView,isScheduleView=isTagsView)        
+    metafileformat.set(settings[locale]['metaview']['dropdown_hints'])
+    metafileformat.trace('w', metafileformatCallBack)
+
+
+    metafileformatbox = ttk.Combobox(left, textvariable=metafileformat)
+    metafileformatbox.config(values = ( 'json','xlsx', 'csv'))
+    metafileformatbox.grid(row = 1, column = 1, sticky='w', padx=14, pady=15)      
+    metafileformatbox.bind("<<ComboboxSelected>>", metafileformatCallBack)  
+
+
+
+    b_download_meta_templates=tk.Button(left,text=settings[locale]['metaview']['b_downvideometafile'],command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
+    b_download_meta_templates.grid(row = 1, column = 3, sticky='w', padx=14, pady=15)  
+    Tooltip(b_download_meta_templates, text=settings[locale]['metaview']['b_downvideometafile_hints'] , wraplength=200)
+
+    b_video_folder_check=tk.Button(left,text=settings[locale]['metaview']['b_checkvideoassets'],command=''
+                                #    lambda: threading.Thread(target=analyse_video_meta_pair(metaView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=isThumbView,isDesView=isDesView,isTagsView=isTagsView,isScheduleView=isScheduleView)).start() 
+                                   )
+    b_video_folder_check.grid(row = 2, column = 0,sticky='w', padx=14, pady=15)    
+    
+
+
+    l_mode_1 = tk.Label(right, text=settings[locale]['toolkits']
                         )
-    l_mode_1.place(x=10, y=int(height-250))
+    l_mode_1.grid(row = 0, column = 0,sticky='w', padx=14, pady=15)    
     
     
-    b_autothumb = tk.Button(frame, text=settings[locale]['autothumb']
+    b_autothumb = tk.Button(right, text=settings[locale]['autothumb']
                             , command=lambda: threading.Thread(target=autothumb).start())
-    b_autothumb.place(x=150, y=int(height-250))
-    b_batchchangebgmusic = tk.Button(frame, text=settings[locale]['batchchangebgmusic']
+    b_autothumb.grid(row = 1, column = 0,sticky='w', padx=14, pady=15)    
+    b_batchchangebgmusic = tk.Button(right, text=settings[locale]['batchchangebgmusic']
                                      , command=lambda: threading.Thread(target=batchchangebgmusic).start())
-    b_batchchangebgmusic.place(x=350,y=int(height-250))
+    b_batchchangebgmusic.grid(row = 2, column = 0,sticky='w', padx=14, pady=15)    
+
     
-    
-    b_hiddenwatermark = tk.Button(frame, text=settings[locale]['hiddenwatermark']
+    b_hiddenwatermark = tk.Button(right, text=settings[locale]['hiddenwatermark']
                                   , command=lambda: threading.Thread(target=hiddenwatermark))
-    b_hiddenwatermark.place(x=500,y=int(height-250))
+    b_hiddenwatermark.grid(row = 3, column = 0,sticky='w', padx=14, pady=15)    
 
 def thumbView(left,right,lang):
     global thumbView_video_folder
@@ -1703,7 +1755,6 @@ def render_video_folder_check_results(frame,right_frame,folder,isThumbView=True,
     if isThumbView==True:
         rendersubmeta(frame,right_frame,folder,'thumb','thumbFileCounts','thumbMetaCounts',render_thumb_gen,4,selectedMetafileformat)
 
-
     if isDesView==True:
         rendersubmeta(frame,right_frame,folder,'des','desFileCounts','desMetaCounts',render_des_gen,5,selectedMetafileformat)
 
@@ -1712,6 +1763,7 @@ def render_video_folder_check_results(frame,right_frame,folder,isThumbView=True,
     if isScheduleView==True:
         rendersubmeta(frame,right_frame,folder,'schedule','scheduleFileCounts','scheduleMetaCounts',
                       render_schedule_gen,6,selectedMetafileformat)
+        tmp['schview_selectedMetafileformat']=selectedMetafileformat
 
 
 
@@ -1965,41 +2017,34 @@ def render_des_gen(frame,isneed,folder,selectedMetafileformat='json'):
         if len(frame.winfo_children())>0:
             for widget in frame.winfo_children():
                 widget.destroy()        
-        global thumbnail_metas_file,thummbnail_bg_folder,thummbnail_bg_file,thumbnail_template_file
-        thumbnail_metas_file = tk.StringVar()        
-        thummbnail_bg_folder = tk.StringVar()        
-        thummbnail_bg_file = tk.StringVar()      
+      
 
         new_canvas = tk.Frame(frame)
         new_canvas.grid(row=2, column=0, pady=(5, 0), sticky='nw')     
 
+        thumbmode = tk.IntVar()
 
-        desmode = tk.IntVar()
-        # thumbmode.set(1)
-        # desmode.trace('w',render_des_update_view(new_canvas,folder,desmode,frame))
-        lab = tk.Label(new_canvas,text="请选择你的视频描述从何而来",bg="lightyellow",width=30)
+        lab = tk.Label(new_canvas,text=settings[locale]['metaview']['choosedespolicy']
+                      ,bg="lightyellow",width=30)
         lab.grid(row = 1, column = 0,  padx=14, pady=15,sticky='nw') 
    
-        desmode1=tk.Radiobutton(new_canvas,text="手动准备",variable=desmode,value=1,command=lambda:render_des_update_view(new_canvas,folder,desmode,frame))
-        desmode1.grid(row = 1, column = 1,  padx=14, pady=15,sticky='nw') 
-        desmode2=tk.Radiobutton(new_canvas,text=" 批量生成",variable=desmode,value=2,command=lambda:render_des_update_view(new_canvas,folder,desmode,frame))
-        desmode2.grid(row = 1, column = 2,  padx=14, pady=15,sticky='nw') 
-
-        # thumbmode.trace_add('write', render_thumb_update_view(new_canvas,folder,thumbmode))
+        thumbmode1=tk.Radiobutton(new_canvas,text=settings[locale]['metaview']['choosethumbpolicy_manual'],variable=thumbmode,value=1,command=lambda:render_des_update_view(new_canvas,folder,thumbmode,frame))
+        thumbmode1.grid(row = 1, column = 1,  padx=14, pady=15,sticky='nw') 
+        thumbmode2=tk.Radiobutton(new_canvas,text=settings[locale]['metaview']['choosethumbpolicy_auto'],variable=thumbmode,value=2,command=lambda:render_des_update_view(new_canvas,folder,thumbmode,frame))
+        thumbmode2.grid(row = 2, column = 1,  padx=14, pady=15,sticky='nw') 
 
 
 
 
 def render_des_update_view(frame,folder,desmode,previous_frame=None):
     print('desmode',type(desmode.get()),desmode.get())    
-    lang='en'
 
     if len(frame.winfo_children())>0:
         for widget in frame.winfo_children():
             widget.destroy()      
    
     if desmode.get() ==1:
-        lbl15 = tk.Label(frame, text='两种选择')
+        lbl15 = tk.Label(frame, text=settings[locale]['metaview']['choosetagpolicy_manual'])
         lbl15.grid(row=0,column=0,padx=14, pady=15,sticky='w') 
        
         lbl15 = tk.Label(frame, text='1.手动准备视频描述，填充到元数据对应字段即可，元数据格式支持xlsx json csv',wraplength=600)
@@ -2010,16 +2055,16 @@ def render_des_update_view(frame,folder,desmode,previous_frame=None):
 
 
 
-        b_check_metas_=tk.Button(frame,text="edit videometa with local editor",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
+        b_check_metas_=tk.Button(frame,text=settings[locale]['metaview']['editwithlocaleditor'],command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
         b_check_metas_.grid(row = 5, column = 0, padx=14, pady=15,sticky='nswe') 
-        Tooltip(b_check_metas_, text='fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field' , wraplength=200)
+        Tooltip(b_check_metas_, text=settings[locale]['metaview']['editwithlocaleditor_hints'] , wraplength=200)
         
         if ultra[folder]['metafileformat']=='json':
 
-            b_edit_thumb_metas=tk.Button(frame,text="edit json with online editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
+            b_edit_thumb_metas=tk.Button(frame,text=settings[locale]['metaview']['editwithonline'],command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
             b_edit_thumb_metas.grid(row = 6, column = 0, padx=14, pady=15,sticky='nswe') 
-            Tooltip(b_check_metas_, text='For those who dont have json editor or have install issues' , wraplength=200)
-        b_open_video_folder=tk.Button(frame,text="open local",command=lambda: threading.Thread(target=openLocal(folder)).start() )
+            Tooltip(b_check_metas_, text=settings[locale]['metaview']['editwithonline_hints'], wraplength=200)
+        b_open_video_folder=tk.Button(frame,text=settings[locale]['metaview']['openlocalfolder'],command=lambda: threading.Thread(target=openLocal(folder)).start() )
         b_open_video_folder.grid(row = 4, column = 0, padx=14, pady=15,sticky='nswe')      
 
 
@@ -2094,10 +2139,10 @@ def render_des_update_view(frame,folder,desmode,previous_frame=None):
         b_check_metas_.grid(row = 8, column = 0, padx=14, pady=15,sticky='nswe') 
         if ultra[folder]['metafileformat']=='json':
 
-            b_edit_thumb_metas=tk.Button(frame,text="edit json with online editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
+            b_edit_thumb_metas=tk.Button(frame,text=settings[locale]['metaview']['editwithonline'],command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
             b_edit_thumb_metas.grid(row = 8, column = 1, padx=14, pady=15,sticky='nswe') 
-        Tooltip(b_edit_thumb_metas, text='fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field' , wraplength=200)
-        b_open_video_folder=tk.Button(frame,text="open local",command=lambda: threading.Thread(target=openLocal(folder)).start() )
+        Tooltip(b_edit_thumb_metas, text=settings[locale]['metaview']['editwithlocaleditor_hints'] , wraplength=200)
+        b_open_video_folder=tk.Button(frame,text=settings[locale]['metaview']['openlocalfolder'],command=lambda: threading.Thread(target=openLocal(folder)).start() )
         b_open_video_folder.grid(row = 8, column = 2, padx=14, pady=15,sticky='nswe')    
         lab = tk.Label(frame,text="Step4:生成视频描述",bg="lightyellow",width=30)
         lab.grid(row = 9, column = 0,  padx=14, pady=15,sticky='nw')         
@@ -2121,27 +2166,22 @@ def render_tag_gen(frame,isneed,folder,selectedMetafileformat='json'):
         if len(frame.winfo_children())>0:
             for widget in frame.winfo_children():
                 widget.destroy()        
-        global thumbnail_metas_file,thummbnail_bg_folder,thummbnail_bg_file,thumbnail_template_file
-        thumbnail_metas_file = tk.StringVar()        
-        thummbnail_bg_folder = tk.StringVar()        
-        thummbnail_bg_file = tk.StringVar()      
+      
 
         new_canvas = tk.Frame(frame)
         new_canvas.grid(row=2, column=0, pady=(5, 0), sticky='nw')     
 
+        thumbmode = tk.IntVar()
 
-        desmode = tk.IntVar()
-        # thumbmode.set(1)
-        # desmode.trace('w',render_des_update_view(new_canvas,folder,desmode,frame))
-        lab = tk.Label(new_canvas,text="请选择你的视频标签从何而来",bg="lightyellow",width=30)
+        lab = tk.Label(new_canvas,text=settings[locale]['metaview']['choosetagspolicy']
+                      ,bg="lightyellow",width=30)
         lab.grid(row = 1, column = 0,  padx=14, pady=15,sticky='nw') 
    
-        desmode1=tk.Radiobutton(new_canvas,text="手动准备",variable=desmode,value=1,command=lambda:render_tag_update_view(new_canvas,folder,desmode,frame))
-        desmode1.grid(row = 1, column = 1,  padx=14, pady=15,sticky='nw') 
-        desmode2=tk.Radiobutton(new_canvas,text=" 批量生成",variable=desmode,value=2,command=lambda:render_tag_update_view(new_canvas,folder,desmode,frame))
-        desmode2.grid(row = 1, column = 2,  padx=14, pady=15,sticky='nw') 
+        thumbmode1=tk.Radiobutton(new_canvas,text=settings[locale]['metaview']['choosethumbpolicy_manual'],variable=thumbmode,value=1,command=lambda:render_tag_update_view(new_canvas,folder,thumbmode,frame))
+        thumbmode1.grid(row = 1, column = 1,  padx=14, pady=15,sticky='nw') 
+        thumbmode2=tk.Radiobutton(new_canvas,text=settings[locale]['metaview']['choosethumbpolicy_auto'],variable=thumbmode,value=2,command=lambda:render_tag_update_view(new_canvas,folder,thumbmode,frame))
+        thumbmode2.grid(row = 2, column = 1,  padx=14, pady=15,sticky='nw') 
 
-        # thumbmode.trace_add('write', render_thumb_update_view(new_canvas,folder,thumbmode))
 
 
 
@@ -2154,32 +2194,32 @@ def render_tag_update_view(frame,folder,desmode,previous_frame=None):
             widget.destroy()      
    
     if desmode.get() ==1:
-        lbl15 = tk.Label(frame, text='两种选择')
+        lbl15 = tk.Label(frame, text=settings[locale]['metaview']['choosetagpolicy_manual'])
         lbl15.grid(row=0,column=0,padx=14, pady=15,sticky='w') 
        
-        lbl15 = tk.Label(frame, text='1.手动准备视频标签，填充到元数据对应字段即可，元数据格式支持xlsx json csv',wraplength=600)
+        lbl15 = tk.Label(frame, text=settings[locale]['metaview']['choosetagpolicy_manual_options_1'],wraplength=600)
         lbl15.grid(row=1,column=0, sticky='w')
 
-        lbl15 = tk.Label(frame, text='2.\r',wraplength=600)
+        lbl15 = tk.Label(frame, text=settings[locale]['metaview']['choosetagpolicy_manual_options_2'],wraplength=600)
         lbl15.grid(row=2,column=0, sticky='w')
 
 
 
-        b_check_metas_=tk.Button(frame,text="edit videometa with local editor",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
+        b_check_metas_=tk.Button(frame,text=settings[locale]['metaview']['editwithlocaleditor'],command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
         b_check_metas_.grid(row = 5, column = 0, padx=14, pady=15,sticky='nswe') 
-        Tooltip(b_check_metas_, text='fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field' , wraplength=200)
+        Tooltip(b_check_metas_, text=settings[locale]['metaview']['editwithlocaleditor_hints'] , wraplength=200)
         
         if ultra[folder]['metafileformat']=='json':
 
-            b_edit_thumb_metas=tk.Button(frame,text="edit json with online editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
+            b_edit_thumb_metas=tk.Button(frame,text=settings[locale]['metaview']['editwithonline'],command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
             b_edit_thumb_metas.grid(row = 6, column = 0, padx=14, pady=15,sticky='nswe') 
-            Tooltip(b_check_metas_, text='For those who dont have json editor or have install issues' , wraplength=200)
-        b_open_video_folder=tk.Button(frame,text="open local",command=lambda: threading.Thread(target=openLocal(folder)).start() )
+            Tooltip(b_check_metas_, text=settings[locale]['metaview']['editwithonline_hints'], wraplength=200)
+        b_open_video_folder=tk.Button(frame,text=settings[locale]['metaview']['openlocalfolder'],command=lambda: threading.Thread(target=openLocal(folder)).start() )
         b_open_video_folder.grid(row = 4, column = 0, padx=14, pady=15,sticky='nswe')      
 
 
-        b_check_metas_=tk.Button(frame,text="edit videometa",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
-        b_check_metas_.grid(row = 7, column = 0, padx=14, pady=15,sticky='nswe') 
+        # b_check_metas_=tk.Button(frame,text="edit videometa",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
+        # b_check_metas_.grid(row = 7, column = 0, padx=14, pady=15,sticky='nswe') 
 
         b_return=tk.Button(frame,text=settings[locale]['metaview']['return'],command=lambda: render_tag_gen(previous_frame,True,folder))
         b_return.grid(row = 8, column =0)   
@@ -2193,74 +2233,72 @@ def render_tag_update_view(frame,folder,desmode,previous_frame=None):
         mode = tk.IntVar()
         mode.set(1)
 
-        lab = tk.Label(frame,text="Step1:请选择视频标签从何而来",bg="lightyellow",width=30)
+        lab = tk.Label(frame,text=settings[locale]['metaview']['choosetagpolicy_auto_options'],bg="lightyellow",width=30)
         lab.grid(row = 0, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
-        mode1=tk.Radiobutton(frame,text="视频文件名称中#",variable=mode,value=1,command='')
-        Tooltip(mode1, text='视频标签使用视频文件名称带#的部分,比如文件名为xxxxxxxxxx#t1#t2#t3.mp4' , wraplength=200)
+        mode1=tk.Radiobutton(frame,text=settings[locale]['metaview']['choosetagpolicy_auto_options_1'],variable=mode,value=1,command='')
+        Tooltip(mode1, text=settings[locale]['metaview']['choosetagpolicy_auto_options_1_hints'] , wraplength=200)
 
         mode1.grid(row = 1, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
-        mode2=tk.Radiobutton(frame,text="rapidtags",variable=mode,value=2,command='')
-        Tooltip(mode2, text='利用rapidtags获取' , wraplength=200)
+        mode2=tk.Radiobutton(frame,text=settings[locale]['metaview']['choosetagpolicy_auto_options_2'],variable=mode,value=2,command='')
+        Tooltip(mode2, text=settings[locale]['metaview']['choosetagpolicy_auto_options_2_hints'] , wraplength=200)
 
         mode2.grid(row = 1, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
-        mode3=tk.Radiobutton(frame,text="自动",variable=mode,value=3,command='')
-        Tooltip(mode2, text='利用视频分类和视频内容总结,推荐最佳的视频标签' , wraplength=200)
+        mode3=tk.Radiobutton(frame,text=settings[locale]['metaview']['choosetagpolicy_auto_options_3'],variable=mode,value=3,command='')
+        Tooltip(mode3, text=settings[locale]['metaview']['choosetagpolicy_auto_options_3_hints'] , wraplength=200)
 
         mode3.grid(row = 2, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
-        mode4=tk.Radiobutton(frame,text="从视频标签文件中来",variable=mode,value=4,command='')
-        Tooltip(mode4, text='视频描述文件须与视频文件同名，后缀必须是.tag,新建txt文件填写内容，修改后缀为tag' , wraplength=200)
+        mode4=tk.Radiobutton(frame,text=settings[locale]['metaview']['choosetagpolicy_auto_options_4'],variable=mode,value=4,command='')
+        Tooltip(mode4, text=settings[locale]['metaview']['choosetagpolicy_auto_options_4_hints'] , wraplength=200)
 
         mode4.grid(row = 2, column = 1, columnspan = 3, padx=14, pady=15,sticky='nw') 
-        mode5=tk.Radiobutton(frame,text="从元数据中来",variable=mode,value=5,command='')
-        mode5.grid(row = 3, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
-        Tooltip(mode5, text='视频标签可后续在元数据文件中手动编辑' , wraplength=200)
 
 
 
-        lab_step2 = tk.Label(frame,text="Step2:是否使用优先标签",bg="lightyellow")
+
+        lab_step2 = tk.Label(frame,text=settings[locale]['metaview']['choosetagpolicy_auto_options_prefertag'] ,bg="lightyellow")
         lab_step2.grid(row = 4, column = 0,  padx=14, pady=15,sticky='nw')         
-        Tooltip(lab_step2, text='可以通过设置优先标签批量标准化频道的视频标签' , wraplength=200)
+        Tooltip(lab_step2, text=settings[locale]['metaview']['choosetagpolicy_auto_options_prefertag_hints'] , wraplength=200)
 
         preferTags=tk.StringVar()
 
-        l_preferredTags = tk.Label(frame, text=settings[locale]['preferTags'])
+        l_preferredTags = tk.Label(frame, text=settings[locale]['metaview']['choosetagpolicy_auto_options_prefertag_label'])
         l_preferredTags.grid(row = 5, column = 0,  padx=14, pady=15,sticky='nw') 
         e_preferredTags = tk.Entry(frame, width=55, textvariable=preferTags)
         e_preferredTags.grid(row = 5, column = 1,  padx=14, pady=15,sticky='nw') 
-        Tooltip(l_preferredTags, text='add \r if you want line breaks' , wraplength=200)
+        Tooltip(l_preferredTags, text=settings[locale]['metaview']['choosetagpolicy_auto_options_prefertag_label_hints'] , wraplength=200)
 
 
         
-        lab = tk.Label(frame,text="Step3:请编辑视频元数据",bg="lightyellow",width=30)
+        lab = tk.Label(frame,text=settings[locale]['metaview']['L_editvideometa'],bg="lightyellow",width=30)
         lab.grid(row = 7, column = 0,  padx=14, pady=15,sticky='nw')         
 
 
 
 
-        b_check_metas_=tk.Button(frame,text="edit videometa",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
+        b_check_metas_=tk.Button(frame,text=settings[locale]['metaview']['editwithlocaleditor'],command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
         b_check_metas_.grid(row = 8, column = 0, padx=14, pady=15,sticky='nswe') 
         if ultra[folder]['metafileformat']=='json':
 
-            b_edit_thumb_metas=tk.Button(frame,text="edit json with online editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
+            b_edit_thumb_metas=tk.Button(frame,text=settings[locale]['metaview']['editwithonline'],command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
             b_edit_thumb_metas.grid(row = 8, column = 1, padx=14, pady=15,sticky='nswe') 
-        Tooltip(b_edit_thumb_metas, text='fill heading,subheading,etra you want to render in clickbait thubmnail.you can overwrite the template  default bg image with a special one for this video.if you dont have a prepared one,you can use the following options to auto set this bg field' , wraplength=200)
-        b_open_video_folder=tk.Button(frame,text="open local",command=lambda: threading.Thread(target=openLocal(folder)).start() )
+        Tooltip(b_edit_thumb_metas, text=settings[locale]['metaview']['editwithlocaleditor_hints'] , wraplength=200)
+        b_open_video_folder=tk.Button(frame,text=settings[locale]['metaview']['openlocalfolder'],command=lambda: threading.Thread(target=openLocal(folder)).start() )
         b_open_video_folder.grid(row = 8, column = 2, padx=14, pady=15,sticky='nswe')    
-        lab = tk.Label(frame,text="Step4:生成视频标签",bg="lightyellow",width=30)
+        lab = tk.Label(frame,text=settings[locale]['metaview']['L_gentags'],bg="lightyellow",width=30)
         lab.grid(row = 9, column = 0,  padx=14, pady=15,sticky='nw')         
 
 
-        b_update_metas_=tk.Button(frame,text="validate meta",command=lambda: ValidateTagGenMetas(folder,mode.get(),preferTags.get(),frame))
+        b_update_metas_=tk.Button(frame,text=settings[locale]['metaview']['validateVideoMetas'],command=lambda: ValidateTagGenMetas(folder,mode.get(),preferTags.get(),frame))
         b_update_metas_.grid(row = 10, column = 0,  padx=14, pady=15,sticky='nswe') 
         
 
 
 
-        b_gen_thumb_=tk.Button(frame,text="gen descriptions",command=lambda: genTag(folder,mode.get(),preferTags.get(),frame))
+        b_gen_thumb_=tk.Button(frame,text=settings[locale]['metaview']['B_gentags'],command=lambda: genTag(folder,mode.get(),preferTags.get(),frame))
         b_gen_thumb_.grid(row = 11, column =0, padx=14, pady=15,sticky='nswe') 
 
 
-        b_check_metas_=tk.Button(frame,text="check metajson",command=lambda: threading.Thread(target=openLocal(folder)).start() )
+        b_check_metas_=tk.Button(frame,text=settings[locale]['metaview']['b_checkvideometafile'],command=lambda: threading.Thread(target=openLocal(folder)).start() )
         b_check_metas_.grid(row = 12, column = 0, padx=14, pady=15,sticky='nswe') 
 
 
@@ -2270,58 +2308,52 @@ def render_schedule_gen(frame,isneed,folder,selectedMetafileformat):
         if len(frame.winfo_children())>0:
             for widget in frame.winfo_children():
                 widget.destroy()        
-        global thumbnail_metas_file,thummbnail_bg_folder,thummbnail_bg_file,thumbnail_template_file
-        thumbnail_metas_file = tk.StringVar()        
-        thummbnail_bg_folder = tk.StringVar()        
-        thummbnail_bg_file = tk.StringVar()      
+      
 
         new_canvas = tk.Frame(frame)
         new_canvas.grid(row=2, column=0, pady=(5, 0), sticky='nw')     
 
-
         thumbmode = tk.IntVar()
-        # thumbmode.set(1)
 
-        lab = tk.Label(new_canvas,text="请选择你的发布时间从何而来",bg="lightyellow",width=30)
+        lab = tk.Label(new_canvas,text=settings[locale]['metaview']['chooseschedulepolicy']
+                      ,bg="lightyellow",width=30)
         lab.grid(row = 1, column = 0,  padx=14, pady=15,sticky='nw') 
    
-        thumbmode1=tk.Radiobutton(new_canvas,text="手动准备",variable=thumbmode,value=1,command=lambda:render_schedule_update_view(new_canvas,folder,thumbmode,frame,selectedMetafileformat))
+        thumbmode1=tk.Radiobutton(new_canvas,text=settings[locale]['metaview']['choosethumbpolicy_manual'],variable=thumbmode,value=1,command=lambda:render_schedule_update_view(new_canvas,folder,thumbmode,frame))
         thumbmode1.grid(row = 1, column = 1,  padx=14, pady=15,sticky='nw') 
-        thumbmode2=tk.Radiobutton(new_canvas,text=" 批量生成",variable=thumbmode,value=2,command=lambda:render_schedule_update_view(new_canvas,folder,thumbmode,frame,selectedMetafileformat))
-        thumbmode2.grid(row = 1, column = 2,  padx=14, pady=15,sticky='nw') 
-
-        # thumbmode.trace_add('write', render_thumb_update_view(new_canvas,folder,thumbmode))
+        thumbmode2=tk.Radiobutton(new_canvas,text=settings[locale]['metaview']['choosethumbpolicy_auto'],variable=thumbmode,value=2,command=lambda:render_schedule_update_view(new_canvas,folder,thumbmode,frame))
+        thumbmode2.grid(row = 2, column = 1,  padx=14, pady=15,sticky='nw') 
 
 
-def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMetafileformat):
+def render_schedule_update_view(frame,folder,thumbmode,previous_frame):
     def policyOptionCallBack(*args):
         schframe = ttk.Frame(frame)
         schframe.grid(row=7, column=0, sticky="nsew")
 
         # if mode.get() in [3,4,5]:
 
-        l_dailycount = tk.Label(schframe, text='dailyVideoLimit')
-        Tooltip(l_dailycount, text='you want to release how many video in one day' , wraplength=200)
+        l_dailycount = tk.Label(schframe, text=settings[locale]['metaview']['dailyVideoLimit'])
+        Tooltip(l_dailycount, text=settings[locale]['metaview']['dailyVideoLimit_hints'] , wraplength=200)
 
 
 
 
 
-        l_releasehour = tk.Label(schframe, text='release hour')
-        Tooltip(l_releasehour, text=f"you can input like '10:15,' more available can choose from {settings[locale]['availableScheduleTimes']}" , wraplength=200)
+        l_releasehour = tk.Label(schframe, text=settings[locale]['metaview']['releasehour'])
+        Tooltip(l_releasehour, text=settings[locale]['metaview']['releasehour_hints'] , wraplength=200)
 
 
 
-        releasehour.set(settings[locale]['default_release_hour'])
+        releasehour.set(settings[locale]['metaview']['default_release_hour'])
 
         e_releasehour = tk.Entry(schframe, width=55, textvariable=releasehour)
 
-        Tooltip(e_releasehour, text=f"you can input more than one with comma separator,such as 10:15,12:00,if you want publish 10 video in serial you should put 10 time here,more available can choose from {settings[locale]['availableScheduleTimes']}" , wraplength=200)
+        Tooltip(e_releasehour, text=settings[locale]['metaview']['default_release_hour_hints'] , wraplength=200)
 
         start_publish_date.set(1)
 
-        l_start_publish_date=tk.Label(schframe, text='offsetDays')
-        Tooltip(l_start_publish_date, text='we calculate publish date from today,  default +1 is tomorrow' , wraplength=200)
+        l_start_publish_date=tk.Label(schframe, text=settings[locale]['metaview']['offsetDays'])
+        Tooltip(l_start_publish_date, text=settings[locale]['metaview']['offsetDays_hints'], wraplength=200)
 
         e_start_publish_date = tk.Entry(schframe, width=55, textvariable=start_publish_date)
 
@@ -2333,9 +2365,9 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
         def display_selected_item_index(event): 
             print('index of this item is: {}\n'.format(releasedatehourbox.current()))
             number=dailycount.get()
-            if dailycount.get()=='Select From policy':
+            if dailycount.get()  in range(0,21) ==False:
                 number=1
-                randomNreleasehour=settings[locale]['default_release_hour']
+                randomNreleasehour=settings[locale]['metaview']['default_release_hour']
             else:
                 randomNreleasehour=','.join(random.sample(settings[locale]['availableScheduleTimes'], int(number)))
             releasehour.set(randomNreleasehour)
@@ -2344,12 +2376,12 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
             # print(releasedatehourbox.current())
             number=dailycount.get()
             print('current dailycount ')
-            if dailycount.get()=='Select From policy':
+            if dailycount.get()  in range(0,21) ==False:
                 number=1
             randomNreleasehour=','.join(random.sample(settings[locale]['availableScheduleTimes'], int(number)))
             releasehour.set(randomNreleasehour)
 
-        dailycount.set("Select From policy")
+        dailycount.set(settings[locale]['metaview']['dropdown_hints'])
         dailycount.trace('w', OptionCallBack)
 
 
@@ -2420,35 +2452,35 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
             widget.destroy()      
    
     if thumbmode.get() ==1:
-        lbl15 = tk.Label(frame, text='两种选择')
+        lbl15 = tk.Label(frame, text=settings[locale]['metaview']['chooseschedulepolicy_manual_options'])
         lbl15.grid(row=1,column=0,padx=14, pady=15,sticky='w') 
         b_return=tk.Button(frame,text=settings[locale]['metaview']['return'],command=lambda: render_schedule_gen(previous_frame,True,folder))
         b_return.grid(row = 0, column =1,padx=14, pady=15,sticky='w') 
 
-        lbl15 = tk.Label(frame, text='1.手动准备发布时间文件，需放在视频所在文件夹下，且与视频文件同名,完成后再次检测即可',wraplength=600)
+        lbl15 = tk.Label(frame, text=settings[locale]['metaview']['chooseschedulepolicy_manual_options_1'],wraplength=600)
         lbl15.grid(row=2,column=0, sticky='nswe')
 
-        lbl15 = tk.Label(frame, text='2.如果没有发布时间文件，需手动编辑视频元数据中发布时间字段,包括日期和时间段,编辑完成后可再次进行检测\r',wraplength=600)
+        lbl15 = tk.Label(frame, text=settings[locale]['metaview']['chooseschedulepolicy_manual_options_2'],wraplength=600)
         lbl15.grid(row=3,column=0, sticky='nswe')
 
 
 
 
-        b_check_metas_=tk.Button(frame,text="edit videometa with local editor",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
+        b_check_metas_=tk.Button(frame,text=settings[locale]['metaview']['editwithlocaleditor'],command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
         b_check_metas_.grid(row = 5, column = 0, padx=14, pady=15,sticky='nswe') 
         Tooltip(b_check_metas_, text='fill release date and hour fields in meta files' , wraplength=200)
         
         if ultra[folder]['metafileformat']=='json':
 
-            b_edit_thumb_metas=tk.Button(frame,text="edit json with online editor",command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
+            b_edit_thumb_metas=tk.Button(frame,text=settings[locale]['metaview']['editwithonline'],command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"))
             b_edit_thumb_metas.grid(row = 6, column = 0, padx=14, pady=15,sticky='nswe') 
-            Tooltip(b_check_metas_, text='For those who dont have json editor or have install issues' , wraplength=200)
+            Tooltip(b_check_metas_, text=settings[locale]['metaview']['editwithonline_hints'], wraplength=200)
 
-        b_open_video_folder=tk.Button(frame,text="open local",command=lambda: threading.Thread(target=openLocal(folder)).start() )
+        b_open_video_folder=tk.Button(frame,text=settings[locale]['metaview']['openlocalfolder'],command=lambda: threading.Thread(target=openLocal(folder)).start() )
         b_open_video_folder.grid(row = 4, column = 0, padx=14, pady=15,sticky='nswe')      
 
 
-        b_update_metas_=tk.Button(frame,text="validate meta",command='validate thumbpath is there')
+        b_update_metas_=tk.Button(frame,text=settings[locale]['metaview']['validateVideoMetas'],command='validate thumbpath is there')
         b_update_metas_.grid(row = 7, column = 0,  padx=14, pady=15,sticky='nswe') 
 
 
@@ -2462,32 +2494,37 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
 
         mode.trace_add('write', policyOptionCallBack)
 
-        lab = tk.Label(frame,text="Step1:请选择你的发布时间生成策略",bg="lightyellow",width=30)
+        lab = tk.Label(frame,text=settings[locale]['metaview']['chooseschedulepolicy_auto_options'],
+                       bg="lightyellow",width=30)
         lab.grid(row = 1, column = 0,  padx=14, pady=15,sticky='nw')    
         b_return=tk.Button(frame,text=settings[locale]['metaview']['return'],command=lambda: render_schedule_gen(previous_frame,True,folder))
         b_return.grid(row = 1, column = 2,  padx=14, pady=15,sticky='e')   
 
 
-        mode1=tk.Radiobutton(frame,text="私有",variable=mode,value=1,command=policyOptionCallBack)
-        # Tooltip(mode1, text='you dont install this extension yet' , wraplength=200)
+        mode1=tk.Radiobutton(frame,text=settings[locale]['metaview']['chooseschedulepolicy_auto_options_1'],variable=mode,value=1,command=policyOptionCallBack)
+        Tooltip(mode1, text=settings[locale]['metaview']['chooseschedulepolicy_auto_options_1_hints'] , wraplength=200)
 
         mode1.grid(row = 2, column = 0,  padx=14, pady=15,sticky='nw') 
-        mode2=tk.Radiobutton(frame,text="公开",variable=mode,value=2,command=policyOptionCallBack)
+        mode2=tk.Radiobutton(frame,text=settings[locale]['metaview']['chooseschedulepolicy_auto_options_2'],variable=mode,value=2,command=policyOptionCallBack)
         # mode2.configure(state = tk.DISABLED)
-        # Tooltip(mode2, text='you dont install this extension yet' , wraplength=200)
+        Tooltip(mode2, text=settings[locale]['metaview']['chooseschedulepolicy_auto_options_2_hints']  , wraplength=200)
 
         mode2.grid(row = 3, column = 0,  padx=14, pady=15,sticky='nw') 
-        mode3=tk.Radiobutton(frame,text="定时",variable=mode,value=3,command=policyOptionCallBack)
+        Tooltip(mode2, text=settings[locale]['metaview']['chooseschedulepolicy_auto_options_2_hints']  , wraplength=200)
+
+        mode3=tk.Radiobutton(frame,text=settings[locale]['metaview']['chooseschedulepolicy_auto_options_3'],variable=mode,value=3,command=policyOptionCallBack)
         mode3.grid(row = 4, column = 0,  padx=14, pady=15,sticky='nw') 
-        Tooltip(mode3, text='please select the bg image folder ' , wraplength=200)
+        Tooltip(mode3, text=settings[locale]['metaview']['chooseschedulepolicy_auto_options_3_hints']  , wraplength=200)
 
-        mode3=tk.Radiobutton(frame,text="unlisted",variable=mode,value=4,command=policyOptionCallBack)
-        mode3.grid(row = 5, column = 0, padx=14, pady=15,sticky='nw') 
+        mode4=tk.Radiobutton(frame,text=settings[locale]['metaview']['chooseschedulepolicy_auto_options_4'],variable=mode,value=4,command=policyOptionCallBack)
+        mode4.grid(row = 5, column = 0, padx=14, pady=15,sticky='nw') 
+        Tooltip(mode4, text=settings[locale]['metaview']['chooseschedulepolicy_auto_options_4_hints']  , wraplength=200)
 
-        mode4=tk.Radiobutton(frame,text="public&premiere",variable=mode,value=5,command=policyOptionCallBack)
-        mode4.grid(row = 6, column = 0,  padx=14, pady=15,sticky='nw')         
- 
-        lab = tk.Label(frame,text="Step4:生成发布时间",bg="lightyellow",width=30)
+        mode5=tk.Radiobutton(frame,text=settings[locale]['metaview']['chooseschedulepolicy_auto_options_5'],variable=mode,value=5,command=policyOptionCallBack)
+        mode5.grid(row = 6, column = 0,  padx=14, pady=15,sticky='nw')         
+        Tooltip(mode5, text=settings[locale]['metaview']['chooseschedulepolicy_auto_options_5_hints']  , wraplength=200)
+
+        lab = tk.Label(frame,text=settings[locale]['metaview']['L_genschedule'],bg="lightyellow",width=30)
         lab.grid(row = 9, column = 0,  padx=14, pady=15,sticky='nw')         
 
 
@@ -2497,21 +2534,21 @@ def render_schedule_update_view(frame,folder,thumbmode,previous_frame,selectedMe
 
 
 
-        b_gen_thumb_=tk.Button(frame,text="gen schedule time plan",command=lambda: genScheduleSLots(folder,mode.get(),start_publish_date.get(),dailycount.get(),releasehour.get(),frame,selectedMetafileformat))
+        b_gen_thumb_=tk.Button(frame,text=settings[locale]['metaview']['B_genschedule'],command=lambda: genScheduleSLots(folder,mode.get(),start_publish_date.get(),dailycount.get(),releasehour.get(),frame))
         b_gen_thumb_.grid(row = 11, column =0, padx=14, pady=15,sticky='nswe') 
 
 
-        b_check_metas_=tk.Button(frame,text="check videometa",command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
+        b_check_metas_=tk.Button(frame,text=settings[locale]['metaview']['b_checkvideometafile'],command=lambda: threading.Thread(target=openVideoMetaFile(folder)).start() )
         b_check_metas_.grid(row = 12, column = 0, padx=14, pady=15,sticky='nswe') 
 
-def genScheduleSLots(folder,mode_value,start_publish_date_value,dailycount_value,releasehour_value,frame,selectedMetafileformat):
+def genScheduleSLots(folder,mode_value,start_publish_date_value,dailycount_value,releasehour_value,frame):
     logger.debug('start to gen slots')
     publish_policy=[1,2,3,4,5].index(mode_value)
     # //0 -private 1-publish 2-schedule 3-Unlisted 4-public&premiere 
     today = date.today()
 
     date_to_publish = datetime(today.year, today.month, today.day)
-    default_hour_to_publish = settings[locale]['default_release_hour']
+    default_hour_to_publish = settings[locale]['metaview']['default_release_hour']
     # if you want more delay ,just change 1 to other numbers to start from other days instead of tomorrow
     start_publish_date_value=int(start_publish_date_value)
     if 'Select From policy'==dailycount_value:
@@ -2520,6 +2557,7 @@ def genScheduleSLots(folder,mode_value,start_publish_date_value,dailycount_value
     metafilechanges=False
     if metafilechanges:
     # 检测缓存中的更新时间 和videometafile的修改时间进行比较，发生变化就同步
+        selectedMetafileformat=tmp['schview_selectedMetafileformat']
         syncVideometa2assetsjson(selectedMetafileformat,folder)
     video_data = ultra[folder]['videos']
     counts=len(video_data)   
@@ -2583,62 +2621,7 @@ def genScheduleSLots(folder,mode_value,start_publish_date_value,dailycount_value
     lab = tk.Label(frame,text="assign schedules finished,you can check videometa",bg="lightyellow")
     lab.grid(row = 10, column = 0,  padx=14, pady=15,sticky='nw')     
     lab.after(5000,lab.destroy)    
-def render_update_meta(frame,isneed,folder,selectedMetafileformat='json'):
-    if isneed==True:
-        lang='en'
-        prefertags=tk.StringVar()
-        if len(frame.winfo_children())>0:
-            for widget in frame.winfo_children():
-                widget.destroy()
-        
-        lab = tk.Label(frame,text="batch modify video metas",bg="lightyellow",width=30)
-        # dropdown platform   so they can have diff fields
-        l_prefertags = tk.Label(frame, text=settings[locale]['is_not_for_kid']
-                                )
-        l_prefertags.grid(row = 0, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
-        el_prefertags = tk.Entry(frame, width=55, textvariable=prefertags)
-        el_prefertags.grid(row = 0, column = 5, columnspan = 3, padx=14, pady=15,sticky='nw') 
 
-        categories=tk.StringVar()
-
-        l_categories = tk.Label(frame, text=settings[locale]['categories']
-                                )
-        l_categories.grid(row = 1, column = 0, columnspan = 3, padx=14, pady=15,sticky='nw') 
-        el_categories = tk.Entry(frame, width=55, textvariable=categories)
-        el_categories.grid(row = 1, column = 5, columnspan = 3, padx=14, pady=15,sticky='nw') 
-
-
-        is_paid_promotion = tk.BooleanVar()
-        # publishpolicy.set(4)
-
-        lab.grid(row = 1, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
-        mode0=tk.Radiobutton(frame,text="私有",variable=is_paid_promotion,value=True,command='')
-        mode0.grid(row = 2, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
-        mode1=tk.Radiobutton(frame,text="私有",variable=is_paid_promotion,value=False,command='')
-        mode1.grid(row = 2, column = 1, columnspan = 3, padx=14, pady=15,sticky='ne') 
-
-            # "is_age_restriction": false,
-            # "is_paid_promotion": false,
-            # "is_automatic_chapters": true,
-            # "is_featured_place": true,
-            # "video_language": "",
-            # "captions_certification": 0,
-            # "video_film_date": "",
-            # "video_film_location": "",
-            # "license_type": 0,
-            # "is_allow_embedding": true,
-            # "is_publish_to_subscriptions_feed_notify": true,
-            # "shorts_remixing_type": 0,
-            # "is_show_howmany_likes": true,
-            # "is_monetization_allowed": true,
-            # "first_comment": "xxxx",
-            # "subtitles": "",
-            # "is_not_for_kid": true,
-            # "categories": 10,
-            # "comments_ratings_policy": 1,
-
-        b_import_thumb_metas_=tk.Button(frame,text="Step4:更新视频元数据文件",command=lambda: genThumbnailFromTemplate(videosView_video_folder.get(),thumbnail_template_file.get(),mode.get()))
-        b_import_thumb_metas_.grid(row = 9, column = 0, columnspan = 3, padx=14, pady=15,sticky='ne') 
 
 def check_folder_thumb_bg(folder):
     supported_thumb_exts=['.jpeg', '.png', '.jpg','webp']
@@ -3098,24 +3081,41 @@ def genThumbnailFromTemplate(folder,thumbnail_template_file_path,mode_value,thum
     
     syncVideometa2assetsjson(ultra[folder]['metafileformat'],folder)
     logger.debug('end to sync gen thumbnail meta to video assets file')
-
-def render_thumb_gen(frame,isneed,folder,selectedMetafileformat='json'):
+def render_submeta_gen(frame,isneed,folder,func):
 
     if isneed==True:
         if len(frame.winfo_children())>0:
             for widget in frame.winfo_children():
                 widget.destroy()        
-        global thumbnail_metas_file,thummbnail_bg_folder,thummbnail_bg_file,thumbnail_template_file
-        thumbnail_metas_file = tk.StringVar()        
-        thummbnail_bg_folder = tk.StringVar()        
-        thummbnail_bg_file = tk.StringVar()      
+      
 
         new_canvas = tk.Frame(frame)
         new_canvas.grid(row=2, column=0, pady=(5, 0), sticky='nw')     
 
+        thumbmode = tk.IntVar()
+
+        lab = tk.Label(new_canvas,text=settings[locale]['metaview']['choosethumbpolicy']
+                      ,bg="lightyellow",width=30)
+        lab.grid(row = 1, column = 0,  padx=14, pady=15,sticky='nw') 
+   
+        thumbmode1=tk.Radiobutton(new_canvas,text=settings[locale]['metaview']['choosethumbpolicy_manual'],variable=thumbmode,value=1,command=lambda:func(new_canvas,folder,thumbmode,frame))
+        thumbmode1.grid(row = 1, column = 1,  padx=14, pady=15,sticky='nw') 
+        thumbmode2=tk.Radiobutton(new_canvas,text=settings[locale]['metaview']['choosethumbpolicy_auto'],variable=thumbmode,value=2,command=lambda:func(new_canvas,folder,thumbmode,frame))
+        thumbmode2.grid(row = 2, column = 1,  padx=14, pady=15,sticky='nw') 
+
+
+def render_thumb_gen(frame,isneed,folder,func):
+
+    if isneed==True:
+        if len(frame.winfo_children())>0:
+            for widget in frame.winfo_children():
+                widget.destroy()        
+      
+
+        new_canvas = tk.Frame(frame)
+        new_canvas.grid(row=2, column=0, pady=(5, 0), sticky='nw')     
 
         thumbmode = tk.IntVar()
-        # thumbmode.set(1)
 
         lab = tk.Label(new_canvas,text=settings[locale]['metaview']['choosethumbpolicy']
                       ,bg="lightyellow",width=30)
@@ -3126,7 +3126,6 @@ def render_thumb_gen(frame,isneed,folder,selectedMetafileformat='json'):
         thumbmode2=tk.Radiobutton(new_canvas,text=settings[locale]['metaview']['choosethumbpolicy_auto'],variable=thumbmode,value=2,command=lambda:render_thumb_update_view(new_canvas,folder,thumbmode,frame))
         thumbmode2.grid(row = 2, column = 1,  padx=14, pady=15,sticky='nw') 
 
-        # thumbmode.trace_add('write', render_thumb_update_view(new_canvas,folder,thumbmode))
 
 
 
@@ -3191,7 +3190,7 @@ def render_thumb_update_view(frame,folder,thumbmode,previous_frame=None):
         mode3.grid(row = 3, column = 0,  padx=14, pady=15,sticky='nw') 
         Tooltip(mode3, text='please select the bg image folder ' , wraplength=200)
 
-
+        thummbnail_bg_folder=tk.StringVar()
         b_thumbnail_bg_folder=tk.Button(frame,text="select",command=lambda: threading.Thread(target=select_folder(ultra[folder]['thumb_gen_setting']['bg_folder'],thummbnail_bg_folder)).start() )
         b_thumbnail_bg_folder.grid(row = 4, column = 1, padx=14, pady=15,sticky='nswe') 
         e_thumbnail_bg_folder = tk.Entry(frame, textvariable=thummbnail_bg_folder)
@@ -4871,11 +4870,11 @@ def uploadView(frame,ttkframe,lang):
     global vid,canvas
     
     taskstatus = tk.StringVar()
-    lbl15 = tk.Label(queryframe, text=settings[locale]['uploadview']['uploadView_q_status'])
+    lbl15 = tk.Label(queryframe, text=settings[locale]['uploadview']['q_status'])
     lbl15.grid(row = 0, column = 0,sticky='w')
 
     task_status_var = tk.StringVar()
-    task_status_var.set("choose one:")    
+    task_status_var.set(settings[locale]['uploadview']['dropdown_hints'])    
 
     def task_status_db_values():
         task_status_names = dict(TASK_STATUS.TASK_STATUS_TEXT).values()
@@ -4894,11 +4893,11 @@ def uploadView(frame,ttkframe,lang):
 
 
     # Create a label for the platform dropdown
-    platform_label = ttk.Label(queryframe, text="Select Platform:")
+    platform_label = ttk.Label(queryframe, text=settings[locale]['uploadview']['q_platform'])
     platform_label.grid(row=0, column=3,  sticky=tk.W)
     # Create a Combobox for the platform selection
     platform_var = tk.StringVar()
-    platform_var.set("choose one:")    
+    platform_var.set(settings[locale]['uploadview']['dropdown_hints'])    
 
     def platform_db_values():
         platform_rows=PlatformModel.filter_platforms(name=None, ptype=None, server=None)
@@ -4915,28 +4914,28 @@ def uploadView(frame,ttkframe,lang):
     
     # platform_combo['values'] = db_values()
     vid = tk.StringVar()
-    lbl15 = tk.Label(queryframe, text='Enter video id.')
+    lbl15 = tk.Label(queryframe, text=settings[locale]['uploadview']['q_videoid'])
     lbl15.grid(row = 0, column = 6,sticky='w')
     txt15 = tk.Entry(queryframe, textvariable=vid)
     txt15.insert(0,'input task id')
     txt15.grid(row = 1, column = 6,sticky='w',columnspan=2)
 
     vtitle = tk.StringVar()
-    lbl15 = tk.Label(queryframe, text='Enter video title.')
+    lbl15 = tk.Label(queryframe, text=settings[locale]['uploadview']['q_videotitle'])
     lbl15.grid(row = 0, column = 9,sticky='w')
     txt15 = tk.Entry(queryframe, textvariable=vtitle)
     txt15.insert(0,'input task title')
     txt15.grid(row = 1, column = 9,sticky='w',columnspan=2)
 
     channelname = tk.StringVar()
-    lbl16 = tk.Label(queryframe, text='Enter channelname.')
+    lbl16 = tk.Label(queryframe, text=settings[locale]['uploadview']['q_channelname'])
     lbl16.grid(row = 0, column = 12,sticky='w')
     txt16 = tk.Entry(queryframe,textvariable=channelname)
     txt16.insert(0,'input channelname')
     txt16.grid(row = 1, column = 12,sticky='w',columnspan=2)
 
     schedule_at_var = tk.StringVar()
-    lbl17 = tk.Label(queryframe, text='Enter schedule date.')
+    lbl17 = tk.Label(queryframe, text=settings[locale]['uploadview']['q_scheduledate'])
     lbl17.grid(row = 0, column = 15,sticky='w')
     txt17 = tk.Entry(queryframe, textvariable=schedule_at_var)
     txt17.insert(0,'input schedule date')
@@ -4944,9 +4943,9 @@ def uploadView(frame,ttkframe,lang):
 
 
     sortby_var = tk.StringVar()
-    sortby_var.set("choose:")    
+    sortby_var.set(settings[locale]['uploadview']['dropdown_hints'])    
 
-    l_sortby= tk.Label(queryframe, text='Sortby.')
+    l_sortby= tk.Label(queryframe, text=settings[locale]['uploadview']['q_Sortby'])
     l_sortby.grid(row = 0, column = 18,columnspan=1, sticky='w')
 
     sortby_combo = ttk.Combobox(queryframe, textvariable=sortby_var)
@@ -5027,11 +5026,11 @@ def uploadView(frame,ttkframe,lang):
     print('First time render tab headers')
 
 
-    btn5= tk.Button(queryframe, text="Get Info", command = lambda:queryTasks(canvas=None,frame=result_frame,status=task_status_var.get(),platform=platform_var.get(),username=channelname.get(),video_id=vid.get(),video_title=vtitle.get(),schedule_at=schedule_at_var.get(),pageno=1,pagecount=50,sortby=sortby_var.get()) )
+    btn5= tk.Button(queryframe, text=settings[locale]['uploadview']['querynow'], command = lambda:queryTasks(canvas=None,frame=result_frame,status=task_status_var.get(),platform=platform_var.get(),username=channelname.get(),video_id=vid.get(),video_title=vtitle.get(),schedule_at=schedule_at_var.get(),pageno=1,pagecount=50,sortby=sortby_var.get()) )
     btn5.grid(row = 1, column = 24,  padx=14, pady=15)
     
     
-    btn5= tk.Button(queryframe, text="Reset", padx = 0, pady = 0,command = lambda:(task_status_var.set(""),schedule_at_var.set(""),platform_var.set(""),channelname.set(""),vid.set(''),vtitle.set(''),sortby_var.set('')))
+    btn5= tk.Button(queryframe, text=settings[locale]['uploadview']['reset'], padx = 0, pady = 0,command = lambda:(task_status_var.set(""),schedule_at_var.set(""),platform_var.set(""),channelname.set(""),vid.set(''),vtitle.set(''),sortby_var.set('')))
     btn5.grid(row=1,column=21, sticky=tk.W)       
 
 
@@ -5885,7 +5884,7 @@ def proxyView(frame,mode='query',linkProxy=None,platform=None):
     refreshProxycanvas(canvas=None,frame=result_frame,headers=tab_headers,datas=[])
 
 def metaView(left,right,isThumbView=True,isDesView=True,isTagsView=True,isScheduleView=True):
-    global metaView_video_folder
+    # global metaView_video_folder
     metaView_video_folder = tk.StringVar()
 
 
@@ -5941,187 +5940,202 @@ def metaView(left,right,isThumbView=True,isDesView=True,isTagsView=True,isSchedu
     b_download_meta_templates.grid(row = 1, column = 3, sticky='w', padx=14, pady=15)  
     Tooltip(b_download_meta_templates, text=settings[locale]['metaview']['b_downvideometafile_hints'] , wraplength=200)
 
-    b_video_folder_check=tk.Button(left,text=settings[locale]['metaview']['b_checkvideoassets'],command=lambda: threading.Thread(target=analyse_video_meta_pair(metaView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=True,isDesView=True,isTagsView=True,isScheduleView=True)).start() )
+    b_video_folder_check=tk.Button(left,text=settings[locale]['metaview']['b_checkvideoassets'],command=lambda: threading.Thread(target=analyse_video_meta_pair(metaView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=isThumbView,isDesView=isDesView,isTagsView=isTagsView,isScheduleView=isScheduleView)).start() )
     b_video_folder_check.grid(row = 2, column = 0,sticky='w', padx=14, pady=15)    
     
 
 
 def tagsView(left,right,lang):
-    tagView_video_folder = tk.StringVar()
+
+    # global metaView_video_folder
+    metaView_video_folder = tk.StringVar()
 
 
-    l_video_folder = tk.Label(left, text=settings[locale]['videoFolder'])
+    l_video_folder = tk.Label(left, text=settings[locale]['metaview']['videoFolder'])
     l_video_folder.grid(row = 0, column = 0, sticky='w', padx=14, pady=15)    
-    Tooltip(l_video_folder, text='Start from where your video lives' , wraplength=200)
 
 
-    e_video_folder = tk.Entry(left,textvariable=tagView_video_folder)
+    e_video_folder = tk.Entry(left,textvariable=metaView_video_folder)
     e_video_folder.grid(row = 0, column = 1, sticky='w', padx=14, pady=15)     
-    
-    b_video_folder=tk.Button(left,text="Select",command=lambda: threading.Thread(target=select_tabview_video_folder(tagView_video_folder,'tagView_video_folder')).start() )
-    b_video_folder.grid(row = 0, column = 2, sticky='w', padx=14, pady=15)  
-    if tagView_video_folder.get()!='':
+    if metaView_video_folder.get()!='':
         if tmp['lastfolder'] is None or tmp['lastfolder']=='':
             pass
         else:            
-            if tmp['tagView_video_folder'] is None:
-                tagView_video_folder.set(tmp['lastfolder'])        
-            tagView_video_folder.set(tmp['tagView_video_folder'])    
-    b_open_video_folder=tk.Button(left,text="open local",command=lambda: threading.Thread(target=openLocal(tagView_video_folder.get())).start() )
-    b_open_video_folder.grid(row = 0, column = 3, sticky='w', padx=14, pady=15)    
-    Tooltip(b_open_video_folder, text='open video folder to find out files change' , wraplength=200)
+            if tmp['metaView_video_folder'] is None:
+                metaView_video_folder.set(tmp['lastfolder'])        
+            metaView_video_folder.set(tmp['metaView_video_folder'])   
+    b_video_folder=tk.Button(left,text=settings[locale]['metaview']['dropdown_hints'],command=lambda: threading.Thread(target=select_tabview_video_folder(metaView_video_folder,'metaView_video_folder')).start() )
+    b_video_folder.grid(row = 0, column = 2, sticky='w', padx=14, pady=15)       
 
-    l_meta_format = tk.Label(left, text=settings[locale]['l_metafileformat']
+    if metaView_video_folder.get()!='':
+
+        tmp['metaView_video_folder']=metaView_video_folder.get()
+
+    b_open_video_folder=tk.Button(left,text=settings[locale]['metaview']['openlocalfolder'],command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
+    b_open_video_folder.grid(row = 0, column = 3, sticky='w', padx=14, pady=15)    
+    l_meta_format = tk.Label(left, text=settings[locale]['metaview']['l_metafileformat']
                              )
     # l_platform.place(x=10, y=90)
     l_meta_format.grid(row = 1, column = 0, sticky='w', padx=14, pady=15)    
-    Tooltip(l_meta_format, text='Choose the one you like to edit metadata' , wraplength=200)
+    global metafileformat
+    
 
     metafileformat = tk.StringVar()
 
 
-
-    metafileformat.set("Select From format")
+    def metafileformatCallBack(*args):
+        print(metafileformat.get())
+        print(metafileformatbox.current())
+        # ultra[metaView_video_folder]['metafileformat']=metafileformat.get()
+        analyse_video_meta_pair(metaView_video_folder.get(),left,right,metafileformatbox.get(), isThumbView=False,isDesView=False,isTagsView=True,isScheduleView=False)        
+    metafileformat.set(settings[locale]['metaview']['dropdown_hints'])
+    metafileformat.trace('w', metafileformatCallBack)
 
 
     metafileformatbox = ttk.Combobox(left, textvariable=metafileformat)
     metafileformatbox.config(values = ( 'json','xlsx', 'csv'))
     metafileformatbox.grid(row = 1, column = 1, sticky='w', padx=14, pady=15)      
-    def metafileformatCallBack(*args):
-        print(metafileformat.get())
-        print(metafileformatbox.current())
-        analyse_video_meta_pair(tagView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=False,isDesView=False,isTagsView=True,isScheduleView=False)
-    print(f'right now metafileformatbox.get():{metafileformatbox.get()}')
-    metafileformat.trace('w', metafileformatCallBack)
+    metafileformatbox.bind("<<ComboboxSelected>>", metafileformatCallBack)  
 
-    b_download_meta_templates=tk.Button(left,text="check video meta files",command=lambda: threading.Thread(target=openLocal(tagView_video_folder.get())).start() )
+
+
+    b_download_meta_templates=tk.Button(left,text=settings[locale]['metaview']['b_downvideometafile'],command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
     b_download_meta_templates.grid(row = 1, column = 3, sticky='w', padx=14, pady=15)  
-    Tooltip(b_download_meta_templates, text='run the check video assets will auto gen templates under folder if they dont' , wraplength=200)
+    Tooltip(b_download_meta_templates, text=settings[locale]['metaview']['b_downvideometafile_hints'] , wraplength=200)
 
-    b_video_folder_check=tk.Button(left,text="Step1:check video assets",command=lambda: threading.Thread(target=analyse_video_meta_pair(tagView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=False,isDesView=False,isTagsView=True,isScheduleView=False)).start() )
-    b_video_folder_check.grid(row = 2, column = 0,sticky='w', padx=14, pady=15)    
-    Tooltip(b_video_folder_check, text='calculate video counts,thumb file count and others' , wraplength=200)
+    b_video_folder_check=tk.Button(left,text=settings[locale]['metaview']['b_checkvideoassets'],command=lambda: threading.Thread(target=analyse_video_meta_pair(metaView_video_folder.get(),left,right,metafileformatbox.get(),
+                                                                                                                                                                isThumbView=False,isDesView=False,isTagsView=True,isScheduleView=False
+                                                                                                                                                                )).start() )
+    b_video_folder_check.grid(row = 2, column = 0,sticky='w', padx=14, pady=15)   
 
 
 
 def desView(left,right,lang):
-    desView_video_folder = tk.StringVar()
+
+    # global metaView_video_folder
+    metaView_video_folder = tk.StringVar()
 
 
-    l_video_folder = tk.Label(left, text=settings[locale]['videoFolder'])
+    l_video_folder = tk.Label(left, text=settings[locale]['metaview']['videoFolder'])
     l_video_folder.grid(row = 0, column = 0, sticky='w', padx=14, pady=15)    
-    Tooltip(l_video_folder, text='Start from where your video lives' , wraplength=200)
 
 
-    e_video_folder = tk.Entry(left,textvariable=desView_video_folder)
+    e_video_folder = tk.Entry(left,textvariable=metaView_video_folder)
     e_video_folder.grid(row = 0, column = 1, sticky='w', padx=14, pady=15)     
-    
-    b_video_folder=tk.Button(left,text="Select",command=lambda: threading.Thread(target=select_tabview_video_folder(desView_video_folder,'desView_video_folder')).start() )
-    b_video_folder.grid(row = 0, column = 2, sticky='w', padx=14, pady=15)    
-    if desView_video_folder.get()!='':
+    if metaView_video_folder.get()!='':
         if tmp['lastfolder'] is None or tmp['lastfolder']=='':
             pass
         else:            
-            if tmp['desView_video_folder'] is None:
-                desView_video_folder.set(tmp['lastfolder'])        
-            desView_video_folder.set(tmp['desView_video_folder'])   
-    b_open_video_folder=tk.Button(left,text="open local",command=lambda: threading.Thread(target=openLocal(desView_video_folder.get())).start() )
-    b_open_video_folder.grid(row = 0, column = 3, sticky='w', padx=14, pady=15)    
-    Tooltip(b_open_video_folder, text='open video folder to find out files change' , wraplength=200)
+            if tmp['metaView_video_folder'] is None:
+                metaView_video_folder.set(tmp['lastfolder'])        
+            metaView_video_folder.set(tmp['metaView_video_folder'])   
+    b_video_folder=tk.Button(left,text=settings[locale]['metaview']['dropdown_hints'],command=lambda: threading.Thread(target=select_tabview_video_folder(metaView_video_folder,'metaView_video_folder')).start() )
+    b_video_folder.grid(row = 0, column = 2, sticky='w', padx=14, pady=15)       
 
-    l_meta_format = tk.Label(left, text=settings[locale]['l_metafileformat'])
+    if metaView_video_folder.get()!='':
+
+        tmp['metaView_video_folder']=metaView_video_folder.get()
+
+    b_open_video_folder=tk.Button(left,text=settings[locale]['metaview']['openlocalfolder'],command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
+    b_open_video_folder.grid(row = 0, column = 3, sticky='w', padx=14, pady=15)    
+    l_meta_format = tk.Label(left, text=settings[locale]['metaview']['l_metafileformat']
+                             )
     # l_platform.place(x=10, y=90)
     l_meta_format.grid(row = 1, column = 0, sticky='w', padx=14, pady=15)    
-    Tooltip(l_meta_format, text='Choose the one you like to edit metadata' , wraplength=200)
+    global metafileformat
+    
 
     metafileformat = tk.StringVar()
 
 
-
-    metafileformat.set("Select From format")
+    def metafileformatCallBack(*args):
+        print(metafileformat.get())
+        print(metafileformatbox.current())
+        # ultra[metaView_video_folder]['metafileformat']=metafileformat.get()
+        analyse_video_meta_pair(metaView_video_folder.get(),left,right,metafileformatbox.get(), isThumbView=False,isDesView=True,isTagsView=False,isScheduleView=False)        
+    metafileformat.set(settings[locale]['metaview']['dropdown_hints'])
+    metafileformat.trace('w', metafileformatCallBack)
 
 
     metafileformatbox = ttk.Combobox(left, textvariable=metafileformat)
     metafileformatbox.config(values = ( 'json','xlsx', 'csv'))
     metafileformatbox.grid(row = 1, column = 1, sticky='w', padx=14, pady=15)      
-    def metafileformatCallBack(*args):
-        print(metafileformat.get())
-        print(metafileformatbox.current())
-        analyse_video_meta_pair(desView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=False,isDesView=True,isTagsView=False,isScheduleView=False)
-    print(f'right now metafileformatbox.get():{metafileformatbox.get()}')
-    metafileformat.trace('w', metafileformatCallBack)
+    metafileformatbox.bind("<<ComboboxSelected>>", metafileformatCallBack)  
 
-    b_download_meta_templates=tk.Button(left,text="check video meta files",command=lambda: threading.Thread(target=openLocal(desView_video_folder.get())).start() )
+
+
+    b_download_meta_templates=tk.Button(left,text=settings[locale]['metaview']['b_downvideometafile'],command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
     b_download_meta_templates.grid(row = 1, column = 3, sticky='w', padx=14, pady=15)  
-    Tooltip(b_download_meta_templates, text='run the check video assets will auto gen templates under folder if they dont' , wraplength=200)
+    Tooltip(b_download_meta_templates, text=settings[locale]['metaview']['b_downvideometafile_hints'] , wraplength=200)
 
-    b_video_folder_check=tk.Button(left,text="Step1:check video assets",command=lambda: threading.Thread(target=analyse_video_meta_pair(desView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=False,isDesView=True,isTagsView=False,isScheduleView=False)).start() )
-    b_video_folder_check.grid(row = 2, column = 0,sticky='w', padx=14, pady=15)    
-    Tooltip(b_video_folder_check, text='calculate video counts,thumb file count and others' , wraplength=200)
-
-    Tooltip(b_video_folder_check, text='calculate video counts,thumb file count and others' , wraplength=200)
-    b_delete_folder_cache=tk.Button(left,text="remove cache data to re-gen",command=lambda: threading.Thread(target=ultra[thumbView_video_folder].unlink()).start() )
-    b_delete_folder_cache.grid(row = 2, column = 1,sticky='w', padx=14, pady=15)  
+    b_video_folder_check=tk.Button(left,text=settings[locale]['metaview']['b_checkvideoassets'],command=lambda: threading.Thread(target=analyse_video_meta_pair(metaView_video_folder.get(),left,right,metafileformatbox.get(),
+                                                                                                                                                                isThumbView=False,isDesView=True,isTagsView=False,isScheduleView=False
+                                                                                                                                                                )).start() )
+    b_video_folder_check.grid(row = 2, column = 0,sticky='w', padx=14, pady=15)  
 
 def scheduleView(left,right,lang):
     scheduleView_video_folder = tk.StringVar()
 
+    # global metaView_video_folder
+    metaView_video_folder = tk.StringVar()
 
-    l_video_folder = tk.Label(left, text=settings[locale]['videoFolder'])
+
+    l_video_folder = tk.Label(left, text=settings[locale]['metaview']['videoFolder'])
     l_video_folder.grid(row = 0, column = 0, sticky='w', padx=14, pady=15)    
-    Tooltip(l_video_folder, text='Start from where your video lives' , wraplength=200)
 
 
-    e_video_folder = tk.Entry(left,textvariable=scheduleView_video_folder)
+    e_video_folder = tk.Entry(left,textvariable=metaView_video_folder)
     e_video_folder.grid(row = 0, column = 1, sticky='w', padx=14, pady=15)     
-    print('===',type(scheduleView_video_folder.get()),scheduleView_video_folder.get())
-    if scheduleView_video_folder.get()=='':
-        print('herte===')
-        if tmp.has_key('lastfolder') and  tmp['lastfolder']=='':
-            if tmp['scheduleView_video_folder'] is None:
-                scheduleView_video_folder.set(tmp['lastfolder'])    
-        else:
-            if tmp.has_key('scheduleView_video_folder') and  tmp['scheduleView_video_folder']=='':
-                scheduleView_video_folder.set(tmp['scheduleView_video_folder'])  
-    
-    b_video_folder=tk.Button(left,text="Select",command=lambda: threading.Thread(target=select_tabview_video_folder(scheduleView_video_folder,'scheduleView_video_folder')).start() )
+    if metaView_video_folder.get()!='':
+        if tmp['lastfolder'] is None or tmp['lastfolder']=='':
+            pass
+        else:            
+            if tmp['metaView_video_folder'] is None:
+                metaView_video_folder.set(tmp['lastfolder'])        
+            metaView_video_folder.set(tmp['metaView_video_folder'])   
+    b_video_folder=tk.Button(left,text=settings[locale]['metaview']['dropdown_hints'],command=lambda: threading.Thread(target=select_tabview_video_folder(metaView_video_folder,'metaView_video_folder')).start() )
     b_video_folder.grid(row = 0, column = 2, sticky='w', padx=14, pady=15)       
 
-    b_open_video_folder=tk.Button(left,text="open local",command=lambda: threading.Thread(target=openLocal(scheduleView_video_folder.get())).start() )
+    if metaView_video_folder.get()!='':
+
+        tmp['metaView_video_folder']=metaView_video_folder.get()
+
+    b_open_video_folder=tk.Button(left,text=settings[locale]['metaview']['openlocalfolder'],command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
     b_open_video_folder.grid(row = 0, column = 3, sticky='w', padx=14, pady=15)    
-    Tooltip(b_open_video_folder, text='open video folder to find out files change' , wraplength=200)
-    print('save folder to tmp',tmp)
-    l_meta_format = tk.Label(left, text=settings[locale]['l_metafileformat'])
+    l_meta_format = tk.Label(left, text=settings[locale]['metaview']['l_metafileformat']
+                             )
     # l_platform.place(x=10, y=90)
     l_meta_format.grid(row = 1, column = 0, sticky='w', padx=14, pady=15)    
-    Tooltip(l_meta_format, text='Choose the one you like to edit metadata' , wraplength=200)
+    global metafileformat
+    
 
     metafileformat = tk.StringVar()
 
 
-
-    metafileformat.set("Select From format")
+    def metafileformatCallBack(*args):
+        print(metafileformat.get())
+        print(metafileformatbox.current())
+        # ultra[metaView_video_folder]['metafileformat']=metafileformat.get()
+        analyse_video_meta_pair(metaView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=False,isDesView=False,isTagsView=False,isScheduleView=True)        
+    metafileformat.set(settings[locale]['metaview']['dropdown_hints'])
+    metafileformat.trace('w', metafileformatCallBack)
 
 
     metafileformatbox = ttk.Combobox(left, textvariable=metafileformat)
     metafileformatbox.config(values = ( 'json','xlsx', 'csv'))
     metafileformatbox.grid(row = 1, column = 1, sticky='w', padx=14, pady=15)      
-    def metafileformatCallBack(*args):
-        print(metafileformat.get())
-        print(metafileformatbox.current())
-        analyse_video_meta_pair(scheduleView_video_folder.get(),left,right,metafileformatbox.get(),
-                                isThumbView=False,isDesView=False,isTagsView=False,isScheduleView=True)
-    print(f'right now metafileformatbox.get():{metafileformatbox.get()}')
-    metafileformat.trace('w', metafileformatCallBack)
+    metafileformatbox.bind("<<ComboboxSelected>>", metafileformatCallBack)  
 
-    b_download_meta_templates=tk.Button(left,text="check video meta files",command=lambda: threading.Thread(target=openLocal(scheduleView_video_folder.get())).start() )
+
+
+    b_download_meta_templates=tk.Button(left,text=settings[locale]['metaview']['b_downvideometafile'],command=lambda: threading.Thread(target=openLocal(metaView_video_folder.get())).start() )
     b_download_meta_templates.grid(row = 1, column = 3, sticky='w', padx=14, pady=15)  
-    Tooltip(b_download_meta_templates, text='run the check video assets will auto gen templates under folder if they dont' , wraplength=200)
+    Tooltip(b_download_meta_templates, text=settings[locale]['metaview']['b_downvideometafile_hints'] , wraplength=200)
 
-    b_video_folder_check=tk.Button(left,text="Step1:check video assets",command=lambda: threading.Thread(target=analyse_video_meta_pair(scheduleView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=False,isDesView=False,isTagsView=False,isScheduleView=True)).start() )
-    b_video_folder_check.grid(row = 2, column = 0,sticky='w', padx=14, pady=15)    
-    Tooltip(b_video_folder_check, text='calculate video counts,thumb file count and others' , wraplength=200)
-
+    b_video_folder_check=tk.Button(left,text=settings[locale]['metaview']['b_checkvideoassets'],command=lambda: threading.Thread(target=analyse_video_meta_pair(metaView_video_folder.get(),left,right,metafileformatbox.get(),
+                                                                                                                                                                isThumbView=False,isDesView=False,isTagsView=False,isScheduleView=True
+                                                                                                                                                                )).start() )
+    b_video_folder_check.grid(row = 2, column = 0,sticky='w', padx=14, pady=15)   
 
 
 def logView(log_tab_frame,root,lang):
@@ -6199,20 +6213,18 @@ def render(root,window,lang):
     # tab_control.grid_columnconfigure(0, weight=1)
     # tab_control.grid_columnconfigure(1, weight=1)
 
-    def refresh_video_folder(event):
-        if tab_control.index(tab_control.select()) == 4:
-            if thumbView_video_folder.get()!='':
-                if tmp['lastfolder'] is None or tmp['lastfolder']=='':
-                    pass
-                else:            
-                    if tmp['thumbView_video_folder'] is None:
-                        thumbView_video_folder.set(tmp['lastfolder'])        
-                    thumbView_video_folder.set(tmp['thumbView_video_folder'])  
+    # def refresh_video_folder(event):
+    #     if tab_control.index(tab_control.select()) == 4:
+    #         if metaView_video_folder.get()!='':
+    #             if tmp.has_key('lastfolder') and  tmp['lastfolder'] is not None or tmp['lastfolder']!='':     
+    #                 if tmp['metaView_video_folder'] is None:
+    #                     metaView_video_folder.set(tmp['lastfolder'])        
+    #                 metaView_video_folder.set(tmp['metaView_video_folder'])  
             
-        elif tab_control.index(tab_control.select()) == 5:
-            # scheduleView_video_folder.set('')  # Reset the value to an empty string
-            pass
-    tab_control.bind("<<NotebookTabChanged>>", refresh_video_folder)
+    #     elif tab_control.index(tab_control.select()) == 5:
+    #         # scheduleView_video_folder.set('')  # Reset the value to an empty string
+    #         pass
+    # tab_control.bind("<<NotebookTabChanged>>", refresh_video_folder)
     
 
     doc_frame = ttk.Frame(tab_control)
@@ -6339,7 +6351,8 @@ def render(root,window,lang):
     schedule_frame_left.grid(row=0,column=0,sticky="nsew")
     schedule_frame_right = tk.Frame(schedule_frame, height = height)
     schedule_frame_right.grid(row=0,column=1,sticky="nsew") 
-    video_frame = ttk.Frame(tab_control)
+
+
     video_frame = ttk.Frame(tab_control)
     video_frame.grid_rowconfigure(0, weight=1)
     video_frame.grid_columnconfigure(0, weight=1, uniform="group1")
@@ -6356,11 +6369,6 @@ def render(root,window,lang):
     video_frame_right.grid(row=0,column=1,sticky="nswe") 
 
     
-    video_frame_left = tk.Frame(video_frame, height = height)
-    video_frame_left.grid(row=0,column=0,sticky="nsew")
-    video_frame_right = tk.Frame(video_frame, height = height)
-    video_frame_right.grid(row=0,column=1,sticky="nsew") 
-
 
 
     proxy_frame = ttk.Frame(tab_control)
@@ -6464,8 +6472,7 @@ def render(root,window,lang):
 
     proxyView(proxy_frame)
 
-    tab_control.add(video_frame, text=settings[lang]['videosView']
-                    )
+    tab_control.add(video_frame, text=settings[lang]['videosView'] )
     videosView(video_frame_left,video_frame_right,lang)
 
     tab_control.add(thumb_frame, 
@@ -6473,17 +6480,22 @@ def render(root,window,lang):
                     
 
     thumbView(thumb_frame_left,thumb_frame_right,lang)
+    # metaView(thumb_frame_left,thumb_frame_right,isThumbView=True,isDesView=False,isTagsView=False,isScheduleView=False)    
 
     tab_control.add(tags_frame, 
                      text=settings[lang]['tagsView'])
                     
 
     tagsView(tags_frame_left,tags_frame_right,lang)
+    # metaView(tags_frame_left,tags_frame_right,isThumbView=False,isDesView=False,isTagsView=True,isScheduleView=False)    
+
+
     tab_control.add(des_frame, 
                      text=settings[lang]['desView'])
                     
 
     desView(des_frame_left,des_frame_right,lang)
+    # metaView(des_frame_left,des_frame_right,isThumbView=False,isDesView=True,isTagsView=False,isScheduleView=False)    
 
 
     tab_control.add(schedule_frame, 
@@ -6491,6 +6503,7 @@ def render(root,window,lang):
                     
 
     scheduleView(schedule_frame_left,schedule_frame_right,lang)
+    # metaView(schedule_frame_left,schedule_frame_right,isThumbView=False,isDesView=False,isTagsView=False,isScheduleView=True)    
 
     tab_control.add(meta_frame, 
                      text=settings[lang]['metaView'])
@@ -6630,6 +6643,8 @@ def changeDisplayLang(lang):
     settings['lastuselang']=lang
     locale=lang
     start(lang,root)
+    settings['locale']=lang
+
     logger.debug(f'switch lang to locale:{lang}')
     
     root.mainloop()
@@ -6681,6 +6696,7 @@ def  start_tkinter_app():
     settings['folders']=tmp
     # root.protocol('WM_DELETE_WINDOW', withdraw_window)
     
+    settings['locale']=locale
 
     root.mainloop()
     
