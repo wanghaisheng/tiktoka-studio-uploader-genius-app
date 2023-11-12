@@ -3859,7 +3859,7 @@ def createTaskMetas(left,right):
     # creatTaskWindow.focus_force()
     # creatTaskWindow.grab_set()
     
-    creatTaskWindow.title('create tasks from scratch')
+    creatTaskWindow.title(settings[locale]['newtaskview']['title'])
     
     creatTaskWindow.grid_rowconfigure(0, weight=1)
     creatTaskWindow.grid_columnconfigure(0, weight=1, uniform="group1")
@@ -3882,7 +3882,7 @@ def createTaskMetas(left,right):
         username='this user account'
 
     label = tk.Label(account_frame_left,
-                text = f"If you are new,try to start from a folder with videos",
+                text = settings[locale]['newtaskview']['instruction'],
                 font = ("Times New Roman", 10),
                 padx = 10, pady = 10)
     # label.pack()
@@ -3896,18 +3896,18 @@ def createTaskMetas(left,right):
     choosedAccounts = tk.StringVar()
     global latest_proxy_conditions_user
     latest_proxy_conditions_user = tk.StringVar()
-    lbl15 = tk.Label(account_frame_left, text='load video metas from file')
+    lbl15 = tk.Label(account_frame_left, text=settings[locale]['newtaskview']['L_loadvideometa'])
     lbl15.grid(row=1,column=0, padx=14, pady=15, sticky=tk.W)
 
     txt15 = tk.Entry(account_frame_left,textvariable=videometafile)
     txt15.insert(0,'')
-    b_thumbnail_template_file=tk.Button(account_frame_left,text="select",command=lambda: threading.Thread(target=select_file('select video meta  file',videometafile,'','all',creatTaskWindow)).start() )
+    b_thumbnail_template_file=tk.Button(account_frame_left,text=settings[locale]['newtaskview']['dropdown_hints'],command=lambda: threading.Thread(target=select_file('select video meta  file',videometafile,'','all',creatTaskWindow)).start() )
     b_thumbnail_template_file.grid(row = 1, column = 1,  padx=14, pady=15,sticky='nswe')     
     # txt15.place(x=580, y=30, anchor=tk.NE)
     # txt15.pack(side='left')
     txt15.grid(row=2,column=1, sticky=tk.W)
 
-    button1 = ttk.Button(account_frame_left, text="Start from video folder", command=lambda: (creatTaskWindow.withdraw(),tab_control.select(8)))
+    button1 = ttk.Button(account_frame_left, text=settings[locale]['newtaskview']['B_startfromfolder'], command=lambda: (creatTaskWindow.withdraw(),tab_control.select(8)))
     button1.grid(row=0,column=1, sticky=tk.W)
 
     uploadStrategy = tk.StringVar()
@@ -3931,14 +3931,14 @@ def createTaskMetas(left,right):
 
 
     
-    lb17 = tk.Label(account_frame_left, text='Binded accounts')
+    lb17 = tk.Label(account_frame_left, text=settings[locale]['newtaskview']['L_bindaccounts'])
     lb17.grid(row=4,column=0, padx=14, pady=15,  sticky=tk.W)
     txt17 = tk.Entry(account_frame_left,textvariable=choosedAccounts)
     txt17.insert(0,'')
     txt17.grid(row=5,column=1, sticky=tk.W)
 
 
-    button1 = ttk.Button(account_frame_left, text="Bind", command=lambda:chooseAccountsView(account_frame_right,choosedAccounts))
+    button1 = ttk.Button(account_frame_left, text=settings[locale]['newtaskview']['B_bindaccounts'], command=lambda:chooseAccountsView(account_frame_right,choosedAccounts))
     button1.grid(row=4,column=1, sticky=tk.W)
 
     multiAccountsPolicy=tk.StringVar()
@@ -3950,17 +3950,17 @@ def createTaskMetas(left,right):
 
 
 
-    multiAccountsPolicy.set("Select From policy")
+    multiAccountsPolicy.set(settings[locale]['newtaskview']['dropdown_hints'])
     multiAccountsPolicy.trace('w', multiAccountsPolicyCallBack)
 
-    l_multiAccountsPolicybox= tk.Label(account_frame_left, text='Policy')
+    l_multiAccountsPolicybox= tk.Label(account_frame_left, text=settings[locale]['newtaskview']['policy'])
     l_multiAccountsPolicybox.grid(row=6,column=0,  padx=14, pady=15, sticky=tk.W)
 
     multiAccountsPolicybox = ttk.Combobox(account_frame_left, textvariable=multiAccountsPolicy)
-    multiAccountsPolicybox.config(values = ('单平台单账号', '同平台主副账号','单平台多独立账号独立发布','单平台多独立账号平均发布'))
+    multiAccountsPolicybox.config(values = settings[locale]['newtaskview']['policy_options'].split(','))
     multiAccountsPolicybox.grid(row = 6, column = 1, padx=14, pady=15, sticky='w')   
 
-    lb18 = tk.Label(account_frame_left, text='Runs on.')
+    lb18 = tk.Label(account_frame_left, text=settings[locale]['newtaskview']['runson'])
     lb18.grid(row=7,column=0,  padx=14, pady=15, sticky=tk.W)
 
 
@@ -3972,69 +3972,69 @@ def createTaskMetas(left,right):
         print(deviceTypebox.current())
         if 'browser' in deviceType.get():
 
-            browserType.set("Select From Browsers")
+            browserType.set(settings[locale]['newtaskview']['dropdown_hints'])
             def browserTypeCallBack(*args):
                 print(browserType.get())
                 print(browserTypebox.current())
             browserType.trace('w', browserTypeCallBack)
 
             browserTypebox = ttk.Combobox(account_frame_left, textvariable=browserType)
-            browserTypebox.config(values = ('firefox', 'webkit','chrome'))
+            browserTypebox.config(values = settings[locale]['newtaskview']['browser_options'].split(',') )
             browserTypebox.grid(row = 8, column = 1,padx=14, pady=15, sticky='w')   
 
         else:
             showinfomsg(message='not supported yet')
-    deviceType.set("Select From device")
+    deviceType.set(settings[locale]['newtaskview']['dropdown_hints'])
     deviceType.trace('w', deviceTypeCallBack)
 
 
     deviceTypebox = ttk.Combobox(account_frame_left, textvariable=deviceType)
-    deviceTypebox.config(values = ('embed browser', 'adspower','phone emulator','iphone','android'))
+    deviceTypebox.config(values =settings[locale]['newtaskview']['devicetype_options'].split(',') )
     deviceTypebox.grid(row = 7, column = 1, padx=14, pady=15, sticky='w')   
 
     is_open_browser = tk.BooleanVar()
     is_open_browser.set(True)
     is_open_browser.trace('w', lambda *_: print("The value is_open_browser was changed"))    
-    l_is_open_browser = tk.Label(account_frame_left, text='静默模式')
+    l_is_open_browser = tk.Label(account_frame_left, text=settings[locale]['newtaskview']['silent_mode'])
 
     l_is_open_browser.grid(row = 9, column = 0,  padx=14, pady=15,sticky='w') 
-    checkbutton = tk.Checkbutton(account_frame_left, text="是", variable=is_open_browser,command = lambda:getBool(is_open_browser))
+    checkbutton = tk.Checkbutton(account_frame_left, text=settings[locale]['newtaskview']['checkbuttonoption'], variable=is_open_browser,command = lambda:getBool(is_open_browser))
     checkbutton.grid(row=9, column=1, padx=14, pady=15, sticky='w')
 
     is_debug = tk.BooleanVar()
     is_debug.set(True)
-    l_is_debug = tk.Label(account_frame_left, text='是否调试')
+    l_is_debug = tk.Label(account_frame_left, text=settings[locale]['newtaskview']['is_debug'])
     is_debug.trace('w', lambda *_: print("The value is_debug was changed"))    
 
     l_is_debug.grid(row = 10, column = 0,  padx=14, pady=15,sticky='w') 
-    checkbutton = tk.Checkbutton(account_frame_left, text="是", variable=is_debug,command =lambda: getBool(is_debug))
+    checkbutton = tk.Checkbutton(account_frame_left, text=settings[locale]['newtaskview']['checkbuttonoption'], variable=is_debug,command =lambda: getBool(is_debug))
     checkbutton.grid(row=10, column=1, padx=14, pady=15, sticky='w')
 
     is_record_video = tk.BooleanVar()
     is_record_video.set(True)
     is_record_video.trace('w', lambda *_: print("The value is_record_video was changed"))    
 
-    l_is_record_video = tk.Label(account_frame_left, text='是否录制视频')
+    l_is_record_video = tk.Label(account_frame_left, text=settings[locale]['newtaskview']['is_record_video'])
     l_is_record_video.grid(row=11, column=0, padx=14, pady=15, sticky='w')
 
 
-    checkbutton = tk.Checkbutton(account_frame_left, text="是", variable=is_record_video,command = lambda:getBool(is_record_video))
+    checkbutton = tk.Checkbutton(account_frame_left, text=settings[locale]['newtaskview']['checkbuttonoption'], variable=is_record_video,command = lambda:getBool(is_record_video))
     checkbutton.grid(row=11, column=1, padx=14, pady=15, sticky='w')
 
 
     wait_policy = tk.IntVar()
     wait_policy.set(3)
-    l_wait_policy = tk.Label(account_frame_left, text='视频处理等待机制')
+    l_wait_policy = tk.Label(account_frame_left, text=settings[locale]['newtaskview']['wait_policy'])
     wait_policy.trace('w', lambda *_: print("The value wait_policy was changed"))    
 
     l_wait_policy.grid(row = 12, column = 0, padx=14, pady=15,sticky='w') 
-    mode0=tk.Radiobutton(account_frame_left,text="after processing success",variable=wait_policy,value=1,command=lambda: getBool(wait_policy))
+    mode0=tk.Radiobutton(account_frame_left,text=settings[locale]['newtaskview']['wait_policy_option1'],variable=wait_policy,value=1,command=lambda: getBool(wait_policy))
     mode0.grid(row = 12, column = 1, padx=14, pady=15,sticky='w') 
-    mode1=tk.Radiobutton(account_frame_left,text="after uploading success",variable=wait_policy,value=2,command=lambda: getBool(wait_policy))
+    mode1=tk.Radiobutton(account_frame_left,text=settings[locale]['newtaskview']['wait_policy_option2'],variable=wait_policy,value=2,command=lambda: getBool(wait_policy))
     mode1.grid(row = 13, column = 1, padx=14, pady=15,sticky='w') 
-    mode1=tk.Radiobutton(account_frame_left,text="after copyright check success",variable=wait_policy,value=3,command=lambda: getBool(wait_policy))
+    mode1=tk.Radiobutton(account_frame_left,text=settings[locale]['newtaskview']['wait_policy_option3'],variable=wait_policy,value=3,command=lambda: getBool(wait_policy))
     mode1.grid(row = 14, column = 1, padx=14, pady=15,sticky='w') 
-    btn6= tk.Button(account_frame_left, text="gen task meta file", padx = 10, pady = 10,command = lambda: threading.Thread(
+    btn6= tk.Button(account_frame_left, text=settings[locale]['newtaskview']['B_gentaskfile'], padx = 10, pady = 10,command = lambda: threading.Thread(
         target=genUploadTaskMetas(
             videometafile.get(),
             choosedAccounts.get(),
@@ -4972,26 +4972,26 @@ def uploadView(frame,ttkframe,lang):
     
     
     
-    b_create_task_metas = tk.Button(operationframe, text=settings[lang]['b_createTaskMetas'],
+    b_create_task_metas = tk.Button(operationframe, text=settings[locale]['uploadview']['b_createTaskMetas'],
                                          command=lambda: threading.Thread(target=createTaskMetas(frame,ttkframe)).start())
     b_create_task_metas.grid(row = 0, column = 0,padx=14, pady=15,sticky='w')
-    Tooltip(b_create_task_metas, text=settings[lang]['t_createTaskMetas'], wraplength=200)
+    Tooltip(b_create_task_metas, text=settings[locale]['t_createTaskMetas'], wraplength=200)
 
 
-    b_down_video_metas_temp = tk.Button(operationframe, text=settings[lang]['b_editTaskMetas'], command=
+    b_down_video_metas_temp = tk.Button(operationframe, text=settings[locale]['uploadview']['b_editTaskMetas'], command=
                                 #  lambda: webbrowser.open_new("https://jsoncrack.com/editor")
                                  lambda: threading.Thread(target=webbrowser.open_new("https://jsoncrack.com/editor")).start())
     b_down_video_metas_temp.grid(row = 0, column = 1, padx=14, pady=15,sticky='w')
     
 
 
-    # l_import_task_metas = tk.Label(operationframe, text=settings[lang]['l_importTaskMetas'])
+    # l_import_task_metas = tk.Label(operationframe, text=settings[locale]['l_importTaskMetas'])
     # l_import_task_metas.grid(row = 0, column = 2, padx=14, pady=15,sticky='w')
     
 
-    b_imported_video_metas_file=tk.Button(operationframe,text=settings[lang]['l_importTaskMetas'],command=lambda:SelectMetafile('taskmetafilepath',imported_task_metas_file))
+    b_imported_video_metas_file=tk.Button(operationframe,text=settings[locale]['uploadview']['l_importTaskMetas'],command=lambda:SelectMetafile('taskmetafilepath',imported_task_metas_file))
     b_imported_video_metas_file.grid(row = 0, column = 2, padx=14, pady=15)
-    Tooltip(b_imported_video_metas_file, text=settings[locale]['t_importTaskMetas'] , wraplength=200)
+    Tooltip(b_imported_video_metas_file, text=settings[locale]['uploadview']['t_importTaskMetas'] , wraplength=200)
 
 
     imported_task_metas_file = tk.StringVar()        
@@ -4999,13 +4999,13 @@ def uploadView(frame,ttkframe,lang):
     e_imported_video_metas_file.grid(row = 0, column = 3, padx=14, pady=15)
 
   
-    b_validate_video_metas = tk.Button(operationframe, text=settings[locale]['validateVideoMetas']
+    b_validate_video_metas = tk.Button(operationframe, text=settings[locale]['uploadview']['validateVideoMetas']
                                        , command=lambda: threading.Thread(target=validateTaskMetafile(result_frame,imported_task_metas_file.get(),canvas=None)).start())
     b_validate_video_metas.grid(row = 0, column = 5, padx=14, pady=15)
 
 
     # test upload  跳转到一个单独页面，录入一个视频的上传信息，点击上传进行测试。
-    b_upload = tk.Button(operationframe, text=settings[locale]['testupload']
+    b_upload = tk.Button(operationframe, text=settings[locale]['uploadview']['testupload']
                          , command=lambda: threading.Thread(target=testupload(DBM('test'),ttkframe)).start())
     b_upload.grid(row =0 ,column = 6, padx=14, pady=15)
 
@@ -5035,7 +5035,7 @@ def uploadView(frame,ttkframe,lang):
 
 
 
-    b_upload = tk.Button(operationframe, text=settings[locale]['b_uploadAll']
+    b_upload = tk.Button(operationframe, text=settings[locale]['uploadview']['b_uploadAll']
                          , command=lambda: threading.Thread(target=runTask(frame=result_frame,status=task_status_var.get(),platform=platform_var.get(),username=channelname.get(),vid=vid.get(),vtitle=vtitle.get(),schedule_at=schedule_at_var.get(),pageno=None,pagecount=50,sortby=sortby_var.get())).start())
     b_upload.grid(row = 0, column = 7, padx=14, pady=15)
 
@@ -6457,33 +6457,33 @@ def render(root,window,lang):
 
 
     tab_control.add(install_frame, 
-                     text=settings[lang]['installView'])
+                     text=settings[locale]['installView'])
                     
     installView(install_frame_left,install_frame_right,lang)
 
 
     tab_control.add(account_frame, 
-                     text=settings[lang]['accountView'])
+                     text=settings[locale]['accountView'])
                     
     accountView(account_frame,mode='query')
 
     tab_control.add(proxy_frame,
-                    text=settings[lang]['proxyView'])
+                    text=settings[locale]['proxyView'])
 
     proxyView(proxy_frame)
 
-    tab_control.add(video_frame, text=settings[lang]['videosView'] )
+    tab_control.add(video_frame, text=settings[locale]['videosView'] )
     videosView(video_frame_left,video_frame_right,lang)
 
     tab_control.add(thumb_frame, 
-                     text=settings[lang]['thumbView'])
+                     text=settings[locale]['thumbView'])
                     
 
     thumbView(thumb_frame_left,thumb_frame_right,lang)
     # metaView(thumb_frame_left,thumb_frame_right,isThumbView=True,isDesView=False,isTagsView=False,isScheduleView=False)    
 
     tab_control.add(tags_frame, 
-                     text=settings[lang]['tagsView'])
+                     text=settings[locale]['tagsView'])
                     
 
     tagsView(tags_frame_left,tags_frame_right,lang)
@@ -6491,7 +6491,7 @@ def render(root,window,lang):
 
 
     tab_control.add(des_frame, 
-                     text=settings[lang]['desView'])
+                     text=settings[locale]['desView'])
                     
 
     desView(des_frame_left,des_frame_right,lang)
@@ -6499,29 +6499,29 @@ def render(root,window,lang):
 
 
     tab_control.add(schedule_frame, 
-                     text=settings[lang]['scheduleView'])
+                     text=settings[locale]['scheduleView'])
                     
 
     scheduleView(schedule_frame_left,schedule_frame_right,lang)
     # metaView(schedule_frame_left,schedule_frame_right,isThumbView=False,isDesView=False,isTagsView=False,isScheduleView=True)    
 
     tab_control.add(meta_frame, 
-                     text=settings[lang]['metaView'])
+                     text=settings[locale]['metaView'])
     metaView(meta_frame_left,meta_frame_right,isThumbView=True,isDesView=True,isTagsView=True,isScheduleView=True)    
     # metaView(meta_frame_left,meta_frame_right,lang)
     # metaView(meta_frame_right,meta_frame_left,lang)
 
 
-    tab_control.add(upload_frame, text=settings[lang]['uploadView'])
+    tab_control.add(upload_frame, text=settings[locale]['uploadView'])
     # uploadView(upload_frame_left,upload_frame_right,lang)
     uploadView(upload_frame_left,upload_frame_left,lang)
     
     statsView(stats_frame,root,lang)
 
-    tab_control.add(stats_frame, text=settings[lang]['statsView'],sticky='nswe')
+    tab_control.add(stats_frame, text=settings[locale]['statsView'],sticky='nswe')
 
 
-    tab_control.add(doc_frame, text=settings[lang]['docView'])
+    tab_control.add(doc_frame, text=settings[locale]['docView'])
 
     docView(doc_frame_left,doc_frame_right,lang)
     # tab_control.pack(expand=1, fill='both')
@@ -6537,11 +6537,11 @@ def render(root,window,lang):
     log_tab_frame.grid_columnconfigure(1, weight=1)
     logView(log_tab_frame,root,lang)
 
-    tab_control.add(log_tab_frame, text=settings[lang]['logView'],sticky='nswe')
+    tab_control.add(log_tab_frame, text=settings[locale]['logView'],sticky='nswe')
 
     pluginsView(stats_frame,root,lang)
 
-    tab_control.add(plugins_frame, text=settings[lang]['pluginsView'],sticky='nswe')
+    tab_control.add(plugins_frame, text=settings[locale]['pluginsView'],sticky='nswe')
 
 
 
@@ -6599,7 +6599,7 @@ def start(lang,root=None):
     root.geometry(window_size)
     # root.resizable(width=True, height=True)
     root.iconbitmap("assets/icon.ico")
-    root.title(settings[lang]['title'])        
+    root.title(settings[locale]['title'])        
 
 
     # Create the frame for the notebook

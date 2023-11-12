@@ -9,7 +9,7 @@
 	"createuploadsession": "create uploadsession",
 	"autothumb": "auto thumbnail",
 	"testupload": "test video upload ",
-	"videosMenu": "视频管理",
+	"videosMenu":"video management",
 	"docView": "Docs",		
 	"cleardb": "clear database",		
 	"pluginsView": "Plugins",		
@@ -34,9 +34,43 @@
 		"reset":"Reset",
 		"querynow":"Query",
 
-		"dropdown_hints":"Select"
+		"dropdown_hints":"Select",
+		"b_createTaskMetas":"New task",
+		"b_editTaskMetas":"edit task file",
+		"l_importTaskMetas":"import task file",
+		"t_importTaskMetas":"import task file,json excel csv",
+		"validateVideoMetas":"validate Task file",
+		"testupload":"test video upload ",
+		"b_uploadAll":"Query && Upload"
 	
 	},	
+
+	"newtaskview":{
+		"title":"create tasks from scratch",
+		"instruction":"If you are new,try to start from a folder with videos",
+		"L_loadvideometa":"load video metas from file",
+		"dropdown_hints":"Select",
+		"B_startfromfolder":"Start from video folder",
+		"L_bindaccounts":"Binded accounts",
+		"B_bindaccounts":"Bind",
+		"policy":"Policy",
+		"policy_options":"one platform one account only, same platfrom main account with backup account,depedent account-publish the same,depedent account-publish randomly",
+		"browser_options":"firefox, webkit,chrome",
+		"devicetype_options":"embed browser, adspower,phone emulator,iphone,android",
+		"silent_mode":"silent",
+		"is_debug":"debug",
+		"is_record_video":"recording",
+		"wait_policy":"wait policy",
+		"runson":"Runs on",
+		"checkbuttonoption":"YES",
+		"wait_policy_option1":"after processing success",
+		"wait_policy_option2":"after uploading success",
+		"wait_policy_option3":"after copyright check success",
+		"B_gentaskfile":"gen task meta file"
+		
+		
+		
+			},	
 	"installview":{
 		"testinstall":"test install",
 		"newuserwizard":"import test data",
@@ -204,23 +238,23 @@
 		"choosetagpolicy_auto_options_prefertag_label_hints":"add \r if you want line breaks",
 		"L_gentags":"Step4:gen tags",
 		"B_gentags":"gen tags",
-		"dailyVideoLimit":"每日公开视频数量",
+		"dailyVideoLimit":"daily publish count",
 		"dailyVideoLimit_hints":"you want to release how many video in one day",
-		"releasehour":"发布时间",
+		"releasehour":"publish hour",
 		"releasehour_hints":"you can input like '10:15,' more available can choose from {settings[locale]['availableScheduleTimes']}",
 		"default_release_hour":"10:15",
 		"default_release_hour_hints":"you can input more than one with comma separator,such as 10:15,12:00,if you want publish 10 video in serial you should put 10 time here,more available can choose from {settings[locale]['availableScheduleTimes']}",
-		"offsetDays":"起始发布日期-当日(天数)",
+		"offsetDays":"days offset",
 		"offsetDays_hints":"we calculate publish date from today,  default +1 is tomorrow",
 
 		"chooseschedulepolicy_auto_options":"Step1:请选择你的发布时间生成策略",
-		"chooseschedulepolicy_auto_options_1":"私有",
+		"chooseschedulepolicy_auto_options_1":"private",
 		"chooseschedulepolicy_auto_options_1_hints":"",
 
-		"chooseschedulepolicy_auto_options_2":"公开",
+		"chooseschedulepolicy_auto_options_2":"public",
 		"chooseschedulepolicy_auto_options_2_hints":"",
 
-		"chooseschedulepolicy_auto_options_3":"定时",
+		"chooseschedulepolicy_auto_options_3":"schedule",
 		"chooseschedulepolicy_auto_options_3_hints":"",
 		"chooseschedulepolicy_auto_options_4":"unlisted",
 		"chooseschedulepolicy_auto_options_4_hints":"",
@@ -228,9 +262,9 @@
 		"chooseschedulepolicy_auto_options_5":"public&premiere",
 		"chooseschedulepolicy_auto_options_5_hints":"",
 
-		"chooseschedulepolicy_auto_options_template":"Step2:请选择你的缩略图模板",
-		"L_genschedule":"Step4:自动规划发布时间",
-		"B_genschedule":"生成发布时间"
+		"chooseschedulepolicy_auto_options_template":"Step2:choose thumbnail template file",
+		"L_genschedule":"Step4:auto gen schedule plan",
+		"B_genschedule":"gen schedule plan"
 	},	
 	"l_proxycity": "city",		
 	"L_proxyprotocol": "protocol",		
@@ -276,7 +310,7 @@
 	"default_release_hour":"10:15",
     "importVideoMetas":"import video meta",
     "newuserwizard": "setup test data",
-    "startfromfolder": "已准备好内含视频的文件夹",
+    "startfromfolder": "start from video folder",
 
     "importVideoMetasToolip":"import video meta  file,support json excel csv",
     "importTaskMetas":"import task file",    

@@ -10,8 +10,42 @@
 		"reset":"重置",
 		"querynow":"查询",
 
-		"dropdown_hints":"选择"
+		"dropdown_hints":"选择",
+		"b_createTaskMetas":"新建任务",
+		"b_editTaskMetas":"编辑任务文件",
+		"l_importTaskMetas":"导入任务文件",
+		"t_importTaskMetas":"导入任务文件,支持json excel csv",
+		"validateVideoMetas":"验证任务文件",
+		"testupload":"开始上传前測試",
+		"b_uploadAll":"查询&&上传"
 	
+	},
+	"newtaskview":{
+"title":"创建上传任务",
+"instruction":"新手建议先准备好一个视频文件夹",
+"L_loadvideometa":"导入视频源文件",
+"dropdown_hints":"选择",
+"B_startfromfolder":"从视频文件夹生成视频元信息",
+"L_bindaccounts":"关联账号",
+"B_bindaccounts":"绑定",
+"policy":"策略",
+"policy_options":"单平台单账号, 同平台主副账号,单平台多独立账号同时发布,单平台多独立账号平均发布",
+"browser_options":"firefox, webkit,chrome",
+"devicetype_options":"embed browser, adspower,phone emulator,iphone,android",
+"silent_mode":"静默模式",
+"runson":"运行在",
+"checkbuttonoption":"是",
+
+"is_debug":"是否调试",
+"is_record_video":"录像模式",
+"wait_policy":"视频处理等待机制",
+"wait_policy_option1":"预处理完成后继续",
+"wait_policy_option2":"上传完成后继续",
+"wait_policy_option3":"版权检查完成后继续",
+"B_gentaskfile":"生成任务文件"
+
+
+
 	},
 	"installview":{
 		"testinstall":"测试安装",
@@ -19,7 +53,7 @@
 		"testdataRemove":"清除测试数据",
 		"cleardb":"清空数据",
 		"L_chooseLang":"语言:",
-		"chooseLanghint":"Select From Langs"
+		"chooseLanghint":"选择"
 
 	},
 
