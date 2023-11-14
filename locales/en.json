@@ -450,5 +450,13 @@
 "23:00",
 "23:15",
 "23:30",
-"23:45"]     
+"23:45"]   ,
+"supportedsites":{
+	"youtube":"https://www.youtube.com/upload?persist_gl=1",
+	"tiktok":"https://www.tiktok.com",
+	"douyin":"https://www.douyin.com"
+
+}
+
+
     }

@@ -586,30 +586,63 @@ def ValidateSetting():
     print('end to validate your upload settings')
 
 
+async def bulk_pull_cookie_file():
+    
+    ytupload=YoutubeUpload(browserType='firefox',logger=logger)
+    # query account in db
+    username=None
+    password=None
+    login=await ytupload.youtube_login(username, password)
+    if login:
+        logger.debug('we need save cookie to future usage')
+        cookiepath = (
+            username + datetime.now().strftime("%Y-%m-%d-%H-%M-%S") + ".json"
+        )
+        await ytupload.page.context.storage_state(path=cookiepath)        
 
 
 
-
-def auto_gen_cookie_file(username,password,proxy=None,cookiepath=None):
+def auto_gen_cookie_file(username,password,platform,proxy=None,cookiepath=None):
     
     print('call tsup gen cookie api')
     if  proxy is None or proxy=='':
         proxyserver=None
     else:
+        print(f'get proxy:{proxy}')
         id=CustomID(custom_id=proxy).to_bin()
         proxydata=ProxyModel.get_proxy_by_id(id=id)
         certification=None
-        if proxydata.proxy_username:
+        print(f'proxy username:{proxydata.proxy_username}')
+        if proxydata.proxy_username is not None:
             certification=f"@{proxydata.proxy_username}:{proxydata.proxy_password}"
         server=None
-        if proxydata.proxy_host:
+        if proxydata.proxy_host is not None:
             server=f"{proxydata.proxy_host}:{proxydata.proxy_port}"
         protocol=None
-        if proxydata.proxy_protocol:
-            protocol=f"{dict(PROXY_PROTOCOL.PROXY_PROTOCOL_TEXT,proxydata.proxy_protocol)}"
-        proxyserver=f"{protocol}://{server}{certification}"
+        if proxydata.proxy_protocol is not None:
+            protocol=proxydata.proxy_protocol.lower()
+        if certification is  None:
+            proxyserver=f"{protocol}://{server}"
+        else:
+            proxyserver=f"{protocol}://{server}{certification}"
+            
     browserType="firefox"
-    url='https://www.youtube.com/upload?persist_gl=1'
+    url=None
+    sites = settings[locale]['supportedsites']
+    platformname=None
+    if type(platform)==int:
+        try:
+            platformname=getattr(PLATFORM_TYPE.PLATFORM_TYPE_TEXT,platform)
+        except:
+            logger.error('please add platform in database')
+    else:
+        platformname=platform
+    try:
+        url=sites[platformname]
+    except:
+        logger.error('please add url in json file')    
+    
+    print(f'url{url}')
     if browserType in ["firefox", "webkit", "chromium"]:
         if proxyserver:
             command = (
@@ -641,10 +674,11 @@ def auto_gen_cookie_file(username,password,proxy=None,cookiepath=None):
         if result.returncode:
             print(f"failed to save cookie file:{result.stderr}")
             logger.error(f"failed to save cookie file:{result.stderr}")
+            showinfomsg(message=f"failed to save cookie file:{result.stderr}")
 
         else:
-            print("just check your cookie file", username + "-cookie.json")    
-            logger.debug("just check your cookie file", username + "-cookie.json")    
+            print(f"just check your cookie file:{username}-cookie.json")    
+            logger.debug(f"just check your cookie file:{username}-cookie.json")    
 
             cookiepath.set(PurePath(ROOT_DIR,username+ "-cookie.json "))
 
@@ -3794,7 +3828,7 @@ def newaccountView(frame):
 
     
     b_channel_cookie_gen=tk.Button(ttkframe,text=settings[locale]['newaccountview']['pullcookie'],command=
-                                   lambda: threading.Thread(target=auto_gen_cookie_file(username.get(),password.get(),proxy_option_account.get(),channel_cookie_user)).start() 
+                                   lambda: threading.Thread(target=auto_gen_cookie_file(username.get(),password.get(),socialplatform.get(),proxy_option_account.get(),channel_cookie_user)).start() 
     )
     # b_channel_cookie_gen.place(x=100, y=390)    
     b_channel_cookie_gen.grid(row = 6, column = 12, columnspan = 2, padx=14, pady=15)    
