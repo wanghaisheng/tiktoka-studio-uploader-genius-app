@@ -4,6 +4,7 @@ from tsup.youtube.models.youtube_models import YoutubeVideo,UploadSetting
 
 from datetime import datetime,date,timedelta
 import asyncio
+from src.log import logger,addKeywordfilter
 
 # # for cookie issue,
 # upload = Upload(
@@ -11,10 +12,17 @@ import asyncio
 async def uploadTask(uploadsetting=None,account=None,video=None):
 
     youtubevideoid=None
-    
-    upload = YoutubeUpload(**uploadsetting)
+    logger.debug(f'start to youtube upload video:\r{video}')
 
+    upload = YoutubeUpload(**uploadsetting)
+    logger.debug('initial youtube upload ok')
     youtubevideoid=await upload.upload(**video)
+    
+    if youtubevideoid:
+        logger.debug('video upload ok:{youtubevideoid}')
+    else:
+        logger.debug('video upload failed')
+
     return youtubevideoid
 async def startUpload(root_profile_directory="",use_stealth_js=False,proxy_option="",is_open_browser=True,debug=True,channel_cookie_path='',wait_policy="go next after copyright check success",username='',password='',is_record_video=True):
     uploadSetting=UploadSetting(

@@ -42,18 +42,18 @@ def queryTasks(frame=None,canvas=None,tab_headers=None,username=None,platform=No
         platform=None        
     elif type(platform)==str:
         print('======',platform)
-        print(f'query tasks for {platform} {find_key(PLATFORM_TYPE.PLATFORM_TYPE_TEXT, platform)} ')
+        print(f'query tasks for  platform:{platform} {find_key(PLATFORM_TYPE.PLATFORM_TYPE_TEXT, platform)} ')
 
         platform=find_key(PLATFORM_TYPE.PLATFORM_TYPE_TEXT, platform)
 
-    if status=='':
-        status=None  
-    elif  status is not None and 'choose' in status:
-        status=None             
-    elif type(status)==str:
-        print(f'query tasks for {status} {getattr(TASK_STATUS, status.upper())} ')
+        if type(status)==str:
+            try:
+                print(f'query tasks for status:{status} {getattr(TASK_STATUS, status.upper())} ')
 
-        status=getattr(TASK_STATUS, status.upper())
+                status=getattr(TASK_STATUS, status.upper())
+            except:
+                logger.info('you input status is invalid :{status},we use default 2')
+                status=0
 
     if sortby=='':
         sortby="Add DATE ASC"
@@ -62,7 +62,7 @@ def queryTasks(frame=None,canvas=None,tab_headers=None,username=None,platform=No
     elif  sortby is not None and 'choose' in sortby:
         sortby=None             
     elif type(sortby)==str:
-        print(f'query tasks for {sortby} {find_key(SORT_BY_TYPE.SORT_BY_TYPE_TEXT, sortby.upper())} ')
+        print(f'query tasks for sortby: {sortby} {find_key(SORT_BY_TYPE.SORT_BY_TYPE_TEXT, sortby.upper())} ')
 
         sortby=find_key(SORT_BY_TYPE.SORT_BY_TYPE_TEXT, sortby.upper())
 
@@ -365,6 +365,7 @@ def upload_selected_row_task(rowid,frame=None,status=None,platform=None):
                         uploadsetting.pop('account')
                         uploadsetting.pop('is_deleted')
                         uploadsetting.pop('platform')
+                        uploadsetting['logger']=logger
                         proxy=row.setting.account.proxy
                         if proxy:
                             uploadsetting['proxy_option']='socks5:127.0.0.1:1080'

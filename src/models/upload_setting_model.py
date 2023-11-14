@@ -14,7 +14,7 @@ class BROWSER_TYPE:
     BROWSER_TYPE_TEXT = [
         (CHROMIUM, "chromium"),
         (FIREFOX, "firefox"),
-        (WEBKIT, "webKit"),
+        (WEBKIT, "webkit"),
     ]
 class WAIT_POLICY_TYPE:
 

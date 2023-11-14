@@ -19,6 +19,7 @@ platforms=platforms*5
 policys=list(dict(WAIT_POLICY.WAIT_POLICY_TEXT).keys())
 taskstatus=list(dict(TASK_STATUS.TASK_STATUS_TEXT).keys())
 browsers=list(dict(BROWSER_TYPE.BROWSER_TYPE_TEXT).keys())
+categories=list(dict(VIDEO_CATEGORIES_OPTIONS.VIDEO_CATEGORIES_OPTIONS_TEXT).keys())
 
 # https://github.com/coleifer/peewee/issues/221
 # 如何切换数据库
@@ -178,16 +179,20 @@ class TestData:
 
                 test_videos=[]
                 for i in range(1,50):
-                        video=YoutubeVideoModel.add_video(
-                                video_data={
+                        video_data={
                         "video_local_path": random.choice(fule),
                         "video_title": 'test title'+str(random.choice(range(1,100))),
                         "video_description":'test description'+str(random.choice(range(1,100))),
                         "thumbnail_local_path": random.choice(images),
                         "publish_policy": random.choice(policys),
                         "tags": random.choice(['t1,t2,t3']),
+                        "categories":random.choice(categories)
 
-                        }
+                        }          
+                        print('add video ',video_data)
+
+                        video=YoutubeVideoModel.add_video(video_data=video_data
+
 
                                         
 
