@@ -368,7 +368,7 @@ def load_citydb():
     if os.path.exists(dbfile) :
         try:
             datas = json.loads(open(dbfile,encoding='utf-8').read())
-            print('json data',datas)
+            # print('json data',datas)
             citydb=datas
             # for key,value in enumerate(datas):
             #     print(f'load country db {key} {value}')
@@ -590,22 +590,63 @@ def ValidateSetting():
 
 
 
-def auto_gen_cookie_file():
+def auto_gen_cookie_file(username,password,proxy=None,cookiepath=None):
     
     print('call tsup gen cookie api')
+    if  proxy is None or proxy=='':
+        proxyserver=None
+    else:
+        id=CustomID(custom_id=proxy).to_bin()
+        proxydata=ProxyModel.get_proxy_by_id(id=id)
+        certification=None
+        if proxydata.proxy_username:
+            certification=f"@{proxydata.proxy_username}:{proxydata.proxy_password}"
+        server=None
+        if proxydata.proxy_host:
+            server=f"{proxydata.proxy_host}:{proxydata.proxy_port}"
+        protocol=None
+        if proxydata.proxy_protocol:
+            protocol=f"{dict(PROXY_PROTOCOL.PROXY_PROTOCOL_TEXT,proxydata.proxy_protocol)}"
+        proxyserver=f"{protocol}://{server}{certification}"
+    browserType="firefox"
+    url='https://www.youtube.com/upload?persist_gl=1'
+    if browserType in ["firefox", "webkit", "chromium"]:
+        if proxyserver:
+            command = (
+                "playwright codegen -b "
+                + browserType
+                # + ' --device "iPhone 12" '
+                # + ' --device "iPad Pro 11 landscape" '
+                + " --proxy-server "
+                + proxyserver
+                + " --lang 'en-GB' --save-storage="
+                + username
+                + "-cookie.json "
+                + url
+            )
+        else:
+            command = (
+                "playwright codegen -b "
+                + browserType
+                # + ' --device "iPhone 12" '
+                + " --lang 'en-GB' --save-storage="
+                + username
+                + "-cookie.json "
+                + url
+            )
+        result = subprocess.run(
+            command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True
+        )
+        print(result)
+        if result.returncode:
+            print(f"failed to save cookie file:{result.stderr}")
+            logger.error(f"failed to save cookie file:{result.stderr}")
 
+        else:
+            print("just check your cookie file", username + "-cookie.json")    
+            logger.debug("just check your cookie file", username + "-cookie.json")    
 
-def select_thumb_template_file(folder):
-    global thumbnail_template_file_path
-    try:
-        thumbnail_template_file_path = filedialog.askopenfilenames(title="请选择 template文件", filetypes=[
-            ("Json", "*.json"), ("All Files", "*")])[0]
-
-        thumbnail_template_file.set(thumbnail_template_file_path)
-        # ultra[folder]['thumb_gen_template']=thumbnail_template_file_path
-    except:
-        print('please select a valid template json file')
-
+            cookiepath.set(PurePath(ROOT_DIR,username+ "-cookie.json "))
 
 
 
@@ -693,8 +734,19 @@ def SelectMetafile(cachename,var):
     
 def chooseAccountsView(newWindow,parentchooseaccounts):
 
+    chooseAccountsWindow = tk.Toplevel(newWindow)
+    chooseAccountsWindow.geometry(window_size)
+    chooseAccountsWindow.title('Choose associated account')
+    def refreshAccount(*args):
+        parentchooseaccounts.set(account_var.get())
+    account_var=tk.StringVar()
+    lbl16 = tk.Label(chooseAccountsWindow, text='binded accounts')
+    lbl16.grid(row=5,column=0, sticky=tk.W)
+    txt16 = tk.Entry(chooseAccountsWindow,textvariable=account_var,width=int(int(window_size.split('x')[-1])/5))
+    txt16.grid(row=6,column=0, sticky=tk.W)
+    account_var.trace('w',refreshAccount)
     
-    accountView(newWindow,mode='bind',linkAccounts=parentchooseaccounts)
+    accountView(chooseAccountsWindow,mode='bind',linkAccounts=account_var)
 
 
 
@@ -3564,12 +3616,16 @@ def saveUser(platform,username,password,proxy,cookies,linkaccounts=None):
             'proxy': proxy_ids
         }
         # Create the user and associate the proxy IDs
+        logger.debug(f'start to save user:\r{user_data}')
+        print(f'start to save user:\r{user_data}')
+
         userid = AccountModel.add_account(user_data)
 
         if userid:
             print(f"check link account {type(linkaccounts)} {len(linkaccounts)}")
             if linkaccounts is None or len(linkaccounts)==0:
                 print(f'there is no backup account to be add at all')
+                showinfomsg(message='this account added ok')
 
             else:
                 
@@ -3737,7 +3793,9 @@ def newaccountView(frame):
     b_channel_cookie.grid(row = 6, column = 9, columnspan = 2, padx=14, pady=15)    
 
     
-    b_channel_cookie_gen=tk.Button(ttkframe,text=settings[locale]['newaccountview']['pullcookie'],command=auto_gen_cookie_file)
+    b_channel_cookie_gen=tk.Button(ttkframe,text=settings[locale]['newaccountview']['pullcookie'],command=
+                                   lambda: threading.Thread(target=auto_gen_cookie_file(username.get(),password.get(),proxy_option_account.get(),channel_cookie_user)).start() 
+    )
     # b_channel_cookie_gen.place(x=100, y=390)    
     b_channel_cookie_gen.grid(row = 6, column = 12, columnspan = 2, padx=14, pady=15)    
  
@@ -4158,16 +4216,19 @@ def load_meta_file(filepath):
         logger.error(f'{filepath}is not provide' )  
         return None
 def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPolicy_value,deviceType_value,browserType_value,is_open_browser_value,wait_policy_value,is_debug_value,is_record_video_value,frame):     
-    
-    if multiAccountsPolicy_value=='单平台单账号':
-    # ('单平台单账号', '同平台主副账号','单平台多独立账号随机发布','单平台多独立账号平均发布'))
-        multiAccountsPolicy_value=0
-    elif multiAccountsPolicy_value=='同平台主副账号':
-        multiAccountsPolicy_value=1
-    elif multiAccountsPolicy_value=='单平台多独立账号独立发布':
+    try:
+        multiAccountsPolicy_value=find_key(settings[locale]['newtaskview']['policy'],multiAccountsPolicy_value)
+    except:
         multiAccountsPolicy_value=2
-    elif multiAccountsPolicy_value=='单平台多独立账号平均发布':
-        multiAccountsPolicy_value=3    
+    # if multiAccountsPolicy_value=='单平台单账号':
+    # # ('单平台单账号', '同平台主副账号','单平台多独立账号随机发布','单平台多独立账号平均发布'))
+    #     multiAccountsPolicy_value=0
+    # elif multiAccountsPolicy_value=='同平台主副账号':
+    #     multiAccountsPolicy_value=1
+    # elif multiAccountsPolicy_value=='单平台多独立账号独立发布':
+    #     multiAccountsPolicy_value=2
+    # elif multiAccountsPolicy_value=='单平台多独立账号平均发布':
+    #     multiAccountsPolicy_value=3    
     print('assign account',choosedAccounts_value)
     if choosedAccounts_value=='' or choosedAccounts_value is None:
         logger.debug('please choose which platform and account you want to upload ')
@@ -4201,6 +4262,8 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
             # Check the data dictionary for allowed fields and empty values in each entry
             videocounts=len(tmpdict)
             # multiAccountsPolicy_value  根据它来分配视频，
+            taskno=0
+
             for platform,accounts in choosedAccounts_value.items():
                 if accounts=='':
                     accounts=[]
@@ -4231,10 +4294,11 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
                             logger.debug(f'you dont choose any account for this platform:{platform}')
                         tmpaccounts=  extends_accounts(accounts,videocounts)     
                         print('==单账号=',tmpaccounts)
+
                         for key, entry in tmpdict.items():
                             print('key',key)
                             print('entry',entry)
-                            key=key+'_'+platform
+                            key=key+'_'+platform+'-'+str(taskno)
                             tmp['tasks'][key]=entry
                             tmp['tasks'][key]['timeout']=200
                             tmp['tasks'][key]['is_open_browser']=is_open_browser_value
@@ -4247,7 +4311,7 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
                             
 
 
-                            data=(AccountModel.get_account_by_id(id=accounts[0]))[0]
+                            data=AccountModel.get_account_by_id(id=accounts[0])
                             # print('data====',data[0],data[0].username)
                             tmp['tasks'][key]['username']=data.username
                             logger.debug(f'get credentials for this account {accounts[0]}')
@@ -4255,14 +4319,14 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
                             tmp['tasks'][key]['password']=data.password
                             tmp['tasks'][key]['proxy_option']=data.proxy
                             tmp['tasks'][key]['channel_cookie_path']=data.cookie_local_path
-                        
+                            taskno=+1                                
+
                         
                                 
                     elif multiAccountsPolicy_value==1:
                         print('遍历账号检查是否有副号，计算任务数量，分配视频')
                         # video={'1.mp4'}
                         # accounts={'y1'} {'y1','y11'}
-                        taskno=0
                         for id_ in accounts:
                             r=AccountRelationship.get_AccountRelationship_by_username(id=id_)
                             if r is not None:
@@ -4328,30 +4392,33 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
                                 taskno=+1    
                             
                     elif multiAccountsPolicy_value==2:
-                        print('遍历账号，生成视频数量*账号数量的对应大小的账号数组')
+                        print(f'遍历账号，生成视频数量{len(tmpdict)}*账号数量{len(accounts)}的对应大小的账号数组')
 
-                        tmpaccounts=  extends_accounts(accounts,len(accounts)*videocounts,mode='random')  
-                        taskno=0
-                        for key, entry in tmpdict.items():
-                            print('key',key)
-                            print('entry',entry)
-                            key=key+'_'+platform+'-'+str(taskno)
-                            tmp['tasks'][key]=entry
-                            tmp['tasks'][key]['timeout']=200
-                            tmp['tasks'][key]['is_open_browser']=is_open_browser_value
-                            tmp['tasks'][key]['is_debug']=is_debug_value
-                            tmp['tasks'][key]['platform']=platform
-                            tmp['tasks'][key]['wait_policy']=wait_policy_value
-                            tmp['tasks'][key]['is_record_video']=is_record_video_value
-                            tmp['tasks'][key]['browser_type']=browserType_value
+                        accountids = accounts
+                        videoids   = tmpdict.keys()
+                        from itertools import product
+                        result = product(accountids, videoids)
+                        print(list(result))
+                        for index, entry in tmpdict.items():
 
-                            for id_ in accounts:
+                                print('video index:\n',index)
+                                print('video entry:\n',entry)
+                                print('taskno:\n',taskno)
 
+                                key=index+'_'+platform+'-'+str(taskno)
+                                tmp['tasks'][key]=entry
+                                tmp['tasks'][key]['timeout']=200
+                                tmp['tasks'][key]['is_open_browser']=is_open_browser_value
+                                tmp['tasks'][key]['is_debug']=is_debug_value
+                                tmp['tasks'][key]['platform']=platform
+                                tmp['tasks'][key]['wait_policy']=wait_policy_value
+                                tmp['tasks'][key]['is_record_video']=is_record_video_value
+                                tmp['tasks'][key]['browser_type']=browserType_value
                             # account=tmpaccounts[taskno]
-                                data=AccountModel.get_account_by_id(id=id_)
+                                data=AccountModel.get_account_by_id(id=tmpaccounts[index])
                                 # print('data====',data[0],data[0].username)
                                 tmp['tasks'][key]['username']=data.username
-                                logger.debug(f'get credentials for this account {account}')
+                                logger.debug(f'get credentials for this account {data}')
 
                                 tmp['tasks'][key]['password']=data.password
                                 tmp['tasks'][key]['proxy_option']=data.proxy
@@ -4361,10 +4428,9 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
                     elif multiAccountsPolicy_value==3:
                         print('遍历账号，生成视频数量对应大小的账号数组，平均分配')
                         if videocounts <len(accounts):
-                            tmpaccounts=  extends_accounts(accounts,videocounts,mode='random')      
+                            tmpaccounts= random.sample(accounts,videocounts) 
                         else:
                             tmpaccounts=  extends_accounts(accounts,videocounts,mode='equal')      
-                        taskno=0
                         for key, entry in tmpdict.items():
                             print('key',key)
                             print('entry',entry)
@@ -6612,7 +6678,7 @@ def start(lang,root=None):
 
 
 
-    logger.debug(f'Installation path is:{ROOT_DIR}')
+    logger.debug(f'TiktokaStudio Installation path is:{ROOT_DIR}')
 
     logger.debug('TiktokaStudio GUI started')
     render(root,mainwindow,lang)

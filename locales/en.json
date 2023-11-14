@@ -54,7 +54,7 @@
 		"L_bindaccounts":"Binded accounts",
 		"B_bindaccounts":"Bind",
 		"policy":"Policy",
-		"policy_options":"one platform one account only, same platfrom main account with backup account,depedent account-publish the same,depedent account-publish randomly",
+		"policy_options":"one platform one account only,same platfrom main account with backup account,depedent account-publish the same,depedent account-publish randomly",
 		"browser_options":"firefox, webkit,chrome",
 		"devicetype_options":"embed browser, adspower,phone emulator,iphone,android",
 		"silent_mode":"silent",

@@ -29,7 +29,7 @@
 "L_bindaccounts":"关联账号",
 "B_bindaccounts":"绑定",
 "policy":"策略",
-"policy_options":"单平台单账号, 同平台主副账号,单平台多独立账号同时发布,单平台多独立账号平均发布",
+"policy_options":"单平台单账号,同平台主副账号,单平台多独立账号同时发布,单平台多独立账号平均发布",
 "browser_options":"firefox, webkit,chrome",
 "devicetype_options":"embed browser, adspower,phone emulator,iphone,android",
 "silent_mode":"静默模式",
