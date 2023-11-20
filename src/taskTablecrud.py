@@ -19,7 +19,7 @@ import threading
 
 
 def queryTasks(
-        async_loop,
+    async_loop,
     frame=None,
     canvas=None,
     tab_headers=None,
@@ -248,10 +248,12 @@ def queryTasks(
         tab_headers.append("operation")
 
         print(f"show header and rows based on query {tab_headers}\n{task_data}")
-        refreshTaskcanvas(async_loop,canvas=canvas, frame=frame, headers=tab_headers, datas=[])
+        refreshTaskcanvas(
+            async_loop, canvas=canvas, frame=frame, headers=tab_headers, datas=[]
+        )
 
-        refreshTaskcanvas(async_loop,
-            canvas=canvas, frame=frame, headers=tab_headers, datas=task_data
+        refreshTaskcanvas(
+            async_loop, canvas=canvas, frame=frame, headers=tab_headers, datas=task_data
         )
 
         print(f"end to show header and rows based on query {tab_headers}\n{task_data}")
@@ -259,7 +261,7 @@ def queryTasks(
         logger.debug(f"Task search and display finished")
 
 
-def refreshTaskcanvas(async_loop,canvas=None, frame=None, headers=None, datas=None):
+def refreshTaskcanvas(async_loop, canvas=None, frame=None, headers=None, datas=None):
     print(f"try to clear existing rows in the tabular {len(frame.winfo_children())} ")
 
     try:
@@ -381,14 +383,16 @@ def refreshTaskcanvas(async_loop,canvas=None, frame=None, headers=None, datas=No
                 relief=tk.RIDGE,
                 activebackground="orange",
                 text="upload",
-
                 command=lambda x=i - 1: threading.Thread(
-                    target=upload_selected_row_task(
-                        rowid=datas[x]["id"],
-                        frame=frame,
-                        status=datas[x]["status"],
-                        platform=datas[x]["platform"],
-                    ), args=(async_loop,)
+                    target=async_loop.run_until_complete(
+                        upload_selected_row_task(
+                            rowid=datas[x]["id"],
+                            frame=frame,
+                            status=datas[x]["status"],
+                            platform=datas[x]["platform"],
+                        )
+                    ),
+                    args=(async_loop,),
                 ).start(),
             )
             upload_buttons[i].grid(row=i, column=len(headers) - 1, sticky="news")
@@ -452,7 +456,7 @@ def remove_selected_row_task(rowid, frame=None, name=None, func=None):
         logger.debug(f"end to remove,reset {name} {rowid}")
 
 
-def upload_selected_row_task(rowid, frame=None, status=None, platform=None):
+async def upload_selected_row_task(rowid, frame=None, status=None, platform=None):
     print("you want to upload this task", rowid)
     if rowid == 0:
         showinfomsg(
@@ -503,19 +507,19 @@ def upload_selected_row_task(rowid, frame=None, status=None, platform=None):
                         video.pop("unique_hash")
                         video.pop("inserted_at")
                         video.pop("is_deleted")
-
-                        loop = asyncio.get_event_loop()
-                        get_future = asyncio.ensure_future(
+                        tasks = [
                             uploadTask(
                                 taskid=row.id,
                                 video=video,
                                 uploadsetting=uploadsetting,
                                 account=row.setting.account,
                             )
-                        )  # 相当于开启一个future
-                        loop.run_until_complete(get_future)  # 事件循环
-                        videoid = get_future.result()
-                        print(get_future.result())  # 获取结果
+                        ]
+
+                        completed, pending = await asyncio.wait(tasks)
+                        results = [task.result() for task in completed]
+
+                        videoid = results
 
                         # videoid = asyncio.run(
                         #     uploadTask(
