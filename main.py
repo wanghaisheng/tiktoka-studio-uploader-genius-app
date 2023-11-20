@@ -12,6 +12,7 @@ from playhouse.shortcuts import model_to_dict
 from pathlib import Path,PureWindowsPath,PurePath
 from src.models.addtestdata import TestData
 from src.bg_music import batchchangebgmusic
+from src.asyncEvent import AsyncEvent
 # Initialize FastAPI
 app = FastAPI()
 # Allow all origins
@@ -106,6 +107,7 @@ citydbfilename='assets/country-db/qq/en_loclist.json'
 settingfilename='settings.json'
 locale='en'
 window_size='1024x720'
+
 height=720
 width=1024
 supported_video_exts=['.flv', '.mp4', '.avi']
@@ -4504,7 +4506,7 @@ def genUploadTaskMetas(videometafilepath,choosedAccounts_value,multiAccountsPoli
             showinfomsg(message=f'save task meta success',parent=frame)    
         else:
             showinfomsg(message=f'load video meta failed',parent=frame)    
-def validateTaskMetafile(frame,metafile,canvas=None):
+def validateTaskMetafile(loop,frame,metafile,canvas=None):
     logger.debug('load task metas to database ')
     print('load task meta')
 
@@ -4939,7 +4941,7 @@ def validateTaskMetafile(frame,metafile,canvas=None):
                 logger.debug(f'end to process task data')
                 print('show added task in the tabular',taskids)
                 
-                queryTasks(frame=frame,canvas=canvas,tab_headers=None,username=None,platform=None,status=None,video_title=None,schedule_at=None,video_id=None,pageno=1,pagecount=50,ids=taskids,sortby="ASC")
+                queryTasks(loop,frame=frame,canvas=canvas,tab_headers=None,username=None,platform=None,status=None,video_title=None,schedule_at=None,video_id=None,pageno=1,pagecount=50,ids=taskids,sortby="ASC")
                 showinfomsg(message=f'end to process task data')
 
                                                 
@@ -4957,7 +4959,7 @@ def validateTaskMetafile(frame,metafile,canvas=None):
         logger.error("you choosed task meta  file is missing or broken.")       
 
               
-def uploadView(frame,ttkframe,lang):
+def uploadView(frame,ttkframe,lang,async_loop):
     queryframe=tk.Frame(ttkframe)
     # queryframe=frame
     queryframe.grid(row = 0, column = 0,sticky='w')
@@ -5100,7 +5102,7 @@ def uploadView(frame,ttkframe,lang):
 
   
     b_validate_video_metas = tk.Button(operationframe, text=settings[locale]['uploadview']['validateVideoMetas']
-                                       , command=lambda: threading.Thread(target=validateTaskMetafile(result_frame,imported_task_metas_file.get(),canvas=None)).start())
+                                       , command=lambda: threading.Thread(target=validateTaskMetafile(loop,result_frame,imported_task_metas_file.get(),canvas=None)).start())
     b_validate_video_metas.grid(row = 0, column = 5, padx=14, pady=15)
 
 
@@ -5121,12 +5123,12 @@ def uploadView(frame,ttkframe,lang):
 
 
 
-    refreshTaskcanvas(canvas=None,frame=result_frame,headers=tab_headers,datas=[])
+    refreshTaskcanvas(async_loop,canvas=None,frame=result_frame,headers=tab_headers,datas=[])
 
     print('First time render tab headers')
 
 
-    btn5= tk.Button(queryframe, text=settings[locale]['uploadview']['querynow'], command = lambda:queryTasks(canvas=None,frame=result_frame,status=task_status_var.get(),platform=platform_var.get(),username=channelname.get(),video_id=vid.get(),video_title=vtitle.get(),schedule_at=schedule_at_var.get(),pageno=1,pagecount=50,sortby=sortby_var.get()) )
+    btn5= tk.Button(queryframe, text=settings[locale]['uploadview']['querynow'], command = lambda:queryTasks(loop,canvas=None,frame=result_frame,status=task_status_var.get(),platform=platform_var.get(),username=channelname.get(),video_id=vid.get(),video_title=vtitle.get(),schedule_at=schedule_at_var.get(),pageno=1,pagecount=50,sortby=sortby_var.get()) )
     btn5.grid(row = 1, column = 24,  padx=14, pady=15)
     
     
@@ -6305,7 +6307,7 @@ def addTab(tab_control):
     doc_frame.grid_columnconfigure(1, weight=2)
     return doc_frame,doc_frame_left,doc_frame_right
 
-def render(root,window,lang):
+def render(root,window,lang,async_loop):
     global doc_frame,install_frame,thumb_frame,video_frame,proxy_frame,account_frame,upload_frame,meta_frame,tab_control
 
     tab_control = ttk.Notebook(window)
@@ -6614,7 +6616,7 @@ def render(root,window,lang):
 
     tab_control.add(upload_frame, text=settings[locale]['uploadView'])
     # uploadView(upload_frame_left,upload_frame_right,lang)
-    uploadView(upload_frame_left,upload_frame_left,lang)
+    uploadView(upload_frame_left,upload_frame_left,lang,async_loop)
     
     statsView(stats_frame,root,lang)
 
@@ -6690,7 +6692,7 @@ def render(root,window,lang):
     root.config(menu=menubar)
     # return langchoosen.get()
 
-def start(lang,root=None):
+def start(lang,root=None,async_loop=None):
 
 
 
@@ -6715,7 +6717,7 @@ def start(lang,root=None):
     logger.debug(f'TiktokaStudio Installation path is:{ROOT_DIR}')
 
     logger.debug('TiktokaStudio GUI started')
-    render(root,mainwindow,lang)
+    render(root,mainwindow,lang,async_loop)
     root.update_idletasks()
 
 # # Set the initial size of the notebook frame (4/5 of total height)
@@ -6782,16 +6784,17 @@ app.include_router(router)
 
 async def asynctk():
     start_tkinter_app()
-def  start_tkinter_app():
+def  start_tkinter_app(loop):
     global root,settings,db,canvas,locale
     tmp['accountlinkaccount']={}    
 
     root = tk.Tk()
+    # async_executor.submit(run_in_thread, 3).then(print_result)    
     load_setting()
     load_citydb()
     # print('---',settings)
     locale=settings['lastuselang']
-    start(locale,root)
+    start(locale,root,async_loop)
 
     settings['folders']=tmp
     # root.protocol('WM_DELETE_WINDOW', withdraw_window)
@@ -6819,4 +6822,4 @@ if __name__ == '__main__':
     # loop.create_task(asynctk())
     # start_fastapi_server(loop)
 
-    start_tkinter_app()
+    start_tkinter_app(loop)
