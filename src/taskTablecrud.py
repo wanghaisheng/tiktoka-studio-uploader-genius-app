@@ -12,10 +12,11 @@ from datetime import datetime, date, timedelta
 import tkinter as tk
 from src.constants import height, width, window_size
 from src.log import logger
-from src.utils import showinfomsg, find_key, askokcancelmsg
+from src.utils import showinfomsg, find_key, askokcancelmsg, askquestionmsg
 from pathlib import Path, PureWindowsPath, PurePath
 import asyncio
 import threading
+import json
 
 
 def queryTasks(
@@ -151,7 +152,7 @@ def queryTasks(
                     padx=0,
                     pady=0,
                     command=lambda x=i: queryTasks(
-                        loop,
+                        async_loop,
                         canvas=canvas,
                         frame=frame,
                         status=status,
@@ -178,7 +179,7 @@ def queryTasks(
                 padx=0,
                 pady=0,
                 command=lambda x=0: queryTasks(
-                    loop,
+                    async_loop,
                     canvas=canvas,
                     frame=frame,
                     status=status,
@@ -197,11 +198,9 @@ def queryTasks(
             pagebutton.grid(row=3, column=1, sticky=tk.NW)
         print(f"prepare row data to render:{task_rows}")
         for row in task_rows:
-            print("row data", row)
             print(
-                "platform",
-                row.platform,
-                dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[row.platform],
+                "row data",
+                json.dumps(model_to_dict(row), indent=4, sort_keys=True, default=str),
             )
 
             p_value = row.platform
@@ -383,17 +382,7 @@ def refreshTaskcanvas(async_loop, canvas=None, frame=None, headers=None, datas=N
                 relief=tk.RIDGE,
                 activebackground="orange",
                 text="upload",
-                command=lambda x=i - 1: threading.Thread(
-                    target=async_loop.run_until_complete(
-                        upload_selected_row_task(
-                            rowid=datas[x]["id"],
-                            frame=frame,
-                            status=datas[x]["status"],
-                            platform=datas[x]["platform"],
-                        )
-                    ),
-                    args=(async_loop,),
-                ).start(),
+                command=lambda x=i - 1: do_ups(async_loop, frame, datas, x),
             )
             upload_buttons[i].grid(row=i, column=len(headers) - 1, sticky="news")
 
@@ -427,6 +416,23 @@ def refreshTaskcanvas(async_loop, canvas=None, frame=None, headers=None, datas=N
         print("use parent frame widht")
     canvas.configure(scrollregion=bbox, width=dw, height=dh)
     print("end to render tabular rows")
+
+
+def do_ups(async_loop, frame, datas, x):
+    threading.Thread(
+        target=_asyncio_thread_up, args=(async_loop, frame, datas, x)
+    ).start()
+
+
+def _asyncio_thread_up(async_loop, frame, datas, x):
+    async_loop.run_until_complete(
+        upload_selected_row_task(
+            rowid=datas[x]["id"],
+            frame=frame,
+            status=datas[x]["status"],
+            platform=datas[x]["platform"],
+        )
+    )
 
 
 def remove_selected_row_task(rowid, frame=None, name=None, func=None):
@@ -484,7 +490,7 @@ async def upload_selected_row_task(rowid, frame=None, status=None, platform=None
                     logger.debug(f"this task {rowid} start to upload")
                     setting = None
                     video = None
-
+                    tasks = []
                     for row in task_rows:
                         print(
                             "platform",
@@ -515,33 +521,30 @@ async def upload_selected_row_task(rowid, frame=None, status=None, platform=None
                                 account=row.setting.account,
                             )
                         ]
+                    showinfomsg(
+                        message=f"this task {rowid} add to queue now,upload will start automatically",
+                        parent=frame,
+                        DURATION=2000,
+                    )
+                    completed, pending = await asyncio.wait(tasks)
+                    results = [task.result() for task in completed]
 
-                        completed, pending = await asyncio.wait(tasks)
-                        results = [task.result() for task in completed]
+                    videoid = results[0]
 
-                        videoid = results
-
-                        # videoid = asyncio.run(
-                        #     uploadTask(
-                        #         taskid=row.id,
-                        #         video=video,
-                        #         uploadsetting=uploadsetting,
-                        #         account=row.setting.account,
-                        #     )
-                        # )
-                        # print()
-                        if videoid is None:
-                            showinfomsg(
-                                message=f"this task {rowid} upload failed",
-                                parent=frame,
-                            )
-                            print(f"this task {rowid} upload failed")
-                        else:
-                            showinfomsg(
-                                message=f"this task {rowid} upload success",
-                                parent=frame,
-                            )
-                            print(f"this task {rowid} upload success")
+                    print(f"get videoid after upload:{videoid}")
+                    if videoid is None:
+                        askquestionmsg(
+                            message=f"this task {rowid} upload failed",
+                            parent=frame,
+                            DURATION=1000,
+                        )
+                        print(f"this task {rowid} upload failed")
+                    else:
+                        showinfomsg(
+                            message=f"this task {rowid} upload success",
+                            parent=frame,
+                        )
+                        print(f"this task {rowid} upload success")
 
                 else:
                     logger.debug(
