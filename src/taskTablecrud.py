@@ -35,6 +35,12 @@ def queryTasks(
     ids=None,
     sortby="Add DATE ASC",
 ):
+    print(
+        f"query conditions \nusername: {username} platform:{platform} status:{status} video_title:{video_title} schedule_at:{schedule_at} video_id:{video_id} "
+    )
+    logger.info(
+        f"query conditions \nusername: {username} platform:{platform} status:{status} video_title:{video_title} schedule_at:{schedule_at} video_id:{video_id} "
+    )
     if pageno is None:
         pageno = 1
     if pagecount is None:
@@ -55,17 +61,22 @@ def queryTasks(
         video_title = None
     if video_title == "" or video_title is None:
         video_title = None
-    if platform is not None and "choose" in platform:
+    if type(platform) == int:
         platform = None
-    if platform == "" or platform is None:
+    elif type(platform) == str and (
+        platform == ""
+        or platform in list(dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT).values()) == False
+    ):
         platform = None
-    elif type(platform) == str:
-        print("======", platform)
-        print(
-            f"query tasks for  platform:{platform} {find_key(PLATFORM_TYPE.PLATFORM_TYPE_TEXT, platform)} "
-        )
+    else:
+        try:
+            print(
+                f"query tasks for {platform} {getattr(PLATFORM_TYPE, platform.upper())} "
+            )
 
-        platform = find_key(PLATFORM_TYPE.PLATFORM_TYPE_TEXT, platform)
+            platform = getattr(PLATFORM_TYPE, platform.upper())
+        except:
+            platform = None
 
         if type(status) == str:
             try:
@@ -76,9 +87,9 @@ def queryTasks(
                 status = getattr(TASK_STATUS, status.upper())
             except:
                 logger.info("you input status is invalid :{status},we use default 2")
-                status = 0
+                status = None
 
-    if sortby == "":
+    if sortby == "" or sortby is None:
         sortby = "Add DATE ASC"
     elif sortby in list(dict(SORT_BY_TYPE.SORT_BY_TYPE_TEXT).keys()):
         pass
@@ -198,10 +209,10 @@ def queryTasks(
             pagebutton.grid(row=3, column=1, sticky=tk.NW)
         print(f"prepare row data to render:{task_rows}")
         for row in task_rows:
-            print(
-                "row data",
-                json.dumps(model_to_dict(row), indent=4, sort_keys=True, default=str),
-            )
+            # print(
+            #     "row data",
+            #     json.dumps(model_to_dict(row), indent=4, sort_keys=True, default=str),
+            # )
 
             p_value = row.platform
             if type(row.platform) != int:
@@ -255,7 +266,7 @@ def queryTasks(
             async_loop, canvas=canvas, frame=frame, headers=tab_headers, datas=task_data
         )
 
-        print(f"end to show header and rows based on query {tab_headers}\n{task_data}")
+        print(f"end to show task header and rows based on query")
 
         logger.debug(f"Task search and display finished")
 

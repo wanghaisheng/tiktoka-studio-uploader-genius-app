@@ -19,8 +19,22 @@ async def uploadTask(taskid=None, uploadsetting=None, account=None, video=None):
     if youtubevideoid is None:
         logger.debug("video upload failed")
         print(f"{taskid} video upload failed")
+        print("update task status to failure")
+        result = TaskModel.update_task(
+            id=CustomID(custom_id=taskid).to_bin(),
+            status=TASK_STATUS.FAILURE,
+        )
+        print("end to update task status to failure")
+
     else:
         logger.debug("video upload ok:{youtubevideoid}")
         print(f"{taskid} video upload ok")
+        print("update task status to success")
+
+        result = TaskModel.update_task(
+            id=CustomID(custom_id=taskid).to_bin(),
+            status=TASK_STATUS.SUCCESS,
+        )
+        print("end to update task status to success")
 
     return youtubevideoid

@@ -208,7 +208,7 @@ class TestData:
 
             if len(test_tasks) == 119:
                 print("test data  inserted done")
-                showinfomsg(message="test data  inserted done", DURATION=2000)
+                # showinfomsg(message="test data  inserted done", DURATION=2000)
                 return test_tasks, test_settings, test_videos, test_users
             else:
                 return None, None, None, None

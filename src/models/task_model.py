@@ -12,6 +12,8 @@ from src.log import logger
 from playhouse.shortcuts import model_to_dict
 import json
 
+from src.utils import showinfomsg, find_key, askokcancelmsg, askquestionmsg
+
 
 class TASK_STATUS:
     PENDING = 0
@@ -167,8 +169,7 @@ class TaskModel(BaseModel):
 
             task.save()
             logger.info(
-                "row data",
-                json.dumps(model_to_dict(task), indent=4, sort_keys=True, default=str),
+                f"row data:{json.dumps(model_to_dict(task), indent=4, sort_keys=True, default=str)}"
             )
             print("end to update task data")
 
@@ -209,6 +210,12 @@ class TaskModel(BaseModel):
         ids=None,
         sortby=None,
     ):
+        logger.info(
+            f"filter_tasks query conditions \nusername: {username} platform:{platform} status:{status} video_title:{video_title} schedule_at:{schedule_at} video_id:{video_id} "
+        )
+        print(
+            f"filter_tasks query conditions \nusername: {username} platform:{platform} status:{status} video_title:{video_title} schedule_at:{schedule_at} video_id:{video_id} "
+        )
         query = TaskModel.select()
         counts = query.count()
         query = (
@@ -231,19 +238,44 @@ class TaskModel(BaseModel):
                 print(f"there is no support for status value yet:{status}")
 
         if status is not None:
-            if status in dict(TASK_STATUS.TASK_STATUS_TEXT).keys():
-                query = query.where(TaskModel.status == status)
+            if type(status) == int:
+                if status in dict(TASK_STATUS.TASK_STATUS_TEXT).keys():
+                    query = query.where(TaskModel.status == status)
+
+                else:
+                    print(
+                        f"there is no support for status value yet:{status}.by default we query all status"
+                    )
+
+            elif type(status) == str:
+                if status in dict(TASK_STATUS.TASK_STATUS_TEXT).values():
+                    status = find_key(dict(TASK_STATUS.TASK_STATUS_TEXT), status)
+                else:
+                    status = None
             else:
-                print(f"there is no support for status value yet:{status}")
+                print(
+                    f"there is no support for status value yet:{status}.by default we query all status"
+                )
 
         if sortby is not None:
-            if sortby == 0:
-                query = query.order_by(TaskModel.inserted_at.asc())
+            if type(sortby) == str:
+                if sortby in dict(SORT_BY_TYPE.SORT_BY_TYPE_TEXT).values():
+                    sortby = find_key(dict(SORT_BY_TYPE.SORT_BY_TYPE_TEXT), sortby)
+                else:
+                    sortby = 0
 
-            elif sortby == 1:
-                query = query.order_by(TaskModel.inserted_at.desc())
-            else:
-                print(f"there is no support for sortby value yet:{sortby}")
+            elif type(sortby) == int:
+                if sortby in dict(SORT_BY_TYPE.SORT_BY_TYPE_TEXT).keys() == False:
+                    sortby = 0
+
+        else:
+            sortby = 0
+        if sortby == 0:
+            query = query.order_by(TaskModel.inserted_at.asc())
+
+        elif sortby == 1:
+            query = query.order_by(TaskModel.inserted_at.desc())
+
         if id is not None:
             query = query.switch(
                 TaskModel

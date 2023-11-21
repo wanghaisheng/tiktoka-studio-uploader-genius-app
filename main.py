@@ -1742,15 +1742,13 @@ async def runupload(
         vtitle = None
     if vtitle == "" or vtitle is None:
         vtitle = None
-    if platform is not None and "choose" in platform:
-        platform = None
-    if (
+
+    if type(platform) == str and (
         platform == ""
         or platform in list(dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT).values()) == False
     ):
         platform = None
     else:
-        print("======", platform)
         try:
             print(
                 f"query tasks for {platform} {getattr(PLATFORM_TYPE, platform.upper())} "
@@ -1790,7 +1788,7 @@ async def runupload(
         showinfomsg(message=f"try to add tasks  first", parent=frame, DURATION=500)
 
     else:
-        logger.debug(f"we found {counts} record matching ")
+        logger.debug(f"we found {counts} record matching waiting to  upload ")
         showinfomsg(
             message=f"According to search conditions,we found {counts} record matching to upload",
             DURATION=500,
@@ -1800,6 +1798,13 @@ async def runupload(
         taskids = []
         no_concurrent = settings[locale]["no_concurrent"]
         uptasks = set()
+        print(f"there are {len(task_rows)}  video attempt to upload")
+        askquestionmsg(
+            message=f"{len(task_rows)} tasks add to queue now,upload will start automatically",
+            parent=frame,
+            DURATION=000,
+        )
+
         for row in task_rows:
             taskids.append(CustomID(custom_id=row.id).to_hex())
             uploadsetting = model_to_dict(row.setting)
@@ -1833,33 +1838,27 @@ async def runupload(
                 )
             uptasks.add(asyncio.create_task(task))
 
-        showinfomsg(
-            message=f"{len(uptasks)} tasks add to queue now,upload will start automatically",
-            parent=frame,
-            DURATION=2000,
-        )
 
-        completed, pending = await asyncio.wait(uptasks)
-        results = [task.result() for task in completed]
+        # completed, pending = await asyncio.wait(uptasks)
+        # results = results + [task.result() for task in completed]
+        # # print(async_loop.run(semaphore_gather(3, tasks)))
 
-        # print(async_loop.run(semaphore_gather(3, tasks)))
+        # totalmsg = ""
+        # for idx, videoid in enumerate(results):
+        #     print(f"get videoid after upload:{videoid}")
+        #     if videoid is None:
+        #         totalmsg = totalmsg + "\n" + f"this task {taskids[idx]} upload failed"
+        #         result = TaskModel.update_task(
+        #             id=CustomID(custom_id=taskids[idx]).to_bin(),
+        #             status=TASK_STATUS.FAILURE,
+        #         )
 
-        totalmsg = ""
-        for idx, videoid in enumerate(results):
-            print(f"get videoid after upload:{videoid}")
-            if videoid is None:
-                totalmsg = totalmsg + "\n" + f"this task {taskids[idx]} upload failed"
-                result = TaskModel.update_task(
-                    id=CustomID(custom_id=taskids[idx]).to_bin(),
-                    status=TASK_STATUS.FAILURE,
-                )
-
-            else:
-                totalmsg = totalmsg + "\n" + f"this task {taskids[idx]} upload success"
-                result = TaskModel.update_task(
-                    id=CustomID(custom_id=taskids[idx]).to_bin(),
-                    status=TASK_STATUS.SUCCESS,
-                )
+        #     else:
+        #         totalmsg = totalmsg + "\n" + f"this task {taskids[idx]} upload success"
+        #         result = TaskModel.update_task(
+        #             id=CustomID(custom_id=taskids[idx]).to_bin(),
+        #             status=TASK_STATUS.SUCCESS,
+        #         )
 
         logger.debug(f"end to upload batch task {len(tasks)}")
         logger.debug(f"start to refresh tabular {len(tasks)}")
@@ -1880,11 +1879,11 @@ async def runupload(
         )
         logger.debug(f"end to refresh tabular {len(tasks)}")
 
-        print(f"upload logs:{totalmsg}")
-        askquestionmsg(
-            message=totalmsg,
-            parent=frame,
-        )
+        # print(f"upload logs:{totalmsg}")
+        # askquestionmsg(
+        #     message=totalmsg,
+        #     parent=frame,
+        # )
         print(f"this batch task {len(tasks)} upload endding")
 
 
