@@ -1804,7 +1804,7 @@ async def runupload(
             parent=frame,
             DURATION=000,
         )
-
+        skipcount=0
         for row in task_rows:
             taskids.append(CustomID(custom_id=row.id).to_hex())
             uploadsetting = model_to_dict(row.setting)
@@ -1823,22 +1823,30 @@ async def runupload(
             video.pop("unique_hash")
             video.pop("inserted_at")
             video.pop("is_deleted")
-            task = uploadTask(
-                taskid=row.id,
-                video=video,
-                uploadsetting=uploadsetting,
-                account=row.setting.account,
-            )
-
-            # https://stackoverflow.com/questions/48483348/how-to-limit-concurrency-with-python-asyncio
-            if len(uptasks) >= no_concurrent:
-                # Wait for some download to finish before adding a new one
-                _done, uptasks = await asyncio.wait(
-                    uptasks, return_when=asyncio.FIRST_COMPLETED
+            if row.status==2:
+                print('task is already upload,skip it')
+                skipcount+=1
+            else:
+                task = uploadTask(
+                    taskid=row.id,
+                    video=video,
+                    uploadsetting=uploadsetting,
+                    account=row.setting.account,
                 )
-            uptasks.add(asyncio.create_task(task))
 
+                # https://stackoverflow.com/questions/48483348/how-to-limit-concurrency-with-python-asyncio
+                if len(uptasks) >= no_concurrent:
+                    # Wait for some download to finish before adding a new one
+                    _done, uptasks = await asyncio.wait(
+                        uptasks, return_when=asyncio.FIRST_COMPLETED
+                    )
+                uptasks.add(asyncio.create_task(task))
 
+        askquestionmsg(
+            message=f"{len(task_rows)} tasks add to queue now,auto skip {skipcount} videos uploaded success before",
+            parent=frame,
+            DURATION=000,
+        )
         # completed, pending = await asyncio.wait(uptasks)
         # results = results + [task.result() for task in completed]
         # # print(async_loop.run(semaphore_gather(3, tasks)))
