@@ -61,7 +61,6 @@ from src.bg_music import using_free_music
 from PIL import Image, ImageTk
 import multiprocessing as mp
 from src.upload import *
-from src.ai_detector import AiThumbnailGenerator
 from src.tooltip import Tooltip
 from datetime import datetime, date, timedelta
 import asyncio
@@ -87,7 +86,7 @@ import pystray
 
 from UltraDict import UltraDict
 
-from src.log import logger, addKeywordfilter
+from src.log import logger
 from src.accountTablecrud import *
 from src.taskTablecrud import *
 from src.proxyTablecrud import *
@@ -931,7 +930,9 @@ def isFilePairedMetas(r, videofilename, meta_exts_list, dict, meta_name):
                     logger.debug(
                         f"found des files,start to set video metas {type(dict['videos'][videofilename]['video_description'])},{dict['videos'][videofilename]['video_description']}"
                     )
-
+                    # 判断后缀是否包含国家编码
+                    
+                    #如果发现多个后缀为.des的文件，自动根据suffix判断，en为默认，其他的全部丢到 otherdes 这个字段中，列表形式存储
                     with open(metapath, "r", encoding="utf-8") as f:
                         lines = f.readlines()
 
@@ -1022,38 +1023,37 @@ def syncVideometa2assetsjson(selectedMetafileformat, folder):
                 f"=111==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}"
             )
 
-            logger.debug(
-                f"=222==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}"
-            )
             # ultra[folder]['videos']= {}
             # 当某个key值为空 {} 如果你要赋值一个嵌套的对象 比如json样子的数组 是没有办法直接赋值的
-            # ultra[folder]['videos']= changed_df_metas
-            if dict(ultra[folder]["videos"]) == dict({}):
-                logger.debug(
-                    f"=333==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}"
-                )
+            ultra[folder]['videos']= changed_df_metas
+            # if dict(ultra[folder]["videos"]) == dict({}):
+            #     logger.debug(
+            #         f"=333==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}"
+            #     )
 
-                for filename, video in tmpvideos.items():
-                    ultra[folder]["videos"][filename] = video
-                logger.debug(
-                    f"=444==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}"
-                )
-            else:
-                logger.debug(
-                    f"=555==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}"
-                )
-                try:
-                    ultra[folder]["videos"] = tmpvideos
-                except Exception as e:
-                    logger.error(e)
-                logger.debug(
-                    f"=5551==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}"
-                )
+            #     for filename, video in tmpvideos.items():
+            #         ultra[folder]["videos"][filename] = video
+            #     logger.debug(
+            #         f"=444==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}"
+            #     )
+            # else:
+            #     logger.debug(
+            #         f"=555==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}"
+            #     )
+            #     try:
+            #         ultra[folder]["videos"] = tmpvideos
+            #     except Exception as e:
+            #         logger.error(e)
+            #     logger.debug(
+            #         f"=5551==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}"
+            #     )
+            #     new = dict({})
 
-                for filename, video in tmpvideos.items():
-                    print("is_debug", filename, video)
-                    ultra[folder]["videos"][filename] = video
-                    # ultra[folder]['videos']=new
+            #     for filename, video in tmpvideos.items():
+            #         logger.info(f"filename:{filename}\n new video data\n:{video}\n olddata:\n{ultra[folder]['videos'][filename]}")
+            #         ultra[folder]["videos"][filename] = dict({})
+            #         new[filename] = video
+            #     ultra[folder]['videos']=new
         else:
             logger.debug(
                 f"=666==\r {type(ultra[folder]['videos'])}{ultra[folder]['videos']}"
@@ -2129,20 +2129,20 @@ def videosView(left, right, lang):
 
     b_autothumb = tk.Button(
         right,
-        text=settings[locale]["autothumb"],
+        text=settings[locale]['videoView']["autothumb"],
         command=lambda: threading.Thread(target=autothumb).start(),
     )
     b_autothumb.grid(row=1, column=0, sticky="w", padx=14, pady=15)
     b_batchchangebgmusic = tk.Button(
         right,
-        text=settings[locale]["batchchangebgmusic"],
+        text=settings[locale]['videoView']["batchchangebgmusic"],
         command=lambda: threading.Thread(target=batchchangebgmusic).start(),
     )
     b_batchchangebgmusic.grid(row=2, column=0, sticky="w", padx=14, pady=15)
 
     b_hiddenwatermark = tk.Button(
         right,
-        text=settings[locale]["hiddenwatermark"],
+        text=settings[locale]['videoView']["hiddenwatermark"],
         command=lambda: threading.Thread(target=hiddenwatermark),
     )
     b_hiddenwatermark.grid(row=3, column=0, sticky="w", padx=14, pady=15)
@@ -2900,11 +2900,10 @@ def render_des_update_view(frame, folder, desmode, previous_frame=None):
                 command=lambda: webbrowser.open_new("https://jsoncrack.com/editor"),
             )
             b_edit_thumb_metas.grid(row=8, column=1, padx=14, pady=15, sticky="nswe")
-        Tooltip(
-            b_edit_thumb_metas,
-            text=settings[locale]["metaview"]["editwithlocaleditor_hints"],
-            wraplength=200,
-        )
+            Tooltip(b_edit_thumb_metas,
+                text=settings[locale]["metaview"]["editwithlocaleditor_hints"],
+                wraplength=200,
+            )
         b_open_video_folder = tk.Button(
             frame,
             text=settings[locale]["metaview"]["openlocalfolder"],

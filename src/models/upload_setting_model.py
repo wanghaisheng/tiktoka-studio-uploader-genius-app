@@ -4,6 +4,19 @@ from src.models.platform_model import PLATFORM_TYPE
 from src.models.account_model import AccountModel
 import time
 from src.customid import CustomID
+class LOG_LEVEL:
+    CRITICAL = 50
+    FATAL = CRITICAL
+    ERROR = 40
+    WARNING = 30
+    WARN = WARNING
+    INFO = 20
+    DEBUG = 10
+
+    LOG_LEVEL_TEXT = [
+        (DEBUG, "debug"),
+        (ERROR, "error")
+    ]
 
 class BROWSER_TYPE:
 
@@ -33,10 +46,10 @@ class UploadSettingModel(BaseModel):
     id = BlobField(primary_key=True)    
     timeout = IntegerField(default=200000)
     is_open_browser = BooleanField(default=True)
-    is_debug = BooleanField(default=True)
+    log_level = IntegerField(default=LOG_LEVEL.DEBUG)
     platform = IntegerField(default=PLATFORM_TYPE.YOUTUBE)
     inserted_at = IntegerField()
-
+    profile_directory=TextField(null=True,default=None)
     browser_type = IntegerField(default=BROWSER_TYPE.FIREFOX)
     account = ForeignKeyField(AccountModel, backref='account_id')
     is_record_video = BooleanField(default=True)

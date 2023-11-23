@@ -1,6 +1,9 @@
 
 pip install requirements.txt 
 
+由于UltraDict==0.0.6最新的修改并未打包发布，需要手动安装
+
+
 python main.py
 
 
@@ -35,7 +38,23 @@ python main.py
 * 2.0.3 Embed invisible watermarks
 * 2.1 If there are images with the same name in the video folder, consider them as thumbnails
 * 2.2 If there are no images with the same name in the video folder, execute thumbnail generation tasks
-* 2.3 If there is a .txt file with the same name in the video folder, consider it as video description
+* 2.3 If there is a .des file with the same name in the video folder, consider it as video description
+* 2.3 If there is a .title file with the same name in the video folder, consider it as video title
+* 2.3 If there is a .srt file with the same name in the video folder, consider it as video subtitle
+
+default language is en,如果找不到不带后缀的文件，则使用后缀为en的文件，如果找到带en的，则随机用一个找到的文件
+
+
+
+we store other meta in otherDes,otherTitles,otherSubtitles
+
+for multiple language des, use suffix such as zh-cn, xxxx-zh-cn.des
+
+for multiple language title, use suffix such as zh-cn, xxxx-zh-cn.title
+
+for multiple language srt, use suffix such as zh-cn, xxxx-zh-cn.srt
+
+
 * 2.4 Plan the scheduled publication date for each video based on the timing publication strategy, the number of videos in the folder, and the daily public quantity limit
 * 2.4.1 Strategy: Daily One Release
   - Daily public quantity is 1

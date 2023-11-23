@@ -5,7 +5,7 @@ from config import generate_unique_hash
 from src.models import BaseModel,db
 from src.customid import CustomID
 import logging
-from src.log import logger,addKeywordfilter
+from src.log import logger
 
 
 
@@ -349,7 +349,14 @@ class VIDEO_SETTINGS:
         "Zulu",
     ]
 
-
+class ALTMeta(BaseModel):
+    lang= TextField(null=True,default=None)
+    title= TextField(null=True,default=None)
+    description= TextField(null=True,default=None)
+    subtitle_filepath= TextField(null=True,default=None)
+    subtitle_name=  TextField(null=True,default=None)
+    subtitle_format= TextField(null=True,default=None)
+    subtitle_contents= TextField(null=True,default=None)
 
 
 class YoutubeVideoModel(BaseModel):
@@ -376,7 +383,7 @@ class YoutubeVideoModel(BaseModel):
     is_show_howmany_likes = BooleanField(default=True)
     is_monetization_allowed = BooleanField(default=True)
     first_comment = TextField(null=True,default=None)
-    subtitles = TextField(null=True,default=None)
+    alternate_infos = TextField(null=True,default=None)
     is_not_for_kid = BooleanField(default=True)
     categories = IntegerField(null=True)
     comments_ratings_policy = IntegerField(default=1)

@@ -1,6 +1,6 @@
 pillow==9.5.0
 moviepy==1.0.3
-ytb_up==0.1.15
+tsup==0.1.16
 requests[socks]
 # scenedetect[opencv]==0.5.6.1
 SQLAlchemy
@@ -15,3 +15,6 @@ bcrypt
 peewee 
 pysocks
 dnspython
+fastapi
+pycountry
+pyperclip

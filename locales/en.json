@@ -242,6 +242,14 @@
 		"L_genschedule": "Step4:auto gen schedule plan",
 		"B_genschedule": "gen schedule plan"
 	},
+	"videoView":{"gen_srt":"生成视频字幕",
+				"srt_translation":"多语种字幕自动翻译",
+			"title_translation":"多语种标题自动翻译",
+			"des_translation":"多语种字幕自动翻译",
+			"hiddenwatermark": "添加隐形水印",
+			"autothumb":"auto thumbnail",
+			"batchchangebgmusic": "批量替换背景音乐"
+		},	
 	"l_proxycity": "city",
 	"L_proxyprotocol": "protocol",
 	"installView": "Setup",
@@ -428,5 +436,12 @@
 		"youtube": "https://www.youtube.com/upload?persist_gl=1",
 		"tiktok": "https://www.tiktok.com",
 		"douyin": "https://www.douyin.com"
+	},
+	"supportedLangs":{
+		"english":"en",
+		"chinese":"zhcn",
+		"tw-chinese":"zhtw",
+		"russian":"russian"
+
 	}
 }

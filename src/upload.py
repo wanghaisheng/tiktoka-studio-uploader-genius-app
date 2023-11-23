@@ -1,7 +1,7 @@
 from tsup.youtube.youtube_upload import YoutubeUpload
 from datetime import datetime, date, timedelta
 import asyncio
-from src.log import logger, addKeywordfilter
+from src.log import logger
 from src.models.task_model import *
 
 

@@ -217,6 +217,16 @@
 		"L_genschedule": "Step4:自动规划发布时间",
 		"B_genschedule": "生成发布时间"
 	},
+	"videoView":{"gen_srt":"生成视频字幕",
+				"srt_translation":"多语种字幕自动翻译",
+			"title_translation":"多语种标题自动翻译",
+			"des_translation":"多语种字幕自动翻译",
+			"hiddenwatermark": "添加隐形水印",
+			"autothumb": "自动生成缩略图",
+
+			"batchchangebgmusic": "批量替换背景音乐"
+
+		},
 	"title": "TiktokaStudio 视频批量上传助手测试版",
 	"select_musics_folder": "选择背景音樂文件夹",
 	"select_videos_folder": "选择视频文件夹",
@@ -258,13 +268,11 @@
 	"L_proxy_tag": "标签",
 	"L_proxyprotocol": "协议",
 	"b_uploadAll": "查询&&上传",
-	"batchchangebgmusic": "批量替换背景音乐",
 	"is_open_browser": "静默模式",
 	"is_record_video": "录像模式",
 	"debug": "开启日志",
 	"start_loading_setting": "开始读取最近保存的配置文件",
 	"loading_default_setting": "读取配置文件失败 加载默认模版",
-	"hiddenwatermark": "添加隐形水印",
 	"downVideoMetas": "下载视频元信息json模板",
 	"toolkits": "工具箱",
 	"mode1": "模式1",
@@ -421,5 +429,12 @@
 		"youtube": "https://www.youtube.com/upload?persist_gl=1",
 		"tiktok": "https://www.tiktok.com",
 		"douyin": "https://www.douyin.com"
+	},
+	"supportedLangs":{
+		"english":"en",
+		"chinese":"zhcn",
+		"tw-chinese":"zhtw",
+		"russian":"rus"
+
 	}
 }
