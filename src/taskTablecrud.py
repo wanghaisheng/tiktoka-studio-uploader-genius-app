@@ -216,7 +216,7 @@ def queryTasks(
 
             p_value = row.platform
             if type(row.platform) != int:
-                p_value = 100
+                p_value = PLATFORM_TYPE.UNKNOWN
             task = {
                 "id": CustomID(custom_id=row.id).to_hex(),
                 "platform": dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[p_value],
@@ -711,9 +711,9 @@ def update_selected_row_task(rowid, frame=None, name=None, func=None):
     tmptask = taskresult
     # tmptask.pop('video')
     # tmptask.pop('setting')
-    print("taskresult\n", taskresult)
-    print("video\n", taskresult.get("video"))
-    print("setting\n", taskresult.get("setting"))
+    # print("taskresult\n", taskresult)
+    # print("video\n", taskresult.get("video"))
+    # print("setting\n", taskresult.get("setting"))
     newtaskresult, serialno, cols, lastindex = renderelements(
         lastindex=0,
         i=1,

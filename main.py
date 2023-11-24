@@ -931,7 +931,7 @@ def isFilePairedMetas(r, videofilename, meta_exts_list, dict, meta_name):
                         f"found des files,start to set video metas {type(dict['videos'][videofilename]['video_description'])},{dict['videos'][videofilename]['video_description']}"
                     )
                     # 判断后缀是否包含国家编码
-                    
+
                     #如果发现多个后缀为.des的文件，自动根据suffix判断，en为默认，其他的全部丢到 otherdes 这个字段中，列表形式存储
                     with open(metapath, "r", encoding="utf-8") as f:
                         lines = f.readlines()
@@ -1823,7 +1823,7 @@ async def runupload(
             video.pop("unique_hash")
             video.pop("inserted_at")
             video.pop("is_deleted")
-            if row.status==2:
+            if row.status==TASK_STATUS.SUCCESS:
                 print('task is already upload,skip it')
                 skipcount+=1
             else:
@@ -5417,7 +5417,7 @@ def createTaskMetas(left, right):
         account_frame_left, textvariable=multiAccountsPolicy
     )
     multiAccountsPolicybox.config(
-        values=settings[locale]["newtaskview"]["policy_options"].split(",")
+        values=settings[locale]["newtaskview"]["policy_options"].values()
     )
     multiAccountsPolicybox.grid(row=6, column=1, padx=14, pady=15, sticky="w")
 
@@ -5699,10 +5699,10 @@ def genUploadTaskMetas(
 ):
     try:
         multiAccountsPolicy_value = find_key(
-            settings[locale]["newtaskview"]["policy"], multiAccountsPolicy_value
+            settings[locale]["newtaskview"]["policy_options"], multiAccountsPolicy_value
         )
     except:
-        multiAccountsPolicy_value = 2
+        multiAccountsPolicy_value = '2'
     # if multiAccountsPolicy_value=='单平台单账号':
     # # ('单平台单账号', '同平台主副账号','单平台多独立账号随机发布','单平台多独立账号平均发布'))
     #     multiAccountsPolicy_value=0
@@ -5781,7 +5781,7 @@ def genUploadTaskMetas(
                         f"you dont choose any account for this platform:{platform}"
                     )
                 else:
-                    if multiAccountsPolicy_value == 0:
+                    if multiAccountsPolicy_value == '0':
                         if len(accounts) == 0:
                             logger.debug(
                                 f"you dont choose any account for this platform:{platform}"
@@ -5816,7 +5816,7 @@ def genUploadTaskMetas(
                             ] = data.cookie_local_path
                             taskno = +1
 
-                    elif multiAccountsPolicy_value == 1:
+                    elif multiAccountsPolicy_value == '1':
                         print("遍历账号检查是否有副号，计算任务数量，分配视频")
                         # video={'1.mp4'}
                         # accounts={'y1'} {'y1','y11'}
@@ -5907,7 +5907,7 @@ def genUploadTaskMetas(
                                 ] = data.cookie_local_path
                                 taskno = +1
 
-                    elif multiAccountsPolicy_value == 2:
+                    elif multiAccountsPolicy_value == '2':
                         print(
                             f"遍历账号，生成视频数量{len(tmpdict)}*账号数量{len(accounts)}的对应大小的账号数组"
                         )
@@ -5933,7 +5933,8 @@ def genUploadTaskMetas(
                             tmp["tasks"][key]["is_record_video"] = is_record_video_value
                             tmp["tasks"][key]["browser_type"] = browserType_value
                             # account=tmpaccounts[taskno]
-                            data = AccountModel.get_account_by_id(id=tmpaccounts[index])
+                            logger.debug(f'grab account data for {taskno},{type(taskno)} {tmpaccounts}')
+                            data = AccountModel.get_account_by_id(id=tmpaccounts[taskno])
                             # print('data====',data[0],data[0].username)
                             tmp["tasks"][key]["username"] = data.username
                             logger.debug(f"get credentials for this account {data}")
@@ -5945,7 +5946,7 @@ def genUploadTaskMetas(
                             ] = data.cookie_local_path
                             taskno = +1
 
-                    elif multiAccountsPolicy_value == 3:
+                    elif multiAccountsPolicy_value == '3':
                         print("遍历账号，生成视频数量对应大小的账号数组，平均分配")
                         if videocounts < len(accounts):
                             tmpaccounts = random.sample(accounts, videocounts)
@@ -6566,7 +6567,7 @@ def validateTaskMetafile(loop, frame, metafile, canvas=None):
 
                     taskdata = {
                         "type": video["platform"],
-                        "status": 0,
+                        "status": TASK_STATUS.PENDING,
                         "prorioty": video["prorioty"],
                     }
                     logger.debug(f"end to process video data")
@@ -6752,7 +6753,7 @@ def uploadView(frame, ttkframe, lang, async_loop):
     b_imported_video_metas_file = tk.Button(
         operationframe,
         text=settings[locale]["uploadview"]["l_importTaskMetas"],
-        command=lambda: SelectMetafile("taskmetafilepath", imported_task_metas_file),
+        command=lambda: select_file(title='import task file',cached="taskmetafilepath", variable=imported_task_metas_file,limited='all'),
     )
     b_imported_video_metas_file.grid(row=0, column=2, padx=14, pady=15)
     Tooltip(

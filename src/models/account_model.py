@@ -11,6 +11,8 @@ class AccountModel(BaseModel):
     username = TextField()
     password = TextField(null=True)  
     cookie_local_path = TextField(null=True)   
+    profile_local_path = TextField(null=True)   
+
     cookie_content = TextField(null=True)   
     proxy = TextField(null=True)
     inserted_at = IntegerField(null=True)
