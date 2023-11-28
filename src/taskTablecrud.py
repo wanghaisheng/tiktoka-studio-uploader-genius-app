@@ -394,8 +394,14 @@ def refreshTaskcanvas(async_loop, canvas=None, frame=None, headers=None, datas=N
                 relief=tk.RIDGE,
                 activebackground="orange",
                 text="upload",
-                command=lambda x=i - 1: do_ups(async_loop, frame, datas, x),
+                command=lambda x=i - 1: do_up(async_loop,             rowid=datas[x]["id"],
+            frame=frame,
+            status=datas[x]["status"],
+            platform=datas[x]["platform"]),
             )
+
+
+
             upload_buttons[i].grid(row=i, column=len(headers) - 1, sticky="news")
 
     # Create canvas window to hold the buttons_frame.
@@ -429,22 +435,43 @@ def refreshTaskcanvas(async_loop, canvas=None, frame=None, headers=None, datas=N
     canvas.configure(scrollregion=bbox, width=dw, height=dh)
     print("end to render tabular rows")
 
-
-def do_ups(async_loop, frame, datas, x):
+def do_up(
+    async_loop,
+    frame=None,
+    rowid=None,
+    platform=None,
+    status=None
+):
     threading.Thread(
-        target=_asyncio_thread_up, args=(async_loop, frame, datas, x)
+        target=_asyncio_thread_up,
+        args=(
+            async_loop,
+            frame,
+            rowid,
+            platform,
+            status,
+        ),
     ).start()
 
 
-def _asyncio_thread_up(async_loop, frame, datas, x):
+def _asyncio_thread_up(
+    async_loop,
+    frame=None,
+    rowid=None,
+    platform=None,
+    status=None
+
+):
     async_loop.run_until_complete(
         upload_selected_row_task(
-            rowid=datas[x]["id"],
+            rowid=rowid,
             frame=frame,
-            status=datas[x]["status"],
-            platform=datas[x]["platform"],
+            status=status,
+            platform=platform,
         )
     )
+
+
 
 
 def remove_selected_row_task(rowid, frame=None, name=None, func=None):
@@ -497,6 +524,7 @@ async def upload_selected_row_task(rowid, frame=None, status=None, platform=None
                 task_rows, counts = TaskModel.filter_tasks(
                     id=rowid_bin, is_deleted=False
                 )
+                uptasks = set()
 
                 if counts > 0:
                     logger.debug(f"this task {rowid} start to upload")
@@ -557,20 +585,23 @@ async def upload_selected_row_task(rowid, frame=None, status=None, platform=None
                         video.pop("inserted_at")
                         video.pop("is_deleted")
                         logger.info(f'start to upload {video}')
-                        tasks = [
-                            uploadTask(
-                                taskid=row.id,
-                                video=video,
-                                uploadsetting=uploadsetting,
-                                account=row.setting.account,
-                            )
-                        ]
+                        task = uploadTask(
+                            taskid=row.id,
+                            video=video,
+                            uploadsetting=uploadsetting,
+                            account=row.setting.account,
+                        )
+
+                        uptasks.add(asyncio.create_task(task))
+
+
+
                     showinfomsg(
                         message=f"this task {rowid} add to queue now,upload will start automatically",
                         parent=frame,
                         DURATION=2000,
                     )
-                    completed, pending = await asyncio.wait(tasks)
+                    completed, pending = await asyncio.wait(uptasks)
                     results = [task.result() for task in completed]
 
                     videoid = results[0]
