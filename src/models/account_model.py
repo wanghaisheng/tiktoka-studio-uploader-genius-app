@@ -96,13 +96,15 @@ class AccountModel(BaseModel):
         except cls.DoesNotExist:
             return False
     @classmethod
-    def filter_accounts(cls, platform=None, username=None,cookie_local_path=None, cookie_content=None,proxy=None,inserted_at=None,is_deleted=None,pageno=None,pagecount=None,start=None,end=None,data=None,ids=None,sortby=None):
+    def filter_accounts(cls, platform=None, username=None,cookie_local_path=None, cookie_content=None,proxy=None,inserted_at=None,is_deleted=False,pageno=None,pagecount=None,start=None,end=None,data=None,ids=None,sortby=None):
         query = cls.select()
         
         print('platform',platform)
         print('username',username)
 
-        if is_deleted is not None and is_deleted!='':
+        if is_deleted is None or type(is_deleted) !=bool:
+            is_deleted=False
+        if is_deleted:
             query = query.where(cls.is_deleted == is_deleted)
 
 
@@ -217,7 +219,7 @@ class AccountRelationship(BaseModel):
             
             return cls.get_or_none(cls.account == AccountRelationship.get_by_id(id))
     @classmethod
-    def filter_AccountRelationship(cls, main_id=None, otherid=None,inserted_at=None,is_deleted=None,pageno=None,pagecount=None,start=None,end=None,data=None,ids=None,sortby=None):
+    def filter_AccountRelationship(cls, main_id=None, otherid=None,inserted_at=None,is_deleted=False,pageno=None,pagecount=None,start=None,end=None,data=None,ids=None,sortby=None):
         query = cls.select()
         if is_deleted is not None and is_deleted!='':
             query = query.where(cls.is_deleted == is_deleted)

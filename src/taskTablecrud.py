@@ -17,6 +17,7 @@ from pathlib import Path, PureWindowsPath, PurePath
 import asyncio
 import threading
 import json
+from src.models.proxy_model import *
 
 
 def queryTasks(
@@ -515,15 +516,47 @@ async def upload_selected_row_task(rowid, frame=None, status=None, platform=None
                         uploadsetting.pop("is_deleted")
                         uploadsetting.pop("platform")
                         uploadsetting["logger"] = logger
-                        proxy = row.setting.account.proxy
-                        if proxy:
-                            uploadsetting["proxy_option"] = "socks5:127.0.0.1:1080"
+                        proxyid = row.setting.account.proxy
+                        if proxyid:
+                            proxyid=CustomID(custom_id=proxyid).to_bin()
+                            proxy=ProxyModel.get_proxy_by_id(id=proxyid)
+                            proxy_string=None
+                            if proxy:
+
+                                proxy_string=(
+                                            f"{proxy.proxy_username}:{proxy.proxy_password}@{proxy.proxy_host}:{proxy.proxy_port}"
+                                            if proxy.proxy_username
+                                            else f"{proxy.proxy_host}:{proxy.proxy_port}"
+                                        )
+                                
+                                protocol=proxy.proxy_protocol
+                                http_proxy=f"{protocol}://{proxy_string}"
+                                https_proxy=f"{protocol}://{proxy_string}"
+                        
+                                uploadsetting["proxy_option"] = https_proxy
+                            else:
+                                uploadsetting["proxy_option"] = None
+
+                        profile_directory = row.setting.account.profile_local_path
+                        uploadsetting['profile_directory']=profile_directory
+
+                        channel_cookie_path = row.setting.account.cookie_local_path
+                        uploadsetting['channel_cookie_path']=channel_cookie_path
+
+                        username=row.setting.account.username
+                        uploadsetting['username']=username
+
+                        password=row.setting.account.password
+                        uploadsetting['password']=password
+
+                        uploadsetting['timeout']=2000 * 1000
 
                         video = model_to_dict(row.video)
                         video.pop("id")
                         video.pop("unique_hash")
                         video.pop("inserted_at")
                         video.pop("is_deleted")
+                        logger.info(f'start to upload {video}')
                         tasks = [
                             uploadTask(
                                 taskid=row.id,

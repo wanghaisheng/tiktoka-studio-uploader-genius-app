@@ -35,8 +35,8 @@
 		"3":"单平台多独立账号平均发布"
 
 		},
-		"browser_options": "firefox, webkit,chrome",
-		"devicetype_options": "embed browser, adspower,phone emulator,iphone,android",
+		"browser_options": "firefox,webkit,chrome",
+		"devicetype_options": "embed browser,adspower,phone emulator,iphone,android",
 		"silent_mode": "静默模式",
 		"runson": "运行在",
 		"checkbuttonoption": "是",
@@ -77,7 +77,8 @@
 		"proxy": "代理",
 		"proxylink": "关联",
 		"pullcookie": "拉取cookie",
-		"save": "保存"
+		"save": "保存",
+		"profilepath":"profile文件夹"
 	},
 	"proxyview": {
 		"new": "新建代理",
@@ -116,7 +117,7 @@
 	"bulkimportproxyView": {
 		"title": "批量导入代理",
 		"copyhints": "复制内容到下面文本框中",
-		"placeholder": "proxy list should be one proxy oneline,and each proxy in such format:\nsocks5://127.0.0.1:1080;tiktok\nsocks5://127.0.0.1:1088;youtube",
+		"placeholder": "proxy list should be one proxy oneline,and each proxy in such format:\nsocks5://127.0.0.1:1080;tiktok\nsocks5://127.0.0.1:1080;youtube",
 		"save": "保存",
 		"bulkimport": "批量导入",
 		"bulkcheck": "批量检查代理",

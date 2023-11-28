@@ -60,8 +60,8 @@
 
 			},
 
-		"browser_options": "firefox, webkit,chrome",
-		"devicetype_options": "embed browser, adspower,phone emulator,iphone,android",
+		"browser_options": "firefox,webkit,chrome",
+		"devicetype_options": "embed browser,adspower,phone emulator,iphone,android",
 		"silent_mode": "silent",
 		"is_debug": "debug",
 		"is_record_video": "recording",
@@ -102,7 +102,9 @@
 		"proxylink": "link",
 		"cookies": "cookies file path",
 		"pullcookie": "pullcookie",
-		"save": "save user"
+		"save": "save user",
+		"profilepath":"profile folder"
+
 	},
 	"proxyview": {
 		"new": "New proxy",
@@ -141,7 +143,7 @@
 	"bulkimportproxyView": {
 		"title": "bulk import proxy",
 		"copyhints": "copy proxy info here",
-		"placeholder": "proxy list should be one proxy oneline,and each proxy in such format:\nsocks5://127.0.0.1:1080;tiktok\nsocks5://127.0.0.1:1088;youtube",
+		"placeholder": "proxy list should be one proxy oneline,and each proxy in such format:\nsocks5://127.0.0.1:1080;tiktok\nsocks5://127.0.0.1:1080;youtube",
 		"save": "save proxy",
 		"bulkimport": "bulk import",
 		"bulkcheck": "bulk check proxy",

@@ -15,6 +15,8 @@ class LOG_LEVEL:
 
     LOG_LEVEL_TEXT = [
         (DEBUG, "debug"),
+        (INFO, "info"),
+
         (ERROR, "error")
     ]
 
@@ -49,7 +51,6 @@ class UploadSettingModel(BaseModel):
     log_level = IntegerField(default=LOG_LEVEL.DEBUG)
     platform = IntegerField(default=PLATFORM_TYPE.YOUTUBE)
     inserted_at = IntegerField()
-    profile_directory=TextField(null=True,default=None)
     browser_type = IntegerField(default=BROWSER_TYPE.FIREFOX)
     account = ForeignKeyField(AccountModel, backref='account_id')
     is_record_video = BooleanField(default=True)
@@ -58,13 +59,18 @@ class UploadSettingModel(BaseModel):
     wait_policy=IntegerField(default=WAIT_POLICY_TYPE.check)
     @classmethod
 
-    def add_uploadsetting(cls,setting_data,account):
+    def add_uploadsetting(cls,setting_data,account_id):
 
         
         setting = UploadSettingModel(**setting_data)
         
         setting.inserted_at = int(time.time())  # Update insert_date
+        print(f'save account in setting data :{type(account_id)} {account_id}')
+        # account
+
+        account = AccountModel.get_account_by_id(CustomID(custom_id=account_id).to_bin())
         setting.account=account
+
         setting.id = CustomID().to_bin()
 
         setting.save(force_insert=True) 

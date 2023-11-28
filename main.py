@@ -1814,11 +1814,44 @@ async def runupload(
             uploadsetting.pop("is_deleted")
             uploadsetting.pop("platform")
             uploadsetting["logger"] = logger
-            proxy = row.setting.account.proxy
-            if proxy:
-                uploadsetting["proxy_option"] = "socks5:127.0.0.1:1080"
+
+
+            proxyid = row.setting.account.proxy
+            if proxyid:
+                proxyid=CustomID(custom_id=proxyid).to_bin()
+                proxy=ProxyModel.get_proxy_by_id(id=proxyid)
+                proxy_string=None
+                if proxy:
+
+                    proxy_string=(
+                                f"{proxy.proxy_username}:{proxy.proxy_password}@{proxy.proxy_host}:{proxy.proxy_port}"
+                                if proxy.proxy_username
+                                else f"{proxy.proxy_host}:{proxy.proxy_port}"
+                            )
+                    protocol=proxy.proxy_protocol
+                    http_proxy=f"{protocol}://{proxy_string}"
+                    https_proxy=f"{protocol}://{proxy_string}"
+            
+                    uploadsetting["proxy_option"] = https_proxy
+                else:
+                    uploadsetting["proxy_option"] = None
+
+            profile_directory = row.setting.account.profile_local_path
+            uploadsetting['profile_directory']=profile_directory
+
+            channel_cookie_path = row.setting.account.cookie_local_path
+            uploadsetting['channel_cookie_path']=channel_cookie_path
+
+            username=row.setting.account.username
+            uploadsetting['username']=username
+
+            password=row.setting.account.password
+            uploadsetting['password']=password
+
 
             video = model_to_dict(row.video)
+
+
             video.pop("id")
             video.pop("unique_hash")
             video.pop("inserted_at")
@@ -4927,7 +4960,7 @@ def bulksaveUser(accountfilepath):
     print(accountfilepath)
 
 
-def saveUser(platform, username, password, proxy, cookies, linkaccounts=None):
+def saveUser(platform, username, password, proxy, cookies, linkaccounts=None,profilepath=None):
     for v in [platform, username, password, proxy, linkaccounts]:
         if v == "" or len(v) == 0:
             v = None
@@ -4957,7 +4990,8 @@ def saveUser(platform, username, password, proxy, cookies, linkaccounts=None):
             "platform": platform,
             "username": username,
             "password": password,
-            "cookies": cookies,
+            "cookie_local_path": cookies,
+            "profile_local_path":profilepath,
             "proxy": proxy_ids,
         }
         # Create the user and associate the proxy IDs
@@ -5022,6 +5056,7 @@ def newaccountView(frame):
     global proxy_option_account, channel_cookie_user
 
     channel_cookie_user = tk.StringVar()
+    channel_profile_path=tk.StringVar()
     username = tk.StringVar()
     proxy_option_account = tk.StringVar()
     password = tk.StringVar()
@@ -5140,7 +5175,7 @@ def newaccountView(frame):
         text="Select",
         command=lambda: threading.Thread(
             target=select_file(
-                "select cookie file for account", channel_cookie_user, cached=None
+                "select cookie file for account", channel_cookie_user, cached=None,parent=newWindow
             )
         ).start(),
     )
@@ -5163,6 +5198,33 @@ def newaccountView(frame):
     # b_channel_cookie_gen.place(x=100, y=390)
     b_channel_cookie_gen.grid(row=6, column=12, columnspan=2, padx=14, pady=15)
 
+
+    l_channel_profile = tk.Label(
+        ttkframe,
+        text=settings[locale]["newaccountview"]["profilepath"]
+        # settings[locale]['select_cookie_file']
+    )
+    # l_channel_profile.place(x=10, y=330)
+    l_channel_profile.grid(row=7, column=0, columnspan=3, padx=14, pady=15)
+
+    e_channel_profile = tk.Entry(ttkframe, textvariable=channel_profile_path)
+    # e_channel_profile.place(x=10, y=360)
+    e_channel_profile.grid(row=7, column=5, columnspan=3, padx=14, pady=15, sticky="w")
+
+    b_channel_profile = tk.Button(
+        ttkframe,
+        text="Select",
+        command=lambda: threading.Thread(
+            target=select_file(
+                "select cookie file for account", channel_profile_path, cached=None
+            )
+        ).start(),
+    )
+    # b_channel_profile.place(x=10, y=390)
+    b_channel_profile.grid(row=7, column=9, columnspan=2, padx=14, pady=15)
+
+
+
     b_save_user = tk.Button(
         ttkframe,
         text=settings[locale]["newaccountview"]["save"],
@@ -5174,6 +5236,7 @@ def newaccountView(frame):
                 proxy_option_account.get(),
                 channel_cookie_user.get(),
                 linkAccounts.get(),
+                channel_profile_path.get()
             )
         ).start(),
     )
@@ -5416,9 +5479,13 @@ def createTaskMetas(left, right):
     multiAccountsPolicybox = ttk.Combobox(
         account_frame_left, textvariable=multiAccountsPolicy
     )
+    policy_optionsvalues=list(dict(settings[locale]["newtaskview"]["policy_options"]).values())
+    policy_optionsvalues=[ inner.strip() for inner in policy_optionsvalues]
+
+
     multiAccountsPolicybox.config(
-        values=settings[locale]["newtaskview"]["policy_options"].values()
-    )
+        values=policy_optionsvalues)
+
     multiAccountsPolicybox.grid(row=6, column=1, padx=14, pady=15, sticky="w")
 
     lb18 = tk.Label(account_frame_left, text=settings[locale]["newtaskview"]["runson"])
@@ -5804,13 +5871,36 @@ def genUploadTaskMetas(
 
                             data = AccountModel.get_account_by_id(id=accounts[0])
                             # print('data====',data[0],data[0].username)
+                            
+                            tmp["tasks"][key]["account_id"] =CustomID(custom_id= data.id).to_hex()
+
                             tmp["tasks"][key]["username"] = data.username
                             logger.debug(
                                 f"get credentials for this account {accounts[0]}"
                             )
 
                             tmp["tasks"][key]["password"] = data.password
-                            tmp["tasks"][key]["proxy_option"] = data.proxy
+                            tmp["tasks"][key]["proxy_option_id"] = data.proxy
+
+                            if data.proxy:
+                                proxyid=data.proxy
+                                proxyid=CustomID(custom_id=proxyid).to_bin()
+                                proxy=ProxyModel.get_proxy_by_id(id=proxyid)
+                                proxy_string=None
+                                if proxy:
+
+                                    proxy_string=(
+                                                f"{proxy.proxy_username}:{proxy.proxy_password}@{proxy.proxy_host}:{proxy.proxy_port}"
+                                                if proxy.proxy_username
+                                                else f"{proxy.proxy_host}:{proxy.proxy_port}"
+                                            )
+                                    
+                                    protocol=proxy.proxy_protocol
+                                    http_proxy=f"{protocol}://{proxy_string}"
+                                    https_proxy=f"{protocol}://{proxy_string}"
+                                    tmp["tasks"][key]["proxy_option_string"] = http_proxy
+
+
                             tmp["tasks"][key][
                                 "channel_cookie_path"
                             ] = data.cookie_local_path
@@ -5895,13 +5985,35 @@ def genUploadTaskMetas(
 
                                 data = AccountModel.get_account_by_id(id=id_)
                                 # print('data====',data[0],data[0].username)
+                                tmp["tasks"][key]["account_id"] =CustomID(custom_id= data.id).to_hex()
+
                                 tmp["tasks"][key]["username"] = data.username
                                 logger.debug(
                                     f"get credentials for this account {data.username}"
                                 )
 
                                 tmp["tasks"][key]["password"] = data.password
-                                tmp["tasks"][key]["proxy_option"] = data.proxy
+                                tmp["tasks"][key]["proxy_option_id"] = data.proxy
+
+                                if data.proxy:
+                                    proxyid=data.proxy
+                                    proxyid=CustomID(custom_id=proxyid).to_bin()
+                                    proxy=ProxyModel.get_proxy_by_id(id=proxyid)
+                                    proxy_string=None
+                                    if proxy:
+
+                                        proxy_string=(
+                                                    f"{proxy.proxy_username}:{proxy.proxy_password}@{proxy.proxy_host}:{proxy.proxy_port}"
+                                                    if proxy.proxy_username
+                                                    else f"{proxy.proxy_host}:{proxy.proxy_port}"
+                                                )
+                                        
+                                        protocol=proxy.proxy_protocol
+                                        http_proxy=f"{protocol}://{proxy_string}"
+                                        https_proxy=f"{protocol}://{proxy_string}"
+                                        tmp["tasks"][key]["proxy_option_string"] = http_proxy
+
+
                                 tmp["tasks"][key][
                                     "channel_cookie_path"
                                 ] = data.cookie_local_path
@@ -5936,11 +6048,32 @@ def genUploadTaskMetas(
                             logger.debug(f'grab account data for {taskno},{type(taskno)} {tmpaccounts}')
                             data = AccountModel.get_account_by_id(id=tmpaccounts[taskno])
                             # print('data====',data[0],data[0].username)
+                            tmp["tasks"][key]["account_id"] =CustomID(custom_id= data.id).to_hex()
+
                             tmp["tasks"][key]["username"] = data.username
                             logger.debug(f"get credentials for this account {data}")
 
                             tmp["tasks"][key]["password"] = data.password
-                            tmp["tasks"][key]["proxy_option"] = data.proxy
+                            tmp["tasks"][key]["proxy_option_id"] = data.proxy
+
+                            if data.proxy:
+                                proxyid=data.proxy
+                                proxyid=CustomID(custom_id=proxyid).to_bin()
+                                proxy=ProxyModel.get_proxy_by_id(id=proxyid)
+                                proxy_string=None
+                                if proxy:
+
+                                    proxy_string=(
+                                                f"{proxy.proxy_username}:{proxy.proxy_password}@{proxy.proxy_host}:{proxy.proxy_port}"
+                                                if proxy.proxy_username
+                                                else f"{proxy.proxy_host}:{proxy.proxy_port}"
+                                            )
+                                    
+                                    protocol=proxy.proxy_protocol
+                                    http_proxy=f"{protocol}://{proxy_string}"
+                                    https_proxy=f"{protocol}://{proxy_string}"
+                                    tmp["tasks"][key]["proxy_option_string"] = http_proxy
+
                             tmp["tasks"][key][
                                 "channel_cookie_path"
                             ] = data.cookie_local_path
@@ -5970,11 +6103,33 @@ def genUploadTaskMetas(
                             account = tmpaccounts[taskno]
                             data = AccountModel.get_account_by_id(id=account)
                             # print('data====',data[0],data[0].username)
+                            tmp["tasks"][key]["account_id"] =CustomID(custom_id= data.id).to_hex()
+
                             tmp["tasks"][key]["username"] = data.username
                             logger.debug(f"get credentials for this account {account}")
 
                             tmp["tasks"][key]["password"] = data.password
-                            tmp["tasks"][key]["proxy_option"] = data.proxy
+                            tmp["tasks"][key]["proxy_option_id"] = data.proxy
+
+                            if data.proxy:
+                                proxyid=data.proxy
+                                proxyid=CustomID(custom_id=proxyid).to_bin()
+                                proxy=ProxyModel.get_proxy_by_id(id=proxyid)
+                                proxy_string=None
+                                if proxy:
+
+                                    proxy_string=(
+                                                f"{proxy.proxy_username}:{proxy.proxy_password}@{proxy.proxy_host}:{proxy.proxy_port}"
+                                                if proxy.proxy_username
+                                                else f"{proxy.proxy_host}:{proxy.proxy_port}"
+                                            )
+                                    
+                                    protocol=proxy.proxy_protocol
+                                    http_proxy=f"{protocol}://{proxy_string}"
+                                    https_proxy=f"{protocol}://{proxy_string}"
+                                    tmp["tasks"][key]["proxy_option_string"] = http_proxy
+
+
                             tmp["tasks"][key][
                                 "channel_cookie_path"
                             ] = data.cookie_local_path
@@ -6024,17 +6179,16 @@ def validateTaskMetafile(loop, frame, metafile, canvas=None):
                     )
                     settingid = None
 
-                    for key in ["proxy_option", "channel_cookie_path"]:
+                    for key in ["proxy_option_id",'proxy_option_string', "channel_cookie_path",'profile_local_path']:
                         if video.get(key) == None:
-                            logger.error(
-                                f" this field {key} is required in given video json data"
+                            logger.debug(
+                                f" this field {key} is optional in given video json data"
                             )
                             # raise ValueError(f"this field {key} is required  in given data")
 
                     for key in [
                         "timeout",
-                        "timeout",
-                        "is_debug",
+                        "log_level",
                         "wait_policy",
                         "is_record_video",
                         "username",
@@ -6155,22 +6309,20 @@ def validateTaskMetafile(loop, frame, metafile, canvas=None):
                             logger.error(
                                 f'is_open_browser is {video.get("is_open_browser")} of {type(video.get("is_open_browser"))},it should be bool, true or false'
                             )
-                    logger.debug(f"start to validate debug:{video.get('is_debug')}")
+                    logger.debug(f"start to validate debug:{video.get('log_level')}")
 
-                    if video.get("is_debug") == None:
-                        video["is_debug"] = True
+                    if video.get("log_level") == None:
+                        video["log_level"] = 10
                         logger.debug("you dont specify debug field,we use default True")
 
                     else:
-                        if type(video.get("is_debug")) == bool:
-                            video["is_debug"] = video.get("is_debug")
-                        elif type(video.get("is_debug")) == str and video.get(
-                            "is_debug"
-                        ).lower() not in ["true", "false"]:
-                            logger.error(
-                                f"debug is {video.get('is_debug')} of {type(video.get('is_debug'))},it should be bool, true or false"
-                            )
-                            video["is_debug"] = video.get("is_debug")
+                        if video.get("log_level") in list(dict(LOG_LEVEL.LOG_LEVEL_TEXT).values()):
+                            video["log_level"] = video.get("log_level")
+                        elif type(video.get("log_level")) == str:
+
+                            video["log_level"] = find_key(dict(LOG_LEVEL.LOG_LEVEL_TEXT),video.get("log_level"))
+                        else:
+                            video["log_level"] = 10
 
                     if video.get("is_record_video") == None:
                         video["is_record_video"] = True
@@ -6203,48 +6355,124 @@ def validateTaskMetafile(loop, frame, metafile, canvas=None):
                             if not video.get("wait_policy") in [0, 1, 2, 3, 4]:
                                 logger.error("wait_policy should be one of 0,1,2,3,4")
                     task_account = None
+                    logger.debug('start to process account info')
                     if video.get("account_id") is None:
+                        proxyid=None
+                        logger.debug(f'there is no account_id set and try to save new account')
+                        if video.get("proxy_option_id"):
+                            proxyid=CustomID(custom_id=video.get("proxy_option_id")).to_bin()
+                            proxy=ProxyModel.get_proxy_by_id(id=proxyid)
+                            if proxy is None:
+
+                                if video.get("proxy_option_string"):
+                                    proxy_string=video.get("proxy_option_string")
+                                    logger.debug('validate proxy_option_string in this task')
+                                    proxy_protocol_type, host, port, user, password = split_proxy(proxy_string)
+
+                                    proxy_data = {
+                                        "proxy_protocol": proxy_protocol_type,
+                                        "proxy_provider_type": 0,
+                                        "proxy_host": host,
+                                        "proxy_port": port,
+                                        "proxy_username": user,
+                                        "proxy_password": password,
+                                        # "ip_address": video.get("proxy_option_string"),
+                                        # "country": video.get("proxy_country"),
+                                        # "state": video.get("proxy_state"),
+                                        # "city": video.get("proxy_city"),
+
+                                        # "tags": video.get("proxy_tags"),
+                                        "status": 2,
+                                        "proxy_validate_network_type": None,
+                                        "proxy_validate_server": None,
+                                        "proxy_validate_results": None,
+                                    }
+                                    result = ProxyModel.add_proxy(proxy_data)
+                                    proxyid=result.id
+                                    logger.debug(f'save proxy to {result}')
                         user_data = {
                             "platform": video["platform"],
                             "username": video.get("username"),
                             "password": video.get("password"),
-                            "cookies": video.get("cookies"),
-                            "proxy": video.get("proxy"),
-                            "wait_policy": video.get("wait_policy"),
+                            "cookie_local_path": video.get("channel_cookie_path"),
+                            "profile_local_path": video.get("profile_local_path"),
+
+                                "proxy": CustomID(custom_id=proxyid).to_hex()
                         }
 
                         task_account = AccountModel.add_account(account_data=user_data)
+                        logger.debug(f'there is no account_id set and end to save new account:{task_account}')
+
                     else:
                         account_id = CustomID(
                             custom_id=video.get("account_id")
                         ).to_bin()
 
                         task_account = AccountModel.get_account_by_id(account_id)
+                        logger.debug(f'detect account_id{task_account} whether exist in db ')
                         if task_account == None:
-                            task_account = AccountModel.filter_accounts(
-                                username=video.get("username"),
-                                platform=video.get("platform"),
-                            )
-                            task_account = task_account[0]
-                            if task_account == None:
-                                user_data = {
-                                    "platform": video["platform"],
-                                    "username": video.get("username"),
-                                    "password": video.get("password"),
-                                    "cookies": video.get("cookies"),
-                                    "proxy": video.get("proxy"),
-                                    "wait_policy": video.get("wait_policy"),
-                                }
+                            logger.debug(f" account_id:{video.get('account_id')} not exist and end to save new account:{task_account}")
 
-                                task_account = AccountModel.add_account(
-                                    account_data=user_data
-                                )
-                                video["account_id"] = task_account.id
+                            proxyid=None
+                            logger.debug(f'there is no account_id set and try to save new account')
+                            if video.get("proxy_option_id"):
+                                proxyid=CustomID(custom_id=video.get("proxy_option_id")).to_bin()
+                                proxy=ProxyModel.get_proxy_by_id(id=proxyid)
+                                if proxy is None:
+
+                                    if video.get("proxy_option_string"):
+                                        proxy_string=video.get("proxy_option_string")
+                                        logger.debug('validate proxy_option_string in this task')
+                                        proxy_protocol_type, host, port, user, password = split_proxy(proxy_string)
+
+                                        proxy_data = {
+                                            "proxy_protocol": proxy_protocol_type,
+                                            "proxy_provider_type": 0,
+                                            "proxy_host": host,
+                                            "proxy_port": port,
+                                            "proxy_username": user,
+                                            "proxy_password": password,
+                                            # "ip_address": video.get("proxy_option_string"),
+                                            # "country": video.get("proxy_country"),
+                                            # "state": video.get("proxy_state"),
+                                            # "city": video.get("proxy_city"),
+
+                                            # "tags": video.get("proxy_tags"),
+                                            "status": 2,
+                                            "proxy_validate_network_type": None,
+                                            "proxy_validate_server": None,
+                                            "proxy_validate_results": None,
+                                        }
+                                        logger.debug(f'try to save proxy_data to {proxy_data}')
+
+                                        result = ProxyModel.add_proxy(proxy_data)
+                                        proxyid=result.id
+                                        logger.debug(f'save proxy to {proxyid}')
+
+                            
+                            user_data = {
+                                "platform": video["platform"],
+                                "username": video.get("username"),
+                                "password": video.get("password"),
+                                "cookie_local_path": video.get("channel_cookie_path"),
+                                "profile_local_path": video.get("profile_local_path"),
+
+                                "proxy": CustomID(custom_id=proxyid).to_hex()
+                            }
+
+
+                            task_account = AccountModel.add_account(
+                                account_data=user_data
+                            )
+                            video["account_id"] = task_account.id
+                            logger.debug(f'update account_id to {task_account.id}')
+
+                    logger.debug('end to process account info')
 
                     settingdata = {
                         "timeout": video.get("timeout"),
                         "is_open_browser": video.get("is_open_browser"),
-                        "is_debug": video.get("is_debug"),
+                        "log_level": LOG_LEVEL.DEBUG,
                         "platform": video["platform"],
                         "browser_type": video.get("browser_type"),
                         "is_record_video": video.get("is_record_video"),
@@ -6254,13 +6482,13 @@ def validateTaskMetafile(loop, frame, metafile, canvas=None):
                     tasksetting = None
                     if video.get("uploadsettingid") == None:
                         logger.debug(
-                            f" this field uploadsettingid is optional in given video json data"
+                            f" save uploadsetting data:{settingdata}"
                         )
 
-                        print("add to upload setting and return id for reuse")
+                        logger.debug("add to upload setting and return id for reuse")
 
                         tasksetting = UploadSettingModel.add_uploadsetting(
-                            settingdata, task_account
+                            settingdata, video["account_id"]
                         )
 
                     else:

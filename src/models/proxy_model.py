@@ -40,14 +40,14 @@ class IP_SOURCE_TYPE:
 
 
 class PROXY_PROTOCOL:
-    HTTP = 'HTTP'
-    HTTPS = 'HTTPS'
-    SOCKS5 = 'SOCKS5'
+    HTTP = 'http'
+    HTTPS = 'https'
+    SOCKS5 = 'socks5'
 
     PROXY_PROTOCOL_TEXT = [
-        (HTTP, "HTTP"),
-        (HTTPS, "HTTPS"),
-        (SOCKS5, "SOCKS5"),
+        (HTTP, "http"),
+        (HTTPS, "https"),
+        (SOCKS5, "socks5"),
     ]
 
 class PROXY_PROVIDER_TYPE:
@@ -88,7 +88,7 @@ class ProxyModel(BaseModel):
     id = BlobField(primary_key=True)    
     inserted_at = IntegerField(null=True)    
     # Proxy Protocol (HTTP/HTTPS/SOCKS5)
-    proxy_protocol = IntegerField(choices=PROXY_PROTOCOL)
+    proxy_protocol = CharField(choices=PROXY_PROTOCOL)
     
     # Proxy provider Type
     proxy_provider_type = IntegerField(default=PROXY_PROVIDER_TYPE.CUSTOM)
@@ -144,7 +144,7 @@ class ProxyModel(BaseModel):
 
         # Check if a proxy with the same unique hash already exists
         existing_proxy = cls.select().where(cls.unique_hash == unique_hash).first()
-
+        print(f'existing_proxy:{existing_proxy}')
         if existing_proxy is None:    
             proxy = cls(**proxy_data)
             proxy.inserted_at = int(time.time())  # Update insert_date
@@ -155,7 +155,7 @@ class ProxyModel(BaseModel):
 
             return proxy
         else:
-            return proxy
+            return cls.get_proxy_by_id(id=existing_proxy)
     # Read (Select) Proxy by ID
     @classmethod
 
