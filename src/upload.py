@@ -3,7 +3,7 @@ from datetime import datetime, date, timedelta
 import asyncio
 from src.log import logger
 from src.models.task_model import *
-
+import traceback
 
 # # for cookie issue,
 # upload = Upload(
@@ -13,13 +13,18 @@ async def uploadTask(taskid=None, uploadsetting=None, account=None, video=None):
     logger.debug(f"===================Start==========================")
 
     logger.debug(f"start task {taskid} to youtube upload video:\r{video}")
+    try:
+        upload = YoutubeUpload(**uploadsetting)
+        logger.debug(f"initial youtube upload ok:{uploadsetting}")
+        isok,youtubevideoid = await upload.upload(**video)
+        print(f"upload return:{youtubevideoid} for task {CustomID(custom_id=taskid).to_hex()}")
+        logger.debug(f"=====================END========================")
+        return youtubevideoid,taskid
 
-    upload = YoutubeUpload(**uploadsetting)
-    logger.debug(f"initial youtube upload ok:{uploadsetting}")
-    isok,youtubevideoid = await upload.upload(**video)
-    print(f"upload return:{youtubevideoid} for task {CustomID(custom_id=taskid).to_hex()}")
-    logger.debug(f"=====================END========================")
+    except Exception as e:
+        traceback.print_exc()
 
+        return None,taskid
     # if youtubevideoid is None:
     #     logger.debug("video upload failed")
     #     print(f"{taskid} video upload failed")
@@ -41,4 +46,3 @@ async def uploadTask(taskid=None, uploadsetting=None, account=None, video=None):
     #     )
     #     print("end to update task status to success")
 
-    return youtubevideoid,taskid

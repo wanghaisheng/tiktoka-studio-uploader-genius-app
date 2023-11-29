@@ -1810,214 +1810,217 @@ async def runupload(
         no_concurrent = settings[locale]["no_concurrent"]
         uptasks = set()
         logger.debug(f"there are {len(task_rows)}  video attempt to upload")
-        askquestionmsg(
+        cancel=askokcancelmsg(
             title='hints',
             message=f"{len(task_rows)} tasks add to queue now,upload will start automatically",
             parent=frame,
             DURATION=000,
         )
-        skipcount=0
-        totalmsg = ""
 
-        for row in task_rows:
-            taskids.append(CustomID(custom_id=row.id).to_hex())
-            uploadsetting = model_to_dict(row.setting)
-            uploadsetting.pop("id")
-            uploadsetting.pop("inserted_at")
-            uploadsetting.pop("account")
-            uploadsetting.pop("is_deleted")
-            uploadsetting.pop("platform")
-            uploadsetting["logger"] = logger
+        if cancel==True:
+            skipcount=0
+            totalmsg = ""
+
+            for row in task_rows:
+                taskids.append(CustomID(custom_id=row.id).to_hex())
+                uploadsetting = model_to_dict(row.setting)
+                uploadsetting.pop("id")
+                uploadsetting.pop("inserted_at")
+                uploadsetting.pop("account")
+                uploadsetting.pop("is_deleted")
+                uploadsetting.pop("platform")
+                uploadsetting["logger"] = logger
 
 
-            proxyid = row.setting.account.proxy
-            if proxyid:
-                proxyid=CustomID(custom_id=proxyid).to_bin()
-                proxy=ProxyModel.get_proxy_by_id(id=proxyid)
-                proxy_string=None
-                if proxy:
+                proxyid = row.setting.account.proxy
+                if proxyid:
+                    proxyid=CustomID(custom_id=proxyid).to_bin()
+                    proxy=ProxyModel.get_proxy_by_id(id=proxyid)
+                    proxy_string=None
+                    if proxy:
 
-                    proxy_string=(
-                                f"{proxy.proxy_username}:{proxy.proxy_password}@{proxy.proxy_host}:{proxy.proxy_port}"
-                                if proxy.proxy_username
-                                else f"{proxy.proxy_host}:{proxy.proxy_port}"
-                            )
-                    protocol=proxy.proxy_protocol
-                    http_proxy=f"{protocol}://{proxy_string}"
-                    https_proxy=f"{protocol}://{proxy_string}"
-            
-                    uploadsetting["proxy_option"] = https_proxy
+                        proxy_string=(
+                                    f"{proxy.proxy_username}:{proxy.proxy_password}@{proxy.proxy_host}:{proxy.proxy_port}"
+                                    if proxy.proxy_username
+                                    else f"{proxy.proxy_host}:{proxy.proxy_port}"
+                                )
+                        protocol=proxy.proxy_protocol
+                        http_proxy=f"{protocol}://{proxy_string}"
+                        https_proxy=f"{protocol}://{proxy_string}"
+                
+                        uploadsetting["proxy_option"] = https_proxy
+                    else:
+                        uploadsetting["proxy_option"] = None
+
+                profile_directory = row.setting.account.profile_local_path
+                uploadsetting['profile_directory']=profile_directory
+
+                channel_cookie_path = row.setting.account.cookie_local_path
+                uploadsetting['channel_cookie_path']=channel_cookie_path
+
+                username=row.setting.account.username
+                uploadsetting['username']=username
+
+                password=row.setting.account.password
+                uploadsetting['password']=password
+
+
+                video = model_to_dict(row.video)
+
+
+                video.pop("id")
+                video.pop("unique_hash")
+                video.pop("inserted_at")
+                video.pop("is_deleted")
+                if row.status==TASK_STATUS.SUCCESS:
+                    print('task is already upload,skip it')
+                    skipcount+=1
                 else:
-                    uploadsetting["proxy_option"] = None
-
-            profile_directory = row.setting.account.profile_local_path
-            uploadsetting['profile_directory']=profile_directory
-
-            channel_cookie_path = row.setting.account.cookie_local_path
-            uploadsetting['channel_cookie_path']=channel_cookie_path
-
-            username=row.setting.account.username
-            uploadsetting['username']=username
-
-            password=row.setting.account.password
-            uploadsetting['password']=password
-
-
-            video = model_to_dict(row.video)
-
-
-            video.pop("id")
-            video.pop("unique_hash")
-            video.pop("inserted_at")
-            video.pop("is_deleted")
-            if row.status==TASK_STATUS.SUCCESS:
-                print('task is already upload,skip it')
-                skipcount+=1
-            else:
-                uptask = uploadTask(
-                    taskid=row.id,
-                    video=video,
-                    uploadsetting=uploadsetting,
-                    account=row.setting.account,
-                )
-
-                # https://stackoverflow.com/questions/48483348/how-to-limit-concurrency-with-python-asyncio
-                if len(uptasks) >= no_concurrent:
-                    # Wait for some download to finish before adding a new one
-                    _done, uptasks = await asyncio.wait(
-                        uptasks, return_when=asyncio.FIRST_COMPLETED
+                    uptask = uploadTask(
+                        taskid=row.id,
+                        video=video,
+                        uploadsetting=uploadsetting,
+                        account=row.setting.account,
                     )
 
-                    all_tasks=_done
-
-                    if not len(all_tasks):
-                        logger.debug('no more scheduled tasks, stopping after this kick.')
-                        stop_after_this_kick = True
-
-                    elif  all(task.done() for task in all_tasks):
-                        logger.debug(f'all {len(all_tasks)} tasks are done, fetching results and stopping after this kick.')
-
-                        import gc
-                        import traceback
-                    # Clean up circular references between tasks.
-                        gc.collect()
-
-                        for task_idx, task in enumerate(all_tasks):
-                            if not task.done():
-                                continue
-
-                            # noinspection PyBroadException
-                            try:
-                                videoid,taskid = task.result()
-                                logger.debug(f'   task:{task_idx} ')
-                                logger.debug(f"get videoid after upload:{videoid} for task {taskid}")
-                                if videoid is None:
-                                    result = TaskModel.update_task(
-                                        id=CustomID(custom_id=taskid).to_bin(),
-                                        status=TASK_STATUS.FAILURE,
-                                    )
-
-
-                                    taskid=CustomID(custom_id=taskid).to_hex()                                
-                                    totalmsg = totalmsg + "\n" + f"this task {taskid} upload failed"
-
-                                else:
-                                    result = TaskModel.update_task(
-                                        id=CustomID(custom_id=taskid).to_bin(),
-                                        videodata={"video_id":videoid},
-                                        status=TASK_STATUS.SUCCESS,
-                                    )
-                                    taskid=CustomID(custom_id=taskid).to_hex()                                
-
-                                    totalmsg = totalmsg + "\n" + f"this task {taskid} upload success"
-
-                            except asyncio.CancelledError:
-                                # No problem, we want to stop anyway.
-                                logger.debug(f'   task :{task_idx} cancelled' )
-                            except Exception:
-                                print('{}: resulted in exception'.format(task))
-                                traceback.print_exc()
-                uptasks.add(asyncio.create_task(uptask))
-        # askquestionmsg(
-        #     title='upload logs1',
-        #     message=totalmsg,
-        #     parent=frame,
-        # )
-        completed, pending = await asyncio.wait(uptasks)
-        all_tasks = uptasks
-
-        if not len(all_tasks):
-            logger.debug('no more scheduled tasks, stopping after this kick.')
-            stop_after_this_kick = True
-
-        elif  all(task.done() for task in all_tasks):
-            logger.debug(f'all {len(all_tasks)}tasks are done, fetching results and stopping after this kick.')
-            import gc
-            import traceback
-        # Clean up circular references between tasks.
-            gc.collect()
-
-            for task_idx, task in enumerate(all_tasks):
-                if not task.done():
-                    continue
-
-                # noinspection PyBroadException
-                try:
-                    videoid,taskid = task.result()
-                    logger.debug(f'   task:{task_idx}')
-                    logger.debug(f"get videoid after upload:{videoid} for task {taskid}")
-                    if videoid is None:
-                        result = TaskModel.update_task(
-                            id=CustomID(custom_id=taskid).to_bin(),
-                            status=TASK_STATUS.FAILURE,
-                        )
-                        taskid=CustomID(custom_id=taskid).to_hex()                                
-                        totalmsg = totalmsg + "\n" + f"this task {taskid} upload failed"
-                    else:
-                        result = TaskModel.update_task(
-                            id=CustomID(custom_id=taskid).to_bin(),
-                            videodata={"video_id":videoid},
-                            status=TASK_STATUS.SUCCESS,
+                    # https://stackoverflow.com/questions/48483348/how-to-limit-concurrency-with-python-asyncio
+                    if len(uptasks) >= no_concurrent:
+                        # Wait for some download to finish before adding a new one
+                        _done, uptasks = await asyncio.wait(
+                            uptasks, return_when=asyncio.FIRST_COMPLETED
                         )
 
-                        taskid=CustomID(custom_id=taskid).to_hex()                                
+                        all_tasks=_done
 
-                        totalmsg = totalmsg + "\n" + f"this task {taskid} upload success"
-                except asyncio.CancelledError:
-                    # No problem, we want to stop anyway.
-                    logger.debug(f'   task :{task_idx} cancelled' )
-                except Exception:
-                    print(f'{task}: resulted in exception')
-                    traceback.print_exc()
+                        if not len(all_tasks):
+                            logger.debug('no more scheduled tasks, stopping after this kick.')
+                            stop_after_this_kick = True
+
+                        elif  all(task.done() for task in all_tasks):
+                            logger.debug(f'all {len(all_tasks)} tasks are done, fetching results and stopping after this kick.')
+
+                            import gc
+                            import traceback
+                        # Clean up circular references between tasks.
+                            gc.collect()
+
+                            for task_idx, task in enumerate(all_tasks):
+                                if not task.done():
+                                    continue
+
+                                # noinspection PyBroadException
+                                try:
+                                    videoid,taskid = task.result()
+                                    logger.debug(f'   task:{task_idx} ')
+                                    logger.debug(f"get videoid after upload:{videoid} for task {taskid}")
+                                    if videoid is None:
+                                        result = TaskModel.update_task(
+                                            id=CustomID(custom_id=taskid).to_bin(),
+                                            status=TASK_STATUS.FAILURE,
+                                        )
 
 
-        logger.debug(f"end to upload batch task {len(tasks)}")
-        logger.debug(f"start to update status in the  tabular {len(tasks)}")
+                                        taskid=CustomID(custom_id=taskid).to_hex()                                
+                                        totalmsg = totalmsg + "\n" + f"this task {taskid} upload failed"
 
-        queryTasks(
-            async_loop,
-            canvas=None,
-            frame=frame,
-            status=status,
-            platform=platform,
-            username=username,
-            video_id=vid,
-            video_title=vtitle,
-            schedule_at=schedule_at,
-            pageno=1,
-            pagecount=50,
-            sortby=sortby,
-        )
-        logger.debug(f"end to refresh tabular {len(tasks)}")
+                                    else:
+                                        result = TaskModel.update_task(
+                                            id=CustomID(custom_id=taskid).to_bin(),
+                                            videodata={"video_id":videoid},
+                                            status=TASK_STATUS.SUCCESS,
+                                        )
+                                        taskid=CustomID(custom_id=taskid).to_hex()                                
 
-        print(f"upload logs:{totalmsg}")
-        askquestionmsg(
-            title='upload logs',
-            message=totalmsg,
-            parent=frame,
-        )
-        print(f"this batch task {len(tasks)} upload endding")
+                                        totalmsg = totalmsg + "\n" + f"this task {taskid} upload success"
 
+                                except asyncio.CancelledError:
+                                    # No problem, we want to stop anyway.
+                                    logger.debug(f'   task :{task_idx} cancelled' )
+                                except Exception:
+                                    print('{}: resulted in exception'.format(task))
+                                    traceback.print_exc()
+                    uptasks.add(asyncio.create_task(uptask))
+            # askquestionmsg(
+            #     title='upload logs1',
+            #     message=totalmsg,
+            #     parent=frame,
+            # )
+            completed, pending = await asyncio.wait(uptasks)
+            all_tasks = uptasks
+
+            if not len(all_tasks):
+                logger.debug('no more scheduled tasks, stopping after this kick.')
+                stop_after_this_kick = True
+
+            elif  all(task.done() for task in all_tasks):
+                logger.debug(f'all {len(all_tasks)}tasks are done, fetching results and stopping after this kick.')
+                import gc
+                import traceback
+            # Clean up circular references between tasks.
+                gc.collect()
+
+                for task_idx, task in enumerate(all_tasks):
+                    if not task.done():
+                        continue
+
+                    # noinspection PyBroadException
+                    try:
+                        videoid,taskid = task.result()
+                        logger.debug(f'   task:{task_idx}')
+                        logger.debug(f"get videoid after upload:{videoid} for task {taskid}")
+                        if videoid is None:
+                            result = TaskModel.update_task(
+                                id=CustomID(custom_id=taskid).to_bin(),
+                                status=TASK_STATUS.FAILURE,
+                            )
+                            taskid=CustomID(custom_id=taskid).to_hex()                                
+                            totalmsg = totalmsg + "\n" + f"this task {taskid} upload failed"
+                        else:
+                            result = TaskModel.update_task(
+                                id=CustomID(custom_id=taskid).to_bin(),
+                                videodata={"video_id":videoid},
+                                status=TASK_STATUS.SUCCESS,
+                            )
+
+                            taskid=CustomID(custom_id=taskid).to_hex()                                
+
+                            totalmsg = totalmsg + "\n" + f"this task {taskid} upload success"
+                    except asyncio.CancelledError:
+                        # No problem, we want to stop anyway.
+                        logger.debug(f'   task :{task_idx} cancelled' )
+                    except Exception:
+                        print(f'{task}: resulted in exception')
+                        traceback.print_exc()
+
+
+            logger.debug(f"end to upload batch task {len(tasks)}")
+            logger.debug(f"start to update status in the  tabular {len(tasks)}")
+
+            queryTasks(
+                async_loop,
+                canvas=None,
+                frame=frame,
+                status=status,
+                platform=platform,
+                username=username,
+                video_id=vid,
+                video_title=vtitle,
+                schedule_at=schedule_at,
+                pageno=1,
+                pagecount=50,
+                sortby=sortby,
+            )
+            logger.debug(f"end to refresh tabular {len(tasks)}")
+
+            print(f"upload logs:{totalmsg}")
+            askquestionmsg(
+                title='upload logs',
+                message=totalmsg,
+                parent=frame,
+            )
+            print(f"this batch task {len(tasks)} upload endding")
+        else:
+            logger.info('cancel to upload these videos')
 
 def docView(frame, ttkframe, lang):
     b_view_readme = tk.Button(

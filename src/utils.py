@@ -43,22 +43,28 @@ def askquestionmsg(message, title="询问确认", DURATION=500, parent=None):
         top.after(DURATION, top.destroy)
     else:
         top.after(DURATION, top.destroy)
-
+    if msg4 is bool:
+        top.after(DURATION, top.destroy)
+    return msg4
 
 def askokcancelmsg(message, title="确定或取消", DURATION=500, parent=None):
     top = Toplevel(parent)
     top.title(title)
     center_window(top)
     msg5 = messagebox.askokcancel(title=title, message=message)
-    print(msg5)
-
+    # print(msg5)
+    if msg5 is bool:
+        top.after(DURATION, top.destroy)
+    return msg5
 
 def askretrycancelmsg(message, title="重试或取消", DURATION=500, parent=None):
     top = Toplevel(parent)
     top.title(title)
     center_window(top)
     msg6 = messagebox.askretrycancel(title=title, message=message)
-    print(msg6)
+    if msg6 is bool:
+        top.after(DURATION, top.destroy)
+    return msg6
 
 
 def askyesonmsg(message, title="hints", DURATION=500, parent=None):
@@ -66,7 +72,9 @@ def askyesonmsg(message, title="hints", DURATION=500, parent=None):
     top.title(title)
     center_window(top)
     msg7 = messagebox.askyesno(title="是或否", message="是否开启团战")
-    print(msg7)
+    if msg7 is bool:
+        top.after(DURATION, top.destroy)
+    return msg7
 
 
 def askyesnocancelmsg(message, title="hints", DURATION=500, parent=None):
@@ -76,7 +84,9 @@ def askyesnocancelmsg(message, title="hints", DURATION=500, parent=None):
     msg8 = messagebox.askyesnocancel(
         title="是或否或取消", message="是否打大龙", default=messagebox.CANCEL
     )
-    print(msg8)
+    if msg8 is bool:
+        top.after(DURATION, top.destroy)
+    return msg8
 
 
 def find_key(input_dict, value):

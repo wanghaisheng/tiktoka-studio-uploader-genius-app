@@ -230,7 +230,7 @@
 			"des_translation":"多语种字幕自动翻译",
 			"hiddenwatermark": "添加隐形水印",
 			"autothumb": "自动生成缩略图",
-
+			"repost":"自动转发视频",
 			"batchchangebgmusic": "批量替换背景音乐"
 
 		},
