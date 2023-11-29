@@ -525,6 +525,7 @@ async def upload_selected_row_task(rowid, frame=None, status=None, platform=None
                     id=rowid_bin, is_deleted=False
                 )
                 uptasks = set()
+                totalmsg = ""
 
                 if counts > 0:
                     logger.debug(f"this task {rowid} start to upload")
@@ -585,55 +586,78 @@ async def upload_selected_row_task(rowid, frame=None, status=None, platform=None
                         video.pop("inserted_at")
                         video.pop("is_deleted")
                         logger.info(f'start to upload {video}')
-                        task = uploadTask(
+                        uptask = uploadTask(
                             taskid=row.id,
                             video=video,
                             uploadsetting=uploadsetting,
                             account=row.setting.account,
                         )
+                        uptasks.add(asyncio.create_task(uptask))
 
-                        uptasks.add(asyncio.create_task(task))
+                        completed, pending = await asyncio.wait(uptasks)
+                        all_tasks = uptasks
+
+                        if not len(all_tasks):
+                            logger.debug('no more scheduled tasks, stopping after this kick.')
+                            stop_after_this_kick = True
+
+                        elif  all(task.done() for task in all_tasks):
+                            logger.debug(f'all {len(all_tasks)}tasks are done, fetching results and stopping after this kick.')
+                            import gc
+                            import traceback
+                        # Clean up circular references between tasks.
+                            gc.collect()
+
+                            for task_idx, task in enumerate(all_tasks):
+                                if not task.done():
+                                    continue
+
+                                # noinspection PyBroadException
+                                try:
+                                    videoid,taskid = task.result()
+                                    logger.debug(f'   task:{task_idx}')
+                                    logger.debug(f"get videoid after upload:{videoid} for task {taskid}")
+                                    if videoid is None:
+                                        result = TaskModel.update_task(
+                                            id=CustomID(custom_id=taskid).to_bin(),
+                                            status=TASK_STATUS.FAILURE,
+                                        )
+                                        taskid=CustomID(custom_id=taskid).to_hex()                                
+                                        totalmsg = totalmsg + "\n" + f"this task {taskid} upload failed"
+                                    else:
+                                        result = TaskModel.update_task(
+                                            id=CustomID(custom_id=taskid).to_bin(),
+                                            videodata={"video_id":videoid},
+                                            status=TASK_STATUS.SUCCESS,
+                                        )
+
+                                        taskid=CustomID(custom_id=taskid).to_hex()                                
+
+                                        totalmsg = totalmsg + "\n" + f"this task {taskid} upload success"
+                                except asyncio.CancelledError:
+                                    # No problem, we want to stop anyway.
+                                    logger.debug(f'   task :{task_idx} cancelled' )
+                                except Exception:
+                                    print(f'{task}: resulted in exception')
+                                    traceback.print_exc()
+
+
+                        logger.debug(f"end to upload batch task {len(tasks)}")
+                        logger.debug(f"start to update status in the  tabular {len(tasks)}")
 
 
 
-                    showinfomsg(
-                        message=f"this task {rowid} add to queue now,upload will start automatically",
-                        parent=frame,
-                        DURATION=2000,
-                    )
-                    completed, pending = await asyncio.wait(uptasks)
-                    results = [task.result() for task in completed]
-
-                    videoid = results[0]
-
-                    print(f"get videoid after upload:{videoid}")
-                    if videoid is None:
+                        print(f"upload logs:{totalmsg}")
                         askquestionmsg(
-                            message=f"this task {rowid} upload failed",
-                            parent=frame,
-                            DURATION=1000,
-                        )
-                        print(f"this task {rowid} upload failed")
-                        print("update task status to failure")
-                        result = TaskModel.update_task(
-                            id=CustomID(custom_id=rowid).to_bin(),
-                            status=TASK_STATUS.FAILURE,
-                        )
-                        print("end to update task status to failure")
-
-                    else:
-                        showinfomsg(
-                            message=f"this task {rowid} upload success",
+                            title='upload logs',
+                            message=totalmsg,
                             parent=frame,
                         )
-                        print(f"this task {rowid} upload success")
-                        print("update task status to success")
+                        print(f"this batch task {len(tasks)} upload endding")
 
-                        result = TaskModel.update_task(
-                            id=CustomID(custom_id=rowid).to_bin(),
-                            status=TASK_STATUS.SUCCESS,
-                        )
-                        print("end to update task status to success")
+
+
+
                 else:
                     logger.debug(
                         f"you cannot upload this task {rowid}, not added before"
