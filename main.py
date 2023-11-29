@@ -9025,9 +9025,16 @@ def read_root():
 
 
 if __name__ == "__main__":
-    loop = asyncio.new_event_loop()
 
-    asyncio.set_event_loop(loop)
+    if sys.platform == 'win32':
+        asyncio.get_event_loop().close()
+        # On Windows, the default event loop is SelectorEventLoop, which does
+        # not support subprocesses. ProactorEventLoop should be used instead.
+        # Source: https://docs.python.org/3/library/asyncio-subprocess.html
+        loop = asyncio.ProactorEventLoop()
+        asyncio.set_event_loop(loop)
+    else:
+        loop = asyncio.get_event_loop()
 
     # Start FastAPI server in a separate thread
     # fastapi_thread = threading.Thread(target=start_fastapi_server).start()

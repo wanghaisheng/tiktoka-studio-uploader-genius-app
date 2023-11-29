@@ -43,8 +43,7 @@ def askquestionmsg(message, title="询问确认", DURATION=500, parent=None):
         top.after(DURATION, top.destroy)
     else:
         top.after(DURATION, top.destroy)
-    if msg4 is bool:
-        top.after(DURATION, top.destroy)
+
     return msg4
 
 def askokcancelmsg(message, title="确定或取消", DURATION=500, parent=None):
