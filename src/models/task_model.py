@@ -168,9 +168,9 @@ class TaskModel(BaseModel):
                 video.save()
 
             task.save()
-            logger.info(
-                f"row data:{json.dumps(model_to_dict(task), indent=4, sort_keys=True, default=str)}"
-            )
+            # logger.info(
+            #     f"row data:{json.dumps(model_to_dict(task), indent=4, sort_keys=True, default=str)}"
+            # )
             print("end to update task data")
 
             return task

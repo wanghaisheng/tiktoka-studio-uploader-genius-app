@@ -34,30 +34,30 @@ def showinfomsg(message, title="hints", DURATION=500, parent=None):
 # 疑问消息框
 
 
-def askquestionmsg(message, title="hints", DURATION=500, parent=None):
+def askquestionmsg(message, title="询问确认", DURATION=500, parent=None):
     top = Toplevel(parent)
     top.title(title)
     center_window(top)
-    msg4 = messagebox.askquestion(title="询问确认", message=message)
+    msg4 = messagebox.askquestion(title=title, message=message)
     if msg4 == "yes":
         top.after(DURATION, top.destroy)
     else:
         top.after(DURATION, top.destroy)
 
 
-def askokcancelmsg(message, title="hints", DURATION=500, parent=None):
+def askokcancelmsg(message, title="确定或取消", DURATION=500, parent=None):
     top = Toplevel(parent)
     top.title(title)
     center_window(top)
-    msg5 = messagebox.askokcancel(title="确定或取消", message=message)
+    msg5 = messagebox.askokcancel(title=title, message=message)
     print(msg5)
 
 
-def askretrycancelmsg(message, title="hints", DURATION=500, parent=None):
+def askretrycancelmsg(message, title="重试或取消", DURATION=500, parent=None):
     top = Toplevel(parent)
     top.title(title)
     center_window(top)
-    msg6 = messagebox.askretrycancel(title="重试或取消", message=message)
+    msg6 = messagebox.askretrycancel(title=title, message=message)
     print(msg6)
 
 

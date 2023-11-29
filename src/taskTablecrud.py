@@ -614,13 +614,26 @@ async def upload_selected_row_task(rowid, frame=None, status=None, platform=None
                             DURATION=1000,
                         )
                         print(f"this task {rowid} upload failed")
+                        print("update task status to failure")
+                        result = TaskModel.update_task(
+                            id=CustomID(custom_id=rowid).to_bin(),
+                            status=TASK_STATUS.FAILURE,
+                        )
+                        print("end to update task status to failure")
+
                     else:
                         showinfomsg(
                             message=f"this task {rowid} upload success",
                             parent=frame,
                         )
                         print(f"this task {rowid} upload success")
+                        print("update task status to success")
 
+                        result = TaskModel.update_task(
+                            id=CustomID(custom_id=rowid).to_bin(),
+                            status=TASK_STATUS.SUCCESS,
+                        )
+                        print("end to update task status to success")
                 else:
                     logger.debug(
                         f"you cannot upload this task {rowid}, not added before"
