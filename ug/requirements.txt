@@ -1,0 +1,20 @@
+pillow==9.5.0
+moviepy==1.0.3
+tsup==0.1.16
+requests[socks]
+# scenedetect[opencv]==0.5.6.1
+SQLAlchemy
+UltraDict
+atomics
+jsons
+lastversion
+jsonschema
+eld
+pystray
+bcrypt
+peewee 
+pysocks
+dnspython
+fastapi
+pycountry
+pyperclip

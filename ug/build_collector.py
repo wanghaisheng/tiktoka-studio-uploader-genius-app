@@ -28,7 +28,7 @@ def build_ug():
         print("remove useless files")
         os.mkdir("build")
         os.mkdir("bin")
-        shutil.copytree("./ug", "build/ug")
+        shutil.copytree("./", "build/ug")
 
     except Exception as e:
         print(e)
