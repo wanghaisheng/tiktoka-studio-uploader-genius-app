@@ -16,3 +16,4 @@ peewee
 fastapi
 pycountry
 pyperclip
+uvicorn

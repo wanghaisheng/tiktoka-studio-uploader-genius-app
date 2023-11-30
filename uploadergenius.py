@@ -1535,7 +1535,8 @@ def dumpMetafiles(selectedMetafileformat, folder):
 def dumpSetting(settingfilename):
     folder = ROOT_DIR
     logger.debug(f"start to dump TiktokaStudio settings")
-    logger.debug(f"check settings before dump {settings}")
+    logger.info(f"check settings before dump {settings}")
+
     tmpjson = os.path.join(folder, settingfilename)
 
     if os.path.exists(tmpjson):
@@ -8953,9 +8954,20 @@ def changeDisplayLang(lang):
 
 
 def quit_window(icon, item):
-    icon.stop()
-    root.destroy()
+    # global loop
+    # print('shutdown icon')
 
+    # icon.stop()
+
+    # print('shutdown server')
+
+    # server.shutdown()
+    # print('shutdown root')
+
+    # root.destroy()
+    # print('shutdown loop')
+    # loop.stop()
+    os._exit(0)
 
 def show_window(icon, item):
     icon.stop()
@@ -8972,7 +8984,7 @@ def withdraw_window():
 
 def start_fastapi_server(loop):
     import uvicorn
-
+    global server
     config = uvicorn.Config(app, loop=loop, host="0.0.0.0", port=8000)
     server = uvicorn.Server(config)
     loop.run_until_complete(server.serve())
@@ -8986,9 +8998,6 @@ def start_fastapi_server_cmd():
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.include_router(router)
 
-
-async def asynctk():
-    start_tkinter_app()
 
 
 def start_tkinter_app(async_loop):
@@ -9004,13 +9013,13 @@ def start_tkinter_app(async_loop):
     start(locale, root, async_loop)
 
     settings["folders"] = tmp
-    # root.protocol('WM_DELETE_WINDOW', withdraw_window)
+    root.protocol('WM_DELETE_WINDOW', withdraw_window)
 
     settings["locale"] = locale
+    dumpSetting(settingfilename)
 
     root.mainloop()
 
-    dumpSetting(settingfilename)
 
 
 @app.get("/")
@@ -9021,7 +9030,8 @@ def read_root():
 
 
 if __name__ == "__main__":
-
+    global loop
+    loop=None
     if sys.platform == 'win32':
         asyncio.get_event_loop().close()
         # On Windows, the default event loop is SelectorEventLoop, which does
@@ -9033,9 +9043,10 @@ if __name__ == "__main__":
         loop = asyncio.get_event_loop()
 
     # Start FastAPI server in a separate thread
-    # fastapi_thread = threading.Thread(target=start_fastapi_server).start()
+    fastapi_thread = threading.Thread(target=start_fastapi_server,args=(
+            loop,)).start()
 
-    # loop.create_task(asynctk())
-    # start_fastapi_server(loop)
 
     start_tkinter_app(loop)
+    # loop.run_forever()
+    # loop.close()
