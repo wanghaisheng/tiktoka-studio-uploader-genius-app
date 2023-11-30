@@ -1,0 +1,106 @@
+name: Build and package python apps
+
+on: push
+
+jobs:
+  build-mac:
+    runs-on: macos-latest
+    env:
+      PYTHONVERSION: "3.11.1"
+      MACOSX_DEPLOYMENT_TARGET: "10.9"
+      PYI_BUILD_MODE: "onedir"
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Cache Python download
+      id: cache-python-download
+      uses: actions/cache@v3
+      with:
+        path: ~/python.pkg
+        key: macOS-Python-${{ env.PYTHON_VERSION }}
+
+    - name: Get Python
+      run: |
+       curl https://www.python.org/ftp/python/${PYTHONVERSION}/python-${PYTHONVERSION}-macos11.pkg -o ~/python.pkg
+
+    - name: Install Python
+      run: sudo installer -pkg ~/python.pkg -target /
+
+    - name: Install Python dependencies and build
+      run: |
+        python3 --version
+        pip3 install --upgrade pip wheel
+        pip3 install pyinstaller
+        pyinstaller app.spec
+      
+    - name: Log files
+      run: |
+        ls dist
+        ls dist/app
+        mkdir app
+        mv ./dist/app.app ./app/app.app
+        hdiutil create -srcfolder ./app app.dmg
+
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        file: app.dmg
+        asset_name: app.dmg
+        tag: latest-builds
+        overwrite: true
+        
+  build-linux:
+    runs-on: ubuntu-latest
+    env:
+      PYI_BUILD_MODE: "onefile"
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install requirements
+      run: |
+        pip3 install pyinstaller
+        sudo apt install python3-tk python3-pil.imagetk
+
+    - name: Build
+      run: pyinstaller app.spec
+      
+    - name: Log files
+      run: |
+        ls dist
+
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        file: dist/app
+        asset_name: app
+        tag: latest-builds
+        overwrite: true
+  
+  build-windows:
+    runs-on: windows-latest
+    env:
+      PYI_BUILD_MODE: "onefile"
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Install Python dependencies and build
+      run: |
+        python3 --version
+        pip install --upgrade pip wheel
+        pip install pyinstaller
+        pyinstaller app.spec
+      
+    - name: Log files
+      run: |
+        ls dist
+
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        file: dist/app.exe
+        asset_name: app.exe
+        tag: latest-builds
+        overwrite: true

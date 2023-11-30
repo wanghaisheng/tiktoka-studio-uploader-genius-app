@@ -1,161 +1,117 @@
-name: Build and Release Assets en
+name: Compile into Executables
 
 on:
+  release:
+    types: [published]
   workflow_dispatch:
 
-  push:
-    tags:
-    - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
-
 jobs:
-
-  linux:
-    runs-on: ubuntu-18.04
-    timeout-minutes: 10
-
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Create environment and install dependencies
-      run: |
-        $CONDA/bin/conda env create --file environment.yml --name autovideo
-        $env:PLAYWRIGHT_BROWSERS_PATH="0"
-        pip install -r requirements.txt
-        playwright install firefox
-    - name: Create binary
-      run: |
-        $CONDA/envs/autovideo/bin/pyinstaller --clean -y --dist ./dist/linux ./autovideo.spec
-
-    - name: Zip binary
-      run: |
-        cd ./dist/linux
-        zip autovideo-linux.zip autovideo
-
-    - uses: actions/upload-artifact@v2
-      with:
-        name: autovideo-linux
-        path: ./dist/linux/autovideo-linux.zip
-
-  macos:
-    runs-on: macos-10.15
-    timeout-minutes: 10
-
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Create environment and install dependencies
-      run: |
-        sudo $CONDA/bin/conda env create --file environment.yml --name autovideo
-
-    - name: Create macos app
-      run: |
-        $CONDA/envs/autovideo/bin/pyinstaller --clean -y --dist ./dist/macos ./autovideo.spec
-        rm -rf ./dist/macos/autovideo
-
-    - name: Zip binary
-      run: |
-        cd ./dist/macos
-        zip -r autovideo-macos.zip .
-
-    - uses: actions/upload-artifact@v2
-      with:
-        name: autovideo-macos
-        path: ./dist/macos/autovideo-macos.zip
-
   windows:
     runs-on: windows-latest
-    timeout-minutes: 10
-
+    name: Windows
     steps:
-    - uses: actions/checkout@v2
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.8.x"
+      - name: Setup Virtual Environment
+        run: |
+          py -m venv env
+          ./env/Scripts/Activate.ps1
+      - name: Install dependencies
+        run: py -m pip install -r requirements.txt
+      - name: Get tag
+        id: vars
+        shell: bash
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+      - name: Make binary
+        run: |
+          py -m pip install cx_Freeze
+          py cxfreeze_setup.py build
+          mv dist/main.exe dist/lazy-dsi-file-downloader-${{ steps.vars.outputs.tag }}-Windows.exe
+        shell: bash
+      - name: Publish builds
+        uses: actions/upload-artifact@v3
+        with:
+          path: dist
+          name: windows
 
-    - name: Create environment and install dependencies
-      run: |
-        %CONDA%\Scripts\conda.exe env create ^
-        --file environment.yml --name autovideo
-      shell: cmd
-
-    - name: Create binary
-      run: |
-        %CONDA%\envs\autovideo\Scripts\pyinstaller.exe ^
-        --clean -y --dist .\dist\windows .\autovideo.spec
-      shell: cmd
-
-    - name: Zip binary
-      run: |
-        cd .\dist\windows
-        powershell Compress-Archive autovideo.exe autovideo-windows.zip
-
-    - uses: actions/upload-artifact@v2
-      with:
-        name: autovideo-windows
-        path: .\dist\windows\autovideo-windows.zip
-
-  release:
-    needs: [ linux, macos, windows ]
+  python:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-
+    name: Python 3 build
     steps:
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Get tag
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+      - name: Make zip
+        run: |
+          mkdir temporary
+          cp LICENSE main.py lazy.ico README.md requirements.txt temporary/
+          cd temporary
+          chmod +x main.py
+          zip -r ../lazy-dsi-file-downloader-${{ steps.vars.outputs.tag }}-Python3.zip * 
+      - name: Publish artifact
+        uses: actions/upload-artifact@v3
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: true
-          prerelease: true
+          path: lazy-dsi-file-downloader-${{ steps.vars.outputs.tag }}-Python3.zip
+          name: python
 
-      - name: Get tag version
-        id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
-
-      - uses: actions/download-artifact@v1
+  
+  macos:
+    runs-on: macos-latest
+    name: macOS
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v3
         with:
-          name: autovideo-linux
-        continue-on-error: true
+          python-version: "3.x"
+      - name: Install pyinstaller
+        run: |
+          pip3 install pyinstaller
+      - name: Install dependencies
+        run: |
+          pip3 install -r requirements.txt
+      - name: Get tag
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+      - name: Create executable
+        run: |
+          pyinstaller --onefile  --icon "lazy.ico" --console --name "lazy-dsi-file-downloader-macOS" main.py
+          cd dist
+          chmod +x lazy-dsi-file-downloader-macOS
+          zip ../lazy-dsi-file-downloader-${{ steps.vars.outputs.tag }}-macOS.zip lazy-dsi-file-downloader-macOS
+      - name: Publish artifact
+        uses: actions/upload-artifact@v3
+        with:   
+          path: lazy-dsi-file-downloader-${{ steps.vars.outputs.tag }}-macOS.zip
+          name: macos
 
-      - name: Upload Linux Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  publish:
+    runs-on: ubuntu-latest
+    name: Publish builds
+    if: ${{ success() }}
+    needs: [windows,python,macos]
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+      - name: Get tag
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+      - name: re-zip Windows
+        run: |
+          cd windows
+          zip -r lazy-dsi-file-downloader-${{ steps.vars.outputs.tag }}-Windows.zip *
+          cd ..
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./autovideo-linux/autovideo-linux.zip
-          asset_name: autovideo-linux-${{ steps.get_version.outputs.VERSION }}.zip
-          asset_content_type: application/zip
-        continue-on-error: true
-
-      - uses: actions/download-artifact@v1
-        with:
-          name: autovideo-macos
-        continue-on-error: true
-
-      - name: Upload MacOS Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./autovideo-macos/autovideo-macos.zip
-          asset_name: autovideo-macos-${{ steps.get_version.outputs.VERSION }}.zip
-          asset_content_type: application/zip
-        continue-on-error: true
-
-      - uses: actions/download-artifact@v1
-        with:
-          name: autovideo-windows
-        continue-on-error: true
-
-      - name: Upload Windows Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./autovideo-windows/autovideo-windows.zip
-          asset_name: autovideo-windows-${{ steps.get_version.outputs.VERSION }}.zip
-          asset_content_type: application/zip
-        continue-on-error: true
+          files: |
+            windows/lazy-dsi-file-downloader-${{ steps.vars.outputs.tag }}-Windows.zip
+            macos/lazy-dsi-file-downloader-${{ steps.vars.outputs.tag }}-macOS.zip
+            python/lazy-dsi-file-downloader-${{ steps.vars.outputs.tag }}-Python3.zip  

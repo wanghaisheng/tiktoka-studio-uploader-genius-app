@@ -1,0 +1,92 @@
+name: Build Binaries
+
+on: push
+
+
+jobs:
+  deploy:
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+    - name: Install headers for lzo (Ubuntu)
+      run: |
+        sudo apt install -y liblzo2-dev zlib1g-dev
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+    - name: Install Mac dependencies
+      run: |
+        brew install lzo
+        brew install libiodbc libpq
+        brew install postgres-unofficial
+        mkdir -p /Applications/Postgres.app/Contents/Versions/9.6/lib/
+        ln -s /Applications/Postgres.app/Contents/Versions/12/lib/libpq.5.12.dylib /Applications/Postgres.app/Contents/Versions/9.6/lib/libpq.5.dylib
+        mkdir -p /usr/local/opt/postgresql@15/lib/
+        ln -s /Applications/Postgres.app/Contents/Versions/12/lib/libpq.5.12.dylib /usr/local/opt/postgresql@15/lib/libpq.5.dylib
+      if: ${{ matrix.os == 'macos-latest' }}
+    - name: Install dependencies
+      run: |
+        pip install wheel
+        pip install -r requirements.txt
+        pip install cx_freeze
+    - name: Build Windows App
+      run: |
+        cd cx_freeze/win_debug
+        python setup.py bdist_msi
+        cd ../..
+        cd cx_freeze/win
+        python setup.py bdist_msi
+        cd ../..
+      if: ${{ matrix.os == 'windows-latest' }}
+    - name: Build Mac App
+      run: |
+        cd cx_freeze/mac
+        python setup.py bdist_dmg
+        cd ../..
+      if: ${{ matrix.os == 'macos-latest' }}
+    - name: Build Linux AppImage
+      run: |
+        pip install python-appimage
+        cp vocabsieve.{desktop,png} recipe/
+        echo $(pwd) | cat - recipe/requirements.txt > tmpfile && mv tmpfile recipe/requirements.txt
+        python -m python_appimage build app -p 3.10 recipe
+        mv VocabSieve-x86_64.AppImage VocabSieve-v$(grep version setup.cfg | awk '{print $3}')-linux-amd64.AppImage
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+    - name: Upload Windows App
+      uses: actions/upload-artifact@v3
+      with:
+        name: Windows App
+        path: |
+          cx_freeze/win/dist/*
+    - name: Upload Windows App (debug)
+      uses: actions/upload-artifact@v3
+      with:
+        name: Windows App (debug)
+        path: |
+          cx_freeze/win_debug/dist/*
+    - name: Upload Mac App
+      uses: actions/upload-artifact@v3
+      with:
+        name: Mac App
+        path: |
+          cx_freeze/mac/build/*.dmg
+    - name: Upload Linux AppImage
+      uses: actions/upload-artifact@v3
+      with:
+        name: Linux AppImage
+        path: |
+          *.AppImage
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: |
+          cx_freeze/win/dist/*
+          cx_freeze/mac/build/*.dmg
+          *.AppImage
+        draft: true
