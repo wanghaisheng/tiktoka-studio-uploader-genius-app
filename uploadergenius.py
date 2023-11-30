@@ -8954,20 +8954,25 @@ def changeDisplayLang(lang):
 
 
 def quit_window(icon, item):
-    # global loop
-    # print('shutdown icon')
+    global loop,fastapi_thread
 
-    # icon.stop()
+    print('shutdown icon')
 
-    # print('shutdown server')
+    icon.stop()
 
-    # server.shutdown()
-    # print('shutdown root')
+    print('shutdown server')
 
-    # root.destroy()
-    # print('shutdown loop')
+    server.shutdown()
+    print('shutdown root')
+
+    root.destroy()
+    print('shutdown loop')
+    sys.exit()    
+    # fastapi_thread.stop()
     # loop.stop()
-    os._exit(0)
+    # for task in loop.tasks:
+    #     task.cancel()
+    # os._exit(0)
 
 def show_window(icon, item):
     icon.stop()
@@ -9030,7 +9035,7 @@ def read_root():
 
 
 if __name__ == "__main__":
-    global loop
+    global loop,fastapi_thread
     loop=None
     if sys.platform == 'win32':
         asyncio.get_event_loop().close()
@@ -9048,5 +9053,5 @@ if __name__ == "__main__":
 
 
     start_tkinter_app(loop)
-    # loop.run_forever()
-    # loop.close()
+    loop.run_forever()
+    loop.close()
