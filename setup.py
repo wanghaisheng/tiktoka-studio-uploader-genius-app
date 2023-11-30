@@ -74,24 +74,56 @@ build_exe_options = {
          ( './static/', 'static' )
 
          ],
-    'includes': ["PIL",'moviepy','tsup',"requests",'UltraDict','jsons','lastversion','jsonschema','pystray','bcrypt','peewee','fastapi','pycountry','pyperclip'], # list of extra modules to include (from your virtualenv of system path),
+    'includes': ["pillow",'moviepy','tsup',"requests",'UltraDict','jsons','lastversion','jsonschema','pystray','bcrypt','peewee','fastapi','pycountry','pyperclip'], # list of extra modules to include (from your virtualenv of system path),
 
 
 }
 
-bdist_rpm_options = {"icon": icon}
+bdist_rpm_options = {"icon": icon,
+    "include_files": [
+         ( './assets/', 'assets' ),
+         ( './locales/', 'locales' ),
+         ( './static/', 'static' )
+
+         ],
+    'includes': ["pillow",'moviepy','tsup',"requests",'UltraDict','jsons','lastversion','jsonschema','pystray','bcrypt','peewee','fastapi','pycountry','pyperclip'], # list of extra modules to include (from your virtualenv of system path),
+}
 
 bdist_msi_options = {
     "add_to_path": False,
     "install_icon": "assets/icon.ico",
     "upgrade_code": upgradeid,
     "target_name": "UploaderGenius",
+    "include_files": [
+         ( './assets/', 'assets' ),
+         ( './locales/', 'locales' ),
+         ( './static/', 'static' )
+
+         ],
+    'includes': ["pillow",'moviepy','tsup',"requests",'UltraDict','jsons','lastversion','jsonschema','pystray','bcrypt','peewee','fastapi','pycountry','pyperclip'], # list of extra modules to include (from your virtualenv of system path),
+
 }
-bdist_mac_options = {"bundle_name": "UploaderGenius", "iconfile": "./assets/icon.ico"}
+bdist_mac_options = {"bundle_name": "UploaderGenius", "iconfile": "./assets/icon.ico",
+    "include_files": [
+         ( './assets/', 'assets' ),
+         ( './locales/', 'locales' ),
+         ( './static/', 'static' )
+
+         ],
+    'includes': ["pillow",'moviepy','tsup',"requests",'UltraDict','jsons','lastversion','jsonschema','pystray','bcrypt','peewee','fastapi','pycountry','pyperclip'], # list of extra modules to include (from your virtualenv of system path),
+}
 
 bdist_dmg_options = {
     "volume_label": "UploaderGenius",
     "applications_shortcut": True,
+    "include_files": [
+         ( './assets/', 'assets' ),
+         ( './locales/', 'locales' ),
+         ( './static/', 'static' )
+
+         ],
+    'includes': ["pillow",'moviepy','tsup',"requests",'UltraDict','jsons','lastversion','jsonschema','pystray','bcrypt','peewee','fastapi','pycountry','pyperclip'], # list of extra modules to include (from your virtualenv of system path),
+
 }
 
 version = "0.9.0"

@@ -1,4 +1,4 @@
-PIL
+pillow
 moviepy==1.0.3
 tsup==0.1.16
 requests
