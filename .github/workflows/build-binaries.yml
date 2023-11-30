@@ -1,0 +1,184 @@
+name: Release Build for All Platforms
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version"
+        required: true
+        default: "X.X"
+
+jobs:
+  # UBUNTU BUILD
+  build-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Install Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: "3.8"
+          architecture: "x64"
+      - name: Install requirements
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run cx_freeze
+        continue-on-error: true
+        run: |
+          python setup.py bdist_rpm
+
+      - name: Run alien
+        continue-on-error: true
+        run: |
+          cd dist
+          sudo apt install alien
+          sudo alien -d UploaderGenius-${{ github.event.inputs.version }}.tar.gz --version=${{ github.event.inputs.version }}
+          sudo alien -r UploaderGenius-${{ github.event.inputs.version }}.tar.gz --version=${{ github.event.inputs.version }}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: UploaderGenius.deb
+          path: dist/UploaderGenius_${{ github.event.inputs.version }}-2_all.deb
+      - uses: actions/upload-artifact@v2
+        with:
+          name: UploaderGenius.rpm
+          path: dist/UploaderGenius-${{ github.event.inputs.version }}-2.noarch.rpm
+      - uses: actions/upload-artifact@v2
+        with:
+          name: UploaderGenius.tar.gz
+          path: dist/UploaderGenius-${{ github.event.inputs.version }}.tar.gz
+
+  # WINDOWS BUILD
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Install Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: "3.10"
+          architecture: "x64"
+      - name: Install requirements
+        run: |
+          pip install -r requirements.txt
+      - name: Run cx_freeze
+        run: |
+          python setup.py bdist_msi
+      - uses: actions/upload-artifact@v2
+        with:
+          name: UploaderGenius-setup.msi
+          path: dist/UploaderGenius-win64.msi
+
+  # MACOS BUILD
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Install Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: "3.10"
+          architecture: "x64"
+      - name: Install requirements
+        run: |
+          pip install -r requirements.txt
+      - name: Run cx_freeze
+        run: |
+          python setup.py bdist_dmg
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: UploaderGenius-setup.dmg
+          path: build/UploaderGenius.dmg
+
+      - uses: actions/download-artifact@v2
+        name: Upload MSI
+        with:
+          name: UploaderGenius-setup.msi
+
+      - uses: actions/download-artifact@v2
+        name: Upload RPM
+        with:
+          name: UploaderGenius.rpm
+
+      - uses: actions/download-artifact@v2
+        name: Upload DEB
+        with:
+          name: UploaderGenius.deb
+
+      - uses: actions/download-artifact@v2
+        name: Upload Tarball
+        with:
+          name: UploaderGenius.tar.gz
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.event.inputs.version }}
+          release_name: "Release ${{ github.event.inputs.version }}"
+          overwrite: true
+          body: |
+            Release ${{ github.event.inputs.version }} (Add your content here and then publish this.)
+          draft: true
+          prerelease: false
+
+      - name: Upload Release Asset(MSI)
+        id: upload-release-asset-msi
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{steps.create_release.outputs.upload_url}}
+          asset_path: UploaderGenius-win64.msi
+          asset_name: UploaderGenius-setup.msi
+          asset_content_type: application/zip
+
+      - name: Upload Release Asset(DEB)
+        id: upload-release-asset-deb
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{steps.create_release.outputs.upload_url}}
+          asset_path: UploaderGenius_${{ github.event.inputs.version }}-2_all.deb
+          asset_name: UploaderGenius.deb
+          asset_content_type: application/zip
+
+      - name: Upload Release Asset(Tarball)
+        id: upload-release-asset-tar
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{steps.create_release.outputs.upload_url}}
+          asset_path: UploaderGenius-${{ github.event.inputs.version }}.tar.gz
+          asset_name: UploaderGenius.tar.gz
+          asset_content_type: application/zip
+
+      - name: Upload Release Asset(RPM)
+        id: upload-release-asset-rpm
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{steps.create_release.outputs.upload_url}}
+          asset_path: UploaderGenius-${{ github.event.inputs.version }}-2.noarch.rpm
+          asset_name: UploaderGenius.rpm
+          asset_content_type: application/zip
+
+      - name: Upload Release Asset(DMG)
+        id: upload-release-asset-dmg
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{steps.create_release.outputs.upload_url}}
+          asset_path: build/UploaderGenius.dmg
+          asset_name: UploaderGenius-setup.dmg
+          asset_content_type: application/zip

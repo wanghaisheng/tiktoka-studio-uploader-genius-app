@@ -1,4 +1,4 @@
-name: Build and package python apps
+name: Build and package python uploadergeniuss
 
 on: push
 
@@ -32,21 +32,21 @@ jobs:
         python3 --version
         pip3 install --upgrade pip wheel
         pip3 install pyinstaller
-        pyinstaller app.spec
+        pyinstaller uploadergenius.spec
       
     - name: Log files
       run: |
         ls dist
-        ls dist/app
-        mkdir app
-        mv ./dist/app.app ./app/app.app
-        hdiutil create -srcfolder ./app app.dmg
+        ls dist/uploadergenius
+        mkdir uploadergenius
+        mv ./dist/uploadergenius.uploadergenius ./uploadergenius/uploadergenius.uploadergenius
+        hdiutil create -srcfolder ./uploadergenius uploadergenius.dmg
 
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
-        file: app.dmg
-        asset_name: app.dmg
+        file: uploadergenius.dmg
+        asset_name: uploadergenius.dmg
         tag: latest-builds
         overwrite: true
         
@@ -64,7 +64,7 @@ jobs:
         sudo apt install python3-tk python3-pil.imagetk
 
     - name: Build
-      run: pyinstaller app.spec
+      run: pyinstaller uploadergenius.spec
       
     - name: Log files
       run: |
@@ -73,8 +73,8 @@ jobs:
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
-        file: dist/app
-        asset_name: app
+        file: dist/uploadergenius
+        asset_name: uploadergenius
         tag: latest-builds
         overwrite: true
   
@@ -91,7 +91,7 @@ jobs:
         python3 --version
         pip install --upgrade pip wheel
         pip install pyinstaller
-        pyinstaller app.spec
+        pyinstaller uploadergenius.spec
       
     - name: Log files
       run: |
@@ -100,7 +100,7 @@ jobs:
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
-        file: dist/app.exe
-        asset_name: app.exe
+        file: dist/uploadergenius.exe
+        asset_name: uploadergenius.exe
         tag: latest-builds
         overwrite: true
