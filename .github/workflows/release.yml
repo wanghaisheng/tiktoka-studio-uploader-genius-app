@@ -17,21 +17,21 @@ jobs:
 
     - name: Create environment and install dependencies
       run: |
-        $CONDA/bin/conda env create --file environment.yml --name autovideo
+        $CONDA/bin/conda env create --file environment.yml --name uploadergenius
 
     - name: Create binary
       run: |
-        $CONDA/envs/autovideo/bin/pyinstaller --clean -y --dist ./dist/linux ./autovideo_en.spec
+        $CONDA/envs/uploadergenius/bin/pyinstaller --clean -y --dist ./dist/linux ./uploadergenius.spec
 
     - name: Zip binary
       run: |
         cd ./dist/linux
-        zip autovideo_en-linux.zip autovideo_en
+        zip uploadergenius-linux.zip uploadergenius
 
     - uses: actions/upload-artifact@v2
       with:
-        name: autovideo_en-linux
-        path: ./dist/linux/autovideo_en-linux.zip
+        name: uploadergenius-linux
+        path: ./dist/linux/uploadergenius-linux.zip
 
   macos:
     runs-on: macos-10.15
@@ -42,22 +42,22 @@ jobs:
 
     - name: Create environment and install dependencies
       run: |
-        sudo $CONDA/bin/conda env create --file environment.yml --name autovideo
+        sudo $CONDA/bin/conda env create --file environment.yml --name uploadergenius
 
     - name: Create macos app
       run: |
-        $CONDA/envs/autovideo/bin/pyinstaller --clean -y --dist ./dist/macos ./autovideo_en.spec
-        rm -rf ./dist/macos/autovideo_en
+        $CONDA/envs/uploadergenius/bin/pyinstaller --clean -y --dist ./dist/macos ./uploadergenius.spec
+        rm -rf ./dist/macos/uploadergenius
 
     - name: Zip binary
       run: |
         cd ./dist/macos
-        zip -r autovideo_en-macos.zip .
+        zip -r uploadergenius-macos.zip .
 
     - uses: actions/upload-artifact@v2
       with:
-        name: autovideo_en-macos
-        path: ./dist/macos/autovideo_en-macos.zip
+        name: uploadergenius-macos
+        path: ./dist/macos/uploadergenius-macos.zip
 
   windows:
     runs-on: windows-latest
@@ -69,24 +69,24 @@ jobs:
     - name: Create environment and install dependencies
       run: |
         %CONDA%\Scripts\conda.exe env create ^
-        --file environment.yml --name autovideo
+        --file environment.yml --name uploadergenius
       shell: cmd
 
     - name: Create binary
       run: |
-        %CONDA%\envs\autovideo\Scripts\pyinstaller.exe ^
-        --clean -y --dist .\dist\windows .\autovideo_en.spec
+        %CONDA%\envs\uploadergenius\Scripts\pyinstaller.exe ^
+        --clean -y --dist .\dist\windows .\uploadergenius.spec
       shell: cmd
 
     - name: Zip binary
       run: |
         cd .\dist\windows
-        powershell Compress-Archive autovideo.exe autovideo_en-windows.zip
+        powershell Compress-Archive uploadergenius.exe uploadergenius-windows.zip
 
     - uses: actions/upload-artifact@v2
       with:
-        name: autovideo_en-windows
-        path: .\dist\windows\autovideo_en-windows.zip
+        name: uploadergenius-windows
+        path: .\dist\windows\uploadergenius-windows.zip
 
   release:
     needs: [ linux, macos, windows ]
@@ -111,7 +111,7 @@ jobs:
 
       - uses: actions/download-artifact@v1
         with:
-          name: autovideo_en-linux
+          name: uploadergenius-linux
         continue-on-error: true
 
       - name: Upload Linux Release Asset
@@ -120,14 +120,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./autovideo_en-linux/autovideo_en-linux.zip
-          asset_name: autovideo_en-linux-${{ steps.get_version.outputs.VERSION }}.zip
+          asset_path: ./uploadergenius-linux/uploadergenius-linux.zip
+          asset_name: uploadergenius-linux-${{ steps.get_version.outputs.VERSION }}.zip
           asset_content_type: application/zip
         continue-on-error: true
 
       - uses: actions/download-artifact@v1
         with:
-          name: autovideo_en-macos
+          name: uploadergenius-macos
         continue-on-error: true
 
       - name: Upload MacOS Release Asset
@@ -136,14 +136,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./autovideo_en-macos/autovideo_en-macos.zip
-          asset_name: autovideo_en-macos-${{ steps.get_version.outputs.VERSION }}.zip
+          asset_path: ./uploadergenius-macos/uploadergenius-macos.zip
+          asset_name: uploadergenius-macos-${{ steps.get_version.outputs.VERSION }}.zip
           asset_content_type: application/zip
         continue-on-error: true
 
       - uses: actions/download-artifact@v1
         with:
-          name: autovideo_en-windows
+          name: uploadergenius-windows
         continue-on-error: true
 
       - name: Upload Windows Release Asset
@@ -152,7 +152,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./autovideo_en-windows/autovideo_en-windows.zip
-          asset_name: autovideo_en-windows-${{ steps.get_version.outputs.VERSION }}.zip
+          asset_path: ./uploadergenius-windows/uploadergenius-windows.zip
+          asset_name: uploadergenius-windows-${{ steps.get_version.outputs.VERSION }}.zip
           asset_content_type: application/zip
         continue-on-error: true
