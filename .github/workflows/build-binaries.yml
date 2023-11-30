@@ -1,4 +1,4 @@
-name: Release Build for All Platforms
+name: cx_freeze build and Release Build for All Platforms
 
 on:
   workflow_dispatch:

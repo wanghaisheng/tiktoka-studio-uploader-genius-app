@@ -1,4 +1,4 @@
-name: Build and Release Assets cn
+name: pyinstaller Build and Release Assets cn
 
 on:
   workflow_dispatch:
