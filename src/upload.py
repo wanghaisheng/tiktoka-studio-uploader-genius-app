@@ -22,8 +22,8 @@ async def uploadTask(taskid=None, uploadsetting=None, account=None, video=None):
         return youtubevideoid,taskid
 
     except Exception as e:
-        traceback.print_exc()
-
+        e=traceback.print_exc()
+        logger.error(f"upload failed:{e}")
         return None,taskid
     # if youtubevideoid is None:
     #     logger.debug("video upload failed")
