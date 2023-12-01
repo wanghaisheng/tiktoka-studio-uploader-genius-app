@@ -34,7 +34,6 @@ def start(lang, root=None, async_loop=None):
 
 
 
-
 def quit_window(icon, item):
     global loop,fastapi_thread
 
@@ -42,18 +41,62 @@ def quit_window(icon, item):
 
     icon.stop()
 
-    print('shutdown server')
 
-    server.shutdown()
+
+    print('shutdown server')
+    server.should_exit = True
+    server.force_exit = True
+    asyncio.run(server.shutdown())
+
+
+    try:
+        tasks = asyncio.all_tasks(loop)
+        print(tasks,'========')
+        for task in tasks:
+            try:
+                # await asyncio.sleep(3600)
+                task.cancel()                
+            except asyncio.exceptions.CancelledError:
+                print("done")
+
+
+    except RuntimeError as err:
+        print('SIGINT or SIGTSTP raised')
+        print("cleaning and exiting")
+        sys.exit(1)    
     print('shutdown root')
 
     root.destroy()
-    print('shutdown loop')
-    sys.exit()    
-    # fastapi_thread.stop()
-    # loop.stop()
-    # for task in loop.tasks:
-    #     task.cancel()
+
+
+
+    try:
+        tasks = asyncio.all_tasks(loop)
+        print(f'========{tasks}')
+        for task in tasks:
+            try:
+                # await asyncio.sleep(3600)
+                task.cancel()                
+            except asyncio.exceptions.CancelledError:
+                print("done")
+
+
+    except RuntimeError as err:
+        print('SIGINT or SIGTSTP raised')
+        print("cleaning and exiting")
+        sys.exit(1)    
+
+
+    print('close loop')
+
+
+
+    # loop.close()
+    print('stop loop')
+
+    loop.stop()
+    # loop.run_until_complete(asyncio.gather(*[shutdown()]))
+    # import os
     # os._exit(0)
 
 def show_window(icon, item):
@@ -66,16 +109,25 @@ def withdraw_window():
     image = Image.open("assets/icon.ico")
     menu = (item("Quit", quit_window), item("Show", show_window))
     icon = pystray.Icon("name", image, "title", menu)
-    icon.run_detached()
-
+    # icon.run_detached()
+    icon.run()
 
 def start_fastapi_server(loop):
     import uvicorn
     global server
     config = uvicorn.Config(app, loop=loop, host="0.0.0.0", port=8000)
     server = uvicorn.Server(config)
-    loop.run_until_complete(server.serve())
-
+    try:
+        loop.run_until_complete(server.serve())
+    except KeyboardInterrupt:
+        print("Received Ctrl+C. Stopping gracefully...")
+        # Cancel all running tasks
+        for task in asyncio.Task.all_tasks():
+            task.cancel()
+        # Optionally: Close any open resources (sockets, files, etc.)
+        # Cleanup code here
+    finally:
+        loop.close()
 
 
 
