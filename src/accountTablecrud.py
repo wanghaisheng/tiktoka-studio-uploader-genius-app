@@ -15,7 +15,12 @@ import tkinter as tk
 from src.constants import height, width, window_size
 from src.log import logger
 from src.utils import showinfomsg, find_key
-
+from UltraDict import UltraDict
+import platform
+if platform.system() == "Windows":
+    querycondition = UltraDict(shared_lock=True, recurse=True)
+else:
+    querycondition = UltraDict(recurse=True)
 
 def queryAccounts(
     linkAccounts=None,
@@ -91,6 +96,18 @@ def queryAccounts(
     if account_rows is None or len(account_rows) == 0:
         showinfomsg(message=f"try to add accounts  first", parent=frame, DURATION=500)
 
+        if querycondition.has_key('task_tab_headers'):
+            print(f"refresh existing data with  {querycondition['task_tab_headers']}")
+            print(f'try to clear existing rows in the tabular ')          
+            refreshAccountcanvas(
+                linkAccounts=linkAccounts,
+                canvas=canvas,
+                frame=frame,
+                headers=tab_headers,
+                datas=[],
+                mode=mode,
+            )
+        
     else:
         logger.debug(f"we found {counts} record matching ")
         # showinfomsg(message=f'we found {counts} record matching',DURATION=500)
@@ -223,6 +240,7 @@ def queryAccounts(
         if mode == "bind":
             tab_headers.append("operation")
             tab_headers.append("operation")
+        querycondition['task_tab_headers']=tab_headers
 
         print(f"show header and rows based on query {tab_headers}\n{account_data}")
         refreshAccountcanvas(

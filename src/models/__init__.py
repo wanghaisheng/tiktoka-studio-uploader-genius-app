@@ -7,6 +7,7 @@ import binascii
 from peewee import *
 from playhouse.shortcuts import model_to_dict
 from playhouse.sqlite_ext import (SqliteExtDatabase)
+from UltraDict import UltraDict
 
 # asyncpg 配置
 # https://github.com/fy0/Icarus

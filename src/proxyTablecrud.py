@@ -17,6 +17,12 @@ from src.utils import showinfomsg
 from src.utils import showinfomsg,find_key,askokcancelmsg
 from pathlib import Path,PureWindowsPath,PurePath
 import asyncio
+from UltraDict import UltraDict
+import platform
+if platform.system() == "Windows":
+    querycondition = UltraDict(shared_lock=True, recurse=True)
+else:
+    querycondition = UltraDict(recurse=True)
 def check_selected_row(rowid):
     
     print('check proxy whether valid and its city country')
@@ -74,10 +80,33 @@ def queryProxy(linkProxy=None,platform=None,frame=None,canvas=None,tab_headers=N
         tags=tags.lower()
 
     db_rows=  ProxyModel.filter_proxies(city=city,country=country,tags=tags,status=status,state=state,network_type=network_type)
+
+
+    print(f"try to clear existing result frame  {len(frame.winfo_children())} ")
+
+    try:
+        print(frame.winfo_children())
+        frame.winfo_children()
+
+        if len(frame.winfo_children()) > 0:
+            for widget in frame.winfo_children():
+                widget.destroy()
+
+    except:
+        print("there is no result frame  at all")    
+
     # Extract account names and set them as options in the account dropdown
     if db_rows is None or len(db_rows)==0:
         # langlist.delete(0,tk.END)
         showinfomsg(message=f"try to add proxy first",parent=frame)    
+
+        if querycondition.has_key('task_tab_headers'):
+            print(f"refresh existing data with  {querycondition['task_tab_headers']}")
+            print(f'try to clear existing rows in the tabular ')          
+            refreshProxycanvas(
+                 canvas=canvas, frame=frame, headers=querycondition['task_tab_headers'], datas=[]
+            )
+        
 
     else:                
         logger.debug(f'we found {len(db_rows)} record matching ')
@@ -112,6 +141,8 @@ def queryProxy(linkProxy=None,platform=None,frame=None,canvas=None,tab_headers=N
         if mode=='bind':
             tab_headers.append('operation')
             tab_headers.append('operation')
+        querycondition['task_tab_headers']=tab_headers
+
         refreshProxycanvas(canvas=canvas,frame=frame,headers=tab_headers,datas=[],mode=mode,linkProxy=linkProxy,platform=platform)
 
         refreshProxycanvas(canvas=canvas,frame=frame,headers=tab_headers,datas=proxy_data,mode=mode,linkProxy=linkProxy,platform=platform)

@@ -1682,14 +1682,13 @@ def _asyncio_thread_up(
                 sortby="ASC",
             )
     try:
+        # await asyncio.wait(task)
         async_loop.run_until_complete(
             task
         )
     except SystemExit:
         print("caught SystemExit!")
         raise
-    finally:
-        async_loop.close()
 
 
 
@@ -1808,7 +1807,7 @@ async def runupload(
         uptasks = set()
         logger.debug(f"there are {len(task_rows)}  video attempt to upload")
         cancel=askokcancelmsg(
-            title='hints',
+            title='verify before upload',
             message=f"{len(task_rows)} tasks add to queue now,upload will start automatically",
             parent=frame,
             DURATION=000,
@@ -6880,8 +6879,10 @@ def validateTaskMetafile(loop, frame, metafile, canvas=None):
                         logger.debug(
                             f"start to save ytb video data {settingdata} to db"
                         )
-
-                        taskvideo = YoutubeVideoModel.add_video(videodata)
+                        try:
+                            taskvideo = YoutubeVideoModel.add_video(videodata)
+                        except Exception as e:
+                            logger.error(f'save taskvideo failed when validation:{e}')
                     logger.debug(f"end to process video data")
 
                     taskdata = {
@@ -6902,23 +6903,25 @@ def validateTaskMetafile(loop, frame, metafile, canvas=None):
 
                 logger.debug(f"end to process task data")
                 print("show added task in the tabular", taskids)
-
-                queryTasks(
-                    loop,
-                    frame=frame,
-                    canvas=canvas,
-                    tab_headers=None,
-                    username=None,
-                    platform=None,
-                    status=None,
-                    video_title=None,
-                    schedule_at=None,
-                    video_id=None,
-                    pageno=1,
-                    pagecount=50,
-                    ids=taskids,
-                    sortby="ASC",
-                )
+                try:
+                    queryTasks(
+                        loop,
+                        frame=frame,
+                        canvas=canvas,
+                        tab_headers=None,
+                        username=None,
+                        platform=None,
+                        status=None,
+                        video_title=None,
+                        schedule_at=None,
+                        video_id=None,
+                        pageno=1,
+                        pagecount=50,
+                        ids=taskids,
+                        sortby="ASC",
+                    )
+                except Exception as e:
+                    logger.error(f'queryTasks failed when after save task data:{e}')
                 showinfomsg(message=f"end to process task data")
 
             except Exception as e:
@@ -8962,10 +8965,10 @@ def quit_window(icon, item):
 
 
 
-    print('shutdown server')
-    server.should_exit = True
-    server.force_exit = True
-    asyncio.run(server.shutdown())
+    # print('shutdown server')
+    # server.should_exit = True
+    # server.force_exit = True
+    # asyncio.run(server.shutdown())
 
 
     try:
@@ -9014,6 +9017,7 @@ def quit_window(icon, item):
     print('stop loop')
 
     loop.stop()
+    os._exit(0)
 
 def show_window(icon, item):
     icon.stop()
@@ -9077,6 +9081,11 @@ def read_root():
 
 if __name__ == "__main__":
     global loop,fastapi_thread
+    mode='debug'
+    # if mode=='debug' and os.path.exists("debug.sqlite3"):
+    #     print("remove tmp database")
+    #     os.remove("debug.sqlite3")
+
     loop=None
     if sys.platform == 'win32':
         asyncio.get_event_loop().close()
@@ -9089,8 +9098,8 @@ if __name__ == "__main__":
         loop = asyncio.get_event_loop()
 
     # Start FastAPI server in a separate thread
-    fastapi_thread = threading.Thread(target=start_fastapi_server,args=(
-            loop,)).start()
+    # fastapi_thread = threading.Thread(target=start_fastapi_server,args=(
+    #         loop,)).start()
 
 
     start_tkinter_app(loop)

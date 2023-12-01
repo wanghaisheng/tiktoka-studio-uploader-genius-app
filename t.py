@@ -10,7 +10,8 @@ import pystray
 from PIL import Image, ImageTk
 import asyncio
 import tkinter as tk
-
+from asyncio import CancelledError
+from contextlib import suppress
 
 app = FastAPI()
 # Allow all origins
@@ -32,7 +33,24 @@ def start(lang, root=None, async_loop=None):
 
     root.update_idletasks()
 
+async def wait():
 
+
+    try:
+        tasks = asyncio.all_tasks(loop)
+        print(f'========{tasks}')
+        for task in tasks:
+            try:
+                # await asyncio.sleep(3600)
+                await task.cancel()                
+            except asyncio.exceptions.CancelledError:
+                print("done")
+
+
+    except RuntimeError as err:
+        print('SIGINT or SIGTSTP raised')
+        print("cleaning and exiting")
+        sys.exit(1)    
 
 def quit_window(icon, item):
     global loop,fastapi_thread
@@ -48,16 +66,21 @@ def quit_window(icon, item):
     server.force_exit = True
     asyncio.run(server.shutdown())
 
-
+    print(f'0:{asyncio.all_tasks(loop)}')
     try:
-        tasks = asyncio.all_tasks(loop)
-        print(tasks,'========')
-        for task in tasks:
-            try:
-                # await asyncio.sleep(3600)
-                task.cancel()                
-            except asyncio.exceptions.CancelledError:
-                print("done")
+        if loop.is_running():
+            # _logger.debug("Asked running asyncio loop to stop.")
+            loop.call_soon_threadsafe(loop.stop)        
+            tasks = asyncio.all_tasks(loop)
+            print(tasks,'========')
+            for task in tasks:
+                try:
+                    # await asyncio.sleep(3600)
+                    task.cancel()           
+                    with suppress(CancelledError):
+                        loop.run_until_complete(task)
+                except asyncio.exceptions.CancelledError:
+                    print("done")
 
 
     except RuntimeError as err:
@@ -68,29 +91,13 @@ def quit_window(icon, item):
 
     root.destroy()
 
-
-
-    try:
-        tasks = asyncio.all_tasks(loop)
-        print(f'========{tasks}')
-        for task in tasks:
-            try:
-                # await asyncio.sleep(3600)
-                task.cancel()                
-            except asyncio.exceptions.CancelledError:
-                print("done")
-
-
-    except RuntimeError as err:
-        print('SIGINT or SIGTSTP raised')
-        print("cleaning and exiting")
-        sys.exit(1)    
-
+    asyncio.run(wait())
 
     print('close loop')
 
 
 
+    print(f'1:{asyncio.all_tasks(loop)}')
     # loop.close()
     print('stop loop')
 

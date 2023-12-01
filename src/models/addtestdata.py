@@ -15,9 +15,7 @@ from src.utils import showinfomsg, find_key
 from src.models.task_model import TaskModel, TASK_STATUS
 from src.customid import *
 
-if os.path.exists("debug.sqlite3"):
-    print("remove tmp database")
-    os.remove("debug.sqlite3")
+
 
 platforms = list(dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT).keys())
 platforms = platforms * 5
@@ -271,11 +269,23 @@ class TestData:
             ]
         ):
             nrows = AccountRelationship.delete().execute()
+            logger.debug(f"{nrows} AccountRelationship deleted")
             nrows = AccountModel.delete().execute()
+            logger.debug(f"{nrows} AccountModel deleted")
+
             nrows = ProxyModel.delete().execute()
+            logger.debug(f"{nrows} ProxyModel deleted")
+
             nrows = PlatformModel.delete().execute()
+            logger.debug(f"{nrows} PlatformModel deleted")
+
             nrows = UploadSettingModel.delete().execute()
+
+            logger.debug(f"{nrows} UploadSettingModel deleted")
             nrows = YoutubeVideoModel.delete().execute()
+            logger.debug(f"{nrows} YoutubeVideoModel deleted")
+
             nrows = TaskModel.delete().execute()
+            logger.debug(f"{nrows} TaskModel deleted")
 
             print("all data is deleted")

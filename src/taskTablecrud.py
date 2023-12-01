@@ -18,7 +18,12 @@ import asyncio
 import threading
 import json
 from src.models.proxy_model import *
-
+from UltraDict import UltraDict
+import platform
+if platform.system() == "Windows":
+    querycondition = UltraDict(shared_lock=True, recurse=True)
+else:
+    querycondition = UltraDict(recurse=True)
 
 def queryTasks(
     async_loop,
@@ -126,25 +131,36 @@ def queryTasks(
         ids=ids,
         sortby=sortby,
     )
+
+    print(f"try to clear existing result frame  {len(frame.winfo_children())} ")
+
+    try:
+        print(frame.winfo_children())
+        frame.winfo_children()
+
+        if len(frame.winfo_children()) > 0:
+            for widget in frame.winfo_children():
+                widget.destroy()
+
+    except:
+        print("there is no result frame  at all")    
     if task_rows is None or len(task_rows) == 0:
         showinfomsg(message=f"try to add tasks  first", parent=frame, DURATION=500)
+
+
+
+        if querycondition.has_key('task_tab_headers'):
+            print(f"refresh existing data with  {querycondition['task_tab_headers']}")
+            print(f'try to clear existing rows in the tabular ')          
+            refreshTaskcanvas(
+                async_loop, canvas=canvas, frame=frame, headers=querycondition['task_tab_headers'], datas=[]
+            )
+        
 
     else:
         logger.debug(f"we found {counts} record matching ")
         # showinfomsg(message=f'we found {counts} record matching',DURATION=500)
 
-        print(f"try to clear existing result frame  {len(frame.winfo_children())} ")
-
-        try:
-            print(frame.winfo_children())
-            frame.winfo_children()
-
-            if len(frame.winfo_children()) > 0:
-                for widget in frame.winfo_children():
-                    widget.destroy()
-
-        except:
-            print("there is no result frame  at all")
         l_totalcount = tk.Label(
             frame, text=f"total:{counts} per page:{pagecount} current page: {pageno}"
         )
@@ -241,23 +257,11 @@ def queryTasks(
 
             task_data.append(task)
         print(f"end to prepare row data to render:{task_data}")
-        # print(f'try to clear existing rows in the tabular ')
-        # if canvas is not None:
-        #     try:
-        #         canvas.winfo_children
-        #         print('+++++++++++++++++',len(canvas.winfo_children()))
-        #         if len(canvas.winfo_children())>0:
-        #             for widget in canvas.winfo_children():
-        #                 widget.destroy()
 
-        #     except:
-        #         print('there is no rows in the tabular at all')
-        # else:
-        #     print('there is no tabular at all')
         tab_headers.append("operation")
         tab_headers.append("operation")
         tab_headers.append("operation")
-
+        querycondition['task_tab_headers']=tab_headers
         print(f"show header and rows based on query {tab_headers}\n{task_data}")
         refreshTaskcanvas(
             async_loop, canvas=canvas, frame=frame, headers=tab_headers, datas=[]
@@ -346,7 +350,21 @@ def refreshTaskcanvas(async_loop, canvas=None, frame=None, headers=None, datas=N
             #                     activebackground= 'orange', text='operation')
             # delete_button.grid(row=0, column=j, sticky='news')
     print("start to set table data")
-    if datas and datas != []:
+    if datas==[]:
+        logger.debug(f"start to remove previous tabular result data row when data is empty")
+        # try:
+        #     print(canvas.winfo_children())
+        #     canvas.winfo_children()
+
+        #     if len(canvas.winfo_children()) > 0:
+        #         for widget in canvas.winfo_children():
+        #             widget.destroy()
+
+        # except:
+        #     print("there is no rows in the previous tabular result at all")
+        logger.debug(f"end to remove previous tabular result data row when data is empty")
+
+    elif datas and datas != []:
         for i, row in enumerate(datas):
             i = i + 1
             for j in range(0, len(headers)):
@@ -517,6 +535,7 @@ async def upload_selected_row_task(rowid, frame=None, status=None, platform=None
         else:
             if status == "success":
                 askokcancelmsg(
+                    title='this video is been uploaded before',
                     message="this video is been uploaded before", parent=frame
                 )
             if rowid:
@@ -527,7 +546,7 @@ async def upload_selected_row_task(rowid, frame=None, status=None, platform=None
 
                 logger.debug(f"there are {len(task_rows)}  video attempt to upload")
                 cancel=askokcancelmsg(
-                    title='hints',
+                    title='very before video upload',
                     message=f"{len(task_rows)} tasks add to queue now,upload will start automatically",
                     parent=frame,
                     DURATION=000,
