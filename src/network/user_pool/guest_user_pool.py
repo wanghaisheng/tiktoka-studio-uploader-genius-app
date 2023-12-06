@@ -11,12 +11,12 @@ Created on 2018/12/27 11:32 AM
 import random
 from typing import Optional
 
-import tsup.utils.tools as tools
-from tsup import setting
-from tsup.db.redisdb import RedisDB
-from tsup.network.user_pool.base_user_pool import UserPoolInterface, GuestUser
-from tsup.utils.log import log
-from tsup.utils.webdriver import WebDriver
+import upgenius.utils.tools as tools
+from upgenius import setting
+from upgenius.db.redisdb import RedisDB
+from upgenius.network.user_pool.base_user_pool import UserPoolInterface, GuestUser
+from upgenius.utils.log import log
+from upgenius.utils.webdriver import WebDriver
 
 
 class GuestUserPool(UserPoolInterface):

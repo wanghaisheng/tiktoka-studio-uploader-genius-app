@@ -1,7 +1,7 @@
 import abc
 from abc import ABC
 
-from tsup.network.response import Response
+from upgenius.network.response import Response
 
 
 class Downloader:
@@ -10,9 +10,9 @@ class Downloader:
         """
 
         Args:
-            request: tsup.Request
+            request: upgenius.Request
 
-        Returns: tsup.Response
+        Returns: upgenius.Response
 
         """
         raise NotImplementedError

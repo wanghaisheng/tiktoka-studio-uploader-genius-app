@@ -15,14 +15,14 @@ import requests
 from requests.cookies import RequestsCookieJar
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-import tsup.setting as setting
-import tsup.utils.tools as tools
-from tsup.db.redisdb import RedisDB
-from tsup.network import user_agent
-from tsup.network.downloader.base import Downloader, RenderDownloader
-from tsup.network.proxy_pool import ProxyPool
-from tsup.network.response import Response
-from tsup.utils.log import log
+import upgenius.setting as setting
+import upgenius.utils.tools as tools
+from upgenius.db.redisdb import RedisDB
+from upgenius.network import user_agent
+from upgenius.network.downloader.base import Downloader, RenderDownloader
+from upgenius.network.proxy_pool import ProxyPool
+from upgenius.network.response import Response
+from upgenius.utils.log import log
 
 # 屏蔽warning信息
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)

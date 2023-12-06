@@ -11,8 +11,8 @@ Created on 2022/4/10 5:57 下午
 import requests
 from requests.adapters import HTTPAdapter
 
-from tsup.network.downloader.base import Downloader
-from tsup.network.response import Response
+from upgenius.network.downloader.base import Downloader
+from upgenius.network.response import Response
 
 
 class RequestsDownloader(Downloader):

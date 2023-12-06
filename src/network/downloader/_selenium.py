@@ -8,11 +8,11 @@ Created on 2022/7/26 4:28 下午
 @email: boris_liu@foxmail.com
 """
 
-import tsup.setting as setting
-import tsup.utils.tools as tools
-from tsup.network.downloader.base import RenderDownloader
-from tsup.network.response import Response
-from tsup.utils.webdriver import WebDriverPoolSelenium, SeleniumDriver
+import upgenius.setting as setting
+import upgenius.utils.tools as tools
+from upgenius.network.downloader.base import RenderDownloader
+from upgenius.network.response import Response
+from upgenius.utils.webdriver import WebDriverPoolSelenium, SeleniumDriver
 
 
 class SeleniumDownloader(RenderDownloader):

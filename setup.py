@@ -74,7 +74,7 @@ build_exe_options = {
          ( './static/', 'static' )
 
          ],
-    'includes': ["PIL",'moviepy','tsup',"requests",'UltraDict','jsons','lastversion','jsonschema','pystray','bcrypt','peewee','fastapi','pycountry','pyperclip'], # list of extra modules to include (from your virtualenv of system path),
+    'includes': ["PIL",'moviepy','upgenius',"requests",'UltraDict','jsons','lastversion','jsonschema','pystray','bcrypt','peewee','fastapi','pycountry','pyperclip'], # list of extra modules to include (from your virtualenv of system path),
 
 
 }

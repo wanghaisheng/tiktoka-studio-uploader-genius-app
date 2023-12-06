@@ -4,9 +4,9 @@ import random
 import time
 from datetime import datetime
 
-from tsup.db.redisdb import RedisDB
-from tsup.utils.log import log
-from tsup.utils.tools import get_md5, timestamp_to_date
+from upgenius.db.redisdb import RedisDB
+from upgenius.utils.log import log
+from upgenius.utils.tools import get_md5, timestamp_to_date
 
 
 class GuestUser:

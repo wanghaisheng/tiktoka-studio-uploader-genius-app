@@ -17,8 +17,8 @@ from pymongo.collection import Collection
 from pymongo.database import Database
 from pymongo.errors import DuplicateKeyError, BulkWriteError
 
-import tsup.setting as setting
-from tsup.utils.log import log
+import upgenius.setting as setting
+from upgenius.utils.log import log
 
 
 class MongoDB:
@@ -406,7 +406,7 @@ class MongoDB:
         """
         根据索引冲突的报错信息 获取更新条件
         Args:
-            duplicate_errmsg: E11000 duplicate key error collection: tsup.test index: a_1_b_1 dup key: { : 1, : "你好" }
+            duplicate_errmsg: E11000 duplicate key error collection: upgenius.test index: a_1_b_1 dup key: { : 1, : "你好" }
             data: {"a": 1, "b": "你好", "c": "嘻嘻"}
 
         Returns: {"a": 1, "b": "你好"}

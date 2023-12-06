@@ -47,10 +47,10 @@ import six
 from requests.cookies import RequestsCookieJar
 from w3lib.url import canonicalize_url as _canonicalize_url
 
-import tsup.setting as setting
-from tsup.db.redisdb import RedisDB
-from tsup.utils.email_sender import EmailSender
-from tsup.utils.log import log
+import upgenius.setting as setting
+from upgenius.db.redisdb import RedisDB
+from upgenius.utils.email_sender import EmailSender
+from upgenius.utils.log import log
 
 try:
     import execjs  # pip install PyExecJS
@@ -138,7 +138,7 @@ def url_ok(proxies,url):
             return False
         else:
 
-            return True   
+            return True
 def run_safe_model(module_name):
     def inner_run_safe_model(func):
         try:
@@ -534,8 +534,8 @@ def get_param(url, key):
 
 def get_all_params(url):
     """
-    >>> get_all_params("https://www.baidu.com/s?wd=tsup")
-    {'wd': 'tsup'}
+    >>> get_all_params("https://www.baidu.com/s?wd=upgenius")
+    {'wd': 'upgenius'}
     """
     params_json = {}
     params = url.split("?", 1)[-1].split("&")
@@ -1183,7 +1183,7 @@ def get_cache_path(filename, root_dir=None, local=False):
         if local:
             root_dir = os.path.join(sys.path[0], ".cache")
         else:
-            root_dir = os.path.join(os.path.expanduser("~"), ".tsup/cache")
+            root_dir = os.path.join(os.path.expanduser("~"), ".upgenius/cache")
     file_path = f"{root_dir}{os.sep}{filename}"
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
     return f"{root_dir}{os.sep}{filename}"
@@ -2979,7 +2979,7 @@ def send_msg(msg, level="DEBUG", message_prefix=""):
             return
 
     if setting.DINGDING_WARNING_URL:
-        keyword = "tsup报警系统\n"
+        keyword = "upgenius报警系统\n"
         dingding_warning(keyword + msg, message_prefix=message_prefix)
 
     if setting.EMAIL_RECEIVER:
@@ -2989,11 +2989,11 @@ def send_msg(msg, level="DEBUG", message_prefix=""):
         email_warning(msg, message_prefix=message_prefix, title=title)
 
     if setting.WECHAT_WARNING_URL:
-        keyword = "tsup报警系统\n"
+        keyword = "upgenius报警系统\n"
         wechat_warning(keyword + msg, message_prefix=message_prefix)
 
     if setting.FEISHU_WARNING_URL:
-        keyword = "tsup报警系统\n"
+        keyword = "upgenius报警系统\n"
         feishu_warning(keyword + msg, message_prefix=message_prefix)
 
 

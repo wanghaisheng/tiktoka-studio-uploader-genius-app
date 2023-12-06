@@ -10,7 +10,7 @@ Created on 2018-07-26 22:28:10
 
 import re
 
-import tsup.utils.tools as tools
+import upgenius.utils.tools as tools
 
 
 class ItemMetaclass(type):

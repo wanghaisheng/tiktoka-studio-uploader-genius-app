@@ -13,9 +13,9 @@ from urllib import parse
 import redis
 import requests
 
-from tsup import setting
-from tsup.utils import tools
-from tsup.utils.log import log
+from upgenius import setting
+from upgenius.utils import tools
+from upgenius.utils.log import log
 
 # 建立本地缓存代理文件夹
 proxy_path = os.path.join(os.path.dirname(__file__), "proxy_file")

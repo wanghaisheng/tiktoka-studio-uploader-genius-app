@@ -17,8 +17,8 @@ from redis.exceptions import DataError
 from redis.sentinel import Sentinel
 from rediscluster import RedisCluster
 
-import tsup.setting as setting
-from tsup.utils.log import log
+import upgenius.setting as setting
+from upgenius.utils.log import log
 
 
 class Encoder(_Encoder):

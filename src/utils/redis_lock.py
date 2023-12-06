@@ -10,8 +10,8 @@ Created on 2019/11/5 5:25 PM
 import threading
 import time
 
-from tsup.db.redisdb import RedisDB
-from tsup.utils.log import log
+from upgenius.db.redisdb import RedisDB
+from upgenius.utils.log import log
 
 
 class RedisLock:

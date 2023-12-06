@@ -20,9 +20,9 @@ from requests.cookies import RequestsCookieJar
 from requests.models import Response as res
 from w3lib.encoding import http_content_type_encoding, html_body_declared_encoding
 
-from tsup import setting
-from tsup.network.selector import Selector
-from tsup.utils.log import log
+from upgenius import setting
+from upgenius.network.selector import Selector
+from upgenius.utils.log import log
 
 FAIL_ENCODING = "ISO-8859-1"
 

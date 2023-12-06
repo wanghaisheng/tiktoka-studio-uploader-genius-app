@@ -1,6 +1,6 @@
 pillow
 moviepy==1.0.3
-tsup==0.1.16
+upgenius==0.1.16
 requests
 # scenedetect[opencv]==0.5.6.1
 SQLAlchemy
@@ -12,7 +12,7 @@ jsonschema
 eld
 pystray
 bcrypt
-peewee 
+peewee
 fastapi
 pycountry
 pyperclip

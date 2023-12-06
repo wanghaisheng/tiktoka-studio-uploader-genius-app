@@ -14,13 +14,13 @@ import time
 from enum import Enum, unique
 from typing import Optional, List
 
-from tsup import setting
-from tsup.db.redisdb import RedisDB
-from tsup.network.user_pool.base_user_pool import GoldUser, UserPoolInterface
-from tsup.utils import metrics
-from tsup.utils.log import log
-from tsup.utils.redis_lock import RedisLock
-from tsup.utils.tools import send_msg
+from upgenius import setting
+from upgenius.db.redisdb import RedisDB
+from upgenius.network.user_pool.base_user_pool import GoldUser, UserPoolInterface
+from upgenius.utils import metrics
+from upgenius.utils.log import log
+from upgenius.utils.redis_lock import RedisLock
+from upgenius.utils.tools import send_msg
 
 
 @unique

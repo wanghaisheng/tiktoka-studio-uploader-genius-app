@@ -9,7 +9,7 @@ Created on 2020/4/21 11:42 PM
 """
 from queue import PriorityQueue
 
-from tsup import setting
+from upgenius import setting
 
 
 class MemoryDB:

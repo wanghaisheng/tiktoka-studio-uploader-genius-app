@@ -65,7 +65,7 @@ import asyncio
 import requests
 import re
 import calendar
-from tsup.utils.webdriver.setupPL import checkRequirments
+from upgenius.utils.webdriver.setupPL import checkRequirments
 import logging
 from src.gpt_thumbnail import draw_text_on_image, validateSeting
 from src.checkIp import CheckIP
@@ -644,7 +644,7 @@ async def bulk_pull_cookie_file():
 
 
 def auto_gen_cookie_file(username, password, platform, proxy=None, cookiepath=None):
-    print("call tsup gen cookie api")
+    print("call upgenius gen cookie api")
     if proxy is None or proxy == "":
         proxyserver = None
     else:
@@ -1845,7 +1845,7 @@ async def runupload(
                         protocol=proxy.proxy_protocol
                         http_proxy=f"{protocol}://{proxy_string}"
                         https_proxy=f"{protocol}://{proxy_string}"
-                
+
                         uploadsetting["proxy_option"] = https_proxy
                     else:
                         uploadsetting["proxy_option"] = None
@@ -1918,7 +1918,7 @@ async def runupload(
                                         )
 
 
-                                        taskid=CustomID(custom_id=taskid).to_hex()                                
+                                        taskid=CustomID(custom_id=taskid).to_hex()
                                         totalmsg = totalmsg + "\n" + f"this task {taskid} upload failed"
 
                                     else:
@@ -1927,7 +1927,7 @@ async def runupload(
                                             videodata={"video_id":videoid},
                                             status=TASK_STATUS.SUCCESS,
                                         )
-                                        taskid=CustomID(custom_id=taskid).to_hex()                                
+                                        taskid=CustomID(custom_id=taskid).to_hex()
 
                                         totalmsg = totalmsg + "\n" + f"this task {taskid} upload success"
 
@@ -1971,7 +1971,7 @@ async def runupload(
                                 id=CustomID(custom_id=taskid).to_bin(),
                                 status=TASK_STATUS.FAILURE,
                             )
-                            taskid=CustomID(custom_id=taskid).to_hex()                                
+                            taskid=CustomID(custom_id=taskid).to_hex()
                             totalmsg = totalmsg + "\n" + f"this task {taskid} upload failed"
                         else:
                             result = TaskModel.update_task(
@@ -1980,7 +1980,7 @@ async def runupload(
                                 status=TASK_STATUS.SUCCESS,
                             )
 
-                            taskid=CustomID(custom_id=taskid).to_hex()                                
+                            taskid=CustomID(custom_id=taskid).to_hex()
 
                             totalmsg = totalmsg + "\n" + f"this task {taskid} upload success"
                     except asyncio.CancelledError:
@@ -5963,7 +5963,7 @@ def genUploadTaskMetas(
 
                             data = AccountModel.get_account_by_id(id=accounts[0])
                             # print('data====',data[0],data[0].username)
-                            
+
                             tmp["tasks"][key]["account_id"] =CustomID(custom_id= data.id).to_hex()
 
                             tmp["tasks"][key]["username"] = data.username
@@ -5986,7 +5986,7 @@ def genUploadTaskMetas(
                                                 if proxy.proxy_username
                                                 else f"{proxy.proxy_host}:{proxy.proxy_port}"
                                             )
-                                    
+
                                     protocol=proxy.proxy_protocol
                                     http_proxy=f"{protocol}://{proxy_string}"
                                     https_proxy=f"{protocol}://{proxy_string}"
@@ -6099,7 +6099,7 @@ def genUploadTaskMetas(
                                                     if proxy.proxy_username
                                                     else f"{proxy.proxy_host}:{proxy.proxy_port}"
                                                 )
-                                        
+
                                         protocol=proxy.proxy_protocol
                                         http_proxy=f"{protocol}://{proxy_string}"
                                         https_proxy=f"{protocol}://{proxy_string}"
@@ -6160,7 +6160,7 @@ def genUploadTaskMetas(
                                                 if proxy.proxy_username
                                                 else f"{proxy.proxy_host}:{proxy.proxy_port}"
                                             )
-                                    
+
                                     protocol=proxy.proxy_protocol
                                     http_proxy=f"{protocol}://{proxy_string}"
                                     https_proxy=f"{protocol}://{proxy_string}"
@@ -6215,7 +6215,7 @@ def genUploadTaskMetas(
                                                 if proxy.proxy_username
                                                 else f"{proxy.proxy_host}:{proxy.proxy_port}"
                                             )
-                                    
+
                                     protocol=proxy.proxy_protocol
                                     http_proxy=f"{protocol}://{proxy_string}"
                                     https_proxy=f"{protocol}://{proxy_string}"
@@ -6541,7 +6541,7 @@ def validateTaskMetafile(loop, frame, metafile, canvas=None):
                                         proxyid=result.id
                                         logger.debug(f'save proxy to {proxyid}')
 
-                            
+
                             user_data = {
                                 "platform": video["platform"],
                                 "username": video.get("username"),

@@ -17,9 +17,9 @@ from dbutils.pooled_db import PooledDB
 from pymysql import cursors
 from pymysql import err
 
-import tsup.setting as setting
-from tsup.utils.log import log
-from tsup.utils.tools import make_insert_sql, make_batch_sql, make_update_sql
+import upgenius.setting as setting
+from upgenius.utils.log import log
+from upgenius.utils.tools import make_insert_sql, make_batch_sql, make_update_sql
 
 
 def auto_retry(func):

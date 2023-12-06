@@ -12,13 +12,13 @@ import os
 import random
 from typing import Iterable, Optional
 
-import tsup.utils.tools as tools
-from tsup import setting
-from tsup.db.mysqldb import MysqlDB
-from tsup.db.redisdb import RedisDB
-from tsup.network.user_pool.base_user_pool import UserPoolInterface, NormalUser
-from tsup.utils.log import log
-from tsup.utils.redis_lock import RedisLock
+import upgenius.utils.tools as tools
+from upgenius import setting
+from upgenius.db.mysqldb import MysqlDB
+from upgenius.db.redisdb import RedisDB
+from upgenius.network.user_pool.base_user_pool import UserPoolInterface, NormalUser
+from upgenius.utils.log import log
+from upgenius.utils.redis_lock import RedisLock
 
 
 class NormalUserPool(UserPoolInterface):

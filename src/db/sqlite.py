@@ -17,9 +17,9 @@ from typing import List, Dict
 
 import sqlite3
 
-import tsup.setting as setting
-from tsup.utils.log import log
-from tsup.utils.tools import make_insert_sqlite, make_batch_sqlite, make_update_sqlite
+import upgenius.setting as setting
+from upgenius.utils.log import log
+from upgenius.utils.tools import make_insert_sqlite, make_batch_sqlite, make_update_sqlite
 
 
 def auto_retry(func):

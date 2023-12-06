@@ -8,11 +8,11 @@ Created on 2022/9/7 4:05 PM
 @email: boris_liu@foxmail.com
 """
 
-import tsup.setting as setting
-import tsup.utils.tools as tools
-from tsup.network.downloader.base import RenderDownloader
-from tsup.network.response import Response
-from tsup.utils.webdriver import WebDriverPoolPlayWright, PlaywrightAsyncDriver
+import upgenius.setting as setting
+import upgenius.utils.tools as tools
+from upgenius.network.downloader.base import RenderDownloader
+from upgenius.network.response import Response
+from upgenius.utils.webdriver import WebDriverPoolPlayWright, PlaywrightAsyncDriver
 
 
 class PlaywrightDownloader(RenderDownloader):
