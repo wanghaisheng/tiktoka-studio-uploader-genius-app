@@ -480,16 +480,14 @@ def _asyncio_thread_up(
     status=None
 
 ):
-    async_loop.run_until_complete(
-        upload_selected_row_task(
+
+    task=  upload_selected_row_task(
             rowid=rowid,
             frame=frame,
             status=status,
             platform=platform,
         )
-    )
-
-
+    asyncio.ensure_future(task, loop=async_loop)
 
 
 def remove_selected_row_task(rowid, frame=None, name=None, func=None):

@@ -1681,14 +1681,16 @@ def _asyncio_thread_up(
                 ids=ids,
                 sortby="ASC",
             )
-    try:
-        # await asyncio.wait(task)
-        async_loop.run_until_complete(
-            task
-        )
-    except SystemExit:
-        print("caught SystemExit!")
-        raise
+    # try:
+    #     # await asyncio.wait(task)
+    #     async_loop.run_until_complete(
+    #         task
+    #     )
+    # except SystemExit:
+    #     print("caught SystemExit!")
+    #     raise
+
+    asyncio.ensure_future(task, loop=async_loop)
 
 
 
@@ -8957,67 +8959,26 @@ def changeDisplayLang(lang):
 
 
 def quit_window(icon, item):
-    global loop,fastapi_thread
+    global loop, fastapi_thread
 
-    print('shutdown icon')
-
+    print('Shutdown icon')
     icon.stop()
 
+    print('Shutdown server')
+    server.should_exit = True
+    server.force_exit = True
+    asyncio.run_coroutine_threadsafe(server.shutdown(), loop)
+
+    print('Shutdown root')
+    root.quit()
+
+    # print('Wait for server and loop to finish')
+    # asyncio.run_coroutine_threadsafe(wait(), loop)
+
+    print('Stop loop')
+    # loop.stop()
 
 
-    # print('shutdown server')
-    # server.should_exit = True
-    # server.force_exit = True
-    # asyncio.run(server.shutdown())
-
-
-    try:
-        tasks = asyncio.all_tasks(loop)
-        print(tasks,'========')
-        for task in tasks:
-            try:
-                # await asyncio.sleep(3600)
-                task.cancel()                
-            except asyncio.exceptions.CancelledError:
-                print("done")
-
-
-    except RuntimeError as err:
-        print('SIGINT or SIGTSTP raised')
-        print("cleaning and exiting")
-        sys.exit(1)    
-    print('shutdown root')
-
-    root.destroy()
-
-
-
-    try:
-        tasks = asyncio.all_tasks(loop)
-        print(f'========{tasks}')
-        for task in tasks:
-            try:
-                # await asyncio.sleep(3600)
-                task.cancel()                
-            except asyncio.exceptions.CancelledError:
-                print("done")
-
-
-    except RuntimeError as err:
-        print('SIGINT or SIGTSTP raised')
-        print("cleaning and exiting")
-        sys.exit(1)    
-
-
-    print('close loop')
-
-
-
-    # loop.close()
-    print('stop loop')
-
-    loop.stop()
-    os._exit(0)
 
 def show_window(icon, item):
     icon.stop()
@@ -9037,7 +8998,17 @@ def start_fastapi_server(loop):
     global server
     config = uvicorn.Config(app, loop=loop, host="0.0.0.0", port=8000)
     server = uvicorn.Server(config)
-    loop.run_until_complete(server.serve())
+    try:
+        loop.run_until_complete(server.serve())
+    except KeyboardInterrupt:
+        print("Received Ctrl+C. Stopping gracefully...")
+        # Cancel all running tasks
+        for task in asyncio.Task.all_tasks():
+            task.cancel()
+        # Optionally: Close any open resources (sockets, files, etc.)
+        # Cleanup code here
+    # finally:
+    #     loop.close()
 
 
 def start_fastapi_server_cmd():
@@ -9080,14 +9051,16 @@ def read_root():
 
 
 if __name__ == "__main__":
-    global loop,fastapi_thread
+    global loop, fastapi_thread
+    loop = None
     mode='debug'
-    # if mode=='debug' and os.path.exists("debug.sqlite3"):
-    #     print("remove tmp database")
-    #     os.remove("debug.sqlite3")
 
-    loop=None
+    if sys.platform == "win32" and (3, 8, 0) <= sys.version_info < (3, 9, 0):
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
+
     if sys.platform == 'win32':
+
         asyncio.get_event_loop().close()
         # On Windows, the default event loop is SelectorEventLoop, which does
         # not support subprocesses. ProactorEventLoop should be used instead.
@@ -9098,10 +9071,8 @@ if __name__ == "__main__":
         loop = asyncio.get_event_loop()
 
     # Start FastAPI server in a separate thread
-    # fastapi_thread = threading.Thread(target=start_fastapi_server,args=(
-    #         loop,)).start()
-
+    fastapi_thread = threading.Thread(target=start_fastapi_server, args=(loop,)).start()
 
     start_tkinter_app(loop)
-    loop.run_forever()
-    loop.close()
+    # loop.run_forever()
+    # loop.close()
