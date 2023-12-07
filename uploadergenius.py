@@ -2248,29 +2248,33 @@ def videosView(left, right, lang):
         #    lambda: threading.Thread(target=analyse_video_meta_pair(metaView_video_folder.get(),left,right,metafileformatbox.get(),isThumbView=isThumbView,isDesView=isDesView,isTagsView=isTagsView,isScheduleView=isScheduleView)).start()
     )
     b_video_folder_check.grid(row=2, column=0, sticky="w", padx=14, pady=15)
+    video_assets_toolkits = tk.Label(right, text=settings[locale]['videoView']["video_assets_toolkits"])
+    video_assets_toolkits.grid(row=0, column=0, sticky="w", padx=14, pady=15)
+    video_gen_toolkits = tk.Label(right, text=settings[locale]['videoView']["video_gen_toolkits"])
+    video_gen_toolkits.grid(row=0, column=1, sticky="w", padx=14, pady=15)
 
-    l_mode_1 = tk.Label(right, text=settings[locale]["toolkits"])
-    l_mode_1.grid(row=0, column=0, sticky="w", padx=14, pady=15)
+    post_process_toolkits = tk.Label(right, text=settings[locale]['videoView']["post_process_toolkits"])
+    post_process_toolkits.grid(row=0, column=2, sticky="w", padx=14, pady=15)
 
-    b_autothumb = tk.Button(
-        right,
-        text=settings[locale]['videoView']["autothumb"],
-        command=lambda: threading.Thread(target=autothumb).start(),
-    )
-    b_autothumb.grid(row=1, column=0, sticky="w", padx=14, pady=15)
-    b_batchchangebgmusic = tk.Button(
-        right,
-        text=settings[locale]['videoView']["batchchangebgmusic"],
-        command=lambda: threading.Thread(target=batchchangebgmusic).start(),
-    )
-    b_batchchangebgmusic.grid(row=2, column=0, sticky="w", padx=14, pady=15)
+    # b_autothumb = tk.Button(
+    #     right,
+    #     text=settings[locale]['videoView']["autothumb"],
+    #     command=lambda: threading.Thread(target=autothumb).start(),
+    # )
+    # b_autothumb.grid(row=1, column=0, sticky="w", padx=14, pady=15)
+    # b_batchchangebgmusic = tk.Button(
+    #     right,
+    #     text=settings[locale]['videoView']["batchchangebgmusic"],
+    #     command=lambda: threading.Thread(target=batchchangebgmusic).start(),
+    # )
+    # b_batchchangebgmusic.grid(row=2, column=0, sticky="w", padx=14, pady=15)
 
-    b_hiddenwatermark = tk.Button(
-        right,
-        text=settings[locale]['videoView']["hiddenwatermark"],
-        command=lambda: threading.Thread(target=hiddenwatermark),
-    )
-    b_hiddenwatermark.grid(row=3, column=0, sticky="w", padx=14, pady=15)
+    # b_hiddenwatermark = tk.Button(
+    #     right,
+    #     text=settings[locale]['videoView']["hiddenwatermark"],
+    #     command=lambda: threading.Thread(target=hiddenwatermark),
+    # )
+    # b_hiddenwatermark.grid(row=3, column=0, sticky="w", padx=14, pady=15)
 
 
 def thumbView(left, right, lang):

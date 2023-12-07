@@ -14,6 +14,7 @@ import tkinter as tk
 from asyncio import CancelledError
 from contextlib import suppress
 import random
+from async_tkinter_loop import async_handler, async_mainloop
 
 app = FastAPI()
 # Allow all origins
@@ -42,42 +43,24 @@ async def do_urls():
     print("\n".join(results))
 
 
-def do_tasks(async_loop):
+def do_tasks():
     """Button-Event-Handler starting the asyncio part."""
-    asyncio.ensure_future(do_urls(), loop=async_loop)
+    asyncio.ensure_future(do_urls())
 
 
-def start(lang, root=None, async_loop=None):
+def start(lang, root=None):
     global mainwindow, canvas
 
     # root.resizable(width=True, height=True)
     root.iconbitmap("assets/icon.ico")
     root.title('tkinter asyncio demo')
-    Button(master=root, text="Asyncio Tasks", command=lambda: do_tasks(async_loop)).pack()
+    Button(master=root, text="Asyncio Tasks", command=async_handler(do_tasks())).pack()
 
     root.update_idletasks()
 
 
-async def wait():
-    try:
-        tasks = asyncio.all_tasks(loop)
-        print(f'========{tasks}')
-        for task in tasks:
-            try:
-                # await asyncio.sleep(3600)
-                cancel_ok = task.cancel()
-                print(cancel_ok, task)
-            except asyncio.exceptions.CancelledError:
-                print("done")
-
-
-    except RuntimeError as err:
-        print('SIGINT or SIGTSTP raised')
-        print("cleaning and exiting")
-        sys.exit(1)
-
-
-def quit_window(icon, item):
+@async_handler
+async def quit_window(icon):
     global loop, fastapi_thread
 
     print('Shutdown icon')
@@ -86,13 +69,9 @@ def quit_window(icon, item):
     print('Shutdown server')
     server.should_exit = True
     server.force_exit = True
-    asyncio.run_coroutine_threadsafe(server.shutdown(), loop)
-
+    await server.shutdown()
     print('Shutdown root')
     root.quit()
-
-    # print('Wait for server and loop to finish')
-    # asyncio.run_coroutine_threadsafe(wait(), loop)
 
     print('Stop loop')
     # loop.stop()
@@ -108,41 +87,39 @@ def show_window(icon, item):
 def withdraw_window():
     root.withdraw()
     image = Image.open("assets/icon.ico")
-    menu = (item("Quit", lambda icon, item: threading.Thread(target=quit_window, args=(icon, item)).start()),
+    # menu = (item("Quit", lambda icon, item: threading.Thread(target=quit_window, args=(icon, item)).start()),
+    #         item("Show", show_window))
+    menu = (item("Quit", lambda icon:quit_window(icon)),
             item("Show", show_window))
+
+    
     icon = pystray.Icon("name", image, "title", menu)
     # icon.run_detached()
     icon.run()
 
-
-def start_fastapi_server(loop):
+@async_handler
+async def start_fastapi_server(loop):
     import uvicorn
     global server
     config = uvicorn.Config(app, loop=loop, host="0.0.0.0", port=8000)
     server = uvicorn.Server(config)
-    try:
-        loop.run_until_complete(server.serve())
-    except KeyboardInterrupt:
-        print("Received Ctrl+C. Stopping gracefully...")
-        # Cancel all running tasks
-        for task in asyncio.Task.all_tasks():
-            task.cancel()
-        # Optionally: Close any open resources (sockets, files, etc.)
-        # Cleanup code here
-    # finally:
-    #     loop.close()
+    await asyncio.wait(server.serve())
 
 
-def start_tkinter_app(async_loop):
+
+def start_tkinter_app():
     global root, settings, db, canvas, locale
     root = tk.Tk()
 
     locale = 'en'
-    start(locale, root, async_loop)
+    start(locale, root)
 
     root.protocol('WM_DELETE_WINDOW', withdraw_window)
 
-    root.mainloop()
+    # root.mainloop()
+    async_mainloop(root)
+
+
 
 
 if __name__ == "__main__":
@@ -166,5 +143,5 @@ if __name__ == "__main__":
 
     # Start FastAPI server in a separate thread
     fastapi_thread = threading.Thread(target=start_fastapi_server, args=(loop,)).start()
-
-    start_tkinter_app(loop)
+    # start_fastapi_server(loop)
+    start_tkinter_app()

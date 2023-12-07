@@ -4,6 +4,8 @@ from src.models.platform_model import PLATFORM_TYPE
 from src.models.account_model import AccountModel
 import time
 from src.customid import CustomID
+from src.log import logger
+
 class LOG_LEVEL:
     CRITICAL = 50
     FATAL = CRITICAL
@@ -59,7 +61,7 @@ class UploadSettingModel(BaseModel):
     wait_policy=IntegerField(default=WAIT_POLICY_TYPE.check)
     @classmethod
 
-    def add_uploadsetting(cls,setting_data,account_id):
+    def add_uploadsetting(cls,setting_data,account_id=None,account=None):
 
         
         setting = UploadSettingModel(**setting_data)
@@ -67,8 +69,12 @@ class UploadSettingModel(BaseModel):
         setting.inserted_at = int(time.time())  # Update insert_date
         print(f'save account in setting data :{type(account_id)} {account_id}')
         # account
-
-        account = AccountModel.get_account_by_id(CustomID(custom_id=account_id).to_bin())
+        if account ==None:
+            if account_id ==None:
+                logger.error('you should give one account data or account id in uploadsetting')
+            else:
+                account = AccountModel.get_account_by_id(CustomID(custom_id=account_id).to_bin())
+        
         setting.account=account
 
         setting.id = CustomID().to_bin()

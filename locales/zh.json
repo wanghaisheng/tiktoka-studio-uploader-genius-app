@@ -224,7 +224,12 @@
 		"L_genschedule": "Step4:自动规划发布时间",
 		"B_genschedule": "生成发布时间"
 	},
-	"videoView":{"gen_srt":"生成视频字幕",
+	"videoView":{
+		"video_assets_toolkits":"视频素材工具箱",
+		"video_gen_toolkits":"视频生成工具箱",
+
+		"post_process_toolkits":"视频处理工具箱",
+		"gen_srt":"生成视频字幕",
 				"srt_translation":"多语种字幕自动翻译",
 			"title_translation":"多语种标题自动翻译",
 			"des_translation":"多语种字幕自动翻译",

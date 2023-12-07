@@ -236,7 +236,7 @@
 		"default_release_hour_hints": "you can input more than one with comma separator,such as 10:15,12:00,if you want publish 10 video in serial you should put 10 time here,more available can choose from {settings[locale]['availableScheduleTimes']}",
 		"offsetDays": "days offset",
 		"offsetDays_hints": "we calculate publish date from today,  default +1 is tomorrow",
-		"chooseschedulepolicy_auto_options": "Step1:请选择你的发布时间生成策略",
+		"chooseschedulepolicy_auto_options": "Step1:which option video get pulbish",
 		"chooseschedulepolicy_auto_options_1": "private",
 		"chooseschedulepolicy_auto_options_1_hints": "",
 		"chooseschedulepolicy_auto_options_2": "public",
@@ -251,7 +251,12 @@
 		"L_genschedule": "Step4:auto gen schedule plan",
 		"B_genschedule": "gen schedule plan"
 	},
-	"videoView":{"gen_srt":"生成视频字幕",
+	"videoView":{
+		"video_assets_toolkits":"get video assets toolkits",
+		"video_gen_toolkits":"auto gen video toolkits",
+
+		"post_process_toolkits":"video auto editing toolkits",		
+		"gen_srt":"生成视频字幕",
 				"srt_translation":"多语种字幕自动翻译",
 			"title_translation":"多语种标题自动翻译",
 			"des_translation":"多语种字幕自动翻译",
@@ -308,7 +313,7 @@
 	"editTaskMetas": "edit task meta file",
 	"editTaskMetasToolip": "edit task meta file,support json excel csv",
 	"createTaskMetas": "New task file",
-	"createTaskMetasToolip": "新建任务元数据文件,支持json excel csv",
+	"createTaskMetasToolip": "New Task file that can be json excel csv",
 	"start-loading-setting": "start loading latest used setting file",
 	"loading-default-setting": "loading failed,use default setting template",
 	"contact_str_group": "2.Join discussion group",

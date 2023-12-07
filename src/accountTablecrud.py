@@ -707,9 +707,9 @@ def update_selected_row_account(rowid, frame=None, name=None, func=None):
         disableelements=["id", "inserted_at", "uploaded_at", "unique_hash", "setting"],
         title="account data",
     )
-    newbackupaccountresult = {}
-    newsettingresult = {}
-    newaccountresult = {}
+    # newbackupaccountresult = {}
+    # newsettingresult = {}
+    # newaccountresult = {}
     # print('======================',serialno,cols,lastindex)
 
     # if backupaccount_rows:
@@ -739,14 +739,23 @@ def update_account(newaccountresult=None, id=id):
     if newaccountresult == None:
         showinfomsg(message="you have not make any changes")
     else:
+        if 'platform' in newaccountresult:
+            if  type(newaccountresult['platform'])==int and newaccountresult['platform'] in dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT).keys():
+                pass
+            elif  type(newaccountresult['platform'])==str and newaccountresult['platform'] in dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT).values():
+                newaccountresult['platform']  =find_key(dict(PLATFORM_TYPE.PLATFORM_TYPE_TEXT), platform)
+            else:
+                newaccountresult['platform']  =PLATFORM_TYPE.UNKNOWN
         result = AccountModel.update_account(
             **newaccountresult, id=id, accountdata=newaccountresult
         )
-        if len(newaccountresult["link_accounts"]) > 0:
-            for otherid in newaccountresult["link_accounts"]:
-                result = AccountRelationship.add_AccountRelationship_by_main_id(
-                    **newaccountresult, main_id=id, otherid=otherid
-                )
+        if 'link_accounts' in newaccountresult:
+
+            if len(newaccountresult["link_accounts"]) > 0:
+                for otherid in newaccountresult["link_accounts"]:
+                    result = AccountRelationship.add_AccountRelationship_by_main_id(
+                        **newaccountresult, main_id=id, otherid=otherid
+                    )
 
         if result:
             showinfomsg(message="changes have been updated")
