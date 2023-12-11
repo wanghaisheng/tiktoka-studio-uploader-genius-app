@@ -107,7 +107,9 @@ def get_logger(
     """
     # 加载setting里最新的值
     name = name or setting.LOG_NAME
-    path = path or setting.LOG_PATH
+    if path is None:
+
+        path = setting.LOG_PATH
     log_level = log_level or setting.LOG_LEVEL
     is_write_to_console = (
         is_write_to_console

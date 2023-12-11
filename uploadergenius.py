@@ -2018,10 +2018,14 @@ def setupWizard(frame, td):
         print(socialplatform.get())
         print(socialplatform_box.current())
         if socialplatform_box.current() == 0:
+            showinfomsg(message="start to prepare fake data for testing purpose")   
+            logger.info(f'start to prepare fake data for testing purpose')
+
             test_tasks, test_setting, test_videos, test_users = td.addTestdata()
-            print()
             if test_tasks:
                 showinfomsg(message="test data is prepared")
+                logger.info(f'test data is prepared')
+
         elif socialplatform_box.current() == 1:
             ttkframe.withdraw()
             tab_control.select(8)
