@@ -47,13 +47,13 @@ def askquestionmsg(message, title="询问确认", DURATION=500, parent=None):
     return msg4
 
 def askokcancelmsg(message, title="确定或取消", DURATION=500, parent=None):
-    top = Toplevel(parent)
-    top.title(title)
-    center_window(top)
+    # top = Toplevel(parent)
+    # top.title(title)
+    # center_window(top)
     msg5 = messagebox.askokcancel(title=title, message=message)
-    # print(msg5)
-    if msg5 is bool:
-        top.after(DURATION, top.destroy)
+    print(f'you choose to cancer this :{msg5}')
+    # if msg5 is bool:
+    #     top.after(DURATION, top.destroy)
     return msg5
 
 def askretrycancelmsg(message, title="重试或取消", DURATION=500, parent=None):

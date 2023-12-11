@@ -1,11 +1,6 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 import threading
-from fastapi import FastAPI
-from fastapi.responses import FileResponse
-
-from fastapi.staticfiles import StaticFiles
-from fastapi.middleware.cors import CORSMiddleware
 from src.api.account import router
 
 # Assuming filter_accounts is the function defined in api.py
@@ -15,16 +10,7 @@ from src.models.addtestdata import TestData
 from src.bg_music import batchchangebgmusic
 from src.asyncEvent import AsyncEvent
 
-# Initialize FastAPI
-app = FastAPI()
-# Allow all origins
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # You can replace this with specific origins if needed
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+
 
 # here put the import lib
 from jsonschema import validate
@@ -87,6 +73,11 @@ from src.log import logger
 from src.accountTablecrud import *
 from src.taskTablecrud import *
 from src.proxyTablecrud import *
+
+from asyncio.subprocess import Process
+from typing import Optional
+import platform
+uvicorn_subprocess: Optional[Process] = None
 
 if platform.system() == "Windows":
     ultra = UltraDict(shared_lock=True, recurse=True)
@@ -1634,10 +1625,25 @@ def do_ups(
     ids=None,
     sortby="ASC",
 ):
-    threading.Thread(
-        target=_asyncio_thread_up,
-        args=(
-            async_loop,
+    # threading.Thread(
+    #     target=_asyncio_thread_up,
+    #     args=(
+    #         async_loop,
+    #         frame,
+    #         username,
+    #         platform,
+    #         status,
+    #         vtitle,
+    #         schedule_at,
+    #         vid,
+    #         pageno,
+    #         pagecount,
+    #         ids,
+    #         "ASC",
+    #     ),
+    # ).start()
+
+    asyncio.run(runupload(            async_loop,
             frame,
             username,
             platform,
@@ -1648,67 +1654,9 @@ def do_ups(
             pageno,
             pagecount,
             ids,
-            "ASC",
-        ),
-    ).start()
-
-
-def _asyncio_thread_up(
-    async_loop,
-    frame=None,
-    username=None,
-    platform=None,
-    status=None,
-    vtitle=None,
-    schedule_at=None,
-    vid=None,
-    pageno=None,
-    pagecount=None,
-    ids=None,
-    sortby="ASC",
-):
-    task=runupload(
-                async_loop=async_loop,
-                frame=frame,
-                username=username,
-                platform=platform,
-                status=status,
-                vtitle=vtitle,
-                schedule_at=schedule_at,
-                vid=vid,
-                pageno=pageno,
-                pagecount=pagecount,
-                ids=ids,
-                sortby="ASC",
-            )
-    # try:
-    #     # await asyncio.wait(task)
-    #     async_loop.run_until_complete(
-    #         task
-    #     )
-    # except SystemExit:
-    #     print("caught SystemExit!")
-    #     raise
-
-    asyncio.ensure_future(task, loop=async_loop)
-
-
-
-
-
-
-async def semaphore_gather(num, coros, return_exceptions=False):
-    semaphore = asyncio.Semaphore(num)
-
-    # https://stackoverflow.com/questions/50308812/is-it-possible-to-limit-the-number-of-coroutines-running-corcurrently-in-asyncio
-    async def _wrap_coro(coro):
-        async with semaphore:
-            return await coro
-
-    return await asyncio.gather(
-        *(_wrap_coro(coro) for coro in coros), return_exceptions=return_exceptions
-    )
-
+            "ASC")
+                
+                )
 
 async def runupload(
     async_loop=None,
@@ -8963,24 +8911,16 @@ def changeDisplayLang(lang):
 
 
 def quit_window(icon, item):
-    global loop, fastapi_thread
-
     print('Shutdown icon')
     icon.stop()
 
     print('Shutdown server')
-    server.should_exit = True
-    server.force_exit = True
-    asyncio.run_coroutine_threadsafe(server.shutdown(), loop)
-
+    if uvicorn_subprocess is not None:
+        uvicorn_subprocess.kill()
     print('Shutdown root')
+    # https://github.com/insolor/async-tkinter-loop/issues/10
     root.quit()
-
-    # print('Wait for server and loop to finish')
-    # asyncio.run_coroutine_threadsafe(wait(), loop)
-
-    print('Stop loop')
-    # loop.stop()
+    root.destroy()
 
 
 
@@ -8997,7 +8937,7 @@ def withdraw_window():
     # icon.run_detached()
     icon.run()
 
-def start_fastapi_server(loop):
+def start_fastapi_server_loop(loop):
     import uvicorn
     global server
     config = uvicorn.Config(app, loop=loop, host="0.0.0.0", port=8000)
@@ -9017,11 +8957,49 @@ def start_fastapi_server(loop):
 
 def start_fastapi_server_cmd():
     subprocess.run(["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"])
+from async_tkinter_loop import async_handler, async_mainloop
+console_encoding = "utf-8"
 
+if platform.system() == "Windows":
+    from ctypes import windll
 
-# Mount the static files directory containing your HTML file
-app.mount("/static", StaticFiles(directory="static"), name="static")
-app.include_router(router)
+    console_code_page = windll.kernel32.GetConsoleOutputCP()
+    if console_code_page != 65001:
+        console_encoding = f"cp{console_code_page}"
+
+@async_handler
+async def start_fastapi_server():
+    global uvicorn_subprocess
+    uvicorn_command = ["uvicorn", "fastapiserver:app", "--host", "0.0.0.0", "--port", "8000"]
+
+    uvicorn_subprocess = await asyncio.create_subprocess_exec(
+        *uvicorn_command,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE,
+    )
+
+    while uvicorn_subprocess.returncode is None:
+        stdout = asyncio.create_task(uvicorn_subprocess.stdout.readline())
+        stderr = asyncio.create_task(uvicorn_subprocess.stderr.readline())
+
+        done, pending = await asyncio.wait({stdout, stderr}, return_when=asyncio.FIRST_COMPLETED)
+
+        if stdout in done:
+            result_text = stdout.result().decode(console_encoding)
+            print(f'stdout:{result_text}')
+
+        if stderr in done:
+            result_text = stderr.result().decode(console_encoding)
+            print(f'stderr:{result_text}')
+
+        for item in pending:
+            item.cancel()
+
+    uvicorn_subprocess = None
+def stop():
+    if uvicorn_subprocess is not None:
+        uvicorn_subprocess.kill()
+
 
 
 
@@ -9043,15 +9021,10 @@ def start_tkinter_app(async_loop):
     settings["locale"] = locale
     dumpSetting(settingfilename)
 
-    root.mainloop()
+    # root.mainloop()
+    async_mainloop(root)
 
 
-
-@app.get("/")
-def read_root():
-    return FileResponse(
-        "static/proxy.html"
-    )  # Replace with the actual path to your HTML file
 
 
 if __name__ == "__main__":
@@ -9059,24 +9032,9 @@ if __name__ == "__main__":
     loop = None
     mode='debug'
 
-    if sys.platform == "win32" and (3, 8, 0) <= sys.version_info < (3, 9, 0):
-        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-
-    if sys.platform == 'win32':
-
-        asyncio.get_event_loop().close()
-        # On Windows, the default event loop is SelectorEventLoop, which does
-        # not support subprocesses. ProactorEventLoop should be used instead.
-        # Source: https://docs.python.org/3/library/asyncio-subprocess.html
-        loop = asyncio.ProactorEventLoop()
-        asyncio.set_event_loop(loop)
-    else:
-        loop = asyncio.get_event_loop()
-
+    # https://github.com/Azure/azure-sdk-for-python/issues/21207
     # Start FastAPI server in a separate thread
-    fastapi_thread = threading.Thread(target=start_fastapi_server, args=(loop,)).start()
-
+    # fastapi_thread = threading.Thread(target=start_fastapi_server, args=(loop,)).start()
+    start_fastapi_server()
     start_tkinter_app(loop)
-    # loop.run_forever()
-    # loop.close()

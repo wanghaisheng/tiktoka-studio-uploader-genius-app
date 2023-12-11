@@ -12,6 +12,8 @@ from async_tkinter_loop import async_handler, async_mainloop
 from asyncio.subprocess import Process
 from typing import Optional
 import platform
+from batchrunworker import BatchWorker
+from string import ascii_uppercase
 
 uvicorn_subprocess: Optional[Process] = None
 
@@ -25,28 +27,19 @@ if platform.system() == "Windows":
     if console_code_page != 65001:
         console_encoding = f"cp{console_code_page}"
 
+async def task(name: str):
+    print(f"Task '{name}' is running...")
+    if name=='A':
+        print('task failed')
+    else:
+        print('task ok')
+    await asyncio.sleep(3)  # Pretend to do something
+TASK_NAMES = ascii_uppercase  # 26 fake tasks in total
 
-
-async def one_url(url):
-    """One task."""
-    print(f'run one_url: {url}')  # for debug
-    sec = random.randint(1, 8)
-    await asyncio.sleep(sec)
-    return "url: {}\tsec: {}".format(url, sec)
-
-
-async def do_urls():
-    """Creating and starting 10 tasks."""
-    tasks = [one_url(url) for url in range(10)]
-    completed, pending = await asyncio.wait(tasks)
-    results = [task.result() for task in completed]
-    print("\n".join(results))
-
-
-def do_tasks():
-    """Button-Event-Handler starting the asyncio part."""
-    asyncio.ensure_future(do_urls())
-
+async def do_tasks():
+    tasks = [task(name) for name in TASK_NAMES]
+    worker = BatchWorker(tasks)
+    await worker.run()
 
 def start(lang, root=None):
     global mainwindow, canvas
@@ -54,7 +47,9 @@ def start(lang, root=None):
     # root.resizable(width=True, height=True)
     root.iconbitmap("assets/icon.ico")
     root.title('tkinter asyncio demo')
-    Button(master=root, text="Asyncio Tasks", command=async_handler(do_tasks())).pack()
+    Button(master=root, text="async_handler Asyncio Tasks", command=async_handler(do_tasks)).pack()
+
+
     Button(master=root, text="Start Server", command=start_fastapi_server).pack(side=tk.LEFT)
 
     Button(master=root, text="Stop Server", command=stop).pack(side=tk.LEFT)
@@ -145,4 +140,5 @@ def start_tkinter_app():
 
 
 if __name__ == "__main__":
+    start_fastapi_server()
     start_tkinter_app()

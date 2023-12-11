@@ -460,18 +460,15 @@ def do_up(
     platform=None,
     status=None
 ):
-    threading.Thread(
-        target=_asyncio_thread_up,
-        args=(
-            async_loop,
-            frame,
-            rowid,
-            platform,
-            status,
-        ),
-    ).start()
+    asyncio.run(
+         upload_selected_row_task(
+            rowid=rowid,
+            frame=frame,
+            status=status,
+            platform=platform,
+        )
 
-
+    )
 def _asyncio_thread_up(
     async_loop,
     frame=None,
@@ -519,7 +516,7 @@ def remove_selected_row_task(rowid, frame=None, name=None, func=None):
 
 async def upload_selected_row_task(rowid, frame=None, status=None, platform=None):
     print("you want to upload this task", rowid)
-    if rowid == 0:
+    if rowid == None:
         showinfomsg(
             message="you have not selected  task at all.choose one or more",
             parent=frame,
@@ -549,7 +546,14 @@ async def upload_selected_row_task(rowid, frame=None, status=None, platform=None
                     parent=frame,
                     DURATION=000,
                 )
-
+                if counts==0:
+                    logger.debug(
+                        f"you cannot upload this task {rowid}, not added before"
+                    )
+                    showinfomsg(
+                        message=f"this task {rowid} not added before", parent=frame
+                    )
+                
                 if cancel==True:
 
                     uptasks = set()
@@ -682,18 +686,12 @@ async def upload_selected_row_task(rowid, frame=None, status=None, platform=None
                                 parent=frame,
                             )
                             print(f"this batch task {len(tasks)} upload endding")
-                    else:
-                        logger.info(f'cancel to upload this video:{rowid}')
-
-
-
                 else:
-                    logger.debug(
-                        f"you cannot upload this task {rowid}, not added before"
-                    )
-                    showinfomsg(
-                        message=f"this task {rowid} not added before", parent=frame
-                    )
+                    logger.info(f'cancel to upload this video:{rowid}')
+
+
+
+ 
         logger.debug(f"end to upload,reset task {rowid}")
 
 

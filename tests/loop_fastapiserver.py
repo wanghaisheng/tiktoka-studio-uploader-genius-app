@@ -46,6 +46,33 @@ def do_tasks(async_loop):
     """Button-Event-Handler starting the asyncio part."""
     asyncio.ensure_future(do_urls(), loop=async_loop)
 
+async def do_tasks_gather():
+    tasks = [one_url(url) for url in range(10)]    
+    await asyncio.gather(*tasks)    
+
+async def do_tasks_group():
+    tasks = [one_url(url) for url in range(10)]
+    background_tasks = set()
+    for task in tasks:
+        task1 = asyncio.create_task(task)
+        background_tasks.add(task1)
+    await asyncio.sleep(1)
+    for task1 in  background_tasks:
+        print(f"Both tasks have completed now: {task1}")
+
+
+
+async def do_tasks_group_311():
+    tasks = [one_url(url) for url in range(10)]
+    background_tasks = set()
+    # python 3.11
+    async with asyncio.TaskGroup() as tg:
+        for task in tasks:
+            task1 = tg.create_task(task)
+            background_tasks.add(task1)
+    for task1 in  background_tasks:
+        print(f"Both tasks have completed now: {task1.result()}")
+
 
 def start(lang, root=None, async_loop=None):
     global mainwindow, canvas
@@ -53,7 +80,7 @@ def start(lang, root=None, async_loop=None):
     # root.resizable(width=True, height=True)
     root.iconbitmap("assets/icon.ico")
     root.title('tkinter asyncio demo')
-    Button(master=root, text="Asyncio Tasks", command=lambda: do_tasks(async_loop)).pack()
+    Button(master=root, text="Asyncio Tasks", command=lambda: asyncio.run(do_tasks_gather())).pack()
 
     root.update_idletasks()
 
@@ -90,7 +117,8 @@ def quit_window(icon, item):
 
     print('Shutdown root')
     root.quit()
-
+    print('Shutdown root')
+    root.destroy()
     # print('Wait for server and loop to finish')
     # asyncio.run_coroutine_threadsafe(wait(), loop)
 
