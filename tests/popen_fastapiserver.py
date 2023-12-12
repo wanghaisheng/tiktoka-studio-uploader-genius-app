@@ -54,7 +54,7 @@ def start(lang, root=None):
     Button(master=root, text="Asyncio Tasks", command=lambda:threading.Thread(target=do_tasks_wrap, args=(5,)).start()).pack()
 
 
-    Button(master=root, text="Start Server", command=start_fastapi_server).pack(side=tk.LEFT)
+    Button(master=root, text="Start Server", command=lambda:threading.Thread(target=start_fastapi_server).start()).pack(side=tk.LEFT)
 
     Button(master=root, text="Stop Server", command=stop).pack(side=tk.LEFT)
 
@@ -70,8 +70,14 @@ def quit_window(icon):
     if uvicorn_subprocess is not None:
         uvicorn_subprocess.terminate() 
         time.sleep(0.5)
-        uvicorn_subprocess.poll()
+        done=uvicorn_subprocess.poll()
+        if done==None:
+            print(f'server shutdown error :{done}')
 
+        else:
+            print('server shutdown')
+    else:
+        print('server not started')
     print('Shutdown root')
     # https://github.com/insolor/async-tkinter-loop/issues/10
     root.quit()

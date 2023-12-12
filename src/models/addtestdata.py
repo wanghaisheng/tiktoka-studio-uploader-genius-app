@@ -47,7 +47,7 @@ class TestData:
                 TaskModel,
             ]
         ):
-            print("inital supported platforms")
+            print("initial supported platforms")
             PlatformModel.add_platform(
                 platform_data={
                     "name": "youtube",

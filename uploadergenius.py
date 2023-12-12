@@ -1,17 +1,14 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 import threading
-from src.api.account import router
+
 
 # Assuming filter_accounts is the function defined in api.py
 from playhouse.shortcuts import model_to_dict
 from pathlib import Path, PureWindowsPath, PurePath
 from src.models.addtestdata import TestData
 from src.bg_music import batchchangebgmusic
-from src.asyncEvent import AsyncEvent
-
-
-
+import psutil
 # here put the import lib
 from jsonschema import validate
 from jsonschema import ValidationError
@@ -74,11 +71,6 @@ from src.accountTablecrud import *
 from src.taskTablecrud import *
 from src.proxyTablecrud import *
 
-from asyncio.subprocess import Process
-from typing import Optional
-import platform
-uvicorn_subprocess: Optional[Process] = None
-
 if platform.system() == "Windows":
     ultra = UltraDict(shared_lock=True, recurse=True)
     tmp = UltraDict(shared_lock=True, recurse=True)
@@ -111,6 +103,7 @@ supported_meta_exts = [".json", ".xls", ".xlsx", ".csv"]
 window = None
 
 availableScheduleTimes = []
+uvicorn_subprocess=None
 
 
 class QueueHandler(logging.Handler):
@@ -1625,25 +1618,10 @@ def do_ups(
     ids=None,
     sortby="ASC",
 ):
-    # threading.Thread(
-    #     target=_asyncio_thread_up,
-    #     args=(
-    #         async_loop,
-    #         frame,
-    #         username,
-    #         platform,
-    #         status,
-    #         vtitle,
-    #         schedule_at,
-    #         vid,
-    #         pageno,
-    #         pagecount,
-    #         ids,
-    #         "ASC",
-    #     ),
-    # ).start()
-
-    asyncio.run(runupload(            async_loop,
+    threading.Thread(
+        target=_asyncio_thread_up,
+        args=(
+            async_loop,
             frame,
             username,
             platform,
@@ -1654,9 +1632,59 @@ def do_ups(
             pageno,
             pagecount,
             ids,
-            "ASC")
-                
-                )
+            "ASC",
+        ),
+    ).start()
+    # task=runupload(
+    #             async_loop=async_loop,
+    #             frame=frame,
+    #             username=username,
+    #             platform=platform,
+    #             status=status,
+    #             vtitle=vtitle,
+    #             schedule_at=schedule_at,
+    #             vid=vid,
+    #             pageno=pageno,
+    #             pagecount=pagecount,
+    #             ids=ids,
+    #             sortby="ASC",
+    #         )
+    # asyncio.run(task)
+
+
+
+def _asyncio_thread_up(
+    async_loop,
+    frame=None,
+    username=None,
+    platform=None,
+    status=None,
+    vtitle=None,
+    schedule_at=None,
+    vid=None,
+    pageno=None,
+    pagecount=None,
+    ids=None,
+    sortby="ASC",
+):
+    task=runupload(
+                async_loop=async_loop,
+                frame=frame,
+                username=username,
+                platform=platform,
+                status=status,
+                vtitle=vtitle,
+                schedule_at=schedule_at,
+                vid=vid,
+                pageno=pageno,
+                pagecount=pagecount,
+                ids=ids,
+                sortby="ASC",
+            )
+
+
+    asyncio.run(task)
+
 
 async def runupload(
     async_loop=None,
@@ -1965,8 +1993,10 @@ async def runupload(
                 parent=frame,
             )
             print(f"this batch task {len(tasks)} upload endding")
+            logger.info(f"this batch task {len(tasks)} upload endding")
+
         else:
-            logger.info('cancel to upload these videos')
+            logger.info(f'cancel to upload these {len(tasks)} videos')
 
 def docView(frame, ttkframe, lang):
     b_view_readme = tk.Button(
@@ -2025,7 +2055,6 @@ def setupWizard(frame, td):
             if test_tasks:
                 showinfomsg(message="test data is prepared")
                 logger.info(f'test data is prepared')
-
         elif socialplatform_box.current() == 1:
             ttkframe.withdraw()
             tab_control.select(8)
@@ -6895,7 +6924,24 @@ def validateTaskMetafile(loop, frame, metafile, canvas=None):
         showinfomsg(message="please choose a valid task file")
         logger.error("you choosed task meta  file is missing or broken.")
 
-
+async def cancerlall():
+    try:
+        tasks = asyncio.Task.all_tasks()
+        pending = [task for task in tasks if not task.done()]
+        for task in pending:
+            task.cancel()
+            try:
+                async with asyncio.timeout(-1):
+                    await task
+            except asyncio.CancelledError:
+                if asyncio.current_task().cancelling() == 0:
+                    raise
+                else:
+                    return # this is the only non-exceptional return
+            else:
+                raise RuntimeError("Cancelled task did not end with an exception")
+    except:
+        print('there is no waiting task at all')
 def uploadView(frame, ttkframe, lang, async_loop):
     queryframe = tk.Frame(ttkframe)
     # queryframe=frame
@@ -7149,6 +7195,16 @@ def uploadView(frame, ttkframe, lang, async_loop):
     )
     b_upload.grid(row=0, column=7, padx=14, pady=15)
 
+
+
+    b_upload_cancelall = tk.Button(
+        operationframe,
+        text=settings[locale]["uploadview"]["b_cancelAll"],
+        command=lambda: threading.Thread(
+            target=cancerlall()
+        ).start(),
+    )
+    b_upload_cancelall.grid(row=0, column=8, padx=14, pady=15)
     # Bind the platform selection event to the on_platform_selected function
 
 
@@ -8915,12 +8971,37 @@ def changeDisplayLang(lang):
 
 
 def quit_window(icon, item):
+
+    print('cancel all waiting tasks')
+
+    # threading.Thread(
+    #             target=cancerlall()
+    #         ).start()
+    asyncio.run(cancerlall())
     print('Shutdown icon')
     icon.stop()
 
     print('Shutdown server')
     if uvicorn_subprocess is not None:
-        uvicorn_subprocess.kill()
+        uvicorn_subprocess.terminate() 
+        time.sleep(0.5)
+        done=uvicorn_subprocess.poll()
+        if done==None:
+            print(f'server shutdown error :{done}')
+
+        else:
+            print('server shutdown')
+    else:
+        print('server not started')
+    if uvicorn_subprocess.returncode is  None:
+        print('check result server is there ')
+        parent = psutil.Process(uvicorn_subprocess.pid)
+        for child in parent.children(recursive=True): 
+            child.terminate()
+        parent.terminate()
+    else:
+        print('check result server is shutdown already')
+
     print('Shutdown root')
     # https://github.com/insolor/async-tkinter-loop/issues/10
     root.quit()
@@ -8941,68 +9022,16 @@ def withdraw_window():
     # icon.run_detached()
     icon.run()
 
-def start_fastapi_server_loop(loop):
-    import uvicorn
-    global server
-    config = uvicorn.Config(app, loop=loop, host="0.0.0.0", port=8000)
-    server = uvicorn.Server(config)
-    try:
-        loop.run_until_complete(server.serve())
-    except KeyboardInterrupt:
-        print("Received Ctrl+C. Stopping gracefully...")
-        # Cancel all running tasks
-        for task in asyncio.Task.all_tasks():
-            task.cancel()
-        # Optionally: Close any open resources (sockets, files, etc.)
-        # Cleanup code here
-    # finally:
-    #     loop.close()
 
-
-def start_fastapi_server_cmd():
-    subprocess.run(["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"])
-from async_tkinter_loop import async_handler, async_mainloop
-console_encoding = "utf-8"
-
-if platform.system() == "Windows":
-    from ctypes import windll
-
-    console_code_page = windll.kernel32.GetConsoleOutputCP()
-    if console_code_page != 65001:
-        console_encoding = f"cp{console_code_page}"
-
-@async_handler
-async def start_fastapi_server():
+def start_fastapi_server():
     global uvicorn_subprocess
     uvicorn_command = ["uvicorn", "fastapiserver:app", "--host", "0.0.0.0", "--port", "8000"]
-
-    uvicorn_subprocess = await asyncio.create_subprocess_exec(
-        *uvicorn_command,
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-    )
-
-    while uvicorn_subprocess.returncode is None:
-        stdout = asyncio.create_task(uvicorn_subprocess.stdout.readline())
-        stderr = asyncio.create_task(uvicorn_subprocess.stderr.readline())
-
-        done, pending = await asyncio.wait({stdout, stderr}, return_when=asyncio.FIRST_COMPLETED)
-
-        if stdout in done:
-            result_text = stdout.result().decode(console_encoding)
-            print(f'stdout:{result_text}')
-
-        if stderr in done:
-            result_text = stderr.result().decode(console_encoding)
-            print(f'stderr:{result_text}')
-
-        for item in pending:
-            item.cancel()
-
-    uvicorn_subprocess = None
-def stop():
-    if uvicorn_subprocess is not None:
+    uvicorn_subprocess = subprocess.Popen(uvicorn_command) 
+    try:
+        outs, errs = uvicorn_subprocess.communicate(timeout=15)
+    except subprocess.TimeoutExpired:
         uvicorn_subprocess.kill()
+        outs, errs = uvicorn_subprocess.communicate()
 
 
 
@@ -9025,10 +9054,7 @@ def start_tkinter_app(async_loop):
     settings["locale"] = locale
     dumpSetting(settingfilename)
 
-    # root.mainloop()
-    async_mainloop(root)
-
-
+    root.mainloop()
 
 
 if __name__ == "__main__":
@@ -9036,9 +9062,24 @@ if __name__ == "__main__":
     loop = None
     mode='debug'
 
+    if sys.platform == "win32" and (3, 8, 0) <= sys.version_info < (3, 9, 0):
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-    # https://github.com/Azure/azure-sdk-for-python/issues/21207
+
+    if sys.platform == 'win32':
+
+        asyncio.get_event_loop().close()
+        # On Windows, the default event loop is SelectorEventLoop, which does
+        # not support subprocesses. ProactorEventLoop should be used instead.
+        # Source: https://docs.python.org/3/library/asyncio-subprocess.html
+        loop = asyncio.ProactorEventLoop()
+        asyncio.set_event_loop(loop)
+    else:
+        loop = asyncio.get_event_loop()
+
     # Start FastAPI server in a separate thread
-    # fastapi_thread = threading.Thread(target=start_fastapi_server, args=(loop,)).start()
-    start_fastapi_server()
+    fastapi_thread = threading.Thread(target=start_fastapi_server).start()
+
     start_tkinter_app(loop)
+    # loop.run_forever()
+    # loop.close()

@@ -18,3 +18,4 @@ pycountry
 pyperclip
 uvicorn
 cx_Freeze
+async_tkinter_loop

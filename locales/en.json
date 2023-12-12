@@ -41,6 +41,8 @@
 		"t_importTaskMetas": "import task file,json excel csv",
 		"validateVideoMetas": "validate Task file",
 		"testupload": "test video upload ",
+		"b_cancelAll": "cancerl upload",
+
 		"b_uploadAll": "Query && Upload"
 	},
 	"newtaskview": {

@@ -14,7 +14,7 @@ from typing import Optional
 import platform
 from batchrunworker import BatchWorker
 from string import ascii_uppercase
-
+import time
 uvicorn_subprocess: Optional[Process] = None
 
 
@@ -119,9 +119,23 @@ async def start_fastapi_server():
             item.cancel()
 
     uvicorn_subprocess = None
+
+async def is_running():
+    # https://stackoverflow.com/questions/65874648/python-asyncio-subprocess-how-to-see-whether-it-is-still-running
+    with suppress(asyncio.TimeoutError):
+        await asyncio.wait_for(uvicorn_subprocess.wait(), 1e-6)
+    return uvicorn_subprocess.returncode is None    
 def stop():
+
+    print('Shutdown server')
     if uvicorn_subprocess is not None:
-        uvicorn_subprocess.kill()
+
+
+        time.sleep(0.5)
+        uvicorn_subprocess.terminate() 
+
+    else:
+        print('server not started')
 
 
 

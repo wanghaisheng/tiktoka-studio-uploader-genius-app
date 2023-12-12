@@ -17,6 +17,8 @@
 		"t_importTaskMetas": "导入任务文件,支持json excel csv",
 		"validateVideoMetas": "验证任务文件",
 		"testupload": "开始上传前測試",
+		"b_cancelAll": "取消上传",
+
 		"b_uploadAll": "查询&&上传"
 	},
 	"newtaskview": {
