@@ -14,7 +14,6 @@ import tkinter as tk
 from asyncio import CancelledError
 from contextlib import suppress
 import random
-from async_tkinter_loop import async_handler, async_mainloop
 
 from asyncio.subprocess import Process
 from typing import Optional
