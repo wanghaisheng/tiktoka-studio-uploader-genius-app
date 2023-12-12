@@ -1,4 +1,4 @@
-name: Build app
+name: cx freez Build app
 
 on:
   release:
@@ -42,7 +42,7 @@ jobs:
             # python setup.py bdist_appimage
             python setup.py build
           fi
-          
+
 
       - name: Upload executable
         if: ${{ always() }}
