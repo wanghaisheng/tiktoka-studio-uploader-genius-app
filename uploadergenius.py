@@ -70,7 +70,9 @@ from src.log import logger
 from src.accountTablecrud import *
 from src.taskTablecrud import *
 from src.proxyTablecrud import *
-
+task_queue = queue.Queue()
+done_tasks = 0
+taskcounts=0
 if platform.system() == "Windows":
     ultra = UltraDict(shared_lock=True, recurse=True)
     tmp = UltraDict(shared_lock=True, recurse=True)
@@ -1604,6 +1606,25 @@ def testupload(dbm, ttkframe):
             )
 
 
+def cancel_all_waiting_tasks(frame=None):
+    global done_tasks
+    print(f" {done_tasks} tasks have been done.")
+
+    if task_queue.qsize() > 0:
+        with task_queue.mutex:
+            # done_tasks.update(task_queue.queue)  # Add waiting tasks to done_tasks set
+            task_queue.queue.clear()
+        print(f"All waiting tasks have been canceled.")
+    else:
+        print("No waiting tasks to cancel.")
+    print(f'except ongoing  {done_tasks} task is waiting to be finished, all the waiting {taskcounts-done_tasks} tasks are canceled')
+    logger.debug(f'except ongoing  {done_tasks} task is waiting to be finished, all the waiting {taskcounts-done_tasks} tasks are canceled')
+    askokcancelmsg(
+        title='cancel waiting task',
+        message=f'except ongoing  {done_tasks} task is waiting to be finished, all the waiting {taskcounts-done_tasks} tasks are canceled',
+        parent=frame,
+    )
+
 def do_ups(
     async_loop,
     frame=None,
@@ -1619,37 +1640,23 @@ def do_ups(
     sortby="ASC",
 ):
     threading.Thread(
-        target=_asyncio_thread_up,
-        args=(
-            async_loop,
-            frame,
-            username,
-            platform,
-            status,
-            vtitle,
-            schedule_at,
-            vid,
-            pageno,
-            pagecount,
-            ids,
-            "ASC",
-        ),
+        target=lambda:
+            _asyncio_thread_up(
+                async_loop,
+                frame,
+                username,
+                platform,
+                status,
+                vtitle,
+                schedule_at,
+                vid,
+                pageno,
+                pagecount,
+                ids,
+                "ASC",
+            ),
     ).start()
-    # task=runupload(
-    #             async_loop=async_loop,
-    #             frame=frame,
-    #             username=username,
-    #             platform=platform,
-    #             status=status,
-    #             vtitle=vtitle,
-    #             schedule_at=schedule_at,
-    #             vid=vid,
-    #             pageno=pageno,
-    #             pagecount=pagecount,
-    #             ids=ids,
-    #             sortby="ASC",
-    #         )
-    # asyncio.run(task)
+
 
 
 
@@ -1667,7 +1674,7 @@ def _asyncio_thread_up(
     ids=None,
     sortby="ASC",
 ):
-    task=runupload(
+    task=querydbtoqueues(
                 async_loop=async_loop,
                 frame=frame,
                 username=username,
@@ -1679,14 +1686,33 @@ def _asyncio_thread_up(
                 pageno=pageno,
                 pagecount=pagecount,
                 ids=ids,
-                sortby="ASC",
+                sortby=sortby,
             )
 
 
     asyncio.run(task)
+    totalmesg=asyncio.run(process_tasks_in_batch())
+    update_tabular(
+
+                async_loop=async_loop,
+                frame=frame,
+                username=username,
+                platform=platform,
+                status=status,
+                vtitle=vtitle,
+                schedule_at=schedule_at,
+                vid=vid,
+                pageno=pageno,
+                pagecount=pagecount,
+                ids=ids,
+                sortby=sortby,
+                totalmsg=totalmesg
 
 
-async def runupload(
+
+        )
+
+async def querydbtoqueues(
     async_loop=None,
     frame=None,
     username=None,
@@ -1769,6 +1795,8 @@ async def runupload(
         ids=ids,
         sortby=sortby,
     )
+    skipcount=0
+
     if task_rows is None or len(task_rows) == 0:
         showinfomsg(message=f"try to add tasks  first", parent=frame, DURATION=500)
 
@@ -1781,6 +1809,7 @@ async def runupload(
         i = 0
         tasks = []
         taskids = []
+
         no_concurrent = settings[locale]["no_concurrent"]
         uptasks = set()
         logger.debug(f"there are {len(task_rows)}  video attempt to upload")
@@ -1792,7 +1821,6 @@ async def runupload(
         )
 
         if cancel==True:
-            skipcount=0
             totalmsg = ""
 
             for row in task_rows:
@@ -1857,146 +1885,150 @@ async def runupload(
                         account=row.setting.account,
                     )
 
-                    # https://stackoverflow.com/questions/48483348/how-to-limit-concurrency-with-python-asyncio
-                    if len(uptasks) >= no_concurrent:
-                        # Wait for some download to finish before adding a new one
-                        _done, uptasks = await asyncio.wait(
-                            uptasks, return_when=asyncio.FIRST_COMPLETED
-                        )
+                    task_queue.put(uptask)
 
-                        all_tasks=_done
+            print('query task from databbase and add it to queues')
+    global taskcounts
+    taskcounts=counts-skipcount
+async def upload_task(uptask):
+    global done_tasks
 
-                        if not len(all_tasks):
-                            logger.debug('no more scheduled tasks, stopping after this kick.')
-                            stop_after_this_kick = True
+    try:
+        done_tasks+=1  # Mark the task as done
 
-                        elif  all(task.done() for task in all_tasks):
-                            logger.debug(f'all {len(all_tasks)} tasks are done, fetching results and stopping after this kick.')
+        videoid, taskid = await uptask
+        logger.debug(f'get videoid after upload: {videoid} for task {taskid}')
+        return videoid,taskid
 
-                            import gc
-                            import traceback
-                        # Clean up circular references between tasks.
-                            gc.collect()
+    except asyncio.CancelledError:
+        # No problem, we want to stop anyway.
+        logger.debug(f'task cancelled')
+        return None,taskid
 
-                            for task_idx, task in enumerate(all_tasks):
-                                if not task.done():
-                                    continue
+    except Exception as e:
+        print(f'{uptask}: resulted in exception')
+        logger.exception(e)
+        return None,taskid
 
-                                # noinspection PyBroadException
-                                try:
-                                    videoid,taskid = task.result()
-                                    logger.debug(f'   task:{task_idx} ')
-                                    logger.debug(f"get videoid after upload:{videoid} for task {taskid}")
-                                    if videoid is None:
-                                        result = TaskModel.update_task(
-                                            id=CustomID(custom_id=taskid).to_bin(),
-                                            status=TASK_STATUS.FAILURE,
-                                        )
+async def process_tasks_in_batch( ):
+    tasks = []
+    uptasks = set()
+    no_concurrent = settings[locale]["no_concurrent"]
+    stop_after_this_kick = False
+    totalmsg = []
+    global done_tasks
 
+    while not task_queue.empty():
+        if stop_after_this_kick:
+            break
 
-                                        taskid=CustomID(custom_id=taskid).to_hex()
-                                        totalmsg = totalmsg + "\n" + f"this task {taskid} upload failed"
+        uptasks.clear()
 
-                                    else:
-                                        result = TaskModel.update_task(
-                                            id=CustomID(custom_id=taskid).to_bin(),
-                                            videodata={"video_id":videoid},
-                                            status=TASK_STATUS.SUCCESS,
-                                        )
-                                        taskid=CustomID(custom_id=taskid).to_hex()
+        for _ in range(min(no_concurrent - len(uptasks), task_queue.qsize())):
+            uptask = task_queue.get()
+            uptasks.add(uptask)
 
-                                        totalmsg = totalmsg + "\n" + f"this task {taskid} upload success"
+        if not uptasks:
+            logger.debug('no more scheduled tasks, stopping after this kick.')
+            stop_after_this_kick = True
+            break
 
-                                except asyncio.CancelledError:
-                                    # No problem, we want to stop anyway.
-                                    logger.debug(f'   task :{task_idx} cancelled' )
-                                except Exception:
-                                    print('{}: resulted in exception'.format(task))
-                                    traceback.print_exc()
-                    uptasks.add(asyncio.create_task(uptask))
-            # askquestionmsg(
-            #     title='upload logs1',
-            #     message=totalmsg,
-            #     parent=frame,
-            # )
-            completed, pending = await asyncio.wait(uptasks)
-            all_tasks = uptasks
+        # Execute tasks in batches using asyncio.gather
+        done, pending = await asyncio.wait(
+            [upload_task(uptask) for uptask in uptasks],
+            return_when=asyncio.ALL_COMPLETED
+        )
 
-            if not len(all_tasks):
-                logger.debug('no more scheduled tasks, stopping after this kick.')
-                stop_after_this_kick = True
+        all_tasks = done.union(pending)
 
-            elif  all(task.done() for task in all_tasks):
-                logger.debug(f'all {len(all_tasks)}tasks are done, fetching results and stopping after this kick.')
-                import gc
-                import traceback
-            # Clean up circular references between tasks.
-                gc.collect()
+        if not all_tasks:
+            logger.debug('no more scheduled tasks, stopping after this kick.')
+            stop_after_this_kick = True
+            break
 
-                for task_idx, task in enumerate(all_tasks):
-                    if not task.done():
-                        continue
+        elif all(task.done() for task in all_tasks):
+            logger.debug(f'all {len(all_tasks)} tasks are done, fetching results and stopping after this kick.')
 
-                    # noinspection PyBroadException
-                    try:
-                        videoid,taskid = task.result()
-                        logger.debug(f'   task:{task_idx}')
-                        logger.debug(f"get videoid after upload:{videoid} for task {taskid}")
-                        if videoid is None:
-                            result = TaskModel.update_task(
-                                id=CustomID(custom_id=taskid).to_bin(),
-                                status=TASK_STATUS.FAILURE,
-                            )
-                            taskid=CustomID(custom_id=taskid).to_hex()
-                            totalmsg = totalmsg + "\n" + f"this task {taskid} upload failed"
-                        else:
-                            result = TaskModel.update_task(
-                                id=CustomID(custom_id=taskid).to_bin(),
-                                videodata={"video_id":videoid},
-                                status=TASK_STATUS.SUCCESS,
-                            )
+            for task_idx, task in enumerate(all_tasks):
+                if not task.done():
+                    continue
 
-                            taskid=CustomID(custom_id=taskid).to_hex()
+                try:
+                    await task  # Wait for the task to complete
+                except Exception as e:
+                    print(f'{task}: resulted in exception')
+                    logger.exception(e)
 
-                            totalmsg = totalmsg + "\n" + f"this task {taskid} upload success"
-                    except asyncio.CancelledError:
-                        # No problem, we want to stop anyway.
-                        logger.debug(f'   task :{task_idx} cancelled' )
-                    except Exception:
-                        print(f'{task}: resulted in exception')
-                        traceback.print_exc()
+        logger.debug(f'end of the batch upload for {len(uptasks)} tasks')
+        for task in all_tasks:
+            videoid, taskid = task.result()
+
+            if videoid is None:
+                result = TaskModel.update_task(
+                    id=CustomID(custom_id=taskid).to_bin(),
+                    status=TASK_STATUS.FAILURE,
+                )
+                taskid = CustomID(custom_id=taskid).to_hex()
+                totalmsg.append(f"this task {taskid} upload failed")
+            else:
+                result = TaskModel.update_task(
+                    id=CustomID(custom_id=taskid).to_bin(),
+                    videodata={"video_id": videoid},
+                    status=TASK_STATUS.SUCCESS,
+                )
+                taskid = CustomID(custom_id=taskid).to_hex()
+                totalmsg.append(f"this task {taskid} upload success")
+
+        logger.debug(f'start to update status in the tabular for {len(uptasks)}')
+    return "\n".join(totalmsg),  done_tasks
 
 
-            logger.debug(f"end to upload batch task {len(tasks)}")
-            logger.debug(f"start to update status in the  tabular {len(tasks)}")
 
-            queryTasks(
-                async_loop,
-                canvas=None,
-                frame=frame,
-                status=status,
-                platform=platform,
-                username=username,
-                video_id=vid,
-                video_title=vtitle,
-                schedule_at=schedule_at,
-                pageno=1,
-                pagecount=50,
-                sortby=sortby,
-            )
-            logger.debug(f"end to refresh tabular {len(tasks)}")
+def update_tabular(totalmsg=None,
+    async_loop=None,
+    frame=None,
+    username=None,
+    platform=None,
+    status=None,
+    vtitle=None,
+    schedule_at=None,
+    vid=None,
+    pageno=None,
+    pagecount=None,
+    ids=None,
+    sortby="ASC",
 
-            print(f"upload logs:{totalmsg}")
-            askquestionmsg(
-                title='upload logs',
-                message=totalmsg,
-                parent=frame,
-            )
-            print(f"this batch task {len(tasks)} upload endding")
-            logger.info(f"this batch task {len(tasks)} upload endding")
 
-        else:
-            logger.info(f'cancel to upload these {len(tasks)} videos')
+
+                   ):
+
+    # Notify user about the results
+    askokcancelmsg(
+        title='Upload Results',
+        message=totalmsg,
+        parent=frame,
+    )
+
+    queryTasks(
+        async_loop,
+        canvas=None,
+        frame=frame,
+        status=status,
+        platform=platform,
+        username=username,
+        video_id=vid,
+        video_title=vtitle,
+        schedule_at=schedule_at,
+        pageno=pageno,
+        pagecount=pagecount,
+        sortby=sortby,
+    )
+    # logger.debug(f"end to refresh tabular {len(tasks)}")
+
+
+    # print(f"this batch task {len(tasks)} upload endding")
+    # logger.info(f"this batch task {len(tasks)} upload endding")
+
 
 def docView(frame, ttkframe, lang):
     b_view_readme = tk.Button(
@@ -7195,16 +7227,16 @@ def uploadView(frame, ttkframe, lang, async_loop):
     )
     b_upload.grid(row=0, column=7, padx=14, pady=15)
 
-
-
+    # Modify the b_upload_cancelall button to call cancel_all_waiting_tasks
     b_upload_cancelall = tk.Button(
         operationframe,
         text=settings[locale]["uploadview"]["b_cancelAll"],
         command=lambda: threading.Thread(
-            target=cancerlall()
+            target=cancel_all_waiting_tasks(frame=result_frame)  # Pass the result_frame
         ).start(),
     )
     b_upload_cancelall.grid(row=0, column=8, padx=14, pady=15)
+
     # Bind the platform selection event to the on_platform_selected function
 
 
