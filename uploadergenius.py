@@ -2048,7 +2048,7 @@ def setupWizard(frame, td):
         print(socialplatform.get())
         print(socialplatform_box.current())
         if socialplatform_box.current() == 0:
-            showinfomsg(message="start to prepare fake data for testing purpose")   
+            showinfomsg(message="start to prepare fake data for testing purpose")
             logger.info(f'start to prepare fake data for testing purpose')
 
             test_tasks, test_setting, test_videos, test_users = td.addTestdata()
@@ -8983,7 +8983,7 @@ def quit_window(icon, item):
 
     print('Shutdown server')
     if uvicorn_subprocess is not None:
-        uvicorn_subprocess.terminate() 
+        uvicorn_subprocess.terminate()
         time.sleep(0.5)
         done=uvicorn_subprocess.poll()
         if done==None:
@@ -8996,7 +8996,7 @@ def quit_window(icon, item):
     if uvicorn_subprocess.returncode is  None:
         print('check result server is there ')
         parent = psutil.Process(uvicorn_subprocess.pid)
-        for child in parent.children(recursive=True): 
+        for child in parent.children(recursive=True):
             child.terminate()
         parent.terminate()
     else:
@@ -9019,14 +9019,14 @@ def withdraw_window():
     image = Image.open("assets/icon.ico")
     menu = (item("Quit", quit_window), item("Show", show_window))
     icon = pystray.Icon("name", image, "title", menu)
-    # icon.run_detached()
-    icon.run()
+    icon.run_detached()
+    # icon.run()
 
 
 def start_fastapi_server():
     global uvicorn_subprocess
     uvicorn_command = ["uvicorn", "fastapiserver:app", "--host", "0.0.0.0", "--port", "8000"]
-    uvicorn_subprocess = subprocess.Popen(uvicorn_command) 
+    uvicorn_subprocess = subprocess.Popen(uvicorn_command)
     try:
         outs, errs = uvicorn_subprocess.communicate(timeout=15)
     except subprocess.TimeoutExpired:
