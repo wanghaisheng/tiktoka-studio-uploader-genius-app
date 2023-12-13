@@ -1,12 +1,13 @@
 import sys
 from cx_Freeze import setup, Executable
+import src.app
 
 executables = [
     Executable('uploadergenius.py', base=None)
 ]
 build_exe_options = {
     "include_msvcr": True,
-
+    "zip_include_packages":['src.app'],
     "include_files": [
          ( './assets/', 'assets' ),
          ( './locales/', 'locales' ),

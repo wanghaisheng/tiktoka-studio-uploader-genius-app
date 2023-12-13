@@ -29,4 +29,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.mount("/static", StaticFiles(directory=os.path.join(ROOT_DIR,"static")), name="static")
+# https://www.starlette.io/staticfiles/
+# app.mount("/static", StaticFiles(directory="static",packages=['src.app']), name="static")
+
 app.include_router(router)
