@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from src.api.account import router
 
-ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
 
@@ -16,7 +16,7 @@ if sys.platform=='darwin':
     ROOT_DIR = os.path.dirname(os.path.abspath(sys.argv[0]))
 
 
-parent_dir = os.path.dirname(ROOT_DIR)
+parent_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
 print('fastserver  static files location======',ROOT_DIR,parent_dir)
 app = FastAPI()
@@ -28,7 +28,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.mount("/static", StaticFiles(directory=os.path.join(ROOT_DIR,"static")), name="static")
+app.mount("/static", StaticFiles(directory=os.path.join(parent_dir,"static")), name="static")
 # https://www.starlette.io/staticfiles/
 # app.mount("/static", StaticFiles(directory="static",packages=['src.app']), name="static")
 
