@@ -36,6 +36,8 @@ from src.models.task_model import *
 from src.models.youtube_video_model import *
 # comment this fastapiserver import will cause cx freeze not include the file
 import src.app.fastapiserver
+from src.app.fastapiserver import app
+
 # import multiprocessing.dummy as mp
 import concurrent
 from glob import glob
@@ -9107,6 +9109,9 @@ def start_fastapi_server():
     global uvicorn_subprocess
     uvicorn_command = ["uvicorn", "src.app.fastapiserver:app", "--host", "0.0.0.0", "--port", "8000"]
     uvicorn_subprocess = subprocess.Popen(uvicorn_command)
+    app.mount("/static", StaticFiles(directory=os.path.join(ROOT_DIR,"static")), name="static")
+
+
     try:
         outs, errs = uvicorn_subprocess.communicate(timeout=15)
     except subprocess.TimeoutExpired:
@@ -9132,6 +9137,7 @@ def start_tkinter_app(async_loop):
     root.protocol('WM_DELETE_WINDOW', withdraw_window)
 
     settings["locale"] = locale
+    settings['rootdir']=ROOT_DIR
     dumpSetting(settingfilename)
 
     root.mainloop()
