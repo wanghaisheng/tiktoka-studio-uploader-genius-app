@@ -10,6 +10,7 @@ from random import randint
 import zipfile
 import shutil
 import argparse
+import sys
 
 class CreateZip:
     def __init__(self):
@@ -75,7 +76,16 @@ class CreateZip:
 def main(filename=None):
 
     obj = CreateZip()
-    directory = f"{os.getcwd()}/build/"
+    directory = f"{os.getcwd()}/dist/"
+
+    if sys.platform == 'win32':
+        directory = f"{os.getcwd()}/dist/"
+    elif sys.platform == 'darwin': 
+        directory = f"{os.getcwd()}/dist/"
+    else:
+        directory = f"{os.getcwd()}/build/"
+
+
     zip_file_path = obj.create_zip_file_v2(directory,filename)
     # output_folder = obj.unzip_file(zip_file_path)
     # print(output_folder)

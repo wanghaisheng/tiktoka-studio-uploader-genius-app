@@ -35,12 +35,12 @@ jobs:
       - name: Freeze app
         run: |
           if [[ ${{ matrix.os }} == macos-* ]]; then
-            python setup.py bdist_mac
+            python setup.py bdist_dmg
           elif [[ ${{ matrix.os }} == windows-* ]]; then
             python setup.py bdist_msi
           else
             # python setup.py bdist_appimage
-            python setup.py build
+            python setup.py bdist_rpm
           fi
       - name: Zip artifact for deployment
         run: python createzip.py  -f app-${{ matrix.os }}
