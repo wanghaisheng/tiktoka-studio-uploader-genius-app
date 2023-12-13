@@ -42,12 +42,13 @@ jobs:
             # python setup.py bdist_appimage
             python setup.py build
           fi
-
+      - name: Zip artifact for deployment
+        run: zip app-${{ matrix.os }}.zip build/** -r
 
       - name: Upload executable
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
         with:
           name: app-${{ matrix.os }}
-          path: build/**
+          path: ./
           if-no-files-found: ignore
