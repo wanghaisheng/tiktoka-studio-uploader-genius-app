@@ -34,7 +34,8 @@ from src.models.platform_model import *
 from src.models.upload_setting_model import *
 from src.models.task_model import *
 from src.models.youtube_video_model import *
-
+# comment this fastapiserver import will cause cx freeze not include the file
+import src.app.fastapiserver
 # import multiprocessing.dummy as mp
 import concurrent
 from glob import glob
@@ -85,9 +86,14 @@ else:
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
+if sys.platform=='darwin':
+    ROOT_DIR = os.path.dirname(os.path.abspath(sys.argv[0]))
+
 videoassetsfilename = "videos-assets.json"
 citydbfilename = "assets/country-db/qq/en_loclist.json"
 settingfilename = "settings.json"
+iconfilename="assets/icon.ico"
+
 locale = "en"
 window_size = "1024x720"
 
@@ -8954,7 +8960,9 @@ def start(lang, root=None, async_loop=None):
 
     root.geometry(window_size)
     # root.resizable(width=True, height=True)
-    root.iconbitmap("assets/icon.ico")
+    iconfile = os.path.join(ROOT_DIR, iconfilename)
+
+    root.iconbitmap(iconfile)
     root.title(settings[locale]["title"])
 
     # Create the frame for the notebook
@@ -9054,29 +9062,29 @@ def quit_window(icon, item):
     # print('here')
     print('quit uploader genius program now')
 
-    current_system_pid = os.getpid()
 
-    ThisSystem = psutil.Process(current_system_pid)
-    ThisSystem.terminate()        
 
     if sys.platform == 'win32':
-
-        os._exit(1)
-
         current_system_pid = os.getpid()
 
         ThisSystem = psutil.Process(current_system_pid)
-        ThisSystem.terminate()        
+        ThisSystem.terminate()
+        os._exit(1)
+    elif  sys.platform=='darwin':
+
+        print('Shutdown root')
+        # https://github.com/insolor/async-tkinter-loop/issues/10
+
+        root.quit()
+
+        root.destroy()
+
     else:
+        import signal
 
         os.kill(os.getpid(), signal.SIGINT)
 
-    # print('Shutdown root')
-    # # https://github.com/insolor/async-tkinter-loop/issues/10
 
-    # root.quit()
-
-    # root.destroy()
 
 
 def show_window(icon, item):
@@ -9086,7 +9094,9 @@ def show_window(icon, item):
 
 def withdraw_window():
     root.withdraw()
-    image = Image.open("assets/icon.ico")
+    iconfile = os.path.join(ROOT_DIR, iconfilename)
+
+    image = Image.open(iconfile)
     menu = (item("Quit", quit_window), item("Show", show_window))
     icon = pystray.Icon("name", image, "title", menu)
     icon.run_detached()
@@ -9095,7 +9105,7 @@ def withdraw_window():
 
 def start_fastapi_server():
     global uvicorn_subprocess
-    uvicorn_command = ["uvicorn", "fastapiserver:app", "--host", "0.0.0.0", "--port", "8000"]
+    uvicorn_command = ["uvicorn", "src.app.fastapiserver:app", "--host", "0.0.0.0", "--port", "8000"]
     uvicorn_subprocess = subprocess.Popen(uvicorn_command)
     try:
         outs, errs = uvicorn_subprocess.communicate(timeout=15)

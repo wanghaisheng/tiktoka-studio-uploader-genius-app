@@ -1,7 +1,7 @@
 
-pip install requirements.txt 
+pip install requirements.txt
 
-由于UltraDict==0.0.6最新的修改并未打包发布，需要手动安装
+由于i18n_json==0.0.6最新的修改并未打包发布，需要手动安装
 
 
 python main.py
@@ -86,7 +86,7 @@ for multiple language srt, use suffix such as zh-cn, xxxx-zh-cn.srt
 * 4. View the list of uploaded tasks
 * 5. View the list of failed upload tasks and set up automatic retries [X]
 
-Issue: 
+Issue:
 
 1. Thumbnail Tab
    - Select the format first, then select the folder; it does not trigger the automatic generation of metadata. Manual clicking on "check" is required.

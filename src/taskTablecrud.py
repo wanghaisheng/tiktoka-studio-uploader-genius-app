@@ -18,12 +18,12 @@ import asyncio
 import threading
 import json
 from src.models.proxy_model import *
-from UltraDict import UltraDict
+from i18n_json import i18n_json
 import platform
 if platform.system() == "Windows":
-    querycondition = UltraDict(shared_lock=True, recurse=True)
+    querycondition = i18n_json(shared_lock=True, recurse=True)
 else:
-    querycondition = UltraDict(recurse=True)
+    querycondition = i18n_json(recurse=True)
 
 def queryTasks(
     async_loop,
@@ -143,7 +143,7 @@ def queryTasks(
                 widget.destroy()
 
     except:
-        print("there is no result frame  at all")    
+        print("there is no result frame  at all")
     if task_rows is None or len(task_rows) == 0:
         showinfomsg(message=f"try to add tasks  first", parent=frame, DURATION=500)
 
@@ -151,11 +151,11 @@ def queryTasks(
 
         if querycondition.has_key('task_tab_headers'):
             print(f"refresh existing data with  {querycondition['task_tab_headers']}")
-            print(f'try to clear existing rows in the tabular ')          
+            print(f'try to clear existing rows in the tabular ')
             refreshTaskcanvas(
                 async_loop, canvas=canvas, frame=frame, headers=querycondition['task_tab_headers'], datas=[]
             )
-        
+
 
     else:
         logger.debug(f"we found {counts} record matching ")
@@ -553,7 +553,7 @@ async def upload_selected_row_task(rowid, frame=None, status=None, platform=None
                     showinfomsg(
                         message=f"this task {rowid} not added before", parent=frame
                     )
-                
+
                 if cancel==True:
 
                     uptasks = set()
@@ -589,11 +589,11 @@ async def upload_selected_row_task(rowid, frame=None, status=None, platform=None
                                                 if proxy.proxy_username
                                                 else f"{proxy.proxy_host}:{proxy.proxy_port}"
                                             )
-                                    
+
                                     protocol=proxy.proxy_protocol
                                     http_proxy=f"{protocol}://{proxy_string}"
                                     https_proxy=f"{protocol}://{proxy_string}"
-                            
+
                                     uploadsetting["proxy_option"] = https_proxy
                                 else:
                                     uploadsetting["proxy_option"] = None
@@ -654,7 +654,7 @@ async def upload_selected_row_task(rowid, frame=None, status=None, platform=None
                                                 id=CustomID(custom_id=taskid).to_bin(),
                                                 status=TASK_STATUS.FAILURE,
                                             )
-                                            taskid=CustomID(custom_id=taskid).to_hex()                                
+                                            taskid=CustomID(custom_id=taskid).to_hex()
                                             totalmsg = totalmsg + "\n" + f"this task {taskid} upload failed"
                                         else:
                                             result = TaskModel.update_task(
@@ -663,7 +663,7 @@ async def upload_selected_row_task(rowid, frame=None, status=None, platform=None
                                                 status=TASK_STATUS.SUCCESS,
                                             )
 
-                                            taskid=CustomID(custom_id=taskid).to_hex()                                
+                                            taskid=CustomID(custom_id=taskid).to_hex()
 
                                             totalmsg = totalmsg + "\n" + f"this task {taskid} upload success"
                                     except asyncio.CancelledError:
@@ -691,7 +691,7 @@ async def upload_selected_row_task(rowid, frame=None, status=None, platform=None
 
 
 
- 
+
         logger.debug(f"end to upload,reset task {rowid}")
 
 

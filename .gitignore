@@ -28,3 +28,4 @@ tests/videos/vertical/16-9/*
 build
 bin/
 output/*
+.venv/*

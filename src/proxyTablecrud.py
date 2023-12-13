@@ -17,14 +17,14 @@ from src.utils import showinfomsg
 from src.utils import showinfomsg,find_key,askokcancelmsg
 from pathlib import Path,PureWindowsPath,PurePath
 import asyncio
-from UltraDict import UltraDict
+from i18n_json import i18n_json
 import platform
 if platform.system() == "Windows":
-    querycondition = UltraDict(shared_lock=True, recurse=True)
+    querycondition = i18n_json(shared_lock=True, recurse=True)
 else:
-    querycondition = UltraDict(recurse=True)
+    querycondition = i18n_json(recurse=True)
 def check_selected_row(rowid):
-    
+
     print('check proxy whether valid and its city country')
     result=ProxyModel.get_proxy_by_id(id=rowid)
     # if len(results)>0:
@@ -59,17 +59,17 @@ def queryProxy(linkProxy=None,platform=None,frame=None,canvas=None,tab_headers=N
     elif status=='invalid':
         status=0
     else:
-        status=2        
+        status=2
     if city=='':
         city=None
     if country=='':
-        country=None  
+        country=None
     if tags=='':
-        tags=None      
+        tags=None
     if state=='':
         state=None
     if network_type=='':
-        network_type=None 
+        network_type=None
     if city is not None:
         city=city.lower()
     if country is not None:
@@ -93,22 +93,22 @@ def queryProxy(linkProxy=None,platform=None,frame=None,canvas=None,tab_headers=N
                 widget.destroy()
 
     except:
-        print("there is no result frame  at all")    
+        print("there is no result frame  at all")
 
     # Extract account names and set them as options in the account dropdown
     if db_rows is None or len(db_rows)==0:
         # langlist.delete(0,tk.END)
-        showinfomsg(message=f"try to add proxy first",parent=frame)    
+        showinfomsg(message=f"try to add proxy first",parent=frame)
 
         if querycondition.has_key('task_tab_headers'):
             print(f"refresh existing data with  {querycondition['task_tab_headers']}")
-            print(f'try to clear existing rows in the tabular ')          
+            print(f'try to clear existing rows in the tabular ')
             refreshProxycanvas(
                  canvas=canvas, frame=frame, headers=querycondition['task_tab_headers'], datas=[]
             )
-        
 
-    else:                
+
+    else:
         logger.debug(f'we found {len(db_rows)} record matching ')
 
         # langlist.delete(0,tk.END)
@@ -120,14 +120,14 @@ def queryProxy(linkProxy=None,platform=None,frame=None,canvas=None,tab_headers=N
                 "provider": dict(PROXY_PROVIDER_TYPE.PROXY_PROVIDER_TYPE_TEXT)[row.proxy_provider_type],
                 "protocol":row.proxy_protocol,
                 "host":row.proxy_host,
-                "port":row.proxy_port,                    
+                "port":row.proxy_port,
                 "username":row.proxy_username,
                 "pass":row.proxy_password,
                 "country":row.country,
                 "state":row.state,
-                "city":row.city,                    
-                "tags":row.tags,                    
-                "status":dict(PROXY_STATUS.PROXY_STATUS_TEXT)[row.status],                  
+                "city":row.city,
+                "tags":row.tags,
+                "status":dict(PROXY_STATUS.PROXY_STATUS_TEXT)[row.status],
                 "validate_results":row.proxy_validate_results,
                 "is_deleted":row.is_deleted   ,
                 "inserted_at":datetime.fromtimestamp(row.inserted_at).strftime("%Y-%m-%d %H:%M:%S")
@@ -146,16 +146,16 @@ def queryProxy(linkProxy=None,platform=None,frame=None,canvas=None,tab_headers=N
         refreshProxycanvas(canvas=canvas,frame=frame,headers=tab_headers,datas=[],mode=mode,linkProxy=linkProxy,platform=platform)
 
         refreshProxycanvas(canvas=canvas,frame=frame,headers=tab_headers,datas=proxy_data,mode=mode,linkProxy=linkProxy,platform=platform)
-    
+
 
 
 
         print(f'end to show header and rows based on query {tab_headers}\n{proxy_data}')
 
         logger.debug(f'Proxy search and display finished')
-                
 
-                    
+
+
 def refreshProxycanvas(linkProxy=None,canvas=None,frame=None,headers=None,datas=None,mode=None,platform=None):
 
     print(f'try to clear existing rows in the tabular {len(frame.winfo_children())} ')
@@ -167,16 +167,16 @@ def refreshProxycanvas(linkProxy=None,canvas=None,frame=None,headers=None,datas=
 
         if len(canvas.winfo_children())>0:
             for widget in canvas.winfo_children():
-                widget.destroy()      
+                widget.destroy()
 
     except:
         print('there is no rows in the tabular at all')
-        
+
     print('start to render tabular rows')
     # Add a canvas in that frame.
     canvas = tk.Canvas(frame, bg='Yellow')
     canvas.grid(row=0, column=0)
-    print(f'currrent accountvas is {canvas}')    
+    print(f'currrent accountvas is {canvas}')
     canvas=canvas
     print(f'set canvas to {canvas}')
     # Create a vertical scrollbar linked to the canvas.
@@ -191,24 +191,24 @@ def refreshProxycanvas(linkProxy=None,canvas=None,frame=None,headers=None,datas=
 
     # Create a frame on the canvas to contain the grid of buttons.
     buttons_frame = tk.Frame(canvas)
-    
 
-    
+
+
     ROWS_DISP = len(datas)+1 # Number of rows to display.
     COLS_DISP = len(headers)+1  # Number of columns to display.
     COLS=len(headers)+1
-    
-    
+
+
     ROWS=len(datas)+1
-    
+
 
 
 
     # Add the buttons to the frame.
-    add_buttons = [tk.Button() for j in range(ROWS+1)] 
-    del_buttons = [tk.Button() for j in range(ROWS+1)] 
-    bind_buttons = [tk.Button() for j in range(ROWS+1)] 
-    unbind_buttons = [tk.Button() for j in range(ROWS+1)] 
+    add_buttons = [tk.Button() for j in range(ROWS+1)]
+    del_buttons = [tk.Button() for j in range(ROWS+1)]
+    bind_buttons = [tk.Button() for j in range(ROWS+1)]
+    unbind_buttons = [tk.Button() for j in range(ROWS+1)]
 
     # set table header
     print('start to set table header')
@@ -217,7 +217,7 @@ def refreshProxycanvas(linkProxy=None,canvas=None,frame=None,headers=None,datas=
     for j,h in enumerate(headers):
         label = tk.Label(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
                             activebackground= 'orange', text=h)
-        label.grid(row=0, column=j, sticky='news')                    
+        label.grid(row=0, column=j, sticky='news')
         if h=='operation':
             button = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
                                 activebackground= 'orange', text='operation')
@@ -229,15 +229,15 @@ def refreshProxycanvas(linkProxy=None,canvas=None,frame=None,headers=None,datas=
             # delete_button.grid(row=0, column=j, sticky='news')
     print('start to set table data')
     if datas and datas!=[]:
-        
+
         for i,row in enumerate(datas):
             i=i+1
             for j in range(0,len(headers)):
-                
+
                 if headers[j]!='operation':
                     label = tk.Label(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
                                         activebackground= 'orange', text=row[headers[j]])
-                    label.grid(row=i ,column=j, sticky='news')         
+                    label.grid(row=i ,column=j, sticky='news')
 
 
             add_buttons[i] = tk.Button(buttons_frame, padx=7, pady=7, relief=tk.RIDGE,
@@ -273,7 +273,7 @@ def refreshProxycanvas(linkProxy=None,canvas=None,frame=None,headers=None,datas=
         if dw>int( width*widthratio):
             COLS=i-1
     for i in range(5,ROWS_DISP):
-        dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)                
+        dw, dh = int((w/COLS) * COLS_DISP), int((h/ROWS) * ROWS_DISP)
         if dh>int( height*height_ratio):
             ROWS=i-1
 
@@ -295,8 +295,8 @@ def remove_selected_row_proxy(rowid,frame=None,name=None,func=None):
     print(f'you want to remove these selected {name}',rowid)
     if rowid==0:
 
-        showinfomsg(message=f'you have not selected  {name} at all.choose one or more',parent=frame)      
-    
+        showinfomsg(message=f'you have not selected  {name} at all.choose one or more',parent=frame)
+
     else:
 
 
@@ -307,10 +307,10 @@ def remove_selected_row_proxy(rowid,frame=None,name=None,func=None):
 
             if result:
                 logger.debug(f'this {name}: {rowid} removed success')
-                showinfomsg(message=f'this {name}: {rowid} removed success',parent=frame)    
+                showinfomsg(message=f'this {name}: {rowid} removed success',parent=frame)
             else:
                 logger.debug(f'you cannot remove this {name} {rowid}, not added before')
-                showinfomsg(message=f'this {name}: {rowid} not added before',parent=frame)    
+                showinfomsg(message=f'this {name}: {rowid} not added before',parent=frame)
         logger.debug(f'end to remove,reset {name} {rowid}')
 
 def bind_selected_row_proxy(rowid,selected_platform=None,linkProxy=None,frame=None):
@@ -319,12 +319,12 @@ def bind_selected_row_proxy(rowid,selected_platform=None,linkProxy=None,frame=No
     show_str=linkProxy.get()
     if rowid is None:
         logger.debug('you have not selected new proxies at all')
-        showinfomsg(message='you have not selected new proxies at all',parent=frame)    
-    
+        showinfomsg(message='you have not selected new proxies at all',parent=frame)
+
     else:
         if rowid in existingaProxies:
-            logger.debug(f'this proxy {rowid} added before')                   
-            showinfomsg(message=f'this proxiess {rowid} added before') 
+            logger.debug(f'this proxy {rowid} added before')
+            showinfomsg(message=f'this proxiess {rowid} added before')
 
         else:
             existingaProxies.append(rowid)
@@ -338,21 +338,21 @@ def bind_selected_row_proxy(rowid,selected_platform=None,linkProxy=None,frame=No
 
     linkProxy.set(show_str)
 
-        
-        
+
+
 def unbind_selected_row_proxy(rowid,selected_platform=None,linkProxy=None,frame=None):
     existingaProxies=linkProxy.get().split(',')
     show_str=linkProxy.get()
     if rowid is None:
         logger.debug('you have not selected new proxies at all')
-        showinfomsg(message='you have not selected new proxies at all',parent=frame)    
-    
+        showinfomsg(message='you have not selected new proxies at all',parent=frame)
+
     else:
         logger.debug(f'you want to remove this selected proxy {rowid} from existing: {existingaProxies}')
 
         if rowid in existingaProxies==False:
-            logger.debug(f'this proxy {rowid} has not added before')                   
-            showinfomsg(message=f'this proxiess {rowid}  has not added before') 
+            logger.debug(f'this proxy {rowid} has not added before')
+            showinfomsg(message=f'this proxiess {rowid}  has not added before')
 
         else:
             existingaProxies.remove(rowid)
@@ -365,11 +365,11 @@ def unbind_selected_row_proxy(rowid,selected_platform=None,linkProxy=None,frame=
     linkProxy.set(show_str)
 
 
-        
+
 
 
 def update_selected_row_proxy(rowid,frame=None,name=None,func=None):
-    # showinfomsg(message='not supported yet',parent=chooseAccountsWindow)    
+    # showinfomsg(message='not supported yet',parent=chooseAccountsWindow)
     editsWindow = tk.Toplevel(frame)
     editsWindow.geometry(window_size)
     editsWindow.title('Edit and update account and related setting,video info ')
@@ -383,17 +383,17 @@ def update_selected_row_proxy(rowid,frame=None,name=None,func=None):
         newresult={}
         rowlimit=22
         if lastindex==0:
-            lastindex=0        
+            lastindex=0
         label= tk.Label(editsWindow, padx=7, pady=7,bg="lightyellow", relief=tk.RIDGE,
                             activebackground= 'orange', text=title)
-        label.grid(row=i ,column=column, sticky='news')    
+        label.grid(row=i ,column=column, sticky='news')
         i=i+1
 
         for key,value in result.items():
 
             if i >rowlimit:
                 i=1
-                
+
                 column=i%rowlimit+column+2
             # print('current key',key,value)
             if key=='id':
@@ -401,9 +401,9 @@ def update_selected_row_proxy(rowid,frame=None,name=None,func=None):
             if key=='platform':
                 value= dict( PLATFORM_TYPE.PLATFORM_TYPE_TEXT)[value]
             if value==None:
-                value=''                        
+                value=''
             if key=='inserted_at':
-                value=datetime.fromtimestamp(value).strftime("%Y-%m-%d %H:%M:%S")    
+                value=datetime.fromtimestamp(value).strftime("%Y-%m-%d %H:%M:%S")
             if key=='video_local_path':
                 print('value===',value)
                 value=PurePath(value)
@@ -415,18 +415,18 @@ def update_selected_row_proxy(rowid,frame=None,name=None,func=None):
                 value=PurePath(value)
                 print('value===',value)
                 value=str(value)
-                print('value===',value)                    
+                print('value===',value)
 
 
             if not  key  in disableelements:
-            
+
                 label= tk.Label(editsWindow, padx=7, pady=7, relief=tk.RIDGE,
                                     activebackground= 'orange', text=key)
-                label.grid(row=i ,column=column, sticky='news')         
+                label.grid(row=i ,column=column, sticky='news')
                 entry = tk.Entry(editsWindow)
-        
+
                 entry.insert(0, value)
-                entry.grid(row=i ,column=column+1, sticky='news')   
+                entry.grid(row=i ,column=column+1, sticky='news')
 
 
 
@@ -438,7 +438,7 @@ def update_selected_row_proxy(rowid,frame=None,name=None,func=None):
                     index=int(index)+x-2
                     print(f'index  is {index},x {x} y-{y} column-{column}key- {rowkeys[index]}')
 
-                    print(f'current input changes for {rowkeys[index]}',event.widget.get())   
+                    print(f'current input changes for {rowkeys[index]}',event.widget.get())
 
                     newresult[rowkeys[index]]=event.widget.get()
                     if rowkeys[index]=='is_deleted':
@@ -446,12 +446,12 @@ def update_selected_row_proxy(rowid,frame=None,name=None,func=None):
                         if event.widget.get()=='0':
                             value=False
                         elif event.widget.get()=='1':
-                            value=True                        
+                            value=True
                         newresult[rowkeys[index]]=value
 
                         print(f'============update row {rowkeys[index]} to',newresult)
 
-                # variable.trace('w', lambda:setEnty())    
+                # variable.trace('w', lambda:setEnty())
                 entry.bind("<KeyRelease>", callback)
                 i=i+1
                 rowkeys[lastindex]=key
@@ -465,15 +465,15 @@ def update_selected_row_proxy(rowid,frame=None,name=None,func=None):
 
                 label = tk.Label(editsWindow, padx=7, pady=7, relief=tk.RIDGE,
                                     activebackground= 'orange', text=key)
-                label.grid(row=i ,column=column, sticky='news')         
+                label.grid(row=i ,column=column, sticky='news')
                 variable=tk.StringVar()
                 variable.set(value)
                 entry = tk.Entry(editsWindow,textvariable=variable)
-                entry.grid(row=i ,column=column+1, sticky='news') 
+                entry.grid(row=i ,column=column+1, sticky='news')
                 entry.config(state='disabled')
                 i=i+1
                 rowkeys[lastindex]=key
-                print(f'set {lastindex} to -{key}')                
+                print(f'set {lastindex} to -{key}')
                 lastindex=lastindex+1
         if fenlie==True:
             # print('is fenlie',lastindex)s
@@ -509,14 +509,14 @@ def update_selected_row_proxy(rowid,frame=None,name=None,func=None):
     #         newaccountresult,serialno,cols,lastindex=renderelements(lastindex=lastindex,i=serialno,result=accountresult.get('setting').get('account'),column=cols-2,disableelements=['id','inserted_at','unique_hash'],title='account data')
 
     btn5= tk.Button(editsWindow, text="save && update", padx = 0, pady = 0,command = lambda:update_proxy(id=rowid_bin,newaccountresult=newaccountresult))
-    btn5.grid(row=0,column=cols+1, rowspan=2,sticky=tk.W)    
+    btn5.grid(row=0,column=cols+1, rowspan=2,sticky=tk.W)
 
 
 def update_proxy(newaccountresult=None,id=id):
     if newaccountresult==None:
         showinfomsg(message='you have not make any changes')
     else:
-        result=ProxyModel.update_proxy(**newaccountresult,id=id,accountdata=newaccountresult)     
+        result=ProxyModel.update_proxy(**newaccountresult,id=id,accountdata=newaccountresult)
 
         if result:
             showinfomsg(message='changes have been updated')

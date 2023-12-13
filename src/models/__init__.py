@@ -7,7 +7,7 @@ import binascii
 from peewee import *
 from playhouse.shortcuts import model_to_dict
 from playhouse.sqlite_ext import (SqliteExtDatabase)
-from UltraDict import UltraDict
+from i18n_json import i18n_json
 
 # asyncpg 配置
 # https://github.com/fy0/Icarus
@@ -23,7 +23,7 @@ def connect(db_uri):
 
     db = SqliteExtDatabase(db_uri
                         , regexp_function=True
-                        # , 
+                        # ,
         #                 pragmas={
         # 'journal_mode': 'wal',  # WAL-mode.
         # 'cache_size': -64 * 1000,  # 64MB cache.

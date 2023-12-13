@@ -5,7 +5,7 @@ requests
 # scenedetect[opencv]==0.5.6.1
 SQLAlchemy
 i18n_json
-# atomics
+atomics
 jsons
 lastversion
 jsonschema
@@ -19,3 +19,11 @@ pyperclip
 uvicorn
 cx_Freeze
 async_tkinter_loop
+loguru
+better_exceptions
+undetected_playwright
+selenium
+webdriver_manager
+w3lib
+psutil
+pandas

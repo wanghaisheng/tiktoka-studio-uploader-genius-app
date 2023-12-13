@@ -1,11 +1,11 @@
-from UltraDict import UltraDict
+from i18n_json import i18n_json
 import traceback,platform
 
-ultra = UltraDict(recurse=True)
+ultra = i18n_json(recurse=True)
 
 if platform.system()=='Windows':
 
-    ultra = UltraDict(shared_lock=True,recurse=True)
+    ultra = i18n_json(shared_lock=True,recurse=True)
 ultra['empty']={}
 new={'1': {'video_local_path': 'D:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\\1.mp4', 'video_filename': '1.mp4', 'video_title': 1, 'heading': None, 'subheading': None, 'extraheading': None, 'video_description': None, 'thumbnail_bg_image_path': None, 'thumbnail_local_path': '[]', 'release_date': None, 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': None, 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': None, 'captions_certification': 0, 'video_film_date': None, 'video_film_location': None, 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': None, 'subtitles': None, 'tags': None}}
 
@@ -35,14 +35,14 @@ def t12(key):
         ultra[key]={'1': {'video_local_path': 'C:/Download/audio-visual/saas/tiktoka/tiktoka-studio-uploader-genius/tests/videos/vertical\\1.mp4', 'video_filename': '1.mp4', 'video_title': 1, 'heading': None, 'subheading': None, 'extraheading': None, 'video_description': None, 'thumbnail_bg_image_path': None, 'thumbnail_local_path': '[]', 'release_date': None, 'release_date_hour': '10:15', 'is_not_for_kid': True, 'categories': None, 'comments_ratings_policy': 1, 'is_age_restriction': False, 'is_paid_promotion': False, 'is_automatic_chapters': True, 'is_featured_place': True, 'video_language': None, 'captions_certification': 0, 'video_film_date': None, 'video_film_location': None, 'license_type': 0, 'is_allow_embedding': True, 'is_publish_to_subscriptions_feed_notify': True, 'shorts_remixing_type': 0, 'is_show_howmany_likes': True, 'is_monetization_allowed': True, 'first_comment': None, 'subtitles': None, 'tags': None}}
         # print('same key diff field',ultra[key])
 def t2(key):
-#overwrite with diff key 
+#overwrite with diff key
 
         ultra[key]=new2
         # print(ultra[key])
 
 def method1(key):
     ultra[key]=new3
-    # print(ultra[key])    
+    # print(ultra[key])
 
 def method2(key):
     for filename,video in new3.items():

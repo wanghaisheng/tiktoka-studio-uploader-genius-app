@@ -26,11 +26,7 @@ elif sys.platform == "darwin":
     executables = [
         Executable(
             "uploadergenius.py",
-            base=base,
-            icon=icon,
-            shortcut_name="UploaderGenius",
-            target_name="UploaderGenius.exe",
-        )
+            base=base)
     ]
 else:
     # icon = "./assets/logo_new.png"
@@ -42,24 +38,10 @@ else:
             base=base,
             icon=icon,
             shortcut_name="UploaderGenius",
-            target_name="UploaderGenius.exe",
+            target_name="UploaderGenius",
         )
     ]
 
-# directory_table = [
-#     ("ProgramMenuFolder", "TARGETDIR", "."),
-#     ("MyProgramMenu", "ProgramMenuFolder", "MYPROG~1|My Program"),
-# ]
-
-# msi_data = {
-#     "Directory": directory_table,
-#     "ProgId": [
-#         ("UploaderGenius", None, None, "A simple, lightweight, & beautiful timer app built in Python and tkinter.ttk using rdbende's Sun Valley TTk Theme", "IconId", None),
-#     ],
-#     "Icon": [
-#         ("IconId", "assets/logo.ico"),
-#     ],
-# }
 import uuid
 
 upgradeid = (
@@ -74,7 +56,7 @@ build_exe_options = {
          ( './static/', 'static' )
 
          ],
-    'includes': ["PIL",'moviepy','upgenius',"requests",'i18n_json','jsons','lastversion','jsonschema','pystray','bcrypt','peewee','fastapi','pycountry','pyperclip','async_tkinter_loop'], # list of extra modules to include (from your virtualenv of system path),
+    'includes': ["PIL",'loguru','psutil','pandas','better_exceptions','undetected_playwright','webdriver_manager','selenium','atomics','w3lib','moviepy','upgenius',"requests",'i18n_json','jsons','lastversion','jsonschema','pystray','bcrypt','peewee','fastapi','pycountry','pyperclip','async_tkinter_loop'], # list of extra modules to include (from your virtualenv of system path),
 
 
 }
@@ -88,7 +70,8 @@ bdist_msi_options = {
     "dist_dir":"dist",
     "target_name": "UploaderGenius",
 }
-bdist_mac_options = {"bundle_name": "UploaderGenius", "iconfile": "./assets/icon.ico"}
+bdist_mac_options = {"bundle_name": "UploaderGenius", "iconfile": "./assets/icon.ico"
+                     }
 
 bdist_dmg_options = {
     "volume_label": "UploaderGenius",

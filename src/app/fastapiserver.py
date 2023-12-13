@@ -1,26 +1,24 @@
 import sys
-import threading
+import os
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
-from tkinter import *
 
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from pystray import MenuItem as item
-import pystray
-from PIL import Image, ImageTk
-import asyncio
-import tkinter as tk
-from asyncio import CancelledError
-from contextlib import suppress
-import random
-
-from asyncio.subprocess import Process
-from typing import Optional
-import platform
 
 from src.api.account import router
 
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
+
+if sys.platform=='darwin':
+    ROOT_DIR = os.path.dirname(os.path.abspath(sys.argv[0]))
+
+
+parent_dir = os.path.dirname(ROOT_DIR)
+
+print('fastserver  static files location======',ROOT_DIR,parent_dir)
 app = FastAPI()
 # Allow all origins
 app.add_middleware(
@@ -30,5 +28,5 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory=os.path.join(ROOT_DIR,"static")), name="static")
 app.include_router(router)

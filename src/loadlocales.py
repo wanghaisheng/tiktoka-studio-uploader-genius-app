@@ -2,7 +2,7 @@ from constants import *
 import os,platform
 from src.log import logger
 import json
-from UltraDict import UltraDict
+from i18n_json import i18n_json
 
 def load_setting():
     global settings
@@ -34,10 +34,10 @@ def load_setting():
         except:
 
             if platform.system()!='Windows':
-                settings = UltraDict(recurse=True)
+                settings = i18n_json(recurse=True)
             else:
-                settings = UltraDict(shared_lock=True,recurse=True)
-                
+                settings = i18n_json(shared_lock=True,recurse=True)
+
         settings['lastuselang']='en'
         settings['zh']=json.loads(open(os.path.join(ROOT_DIR+os.sep+'locales','zh.json'), 'r', encoding='utf-8').read())
         settings['en']=json.loads(open(os.path.join(ROOT_DIR+os.sep+'locales','en.json'), 'r', encoding='utf-8').read())

@@ -15,12 +15,12 @@ import tkinter as tk
 from src.constants import height, width, window_size
 from src.log import logger
 from src.utils import showinfomsg, find_key
-from UltraDict import UltraDict
+from i18n_json import i18n_json
 import platform
 if platform.system() == "Windows":
-    querycondition = UltraDict(shared_lock=True, recurse=True)
+    querycondition = i18n_json(shared_lock=True, recurse=True)
 else:
-    querycondition = UltraDict(recurse=True)
+    querycondition = i18n_json(recurse=True)
 
 def queryAccounts(
     linkAccounts=None,
@@ -98,7 +98,7 @@ def queryAccounts(
 
         if querycondition.has_key('task_tab_headers'):
             print(f"refresh existing data with  {querycondition['task_tab_headers']}")
-            print(f'try to clear existing rows in the tabular ')          
+            print(f'try to clear existing rows in the tabular ')
             refreshAccountcanvas(
                 linkAccounts=linkAccounts,
                 canvas=canvas,
@@ -107,7 +107,7 @@ def queryAccounts(
                 datas=[],
                 mode=mode,
             )
-        
+
     else:
         logger.debug(f"we found {counts} record matching ")
         # showinfomsg(message=f'we found {counts} record matching',DURATION=500)
