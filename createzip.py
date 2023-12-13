@@ -76,12 +76,12 @@ class CreateZip:
 def main(filename=None):
 
     obj = CreateZip()
-    directory = f"{os.getcwd()}/dist/"
+    directory = f"{os.getcwd()}/build/"
 
     if sys.platform == 'win32':
         directory = f"{os.getcwd()}/dist/"
     elif sys.platform == 'darwin': 
-        directory = f"{os.getcwd()}/dist/"
+        pass
     else:
         directory = f"{os.getcwd()}/build/"
 

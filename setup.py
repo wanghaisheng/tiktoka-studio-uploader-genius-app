@@ -85,6 +85,7 @@ bdist_msi_options = {
     "add_to_path": False,
     "install_icon": "assets/icon.ico",
     "upgrade_code": upgradeid,
+    "dist_dir":"dist",
     "target_name": "UploaderGenius",
 }
 bdist_mac_options = {"bundle_name": "UploaderGenius", "iconfile": "./assets/icon.ico"}
