@@ -27,3 +27,4 @@ tests/videos/vertical/9-16/*
 tests/videos/vertical/16-9/*
 build
 bin/
+output/*
