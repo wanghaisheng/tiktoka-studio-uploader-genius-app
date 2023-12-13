@@ -64,7 +64,7 @@ import platform
 from pystray import MenuItem as item
 import pystray
 
-from UltraDict import UltraDict
+from i18n_json import i18n_json
 
 from src.log import logger
 from src.accountTablecrud import *
@@ -74,14 +74,14 @@ task_queue = queue.Queue()
 done_tasks = 0
 taskcounts=0
 if platform.system() == "Windows":
-    ultra = UltraDict(shared_lock=True, recurse=True)
-    tmp = UltraDict(shared_lock=True, recurse=True)
-    citydb = UltraDict(shared_lock=True, recurse=True)
+    ultra = i18n_json(shared_lock=True, recurse=True)
+    tmp = i18n_json(shared_lock=True, recurse=True)
+    citydb = i18n_json(shared_lock=True, recurse=True)
 
 else:
-    ultra = UltraDict(recurse=True)
-    tmp = UltraDict(recurse=True)
-    citydb = UltraDict(recurse=True)
+    ultra = i18n_json(recurse=True)
+    tmp = i18n_json(recurse=True)
+    citydb = i18n_json(recurse=True)
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -382,9 +382,9 @@ def load_setting():
             settings
         except:
             if platform.system() != "Windows":
-                settings = UltraDict(recurse=True)
+                settings = i18n_json(recurse=True)
             else:
-                settings = UltraDict(shared_lock=True, recurse=True)
+                settings = i18n_json(shared_lock=True, recurse=True)
 
         settings["lastuselang"] = "en"
         settings["zh"] = json.loads(
@@ -4129,7 +4129,7 @@ def ValidateThumbnailGenMetas(
 
                                     # print('==3==',type(json.loads(df.to_json())))
                                     # print('==4==',json.loads(df.to_json()))
-                                    new = UltraDict()
+                                    new = i18n_json()
                                     tmpdict = None
 
                                     if ultra[folder]["metafileformat"] == "xlsx":
@@ -4145,7 +4145,7 @@ def ValidateThumbnailGenMetas(
                                         new[key] = tmpdict[key]
 
                                     # new=json.loads(df.to_json())
-                                    # 如果不先 new一个UltraDict 而是仅仅凭借json.loads(df.to_json() python 内置的dict类型直接赋值，就会出错
+                                    # 如果不先 new一个i18n_json 而是仅仅凭借json.loads(df.to_json() python 内置的dict类型直接赋值，就会出错
                                     # 奇怪的是这种方法不行，得像上面那样遍历每一个key 赋值以后才行
                                     try:
                                         ultra[folder]["videos"] = new
