@@ -9006,6 +9006,7 @@ def changeDisplayLang(lang):
 
 
 def quit_window(icon, item):
+    print('prepare to quit uploader genius program')
 
     print('cancel all waiting tasks')
 
@@ -9013,10 +9014,10 @@ def quit_window(icon, item):
     #             target=cancerlall()
     #         ).start()
     cancel_all_waiting_tasks(frame=None)
-    print('Shutdown icon')
+    # print('Shutdown icon')
     icon.stop()
 
-    print('Shutdown server')
+    print('Shutdown thumbnail genius server')
     if uvicorn_subprocess is not None:
         uvicorn_subprocess.terminate()
         time.sleep(0.5)
@@ -9048,9 +9049,10 @@ def quit_window(icon, item):
     #         continue
     #     print(f"joining {t.getName()} ")
     #     logger.debug('joining %s', t.getName())
-    #     t.join()
+    #     threading.Event().set()
 
-    print('here')
+    # print('here')
+    print('quit uploader genius program now')
 
     current_system_pid = os.getpid()
 
