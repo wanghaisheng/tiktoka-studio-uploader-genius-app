@@ -1619,11 +1619,14 @@ def cancel_all_waiting_tasks(frame=None):
         print("No waiting tasks to cancel.")
     print(f'except ongoing  {done_tasks} task is waiting to be finished, all the waiting {taskcounts-done_tasks} tasks are canceled')
     logger.debug(f'except ongoing  {done_tasks} task is waiting to be finished, all the waiting {taskcounts-done_tasks} tasks are canceled')
-    askokcancelmsg(
-        title='cancel waiting task',
-        message=f'except ongoing  {done_tasks} task is waiting to be finished, all the waiting {taskcounts-done_tasks} tasks are canceled',
-        parent=frame,
-    )
+    if frame is None:
+        print('cancel task before quit program')
+    else:
+        askokcancelmsg(
+            title='cancel waiting task',
+            message=f'except ongoing  {done_tasks} task is waiting to be finished, all the waiting {taskcounts-done_tasks} tasks are canceled',
+            parent=frame,
+        )
 
 def do_ups(
     async_loop,
@@ -1690,7 +1693,7 @@ def _asyncio_thread_up(
             )
 
 
-    asyncio.run(task)
+    # asyncio.run(task)
     totalmesg=asyncio.run(process_tasks_in_batch())
     update_tabular(
 
@@ -1712,7 +1715,7 @@ def _asyncio_thread_up(
 
         )
 
-async def querydbtoqueues(
+def querydbtoqueues(
     async_loop=None,
     frame=None,
     username=None,
@@ -9009,7 +9012,7 @@ def quit_window(icon, item):
     # threading.Thread(
     #             target=cancerlall()
     #         ).start()
-    asyncio.run(cancerlall())
+    cancel_all_waiting_tasks(frame=None)
     print('Shutdown icon')
     icon.stop()
 
@@ -9034,11 +9037,44 @@ def quit_window(icon, item):
     else:
         print('check result server is shutdown already')
 
-    print('Shutdown root')
-    # https://github.com/insolor/async-tkinter-loop/issues/10
-    root.quit()
-    root.destroy()
 
+
+    # print(' check what threads are still open at the end of your program.')
+    # print(threading.enumerate())
+    # main_thread = threading.current_thread()
+
+    # for t in threading.enumerate():
+    #     if t is main_thread:
+    #         continue
+    #     print(f"joining {t.getName()} ")
+    #     logger.debug('joining %s', t.getName())
+    #     t.join()
+
+    print('here')
+
+    current_system_pid = os.getpid()
+
+    ThisSystem = psutil.Process(current_system_pid)
+    ThisSystem.terminate()        
+
+    if sys.platform == 'win32':
+
+        os._exit(1)
+
+        current_system_pid = os.getpid()
+
+        ThisSystem = psutil.Process(current_system_pid)
+        ThisSystem.terminate()        
+    else:
+
+        os.kill(os.getpid(), signal.SIGINT)
+
+    # print('Shutdown root')
+    # # https://github.com/insolor/async-tkinter-loop/issues/10
+
+    # root.quit()
+
+    # root.destroy()
 
 
 def show_window(icon, item):
@@ -9111,7 +9147,7 @@ if __name__ == "__main__":
 
     # Start FastAPI server in a separate thread
     fastapi_thread = threading.Thread(target=start_fastapi_server).start()
-
+    print(f'fast:{fastapi_thread}')
     start_tkinter_app(loop)
     # loop.run_forever()
     # loop.close()
