@@ -4,7 +4,7 @@ upgenius==0.1.16
 requests
 # scenedetect[opencv]==0.5.6.1
 SQLAlchemy
-jsondb-in-memory
+jsondb_in_memory
 # atomics
 jsons
 lastversion
