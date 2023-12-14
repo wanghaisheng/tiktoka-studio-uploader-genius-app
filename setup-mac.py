@@ -7,7 +7,7 @@ executables = [
 ]
 build_exe_options = {
     "include_msvcr": True,
-    "zip_include_packages":['src.app'],
+    "packages":['src'],
     "include_files": [
          ( './assets/', 'assets' ),
          ( './locales/', 'locales' ),

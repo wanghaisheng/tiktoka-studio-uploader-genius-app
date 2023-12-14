@@ -133,11 +133,11 @@ if __name__ == '__main__':
                     LOG.info('%s -> %s', q.domain, addr[0])
                     udps.sendto(r.answer(), addr)
                 LASTQUERY = time.time()
-            except Exception, err:
+            except Exception as err:
                 LOG.warning("Exception caused by %s: %s", addr, err)
                 # We don't send data since address could be spoofed
                 #udps.sendto("Invalid request", addr)
 
     except KeyboardInterrupt:
-      print 'Closing'
+      print('Closing')
       udps.close()

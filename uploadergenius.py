@@ -37,6 +37,7 @@ from src.models.youtube_video_model import *
 # comment this fastapiserver import will cause cx freeze not include the file
 import src.app.fastapiserver
 from src.app.fastapiserver import app
+from fastapi.staticfiles import StaticFiles
 
 # import multiprocessing.dummy as mp
 import concurrent
