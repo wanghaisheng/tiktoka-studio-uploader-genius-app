@@ -35,7 +35,7 @@ from src.models.upload_setting_model import *
 from src.models.task_model import *
 from src.models.youtube_video_model import *
 # comment this fastapiserver import will cause cx freeze not include the file
-import src.app.fastapiserver
+# import src.app.fastapiserver
 # from src.app import fastapiserver
 from fastapi.staticfiles import StaticFiles
 
