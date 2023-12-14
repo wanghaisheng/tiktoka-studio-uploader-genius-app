@@ -12,7 +12,7 @@ from src.log import logger
 from playhouse.shortcuts import model_to_dict
 import json
 
-from src.utils import showinfomsg, find_key, askokcancelmsg, askquestionmsg
+from src.utils.tkutils import showinfomsg, find_key, askokcancelmsg, askquestionmsg
 
 
 class TASK_STATUS:

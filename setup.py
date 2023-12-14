@@ -1,5 +1,5 @@
 # https://github.com/Futura-Py/TimerX/tree/master
-import sys
+import sys,os
 
 from cx_Freeze import Executable, setup
 
@@ -47,6 +47,34 @@ import uuid
 upgradeid = (
     "{" + str(uuid.uuid3(uuid.NAMESPACE_DNS, "UploaderGenius-App.UploaderGenius.org")).upper() + "}"
 )
+
+
+modules_include: list = []
+
+for folder in os.listdir(os.path.join(os.getcwd(), 'src')):
+    if folder != '__pycache__' and os.path.isdir(os.path.join(os.path.join(os.getcwd(), 'src'), folder)):
+        modules_include.append(f'src.{folder}')
+        for module in os.listdir(os.path.join(os.path.join(os.getcwd(), 'src'), folder)):
+            if module != '__pycache__' and '.py' in module:
+                modules_include.append(f'src.{folder}.{module[:-3]}')
+
+
+others=["PIL",'loguru','psutil','pandas','better_exceptions','undetected_playwright','webdriver_manager','selenium','atomics','w3lib','moviepy','upgenius',"requests",'i18n_json','jsons','lastversion','jsonschema','pystray','bcrypt','peewee','fastapi','pycountry','pyperclip','async_tkinter_loop']
+
+
+executables = [
+    Executable('uploadergenius.py', base=None)
+]
+build_exe_options = {
+    "include_msvcr": True,
+    "include_files": [
+         ( './assets/', 'assets' ),
+         ( './locales/', 'locales' ),
+         ( './static/', 'static' )
+         ],
+    'includes':modules_include+others
+}
+
 
 build_exe_options = {
     "include_msvcr": True,

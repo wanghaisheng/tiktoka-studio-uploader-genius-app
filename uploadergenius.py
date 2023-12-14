@@ -36,7 +36,7 @@ from src.models.task_model import *
 from src.models.youtube_video_model import *
 # comment this fastapiserver import will cause cx freeze not include the file
 import src.app.fastapiserver
-from src.app.fastapiserver import app
+# from src.app import fastapiserver
 from fastapi.staticfiles import StaticFiles
 
 # import multiprocessing.dummy as mp
@@ -57,6 +57,7 @@ import logging
 from src.gpt_thumbnail import draw_text_on_image, validateSeting
 from src.checkIp import CheckIP
 from src.models.create_tables import *
+from src.utils.tkutils import showinfomsg, find_key
 
 try:
     import tkinter.scrolledtext as ScrolledText
@@ -87,11 +88,20 @@ else:
     tmp = i18n_json(recurse=True)
     citydb = i18n_json(recurse=True)
 
-ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+if getattr(sys, 'frozen', False):
+    # The application is frozen
+    datadir = os.path.dirname(sys.executable)
+else:
+    # The application is not frozen
+    datadir = os.path.dirname(__file__)
 
-if sys.platform=='darwin':
-    ROOT_DIR = os.path.dirname(os.path.abspath(sys.argv[0]))
+# https://stackoverflow.com/questions/56733085/how-to-know-the-current-file-path-after-being-frozen-into-an-executable-using-cx
+ROOT_DIR = datadir
 
+# if sys.platform=='darwin':
+#     ROOT_DIR = os.path.dirname(os.path.abspath(sys.argv[0]))
+import os
+tmp["ROOT_DIR"] = datadir
 videoassetsfilename = "videos-assets.json"
 citydbfilename = "assets/country-db/qq/en_loclist.json"
 settingfilename = "settings.json"
@@ -1530,7 +1540,7 @@ def dumpMetafiles(selectedMetafileformat, folder):
 def dumpSetting(settingfilename):
     folder = ROOT_DIR
     logger.debug(f"start to dump TiktokaStudio settings")
-    logger.info(f"check settings before dump {settings}")
+    logger.info(f"check settings before dump")
 
     tmpjson = os.path.join(folder, settingfilename)
 
@@ -8586,9 +8596,7 @@ def logView(log_tab_frame, root, lang):
     e_log_filter.grid(row=0, column=1, padx=14, pady=15, sticky="nswe")
 
     st = ConsoleUi(log_tab_frame, root, row=1, column=0)
-    logger.debug(f"Installation path is:{ROOT_DIR}")
 
-    logger.debug("TiktokaStudio GUI started")
 
 
 def on_tab_change(event):
@@ -9110,7 +9118,7 @@ def start_fastapi_server():
     global uvicorn_subprocess
     uvicorn_command = ["uvicorn", "src.app.fastapiserver:app", "--host", "0.0.0.0", "--port", "8000"]
     uvicorn_subprocess = subprocess.Popen(uvicorn_command)
-    app.mount("/static", StaticFiles(directory=os.path.join(ROOT_DIR,"static")), name="static")
+    # fastapiserver.app.mount("/static", StaticFiles(directory=os.path.join(ROOT_DIR,"static")), name="static")
 
 
     try:

@@ -1,22 +1,33 @@
-import sys
+import sys,os
 from cx_Freeze import setup, Executable
-import src.app
+
+
+
+modules_include: list = []
+
+for folder in os.listdir(os.path.join(os.getcwd(), 'src')):
+    if folder != '__pycache__' and os.path.isdir(os.path.join(os.path.join(os.getcwd(), 'src'), folder)):
+        modules_include.append(f'src.{folder}')
+        for module in os.listdir(os.path.join(os.path.join(os.getcwd(), 'src'), folder)):
+            if module != '__pycache__' and '.py' in module:
+                modules_include.append(f'src.{folder}.{module[:-3]}')
+
+
+others=["PIL",'loguru','psutil','pandas','better_exceptions','undetected_playwright','webdriver_manager','selenium','atomics','w3lib','moviepy','upgenius',"requests",'i18n_json','jsons','lastversion','jsonschema','pystray','bcrypt','peewee','fastapi','pycountry','pyperclip','async_tkinter_loop']
+
 
 executables = [
     Executable('uploadergenius.py', base=None)
 ]
 build_exe_options = {
     "include_msvcr": True,
-    "packages":['src'],
+    # "packages":['src'],
     "include_files": [
          ( './assets/', 'assets' ),
          ( './locales/', 'locales' ),
          ( './static/', 'static' )
-
          ],
-    'includes': ["PIL",'loguru','psutil','pandas','better_exceptions','undetected_playwright','webdriver_manager','selenium','atomics','w3lib','moviepy','upgenius',"requests",'i18n_json','jsons','lastversion','jsonschema','pystray','bcrypt','peewee','fastapi','pycountry','pyperclip','async_tkinter_loop'], # list of extra modules to include (from your virtualenv of system path),
-
-
+    'includes':modules_include+others
 }
 
 

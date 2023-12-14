@@ -14,7 +14,7 @@ from datetime import datetime, date, timedelta
 import tkinter as tk
 from src.constants import height, width, window_size
 from src.log import logger
-from src.utils import showinfomsg, find_key
+from src.utils.tkutils import showinfomsg, find_key
 from i18n_json import i18n_json
 import platform
 if platform.system() == "Windows":

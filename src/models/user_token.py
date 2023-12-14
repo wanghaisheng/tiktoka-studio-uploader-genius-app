@@ -9,23 +9,25 @@ import binascii
 import os
 import time
 from typing import Optional
+from peewee import TextField, BlobField, BooleanField, IntegerField, ForeignKeyField
 
 import peewee
 from peewee import TextField, BigIntegerField, BlobField
-from slim.utils import to_bin, get_bytes_from_blob
+# from slim.utils import to_bin, get_bytes_from_blob
 
-from model import StdUserModel, INETField, db
+# from model import StdUserModel, INETField, db
 
+from src.models import BaseModel, db
 
-class UserToken(StdUserModel):
+class UserToken(BaseModel):
     expire = BigIntegerField(null=True)
 
     first_meet_time = BigIntegerField(null=True)
-    ip_first_meet = INETField(default=None, null=True)  # 注册IP
+    ip_first_meet = TextField(default=None, null=True)  # 注册IP
     ua_first_meet = TextField(null=True)
 
     last_access_time = BigIntegerField(null=True)
-    ip_latest = INETField(default=None, null=True)
+    ip_latest = TextField(default=None, null=True)
     ua_latest = TextField(null=True)
 
     class Meta:
@@ -45,36 +47,36 @@ class UserToken(StdUserModel):
         except peewee.DatabaseError:
             db.rollback()
 
-    @classmethod
-    def get_by_token(cls, token) -> Optional['UserToken']:
-        if isinstance(token, str):
-            try:
-                token = to_bin(token)
-            except binascii.Error:
-                return
+    # @classmethod
+    # def get_by_token(cls, token) -> Optional['UserToken']:
+    #     if isinstance(token, str):
+    #         try:
+    #             token = to_bin(token)
+    #         except binascii.Error:
+    #             return
 
-        try:
-            t = cls.get(cls.id == token, time.time() < cls.expire, cls.deleted_at.is_null(True))
-        except peewee.DoesNotExist:
-            pass
+    #     try:
+    #         t = cls.get(cls.id == token, time.time() < cls.expire, cls.deleted_at.is_null(True))
+    #     except peewee.DoesNotExist:
+    #         pass
 
-    def get_token(self):
-        return get_bytes_from_blob(self.id)
+    # def get_token(self):
+    #     return get_bytes_from_blob(self.id)
 
-    async def init(self, view: 'AbstractSQLView'):
-        """
-        从请求初始化信息
-        :param view:
-        :return:
-        """
-        # req = view._request
-        self.first_meet_time = int(time.time())
-        self.ip_first_meet = await view.get_ip()
-        self.ua_first_meet = view.headers.get('User-Agent', None)
-        self.save(force_insert=True) 
+    # async def init(self, view: 'AbstractSQLView'):
+    #     """
+    #     从请求初始化信息
+    #     :param view:
+    #     :return:
+    #     """
+    #     # req = view._request
+    #     self.first_meet_time = int(time.time())
+    #     self.ip_first_meet = await view.get_ip()
+    #     self.ua_first_meet = view.headers.get('User-Agent', None)
+    #     self.save(force_insert=True)
 
-    async def access_save(self, view: 'AbstractSQLView'):
-        self.last_access_time = int(time.time())
-        self.ip_latest = await view.get_ip()
-        self.ua_latest = view.headers.get('User-Agent', None)
-        self.save(force_insert=True) 
+    # async def access_save(self, view: 'AbstractSQLView'):
+    #     self.last_access_time = int(time.time())
+    #     self.ip_latest = await view.get_ip()
+    #     self.ua_latest = view.headers.get('User-Agent', None)
+    #     self.save(force_insert=True)
