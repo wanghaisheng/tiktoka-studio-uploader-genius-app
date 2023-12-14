@@ -27,3 +27,8 @@ webdriver_manager
 w3lib
 psutil
 pandas
+pyupdater
+cheroot
+server-thread
+keyring
+flask
