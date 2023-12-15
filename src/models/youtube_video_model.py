@@ -1,7 +1,7 @@
 import time,base64,os
 import peewee
 from peewee import *
-from config import generate_unique_hash
+from src.config import generate_unique_hash
 from src.models import BaseModel,db
 from src.customid import CustomID
 import logging

@@ -1,6 +1,6 @@
 from peewee import Model, CharField, IntegerField,TextField,BooleanField,BlobField,ForeignKeyField
 import time
-import config
+from src.config import generate_unique_hash
 from src.models import BaseModel,db
 from src.models.account_model import AccountModel
 from src.customid import CustomID

@@ -9107,7 +9107,7 @@ def withdraw_window():
     root.withdraw()
     iconfile = os.path.join(ROOT_DIR, iconfilename)
 
-    image = Image.open(iconfile)
+    image = Image.open(iconfilename)
     menu = (item("Quit", quit_window), item("Show", show_window))
     icon = pystray.Icon("name", image, "title", menu)
     icon.run_detached()
@@ -9116,16 +9116,24 @@ def withdraw_window():
 
 def start_fastapi_server():
     global uvicorn_subprocess
+    print('start thumbnail template editor server')
     uvicorn_command = ["uvicorn", "src.app.fastapiserver:app", "--host", "0.0.0.0", "--port", "8000"]
-    uvicorn_subprocess = subprocess.Popen(uvicorn_command)
+    # uvicorn_subprocess = subprocess.Popen(uvicorn_command)
+    uvicorn_subprocess = subprocess.Popen(uvicorn_command, cwd="lib" if getattr(sys, "frozen", False) else None)
+
     # fastapiserver.app.mount("/static", StaticFiles(directory=os.path.join(ROOT_DIR,"static")), name="static")
 
 
     try:
         outs, errs = uvicorn_subprocess.communicate(timeout=15)
     except subprocess.TimeoutExpired:
-        uvicorn_subprocess.kill()
+        # uvicorn_subprocess.kill()
         outs, errs = uvicorn_subprocess.communicate()
+    if outs:
+        print(f'stdout:{outs}')
+    if errs:
+        print(f'stdout:{errs}')
+
 
 
 

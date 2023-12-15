@@ -1,6 +1,6 @@
 from peewee import TextField, BlobField, BooleanField, IntegerField, ForeignKeyField
 from src.models import BaseModel, db
-import config
+from src.config import generate_unique_hash
 import time
 from src.customid import CustomID
 from src.models.youtube_video_model import YoutubeVideoModel

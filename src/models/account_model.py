@@ -1,6 +1,6 @@
 from peewee import Model, BooleanField, TextField,IntegerField,ForeignKeyField,BlobField
 from src.models import BaseModel,db
-import config
+from src.config import generate_unique_hash
 import time
 from src.customid import CustomID
 from src.models.platform_model import PLATFORM_TYPE
@@ -25,7 +25,7 @@ class AccountModel(BaseModel):
     @classmethod
 
     def add_account(cls,account_data):
-        unique_hash = config.generate_unique_hash(
+        unique_hash = generate_unique_hash(
 
         account_data
             )

@@ -1,0 +1,387 @@
+/* Reset some default styles */
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Set a background color and default font */
+body {
+    background-color: #f0f0f0;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Header Styles */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+/* Logo Styles */
+.logo h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* Navigation Styles */
+.nav-links {
+    list-style: none;
+}
+
+.nav-links li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #ff5722;
+}
+
+/* Hero Section Styles */
+.hero {
+    background-image: url('hero-background.jpg'); /* Replace with your background image */
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    text-align: center;
+    padding: 120px 0;
+}
+
+.hero h1 {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 20px; /* Slightly reduced margin for better readability */
+    color: #666;
+}
+
+/* CTA Button Styles */
+.cta-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #ff5722;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin: 10px; /* Add margin for spacing */
+}
+
+.cta-button:hover {
+    background-color: #e64100;
+}
+
+
+/* Features Section Styles */
+.features {
+    background-color: #fff;
+    padding: 60px 0;
+    text-align: center;
+}
+
+/* Feature Block Styles */
+.feature-block {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.feature {
+    flex-basis: calc(50% - 20px);
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.feature h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.feature p {
+    font-size: 16px;
+    margin-bottom: 10px; /* Slightly reduced margin for better readability */
+    color: #666;
+}
+
+/* Media Query for Mobile Devices */
+@media screen and (max-width: 768px) {
+    .feature-block {
+        flex-direction: column;
+    }
+    
+    .feature {
+        flex-basis: 100%;
+        margin-bottom: 20px;
+    }
+}
+
+/* CTA Section Styles */
+.cta {
+    background-color: #f9f9f9;
+    padding: 60px 0;
+    text-align: center;
+}
+
+.cta h2 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.cta p {
+    font-size: 18px;
+    margin-bottom: 20px; /* Slightly reduced margin for better readability */
+    color: #666;
+}
+
+/* How It Works Section Styles */
+.help {
+    background-color: #fff; /* Change the background color as desired */
+    padding: 60px 0;
+    text-align: center;
+}
+/* Horizontal Blocks Styles */
+.horizontal-blocks {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    background-color: #fff;
+    /* max-width: 960px; */
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: center;
+    flex-wrap: wrap; /* Added flex-wrap to wrap items on smaller screens */
+}
+
+.join-community,
+.get-started,
+.stay-ahead {
+    flex-basis: calc(33.33% - 20px);
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.join-community h3,
+.get-started h3,
+.stay-ahead h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.join-community p,
+.get-started p,
+.stay-ahead p {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #666;
+}
+
+/* Media Query for Smaller Screens (Mobile) */
+@media screen and (max-width: 768px) {
+    .join-community,
+    .get-started,
+    .stay-ahead {
+        flex-basis: 100%;
+    }
+}
+
+
+/* Footer Styles */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.footer-logo h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff5722;
+}
+
+.footer-nav li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.footer-nav a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* How It Works Section Styles */
+.how-it-works {
+    background-color: #fff; /* Change the background color as desired */
+    padding: 60px 0;
+    text-align: center;
+}
+
+.how-it-works h3 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.steps {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.step {
+    flex-basis: calc(33.33% - 20px); /* Adjust the width for three steps on desktop */
+    text-align: left;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.step h4 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.step ul {
+    list-style: none;
+    padding-left: 0;
+    text-align: left;
+    margin-top: 10px;
+}
+
+.step li {
+    margin-bottom: 10px;
+}
+
+.step a {
+    text-decoration: none;
+    color: #ff5722;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.step a:hover {
+    color: #e64100;
+}
+
+/* Media Query for Mobile Devices */
+@media screen and (max-width: 768px) {
+    .step {
+        flex-basis: 100%; /* Adjust the width for one step per line on mobile */
+    }
+}
+
+
+#canvas-container {
+    position: relative;
+}
+#canvas {
+    border: 1px solid #000;
+}
+.grid-line {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+.grid-serial-number {
+    position: absolute;
+    font-size: 12px;
+    color: white;
+}
+.bounding-box {
+    position: absolute;
+    border: 2px solid red;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 2px;
+}
+
+
+
+
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+        }
+
+        .form-control-file {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background-color: #ff5722;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: #e64100;
+        }
+
+        /* Error Messages */
+        .text-danger {
+            color: red;
+            display: none;
+        }
+
+        #scrollToTopButton {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #0078d4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        
+        #scrollToTopButton:hover {
+            background-color: #0056b3;
+        }
+        
