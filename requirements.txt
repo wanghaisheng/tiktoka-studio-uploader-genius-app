@@ -31,4 +31,4 @@ pyupdater
 cheroot
 server-thread
 keyring
-flask
+a2wsgi

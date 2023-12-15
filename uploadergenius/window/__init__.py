@@ -101,12 +101,6 @@ else:
     tmp = i18n_json(recurse=True)
     citydb = i18n_json(recurse=True)
 
-# ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
-
-# if sys.platform=='darwin':
-#     ROOT_DIR = os.path.dirname(os.path.abspath(sys.argv[0]))
-
-# ROOT_DIR=ROOT_DIR
 videoassetsfilename = "videos-assets.json"
 citydbfilename = "assets/country-db/qq/en_loclist.json"
 settingfilename = "settings.json"
@@ -266,6 +260,7 @@ def load_citydb():
 def load_setting():
     global settings
     settingfile = os.path.join(ROOT_DIR, settingfilename)
+    print('settingfile',ROOT_DIR,settingfile)
     failed = False
     if os.path.exists(settingfile):
         try:
@@ -8949,7 +8944,7 @@ def quit_window(icon, item):
             print('check result server is shutdown already')
 
     except:
-        pass
+        print('check result server is shutdown already')
 
     # print(' check what threads are still open at the end of your program.')
     # print(threading.enumerate())
@@ -9009,8 +9004,7 @@ def withdraw_window():
 def start_fastapi_server():
     global uvicorn_subprocess
     uvicorn_command = ["uvicorn", "uploadergenius.app.fastapiserver:app", "--host", "0.0.0.0", "--port", "8000"]
-    uvicorn_subprocess = subprocess.Popen(uvicorn_command)
-    app.mount("/static", StaticFiles(directory=os.path.join(ROOT_DIR,"static")), name="static")
+    uvicorn_subprocess = subprocess.Popen(uvicorn_command, cwd="lib" if getattr(sys, "frozen", False) else None)
 
 
     try:

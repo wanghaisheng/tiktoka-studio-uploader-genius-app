@@ -1,7 +1,8 @@
 import platform
-import sys
+import sys,os
 from os import environ, path,getenv
 from uuid import uuid4
+from pathlib import Path
 
 from click import get_app_dir
 
@@ -22,7 +23,20 @@ ALIAS_FOLDER_NAMES = ["inbox", "sent", "archive", "drafts", "trash", "spam"]
 
 # App directory/filenames
 #
-ROOT_DIR=getenv('PWD')
+if getattr(sys, 'frozen', False):
+    # The application is frozen
+    datadir = Path(sys.executable).parent.parent
+else:
+    # The application is not frozen
+    datadir = Path(__file__).parent.parent
+
+parent_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+
+
+print('datadir',datadir)
+print('parent_dir',parent_dir)
+
+ROOT_DIR=str(datadir)
 # "App" directory for this user - settings/logs/cache go here
 APP_DIR = environ.get("KANMAIL_APP_DIR", get_app_dir(APP_NAME))
 

@@ -30,6 +30,19 @@ def run_server():
         logger.exception(f"Exception in server thread!: {e}")
 
 
+
+def monitor_server(server):
+    while True:
+        if not server.is_alive():
+            logger.critical(f"Thread: {thread} died, exiting!")
+            quit_window(icon=None)
+            server.shutdown()
+            sys.exit(2)
+        else:
+            sleep(0.5)
+
+
+
 def monitor_threads(*threads):
     while True:
         for thread in threads:
@@ -62,20 +75,21 @@ def main():
 
     boot()
     print('start server thread')
-    server_thread = Thread(name="Server", target=run_server)
-    # server_thread.daemon = True
-    server_thread.start()
-    print('started server thread')
+    # server_thread = Thread(name="Server", target=run_server)
+    # # server_thread.daemon = True
+    # server_thread.start()
 
     # run_thread(validate_or_remove_license)
     # run_thread(run_cache_cleanup_later)
-    print('test server thread')
+    print('test server works')
+    print(f'import start server {server.host}:{server.port}')
 
     # Ensure the webserver is up & running by polling it
     waits = 0
     while waits < 10:
         try:
-            response = requests.get(f"http://{SERVER_HOST}:{server.get_port()}/static/index.html")
+            response = requests.get(f"http://{server.host}:{server.port}/static/index.html")
+            print('server response',response.status_code)
             response.raise_for_status()
         except requests.RequestException as e:
             logger.warning(f"Waiting for main window: {e}")
@@ -92,13 +106,13 @@ def main():
     #     **get_window_settings(),
     # )
     # Let's hope this thread doesn't fail!
-    monitor_thread = Thread(
-        name="Thread monitor",
-        target=monitor_threads,
-        args=(server_thread,),
-    )
-    monitor_thread.daemon = True
-    monitor_thread.start()
+    # monitor_thread = Thread(
+    #     name="Thread monitor",
+    #     target=monitor_threads,
+    #     args=(server_thread,),
+    # )
+    # monitor_thread.daemon = True
+    # monitor_thread.start()
 
     if DEBUG:
         sleep(1)  # give webpack a second to start listening
@@ -120,10 +134,10 @@ def main():
     else:
         loop = asyncio.get_event_loop()
 
-    start_tkinter_app(loop)
+    start_tkinter_app(loop=None)
 
     logger.debug("Main window closed, shutting down...")
-    server.stop()
+    server.shutdown()
     sys.exit()
 
 
@@ -131,5 +145,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception:
-        server.stop()
+        server.shutdown()
         raise

@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from os import environ, path
 from cheroot.wsgi import Server
+from server_thread import ServerThread
 
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
@@ -35,84 +36,39 @@ from uploadergenius.server.models.youtube_video_model import YoutubeVideoModel,V
 
 from uploadergenius.server.models.task_model import TaskModel,TASK_STATUS
 from uploadergenius.utils.customid import *
-ROOT_DIR = os.path.dirname(os.path.dirname(__file__))
-from flask import Flask, abort, request
-from json import JSONEncoder
-from typing import Union
-from flask import send_from_directory
 
+app = FastAPI()
 
-if sys.platform=='darwin':
-    ROOT_DIR = os.path.dirname(os.path.abspath(sys.argv[0]))
+# Allow all origins
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # You can replace this with specific origins if needed
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+@app.get("/")
+def howdy():
+    return {"Howdy": "World"}
 
+# https://www.starlette.io/staticfiles/
+app.mount("/static", StaticFiles(packages=[('uploadergenius.server.app',"static")]), name="static")
 
-parent_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-
-print('fastserver  static files location======',ROOT_DIR,parent_dir)
-# app = FastAPI()
-
-# # Allow all origins
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["*"],  # You can replace this with specific origins if needed
-#     allow_credentials=True,
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
-# @app.get("/")
-# def howdy():
-#     return {"Howdy": "World"}
-
-# app.mount("/static", StaticFiles(directory=os.path.join(parent_dir,"static")), name="static")
-# # https://www.starlette.io/staticfiles/
-# # app.mount("/static", StaticFiles(directory="static",packages=['src.app']), name="static")
-
-# # app.include_router(router)
-
-
-class JsonEncoder(JSONEncoder):
-    def default(self, obj) -> Union[str, int]:
-        if isinstance(obj, bytes):
-            try:
-                return obj.decode()
-            except UnicodeDecodeError:
-                return obj.decode("utf-8", "ignore")
-
-        return super(JsonEncoder, self).default(obj)
 
 print(path.join(ROOT_DIR, "static"),'=========')
-app = Flask(
-    APP_NAME,
-    static_folder=path.join(ROOT_DIR, "static"),
-    template_folder=path.join(ROOT_DIR, "templates"),
-)
-app.json_encoder = JsonEncoder
-app.config["JSON_SORT_KEYS"] = False
-@app.route('/<path:path>')
-def static_file(path):
-    return app.send_static_file(path)
+print(f'try to start server {SERVER_HOST}:{SERVER_PORT}')
 
+server = ServerThread(app, host=SERVER_HOST, port=SERVER_PORT,debug=True)
+# server.is_alive
+# import requests
 
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {"connect_args": {"timeout": 30}}
-app.config["SQLALCHEMY_BINDS"] = {
-    "contacts": f"sqlite:///{CONTACTS_CACHE_DB_FILE}",
-    "folders": f"sqlite:///{FOLDER_CACHE_DB_FILE}",
-}
+# print(f"http://{server.host}:{server.port}")
+# response = requests.get(f"http://{server.host}:{server.port}/")
+# response.raise_for_status()
 
-class ServerWithGetPort(Server):
-    def get_port(self):
-        if not hasattr(self, "socket"):
-            return SERVER_PORT
-        return self.socket.getsockname()[1]
-
-
-server = ServerWithGetPort((SERVER_HOST, SERVER_PORT), app
-                           )
-
+print(f'start server {server.host}:{server.port}')
 def boot(prepare_server: bool = True) -> None:
-    if prepare_server:
-        server.prepare()
+
 
     logger.debug(f"App client root is: {CLIENT_ROOT}")
     logger.debug(f"App session token is: {SESSION_TOKEN}")
