@@ -1,19 +1,8 @@
-<<<<<<< HEAD
-MainThread|2023-12-15 21:03:26,656|uploadergenius.py|start|line:8987|DEBUG| TiktokaStudio Installation path is:/Users/wenke/github/tiktoka-studio-uploader-genius
-MainThread|2023-12-15 21:03:26,657|uploadergenius.py|start|line:8989|DEBUG| TiktokaStudio GUI started
-MainThread|2023-12-15 21:03:26,806|taskTablecrud.py|refreshTaskcanvas|line:355|DEBUG| start to remove previous tabular result data row when data is empty
-MainThread|2023-12-15 21:03:26,806|taskTablecrud.py|refreshTaskcanvas|line:366|DEBUG| end to remove previous tabular result data row when data is empty
-MainThread|2023-12-15 21:03:27,136|uploadergenius.py|dumpSetting|line:1542|DEBUG| start to dump TiktokaStudio settings
-MainThread|2023-12-15 21:03:27,137|uploadergenius.py|dumpSetting|line:1543|INFO| check settings before dump
-MainThread|2023-12-15 21:03:27,143|uploadergenius.py|dumpSetting|line:1553|DEBUG| end to dump TiktokaStudio settings
-MainThread|2023-12-15 21:03:31,536|uploadergenius.py|cancel_all_waiting_tasks|line:1640|DEBUG| except ongoing  0 task is waiting to be finished, all the waiting 0 tasks are canceled
-=======
-MainThread|2023-12-18 17:11:04,458|uploadergenius.py|start|line:8987|DEBUG| TiktokaStudio Installation path is:D:\workspace\tiktoka\tiktoka-studio-uploader-genius
-MainThread|2023-12-18 17:11:04,458|uploadergenius.py|start|line:8989|DEBUG| TiktokaStudio GUI started
-MainThread|2023-12-18 17:11:04,695|taskTablecrud.py|refreshTaskcanvas|line:355|DEBUG| start to remove previous tabular result data row when data is empty
-MainThread|2023-12-18 17:11:04,697|taskTablecrud.py|refreshTaskcanvas|line:366|DEBUG| end to remove previous tabular result data row when data is empty
-MainThread|2023-12-18 17:11:04,957|uploadergenius.py|dumpSetting|line:1542|DEBUG| start to dump TiktokaStudio settings
-MainThread|2023-12-18 17:11:04,958|uploadergenius.py|dumpSetting|line:1543|INFO| check settings before dump
-MainThread|2023-12-18 17:11:04,967|uploadergenius.py|dumpSetting|line:1553|DEBUG| end to dump TiktokaStudio settings
-Thread-3 (<lambda>)|2023-12-18 17:11:14,691|uploadergenius.py|cancel_all_waiting_tasks|line:1640|DEBUG| except ongoing  0 task is waiting to be finished, all the waiting 0 tasks are canceled
->>>>>>> 3141c59e40a5385cb970bca744c4f3896203214a
+MainThread|2023-12-18 18:46:04,551|uploadergenius.py|start|line:8987|DEBUG| TiktokaStudio Installation path is:/Users/wenke/github/tiktoka-studio-uploader-genius
+MainThread|2023-12-18 18:46:04,552|uploadergenius.py|start|line:8989|DEBUG| TiktokaStudio GUI started
+MainThread|2023-12-18 18:46:04,866|taskTablecrud.py|refreshTaskcanvas|line:355|DEBUG| start to remove previous tabular result data row when data is empty
+MainThread|2023-12-18 18:46:04,867|taskTablecrud.py|refreshTaskcanvas|line:366|DEBUG| end to remove previous tabular result data row when data is empty
+MainThread|2023-12-18 18:46:05,847|uploadergenius.py|dumpSetting|line:1542|DEBUG| start to dump TiktokaStudio settings
+MainThread|2023-12-18 18:46:05,848|uploadergenius.py|dumpSetting|line:1543|INFO| check settings before dump
+MainThread|2023-12-18 18:46:05,856|uploadergenius.py|dumpSetting|line:1553|DEBUG| end to dump TiktokaStudio settings
+MainThread|2023-12-18 18:46:21,946|uploadergenius.py|cancel_all_waiting_tasks|line:1640|DEBUG| except ongoing  0 task is waiting to be finished, all the waiting 0 tasks are canceled
