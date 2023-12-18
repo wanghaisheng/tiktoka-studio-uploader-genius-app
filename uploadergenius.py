@@ -9024,6 +9024,16 @@ def changeDisplayLang(lang):
     root.mainloop()
 
 
+def monitor_threads(*threads):
+    while True:
+        for thread in threads:
+            if not thread.is_alive():
+                logger.critical(f"Thread: {thread} died, exiting!")
+                server.shutdown()
+                sys.exit(2)
+        else:
+            time.sleep(0.5)
+
 def quit_window(icon, item):
     print('prepare to quit uploader genius program')
 
@@ -9037,26 +9047,29 @@ def quit_window(icon, item):
     icon.stop()
 
     print('Shutdown thumbnail genius server')
-    if uvicorn_subprocess is not None:
-        uvicorn_subprocess.terminate()
-        time.sleep(0.5)
-        done=uvicorn_subprocess.poll()
-        if done==None:
-            print(f'server shutdown error :{done}')
+    try:
+        if uvicorn_subprocess is not None:
+            uvicorn_subprocess.terminate()
+            time.sleep(0.5)
+            done=uvicorn_subprocess.poll()
+            if done==None:
+                print(f'server shutdown error :{done}')
 
+            else:
+                print('server shutdown')
         else:
-            print('server shutdown')
-    else:
-        print('server not started')
-    if uvicorn_subprocess.returncode is  None:
-        print('check result server is there ')
-        parent = psutil.Process(uvicorn_subprocess.pid)
-        for child in parent.children(recursive=True):
-            child.terminate()
-        parent.terminate()
-    else:
-        print('check result server is shutdown already')
+            print('server not started')
+        if uvicorn_subprocess.returncode is  None:
+            print('check result server is there ')
+            parent = psutil.Process(uvicorn_subprocess.pid)
+            for child in parent.children(recursive=True):
+                child.terminate()
+            parent.terminate()
+        else:
+            print('check result server is shutdown already')
 
+    except:
+        print('check result server is shutdown already')
 
 
     # print(' check what threads are still open at the end of your program.')
@@ -9071,6 +9084,11 @@ def quit_window(icon, item):
     #     threading.Event().set()
 
     # print('here')
+    loop.call_soon_threadsafe(
+            loop.stop)
+
+
+
     print('quit uploader genius program now')
 
 
@@ -9134,10 +9152,18 @@ def start_fastapi_server():
     if errs:
         print(f'stdout:{errs}')
 
+async def start_fastapi_server_async():
+    import uvicorn    
+    global server
 
+    config = uvicorn.Config("src.app.fastapiserver:app", port=5000, log_level="info")
+    server = uvicorn.Server(config)
+    await server.serve()
+    return 'running'
 
-
-
+async def startserver(loop):
+    result=asyncio.run_coroutine_threadsafe(start_fastapi_server_async(), loop)    
+    print(result)
 def start_tkinter_app(async_loop):
     global root, settings, db, canvas, locale
     tmp["accountlinkaccount"] = {}
@@ -9181,7 +9207,9 @@ if __name__ == "__main__":
         loop = asyncio.get_event_loop()
 
     # Start FastAPI server in a separate thread
-    fastapi_thread = threading.Thread(target=start_fastapi_server).start()
+    # fastapi_thread = threading.Thread(target=start_fastapi_server).start()
+    # print(f'fast:{fastapi_thread}')
+    fastapi_thread = threading.Thread(target=startserver,args=(loop,)).start()
     print(f'fast:{fastapi_thread}')
     start_tkinter_app(loop)
     # loop.run_forever()
