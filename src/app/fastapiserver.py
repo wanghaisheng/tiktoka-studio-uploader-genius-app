@@ -42,7 +42,9 @@ app.add_middleware(
 # app.mount("/static", StaticFiles(packages=[('src.app','static')]), name="static")
 
 # you should have static at the same level of         Executable( "uploadergenius.py",
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory=os.path.join(datadir,"static")), name="static")
+
+# for macos  'static' dont work
 
 
 # app.mount("/static", StaticFiles(directory="static",packages=[('src.app','static')]), name="static")

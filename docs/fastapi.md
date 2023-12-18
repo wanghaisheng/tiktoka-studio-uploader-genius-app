@@ -14,12 +14,12 @@ async def go():
         print(counter)
         await asyncio.sleep(1)
 
-       
+
 def run():
     asyncio.run(go())
 
 ```
-    
+
 ```
 from fastapi import FastAPI
 import printing_app
@@ -32,21 +32,30 @@ app = FastAPI()
 @app.get('/')
 def main():
     return 'Hello World!'
-    
+
 
 def start_uvicorn(loop):
     config = uvicorn.Config(app, loop=loop)
     server = uvicorn.Server(config)
     loop.run_until_complete(server.serve())
-    
+
 
 def start_printing_app(loop):
-    loop.create_task(printing_app.go())  # pass go() (coroutine), not run() 
+    loop.create_task(printing_app.go())  # pass go() (coroutine), not run()
 
-            
+
 if __name__ == '__main__':
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     start_printing_app(loop)
     start_uvicorn(loop)
 ```
+
+
+
+
+https://github.com/tiangolo/fastapi/discussions/9808
+
+
+
+https://github.com/tiangolo/fastapi/discussions/10476

@@ -9025,6 +9025,38 @@ def changeDisplayLang(lang):
 
 
 def quit_window(icon, item):
+
+    print('clear cache')
+    try:
+
+        i18n_json.unlink_by_name(ultra, ignore_errors=True)
+    except:
+        pass
+    print('0000')
+    try:
+
+        i18n_json.unlink_by_name(citydb, ignore_errors=True)
+    except:
+        pass
+    print('1111')
+    try:
+
+        i18n_json.unlink_by_name(tmp, ignore_errors=True)
+    except:
+        pass
+    print('222')
+
+    # ultra.close()
+
+    # ultra.unlink()
+
+    # citydb.close()
+
+    # citydb.unlink()
+    # tmp.close()
+
+    # tmp.unlink()
+
     print('prepare to quit uploader genius program')
 
     print('cancel all waiting tasks')
@@ -9048,15 +9080,18 @@ def quit_window(icon, item):
             print('server shutdown')
     else:
         print('server not started')
-    if uvicorn_subprocess.returncode is  None:
-        print('check result server is there ')
-        parent = psutil.Process(uvicorn_subprocess.pid)
-        for child in parent.children(recursive=True):
-            child.terminate()
-        parent.terminate()
-    else:
+    try:
+        uvicorn_subprocess
+        if uvicorn_subprocess.returncode is  None:
+            print('check result server is there ')
+            parent = psutil.Process(uvicorn_subprocess.pid)
+            for child in parent.children(recursive=True):
+                child.terminate()
+            parent.terminate()
+        else:
+            print('check result server is shutdown already')
+    except:
         print('check result server is shutdown already')
-
 
 
     # print(' check what threads are still open at the end of your program.')
@@ -9090,8 +9125,15 @@ def quit_window(icon, item):
 
         root.destroy()
 
-    else:
+        current_system_pid = os.getpid()
+        ThisSystem = psutil.Process(current_system_pid)
+        # ThisSystem.terminate()
         import signal
+
+        os.kill(os.getpid(), signal.SIGINT)
+        os._exit(1)
+
+    else:
 
         os.kill(os.getpid(), signal.SIGINT)
 
@@ -9107,7 +9149,7 @@ def withdraw_window():
     root.withdraw()
     iconfile = os.path.join(ROOT_DIR, iconfilename)
 
-    image = Image.open(iconfilename)
+    image = Image.open(iconfile)
     menu = (item("Quit", quit_window), item("Show", show_window))
     icon = pystray.Icon("name", image, "title", menu)
     icon.run_detached()
@@ -9116,10 +9158,13 @@ def withdraw_window():
 
 def start_fastapi_server():
     global uvicorn_subprocess
-    print('start thumbnail template editor server')
+    print('start thumbnail template editor server',ROOT_DIR)
+    lib_folder = os.path.join(ROOT_DIR, 'lib')
+    # lsof -nP -iTCP -sTCP:LISTEN | grep 8000
     uvicorn_command = ["uvicorn", "src.app.fastapiserver:app", "--host", "0.0.0.0", "--port", "8000"]
+    print(f'uvicorn_command:{uvicorn_command}')
     # uvicorn_subprocess = subprocess.Popen(uvicorn_command)
-    uvicorn_subprocess = subprocess.Popen(uvicorn_command, cwd="lib" if getattr(sys, "frozen", False) else None)
+    uvicorn_subprocess = subprocess.Popen(uvicorn_command, cwd=lib_folder if getattr(sys, "frozen", False) else None)
 
     # fastapiserver.app.mount("/static", StaticFiles(directory=os.path.join(ROOT_DIR,"static")), name="static")
 

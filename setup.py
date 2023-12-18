@@ -29,7 +29,7 @@ elif sys.platform == "darwin":
             base=base,
             icon=icon,
             shortcut_name="UploaderGenius",
-            target_name="UploaderGenius.exe",
+            target_name="UploaderGenius",
         )
     ]
 else:
@@ -88,7 +88,16 @@ bdist_msi_options = {
     "upgrade_code": upgradeid,
     "target_name": "UploaderGenius",
 }
-bdist_mac_options = {"bundle_name": "UploaderGenius", "iconfile": "./assets/icon.ico"}
+bdist_mac_options = {"bundle_name": "UploaderGenius", "iconfile": "./assets/icon.ico",
+
+"include_resources":[
+
+         ( './assets/', 'assets' ),
+         ( './locales/', 'locales' ),
+         ( './static/', 'static' )
+]
+
+                     }
 
 bdist_dmg_options = {
     "volume_label": "UploaderGenius",
