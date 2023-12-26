@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 import threading
-import pdb; pdb.set_trace()
+# import pdb; pdb.set_trace()
 
 # Assuming filter_accounts is the function defined in api.py
 from playhouse.shortcuts import model_to_dict

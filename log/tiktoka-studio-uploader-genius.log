@@ -1,8 +1,8 @@
-MainThread|2023-12-18 18:46:04,551|uploadergenius.py|start|line:8987|DEBUG| TiktokaStudio Installation path is:/Users/wenke/github/tiktoka-studio-uploader-genius
-MainThread|2023-12-18 18:46:04,552|uploadergenius.py|start|line:8989|DEBUG| TiktokaStudio GUI started
-MainThread|2023-12-18 18:46:04,866|taskTablecrud.py|refreshTaskcanvas|line:355|DEBUG| start to remove previous tabular result data row when data is empty
-MainThread|2023-12-18 18:46:04,867|taskTablecrud.py|refreshTaskcanvas|line:366|DEBUG| end to remove previous tabular result data row when data is empty
-MainThread|2023-12-18 18:46:05,847|uploadergenius.py|dumpSetting|line:1542|DEBUG| start to dump TiktokaStudio settings
-MainThread|2023-12-18 18:46:05,848|uploadergenius.py|dumpSetting|line:1543|INFO| check settings before dump
-MainThread|2023-12-18 18:46:05,856|uploadergenius.py|dumpSetting|line:1553|DEBUG| end to dump TiktokaStudio settings
-MainThread|2023-12-18 18:46:21,946|uploadergenius.py|cancel_all_waiting_tasks|line:1640|DEBUG| except ongoing  0 task is waiting to be finished, all the waiting 0 tasks are canceled
+MainThread|2023-12-26 22:24:58,938|uploadergenius.py|start|line:8987|DEBUG| TiktokaStudio Installation path is:/Users/wenke/github/tiktoka-studio-uploader-genius
+MainThread|2023-12-26 22:24:58,939|uploadergenius.py|start|line:8989|DEBUG| TiktokaStudio GUI started
+MainThread|2023-12-26 22:24:59,203|taskTablecrud.py|refreshTaskcanvas|line:355|DEBUG| start to remove previous tabular result data row when data is empty
+MainThread|2023-12-26 22:24:59,204|taskTablecrud.py|refreshTaskcanvas|line:366|DEBUG| end to remove previous tabular result data row when data is empty
+MainThread|2023-12-26 22:25:00,635|uploadergenius.py|dumpSetting|line:1542|DEBUG| start to dump TiktokaStudio settings
+MainThread|2023-12-26 22:25:00,635|uploadergenius.py|dumpSetting|line:1543|INFO| check settings before dump
+MainThread|2023-12-26 22:25:00,642|uploadergenius.py|dumpSetting|line:1553|DEBUG| end to dump TiktokaStudio settings
+MainThread|2023-12-26 22:27:08,603|uploadergenius.py|cancel_all_waiting_tasks|line:1640|DEBUG| except ongoing  0 task is waiting to be finished, all the waiting 0 tasks are canceled
